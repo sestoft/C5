@@ -16,7 +16,8 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -82,6 +83,7 @@
     <Content Include="trans.xslt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="dodoc.cmd" />
     <None Include="mkcurrent.cmd" />
   </ItemGroup>

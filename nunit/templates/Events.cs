@@ -81,7 +81,6 @@ namespace C5UnitTests.Templates.Events
     {
       return SpecsBasic;
     }
-    [Test]
     public virtual void Listenable()
     {
       Assert.AreEqual(EventTypeEnum.Basic, collection.ListenableEvents);
@@ -90,7 +89,6 @@ namespace C5UnitTests.Templates.Events
       Assert.AreEqual(listenTo, collection.ActiveEvents);
     }
 
-    [Test]
     public void Add()
     {
       listen();
@@ -101,7 +99,6 @@ namespace C5UnitTests.Templates.Events
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection)});
     }
 
-    [Test]
     public void AddAll()
     {
       for (int i = 0; i < 10; i++)
@@ -137,7 +134,6 @@ namespace C5UnitTests.Templates.Events
 
   public class CollectionTester<U> : ExtensibleTester<U> where U : ICollection<int>
   {
-    [Test]
     public void Update()
     {
       collection.Add(4); collection.Add(54); collection.Add(56); collection.Add(8);
@@ -165,7 +161,6 @@ namespace C5UnitTests.Templates.Events
       seen.Check(new CollectionEvent<int>[] { });
     }
 
-    [Test]
     public void FindOrAdd()
     {
       collection.Add(4); collection.Add(56); collection.Add(8);
@@ -181,7 +176,6 @@ namespace C5UnitTests.Templates.Events
         });
     }
 
-    [Test]
     public void UpdateOrAdd()
     {
       collection.Add(4); collection.Add(56); collection.Add(8);
@@ -213,7 +207,6 @@ namespace C5UnitTests.Templates.Events
         });
     }
 
-    [Test]
     public void RemoveItem()
     {
       collection.Add(4); collection.Add(56); collection.Add(18);
@@ -228,7 +221,6 @@ namespace C5UnitTests.Templates.Events
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection)});
     }
 
-    [Test]
     public void RemoveAll()
     {
       for (int i = 0; i < 10; i++)
@@ -246,7 +238,6 @@ namespace C5UnitTests.Templates.Events
       seen.Check(new CollectionEvent<int>[] { });
     }
 
-    [Test]
     public void RetainAll()
     {
       for (int i = 0; i < 10; i++)
@@ -265,7 +256,6 @@ namespace C5UnitTests.Templates.Events
       seen.Check(new CollectionEvent<int>[] { });
     }
 
-    [Test]
     public void RemoveAllCopies()
     {
       for (int i = 0; i < 10; i++)
@@ -294,7 +284,6 @@ namespace C5UnitTests.Templates.Events
       seen.Check(new CollectionEvent<int>[] { });
     }
 
-    [Test]
     public virtual void Clear()
     {
       collection.Add(4); collection.Add(56); collection.Add(8);
@@ -312,7 +301,6 @@ namespace C5UnitTests.Templates.Events
 
   public class IndexedTester<U> : CollectionTester<U> where U : IIndexed<int>
   {
-    [Test]
     public void RemoveAt()
     {
       collection.Add(4); collection.Add(16); collection.Add(28);
@@ -324,7 +312,6 @@ namespace C5UnitTests.Templates.Events
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection)});
     }
 
-    [Test]
     public void RemoveInterval()
     {
       collection.Add(4); collection.Add(56); collection.Add(18);
@@ -343,7 +330,6 @@ namespace C5UnitTests.Templates.Events
 
   public class SortedIndexedTester<U> : IndexedTester<U> where U : IIndexedSorted<int>
   {
-    [Test]
     public void DeleteMinMax()
     {
       collection.Add(34);
@@ -363,7 +349,6 @@ namespace C5UnitTests.Templates.Events
       });
     }
 
-    [Test]
     public void AddSorted()
     {
       listen();
@@ -393,7 +378,6 @@ namespace C5UnitTests.Templates.Events
       seen.Check(new CollectionEvent<int>[] { });
     }
 
-    [Test]
     public void RemoveRange()
     {
       for (int i = 0; i < 20; i++)
@@ -437,7 +421,6 @@ namespace C5UnitTests.Templates.Events
       return SpecsAll;
     }
 
-    [Test]
     public override void Listenable()
     {
       Assert.AreEqual(EventTypeEnum.All, collection.ListenableEvents);
@@ -445,7 +428,6 @@ namespace C5UnitTests.Templates.Events
       listen();
       Assert.AreEqual(listenTo, collection.ActiveEvents);
     }
-    [Test]
     public void SetThis()
     {
       collection.Add(4); collection.Add(56); collection.Add(8);
@@ -460,7 +442,6 @@ namespace C5UnitTests.Templates.Events
           });
     }
 
-    [Test]
     public void Insert()
     {
       collection.Add(4); collection.Add(56); collection.Add(8);
@@ -473,7 +454,6 @@ namespace C5UnitTests.Templates.Events
           });
     }
 
-    [Test]
     public void InsertAll()
     {
       collection.Add(4); collection.Add(56); collection.Add(8);
@@ -493,7 +473,6 @@ namespace C5UnitTests.Templates.Events
       seen.Check(new CollectionEvent<int>[] { });
     }
 
-    [Test]
     public void InsertFirstLast()
     {
       collection.Add(4); collection.Add(56); collection.Add(18);
@@ -512,7 +491,6 @@ namespace C5UnitTests.Templates.Events
           });
     }
 
-    [Test]
     public void Remove()
     {
       collection.FIFO = false;
@@ -529,7 +507,6 @@ namespace C5UnitTests.Templates.Events
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection)});
     }
 
-    [Test]
     public void RemoveFirst()
     {
       collection.Add(4); collection.Add(56); collection.Add(18);
@@ -541,7 +518,6 @@ namespace C5UnitTests.Templates.Events
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection)});
     }
 
-    [Test]
     public void RemoveLast()
     {
       collection.Add(4); collection.Add(56); collection.Add(18);
@@ -553,7 +529,6 @@ namespace C5UnitTests.Templates.Events
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection)});
     }
 
-    [Test]
     public void Reverse()
     {
       collection.Add(4); collection.Add(56); collection.Add(8);
@@ -567,7 +542,6 @@ namespace C5UnitTests.Templates.Events
     }
 
 
-    [Test]
     public void Sort()
     {
       collection.Add(4); collection.Add(56); collection.Add(8);
@@ -580,7 +554,6 @@ namespace C5UnitTests.Templates.Events
       seen.Check(new CollectionEvent<int>[] { });
     }
 
-    [Test]
     public void Shuffle()
     {
       collection.Add(4); collection.Add(56); collection.Add(8);
@@ -593,7 +566,6 @@ namespace C5UnitTests.Templates.Events
       seen.Check(new CollectionEvent<int>[] { });
     }
 
-    [Test]
     public override void Clear()
     {
       collection.Add(4); collection.Add(56); collection.Add(18);
@@ -612,7 +584,6 @@ namespace C5UnitTests.Templates.Events
       seen.Check(new CollectionEvent<int>[] { });
     }
 
-    [Test]
     public void ListDispose()
     {
       collection.Add(4); collection.Add(56); collection.Add(18);
@@ -720,7 +691,6 @@ namespace C5UnitTests.Templates.Events
       return SpecsBasic;
     }
 
-    [Test]
     public void PushPop()
     {
       listen();
@@ -755,7 +725,6 @@ namespace C5UnitTests.Templates.Events
       return SpecsBasic;
     }
 
-    [Test]
     public void EnqueueDequeue()
     {
       listen();
@@ -790,7 +759,6 @@ namespace C5UnitTests.Templates.Events
       return SpecsBasic;
     }
 
-    [Test]
     public void Direct()
     {
       listen();
@@ -837,7 +805,6 @@ namespace C5UnitTests.Templates.Events
       });
     }
 
-    [Test]
     public void WithHandles()
     {
       listen();
@@ -895,7 +862,6 @@ namespace C5UnitTests.Templates.Events
       return SpecsBasic;
     }
 
-    [Test]
     public virtual void Listenable()
     {
       Assert.AreEqual(EventTypeEnum.Basic, collection.ListenableEvents);
@@ -904,7 +870,6 @@ namespace C5UnitTests.Templates.Events
       Assert.AreEqual(listenTo, collection.ActiveEvents);
     }
 
-    [Test]
     public void AddAndREmove()
     {
       listen();
