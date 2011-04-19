@@ -572,7 +572,7 @@ namespace C5UnitTests.support
           return true;
         }
 
-        public new int GetHashCode(Object o)
+        public int GetHashCode(Object o)
         {
           return 1;
         }
