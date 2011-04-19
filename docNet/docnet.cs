@@ -68,7 +68,7 @@ namespace DocNet
     DocNet(string a, string x, string defaultNamespace)
     {
       this.defaultNamespace = defaultNamespace;
-      assembly = Assembly.LoadFrom(a, null);
+      assembly = Assembly.LoadFrom(a);
       XmlDocument xml = new XmlDocument();
       xml.Load(x);
       assemblyName = xml.SelectSingleNode("doc/assembly/name").InnerXml;
