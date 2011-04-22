@@ -32,6 +32,7 @@
 //   csc /r:C5.dll Anagrams.cs 
 
 using System;
+using System.Diagnostics;
 using System.IO;                        // StreamReader, TextReader
 using System.Text;			// Encoding
 using System.Text.RegularExpressions;   // Regex
@@ -40,120 +41,103 @@ using SCG = System.Collections.Generic;
 
 namespace AnagramStrings
 {
-  class MyTest
-  {
-    public static void Main(String[] args)
+    class MyTest
     {
-      Console.OutputEncoding = Encoding.GetEncoding("iso-8859-1");
-      SCG.IEnumerable<String> ss;
-      if (args.Length == 1)
-        ss = ReadFileWords(args[0]);
-      else
-        ss = args;
+        public static void Main(String[] args)
+        {
+            Console.OutputEncoding = Encoding.GetEncoding("iso-8859-1");
+            SCG.IEnumerable<String> ss;
+            if (args.Length == 1)
+                ss = ReadFileWords(args[0]);
+            else
+                ss = args;
 
-      Timer t = new Timer();
-      SCG.IEnumerable<SCG.IEnumerable<String>> classes = AnagramClasses(ss);
-      int count = 0;
-      foreach (SCG.IEnumerable<String> anagramClass in classes)
-      {
-        count++;
-        // foreach (String s in anagramClass) 
-        //   Console.Write(s + " ");
-        // Console.WriteLine();
-      }
-      Console.WriteLine("{0} anagram classes", count);
-      Console.WriteLine(t.Check());
+            var sw = Stopwatch.StartNew();
+            SCG.IEnumerable<SCG.IEnumerable<String>> classes = AnagramClasses(ss);
+            int count = 0;
+            foreach (SCG.IEnumerable<String> anagramClass in classes)
+            {
+                count++;
+                // foreach (String s in anagramClass) 
+                //   Console.Write(s + " ");
+                // Console.WriteLine();
+            }
+            Console.WriteLine("{0} anagram classes", count);
+            sw.Stop();
+            Console.WriteLine(sw.Elapsed);
+        }
+
+        // Read words from a file
+
+        public static SCG.IEnumerable<String> ReadFileWords(String filename)
+        {
+            Regex delim = new Regex("[^a-zæøåA-ZÆØÅ0-9-]+");
+            using (TextReader rd = new StreamReader(filename, Encoding.GetEncoding("iso-8859-1")))
+            {
+                for (String line = rd.ReadLine(); line != null; line = rd.ReadLine())
+                    foreach (String s in delim.Split(line))
+                        if (s != "")
+                            yield return s.ToLower();
+            }
+        }
+
+        // From an anagram point of view, a word is just a bag of characters.
+
+        public static CharBag AnagramClass(String s)
+        {
+            return new CharBag(s);
+        }
+
+        // Given a sequence of strings, return all non-trivial anagram classes   
+
+        public static SCG.IEnumerable<SCG.IEnumerable<String>> AnagramClasses(SCG.IEnumerable<String> ss)
+        {
+            IDictionary<CharBag, HashSet<String>> classes
+              = new TreeDictionary<CharBag, HashSet<String>>();
+            foreach (String s in ss)
+            {
+                CharBag anagram = AnagramClass(s);
+                HashSet<String> anagramClass;
+                if (!classes.Find(anagram, out anagramClass))
+                    classes[anagram] = anagramClass = new HashSet<String>();
+                anagramClass.Add(s);
+            }
+            foreach (HashSet<String> anagramClass in classes.Values)
+                if (anagramClass.Count > 1
+              ) // && anagramClass.Exists(delegate(String s) { return !s.EndsWith("s"); }))
+                    yield return anagramClass;
+        }
     }
 
-    // Read words from a file
+    // A bag of characters is represented as a sorted string of the
+    // characters, with multiplicity.  Since natural language words are
+    // short, the bags are small, so this is vastly better than
+    // representing character bags using HashBag<char> or TreeBag<char>
 
-    public static SCG.IEnumerable<String> ReadFileWords(String filename)
+    class CharBag : IComparable<CharBag>
     {
-      Regex delim = new Regex("[^a-zæøåA-ZÆØÅ0-9-]+");
-      using (TextReader rd = new StreamReader(filename, Encoding.GetEncoding("iso-8859-1")))
-      {
-        for (String line = rd.ReadLine(); line != null; line = rd.ReadLine())
-          foreach (String s in delim.Split(line))
-            if (s != "")
-              yield return s.ToLower();
-      }
+        private readonly String contents; // The bag's characters, sorted, with multiplicity
+
+        public CharBag(String s)
+        {
+            char[] chars = s.ToCharArray();
+            Array.Sort(chars);
+            this.contents = new String(chars);
+        }
+
+        public override int GetHashCode()
+        {
+            return contents.GetHashCode();
+        }
+
+        public bool Equals(CharBag that)
+        {
+            return this.contents.Equals(that.contents);
+        }
+
+        public int CompareTo(CharBag that)
+        {
+            return this.contents.CompareTo(that.contents);
+        }
     }
-
-    // From an anagram point of view, a word is just a bag of characters.
-
-    public static CharBag AnagramClass(String s)
-    {
-      return new CharBag(s);
-    }
-
-    // Given a sequence of strings, return all non-trivial anagram classes   
-
-    public static SCG.IEnumerable<SCG.IEnumerable<String>> AnagramClasses(SCG.IEnumerable<String> ss)
-    {
-      IDictionary<CharBag, HashSet<String>> classes
-        = new TreeDictionary<CharBag, HashSet<String>>();
-      foreach (String s in ss)
-      {
-        CharBag anagram = AnagramClass(s);
-        HashSet<String> anagramClass;
-        if (!classes.Find(anagram, out anagramClass))
-          classes[anagram] = anagramClass = new HashSet<String>();
-        anagramClass.Add(s);
-      }
-      foreach (HashSet<String> anagramClass in classes.Values)
-        if (anagramClass.Count > 1
-      ) // && anagramClass.Exists(delegate(String s) { return !s.EndsWith("s"); }))
-          yield return anagramClass;
-    }
-  }
-
-// A bag of characters is represented as a sorted string of the
-// characters, with multiplicity.  Since natural language words are
-// short, the bags are small, so this is vastly better than
-// representing character bags using HashBag<char> or TreeBag<char>
-
-  class CharBag : IComparable<CharBag>
-  {
-    private readonly String contents; // The bag's characters, sorted, with multiplicity
-
-    public CharBag(String s)
-    {
-      char[] chars = s.ToCharArray();
-      Array.Sort(chars);
-      this.contents = new String(chars);
-    }
-
-    public override int GetHashCode()
-    {
-      return contents.GetHashCode();
-    }
-
-    public bool Equals(CharBag that)
-    {
-      return this.contents.Equals(that.contents);
-    }
-
-    public int CompareTo(CharBag that)
-    {
-      return this.contents.CompareTo(that.contents);
-    }
-  }
-
-// Crude timing utility ----------------------------------------
-
-  public class Timer
-  {
-    private DateTime start;
-
-    public Timer()
-    {
-      start = DateTime.Now;
-    }
-
-    public double Check()
-    {
-      TimeSpan dur = DateTime.Now - start;
-      return dur.TotalSeconds;
-    }
-  }
 }
