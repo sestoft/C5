@@ -4532,7 +4532,7 @@ namespace C5
         [Tested]
         public bool Check()
         {
-            //return check("", System.IO.TextWriter.Null);
+            //return check("");
             //Logger.Log("bamse");
             if (!isValid)
                 return true;
