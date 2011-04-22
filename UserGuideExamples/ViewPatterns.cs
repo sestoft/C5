@@ -289,7 +289,7 @@ namespace ViewPatterns {
 
     // Find the index of the first item that satisfies p
 
-    public static int FindFirstIndex<T>(IList<T> list, Fun<T,bool> p) {
+    public static int FindFirstIndex<T>(IList<T> list, Func<T,bool> p) {
       using (IList<T> view = list.View(0, 0)) {
         while (view.TrySlide(0, 1)) {
           if (p(view.First)) 
@@ -302,7 +302,7 @@ namespace ViewPatterns {
 
     // Find the index of the last item that satisfies p
     
-    public static int FindLastIndex<T>(IList<T> list, Fun<T,bool> p) {
+    public static int FindLastIndex<T>(IList<T> list, Func<T,bool> p) {
       using (IList<T> view = list.View(list.Count, 0)) {
         while (view.TrySlide(-1, 1)) {
           if (p(view.First)) 

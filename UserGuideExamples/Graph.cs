@@ -76,8 +76,8 @@
 // Some notes:
 // The code only supports "natural" equality of vertices.
 
-using C5;
 using System;
+using C5;
 using SCG = System.Collections.Generic;
 
 namespace Graph
@@ -223,7 +223,7 @@ namespace Graph
     /// <param name="bfs">True if BFS, false if DFS</param>
     /// <param name="start">The vertex to start at</param>
     /// <param name="act">The action to perform at each node</param>
-    void TraverseVertices(bool bfs, V start, Action<Edge<V, E>> act);
+    void TraverseVertices(bool bfs, V start, System.Action<Edge<V, E>> act);
 
     /// <summary>
     /// Traverse an undirected graph in either BFS or DFS order, performing the action 
@@ -232,7 +232,7 @@ namespace Graph
     /// </summary>
     /// <param name="bfs">True if BFS, false if DFS</param>
     /// <param name="act"></param>
-    void TraverseVertices(bool bfs, Action<V> act);
+    void TraverseVertices(bool bfs, System.Action<V> act);
 
     /// <summary>
     /// Traverse an undirected graph in either BFS or DFS order, performing the action 
@@ -243,7 +243,7 @@ namespace Graph
     /// <param name="act"></param>
     /// <param name="beforecomponent"></param>
     /// <param name="aftercomponent"></param>
-    void TraverseVertices(bool bfs, Action<Edge<V, E>> act, Action<V> beforecomponent, Action<V> aftercomponent);
+    void TraverseVertices(bool bfs, System.Action<Edge<V, E>> act, System.Action<V> beforecomponent, System.Action<V> aftercomponent);
 
     /// <summary>
     /// A more advanced Depth First Search traversal.
@@ -254,8 +254,8 @@ namespace Graph
     /// <param name="onfollow">Action to perform as an edge is traversed.</param>
     /// <param name="onfollowed">Action to perform when an edge is travesed back.</param>
     /// <param name="onnotfollowed">Action to perform when an edge (a backedge)is seen, but not followed.</param>
-    void DepthFirstSearch(V start, Action<V> beforevertex, Action<V> aftervertex,
-            Action<Edge<V, E>> onfollow, Action<Edge<V, E>> onfollowed, Action<Edge<V, E>> onnotfollowed);
+    void DepthFirstSearch(V start, System.Action<V> beforevertex, System.Action<V> aftervertex,
+            System.Action<Edge<V, E>> onfollow, System.Action<Edge<V, E>> onfollowed, System.Action<Edge<V, E>> onnotfollowed);
 
     //TODO: perhaps we should avoid exporting this?
     /// <summary>
@@ -709,16 +709,16 @@ namespace Graph
       ArrayList<KeyValuePair<V, IGraph<V, E, W>>> retval = new ArrayList<KeyValuePair<V, IGraph<V, E, W>>>();
       HashGraph<V, E, W> component;
       ArrayList<V> vertices = null;
-      Action<Edge<V, E>> edgeaction = delegate(Edge<V, E> e)
+      System.Action<Edge<V, E>> edgeaction = delegate(Edge<V, E> e)
       {
         vertices.Add(e.end);
       };
-      Action<V> beforecomponent = delegate(V v)
+      System.Action<V> beforecomponent = delegate(V v)
       {
         vertices = new ArrayList<V>();
         vertices.Add(v);
       };
-      Action<V> aftercomponent = delegate(V v)
+      System.Action<V> aftercomponent = delegate(V v)
       {
         //component = SubGraph(vertices);
         component = new HashGraph<V, E, W>(weight);
@@ -736,7 +736,7 @@ namespace Graph
     }
 
     [UsedBy("test1")]
-    public void TraverseVertices(bool bfs, V start, Action<Edge<V, E>> act)
+    public void TraverseVertices(bool bfs, V start, System.Action<Edge<V, E>> act)
     {
       if (!graph.Contains(start))
         throw new ArgumentException("start Vertex not in graph");
@@ -772,18 +772,18 @@ namespace Graph
       }
     }
 
-    public void TraverseVertices(bool bfs, Action<V> act)
+    public void TraverseVertices(bool bfs, System.Action<V> act)
     {
       TraverseVertices(bfs, delegate(Edge<V, E> e) { act(e.end); }, act, null);
     }
 
     //TODO: merge the hash set here with the intra omponent one?
-    public void TraverseVertices(bool bfs, Action<Edge<V, E>> act, Action<V> beforecomponent, Action<V> aftercomponent)
+    public void TraverseVertices(bool bfs, System.Action<Edge<V, E>> act, System.Action<V> beforecomponent, System.Action<V> aftercomponent)
     {
       HashSet<V> missing = new HashSet<V>();
       missing.AddAll(Vertices());
-      Action<Edge<V, E>> myact = act + delegate(Edge<V, E> e) { missing.Remove(e.end); };
-      Action<V> mybeforecomponent = beforecomponent + delegate(V v) { missing.Remove(v); };
+      System.Action<Edge<V, E>> myact = act + delegate(Edge<V, E> e) { missing.Remove(e.end); };
+      System.Action<V> mybeforecomponent = beforecomponent + delegate(V v) { missing.Remove(v); };
       while (!missing.IsEmpty)
       {
         V start = default(V);
@@ -800,8 +800,8 @@ namespace Graph
 
     //TODO: allow actions to be null
     [UsedBy("testDFS")]
-    public void DepthFirstSearch(V start, Action<V> before, Action<V> after,
-        Action<Edge<V, E>> onfollow, Action<Edge<V, E>> onfollowed, Action<Edge<V, E>> onnotfollowed)
+    public void DepthFirstSearch(V start, System.Action<V> before, System.Action<V> after,
+        System.Action<Edge<V, E>> onfollow, System.Action<Edge<V, E>> onfollowed, System.Action<Edge<V, E>> onnotfollowed)
     {
       HashSet<V> seen = new HashSet<V>();
       seen.Add(start);
@@ -1156,7 +1156,7 @@ namespace Graph
       tour.Add(root);
       IList<V> view = tour.View(1, 1);
 
-      Action<Edge<V, E>> onfollow = delegate(Edge<V, E> e)
+      System.Action<Edge<V, E>> onfollow = delegate(Edge<V, E> e)
       {
         //slide the view until it points to the last copy of e.start
         while (!view[0].Equals(e.start))
@@ -1596,22 +1596,22 @@ namespace Graph
       int[] leastIndexReachableFrom = new int[g.VertexCount];
       int nextindex = 0;
       int outgoingFromRoot = 0;
-      Action<string> beforevertex = delegate(string v)
+      System.Action<string> beforevertex = delegate(string v)
       {
         int i = (index[v] = nextindex++);
         leastIndexReachableFrom[i] = i;
       };
-      Action<string> aftervertex = delegate(string v)
+      System.Action<string> aftervertex = delegate(string v)
       {
         int i = index[v];
         if (i == 0 && outgoingFromRoot > 1)
           Console.WriteLine("Articulation point: {0} ({1}>1 outgoing DFS edges from start)",
               v, outgoingFromRoot);
       };
-      Action<Edge<string, int>> onfollow = delegate(Edge<string, int> e)
+      System.Action<Edge<string, int>> onfollow = delegate(Edge<string, int> e)
       {
       };
-      Action<Edge<string, int>> onfollowed = delegate(Edge<string, int> e)
+      System.Action<Edge<string, int>> onfollowed = delegate(Edge<string, int> e)
       {
         int startind = index[e.start], endind = index[e.end];
         if (startind == 0)
@@ -1626,7 +1626,7 @@ namespace Graph
             leastIndexReachableFrom[startind] = leastIndexReachable;
         }
       };
-      Action<Edge<string, int>> onnotfollowed = delegate(Edge<string, int> e)
+      System.Action<Edge<string, int>> onnotfollowed = delegate(Edge<string, int> e)
       {
         int startind = index[e.start], endind = index[e.end];
         if (leastIndexReachableFrom[startind] > endind)

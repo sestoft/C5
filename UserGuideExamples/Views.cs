@@ -26,7 +26,6 @@
 
 using System;
 using C5;
-using SCG = System.Collections.Generic;
 
 namespace Views {
   class Views {
@@ -116,7 +115,7 @@ namespace Views {
 
     // Find first item that satisfies p
 
-    public static bool Find<T>(IList<T> list, Fun<T,bool> p, out T res) {
+    public static bool Find<T>(IList<T> list, Func<T,bool> p, out T res) {
       IList<T> view = list.View(0, 0);
       while (view.Offset < list.Count) {
         view.Slide(+1, 1);
@@ -131,7 +130,7 @@ namespace Views {
 
     // Or, using that the list is enumerable:
 
-    public static bool Find1<T>(IList<T> list, Fun<T,bool> p, out T res) {
+    public static bool Find1<T>(IList<T> list, Func<T,bool> p, out T res) {
       foreach (T x in list) { 
         if (p(x)) {
           res = x;
@@ -144,7 +143,7 @@ namespace Views {
 
     // Find last item that satisfies p
 
-    public static bool FindLast<T>(IList<T> list, Fun<T,bool> p, out T res) {
+    public static bool FindLast<T>(IList<T> list, Func<T,bool> p, out T res) {
       IList<T> view = list.View(list.Count, 0);
       while (view.Offset > 0) {
         view.Slide(-1, 1);

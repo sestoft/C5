@@ -20,7 +20,6 @@
 */
 
 using System;
-using System.Diagnostics;
 using SCG = System.Collections.Generic;
 namespace C5
 {
@@ -469,7 +468,7 @@ namespace C5
     [Tested]
     public virtual bool Find(K key, out V value)
     {
-      return Find(ref key, out value);
+        return Find(ref key, out value);
     }
     /// <summary>
     /// Check if there is an entry with a specified key and report the corresponding
@@ -480,19 +479,19 @@ namespace C5
     /// <returns>True if key was found</returns>
     public virtual bool Find(ref K key, out V value)
     {
-      KeyValuePair<K, V> p = new KeyValuePair<K, V>(key);
+        KeyValuePair<K, V> p = new KeyValuePair<K, V>(key);
 
-      if (pairs.Find(ref p))
-      {
-        key = p.Key;
-        value = p.Value;
-        return true;
-      }
-      else
-      {
-        value = default(V);
-        return false;
-      }
+        if (pairs.Find(ref p))
+        {
+            key = p.Key;
+            value = p.Value;
+            return true;
+        }
+        else
+        {
+            value = default(V);
+            return false;
+        }
     }
 
 
@@ -661,7 +660,7 @@ namespace C5
     /// <summary>
     /// 
     /// </summary>
-    public virtual Fun<K, V> Fun { get { return delegate(K k) { return this[k]; }; } }
+    public virtual Func<K, V> Func { get { return delegate(K k) { return this[k]; }; } }
 
     /// <summary>
     /// Indexer by key for dictionary. 

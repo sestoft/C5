@@ -6,7 +6,6 @@
 using System;
 using System.Threading;
 using C5;
-using SCG = System.Collections.Generic;
 
 namespace Locking {
   class Locking {
@@ -42,7 +41,7 @@ namespace Locking {
       Console.WriteLine("coll has {0} items, should be {1}", to.Count, count);
     }
 
-    public static void RunTwoThreads(Act run) {
+    public static void RunTwoThreads(Action run) {
       Thread t1 = new Thread(new ThreadStart(run)),
              t2 = new Thread(new ThreadStart(run));
       t1.Start(); t2.Start();

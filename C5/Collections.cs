@@ -488,11 +488,11 @@ namespace C5
     }
 
     /// <summary>
-    /// Apply an single argument action, <see cref="T:C5.Act`1"/> to this enumerable
+    /// Apply an single argument action, <see cref="T:Action`1"/> to this enumerable
     /// </summary>
     /// <param name="action">The action delegate</param>
     [Tested]
-    public virtual void Apply(Act<T> action)
+    public virtual void Apply(Action<T> action)
     {
       foreach (T item in this)
         action(item);
@@ -504,11 +504,11 @@ namespace C5
     /// specific predicate in this collection.
     /// </summary>
     /// <param name="predicate">A delegate 
-    /// (<see cref="T:C5.Fun`2"/> with <code>R = bool</code>) 
+    /// (<see cref="T:Func`2"/> with <code>R = bool</code>) 
     /// defining the predicate</param>
     /// <returns>True if such an item exists</returns>
     [Tested]
-    public virtual bool Exists(Fun<T, bool> predicate)
+    public virtual bool Exists(Func<T, bool> predicate)
     {
       foreach (T item in this)
         if (predicate(item))
@@ -522,10 +522,10 @@ namespace C5
     /// specific predicate in this collection and return the first one in enumeration order.
     /// </summary>
     /// <param name="predicate">A delegate 
-    /// (<see cref="T:C5.Fun`2"/> with <code>R == bool</code>) defining the predicate</param>
+    /// (<see cref="T:Func`2"/> with <code>R == bool</code>) defining the predicate</param>
     /// <param name="item"></param>
     /// <returns>True is such an item exists</returns>
-    public virtual bool Find(Fun<T, bool> predicate, out T item)
+    public virtual bool Find(Func<T, bool> predicate, out T item)
     {
       foreach (T jtem in this)
         if (predicate(jtem))
@@ -541,11 +541,11 @@ namespace C5
     /// Check if all items in this collection satisfies a specific predicate.
     /// </summary>
     /// <param name="predicate">A delegate 
-    /// (<see cref="T:C5.Fun`2"/> with <code>R = bool</code>) 
+    /// (<see cref="T:Func`2"/> with <code>R = bool</code>) 
     /// defining the predicate</param>
     /// <returns>True if all items satisfies the predicate</returns>
     [Tested]
-    public virtual bool All(Fun<T, bool> predicate)
+    public virtual bool All(Func<T, bool> predicate)
     {
       foreach (T item in this)
         if (!predicate(item))
@@ -559,10 +559,10 @@ namespace C5
     /// a certain condition.
     /// </summary>
     /// <param name="predicate">A delegate 
-    /// (<see cref="T:C5.Fun`2"/> with <code>R = bool</code>) 
+    /// (<see cref="T:Func`2"/> with <code>R = bool</code>) 
     /// defining the predicate</param>
     /// <returns>The filtered enumerable</returns>
-    public virtual SCG.IEnumerable<T> Filter(Fun<T, bool> predicate)
+    public virtual SCG.IEnumerable<T> Filter(Func<T, bool> predicate)
     {
       foreach (T item in this)
         if (predicate(item))
@@ -649,10 +649,10 @@ namespace C5
     /// specific predicate in this collection and return the first one in enumeration order.
     /// </summary>
     /// <param name="predicate">A delegate 
-    /// (<see cref="T:C5.Fun`2"/> with <code>R == bool</code>) defining the predicate</param>
+    /// (<see cref="T:Func`2"/> with <code>R == bool</code>) defining the predicate</param>
     /// <param name="item"></param>
     /// <returns>True is such an item exists</returns>
-    public virtual bool FindLast(Fun<T, bool> predicate, out T item)
+    public virtual bool FindLast(Func<T, bool> predicate, out T item)
     {
       foreach (T jtem in Backwards())
         if (predicate(jtem))
@@ -1005,10 +1005,10 @@ namespace C5
     /// specific predicate in this collection and return the first one in enumeration order.
     /// </summary>
     /// <param name="predicate">A delegate 
-    /// (<see cref="T:C5.Fun`2"/> with <code>R == bool</code>) defining the predicate</param>
+    /// (<see cref="T:Func`2"/> with <code>R == bool</code>) defining the predicate</param>
     /// <param name="item"></param>
     /// <returns>True is such an item exists</returns>
-    public virtual bool FindLast(Fun<T, bool> predicate, out T item)
+    public virtual bool FindLast(Func<T, bool> predicate, out T item)
     {
       foreach (T jtem in Backwards())
         if (predicate(jtem))
@@ -1152,9 +1152,9 @@ namespace C5
     /// specific predicate in this collection and return the index of the first one.
     /// </summary>
     /// <param name="predicate">A delegate 
-    /// (<see cref="T:C5.Fun`2"/> with <code>R == bool</code>) defining the predicate</param>
+    /// (<see cref="T:Func`2"/> with <code>R == bool</code>) defining the predicate</param>
     /// <returns>the index, if found, a negative value else</returns>
-    public int FindIndex(Fun<T, bool> predicate)
+    public int FindIndex(Func<T, bool> predicate)
     {
       int index = 0;
       foreach (T item in this)
@@ -1171,9 +1171,9 @@ namespace C5
     /// specific predicate in this collection and return the index of the last one.
     /// </summary>
     /// <param name="predicate">A delegate 
-    /// (<see cref="T:C5.Fun`2"/> with <code>R == bool</code>) defining the predicate</param>
+    /// (<see cref="T:Func`2"/> with <code>R == bool</code>) defining the predicate</param>
     /// <returns>the index, if found, a negative value else</returns>
-    public int FindLastIndex(Fun<T, bool> predicate)
+    public int FindLastIndex(Func<T, bool> predicate)
     {
       int index = Count - 1;
       foreach (T item in Backwards())

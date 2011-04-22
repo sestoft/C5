@@ -19,8 +19,8 @@
  SOFTWARE.
 */
 
-using System.Linq;
 using System;
+using System.Linq;
 using C5;
 using NUnit.Framework;
 using SCG = System.Collections.Generic;
@@ -34,7 +34,7 @@ namespace C5UnitTests.hashtable.dictionary
         [Test]
         public void TestEvents()
         {
-            Fun<DictionaryIntToInt> factory = delegate() { return new DictionaryIntToInt(TenEqualityComparer.Default); };
+            Func<DictionaryIntToInt> factory = delegate() { return new DictionaryIntToInt(TenEqualityComparer.Default); };
             new C5UnitTests.Templates.Events.DictionaryTester<DictionaryIntToInt>().Test(factory);
         }
 
@@ -305,7 +305,7 @@ namespace C5UnitTests.hashtable.dictionary
         [Test]
         public void Fun()
         {
-            Assert.AreEqual("B", _dict.Fun("T"));
+            Assert.AreEqual("B", _dict.Func("T"));
         }
 
 

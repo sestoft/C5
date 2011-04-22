@@ -34,7 +34,7 @@ namespace C5UnitTests.arrays.list
     [Test]
     public void TestEvents()
     {
-      Fun<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
+      Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
       new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory);
       new C5UnitTests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory);
       new C5UnitTests.Templates.Events.StackTester<CollectionOfInt>().Test(factory);
@@ -732,7 +732,7 @@ namespace C5UnitTests.arrays.list
     {
       private ArrayList<int> list;
 
-      private Fun<int, bool> always, never, even;
+      private Func<int, bool> always, never, even;
 
 
       [SetUp]
@@ -783,7 +783,7 @@ namespace C5UnitTests.arrays.list
       public void Apply()
       {
         int sum = 0;
-        Act<int> a = delegate(int i) { sum = i + 10 * sum; };
+        Action<int> a = delegate(int i) { sum = i + 10 * sum; };
 
         list.Apply(a);
         Assert.AreEqual(0, sum);
@@ -968,7 +968,7 @@ namespace C5UnitTests.arrays.list
     public class FindPredicate
     {
       private ArrayList<int> list;
-      Fun<int, bool> pred;
+      Func<int, bool> pred;
 
       [SetUp]
       public void Init()
@@ -1248,7 +1248,7 @@ namespace C5UnitTests.arrays.list
       [Test]
       public void FindAll()
       {
-        Fun<int, bool> f = delegate(int i) { return i % 2 == 0; };
+        Func<int, bool> f = delegate(int i) { return i % 2 == 0; };
 
         Assert.IsTrue(list.FindAll(f).IsEmpty);
         list.Add(5); list.Add(8); list.Add(5); list.Add(10); list.Add(8);
@@ -1800,7 +1800,7 @@ namespace C5UnitTests.arrays.list
       [Test]
       public void Map()
       {
-        Fun<int, string> m = delegate(int i) { return "<<" + i + ">>"; };
+        Func<int, string> m = delegate(int i) { return "<<" + i + ">>"; };
         IList<string> r = lst.Map(m);
 
         Assert.IsTrue(r.Check());
@@ -1823,7 +1823,7 @@ namespace C5UnitTests.arrays.list
         lst.Add(1);
         lst.Add(2);
         lst.Add(3);
-        Fun<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
+        Func<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
         lst.Map(m);
       }
 
@@ -1834,7 +1834,7 @@ namespace C5UnitTests.arrays.list
         lst.Add(1);
         lst.Add(2);
         lst.Add(3);
-        Fun<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
+        Func<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
         lst.FindAll(m);
       }
 
@@ -1846,7 +1846,7 @@ namespace C5UnitTests.arrays.list
         lst.Add(1);
         lst.Add(2);
         lst.Add(3);
-        Fun<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
+        Func<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
         lst.Map(m);
       }
 
@@ -1858,7 +1858,7 @@ namespace C5UnitTests.arrays.list
         lst.Add(1);
         lst.Add(2);
         lst.Add(3);
-        Fun<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
+        Func<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
         lst.FindAll(m);
       }
 
@@ -2542,14 +2542,14 @@ namespace C5UnitTests.arrays.list
       [Test]
       public void MapEtc()
       {
-        ArrayList<double> dbl = (ArrayList<double>)view.Map(new Fun<int, double>(delegate(int i) { return i / 10.0; }));
+        ArrayList<double> dbl = (ArrayList<double>)view.Map(new Func<int, double>(delegate(int i) { return i / 10.0; }));
 
         Assert.IsTrue(dbl.Check());
         Assert.AreEqual(0.1, dbl[0]);
         Assert.AreEqual(0.2, dbl[1]);
         for (int i = 0; i < 10; i++) view.Add(i);
 
-        list = (ArrayList<int>)view.FindAll(new Fun<int, bool>(delegate(int i) { return i % 4 == 1; }));
+        list = (ArrayList<int>)view.FindAll(new Func<int, bool>(delegate(int i) { return i % 4 == 1; }));
         Assert.IsTrue(list.Check());
         Assert.IsTrue(IC.eq(list, 1, 1, 5, 9));
       }

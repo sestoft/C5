@@ -21,7 +21,6 @@
 
 using System;
 using System.Text;
-using System.Diagnostics;
 using SCG = System.Collections.Generic;
 namespace C5
 {
@@ -80,7 +79,7 @@ namespace C5
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public IList<T> FindAll(Fun<T, bool> filter) { return innerlist.FindAll(filter); }
+    public IList<T> FindAll(Func<T, bool> filter) { return innerlist.FindAll(filter); }
 
     /// <summary>
     /// 
@@ -88,7 +87,7 @@ namespace C5
     /// <typeparam name="V"></typeparam>
     /// <param name="mapper"></param>
     /// <returns></returns>
-    public IList<V> Map<V>(Fun<T, V> mapper) { return innerlist.Map<V>(mapper); }
+    public IList<V> Map<V>(Func<T, V> mapper) { return innerlist.Map<V>(mapper); }
 
     /// <summary>
     /// 
@@ -97,7 +96,7 @@ namespace C5
     /// <param name="mapper"></param>
     /// <param name="equalityComparer"></param>
     /// <returns></returns>
-    public IList<V> Map<V>(Fun<T, V> mapper, SCG.IEqualityComparer<V> equalityComparer) { return innerlist.Map<V>(mapper, equalityComparer); }
+    public IList<V> Map<V>(Func<T, V> mapper, SCG.IEqualityComparer<V> equalityComparer) { return innerlist.Map<V>(mapper, equalityComparer); }
 
     /// <summary>
     /// ???? should we throw NotRelevantException
@@ -356,14 +355,14 @@ namespace C5
     /// </summary>
     /// <param name="predicate"></param>
     /// <returns></returns>
-    public int FindIndex(Fun<T, bool> predicate) { return innerlist.FindIndex(predicate); }
+    public int FindIndex(Func<T, bool> predicate) { return innerlist.FindIndex(predicate); }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="predicate"></param>
     /// <returns></returns>
-    public int FindLastIndex(Fun<T, bool> predicate) { return innerlist.FindLastIndex(predicate); }
+    public int FindLastIndex(Func<T, bool> predicate) { return innerlist.FindLastIndex(predicate); }
 
     /// <summary>
     /// 
@@ -710,14 +709,14 @@ namespace C5
     /// 
     /// </summary>
     /// <param name="action"></param>
-    public void Apply(Act<T> action) { innerlist.Apply(action); }
+    public void Apply(Action<T> action) { innerlist.Apply(action); }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="predicate"></param>
     /// <returns></returns>
-    public bool Exists(Fun<T, bool> predicate) { return innerlist.Exists(predicate); }
+    public bool Exists(Func<T, bool> predicate) { return innerlist.Exists(predicate); }
 
     /// <summary>
     /// 
@@ -725,14 +724,14 @@ namespace C5
     /// <param name="predicate"></param>
     /// <param name="item"></param>
     /// <returns></returns>
-    public bool Find(Fun<T, bool> predicate, out T item) { return innerlist.Find(predicate, out item); }
+    public bool Find(Func<T, bool> predicate, out T item) { return innerlist.Find(predicate, out item); }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="predicate"></param>
     /// <returns></returns>
-    public bool All(Fun<T, bool> predicate) { return innerlist.All(predicate); }
+    public bool All(Func<T, bool> predicate) { return innerlist.All(predicate); }
 
     /// <summary>
     /// 
@@ -745,7 +744,7 @@ namespace C5
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public SCG.IEnumerable<T> Filter(Fun<T, bool> filter) { return innerlist.Filter(filter); }
+    public SCG.IEnumerable<T> Filter(Func<T, bool> filter) { return innerlist.Filter(filter); }
 
     #endregion
 
@@ -805,7 +804,7 @@ namespace C5
     /// <param name="predicate"></param>
     /// <param name="item"></param>
     /// <returns></returns>
-    public bool FindLast(Fun<T, bool> predicate, out T item) { return innerlist.FindLast(predicate, out item); }
+    public bool FindLast(Func<T, bool> predicate, out T item) { return innerlist.FindLast(predicate, out item); }
 
     #endregion
 

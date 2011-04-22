@@ -137,9 +137,9 @@ namespace C5UnitTests
   public class FunEnumerable : SCG.IEnumerable<int>
   {
     int size;
-    Fun<int, int> f;
+    Func<int, int> f;
 
-    public FunEnumerable(int size, Fun<int, int> f)
+    public FunEnumerable(int size, Func<int, int> f)
     {
       this.size = size; this.f = f;
     }
@@ -328,12 +328,12 @@ namespace C5UnitTests
             return a.Index == o.Index && itemequalityComparer.Equals(a.Item, o.Item);
           }
       }
-      throw new ApplicationException("Illegal Act: " + Act);
+      throw new ApplicationException("Illegal Action: " + Act);
     }
 
     public override string ToString()
     {
-      return string.Format("Act: {0}, Args : {1}, Source : {2}", Act, Args, Sender);
+      return string.Format("Action: {0}, Args : {1}, Source : {2}", Act, Args, Sender);
     }
 
   }

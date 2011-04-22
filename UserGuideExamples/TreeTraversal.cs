@@ -3,7 +3,6 @@
 
 using System;
 using C5;
-using SCG = System.Collections.Generic;
 
 namespace TreeTraversal
 {
@@ -12,15 +11,15 @@ namespace TreeTraversal
     public static void Main(String[] args)
     {
       Tree<int> t = MakeTree(1, 15);
-      Act<int> act = delegate(int val) { Console.Write("{0} ", val); };
+      Action<int> action = delegate(int val) { Console.Write("{0} ", val); };
       Console.WriteLine("Depth-first:");
-      Tree<int>.DepthFirst(t, act);
+      Tree<int>.DepthFirst(t, action);
       Console.WriteLine("\nBreadth-first:");
-      Tree<int>.BreadthFirst(t, act);
+      Tree<int>.BreadthFirst(t, action);
       Console.WriteLine("\nDepth-first:");
-      Tree<int>.Traverse(t, act, new ArrayList<Tree<int>>());
+      Tree<int>.Traverse(t, action, new ArrayList<Tree<int>>());
       Console.WriteLine("\nBreadth-first:");
-      Tree<int>.Traverse(t, act, new LinkedList<Tree<int>>());
+      Tree<int>.Traverse(t, action, new LinkedList<Tree<int>>());
       Console.WriteLine();
     }
 
@@ -48,7 +47,7 @@ namespace TreeTraversal
       this.val = val; this.t1 = t1; this.t2 = t2;
     }
 
-    public static void DepthFirst(Tree<T> t, Act<T> act)
+    public static void DepthFirst(Tree<T> t, Action<T> action)
     {
       IStack<Tree<T>> work = new ArrayList<Tree<T>>();
       work.Push(t);
@@ -59,12 +58,12 @@ namespace TreeTraversal
         {
           work.Push(cur.t2);
           work.Push(cur.t1);
-          act(cur.val);
+          action(cur.val);
         }
       }
     }
 
-    public static void BreadthFirst(Tree<T> t, Act<T> act)
+    public static void BreadthFirst(Tree<T> t, Action<T> action)
     {
       IQueue<Tree<T>> work = new CircularQueue<Tree<T>>();
       work.Enqueue(t);
@@ -75,12 +74,12 @@ namespace TreeTraversal
         {
           work.Enqueue(cur.t1);
           work.Enqueue(cur.t2);
-          act(cur.val);
+          action(cur.val);
         }
       }
     }
 
-    public static void Traverse(Tree<T> t, Act<T> act, IList<Tree<T>> work)
+    public static void Traverse(Tree<T> t, Action<T> action, IList<Tree<T>> work)
     {
       work.Clear();
       work.Add(t);
@@ -99,7 +98,7 @@ namespace TreeTraversal
             work.Add(cur.t2);
             work.Add(cur.t1);
           }
-          act(cur.val);
+          action(cur.val);
         }
       }
     }

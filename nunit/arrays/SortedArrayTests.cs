@@ -34,7 +34,7 @@ namespace C5UnitTests.arrays.sorted
     [Test]
     public void TestEvents()
     {
-      Fun<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
+      Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
       new C5UnitTests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory);
     }
 
@@ -419,7 +419,7 @@ namespace C5UnitTests.arrays.sorted
   public class FindPredicate
   {
     private SortedArray<int> list;
-    Fun<int, bool> pred;
+    Func<int, bool> pred;
 
     [SetUp]
     public void Init()
@@ -1568,7 +1568,7 @@ namespace C5UnitTests.arrays.sorted
 			{
 				Simple simple1 = new Simple();
 
-				array.Apply(new Act<int>(simple1.apply));
+				array.Apply(new Action<int>(simple1.apply));
 				Assert.AreEqual(0, simple1.appfield1);
 				Assert.AreEqual(0, simple1.appfield2);
 
@@ -1576,7 +1576,7 @@ namespace C5UnitTests.arrays.sorted
 
 				for (int i = 0; i < 10; i++) array.Add(i);
 
-				array.Apply(new Act<int>(simple2.apply));
+				array.Apply(new Action<int>(simple2.apply));
 				Assert.AreEqual(10, simple2.appfield1);
 				Assert.AreEqual(285, simple2.appfield2);
 			}
@@ -1585,77 +1585,77 @@ namespace C5UnitTests.arrays.sorted
 			[Test]
 			public void All()
 			{
-				Assert.IsTrue(array.All(new Fun<int, bool>(never)));
-				Assert.IsTrue(array.All(new Fun<int, bool>(even)));
-				Assert.IsTrue(array.All(new Fun<int, bool>(always)));
+				Assert.IsTrue(array.All(new Func<int, bool>(never)));
+				Assert.IsTrue(array.All(new Func<int, bool>(even)));
+				Assert.IsTrue(array.All(new Func<int, bool>(always)));
 				for (int i = 0; i < 10; i++)					array.Add(i);
 
-				Assert.IsFalse(array.All(new Fun<int, bool>(never)));
-				Assert.IsFalse(array.All(new Fun<int, bool>(even)));
-				Assert.IsTrue(array.All(new Fun<int, bool>(always)));
+				Assert.IsFalse(array.All(new Func<int, bool>(never)));
+				Assert.IsFalse(array.All(new Func<int, bool>(even)));
+				Assert.IsTrue(array.All(new Func<int, bool>(always)));
 				array.Clear();
 				for (int i = 0; i < 10; i++)					array.Add(i * 2);
 
-				Assert.IsFalse(array.All(new Fun<int, bool>(never)));
-				Assert.IsTrue(array.All(new Fun<int, bool>(even)));
-				Assert.IsTrue(array.All(new Fun<int, bool>(always)));
+				Assert.IsFalse(array.All(new Func<int, bool>(never)));
+				Assert.IsTrue(array.All(new Func<int, bool>(even)));
+				Assert.IsTrue(array.All(new Func<int, bool>(always)));
 				array.Clear();
 				for (int i = 0; i < 10; i++)					array.Add(i * 2 + 1);
 
-				Assert.IsFalse(array.All(new Fun<int, bool>(never)));
-				Assert.IsFalse(array.All(new Fun<int, bool>(even)));
-				Assert.IsTrue(array.All(new Fun<int, bool>(always)));
+				Assert.IsFalse(array.All(new Func<int, bool>(never)));
+				Assert.IsFalse(array.All(new Func<int, bool>(even)));
+				Assert.IsTrue(array.All(new Func<int, bool>(always)));
 			}
 
 
 			[Test]
 			public void Exists()
 			{
-				Assert.IsFalse(array.Exists(new Fun<int, bool>(never)));
-				Assert.IsFalse(array.Exists(new Fun<int, bool>(even)));
-				Assert.IsFalse(array.Exists(new Fun<int, bool>(always)));
+				Assert.IsFalse(array.Exists(new Func<int, bool>(never)));
+				Assert.IsFalse(array.Exists(new Func<int, bool>(even)));
+				Assert.IsFalse(array.Exists(new Func<int, bool>(always)));
 				for (int i = 0; i < 10; i++)					array.Add(i);
 
-				Assert.IsFalse(array.Exists(new Fun<int, bool>(never)));
-				Assert.IsTrue(array.Exists(new Fun<int, bool>(even)));
-				Assert.IsTrue(array.Exists(new Fun<int, bool>(always)));
+				Assert.IsFalse(array.Exists(new Func<int, bool>(never)));
+				Assert.IsTrue(array.Exists(new Func<int, bool>(even)));
+				Assert.IsTrue(array.Exists(new Func<int, bool>(always)));
 				array.Clear();
 				for (int i = 0; i < 10; i++)					array.Add(i * 2);
 
-				Assert.IsFalse(array.Exists(new Fun<int, bool>(never)));
-				Assert.IsTrue(array.Exists(new Fun<int, bool>(even)));
-				Assert.IsTrue(array.Exists(new Fun<int, bool>(always)));
+				Assert.IsFalse(array.Exists(new Func<int, bool>(never)));
+				Assert.IsTrue(array.Exists(new Func<int, bool>(even)));
+				Assert.IsTrue(array.Exists(new Func<int, bool>(always)));
 				array.Clear();
 				for (int i = 0; i < 10; i++)					array.Add(i * 2 + 1);
 
-				Assert.IsFalse(array.Exists(new Fun<int, bool>(never)));
-				Assert.IsFalse(array.Exists(new Fun<int, bool>(even)));
-				Assert.IsTrue(array.Exists(new Fun<int, bool>(always)));
+				Assert.IsFalse(array.Exists(new Func<int, bool>(never)));
+				Assert.IsFalse(array.Exists(new Func<int, bool>(even)));
+				Assert.IsTrue(array.Exists(new Func<int, bool>(always)));
 			}
 
 
 			[Test]
 			public void FindAll()
 			{
-				Assert.AreEqual(0, array.FindAll(new Fun<int, bool>(never)).Count);
+				Assert.AreEqual(0, array.FindAll(new Func<int, bool>(never)).Count);
 				for (int i = 0; i < 10; i++)
 					array.Add(i);
 
-				Assert.AreEqual(0, array.FindAll(new Fun<int, bool>(never)).Count);
-				Assert.AreEqual(10, array.FindAll(new Fun<int, bool>(always)).Count);
-				Assert.AreEqual(5, array.FindAll(new Fun<int, bool>(even)).Count);
-				Assert.IsTrue(((SortedArray<int>)array.FindAll(new Fun<int, bool>(even))).Check());
+				Assert.AreEqual(0, array.FindAll(new Func<int, bool>(never)).Count);
+				Assert.AreEqual(10, array.FindAll(new Func<int, bool>(always)).Count);
+				Assert.AreEqual(5, array.FindAll(new Func<int, bool>(even)).Count);
+				Assert.IsTrue(((SortedArray<int>)array.FindAll(new Func<int, bool>(even))).Check());
 			}
 
 
 			[Test]
 			public void Map()
 			{
-				Assert.AreEqual(0, array.Map(new Fun<int,string>(themap), new SC()).Count);
+				Assert.AreEqual(0, array.Map(new Func<int,string>(themap), new SC()).Count);
 				for (int i = 0; i < 11; i++)
 					array.Add(i * i * i);
 
-				IIndexedSorted<string> res = array.Map(new Fun<int,string>(themap), new SC());
+				IIndexedSorted<string> res = array.Map(new Func<int,string>(themap), new SC());
 
 				Assert.IsTrue(((SortedArray<string>)res).Check());
 				Assert.AreEqual(11, res.Count);
@@ -1673,7 +1673,7 @@ namespace C5UnitTests.arrays.sorted
 				for (int i = 0; i < 11; i++)
 					array.Add(i * i * i);
 
-				ISorted<string> res = array.Map(new Fun<int,string>(badmap), new SC());
+				ISorted<string> res = array.Map(new Func<int,string>(badmap), new SC());
 			}
 
 
@@ -1796,7 +1796,7 @@ namespace C5UnitTests.arrays.sorted
 			[Test]
 			public void EmptyEmpty()
 			{
-				array.AddAll(new FunEnumerable(0, new Fun<int,int>(sqr)));
+				array.AddAll(new FunEnumerable(0, new Func<int,int>(sqr)));
 				Assert.AreEqual(0, array.Count);
 				Assert.IsTrue(array.Check());
 			}
@@ -1807,7 +1807,7 @@ namespace C5UnitTests.arrays.sorted
 			{
 				for (int i = 4; i < 9; i++) array.Add(i);
 
-				array.AddAll(new FunEnumerable(0, new Fun<int,int>(sqr)));
+				array.AddAll(new FunEnumerable(0, new Func<int,int>(sqr)));
 				Assert.AreEqual(5, array.Count);
 				Assert.IsTrue(array.Check());
 			}
@@ -1816,7 +1816,7 @@ namespace C5UnitTests.arrays.sorted
 			[Test]
 			public void EmptySome()
 			{
-				array.AddAll(new FunEnumerable(4, new Fun<int,int>(sqr)));
+				array.AddAll(new FunEnumerable(4, new Func<int,int>(sqr)));
 				Assert.AreEqual(4, array.Count);
 				Assert.IsTrue(array.Check());
 				Assert.AreEqual(0, array[0]);
@@ -1831,7 +1831,7 @@ namespace C5UnitTests.arrays.sorted
 			{
 				for (int i = 3; i < 9; i++) array.Add(i);
 
-				array.AddAll(new FunEnumerable(4, new Fun<int,int>(sqr)));
+				array.AddAll(new FunEnumerable(4, new Func<int,int>(sqr)));
 				Assert.AreEqual(9, array.Count);
 				Assert.IsTrue(array.Check());
 				Assert.IsTrue(IC.eq(array, 0, 1, 3,4, 5, 6, 7, 8, 9));
@@ -1863,7 +1863,7 @@ namespace C5UnitTests.arrays.sorted
 			[Test]
 			public void EmptyEmpty()
 			{
-				array.AddSorted(new FunEnumerable(0, new Fun<int,int>(sqr)));
+				array.AddSorted(new FunEnumerable(0, new Func<int,int>(sqr)));
 				Assert.AreEqual(0, array.Count);
 				Assert.IsTrue(array.Check());
 			}
@@ -1875,7 +1875,7 @@ namespace C5UnitTests.arrays.sorted
 			{
 				for (int i = 4; i < 9; i++) array.Add(i);
 
-				array.AddSorted(new FunEnumerable(0, new Fun<int,int>(sqr)));
+				array.AddSorted(new FunEnumerable(0, new Func<int,int>(sqr)));
 				Assert.AreEqual(5, array.Count);
 				Assert.IsTrue(array.Check());
 			}
@@ -1885,7 +1885,7 @@ namespace C5UnitTests.arrays.sorted
 			[Test]
 			public void EmptySome()
 			{
-				array.AddSorted(new FunEnumerable(4, new Fun<int,int>(sqr)));
+				array.AddSorted(new FunEnumerable(4, new Func<int,int>(sqr)));
 				Assert.AreEqual(4, array.Count);
 				Assert.IsTrue(array.Check());
 				Assert.AreEqual(0, array[0]);
@@ -1901,7 +1901,7 @@ namespace C5UnitTests.arrays.sorted
 			{
 				for (int i = 3; i < 9; i++) array.Add(i);
 
-				array.AddSorted(new FunEnumerable(4, new Fun<int,int>(sqr)));
+				array.AddSorted(new FunEnumerable(4, new Func<int,int>(sqr)));
 				Assert.AreEqual(9, array.Count);
 				Assert.IsTrue(array.Check());
 				Assert.IsTrue(IC.eq(array, 0, 1, 3, 4, 5, 6, 7, 8, 9));
@@ -1911,7 +1911,7 @@ namespace C5UnitTests.arrays.sorted
 			[ExpectedException(typeof(ArgumentException), ExpectedMessage="Argument not sorted")]
 			public void EmptyBad()
 			{
-				array.AddSorted(new FunEnumerable(9, new Fun<int,int>(bad)));
+				array.AddSorted(new FunEnumerable(9, new Func<int,int>(bad)));
 			}
 
 
@@ -2250,7 +2250,7 @@ namespace C5UnitTests.arrays.sorted
 				public void a(int i) { count++; }
 
 
-				public void traverse() { t.Apply(new Act<int>(a)); }
+				public void traverse() { t.Apply(new Action<int>(a)); }
 			}
 
 

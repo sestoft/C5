@@ -36,20 +36,20 @@ namespace WrappedArray {
 
     // System.Array.Exists
 
-    public static bool Exists<T>(T[] arr, Fun<T,bool> p) {
+    public static bool Exists<T>(T[] arr, Func<T,bool> p) {
       return new WrappedArray<T>(arr).Exists(p);
     }  
 
     // System.Array.TrueForAll
 
-    public static bool TrueForAll<T>(T[] arr, Fun<T,bool> p) {
+    public static bool TrueForAll<T>(T[] arr, Func<T,bool> p) {
       return new WrappedArray<T>(arr).All(p);
     }  
 
     // System.Array.Find(T[], Predicate)
     // This loses the valuable bool returned by C5 Find.
 
-    public static T Find<T>(T[] arr, Fun<T,bool> p) {
+    public static T Find<T>(T[] arr, Func<T,bool> p) {
       T res; 
       new WrappedArray<T>(arr).Find(p, out res);
       return res;
@@ -57,26 +57,26 @@ namespace WrappedArray {
 
     // System.Array.FindAll(T[], Predicate)
 
-    public static T[] FindAll<T>(T[] arr, Fun<T,bool> p) {
+    public static T[] FindAll<T>(T[] arr, Func<T,bool> p) {
       return new WrappedArray<T>(arr).FindAll(p).ToArray();
     }  
 
     // System.Array.FindIndex(T[], Predicate)
 
-    public static int FindIndex<T>(T[] arr, Fun<T,bool> p) {
+    public static int FindIndex<T>(T[] arr, Func<T,bool> p) {
       return new WrappedArray<T>(arr).FindIndex(p);
     }  
 
     // System.Array.FindIndex(T[], int, Predicate)
 
-    public static int FindIndex<T>(T[] arr, int i, Fun<T,bool> p) {
+    public static int FindIndex<T>(T[] arr, int i, Func<T,bool> p) {
       int j = new WrappedArray<T>(arr).View(i,arr.Length-i).FindIndex(p);
       return j < 0 ? j : j+i;
     }  
 
     // System.Array.FindIndex(T[], int, int, Predicate)
 
-    public static int FindIndex<T>(T[] arr, int i, int n, Fun<T,bool> p) {
+    public static int FindIndex<T>(T[] arr, int i, int n, Func<T,bool> p) {
       int j = new WrappedArray<T>(arr).View(i,n).FindIndex(p);
       return j < 0 ? j : j+i;
     }  
@@ -84,7 +84,7 @@ namespace WrappedArray {
     // System.Array.FindLast(T[], Predicate)
     // This loses the valuable bool returned by C5 Find.
 
-    public static T FindLast<T>(T[] arr, Fun<T,bool> p) {
+    public static T FindLast<T>(T[] arr, Func<T,bool> p) {
       T res; 
       new WrappedArray<T>(arr).FindLast(p, out res);
       return res;
@@ -92,28 +92,28 @@ namespace WrappedArray {
 
     // System.Array.FindLastIndex(T[], Predicate)
 
-    public static int FindLastIndex<T>(T[] arr, Fun<T,bool> p) {
+    public static int FindLastIndex<T>(T[] arr, Func<T,bool> p) {
       return new WrappedArray<T>(arr).FindIndex(p);
     }  
 
     // System.Array.FindLastIndex(T[], int, Predicate)
 
-    public static int FindLastIndex<T>(T[] arr, int i, Fun<T,bool> p) {
+    public static int FindLastIndex<T>(T[] arr, int i, Func<T,bool> p) {
       int j = new WrappedArray<T>(arr).View(i,arr.Length-i).FindIndex(p);
       return j < 0 ? j : j+i;
     }  
 
     // System.Array.FindLastIndex(T[], int, int, Predicate)
 
-    public static int FindLastIndex<T>(T[] arr, int i, int n, Fun<T,bool> p) {
+    public static int FindLastIndex<T>(T[] arr, int i, int n, Func<T,bool> p) {
       int j = new WrappedArray<T>(arr).View(i,n).FindIndex(p);
       return j < 0 ? j : j+i;
     }  
     
     // System.Array.ForEach(T[], Action)
 
-    public static void ForEach<T>(T[] arr, Act<T> act) {
-      new WrappedArray<T>(arr).Apply(act);
+    public static void ForEach<T>(T[] arr, Action<T> action) {
+      new WrappedArray<T>(arr).Apply(action);
     }  
 
     // System.Array.IndexOf(T[], T)

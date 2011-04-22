@@ -134,7 +134,7 @@ namespace C5
     /// Apply a delegate to all items of this collection.
     /// </summary>
     /// <param name="action">The delegate to apply</param>
-    void Apply(Act<T> action);
+    void Apply(Action<T> action);
 
 
     /// <summary>
@@ -142,28 +142,28 @@ namespace C5
     /// specific predicate in this collection.
     /// </summary>
     /// <param name="predicate">A  delegate 
-    /// (<see cref="T:C5.Fun`2"/> with <code>R == bool</code>) defining the predicate</param>
+    /// (<see cref="T:Func`2"/> with <code>R == bool</code>) defining the predicate</param>
     /// <returns>True is such an item exists</returns>
-    bool Exists(Fun<T, bool> predicate);
+    bool Exists(Func<T, bool> predicate);
 
     /// <summary>
     /// Check if there exists an item  that satisfies a
     /// specific predicate in this collection and return the first one in enumeration order.
     /// </summary>
     /// <param name="predicate">A delegate 
-    /// (<see cref="T:C5.Fun`2"/> with <code>R == bool</code>) defining the predicate</param>
+    /// (<see cref="T:Func`2"/> with <code>R == bool</code>) defining the predicate</param>
     /// <param name="item"></param>
     /// <returns>True is such an item exists</returns>
-    bool Find(Fun<T, bool> predicate, out T item);
+    bool Find(Func<T, bool> predicate, out T item);
 
 
     /// <summary>
     /// Check if all items in this collection satisfies a specific predicate.
     /// </summary>
     /// <param name="predicate">A delegate 
-    /// (<see cref="T:C5.Fun`2"/> with <code>R == bool</code>) defining the predicate</param>
+    /// (<see cref="T:Func`2"/> with <code>R == bool</code>) defining the predicate</param>
     /// <returns>True if all items satisfies the predicate</returns>
-    bool All(Fun<T, bool> predicate);
+    bool All(Func<T, bool> predicate);
 
     /// <summary>
     /// Choose some item of this collection. 
@@ -184,7 +184,7 @@ namespace C5
     /// </summary>
     /// <param name="filter">The T->bool filter delegate defining the condition</param>
     /// <returns>The filtered enumerable</returns>
-    SCG.IEnumerable<T> Filter(Fun<T, bool> filter);
+    SCG.IEnumerable<T> Filter(Func<T, bool> filter);
   }
 
 
@@ -208,10 +208,10 @@ namespace C5
     /// specific predicate in this collection and return the first one in enumeration order.
     /// </summary>
     /// <param name="predicate">A delegate 
-    /// (<see cref="T:C5.Fun`2"/> with <code>R == bool</code>) defining the predicate</param>
+    /// (<see cref="T:Func`2"/> with <code>R == bool</code>) defining the predicate</param>
     /// <param name="item"></param>
     /// <returns>True is such an item exists</returns>
-    bool FindLast(Fun<T, bool> predicate, out T item);
+    bool FindLast(Func<T, bool> predicate, out T item);
   }
 
 
@@ -496,7 +496,7 @@ namespace C5
     /// <param name="items">The items to remove.</param>
     void RemoveAll<U>(SCG.IEnumerable<U> items) where U : T;
 
-    //void RemoveAll(Fun<T, bool> predicate);
+    //void RemoveAll(Func<T, bool> predicate);
 
     /// <summary>
     /// Remove all items from this collection.
@@ -512,7 +512,7 @@ namespace C5
     /// <param name="items">The items to retain.</param>
     void RetainAll<U>(SCG.IEnumerable<U> items) where U : T;
 
-    //void RetainAll(Fun<T, bool> predicate);
+    //void RetainAll(Func<T, bool> predicate);
     //IDictionary<T> UniqueItems()
   }
 
@@ -599,18 +599,18 @@ namespace C5
     /// specific predicate in this collection and return the index of the first one.
     /// </summary>
     /// <param name="predicate">A delegate 
-    /// (<see cref="T:C5.Fun`2"/> with <code>R == bool</code>) defining the predicate</param>
+    /// (<see cref="T:Func`2"/> with <code>R == bool</code>) defining the predicate</param>
     /// <returns>the index, if found, a negative value else</returns>
-    int FindIndex(Fun<T, bool> predicate);
+    int FindIndex(Func<T, bool> predicate);
 
     /// <summary>
     /// Check if there exists an item  that satisfies a
     /// specific predicate in this collection and return the index of the last one.
     /// </summary>
     /// <param name="predicate">A delegate 
-    /// (<see cref="T:C5.Fun`2"/> with <code>R == bool</code>) defining the predicate</param>
+    /// (<see cref="T:Func`2"/> with <code>R == bool</code>) defining the predicate</param>
     /// <returns>the index, if found, a negative value else</returns>
-    int FindLastIndex(Fun<T, bool> predicate);
+    int FindLastIndex(Func<T, bool> predicate);
 
 
     /// <summary>
@@ -873,7 +873,7 @@ namespace C5
     /// </summary>
     /// <param name="filter">The filter delegate defining the predicate.</param>
     /// <returns>The new list.</returns>
-    IList<T> FindAll(Fun<T, bool> filter);
+    IList<T> FindAll(Func<T, bool> filter);
 
     /// <summary>
     /// Create a new list consisting of the results of mapping all items of this
@@ -882,7 +882,7 @@ namespace C5
     /// <typeparam name="V">The type of items of the new list</typeparam>
     /// <param name="mapper">The delegate defining the map.</param>
     /// <returns>The new list.</returns>
-    IList<V> Map<V>(Fun<T, V> mapper);
+    IList<V> Map<V>(Func<T, V> mapper);
 
     /// <summary>
     /// Create a new list consisting of the results of mapping all items of this
@@ -892,7 +892,7 @@ namespace C5
     /// <param name="mapper">The delegate defining the map.</param>
     /// <param name="equalityComparer">The equalityComparer to use for the new list</param>
     /// <returns>The new list.</returns>
-    IList<V> Map<V>(Fun<T, V> mapper, SCG.IEqualityComparer<V> equalityComparer);
+    IList<V> Map<V>(Func<T, V> mapper, SCG.IEqualityComparer<V> equalityComparer);
 
     /// <summary>
     /// Remove one item from the list: from the front if <code>FIFO</code>
@@ -1531,7 +1531,7 @@ namespace C5
     /// </summary>
     /// <param name="predicate">The filter delegate defining the predicate.</param>
     /// <returns>The new indexed sorted collection.</returns>
-    IIndexedSorted<T> FindAll(Fun<T, bool> predicate);
+    IIndexedSorted<T> FindAll(Func<T, bool> predicate);
 
 
     /// <summary>
@@ -1544,7 +1544,7 @@ namespace C5
     /// <param name="mapper">The delegate definging the map.</param>
     /// <param name="comparer">The comparion relation to use for the result.</param>
     /// <returns>The new sorted collection.</returns>
-    IIndexedSorted<V> Map<V>(Fun<T, V> mapper, SCG.IComparer<V> comparer);
+    IIndexedSorted<V> Map<V>(Func<T, V> mapper, SCG.IComparer<V> comparer);
   }
 
 
@@ -1607,8 +1607,8 @@ namespace C5
     /// <summary>
     /// 
     /// </summary>
-    /// <value>A delegate of type <see cref="T:C5.Fun`2"/> defining the partial function from K to V give by the dictionary.</value>
-    Fun<K, V> Fun { get; }
+    /// <value>A delegate of type <see cref="T:Func`2"/> defining the partial function from K to V give by the dictionary.</value>
+    Func<K, V> Func { get; }
 
 
     //TODO: resolve inconsistency: Add thows exception if key already there, AddAll ignores keys already There?

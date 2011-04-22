@@ -73,7 +73,6 @@
     <Compile Include="Comparer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Delegates.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="Formatting.cs" />

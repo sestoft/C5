@@ -22,8 +22,11 @@
 #define HASHINDEX
 
 using System;
-using System.Diagnostics;
 using SCG = System.Collections.Generic;
+
+#if HASHINDEX
+using System.Diagnostics;
+#endif
 
 namespace C5
 {
@@ -1593,7 +1596,7 @@ namespace C5
     /// <param name="mapper">The delegate defining the map.</param>
     /// <returns>The new list.</returns>
     [Tested]
-    public IList<V> Map<V>(Fun<T, V> mapper)
+    public IList<V> Map<V>(Func<T, V> mapper)
     {
       validitycheck();
 
@@ -1609,7 +1612,7 @@ namespace C5
     /// <param name="mapper">The delegate defining the map.</param>
     /// <param name="equalityComparer">The equalityComparer to use for the new list</param>
     /// <returns>The new list.</returns>
-    public IList<V> Map<V>(Fun<T, V> mapper, SCG.IEqualityComparer<V> equalityComparer)
+    public IList<V> Map<V>(Func<T, V> mapper, SCG.IEqualityComparer<V> equalityComparer)
     {
       validitycheck();
 
@@ -1617,7 +1620,7 @@ namespace C5
       return map<V>(mapper, retval);
     }
 
-    private IList<V> map<V>(Fun<T, V> mapper, HashedLinkedList<V> retval)
+    private IList<V> map<V>(Func<T, V> mapper, HashedLinkedList<V> retval)
     {
       if (size == 0)
         return retval;
@@ -2797,7 +2800,7 @@ namespace C5
     /// 
     /// </summary>
     /// <param name="predicate"></param>
-    void RemoveAll(Fun<T, bool> predicate)
+    void RemoveAll(Func<T, bool> predicate)
     {
       updatecheck();
       if (size == 0)
@@ -3043,7 +3046,7 @@ namespace C5
     /// 
     /// </summary>
     /// <param name="predicate"></param>
-    void RetainAll(Fun<T, bool> predicate)
+    void RetainAll(Func<T, bool> predicate)
     {
       updatecheck();
       if (size == 0)
@@ -3150,7 +3153,7 @@ namespace C5
     /// <param name="filter">The filter delegate defining the predicate.</param>
     /// <returns>The new list.</returns>
     [Tested]
-    public IList<T> FindAll(Fun<T, bool> filter)
+    public IList<T> FindAll(Func<T, bool> filter)
     {
       validitycheck();
       int stamp = this.stamp;
@@ -3330,7 +3333,7 @@ namespace C5
     /// </summary>
     /// <param name="filter">The T->bool filter delegate defining the condition</param>
     /// <returns>The filtered enumerable</returns>
-    public override SCG.IEnumerable<T> Filter(Fun<T, bool> filter) { validitycheck(); return base.Filter(filter); }
+    public override SCG.IEnumerable<T> Filter(Func<T, bool> filter) { validitycheck(); return base.Filter(filter); }
 
     #endregion
 

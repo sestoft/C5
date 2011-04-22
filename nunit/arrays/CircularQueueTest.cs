@@ -22,7 +22,6 @@
 using System;
 using C5;
 using NUnit.Framework;
-using SCG = System.Collections.Generic;
 namespace C5UnitTests.arrays.circularqueue
 {
   using CollectionOfInt = CircularQueue<int>;
@@ -33,7 +32,7 @@ namespace C5UnitTests.arrays.circularqueue
     [Test]
     public void TestEvents()
     {
-      Fun<CollectionOfInt> factory = delegate() { return new CollectionOfInt(); };
+      Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(); };
       new C5UnitTests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory);
       new C5UnitTests.Templates.Events.StackTester<CollectionOfInt>().Test(factory);
     }

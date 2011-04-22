@@ -20,10 +20,10 @@
 */
 
 using System;
+using System.Reflection;
 using C5;
 using NUnit.Framework;
 using SCG = System.Collections.Generic;
-using System.Reflection;
 
 namespace C5UnitTests.Templates
 {
@@ -41,7 +41,7 @@ namespace C5UnitTests.Templates
       }
     }
 
-    public virtual void Test(Fun<U> factory)
+    public virtual void Test(Func<U> factory)
     {
       foreach (MethodInfo minfo in testMethods)
       {

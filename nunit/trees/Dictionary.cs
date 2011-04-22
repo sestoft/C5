@@ -448,7 +448,7 @@ namespace C5UnitTests.trees.RBDictionary
     [Test]
     public void Fun()
     {
-      Assert.AreEqual("B", dict.Fun("T"));
+      Assert.AreEqual("B", dict.Func("T"));
     }
 
 

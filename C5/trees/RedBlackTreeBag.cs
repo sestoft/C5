@@ -2228,7 +2228,7 @@ private bool removeIterativePhase2(Node cursor, int level)
     /// <param name="filter">The filter delegate defining the predicate.</param>
     /// <returns>The new indexed sorted collection.</returns>
     [Tested]
-    public IIndexedSorted<T> FindAll(Fun<T, bool> filter)
+    public IIndexedSorted<T> FindAll(Func<T, bool> filter)
     {
       if (!isValid)
         throw new ViewDisposedException("Snapshot has been disposed");
@@ -2309,7 +2309,7 @@ private bool removeIterativePhase2(Node cursor, int level)
     /// <param name="c">The comparion relation to use for the result.</param>
     /// <returns>The new sorted collection.</returns>
     [Tested]
-    public IIndexedSorted<V> Map<V>(Fun<T, V> mapper, SCG.IComparer<V> c)
+    public IIndexedSorted<V> Map<V>(Func<T, V> mapper, SCG.IComparer<V> c)
     {
       if (!isValid)
         throw new ViewDisposedException("Snapshot has been disposed");

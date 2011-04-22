@@ -33,7 +33,7 @@ namespace C5UnitTests.hashtable.set
     [Test]
     public void TestEvents()
     {
-      Fun<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
+      Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
       new C5UnitTests.Templates.Events.CollectionTester<CollectionOfInt>().Test(factory);
     }
 
@@ -58,7 +58,7 @@ namespace C5UnitTests.hashtable.set
     {
       private HashSet<int> list;
 
-      private Fun<int, bool> always, never, even;
+      private Func<int, bool> always, never, even;
 
 
       [SetUp]
@@ -109,7 +109,7 @@ namespace C5UnitTests.hashtable.set
       public void Apply()
       {
         int sum = 0;
-        Act<int> a = delegate(int i) { sum = i + 10 * sum; };
+        Action<int> a = delegate(int i) { sum = i + 10 * sum; };
 
         list.Apply(a);
         Assert.AreEqual(0, sum);
@@ -286,7 +286,7 @@ namespace C5UnitTests.hashtable.set
     public class FindPredicate
     {
       private HashSet<int> list;
-      Fun<int, bool> pred;
+      Func<int, bool> pred;
 
       [SetUp]
       public void Init()
