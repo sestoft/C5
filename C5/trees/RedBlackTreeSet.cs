@@ -4117,14 +4117,14 @@ namespace C5
         /// <summary>
         /// Print the tree structure to the console stdout.
         /// </summary>
-        [Tested(via = "Sawtooth")]
+        [Tested(Via = "Sawtooth")]
         public void dump() { dump(""); }
 
 
         /// <summary>
         /// Print the tree structure to the console stdout.
         /// </summary>
-        [Tested(via = "Sawtooth")]
+        [Tested(Via = "Sawtooth")]
         public void dump(string msg)
         {
             Logger.Log(string.Format(">>>>>>>>>>>>>>>>>>> dump {0} (count={1}, blackdepth={2}, depth={3}, gen={4})", msg, size, blackdepth,
@@ -4249,7 +4249,7 @@ namespace C5
         /// </summary>
         /// <param name="name">Title of dump</param>
         /// <returns>false if invariant violation</returns>
-        [Tested(via = "Sawtooth")]
+        [Tested(Via = "Sawtooth")]
         public bool Check(string name)
         {
             System.Text.StringBuilder e = new System.Text.StringBuilder();

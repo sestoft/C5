@@ -1552,7 +1552,7 @@ namespace C5
         /// Produce statistics on distribution of bucket sizes. Current implementation is incomplete.
         /// </summary>
         /// <returns>Histogram data.</returns>
-        [Tested(via = "Manually")]
+        [Tested(Via = "Manually")]
         public ISortedDictionary<int, int> BucketCostDistribution()
         {
             TreeDictionary<int, int> res = new TreeDictionary<int, int>();
