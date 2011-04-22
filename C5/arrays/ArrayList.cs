@@ -20,8 +20,6 @@
  SOFTWARE.
 */
 
-#define HASHINDEXnot
-
 using System;
 using SCG = System.Collections.Generic;
 namespace C5
@@ -36,11 +34,7 @@ namespace C5
     /// but very inefficiently, use a LinkedList (<see cref="T:C5.LinkedList`1"/>) instead.</i>
     /// </summary>
     [Serializable]
-    public class ArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
-#if HASHINDEX
-#else
-, IStack<T>, IQueue<T>
-#endif
+    public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
     {
         #region Fields
 
@@ -68,9 +62,6 @@ namespace C5
         /// </summary>
         bool fIFO = false;
 
-#if HASHINDEX
-    HashSet<KeyValuePair<T, int>> itemIndex;
-#endif
         #endregion
         #region Events
 
@@ -312,15 +303,9 @@ namespace C5
         /// <returns>The index of first occurrence</returns>
         int indexOf(T item)
         {
-#if HASHINDEX
-      KeyValuePair<T, int> p = new KeyValuePair<T, int>(item);
-      if (itemIndex.Find(ref p) && p.Value >= offset && p.Value < offset + size)
-        return p.Value - offset;
-#else
             for (int i = 0; i < size; i++)
                 if (equals(item, array[offset + i]))
                     return i;
-#endif
             return ~size;
         }
 
@@ -331,44 +316,23 @@ namespace C5
         /// <returns>The index of last occurrence</returns>
         int lastIndexOf(T item)
         {
-#if HASHINDEX
-      return indexOf(item);
-#else
             for (int i = size - 1; i >= 0; i--)
                 if (equals(item, array[offset + i]))
                     return i;
             return ~size;
-#endif
         }
         #endregion
 
         #region Inserting
 
-#if HASHINDEX
-    /// <summary>
-    /// Internal version of Insert with no modification checks.
-    /// </summary>
-    /// <exception cref="DuplicateNotAllowedException"> if item already in list.</exception>
-    /// <param name="i">Index to insert at</param>
-    /// <param name="item">Item to insert</param>
-#else
         /// <summary>
         /// Internal version of Insert with no modification checks.
         /// </summary>
         /// <param name="i">Index to insert at</param>
         /// <param name="item">Item to insert</param>
-#endif
         protected override void insert(int i, T item)
         {
-#if HASHINDEX
-      KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, offset + i);
-      if (itemIndex.FindOrAdd(ref p))
-        throw new DuplicateNotAllowedException("Item already in indexed list: " + item);
-#endif
             baseinsert(i, item);
-#if HASHINDEX
-      reindex(i + offset + 1);
-#endif
         }
 
         private void baseinsert(int i, T item)
@@ -400,25 +364,13 @@ namespace C5
             if (underlyingsize > i)
                 Array.Copy(array, i + 1, array, i, underlyingsize - i);
             array[underlyingsize] = default(T);
-#if HASHINDEX
-      itemIndex.Remove(new KeyValuePair<T, int>(retval));
-      reindex(i);
-#endif
+
             return retval;
         }
         #endregion
 
         #region Indexing
 
-#if HASHINDEX
-    private void reindex(int start) { reindex(start, underlyingsize); }
-
-    private void reindex(int start, int end)
-    {
-      for (int j = start; j < end; j++)
-        itemIndex.UpdateOrAdd(new KeyValuePair<T, int>(array[j], j));
-    }
-#endif
         #endregion
 
         #region fixView utilities
@@ -664,9 +616,7 @@ namespace C5
         public ArrayList(int capacity, SCG.IEqualityComparer<T> itemequalityComparer)
             : base(capacity, itemequalityComparer)
         {
-#if HASHINDEX
-      itemIndex = new HashSet<KeyValuePair<T, int>>(new KeyValuePairEqualityComparer<T, int>(itemequalityComparer));
-#endif
+
         }
 
         #endregion
@@ -734,18 +684,6 @@ namespace C5
             get { validitycheck(); return false; }
         }
 
-
-#if HASHINDEX
-    /// <summary>
-    /// On this list, this indexer is read/write.
-    /// </summary>
-    /// <exception cref="IndexOutOfRangeException"> if index is negative or
-    /// &gt;= the size of the collection.</exception>
-    /// <exception cref="DuplicateNotAllowedException"> By the get operation
-    /// if the item already is present somewhere else in the list.</exception>
-    /// <value>The index'th item of this list.</value>
-    /// <param name="index">The index of the item to fetch or store.</param>
-#else
         /// <summary>
         /// On this list, this indexer is read/write.
         /// </summary>
@@ -753,7 +691,6 @@ namespace C5
         /// &gt;= the size of the collection.</exception>
         /// <value>The index'th item of this list.</value>
         /// <param name="index">The index of the item to fetch or store.</param>
-#endif
         [Tested]
         public virtual T this[int index]
         {
@@ -774,23 +711,9 @@ namespace C5
                     throw new IndexOutOfRangeException();
                 index += offset;
                 T item = array[index];
-#if HASHINDEX
-        KeyValuePair<T, int> p = new KeyValuePair<T, int>(value, index);
-        if (itemequalityComparer.Equals(value, item))
-        {
-          array[index] = value;
-          itemIndex.Update(p);
-        }
-        else if (!itemIndex.FindOrAdd(ref p))
-        {
-          itemIndex.Remove(new KeyValuePair<T, int>(item));
-          array[index] = value;
-        }
-        else
-          throw new DuplicateNotAllowedException("Item already in indexed list");
-#else
+
                 array[index] = value;
-#endif
+
                 (underlying ?? this).raiseForSetThis(index, value, item);
             }
         }
@@ -801,17 +724,6 @@ namespace C5
         /// <value></value>
         public virtual Speed IndexingSpeed { get { return Speed.Constant; } }
 
-#if HASHINDEX
-    /// <summary>
-    /// Insert an item at a specific index location in this list. 
-    ///</summary>
-    /// <exception cref="IndexOutOfRangeException"> if index is negative or
-    /// &gt; the size of the collection. </exception>
-    /// <exception cref="DuplicateNotAllowedException"> 
-    /// If the item is already present in the list.</exception>
-    /// <param name="index">The index at which to insert.</param>
-    /// <param name="item">The item to insert.</param>
-#else
         /// <summary>
         /// Insert an item at a specific index location in this list. 
         ///</summary>
@@ -819,7 +731,6 @@ namespace C5
         /// &gt; the size of the collection. </exception>
         /// <param name="index">The index at which to insert.</param>
         /// <param name="item">The item to insert.</param>
-#endif
         [Tested]
         public virtual void Insert(int index, T item)
         {
@@ -853,18 +764,6 @@ namespace C5
             Insert(pointer.Offset + pointer.Count - Offset, item);
         }
 
-#if HASHINDEX
-    /// <summary>
-    /// Insert into this list all items from an enumerable collection starting 
-    /// at a particular index.
-    /// </summary>
-    /// <exception cref="IndexOutOfRangeException"> if index is negative or
-    /// &gt; the size of the collection.</exception>
-    /// <exception cref="DuplicateNotAllowedException"> If <code>items</code> 
-    /// contains duplicates or some item already  present in the list.</exception>
-    /// <param name="index">Index to start inserting at</param>
-    /// <param name="items">Items to insert</param>
-#else
         /// <summary>
         /// Insert into this list all items from an enumerable collection starting 
         /// at a particular index.
@@ -873,7 +772,6 @@ namespace C5
         /// &gt; the size of the collection.</exception>
         /// <param name="index">Index to start inserting at</param>
         /// <param name="items">Items to insert</param>
-#endif
         [Tested]
         public virtual void InsertAll(int index, SCG.IEnumerable<T> items)
         {
@@ -894,11 +792,6 @@ namespace C5
 
                 foreach (T item in items)
                 {
-#if HASHINDEX
-          KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, i);
-          if (itemIndex.FindOrAdd(ref p))
-            throw new DuplicateNotAllowedException("Item already in indexed list");
-#endif
                     array[i++] = item;
                 }
             }
@@ -913,9 +806,7 @@ namespace C5
                 if (added > 0)
                 {
                     addtosize(added);
-#if HASHINDEX
-          reindex(i);
-#endif
+
                     fixViewsAfterInsert(added, index);
                     (underlying ?? this).raiseForInsertAll(index, added);
                 }
@@ -935,18 +826,10 @@ namespace C5
             }
         }
 
-#if HASHINDEX
-    /// <summary>
-    /// Insert an item at the front of this list;
-    /// </summary>
-    /// <exception cref="DuplicateNotAllowedException">If the item is already in the list</exception>
-    /// <param name="item">The item to insert.</param>
-#else
         /// <summary>
         /// Insert an item at the front of this list;
         /// </summary>
         /// <param name="item">The item to insert.</param>
-#endif
         [Tested]
         public virtual void InsertFirst(T item)
         {
@@ -955,19 +838,10 @@ namespace C5
             (underlying ?? this).raiseForInsert(offset, item);
         }
 
-
-#if HASHINDEX
-    /// <summary>
-    /// Insert an item at the back of this list.
-    /// </summary>
-    /// <exception cref="DuplicateNotAllowedException">If the item is already in the list</exception>
-    /// <param name="item">The item to insert.</param>
-#else
         /// <summary>
         /// Insert an item at the back of this list.
         /// </summary>
         /// <param name="item">The item to insert.</param>
-#endif
         [Tested]
         public virtual void InsertLast(T item)
         {
@@ -1004,25 +878,10 @@ namespace C5
                 }
             }
             res.size = j;
-#if HASHINDEX
-      res.reindex(0);
-#endif
+
             return res;
         }
 
-
-#if HASHINDEX
-    /// <summary>
-    /// Create a new list consisting of the results of mapping all items of this
-    /// list. The new list will use the default item equalityComparer for the item type V.
-    /// <para>The new list will be of type ArrayList</para>
-    /// </summary>
-    /// <exception cref="DuplicateNotAllowedException">If <code>mapper</code>
-    /// creates duplicates</exception>
-    /// <typeparam name="V">The type of items of the new list</typeparam>
-    /// <param name="mapper">The delegate defining the map.</param>
-    /// <returns>The new list.</returns>
-#else
         /// <summary>
         /// Create a new list consisting of the results of mapping all items of this
         /// list. The new list will use the default item equalityComparer for the item type V.
@@ -1031,7 +890,6 @@ namespace C5
         /// <typeparam name="V">The type of items of the new list</typeparam>
         /// <param name="mapper">The delegate defining the map.</param>
         /// <returns>The new list.</returns>
-#endif
         [Tested]
         public virtual IList<V> Map<V>(Func<T, V> mapper)
         {
@@ -1042,19 +900,6 @@ namespace C5
             return map<V>(mapper, res);
         }
 
-#if HASHINDEX
-    /// <summary>
-    /// Create a new list consisting of the results of mapping all items of this
-    /// list. The new list will use a specified item equalityComparer for the item type.
-    /// <para>The new list will be of type ArrayList</para>
-    /// </summary>
-    /// <exception cref="DuplicateNotAllowedException">If <code>mapper</code>
-    /// creates duplicates</exception>
-    /// <typeparam name="V">The type of items of the new list</typeparam>
-    /// <param name="mapper">The delegate defining the map.</param>
-    /// <param name="itemequalityComparer">The item equalityComparer to use for the new list</param>
-    /// <returns>The new list.</returns>
-#else
         /// <summary>
         /// Create a new list consisting of the results of mapping all items of this
         /// list. The new list will use a specified item equalityComparer for the item type.
@@ -1064,7 +909,6 @@ namespace C5
         /// <param name="mapper">The delegate defining the map.</param>
         /// <param name="itemequalityComparer">The item equalityComparer to use for the new list</param>
         /// <returns>The new list.</returns>
-#endif
         public virtual IList<V> Map<V>(Func<T, V> mapper, SCG.IEqualityComparer<V> itemequalityComparer)
         {
             validitycheck();
@@ -1082,11 +926,7 @@ namespace C5
                 {
                     V mappeditem = mapper(array[offset + i]);
                     modifycheck(stamp);
-#if HASHINDEX
-          KeyValuePair<V, int> p = new KeyValuePair<V, int>(mappeditem, i);
-          if (res.itemIndex.FindOrAdd(ref p))
-            throw new ArgumentException("Mapped item already in indexed list");
-#endif
+
                     res.array[i] = mappeditem;
                 }
             res.size = size;
@@ -1325,9 +1165,7 @@ namespace C5
                 array[offset + i] = array[end - i];
                 array[end - i] = swap;
             }
-#if HASHINDEX
-      reindex(offset, offset + size);
-#endif
+
             //TODO: be more forgiving wrt. disposing
             disposeOverlappingViews(true);
             (underlying ?? this).raiseCollectionChanged();
@@ -1382,9 +1220,7 @@ namespace C5
                 return;
             Sorting.IntroSort<T>(array, offset, size, comparer);
             disposeOverlappingViews(false);
-#if HASHINDEX
-      reindex(offset, offset + size);
-#endif
+
             (underlying ?? this).raiseCollectionChanged();
         }
 
@@ -1415,9 +1251,7 @@ namespace C5
                 }
             }
             disposeOverlappingViews(false);
-#if HASHINDEX
-      reindex(offset, offset + size);
-#endif
+
             (underlying ?? this).raiseCollectionChanged();
         }
         #endregion
@@ -1478,20 +1312,11 @@ namespace C5
             checkRange(start, count);
             start += offset;
             fixViewsBeforeRemove(start, count);
-#if HASHINDEX
-      KeyValuePair<T, int> p = new KeyValuePair<T, int>();
-      for (int i = start, end = start + count; i < end; i++)
-      {
-        p.Key = array[i];
-        itemIndex.Remove(p);
-      }
-#endif
+
             Array.Copy(array, start + count, array, start, underlyingsize - start - count);
             addtosize(-count);
             Array.Clear(array, underlyingsize, count);
-#if HASHINDEX
-      reindex(start);
-#endif
+
             (underlying ?? this).raiseForRemoveInterval(start, count);
         }
         void raiseForRemoveInterval(int start, int count)
@@ -1518,11 +1343,7 @@ namespace C5
             [Tested]
             get
             {
-#if HASHINDEX
-        return Speed.Constant;
-#else
                 return Speed.Linear;
-#endif
             }
         }
 
@@ -1608,9 +1429,7 @@ namespace C5
             {
                 olditem = array[offset + i];
                 array[offset + i] = item;
-#if HASHINDEX
-        itemIndex.Update(new KeyValuePair<T, int>(item, offset + i));
-#endif
+
                 (underlying ?? this).raiseForUpdate(item, olditem);
                 return true;
             }
@@ -1749,23 +1568,13 @@ namespace C5
             int j = offset;
             int removed = 0;
             int i = offset, end = offset + size;
-#if HASHINDEX
-      KeyValuePair<T, int> p = new KeyValuePair<T, int>();
-#endif
+
             while (i < end)
             {
                 T item;
                 //pass by a stretch of nodes
                 while (i < end && !toremove.Contains(item = array[i]))
                 {
-#if HASHINDEX
-          if (j < i)
-          {
-            p.Key = item;
-            p.Value = j;
-            itemIndex.Update(p);
-          }
-#endif
                     //if (j<i)
                     array[j] = item;
                     i++; j++;
@@ -1774,10 +1583,6 @@ namespace C5
                 //Remove a stretch of nodes
                 while (i < end && toremove.Remove(item = array[i]))
                 {
-#if HASHINDEX
-          p.Key = item;
-          itemIndex.Remove(p);
-#endif
                     if (mustFire)
                         raiseHandler.Remove(item);
                     removed++;
@@ -1791,9 +1596,7 @@ namespace C5
             Array.Copy(array, offset + size, array, j, underlyingsize - offset - size);
             addtosize(-removed);
             Array.Clear(array, underlyingsize, removed);
-#if HASHINDEX
-      reindex(j);
-#endif
+
             if (mustFire)
                 raiseHandler.Raise();
         }
@@ -1813,9 +1616,7 @@ namespace C5
             int j = offset;
             int removed = 0;
             int i = offset, end = offset + size;
-#if HASHINDEX
-      KeyValuePair<T, int> p = new KeyValuePair<T, int>();
-#endif
+
             while (i < end)
             {
                 T item;
@@ -1823,14 +1624,7 @@ namespace C5
                 while (i < end && !predicate(item = array[i]))
                 {
                     updatecheck();
-#if HASHINDEX
-          if (j < i)
-          {
-            p.Key = item;
-            p.Value = j;
-            itemIndex.Update(p);
-          }
-#endif
+
                     //if (j<i)
                     array[j] = item;
                     i++; j++;
@@ -1841,10 +1635,7 @@ namespace C5
                 while (i < end && predicate(item = array[i]))
                 {
                     updatecheck();
-#if HASHINDEX
-          p.Key = item;
-          itemIndex.Remove(p);
-#endif
+
                     if (mustFire)
                         raiseHandler.Remove(item);
                     removed++;
@@ -1859,9 +1650,7 @@ namespace C5
             Array.Copy(array, offset + size, array, j, underlyingsize - offset - size);
             addtosize(-removed);
             Array.Clear(array, underlyingsize, removed);
-#if HASHINDEX
-      reindex(j);
-#endif
+
             if (mustFire)
                 raiseHandler.Raise();
         }
@@ -1879,9 +1668,7 @@ namespace C5
                     return;
                 int oldsize = size;
                 fixViewsBeforeRemove(0, size);
-#if HASHINDEX
-        itemIndex.Clear();
-#endif
+
                 array = new T[8];
                 size = 0;
                 (underlying ?? this).raiseForRemoveInterval(offset, oldsize);
@@ -1914,23 +1701,13 @@ namespace C5
             int j = offset;
             int removed = 0;
             int i = offset, end = offset + size;
-#if HASHINDEX
-      KeyValuePair<T, int> p = new KeyValuePair<T, int>();
-#endif
+
             while (i < end)
             {
                 T item;
                 //pass by a stretch of nodes
                 while (i < end && toretain.Remove(item = array[i]))
                 {
-#if HASHINDEX
-          if (j < i)
-          {
-            p.Key = item;
-            p.Value = j;
-            itemIndex.Update(p);
-          }
-#endif
                     //if (j<i)
                     array[j] = item;
                     i++; j++;
@@ -1939,10 +1716,6 @@ namespace C5
                 //Remove a stretch of nodes
                 while (i < end && !toretain.Contains(item = array[i]))
                 {
-#if HASHINDEX
-          p.Key = item;
-          itemIndex.Remove(p);
-#endif
                     if (mustFire)
                         raiseHandler.Remove(item);
                     removed++;
@@ -1956,9 +1729,7 @@ namespace C5
             Array.Copy(array, offset + size, array, j, underlyingsize - offset - size);
             addtosize(-removed);
             Array.Clear(array, underlyingsize, removed);
-#if HASHINDEX
-      reindex(j);
-#endif
+
             raiseHandler.Raise();
         }
 
@@ -1977,9 +1748,7 @@ namespace C5
             int j = offset;
             int removed = 0;
             int i = offset, end = offset + size;
-#if HASHINDEX
-      KeyValuePair<T, int> p = new KeyValuePair<T, int>();
-#endif
+
             while (i < end)
             {
                 T item;
@@ -1987,14 +1756,7 @@ namespace C5
                 while (i < end && predicate(item = array[i]))
                 {
                     updatecheck();
-#if HASHINDEX
-          if (j < i)
-          {
-            p.Key = item;
-            p.Value = j;
-            itemIndex.Update(p);
-          }
-#endif
+
                     //if (j<i)
                     array[j] = item;
                     i++; j++;
@@ -2005,10 +1767,7 @@ namespace C5
                 while (i < end && !predicate(item = array[i]))
                 {
                     updatecheck();
-#if HASHINDEX
-          p.Key = item;
-          itemIndex.Remove(p);
-#endif
+
                     if (mustFire)
                         raiseHandler.Remove(item);
                     removed++;
@@ -2023,9 +1782,7 @@ namespace C5
             Array.Copy(array, offset + size, array, j, underlyingsize - offset - size);
             addtosize(-removed);
             Array.Clear(array, underlyingsize, removed);
-#if HASHINDEX
-      reindex(j);
-#endif
+
             raiseHandler.Raise();
         }
 
@@ -2041,13 +1798,7 @@ namespace C5
         public virtual bool ContainsAll(SCG.IEnumerable<T> items)
         {
             validitycheck();
-#if HASHINDEX
-      foreach (T item in items)
-        if (indexOf(item) < 0)
-          return false;
 
-      return true;
-#else
             //TODO: use aux hash bag to obtain linear time procedure
             HashBag<T> tomatch = new HashBag<T>(itemequalityComparer);
             tomatch.AddAll(items);
@@ -2060,7 +1811,6 @@ namespace C5
                     return true;
             }
             return false;
-#endif
         }
 
 
@@ -2074,15 +1824,12 @@ namespace C5
         public virtual int ContainsCount(T item)
         {
             validitycheck();
-#if HASHINDEX
-      return indexOf(item) >= 0 ? 1 : 0;
-#else
+
             int count = 0;
             for (int i = 0; i < size; i++)
                 if (equals(item, array[offset + i]))
                     count++;
             return count;
-#endif
         }
 
         /// <summary>
@@ -2091,13 +1838,9 @@ namespace C5
         /// <returns></returns>
         public virtual ICollectionValue<T> UniqueItems()
         {
-#if HASHINDEX
-      return this;
-#else
             HashBag<T> hashbag = new HashBag<T>(itemequalityComparer);
             hashbag.AddAll(this);
             return hashbag.UniqueItems();
-#endif
         }
 
         /// <summary>
@@ -2106,13 +1849,9 @@ namespace C5
         /// <returns></returns>
         public virtual ICollectionValue<KeyValuePair<T, int>> ItemMultiplicities()
         {
-#if HASHINDEX
-      return new MultiplicityOne<T>(this);
-#else
             HashBag<T> hashbag = new HashBag<T>(itemequalityComparer);
             hashbag.AddAll(this);
             return hashbag.ItemMultiplicities();
-#endif
         }
 
 
@@ -2126,9 +1865,6 @@ namespace C5
         [Tested]
         public virtual void RemoveAllCopies(T item)
         {
-#if HASHINDEX
-      Remove(item);
-#else
             updatecheck();
             if (size == 0)
                 return;
@@ -2161,7 +1897,6 @@ namespace C5
             addtosize(-removed);
             Array.Clear(array, underlyingsize, removed);
             raiseHandler.Raise();
-#endif
         }
 
 
@@ -2224,31 +1959,6 @@ namespace C5
                     }
             }
 
-
-#if HASHINDEX
-      if (underlyingsize != itemIndex.Count)
-      {
-        Logger.Log(string.Format("size ({0})!= index.Count ({1})", size, itemIndex.Count));
-        retval = false;
-      }
-
-      for (int i = 0; i < underlyingsize; i++)
-      {
-        KeyValuePair<T, int> p = new KeyValuePair<T, int>(array[i]);
-
-        if (!itemIndex.Find(ref p))
-        {
-          Logger.Log(string.Format("Item {1} at {0} not in hashindex", i, array[i]));
-          retval = false;
-        }
-
-        if (p.Value != i)
-        {
-          Logger.Log(string.Format("Item {1} at {0} has hashindex {2}", i, array[i], p.Value));
-          retval = false;
-        }
-      }
-#endif
             return retval;
         }
 
@@ -2266,11 +1976,7 @@ namespace C5
             [Tested]
             get
             {
-#if HASHINDEX
-        return false;
-#else
                 return true;
-#endif
             }
         }
 
@@ -2283,11 +1989,7 @@ namespace C5
         {
             get
             {
-#if HASHINDEX
-        return true;
-#else
                 return false;
-#endif
             }
         }
 
@@ -2300,15 +2002,9 @@ namespace C5
         public virtual bool Add(T item)
         {
             updatecheck();
-#if HASHINDEX
-      KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, size + offset);
-      if (itemIndex.FindOrAdd(ref p))
-        return false;
-#endif
+
             baseinsert(size, item);
-#if HASHINDEX
-      reindex(size + offset);
-#endif
+
             (underlying ?? this).raiseForAdd(item);
             return true;
         }
@@ -2336,11 +2032,6 @@ namespace C5
             {
                 foreach (T item in items)
                 {
-#if HASHINDEX
-          KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, i);
-          if (itemIndex.FindOrAdd(ref p))
-            continue;
-#endif
                     array[i++] = item;
                 }
             }
@@ -2355,9 +2046,6 @@ namespace C5
                 if (added > 0)
                 {
                     addtosize(added);
-#if HASHINDEX
-          reindex(i);
-#endif
                     fixViewsAfterInsert(added, i - added);
                     (underlying ?? this).raiseForAddAll(i - added, added);
                 }
@@ -2410,8 +2098,7 @@ namespace C5
         }
         #endregion
 
-#if HASHINDEX
-#else
+
         #region IStack<T> Members
 
         /// <summary>
@@ -2459,7 +2146,6 @@ namespace C5
         }
 
         #endregion
-#endif
         #region IDisposable Members
 
         /// <summary>
@@ -2527,9 +2213,7 @@ namespace C5
       {
         array[i] = (T)(info.GetValue("elem" + i,typeof(T)));
       }
-#if HASHINDEX
-      reindex(0);
-#endif      
+    
     }
 
     /// <summary>
