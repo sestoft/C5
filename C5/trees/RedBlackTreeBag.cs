@@ -21,7 +21,6 @@
 
 #define MAINTAIN_SIZE
 #define BAG
-#define NCP
 
 #if BAG
 #if !MAINTAIN_SIZE
@@ -87,7 +86,7 @@ namespace C5
         private int[] dirs = new int[2];
 
         private Node[] path = new Node[2];
-#if NCP
+
         //TODO: refactor into separate class
         bool isSnapShot = false;
 
@@ -96,7 +95,7 @@ namespace C5
         bool isValid = true;
 
         SnapRef snapList;
-#endif
+
         #endregion
 
         #region Events
@@ -118,28 +117,24 @@ namespace C5
         /// <returns></returns>
         private Node left(Node n)
         {
-#if NCP
             if (isSnapShot)
             {
 
                 if (n.lastgeneration >= generation && n.leftnode)
                     return n.oldref;
             }
-#endif
             return n.left;
         }
 
 
         private Node right(Node n)
         {
-#if NCP
             if (isSnapShot)
             {
 
                 if (n.lastgeneration >= generation && !n.leftnode)
                     return n.oldref;
             }
-#endif
             return n.right;
         }
 
@@ -182,7 +177,6 @@ namespace C5
       public int items = 1;
 #endif
 
-#if NCP
             //TODO: move everything into (separate) Extra
             public int generation;
 
@@ -249,11 +243,9 @@ namespace C5
                     cursor.lastgeneration = -1;
                     return true;
                 }
-                else
-                    return false;
-            }
 
-#endif
+                return false;
+            }
         }
 
         #endregion
@@ -452,7 +444,7 @@ namespace C5
 
             #endregion
         }
-#if NCP
+
         /// <summary>
         /// An enumerator for a snapshot of a node copy persistent red-black tree
         /// collection.
@@ -587,7 +579,7 @@ namespace C5
 
             #endregion
         }
-#endif
+
         #endregion
 
         #region IEnumerable<T> Members
@@ -656,10 +648,9 @@ namespace C5
         {
             if (!isValid)
                 throw new ViewDisposedException("Snapshot has been disposed");
-#if NCP
+
             if (isSnapShot)
                 return new SnapEnumerator(this);
-#endif
 #if BAG
       return getEnumerator(root, stamp);
 #else
@@ -688,9 +679,7 @@ namespace C5
                 root.red = false;
                 blackdepth = 1;
                 root.item = item;
-#if NCP
                 root.generation = generation;
-#endif
                 return true;
             }
 
@@ -709,9 +698,7 @@ namespace C5
 #if BAG
           wasfound = true;
           bool nodeWasUpdated = true;
-#if NCP
           Node.CopyNode(ref cursor, maxsnapid, generation);
-#endif
           if (update)
             cursor.item = item;
           else
@@ -723,9 +710,7 @@ namespace C5
                     bool nodeWasUpdated = update;
                     if (update)
                     {
-#if NCP
                         Node.CopyNode(ref cursor, maxsnapid, generation);
-#endif
                         cursor.item = item;
                     }
 #endif
@@ -737,9 +722,7 @@ namespace C5
                             Node kid = cursor;
 
                             cursor = path[level];
-#if NCP
                             Node.update(ref cursor, dirs[level] > 0, kid, maxsnapid, generation);
-#endif
 #if BAG
               if (!update)
                 cursor.size++;
@@ -765,13 +748,9 @@ namespace C5
                 {
                     child = new Node();
                     child.item = item;
-#if NCP
                     child.generation = generation;
                     Node.update(ref cursor, comp > 0, child, maxsnapid, generation);
-#else
-					if (comp > 0) { cursor.left = child; }
-					else { cursor.right = child; }
-#endif
+
 #if MAINTAIN_SIZE
                     cursor.size++;
 #endif
@@ -794,9 +773,7 @@ namespace C5
 
                 cursor = path[--level];
                 path[level] = null;
-#if NCP
                 Node.update(ref cursor, dirs[level] > 0, child, maxsnapid, generation);
-#endif
 #if MAINTAIN_SIZE
                 cursor.size++;
 #endif
@@ -807,9 +784,7 @@ namespace C5
                 {
                     //Promote
                     child.red = false;
-#if NCP
                     Node.update(ref cursor, comp < 0, childsibling, maxsnapid, generation);
-#endif
                     childsibling.red = false;
 
                     //color cursor red & take one step up the tree unless at root
@@ -822,11 +797,9 @@ namespace C5
                     else
                     {
                         cursor.red = true;
-#if NCP
                         child = cursor;
                         cursor = path[--level];
                         Node.update(ref cursor, dirs[level] > 0, child, maxsnapid, generation);
-#endif
                         path[level] = null;
 #if MAINTAIN_SIZE
                         cursor.size++;
@@ -843,26 +816,18 @@ namespace C5
                     {
                         if (childcomp > 0)
                         {//zagzag
-#if NCP
                             Node.update(ref cursor, true, child.right, maxsnapid, generation);
                             Node.update(ref child, false, cursor, maxsnapid, generation);
-#else
-							cursor.left = child.right;
-							child.right = cursor;
-#endif
+
                             cursor = child;
                         }
                         else
                         {//zagzig
                             Node badgrandchild = child.right;
-#if NCP
                             Node.update(ref cursor, true, badgrandchild.right, maxsnapid, generation);
                             Node.update(ref child, false, badgrandchild.left, maxsnapid, generation);
                             Node.CopyNode(ref badgrandchild, maxsnapid, generation);
-#else
-							cursor.left = badgrandchild.right;
-							child.right = badgrandchild.left;
-#endif
+
                             badgrandchild.left = child;
                             badgrandchild.right = cursor;
                             cursor = badgrandchild;
@@ -872,26 +837,18 @@ namespace C5
                     {//comp < 0
                         if (childcomp < 0)
                         {//zigzig
-#if NCP
                             Node.update(ref cursor, false, child.left, maxsnapid, generation);
                             Node.update(ref child, true, cursor, maxsnapid, generation);
-#else
-							cursor.right = child.left;
-							child.left = cursor;
-#endif
+
                             cursor = child;
                         }
                         else
                         {//zigzag
                             Node badgrandchild = child.left;
-#if NCP
                             Node.update(ref cursor, false, badgrandchild.left, maxsnapid, generation);
                             Node.update(ref child, true, badgrandchild.right, maxsnapid, generation);
                             Node.CopyNode(ref badgrandchild, maxsnapid, generation);
-#else
-							cursor.right = badgrandchild.left;
-							child.left = badgrandchild.right;
-#endif
+
                             badgrandchild.right = child;
                             badgrandchild.left = cursor;
                             cursor = badgrandchild;
@@ -927,14 +884,8 @@ namespace C5
                         child = cursor;
                         cursor = path[--level];
                         path[level] = null;
-#if NCP
                         Node.update(ref cursor, dirs[level] > 0, child, maxsnapid, generation);
-#else
-						if (dirs[level] > 0)
-							cursor.left = child;
-						else
-							cursor.right = child;
-#endif
+
 #if MAINTAIN_SIZE
                         cursor.size++;
 #endif
@@ -942,19 +893,15 @@ namespace C5
                     }
                 }
             }
-#if NCP
             bool stillmore = true;
-#endif
             while (level > 0)
             {
                 Node child = cursor;
 
                 cursor = path[--level];
                 path[level] = null;
-#if NCP
                 if (stillmore)
                     stillmore = Node.update(ref cursor, dirs[level] > 0, child, maxsnapid, generation);
-#endif
 #if MAINTAIN_SIZE
                 cursor.size++;
 #endif
@@ -1180,9 +1127,7 @@ namespace C5
           tail.right = new Node();
           tail = tail.right;
           lastitem = tail.item = thisitem;
-#if NCP
           tail.generation = generation;
-#endif
         }
 #else
                 z++;
@@ -1196,9 +1141,7 @@ namespace C5
 
                     lastitem = tail.item;
                 }
-#if NCP
                 tail.generation = generation;
-#endif
 #endif
             }
 #if BAG
@@ -1393,11 +1336,9 @@ namespace C5
             if (!isValid)
                 throw new ViewDisposedException("Snapshot has been disposed");
             updatecheck();
-#if NCP
             stackcheck();
 
             int level = 0;
-#endif
             Node cursor = root;
             int comp = 0;
 
@@ -1406,36 +1347,23 @@ namespace C5
                 comp = comparer.Compare(cursor.item, item);
                 if (comp == 0)
                 {
-#if NCP
                     Node.CopyNode(ref cursor, maxsnapid, generation);
-#endif
                     olditem = cursor.item;
 #if BAG
           int items = cursor.items;
 #endif
                     cursor.item = item;
-#if NCP
                     while (level > 0)
                     {
                         Node child = cursor;
 
                         cursor = path[--level];
                         path[level] = null;
-#if NCP
                         Node.update(ref cursor, dirs[level] > 0, child, maxsnapid, generation);
-#else
-						if (Node.CopyNode(maxsnapid, ref cursor, generation))
-						{
-							if (dirs[level] > 0)
-								cursor.left = child;
-							else
-								cursor.right = child;
-						}
-#endif
+
                     }
 
                     root = cursor;
-#endif
 #if BAG
           if (ActiveEvents != 0)
             raiseForUpdate(item, olditem, items);
@@ -1445,10 +1373,8 @@ namespace C5
 #endif
                     return true;
                 }
-#if NCP
                 dirs[level] = comp;
                 path[level++] = cursor;
-#endif
                 cursor = comp < 0 ? cursor.right : cursor.left;
             }
 
@@ -1577,9 +1503,7 @@ namespace C5
 #if BAG
           if (!all && cursor.items > 1)
           {
-#if NCP
             Node.CopyNode(ref cursor, maxsnapid, generation);
-#endif
             cursor.items--;
             cursor.size--;
             while (level-- > 0)
@@ -1587,9 +1511,7 @@ namespace C5
               Node kid = cursor;
 
               cursor = path[level];
-#if NCP
               Node.update(ref cursor, dirs[level] > 0, kid, maxsnapid, generation);
-#endif
               cursor.size--;
               path[level] = null;
             }
@@ -1646,9 +1568,7 @@ namespace C5
                     path[level++] = cursor;
                     cursor = cursor.right;
                 }
-#if NCP
                 Node.CopyNode(ref path[level_of_item], maxsnapid, generation);
-#endif
                 path[level_of_item].item = cursor.item;
 #if BAG
         path[level_of_item].items = cursor.items;
@@ -1677,14 +1597,8 @@ namespace C5
 
             int comp = dirs[level];
             Node childsibling;
-#if NCP
             Node.update(ref cursor, comp > 0, newchild, maxsnapid, generation);
-#else
-			if (comp > 0)
-				cursor.left = newchild;
-			else
-				cursor.right = newchild;
-#endif
+
             childsibling = comp > 0 ? cursor.right : cursor.left;
 #if BAG
       cursor.size = cursor.items + (newchild == null ? 0 : newchild.size) + (childsibling == null ? 0 : childsibling.size);
@@ -1714,9 +1628,7 @@ namespace C5
                 {
                     cursor.red = false;
                     blackdepth--;
-#if NCP
                     root = cursor;
-#endif
                     return true;
                 }
                 else if (cursor.red)
@@ -1733,9 +1645,7 @@ namespace C5
                     path[level] = null;
                     comp = dirs[level];
                     childsibling = comp > 0 ? cursor.right : cursor.left;
-#if NCP
                     Node.update(ref cursor, comp > 0, child, maxsnapid, generation);
-#endif
 #if BAG
           cursor.size = cursor.items + (child == null ? 0 : child.size) + (childsibling == null ? 0 : childsibling.size);
 #elif MAINTAIN_SIZE
@@ -1776,13 +1686,11 @@ namespace C5
 
                     if (fargrandnephew != null && fargrandnephew.red)
                     {//Case 2+1b
-#if NCP
                         Node.CopyNode(ref nearnephew, maxsnapid, generation);
 
                         //The end result of this will always be e copy of parent
                         Node.update(ref parent, comp < 0, neargrandnephew, maxsnapid, generation);
                         Node.update(ref childsibling, comp > 0, nearnephew, maxsnapid, generation);
-#endif
                         if (comp > 0)
                         {
                             nearnephew.left = parent;
@@ -1810,34 +1718,20 @@ namespace C5
                     }
                     else if (neargrandnephew != null && neargrandnephew.red)
                     {//Case 2+1c
-#if NCP
                         Node.CopyNode(ref neargrandnephew, maxsnapid, generation);
-#endif
                         if (comp > 0)
                         {
-#if NCP
                             Node.update(ref childsibling, true, neargrandnephew, maxsnapid, generation);
                             Node.update(ref nearnephew, true, neargrandnephew.right, maxsnapid, generation);
                             Node.update(ref parent, false, neargrandnephew.left, maxsnapid, generation);
-#else
-							childsibling.left = neargrandnephew;
-							nearnephew.left = neargrandnephew.right;
-							parent.right = neargrandnephew.left;
-#endif
                             neargrandnephew.left = parent;
                             neargrandnephew.right = nearnephew;
                         }
                         else
                         {
-#if NCP
                             Node.update(ref childsibling, false, neargrandnephew, maxsnapid, generation);
                             Node.update(ref nearnephew, false, neargrandnephew.left, maxsnapid, generation);
                             Node.update(ref parent, true, neargrandnephew.right, maxsnapid, generation);
-#else
-							childsibling.right = neargrandnephew;
-							nearnephew.right = neargrandnephew.left;
-							parent.left = neargrandnephew.right;
-#endif
                             neargrandnephew.right = parent;
                             neargrandnephew.left = nearnephew;
                         }
@@ -1858,21 +1752,9 @@ namespace C5
                     }
                     else
                     {//Case 2 only
-#if NCP
                         Node.update(ref parent, comp < 0, nearnephew, maxsnapid, generation);
                         Node.update(ref childsibling, comp > 0, parent, maxsnapid, generation);
-#else
-						if (comp > 0)
-						{
-							childsibling.left = parent;
-							parent.right = nearnephew;
-						}
-						else
-						{
-							childsibling.right = parent;
-							parent.left = nearnephew;
-						}
-#endif
+
                         cursor = childsibling;
                         childsibling.red = false;
                         nearnephew.red = true;
@@ -1888,7 +1770,6 @@ namespace C5
                 else if (farnephew != null && farnephew.red)
                 {//Case 1b
                     nearnephew = comp > 0 ? childsibling.left : childsibling.right;
-#if NCP
                     Node.update(ref parent, comp < 0, nearnephew, maxsnapid, generation);
                     Node.CopyNode(ref childsibling, maxsnapid, generation);
                     if (comp > 0)
@@ -1901,18 +1782,7 @@ namespace C5
                         childsibling.right = parent;
                         childsibling.left = farnephew;
                     }
-#else
-					if (comp > 0)
-					{
-						childsibling.left = parent;
-						parent.right = nearnephew;
-					}
-					else
-					{
-						childsibling.right = parent;
-						parent.left = nearnephew;
-					}
-#endif
+
                     cursor = childsibling;
                     cursor.red = parent.red;
                     parent.red = false;
@@ -1928,30 +1798,20 @@ namespace C5
                 }
                 else if (nearnephew != null && nearnephew.red)
                 {//Case 1c
-#if NCP
                     Node.CopyNode(ref nearnephew, maxsnapid, generation);
-#endif
                     if (comp > 0)
                     {
-#if NCP
                         Node.update(ref childsibling, true, nearnephew.right, maxsnapid, generation);
                         Node.update(ref parent, false, nearnephew.left, maxsnapid, generation);
-#else
-						childsibling.left = nearnephew.right;
-						parent.right = nearnephew.left;
-#endif
+
                         nearnephew.left = parent;
                         nearnephew.right = childsibling;
                     }
                     else
                     {
-#if NCP
                         Node.update(ref childsibling, false, nearnephew.left, maxsnapid, generation);
                         Node.update(ref parent, true, nearnephew.right, maxsnapid, generation);
-#else
-						childsibling.right = nearnephew.left;
-						parent.left = nearnephew.right;
-#endif
+
                         nearnephew.right = parent;
                         nearnephew.left = childsibling;
                     }
@@ -1985,15 +1845,8 @@ namespace C5
 
                     cursor = path[--level];
                     path[level] = null;
-#if NCP
                     Node.update(ref cursor, dirs[level] > 0, swap, maxsnapid, generation);
-#else
-				
-					if (dirs[level] > 0)
-						cursor.left = swap;
-					else
-						cursor.right = swap;
-#endif
+
 #if BAG
           cursor.size = cursor.items + (cursor.right == null ? 0 : cursor.right.size) + (cursor.left == null ? 0 : cursor.left.size);
 #elif MAINTAIN_SIZE
@@ -2009,10 +1862,9 @@ namespace C5
 
                 cursor = path[--level];
                 path[level] = null;
-#if NCP
                 if (child != (dirs[level] > 0 ? cursor.left : cursor.right))
                     Node.update(ref cursor, dirs[level] > 0, child, maxsnapid, generation);
-#endif
+
 #if BAG
         cursor.size = cursor.items + (cursor.right == null ? 0 : cursor.right.size) + (cursor.left == null ? 0 : cursor.left.size);
 #elif MAINTAIN_SIZE
@@ -2020,9 +1872,7 @@ namespace C5
 #endif
             }
 
-#if NCP
             root = cursor;
-#endif
             return true;
         }
 
@@ -2487,10 +2337,8 @@ namespace C5
 
         private Node findNode(int i)
         {
-#if NCP
             if (isSnapShot)
                 throw new NotSupportedException("Indexing not supported for snapshots");
-#endif
 #if MAINTAIN_SIZE
             Node next = root;
 
@@ -2559,10 +2407,8 @@ namespace C5
 
         private int indexOf(T item, out int upper)
         {
-#if NCP
             if (isSnapShot)
                 throw new NotSupportedException("Indexing not supported for snapshots");
-#endif
 #if MAINTAIN_SIZE
             int ind = 0; Node next = root;
 
@@ -2710,9 +2556,7 @@ namespace C5
 #if BAG
     private void resplicebag(int level, Node cursor)
     {
-#if NCP
       Node.CopyNode(ref cursor, maxsnapid, generation);
-#endif
       cursor.items--;
       cursor.size--;
       while (level-- > 0)
@@ -2720,9 +2564,7 @@ namespace C5
         Node kid = cursor;
 
         cursor = path[level];
-#if NCP
         Node.update(ref cursor, dirs[level] > 0, kid, maxsnapid, generation);
-#endif
         cursor.size--;
         path[level] = null;
       }
@@ -2790,10 +2632,8 @@ namespace C5
 
             internal Interval(TreeBag<T> tree, int start, int count, bool forwards)
             {
-#if NCP
                 if (tree.isSnapShot)
                     throw new NotSupportedException("Indexing not supported for snapshots");
-#endif
                 this.start = start; this.length = count; this.forwards = forwards;
                 this.tree = tree; this.stamp = tree.stamp;
             }
@@ -3493,10 +3333,8 @@ namespace C5
         //Utility for CountXxxx. Actually always called with strict = true.
         private int countTo(T item, bool strict)
         {
-#if NCP
             if (isSnapShot)
                 throw new NotSupportedException("Indexing not supported for snapshots");
-#endif
 #if MAINTAIN_SIZE
             int ind = 0, comp = 0; Node next = root;
 
@@ -3785,7 +3623,6 @@ namespace C5
         #endregion
 
         #region IPersistent<T> Members
-#if NCP
         int maxsnapid { get { return snapList == null ? -1 : findLastLiveSnapShot(); } }
 
         int findLastLiveSnapShot()
@@ -3823,7 +3660,6 @@ namespace C5
                 Next = Prev = null;
             }
         }
-#endif
 
         /// <summary>
         /// If this tree is a snapshot, remove registration in base tree
@@ -3831,7 +3667,6 @@ namespace C5
         [Tested]
         public void Dispose()
         {
-#if NCP
             if (!isValid)
                 return;
             if (isSnapShot)
@@ -3855,9 +3690,7 @@ namespace C5
                 snapList = null;
                 Clear();
             }
-#else
-      Clear();
-#endif
+
         }
 
         private void snapDispose()
@@ -3877,7 +3710,6 @@ namespace C5
         [Tested]
         public ISorted<T> Snapshot()
         {
-#if NCP
             if (isSnapShot)
                 throw new InvalidOperationException("Cannot snapshot a snapshot");
 
@@ -3901,7 +3733,6 @@ namespace C5
             generation++;
 
             return res;
-#endif
         }
 
         #endregion
@@ -4039,19 +3870,13 @@ namespace C5
                                 if (comp > 0)
                                 {
                                     path[level++] = cursor;
-#if NCP
                                     cursor = range.basis.left(cursor);
-#else
-									cursor = cursor.left;
-#endif
+
                                 }
                                 else if (comp < 0)
                                 {
-#if NCP
                                     cursor = range.basis.right(cursor);
-#else
-									cursor = cursor.right;
-#endif
+
                                 }
                                 else
                                 {
@@ -4068,7 +3893,6 @@ namespace C5
                                     cursor = path[--level];
                             }
                         }
-#if NCP
                         else if (range.basis.right(cursor) != null)
                         {
                             path[level] = cursor = range.basis.right(cursor);
@@ -4081,14 +3905,7 @@ namespace C5
                                 next = range.basis.left(cursor);
                             }
                         }
-#else
-						else if (cursor.right != null)
-						{
-							path[level] = cursor = cursor.right;
-							while (cursor.left != null)
-								path[++level] = cursor = cursor.left;
-						}
-#endif
+
                         else if (level == 0)
                             return valid = ready = false;
                         else
@@ -4115,19 +3932,13 @@ namespace C5
                                 if (comp < 0)
                                 {
                                     path[level++] = cursor;
-#if NCP
                                     cursor = range.basis.right(cursor);
-#else
-									cursor = cursor.right;
-#endif
+
                                 }
                                 else
                                 {
-#if NCP
                                     cursor = range.basis.left(cursor);
-#else
-									cursor = cursor.left;
-#endif
+
                                 }
                             }
 
@@ -4139,7 +3950,6 @@ namespace C5
                                     cursor = path[--level];
                             }
                         }
-#if NCP
                         else if (range.basis.left(cursor) != null)
                         {
                             path[level] = cursor = range.basis.left(cursor);
@@ -4152,14 +3962,7 @@ namespace C5
                                 next = range.basis.right(cursor);
                             }
                         }
-#else
-						else if (cursor.left != null)
-						{
-							path[level] = cursor = cursor.left;
-							while (cursor.right != null)
-								path[++level] = cursor = cursor.right;
-						}
-#endif
+
                         else if (level == 0)
                             return valid = ready = false;
                         else
@@ -4293,18 +4096,13 @@ namespace C5
 				0,
 #endif
  0,
-#if NCP
  n.generation,
-#endif
  n.red ? "RED" : "BLACK",
          0,
          0,
-#if NCP
 
  n.lastgeneration == -1 ? "" : string.Format(" [extra: lg={0}, c={1}, i={2}]", n.lastgeneration, n.leftnode ? "L" : "R", n.oldref == null ? "()" : "" + n.oldref.item),
-#else
-				"",
-#endif
+
 #if BAG
  n.items
 #else
@@ -4332,9 +4130,7 @@ namespace C5
             Logger.Log(string.Format(">>>>>>>>>>>>>>>>>>> dump {0} (count={1}, blackdepth={2}, depth={3}, gen={4})", msg, size, blackdepth,
             0
             ,
-#if NCP
  generation
-#endif
 ));
             minidump(root, "");
             check(""); Logger.Log("<<<<<<<<<<<<<<<<<<<");
@@ -4351,9 +4147,7 @@ namespace C5
             Logger.Log(string.Format(">>>>>>>>>>>>>>>>>>> dump {0} (count={1}, blackdepth={2}, depth={3}, gen={4})", msg, size, blackdepth,
             0
             ,
-#if NCP
  generation
-#endif
 ));
             minidump(root, ""); Logger.Log(err);
             Logger.Log("<<<<<<<<<<<<<<<<<<<");
@@ -4418,7 +4212,6 @@ namespace C5
 
 
 
-#if NCP
 
         bool rbminisnapcheck(Node n, out int size, out T min, out T max)
         {
@@ -4450,7 +4243,6 @@ namespace C5
 #endif
             return res;
         }
-#endif
 
         /// <summary>
         /// Checks red-black invariant. Dumps tree to console if bad
@@ -4493,7 +4285,6 @@ namespace C5
             {
                 T max, min;
                 int blackheight;
-#if NCP
                 if (isSnapShot)
                 {
                     //Logger.Log("Im'a snapshot");
@@ -4503,7 +4294,6 @@ namespace C5
                     rv = massert(size == thesize, root, "bad snapshot size") && rv;
                     return !rv;
                 }
-#endif
                 bool res = rbminicheck(root, false, out min, out max, out blackheight);
                 res = massert(blackheight == blackdepth, root, "bad blackh/d") && res;
                 res = massert(!root.red, root, "root is red") && res;
