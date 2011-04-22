@@ -121,15 +121,9 @@ namespace C5
 #if NCP
             if (isSnapShot)
             {
-#if SEPARATE_EXTRA
-				Node.Extra e = n.extra;
 
-				if (e != null && e.lastgeneration >= treegen && e.leftnode)
-					return e.oldref;
-#else
                 if (n.lastgeneration >= generation && n.leftnode)
                     return n.oldref;
-#endif
             }
 #endif
             return n.left;
@@ -141,15 +135,9 @@ namespace C5
 #if NCP
             if (isSnapShot)
             {
-#if SEPARATE_EXTRA
-				Node.Extra e = n.extra;
 
-				if (e != null && e.lastgeneration >= treegen && !e.leftnode)
-					return e.oldref;
-#else
                 if (n.lastgeneration >= generation && !n.leftnode)
                     return n.oldref;
-#endif
             }
 #endif
             return n.right;
@@ -197,27 +185,12 @@ namespace C5
 #if NCP
             //TODO: move everything into (separate) Extra
             public int generation;
-#if SEPARATE_EXTRA
-			internal class Extra
-			{
-				public int lastgeneration;
 
-				public Node oldref;
-
-				public bool leftnode;
-
-				//public Node next;
-			}
-
-			public Extra extra;
-
-#else
             public int lastgeneration = -1;
 
             public Node oldref;
 
             public bool leftnode;
-#endif
 
             /// <summary>
             /// Update a child pointer
@@ -239,17 +212,6 @@ namespace C5
 
                 if (cursor.generation <= maxsnapid)
                 {
-#if SEPARATE_EXTRA
-					if (cursor.extra == null)
-					{
-						Extra extra = cursor.extra = new Extra();	
-
-						extra.leftnode = leftnode;
-						extra.lastgeneration = maxsnapid;
-						extra.oldref = oldref;
-					}
-					else if (cursor.extra.leftnode != leftnode || cursor.extra.lastgeneration < maxsnapid)
-#else
                     if (cursor.lastgeneration == -1)
                     {
                         cursor.leftnode = leftnode;
@@ -257,7 +219,6 @@ namespace C5
                         cursor.oldref = oldref;
                     }
                     else if (cursor.leftnode != leftnode || cursor.lastgeneration < maxsnapid)
-#endif
                     {
                         CopyNode(ref cursor, maxsnapid, generation);
                         retval = true;
@@ -285,11 +246,7 @@ namespace C5
                 {
                     cursor = (Node)(cursor.MemberwiseClone());
                     cursor.generation = generation;
-#if SEPARATE_EXTRA
-					cursor.extra = null;
-#else
                     cursor.lastgeneration = -1;
-#endif
                     return true;
                 }
                 else
@@ -4343,11 +4300,8 @@ namespace C5
          0,
          0,
 #if NCP
-#if SEPARATE_EXTRA
-				n.extra == null ? "" : string.Format(" [extra: lg={0}, c={1}, i={2}]", n.extra.lastgeneration, n.extra.leftnode ? "L" : "R", n.extra.oldref == null ? "()" : "" + n.extra.oldref.item),
-#else
+
  n.lastgeneration == -1 ? "" : string.Format(" [extra: lg={0}, c={1}, i={2}]", n.lastgeneration, n.leftnode ? "L" : "R", n.oldref == null ? "()" : "" + n.oldref.item),
-#endif
 #else
 				"",
 #endif
@@ -4474,23 +4428,16 @@ namespace C5
 
             int lsz = 0, rsz = 0;
             T otherext;
-#if SEPARATE_EXTRA
-			Node.Extra extra = n.extra;
-			Node child = (extra != null && extra.lastgeneration >= treegen && extra.leftnode) ? extra.oldref : n.left;
-#else
+
             Node child = (n.lastgeneration >= generation && n.leftnode) ? n.oldref : n.left;
-#endif
             if (child != null)
             {
                 res = rbminisnapcheck(child, out lsz, out min, out otherext) && res;
                 res = massert(comparer.Compare(n.item, otherext) > 0, n, "Value not > all left children") && res;
             }
 
-#if SEPARATE_EXTRA
-			child = (extra != null && extra.lastgeneration >= treegen && !extra.leftnode) ? extra.oldref : n.right;
-#else
+
             child = (n.lastgeneration >= generation && !n.leftnode) ? n.oldref : n.right;
-#endif
             if (child != null)
             {
                 res = rbminisnapcheck(child, out rsz, out otherext, out max) && res;
