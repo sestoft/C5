@@ -25,12 +25,12 @@
 //   csc /r:C5.dll BipartiteMatching.cs 
 
 using System;
-using System.IO;                        // StreamReader, TextReader
-using System.Text;			// Encoding
-using System.Text.RegularExpressions;   // Regex
+using System.Diagnostics;
+// StreamReader, TextReader
+// Encoding
+// Regex
 using C5;
 using SCG = System.Collections.Generic;
-using System.Diagnostics;
 
 namespace BipartiteMatching
 {
@@ -97,7 +97,7 @@ namespace BipartiteMatching
         }
         public override string ToString()
         {
-          return String.Format(@"""{0}"" -> '{1}'", label, match);
+          return string.Format(@"""{0}"" -> '{1}'", label, match);
         }
       }
       class RightNode
@@ -112,7 +112,7 @@ namespace BipartiteMatching
         }
         public override string ToString()
         {
-          return String.Format(@"'{0}'", label);
+          return string.Format(@"'{0}'", label);
         }
       }
       public BipartiteMatching(SCG.IEnumerable<Rec<TLeftLabel, TRightLabel>> graph)

@@ -350,7 +350,7 @@ namespace Graph
 
     public override string ToString()
     {
-      return String.Format("(start='{0}', end='{1}', edgedata='{2}')", start, end, edgedata); ;
+      return string.Format("(start='{0}', end='{1}', edgedata='{2}')", start, end, edgedata); ;
     }
 
     public override bool Equals(object obj)
@@ -897,7 +897,7 @@ namespace Graph
       });
       if (found)
         return dist;
-      throw new ArgumentException(String.Format("No path from {0} to {1}", start, end));
+      throw new ArgumentException(string.Format("No path from {0} to {1}", start, end));
     }
 
 
@@ -914,7 +914,7 @@ namespace Graph
         v = edge.start;
       }
       if (path.IsEmpty)
-        throw new ArgumentException(String.Format("No path from {0} to {1}", start, end));
+        throw new ArgumentException(string.Format("No path from {0} to {1}", start, end));
       path.Reverse();
       return path;
     }
@@ -1018,7 +1018,7 @@ namespace Graph
       string fmt = "Graph does not have a closed Euler tour: vertex {0} has odd degree {1}";
       foreach (KeyValuePair<V, HashDictionary<V, E>> adj in graph)
         if (adj.Value.Count % 2 != 0)
-          throw new ArgumentException(String.Format(fmt, adj.Key, adj.Value.Count));
+          throw new ArgumentException(string.Format(fmt, adj.Key, adj.Value.Count));
 
       LinkedList<V> path = new LinkedList<V>();
       //Clone the graph data to keep track of used edges.
@@ -1080,7 +1080,7 @@ namespace Graph
       //We should override Equals and GetHashCode
 
       public override string ToString()
-      { return id == 0 ? String.Format("real({0})", vertex) : String.Format("fake({0})", id); }
+      { return id == 0 ? string.Format("real({0})", vertex) : string.Format("fake({0})", id); }
 
       public override bool Equals(object obj) { throw new NotImplementedException(); }
 
@@ -1302,7 +1302,7 @@ namespace Graph
       for (int i = 0; i < treeCount; i++)
       {
         IList<string> q = new ArrayList<string>();
-        string root = String.Format("[{0}]", i);
+        string root = string.Format("[{0}]", i);
         int lmax = height + root.Length;
         q.Add(root);
         while (!q.IsEmpty)
@@ -1658,7 +1658,7 @@ namespace Graph
       }
       else
       {
-        string testMethodName = String.Format("test{0}", args[0]);
+        string testMethodName = string.Format("test{0}", args[0]);
 
         System.Reflection.MethodInfo mi = typeof(Test).GetMethod(testMethodName,
             System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);

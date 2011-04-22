@@ -841,7 +841,7 @@ namespace C5UnitTests.trees.TreeBag
 
       for (int i = 0; i < a.Length; i++)
         if (a[i] != b[i])
-          return String.Format("{0}'th elements differ: {1} != {2}", i, a[i], b[i]);
+          return string.Format("{0}'th elements differ: {1} != {2}", i, a[i], b[i]);
 
       return "Alles klar";
     }
@@ -2175,10 +2175,10 @@ namespace C5UnitTests.trees.TreeBag
       private bool even(int i) { return i % 2 == 0; }
 
 
-      private string themap(int i) { return String.Format("AA {0,4} BB", i); }
+      private string themap(int i) { return string.Format("AA {0,4} BB", i); }
 
 
-      private string badmap(int i) { return String.Format("AA {0} BB", i); }
+      private string badmap(int i) { return string.Format("AA {0} BB", i); }
 
 
       private int appfield1;

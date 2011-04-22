@@ -364,7 +364,7 @@ namespace C5UnitTests
         public RadixFormatProvider(int radix)
         {
             if (radix < 2 || radix > 36)
-                throw new ArgumentException(String.Format(
+                throw new ArgumentException(string.Format(
                     "The radix \"{0}\" is not in the range 2..36.",
                     radix));
             _radixformatter = new RadixFormatter(radix);
@@ -385,7 +385,7 @@ namespace C5UnitTests
         public RadixFormatter(int radix)
         {
             if (radix < 2 || radix > 36)
-                throw new ArgumentException(String.Format(
+                throw new ArgumentException(string.Format(
                     "The radix \"{0}\" is not in the range 2..36.",
                     radix));
             this.radix = radix;

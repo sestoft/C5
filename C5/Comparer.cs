@@ -19,11 +19,7 @@
  SOFTWARE.
 */
 
-using C5;
 using System;
-using System.Reflection;
-using System.Reflection.Emit;
-using System.Diagnostics;
 using SCG = System.Collections.Generic;
 
 namespace C5
@@ -112,7 +108,7 @@ namespace C5
           return cachedComparer = (SCG.IComparer<T>)(c.GetConstructor(System.Type.EmptyTypes).Invoke(null));
         }
 
-        throw new NotComparableException(String.Format("Cannot make comparer for type {0}", t));
+        throw new NotComparableException(string.Format("Cannot make comparer for type {0}", t));
       }
     }
   }

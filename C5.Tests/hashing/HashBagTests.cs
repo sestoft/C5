@@ -472,7 +472,7 @@ namespace C5UnitTests.hashtable.bag
 
       for (int i = 0; i < a.Length; i++)
         if (a[i] != b[i])
-          return String.Format("{0}'th elements differ: {1} != {2}", i, a[i], b[i]);
+          return string.Format("{0}'th elements differ: {1} != {2}", i, a[i], b[i]);
 
       return "Alles klar";
     }

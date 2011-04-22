@@ -4324,12 +4324,12 @@ namespace C5
         {
             if (n == null)
             {
-                //	System.Console.WriteLine(space + "null");
+                //	System.Logger.Log(space + "null");
             }
             else
             {
                 minidump(n.right, space + "  ");
-                Console.WriteLine(String.Format("{0} {4} (size={1}, items={8}, h={2}, gen={3}, id={6}){7}", space + n.item,
+                Logger.Log(string.Format("{0} {4} (size={1}, items={8}, h={2}, gen={3}, id={6}){7}", space + n.item,
 #if MAINTAIN_SIZE
  n.size,
 #else
@@ -4344,9 +4344,9 @@ namespace C5
          0,
 #if NCP
 #if SEPARATE_EXTRA
-				n.extra == null ? "" : String.Format(" [extra: lg={0}, c={1}, i={2}]", n.extra.lastgeneration, n.extra.leftnode ? "L" : "R", n.extra.oldref == null ? "()" : "" + n.extra.oldref.item),
+				n.extra == null ? "" : string.Format(" [extra: lg={0}, c={1}, i={2}]", n.extra.lastgeneration, n.extra.leftnode ? "L" : "R", n.extra.oldref == null ? "()" : "" + n.extra.oldref.item),
 #else
- n.lastgeneration == -1 ? "" : String.Format(" [extra: lg={0}, c={1}, i={2}]", n.lastgeneration, n.leftnode ? "L" : "R", n.oldref == null ? "()" : "" + n.oldref.item),
+ n.lastgeneration == -1 ? "" : string.Format(" [extra: lg={0}, c={1}, i={2}]", n.lastgeneration, n.leftnode ? "L" : "R", n.oldref == null ? "()" : "" + n.oldref.item),
 #endif
 #else
 				"",
@@ -4375,7 +4375,7 @@ namespace C5
         [Tested(via = "Sawtooth")]
         public void dump(string msg)
         {
-            Console.WriteLine(String.Format(">>>>>>>>>>>>>>>>>>> dump {0} (count={1}, blackdepth={2}, depth={3}, gen={4})", msg, size, blackdepth,
+            Logger.Log(string.Format(">>>>>>>>>>>>>>>>>>> dump {0} (count={1}, blackdepth={2}, depth={3}, gen={4})", msg, size, blackdepth,
             0
             ,
 #if NCP
@@ -4383,7 +4383,7 @@ namespace C5
 #endif
 ));
             minidump(root, "");
-            check("", Console.Out); Console.WriteLine("<<<<<<<<<<<<<<<<<<<");
+            check(""); Logger.Log("<<<<<<<<<<<<<<<<<<<");
         }
 
 
@@ -4394,51 +4394,50 @@ namespace C5
         /// <param name="err">Extra (error)message to include</param>
         void dump(string msg, string err)
         {
-            Console.WriteLine(String.Format(">>>>>>>>>>>>>>>>>>> dump {0} (count={1}, blackdepth={2}, depth={3}, gen={4})", msg, size, blackdepth,
+            Logger.Log(string.Format(">>>>>>>>>>>>>>>>>>> dump {0} (count={1}, blackdepth={2}, depth={3}, gen={4})", msg, size, blackdepth,
             0
             ,
 #if NCP
  generation
 #endif
 ));
-            minidump(root, ""); Console.Write(err);
-            Console.WriteLine("<<<<<<<<<<<<<<<<<<<");
+            minidump(root, ""); Logger.Log(err);
+            Logger.Log("<<<<<<<<<<<<<<<<<<<");
         }
 
 
         /// <summary>
-        /// Print warning m on o if b is false.
+        /// Print warning m on logger if b is false.
         /// </summary>
         /// <param name="b">Condition that should hold</param>
         /// <param name="n">Place (used for id display)</param>
         /// <param name="m">Message</param>
-        /// <param name="o">Output stream</param>
         /// <returns>b</returns>
-        bool massert(bool b, Node n, string m, System.IO.TextWriter o)
+        bool massert(bool b, Node n, string m)
         {
-            if (!b) o.WriteLine("*** Node (item={0}, id={1}): {2}", n.item,
+            if (!b) Logger.Log(string.Format("*** Node (item={0}, id={1}): {2}", n.item,
               0
-              , m);
+              , m));
 
             return b;
         }
 
 
-        bool rbminicheck(Node n, bool redp, System.IO.TextWriter o, out T min, out T max, out int blackheight)
+        bool rbminicheck(Node n, bool redp, out T min, out T max, out int blackheight)
         {//Red-Black invariant
             bool res = true;
 
-            res = massert(!(n.red && redp), n, "RED parent of RED node", o) && res;
-            res = massert(n.left == null || n.right != null || n.left.red, n, "Left child black, but right child empty", o) && res;
-            res = massert(n.right == null || n.left != null || n.right.red, n, "Right child black, but left child empty", o) && res;
+            res = massert(!(n.red && redp), n, "RED parent of RED node") && res;
+            res = massert(n.left == null || n.right != null || n.left.red, n, "Left child black, but right child empty") && res;
+            res = massert(n.right == null || n.left != null || n.right.red, n, "Right child black, but left child empty") && res;
 #if BAG
       bool sb = n.size == (n.left == null ? 0 : n.left.size) + (n.right == null ? 0 : n.right.size) + n.items;
 
-      res = massert(sb, n, "Bad size", o) && res;
+      res = massert(sb, n, "Bad size") && res;
 #elif MAINTAIN_SIZE
             bool sb = n.size == (n.left == null ? 0 : n.left.size) + (n.right == null ? 0 : n.right.size) + 1;
 
-            res = massert(sb, n, "Bad size", o) && res;
+            res = massert(sb, n, "Bad size") && res;
 #endif
             min = max = n.item;
 
@@ -4447,17 +4446,17 @@ namespace C5
 
             if (n.left != null)
             {
-                res = rbminicheck(n.left, n.red, o, out min, out otherext, out lbh) && res;
-                res = massert(comparer.Compare(n.item, otherext) > 0, n, "Value not > all left children", o) && res;
+                res = rbminicheck(n.left, n.red, out min, out otherext, out lbh) && res;
+                res = massert(comparer.Compare(n.item, otherext) > 0, n, "Value not > all left children") && res;
             }
 
             if (n.right != null)
             {
-                res = rbminicheck(n.right, n.red, o, out otherext, out max, out rbh) && res;
-                res = massert(comparer.Compare(n.item, otherext) < 0, n, "Value not < all right children", o) && res;
+                res = rbminicheck(n.right, n.red, out otherext, out max, out rbh) && res;
+                res = massert(comparer.Compare(n.item, otherext) < 0, n, "Value not < all right children") && res;
             }
 
-            res = massert(rbh == lbh, n, "Different blackheights of children", o) && res;
+            res = massert(rbh == lbh, n, "Different blackheights of children") && res;
             blackheight = n.red ? rbh : rbh + 1;
             return res;
         }
@@ -4467,7 +4466,7 @@ namespace C5
 
 #if NCP
 
-        bool rbminisnapcheck(Node n, System.IO.TextWriter o, out int size, out T min, out T max)
+        bool rbminisnapcheck(Node n, out int size, out T min, out T max)
         {
             bool res = true;
 
@@ -4483,8 +4482,8 @@ namespace C5
 #endif
             if (child != null)
             {
-                res = rbminisnapcheck(child, o, out lsz, out min, out otherext) && res;
-                res = massert(comparer.Compare(n.item, otherext) > 0, n, "Value not > all left children", o) && res;
+                res = rbminisnapcheck(child, out lsz, out min, out otherext) && res;
+                res = massert(comparer.Compare(n.item, otherext) > 0, n, "Value not > all left children") && res;
             }
 
 #if SEPARATE_EXTRA
@@ -4494,8 +4493,8 @@ namespace C5
 #endif
             if (child != null)
             {
-                res = rbminisnapcheck(child, o, out rsz, out otherext, out max) && res;
-                res = massert(comparer.Compare(n.item, otherext) < 0, n, "Value not < all right children", o) && res;
+                res = rbminisnapcheck(child, out rsz, out otherext, out max) && res;
+                res = massert(comparer.Compare(n.item, otherext) < 0, n, "Value not < all right children") && res;
             }
 #if BAG
       size = n.items + lsz + rsz;
@@ -4515,9 +4514,8 @@ namespace C5
         public bool Check(string name)
         {
             System.Text.StringBuilder e = new System.Text.StringBuilder();
-            System.IO.TextWriter o = new System.IO.StringWriter(e);
 
-            if (!check(name, o))
+            if (!check(name))
                 return true;
             else
             {
@@ -4535,14 +4533,14 @@ namespace C5
         public bool Check()
         {
             //return check("", System.IO.TextWriter.Null);
-            //Console.WriteLine("bamse");
+            //Logger.Log("bamse");
             if (!isValid)
                 return true;
             return Check("-");
         }
 
 
-        bool check(string msg, System.IO.TextWriter o)
+        bool check(string msg)
         {
             if (root != null)
             {
@@ -4551,19 +4549,19 @@ namespace C5
 #if NCP
                 if (isSnapShot)
                 {
-                    //Console.WriteLine("Im'a snapshot");
+                    //Logger.Log("Im'a snapshot");
                     int thesize;
-                    bool rv = rbminisnapcheck(root, o, out thesize, out min, out max);
+                    bool rv = rbminisnapcheck(root, out thesize, out min, out max);
 
-                    rv = massert(size == thesize, root, "bad snapshot size", o) && rv;
+                    rv = massert(size == thesize, root, "bad snapshot size") && rv;
                     return !rv;
                 }
 #endif
-                bool res = rbminicheck(root, false, o, out min, out max, out blackheight);
-                res = massert(blackheight == blackdepth, root, "bad blackh/d", o) && res;
-                res = massert(!root.red, root, "root is red", o) && res;
+                bool res = rbminicheck(root, false, out min, out max, out blackheight);
+                res = massert(blackheight == blackdepth, root, "bad blackh/d") && res;
+                res = massert(!root.red, root, "root is red") && res;
 #if MAINTAIN_SIZE
-                res = massert(root.size == size, root, "count!=root.size", o) && res;
+                res = massert(root.size == size, root, "count!=root.size") && res;
 #endif
                 return !res;
             }

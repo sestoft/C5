@@ -56,7 +56,7 @@ namespace PointLocation
 
         public override string ToString()
         {
-            return String.Format("[({0:G5};{1:G5})->({2:G5};{3:G5})/R:{4} L:{5}]", xs, ys, xe, ye, right, left);
+            return string.Format("[({0:G5};{1:G5})->({2:G5};{3:G5})/R:{4} L:{5}]", xs, ys, xe, ye, right, left);
         }
     }
 
@@ -615,7 +615,7 @@ namespace PointLocation
                 /*if (cell < 0 || cell < 0 || cell >= maxi || cell >= maxj)
                   return "Outside";
 	    
-                  return String.Format("{0}{1}", i2l(cell), cell);*/
+                  return string.Format("{0}{1}", i2l(cell), cell);*/
             }
 
 

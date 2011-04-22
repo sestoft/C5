@@ -19,11 +19,7 @@
  SOFTWARE.
 */
 
-using C5;
 using System;
-using System.Reflection;
-using System.Reflection.Emit;
-using System.Diagnostics;
 using System.Text;
 
 namespace C5

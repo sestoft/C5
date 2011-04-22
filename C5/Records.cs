@@ -19,11 +19,7 @@
  SOFTWARE.
 */
 
-using C5;
 using System;
-using System.Reflection;
-using System.Reflection.Emit;
-using System.Diagnostics;
 
 namespace C5
 {
@@ -130,7 +126,7 @@ namespace C5
     /// <returns></returns>
     public override string ToString()
     {
-      return String.Format("({0}, {1})", X1, X2);
+      return string.Format("({0}, {1})", X1, X2);
     }
 
     #region IShowable Members
@@ -281,7 +277,7 @@ namespace C5
     /// <returns></returns>
     public override string ToString()
     {
-      return String.Format("({0}, {1}, {2})", X1, X2, X3);
+      return string.Format("({0}, {1}, {2})", X1, X2, X3);
     }
     #region IShowable Members
 
@@ -446,7 +442,7 @@ namespace C5
     /// <returns></returns>
     public override string ToString()
     {
-      return String.Format("({0}, {1}, {2}, {3})", X1, X2, X3, X4);
+      return string.Format("({0}, {1}, {2}, {3})", X1, X2, X3, X4);
     }
     #region IShowable Members
 

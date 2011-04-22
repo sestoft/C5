@@ -20,8 +20,6 @@
 */
 
 using System;
-using System.Diagnostics;
-using SCG = System.Collections.Generic;
 
 namespace C5
 {
@@ -361,7 +359,7 @@ namespace C5
     /// <returns></returns>
     public override string ToString()
     {
-      return String.Format("(ItemAtEventArgs {0} '{1}')", Index, Item);
+      return string.Format("(ItemAtEventArgs {0} '{1}')", Index, Item);
     }
   }
 
@@ -391,7 +389,7 @@ namespace C5
     /// <returns></returns>
     public override string ToString()
     {
-      return String.Format("(ItemCountEventArgs {0} '{1}')", Count, Item);
+      return string.Format("(ItemCountEventArgs {0} '{1}')", Count, Item);
     }
   }
 
@@ -423,7 +421,7 @@ namespace C5
     /// <returns></returns>
     public override string ToString()
     {
-      return String.Format("(ClearedEventArgs {0} {1})", Count, Full);
+      return string.Format("(ClearedEventArgs {0} {1})", Count, Full);
     }
   }
 
@@ -450,7 +448,7 @@ namespace C5
     /// <returns></returns>
     public override string ToString()
     {
-      return String.Format("(ClearedRangeEventArgs {0} {1} {2})", Count, Full, Start);
+      return string.Format("(ClearedRangeEventArgs {0} {1} {2})", Count, Full, Start);
     }
   }
 

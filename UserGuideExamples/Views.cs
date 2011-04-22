@@ -51,7 +51,7 @@ namespace Views {
       foreach (IList<char> u in views) {
         foreach (IList<char> w in views) {
           int len = OverlapLength(u, w);
-          Console.Write(len >= 0 ? String.Format("{0}", len) : " ");
+          Console.Write(len >= 0 ? string.Format("{0}", len) : " ");
         }
         Console.WriteLine();
       }   

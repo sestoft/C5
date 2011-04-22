@@ -19,10 +19,8 @@
  SOFTWARE.
 */
 
-using System;
 using C5;
 using NUnit.Framework;
-using SCG = System.Collections.Generic;
 
 namespace C5UnitTests.Templates.Extensible
 {
@@ -56,7 +54,7 @@ namespace C5UnitTests.Templates.Extensible
       object clone = extensible.Clone();
       Assert.IsNotNull(clone);
       Assert.AreEqual(typeof(U), clone.GetType(),
-        String.Format("Wrong type '{0}' of clone of '{1}'", clone.GetType(), typeof(U)));
+        string.Format("Wrong type '{0}' of clone of '{1}'", clone.GetType(), typeof(U)));
       U theClone = clone as U;
       Assert.IsTrue(theClone.Check(), "Clone does not pass Check()");
       if (typeof(ICollection<int>).IsAssignableFrom(typeof(U)))
@@ -97,7 +95,7 @@ namespace C5UnitTests.Templates.Extensible
 
       Assert.IsNotNull(clone);
       Assert.AreEqual(typeof(U), clone.GetType(),
-        String.Format("Wrong type '{0}' of clone of '{1}'", clone.GetType(), typeof(U)));
+        string.Format("Wrong type '{0}' of clone of '{1}'", clone.GetType(), typeof(U)));
       U theClone = clone as U;
       if (typeof(IExtensible<int>).IsAssignableFrom(typeof(U)))
         Assert.IsTrue(((IExtensible<int>)theClone).Check(), "Clone does not pass Check()");
@@ -143,7 +141,7 @@ namespace C5UnitTests.Templates.Extensible
 
       Assert.IsNotNull(clone);
       Assert.AreEqual(typeof(U), clone.GetType(),
-        String.Format("Wrong type '{0}' of clone of '{1}'", clone.GetType(), typeof(U)));
+        string.Format("Wrong type '{0}' of clone of '{1}'", clone.GetType(), typeof(U)));
       U theClone = clone as U;
       Assert.IsTrue(theClone.Check(), "Clone does not pass Check()");
 
