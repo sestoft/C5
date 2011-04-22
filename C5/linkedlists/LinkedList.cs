@@ -19,8 +19,6 @@
  SOFTWARE.
 */
 
-#define HASHINDEXnot
-
 using System;
 using SCG = System.Collections.Generic;
 
