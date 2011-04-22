@@ -26,20 +26,22 @@
 
 using System;
 using C5;
-using SCG = System.Collections.Generic;
 
-namespace MyCloningTest {
-  class MyTest {
-    public static void Main(String[] args) {
-      IList<int> lst = new ArrayList<int>();
-      lst.AddAll(new int[] { 2, 3, 5, 7, 11, 13 });
-      Console.WriteLine(lst);
-      IList<int> v1 = lst.ViewOf(7);
-      Console.WriteLine(v1);
-      IList<int> v2 = (IList<int>)v1.Clone();
-      v2.Slide(1);
-      Console.WriteLine(v1);
-      Console.WriteLine(v2);
+namespace MyCloningTest
+{
+    class MyTest
+    {
+        public static void Main(String[] args)
+        {
+            IList<int> lst = new ArrayList<int>();
+            lst.AddAll(new[] { 2, 3, 5, 7, 11, 13 });
+            Console.WriteLine(lst);
+            IList<int> v1 = lst.ViewOf(7);
+            Console.WriteLine(v1);
+            IList<int> v2 = (IList<int>)v1.Clone();
+            v2.Slide(1);
+            Console.WriteLine(v1);
+            Console.WriteLine(v2);
+        }
     }
-  }
 }

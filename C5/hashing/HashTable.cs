@@ -986,16 +986,15 @@ namespace C5
         /// <summary>
         /// Remove all items in a supplied collection from this set.
         /// </summary>
-        /// <typeparam name="U"></typeparam>
         /// <param name="items">The items to remove.</param>
         [Tested]
-        public virtual void RemoveAll<U>(SCG.IEnumerable<U> items) where U : T
+        public virtual void RemoveAll(SCG.IEnumerable<T> items)
         {
             updatecheck();
             RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(this);
             bool raise = raiseHandler.MustFire;
             T jtem;
-            foreach (U item in items)
+            foreach (var item in items)
             { jtem = item; if (remove(ref jtem) && raise) raiseHandler.Remove(jtem); }
 #if SHRINK
 			if (size < resizethreshhold / 2 && resizethreshhold > 16)
@@ -1031,17 +1030,16 @@ namespace C5
         /// <summary>
         /// Remove all items *not* in a supplied collection from this set.
         /// </summary>
-        /// <typeparam name="U"></typeparam>
         /// <param name="items">The items to retain</param>
         [Tested]
-        public virtual void RetainAll<U>(SCG.IEnumerable<U> items) where U : T
+        public virtual void RetainAll(SCG.IEnumerable<T> items)
         {
             updatecheck();
 
             HashSet<T> aux = new HashSet<T>(EqualityComparer);
 
             //This only works for sets:
-            foreach (U item in items)
+            foreach (var item in items)
                 if (Contains(item))
                 {
                     T jtem = item;
@@ -1087,12 +1085,11 @@ namespace C5
         /// (ignoring multiplicities). 
         /// </summary>
         /// <param name="items">The items to look for.</param>
-        /// <typeparam name="U"></typeparam>
         /// <returns>True if all items are found.</returns>
         [Tested]
-        public virtual bool ContainsAll<U>(SCG.IEnumerable<U> items) where U : T
+        public virtual bool ContainsAll(SCG.IEnumerable<T> items)
         {
-            foreach (U item in items)
+            foreach (var item in items)
                 if (!Contains(item))
                     return false;
             return true;
@@ -1340,10 +1337,9 @@ namespace C5
         /// collection has set semantics, only items not already in the collection
         /// will be added.
         /// </summary>
-        /// <typeparam name="U">The type of items to add</typeparam>
         /// <param name="items">The items to add</param>
         [Tested]
-        public virtual void AddAll<U>(SCG.IEnumerable<U> items) where U : T
+        public virtual void AddAll(SCG.IEnumerable<T> items)
         {
             updatecheck();
             bool wasChanged = false;

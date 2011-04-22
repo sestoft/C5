@@ -157,10 +157,9 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <typeparam name="U"></typeparam>
         /// <param name="i"></param>
         /// <param name="items"></param>
-        public void InsertAll<U>(int i, System.Collections.Generic.IEnumerable<U> items) where U : T
+        public void InsertAll(int i, System.Collections.Generic.IEnumerable<T> items)
         {
             throw new FixedSizeCollectionException();
         }
@@ -446,10 +445,9 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <typeparam name="U"></typeparam>
         /// <param name="items"></param>
         /// <returns></returns>
-        public bool ContainsAll<U>(System.Collections.Generic.IEnumerable<U> items) where U : T
+        public bool ContainsAll(System.Collections.Generic.IEnumerable<T> items)
         { return innerlist.ContainsAll(items); }
 
         /// <summary>
@@ -520,9 +518,8 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <typeparam name="U"></typeparam>
         /// <param name="items"></param>
-        public void RemoveAll<U>(System.Collections.Generic.IEnumerable<U> items) where U : T { throw new FixedSizeCollectionException(); }
+        public void RemoveAll(System.Collections.Generic.IEnumerable<T> items) { throw new FixedSizeCollectionException(); }
 
         /// <summary>
         /// 
@@ -532,9 +529,8 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <typeparam name="U"></typeparam>
         /// <param name="items"></param>
-        public void RetainAll<U>(System.Collections.Generic.IEnumerable<U> items) where U : T { throw new FixedSizeCollectionException(); }
+        public void RetainAll(System.Collections.Generic.IEnumerable<T> items) { throw new FixedSizeCollectionException(); }
 
         #endregion
 
@@ -583,9 +579,8 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <typeparam name="U"></typeparam>
         /// <param name="items"></param>
-        public void AddAll<U>(System.Collections.Generic.IEnumerable<U> items) where U : T
+        public void AddAll(System.Collections.Generic.IEnumerable<T> items)
         {
             throw new FixedSizeCollectionException();
         }

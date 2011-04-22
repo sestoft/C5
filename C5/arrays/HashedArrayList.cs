@@ -873,16 +873,15 @@ namespace C5
         /// &gt; the size of the collection.</exception>
         /// <param name="index">Index to start inserting at</param>
         /// <param name="items">Items to insert</param>
-        /// <typeparam name="U"></typeparam>
 #endif
         [Tested]
-        public virtual void InsertAll<U>(int index, SCG.IEnumerable<U> items) where U : T
+        public virtual void InsertAll(int index, SCG.IEnumerable<T> items)
         {
             updatecheck();
             if (index < 0 || index > size)
                 throw new IndexOutOfRangeException();
             index += offset;
-            int toadd = EnumerableBase<U>.countItems(items);
+            int toadd = countItems(items);
             if (toadd == 0)
                 return;
             if (toadd + underlyingsize > array.Length)
@@ -1732,10 +1731,9 @@ namespace C5
         /// Remove all items in another collection from this one, taking multiplicities into account.
         /// Matching items will be removed from the front. Current implementation is not optimal.
         /// </summary>
-        /// <typeparam name="U"></typeparam>
         /// <param name="items">The items to remove.</param>
         [Tested]
-        public virtual void RemoveAll<U>(SCG.IEnumerable<U> items) where U : T
+        public virtual void RemoveAll(SCG.IEnumerable<T> items)
         {
             updatecheck();
             if (size == 0)
@@ -1896,10 +1894,9 @@ namespace C5
         /// Remove all items not in some other collection from this one, taking multiplicities into account.
         /// Items are retained front first.  
         /// </summary>
-        /// <typeparam name="U"></typeparam>
         /// <param name="items">The items to retain.</param>
         [Tested]
-        public virtual void RetainAll<U>(SCG.IEnumerable<U> items) where U : T
+        public virtual void RetainAll(SCG.IEnumerable<T> items)
         {
             updatecheck();
             if (size == 0)
@@ -2039,10 +2036,9 @@ namespace C5
         /// Current implementation is not optimal.
         /// </summary>
         /// <param name="items">The </param>
-        /// <typeparam name="U"></typeparam>
         /// <returns>True if all values in <code>items</code>is in this collection.</returns>
         [Tested]
-        public virtual bool ContainsAll<U>(SCG.IEnumerable<U> items) where U : T
+        public virtual bool ContainsAll(SCG.IEnumerable<T> items)
         {
             validitycheck();
 #if HASHINDEX
@@ -2321,13 +2317,12 @@ namespace C5
         /// <summary>
         /// Add the elements from another collection to this collection.
         /// </summary>
-        /// <typeparam name="U"></typeparam>
         /// <param name="items"></param>
         [Tested]
-        public virtual void AddAll<U>(SCG.IEnumerable<U> items) where U : T
+        public virtual void AddAll(SCG.IEnumerable<T> items)
         {
             updatecheck();
-            int toadd = EnumerableBase<U>.countItems(items);
+            int toadd = countItems(items);
             if (toadd == 0)
                 return;
 

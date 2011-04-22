@@ -83,11 +83,11 @@ namespace KeywordRecognition
         static KeywordRecognition()
         {
             kw1 = new HashSet<String>();
-            kw1.AddAll<string>(keywordArray);
+            kw1.AddAll(keywordArray);
             kw2 = new TreeSet<String>(new SC());
-            kw2.AddAll<string>(keywordArray);
+            kw2.AddAll(keywordArray);
             kw3 = new SortedArray<String>(new SC());
-            kw3.AddAll<string>(keywordArray);
+            kw3.AddAll(keywordArray);
             kw4 = new SCG.Dictionary<String, bool>();
             foreach (String keyword in keywordArray)
                 kw4.Add(keyword, false);

@@ -477,10 +477,9 @@ namespace C5
         /// Add the elements from another collection with a more specialized item type 
         /// to this collection. 
         /// </summary>
-        /// <typeparam name="U">The type of items to add</typeparam>
         /// <param name="items">The items to add</param>
         [Tested]
-        public void AddAll<U>(SCG.IEnumerable<U> items) where U : T
+        public void AddAll(SCG.IEnumerable<T> items)
         {
             stamp++;
             int oldsize = size;

@@ -288,16 +288,15 @@ namespace C5
         /// <summary>
         /// Remove all items in a supplied collection from this bag, counting multiplicities.
         /// </summary>
-        /// <typeparam name="U"></typeparam>
         /// <param name="items">The items to remove.</param>
         [Tested]
-        public virtual void RemoveAll<U>(SCG.IEnumerable<U> items) where U : T
+        public virtual void RemoveAll(SCG.IEnumerable<T> items)
         {
 #warning Improve if items is a counting bag
             updatecheck();
             bool mustRaise = (ActiveEvents & (EventTypeEnum.Changed | EventTypeEnum.Removed)) != 0;
             RaiseForRemoveAllHandler raiseHandler = mustRaise ? new RaiseForRemoveAllHandler(this) : null;
-            foreach (U item in items)
+            foreach (T item in items)
             {
                 KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, 0);
                 if (dict.Find(ref p))
@@ -341,16 +340,15 @@ namespace C5
         /// Remove all items *not* in a supplied collection from this bag,
         /// counting multiplicities.
         /// </summary>
-        /// <typeparam name="U"></typeparam>
         /// <param name="items">The items to retain</param>
         [Tested]
-        public virtual void RetainAll<U>(SCG.IEnumerable<U> items) where U : T
+        public virtual void RetainAll(SCG.IEnumerable<T> items)
         {
             updatecheck();
 
             HashBag<T> res = new HashBag<T>(itemequalityComparer);
 
-            foreach (U item in items)
+            foreach (T item in items)
             {
                 KeyValuePair<T, int> p = new KeyValuePair<T, int>(item);
                 if (dict.Find(ref p))
@@ -404,10 +402,9 @@ namespace C5
         /// (counting multiplicities). 
         /// </summary>
         /// <param name="items">The items to look for.</param>
-        /// <typeparam name="U"></typeparam>
         /// <returns>True if all items are found.</returns>
         [Tested]
-        public virtual bool ContainsAll<U>(SCG.IEnumerable<U> items) where U : T
+        public virtual bool ContainsAll(SCG.IEnumerable<T> items)
         {
             HashBag<T> res = new HashBag<T>(itemequalityComparer);
 
@@ -576,9 +573,8 @@ namespace C5
         /// Add the elements from another collection with a more specialized item type 
         /// to this collection. 
         /// </summary>
-        /// <typeparam name="U">The type of items to add</typeparam>
         /// <param name="items">The items to add</param>
-        public virtual void AddAll<U>(SCG.IEnumerable<U> items) where U : T
+        public virtual void AddAll(SCG.IEnumerable<T> items)
         {
             updatecheck();
 #warning We could easily raise bag events

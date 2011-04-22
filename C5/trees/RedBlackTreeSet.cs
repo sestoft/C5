@@ -968,10 +968,9 @@ namespace C5
         /// collection has set semantics, only items not already in the collection
         /// will be added.
         /// </summary>
-        /// <typeparam name="U">The type of items to add</typeparam>
         /// <param name="items">The items to add</param>
         [Tested]
-        public void AddAll<U>(SCG.IEnumerable<U> items) where U : T
+        public void AddAll(SCG.IEnumerable<T> items)
         {
             if (!isValid)
                 throw new ViewDisposedException("Snapshot has been disposed");
@@ -1012,9 +1011,8 @@ namespace C5
         /// not to be in increasing order.
         /// </summary>
         /// <param name="items">The collection to add.</param>
-        /// <typeparam name="U"></typeparam>
         [Tested]
-        public void AddSorted<U>(SCG.IEnumerable<U> items) where U : T
+        public void AddSorted(SCG.IEnumerable<T> items)
         {
             if (size > 0)
                 AddAll(items);
@@ -1091,9 +1089,9 @@ namespace C5
         }
 
 
-        void addSorted<U>(SCG.IEnumerable<U> items, bool safe, bool raise) where U : T
+        void addSorted(SCG.IEnumerable<T> items, bool safe, bool raise)
         {
-            SCG.IEnumerator<U> e = items.GetEnumerator(); ;
+            SCG.IEnumerator<T> e = items.GetEnumerator(); ;
             if (size > 0)
                 throw new InternalException("This can't happen");
 
@@ -1909,10 +1907,9 @@ namespace C5
         /// Remove all items in another collection from this one. If this collection
         /// has bag semantics, take multiplicities into account.
         /// </summary>
-        /// <typeparam name="U"></typeparam>
         /// <param name="items">The items to remove.</param>
         [Tested]
-        public void RemoveAll<U>(SCG.IEnumerable<U> items) where U : T
+        public void RemoveAll(SCG.IEnumerable<T> items)
         {
             if (!isValid)
                 throw new ViewDisposedException("Snapshot has been disposed");
@@ -1941,10 +1938,9 @@ namespace C5
         /// Remove all items not in some other collection from this one. If this collection
         /// has bag semantics, take multiplicities into account.
         /// </summary>
-        /// <typeparam name="U"></typeparam>
         /// <param name="items">The items to retain.</param>
         [Tested]
-        public void RetainAll<U>(SCG.IEnumerable<U> items) where U : T
+        public void RetainAll(SCG.IEnumerable<T> items)
         {
             if (!isValid)
                 throw new ViewDisposedException("Snapshot has been disposed");
@@ -2011,10 +2007,9 @@ namespace C5
         /// are not taken into account.
         /// </summary>
         /// <param name="items">The </param>
-        /// <typeparam name="U"></typeparam>
         /// <returns>True if all values in <code>items</code>is in this collection.</returns>
         [Tested]
-        public bool ContainsAll<U>(SCG.IEnumerable<U> items) where U : T
+        public bool ContainsAll(SCG.IEnumerable<T> items)
         {
             //TODO: fix bag implementation
             if (!isValid)

@@ -550,9 +550,8 @@ namespace C5
     /// Check if all items in the argument is in the wrapped collection
     /// </summary>
     /// <param name="items">The items</param>
-    /// <typeparam name="U"></typeparam>
     /// <returns>True if so</returns>
-    public virtual bool ContainsAll<U>(SCG.IEnumerable<U> items) where U : T { return collection.ContainsAll(items); }
+    public virtual bool ContainsAll(SCG.IEnumerable<T> items) { return collection.ContainsAll(items); }
 
     /// <summary> 
     /// Search for an item in the wrapped collection
@@ -638,9 +637,8 @@ namespace C5
     /// <summary>
     /// </summary>
     /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
-    /// <typeparam name="U"></typeparam>
     /// <param name="items"></param>
-    public virtual void RemoveAll<U>(SCG.IEnumerable<U> items) where U : T
+    public virtual void RemoveAll(SCG.IEnumerable<T> items)
     { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
 
     /// <summary>
@@ -653,9 +651,8 @@ namespace C5
     /// <summary>
     /// </summary>
     /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
-    /// <typeparam name="U"></typeparam>
     /// <param name="items"></param>
-    public virtual void RetainAll<U>(SCG.IEnumerable<U> items) where U : T
+    public virtual void RetainAll(SCG.IEnumerable<T> items)
     { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
 
     /// <summary>
@@ -710,9 +707,8 @@ namespace C5
     /// <summary>
     /// </summary>
     /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
-    /// <typeparam name="U"></typeparam>
     /// <param name="items"></param>
-    public virtual void AddAll<U>(SCG.IEnumerable<U> items) where U : T
+    public virtual void AddAll(SCG.IEnumerable<T> items)
     { throw new ReadOnlyCollectionException(); }
 
     #endregion
@@ -1026,8 +1022,7 @@ namespace C5
     /// </summary>
     /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
     /// <param name="items"></param>
-    /// <typeparam name="U"></typeparam>
-    public void AddSorted<U>(SCG.IEnumerable<U> items) where U : T
+    public void AddSorted(SCG.IEnumerable<T> items)
     { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
 
     /// <summary>
@@ -1442,7 +1437,7 @@ namespace C5
     /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
     /// <param name="i"></param>
     /// <param name="items"></param>
-    public void InsertAll<U>(int i, SCG.IEnumerable<U> items) where U : T
+    public void InsertAll(int i, SCG.IEnumerable<T> items)
     { throw new ReadOnlyCollectionException("List is read only"); }
 
 

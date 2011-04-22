@@ -1184,7 +1184,7 @@ namespace C5
                 return new ProjectedDirectedCollectionValue(sorteddict.RangeAll());
             }
 
-            public void AddSorted<U>(SCG.IEnumerable<U> items) where U : K { throw new ReadOnlyCollectionException(); }
+            public void AddSorted(SCG.IEnumerable<K> items) { throw new ReadOnlyCollectionException(); }
 
             public void RemoveRangeFrom(K low) { throw new ReadOnlyCollectionException(); }
 
@@ -1219,7 +1219,7 @@ namespace C5
             }
 
 
-            public bool ContainsAll<U>(SCG.IEnumerable<U> items) where U : K
+            public bool ContainsAll(SCG.IEnumerable<K> items)
             {
                 //TODO: optimize?
                 foreach (K item in items)
@@ -1252,11 +1252,11 @@ namespace C5
 
             public void RemoveAllCopies(K item) { throw new ReadOnlyCollectionException(); }
 
-            public void RemoveAll<U>(SCG.IEnumerable<U> items) where U : K { throw new ReadOnlyCollectionException(); }
+            public void RemoveAll(SCG.IEnumerable<K> items) { throw new ReadOnlyCollectionException(); }
 
             public void Clear() { throw new ReadOnlyCollectionException(); }
 
-            public void RetainAll<U>(SCG.IEnumerable<U> items) where U : K { throw new ReadOnlyCollectionException(); }
+            public void RetainAll(SCG.IEnumerable<K> items) { throw new ReadOnlyCollectionException(); }
 
             #endregion
 
@@ -1272,8 +1272,6 @@ namespace C5
             void SCG.ICollection<K>.Add(K item) { throw new ReadOnlyCollectionException(); }
 
             public void AddAll(System.Collections.Generic.IEnumerable<K> items) { throw new ReadOnlyCollectionException(); }
-
-            public void AddAll<U>(System.Collections.Generic.IEnumerable<U> items) where U : K { throw new ReadOnlyCollectionException(); }
 
             public bool Check() { return sorteddict.Check(); }
 

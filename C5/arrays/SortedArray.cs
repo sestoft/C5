@@ -653,15 +653,14 @@ namespace C5
         /// not to be in increasing order.
         /// </summary>
         /// <param name="items">The collection to add.</param>
-        /// <typeparam name="U"></typeparam>
         [Tested]
-        public void AddSorted<U>(SCG.IEnumerable<U> items) where U : T
+        public void AddSorted(SCG.IEnumerable<T> items)
         {
             //Unless items have <=1 elements we would expect it to be
             //too expensive to do repeated inserts, thus:
             updatecheck();
 
-            int j = 0, i = 0, c = -1, itemcount = EnumerableBase<U>.countItems(items), numAdded = 0;
+            int j = 0, i = 0, c = -1, itemcount = countItems(items), numAdded = 0;
             SortedArray<T> res = new SortedArray<T>(size + itemcount, comparer);
             T lastitem = default(T);
             T[] addedItems = new T[itemcount];
@@ -1006,10 +1005,9 @@ namespace C5
         /// <summary>
         /// Remove all items in another collection from this one. 
         /// </summary>
-        /// <typeparam name="U"></typeparam>
         /// <param name="items">The items to remove.</param>
         [Tested]
-        public void RemoveAll<U>(SCG.IEnumerable<U> items) where U : T
+        public void RemoveAll(SCG.IEnumerable<T> items)
         {
             //This is O(m*logn) with n bits extra storage
             //(Not better to collect the m items and sort them)
@@ -1040,10 +1038,9 @@ namespace C5
         /// <summary>
         /// Remove all items not in some other collection from this one. 
         /// </summary>
-        /// <typeparam name="U"></typeparam>
         /// <param name="items">The items to retain.</param>
         [Tested]
-        public void RetainAll<U>(SCG.IEnumerable<U> items) where U : T
+        public void RetainAll(SCG.IEnumerable<T> items)
         {
             //This is O(m*logn) with n bits extra storage
             //(Not better to collect the m items and sort them)
@@ -1076,10 +1073,9 @@ namespace C5
         /// Multiplicities are not taken into account.
         /// </summary>
         /// <param name="items">The </param>
-        /// <typeparam name="U"></typeparam>
         /// <returns>True if all values in <code>items</code>is in this collection.</returns>
         [Tested]
-        public bool ContainsAll<U>(SCG.IEnumerable<U> items) where U : T
+        public bool ContainsAll(SCG.IEnumerable<T> items)
         {
             int tmp;
 
@@ -1218,12 +1214,11 @@ namespace C5
         /// collection has set semantics, only items not already in the collection
         /// will be added.
         /// </summary>
-        /// <typeparam name="U">The type of items to add</typeparam>
         /// <param name="items">The items to add</param>
         [Tested]
-        public void AddAll<U>(SCG.IEnumerable<U> items) where U : T
+        public void AddAll(SCG.IEnumerable<T> items)
         {
-            int toadd = EnumerableBase<U>.countItems(items), newsize = array.Length;
+            int toadd = countItems(items), newsize = array.Length;
 
             while (newsize < size + toadd) { newsize *= 2; }
 
