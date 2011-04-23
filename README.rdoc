@@ -45,7 +45,7 @@ library with various data structures and algorithms.
 However, it accepts the basic design of the CLI collection classes and therefore
 suffers from some of the same shortcommings, and also does not provide most of the
 advanced functionality (updatable views, snapshots, directed enumeration, priority 
-queye handles, ...) of C5.
+queue handles, ...) of C5.
 
 Thus, in our opinion, C5 provides the most powerful, well-structured and scalable
 generic collections library available for C#/CLI. 
