@@ -56,9 +56,17 @@ namespace C5UnitTests.hashtable.bag
         ICollection<int> coll;
         IFormatProvider rad16;
         [SetUp]
-        public void Init() { coll = Factory.New<int>(); rad16 = new RadixFormatProvider(16); }
+        public void Init()
+        {
+            Debugging.UseDeterministicHashing = true;
+            coll = Factory.New<int>(); rad16 = new RadixFormatProvider(16);
+        }
         [TearDown]
-        public void Dispose() { coll = null; rad16 = null; }
+        public void Dispose()
+        {
+            Debugging.UseDeterministicHashing = false;
+            coll = null; rad16 = null;
+        }
         [Test]
         public void Format()
         {
@@ -192,7 +200,11 @@ namespace C5UnitTests.hashtable.bag
 
 
         [SetUp]
-        public void Init() { hashbag = new HashBag<int>(); }
+        public void Init()
+        {
+            Debugging.UseDeterministicHashing = true;
+            hashbag = new HashBag<int>();
+        }
 
         [Test]
         [ExpectedException(typeof(NullReferenceException))]
@@ -388,7 +400,11 @@ namespace C5UnitTests.hashtable.bag
 
 
         [TearDown]
-        public void Dispose() { hashbag = null; }
+        public void Dispose()
+        {
+            Debugging.UseDeterministicHashing = false;
+            hashbag = null;
+        }
     }
 
     [TestFixture]
@@ -400,12 +416,17 @@ namespace C5UnitTests.hashtable.bag
         [SetUp]
         public void Init()
         {
+            Debugging.UseDeterministicHashing = true;
             list = new HashBag<int>(TenEqualityComparer.Default);
             pred = delegate(int i) { return i % 5 == 0; };
         }
 
         [TearDown]
-        public void Dispose() { list = null; }
+        public void Dispose()
+        {
+            Debugging.UseDeterministicHashing = false;
+            list = null;
+        }
 
         [Test]
         public void Find()
@@ -454,6 +475,7 @@ namespace C5UnitTests.hashtable.bag
         [SetUp]
         public void Init()
         {
+            Debugging.UseDeterministicHashing = true;
             hashbag = new HashBag<int>();
             a = new int[10];
             for (int i = 0; i < 10; i++)
@@ -462,7 +484,11 @@ namespace C5UnitTests.hashtable.bag
 
 
         [TearDown]
-        public void Dispose() { hashbag = null; }
+        public void Dispose()
+        {
+            Debugging.UseDeterministicHashing = false;
+            hashbag = null;
+        }
 
 
         private string aeq(int[] a, params int[] b)

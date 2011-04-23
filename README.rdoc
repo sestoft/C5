@@ -90,14 +90,8 @@ The library builds and runs on the latest versions of Mono.
    it using the NuGet Package Manager Console by typing: <tt>Install-Package
    Install-Package NUnit</tt>.
    
-   There are more than 1437 NUnit test cases which should execute in less
-   than 30 seconds.  All should pass when C5 is built in Debug mode.
-
-   Note: The Release builds of C5 use randomized hashing for efficiency,
-   whereas the Debug builds use deterministic hashing to simplify
-   testing.  This means that approximately 13 hashtable test cases will
-   fail (harmlessly) when C5 is built and tested in Release mode, using
-   File > Open > C5.Tests/bin/Release/C5.Tests.dll
+   There are more than 1400 NUnit test cases which should execute in less
+   than 30 seconds. All should pass.
 
 == License
 

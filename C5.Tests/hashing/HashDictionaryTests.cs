@@ -56,9 +56,19 @@ namespace C5UnitTests.hashtable.dictionary
         IDictionary<int, int> coll;
         IFormatProvider rad16;
         [SetUp]
-        public void Init() { coll = Factory.New<int, int>(); rad16 = new RadixFormatProvider(16); }
+        public void Init()
+        {
+            Debugging.UseDeterministicHashing = true;
+            coll = Factory.New<int, int>();
+            rad16 = new RadixFormatProvider(16);
+        }
         [TearDown]
-        public void Dispose() { coll = null; rad16 = null; }
+        public void Dispose()
+        {
+            Debugging.UseDeterministicHashing = false;
+            coll = null;
+            rad16 = null;
+        }
         [Test]
         public void Format()
         {

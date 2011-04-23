@@ -19,8 +19,9 @@
  SOFTWARE.
 */
 
-using System.Reflection;
 using System;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
 //
 // General Information about an assembly is controlled through the following 
@@ -36,6 +37,7 @@ using System;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
+[assembly: InternalsVisibleTo("C5.Tests")]
 //
 // Version information for an assembly consists of the following four values:
 //

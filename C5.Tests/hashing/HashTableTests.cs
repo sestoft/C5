@@ -64,6 +64,7 @@ namespace C5UnitTests.hashtable.set
             [SetUp]
             public void Init()
             {
+                Debugging.UseDeterministicHashing = true;
                 list = new HashSet<int>();
                 always = delegate { return true; };
                 never = delegate { return false; };
@@ -121,7 +122,11 @@ namespace C5UnitTests.hashtable.set
 
 
             [TearDown]
-            public void Dispose() { list = null; }
+            public void Dispose()
+            {
+                Debugging.UseDeterministicHashing = false;
+                list = null;
+            }
         }
 
 
@@ -205,9 +210,18 @@ namespace C5UnitTests.hashtable.set
             ICollection<int> coll;
             IFormatProvider rad16;
             [SetUp]
-            public void Init() { coll = Factory.New<int>(); rad16 = new RadixFormatProvider(16); }
+            public void Init()
+            {
+                Debugging.UseDeterministicHashing = true;
+                coll = Factory.New<int>(); rad16 = new RadixFormatProvider(16);
+            }
             [TearDown]
-            public void Dispose() { coll = null; rad16 = null; }
+            public void Dispose()
+            {
+                Debugging.UseDeterministicHashing = false;
+                coll = null;
+                rad16 = null;
+            }
             [Test]
             public void Format()
             {
@@ -291,12 +305,17 @@ namespace C5UnitTests.hashtable.set
             [SetUp]
             public void Init()
             {
+                Debugging.UseDeterministicHashing = true;
                 list = new HashSet<int>(TenEqualityComparer.Default);
                 pred = delegate(int i) { return i % 5 == 0; };
             }
 
             [TearDown]
-            public void Dispose() { list = null; }
+            public void Dispose()
+            {
+                Debugging.UseDeterministicHashing = false;
+                list = null;
+            }
 
             [Test]
             public void Find()
@@ -344,6 +363,7 @@ namespace C5UnitTests.hashtable.set
             [SetUp]
             public void Init()
             {
+                Debugging.UseDeterministicHashing = true;
                 hashset = new HashSet<int>();
                 a = new int[10];
                 for (int i = 0; i < 10; i++)
@@ -352,7 +372,11 @@ namespace C5UnitTests.hashtable.set
 
 
             [TearDown]
-            public void Dispose() { hashset = null; }
+            public void Dispose()
+            {
+                Debugging.UseDeterministicHashing = false;
+                hashset = null;
+            }
 
 
             private string aeq(int[] a, params int[] b)
@@ -475,7 +499,11 @@ namespace C5UnitTests.hashtable.set
 
 
             [SetUp]
-            public void Init() { hashset = new HashSet<int>(); }
+            public void Init()
+            {
+                Debugging.UseDeterministicHashing = true;
+                hashset = new HashSet<int>();
+            }
 
 
             [Test]
@@ -713,7 +741,11 @@ namespace C5UnitTests.hashtable.set
 
 
             [TearDown]
-            public void Dispose() { hashset = null; }
+            public void Dispose()
+            {
+                Debugging.UseDeterministicHashing = false;
+                hashset = null;
+            }
         }
 
         [TestFixture]

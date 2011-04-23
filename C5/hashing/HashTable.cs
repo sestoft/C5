@@ -125,12 +125,8 @@ namespace C5
         int resizethreshhold;
 
 #if RANDOMINTERHASHING
-#if DEBUG
-        const uint randomhashfactor = 1529784659;
-#else
-    private static readonly Random random = new Random();
-    uint randomhashfactor = (2 * (uint)random.Next() + 1) * 1529784659;
-#endif
+        private static readonly Random Random = new Random();
+        uint _randomhashfactor;
 #endif
 
         #endregion
@@ -237,7 +233,7 @@ namespace C5
 			//Note: *inverse  mod 2^32 is -1503427877
 			return (int)(((uint)hashval * 1529784659) >>bitsc); 
 #elif RANDOMINTERHASHING
-            return (int)(((uint)hashval * randomhashfactor) >> bitsc);
+            return (int)(((uint)hashval * _randomhashfactor) >> bitsc);
 #else
 			return indexmask & hashval;
 #endif
@@ -834,6 +830,8 @@ namespace C5
         public HashSet(int capacity, double fill, SCG.IEqualityComparer<T> itemequalityComparer)
             : base(itemequalityComparer)
         {
+            _randomhashfactor = (Debugging.UseDeterministicHashing) ? 1529784659 : (2 * (uint)Random.Next() + 1) * 1529784659;
+
             if (fill < 0.1 || fill > 0.9)
                 throw new ArgumentException("Fill outside valid range [0.1, 0.9]");
             if (capacity <= 0)
@@ -1058,10 +1056,8 @@ namespace C5
             resizethreshhold = aux.resizethreshhold;
             bits = aux.bits;
             bitsc = aux.bitsc;
-#if DEBUG
-#else
-      randomhashfactor = aux.randomhashfactor;
-#endif
+
+            _randomhashfactor = aux._randomhashfactor;
 
             if ((ActiveEvents & EventTypeEnum.Removed) != 0)
                 raiseForRemoveAll(wasRemoved);
