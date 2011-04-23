@@ -1,4 +1,4 @@
-﻿= Welcome to The C5 Generic Collection Library for C# and CLI
+﻿== Welcome to The C5 Generic Collection Library for C# and CLI
 
 The C5 library is a set of generic collection classes (or container classes)
 for the C# programming language and other generics-enabled languages on
@@ -8,7 +8,7 @@ The C5 library provides a wide range of classic data
 structures, rich funcionality, the best possible asumptotic time complexity,
 documented performance, and a thoroughly tested implementation.
 
-== Goals of the C5 library
+=== Goals of the C5 library
 
 The overall goal is for C5 to be a generic collection library for the C#
 programming language and the Common Language Infrastructure (CLI) whose 
