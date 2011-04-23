@@ -1,4 +1,4 @@
-﻿== Welcome to The C5 Generic Collection Library for C# and CLI
+= Welcome to The C5 Generic Collection Library for C# and CLI
 
 The C5 library is a set of generic collection classes (or container classes)
 for the C# programming language and other generics-enabled languages on
@@ -8,7 +8,7 @@ The C5 library provides a wide range of classic data
 structures, rich funcionality, the best possible asumptotic time complexity,
 documented performance, and a thoroughly tested implementation.
 
-=== Goals of the C5 library
+== Goals of the C5 library
 
 The overall goal is for C5 to be a generic collection library for the C#
 programming language and the Common Language Infrastructure (CLI) whose 
@@ -57,7 +57,7 @@ Collection Classes for C#</em>, although the library may be used from VB.NET, F#
 and other CLI languages, not just C#. It has nothing to do with a Microsoft
 Dynamics product that used to be called Concorde C5/Damgaard C5/Navision C5, nor a 
 real-time operation system called C5 (or Chorus), nor the C5 Corporation (system
-visualization), nor an Eclipse plug-in called C5, nor with cars such as the Citroën 
+visualization), nor an Eclipse plug-in called C5, nor with cars such as the Citro�n 
 C5 or Corvette C5 or Clive Sinclair's ill-fated C5 concept vehicle.
 
 The name may be inspired by the versatile C4 plastic explosive known from e.g.
