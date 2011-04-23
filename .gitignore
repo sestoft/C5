@@ -1,6 +1,9 @@
 # Untracked files:
+*.pidb
+*.userprefs
 *ReSharper*
 packages/*
+Help/*
 C5.suo
 C5/bin/*
 C5/obj/*

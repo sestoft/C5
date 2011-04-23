@@ -1136,8 +1136,7 @@ namespace C5
         /// Check if there exists an item  that satisfies a
         /// specific predicate in this collection and return the index of the first one.
         /// </summary>
-        /// <param name="predicate">A delegate 
-        /// (<see cref="T:Func`2"/> with <code>R == bool</code>) defining the predicate</param>
+        /// <param name="predicate">A delegate defining the predicate</param>
         /// <returns>the index, if found, a negative value else</returns>
         public int FindIndex(Func<T, bool> predicate)
         {
@@ -1155,8 +1154,7 @@ namespace C5
         /// Check if there exists an item  that satisfies a
         /// specific predicate in this collection and return the index of the last one.
         /// </summary>
-        /// <param name="predicate">A delegate 
-        /// (<see cref="T:Func`2"/> with <code>R == bool</code>) defining the predicate</param>
+        /// <param name="predicate">A delegate defining the predicate</param>
         /// <returns>the index, if found, a negative value else</returns>
         public int FindLastIndex(Func<T, bool> predicate)
         {
