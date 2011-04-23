@@ -1,5 +1,9 @@
 RELEASE NOTES FOR C5 GENERIC COLLECTION LIBRARY FOR C#/CLI
 ------------------------------
+Release 2.0.0 of 2011-?-?
+
+ * The version on Github is currently a 2.0.0 pre-release.
+   It is not backwards compatible with the 1.0 branch.
 
 Release 1.1.1 of 2010-12-17
 

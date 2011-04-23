@@ -1,5 +1,5 @@
 BUILDING THE C5 GENERIC COLLECTION LIBRARY FOR C#/CLI
-Updated 2010-12-17
+Updated 2011-04-23
 
 The C5 library can be built by opening the solution file C5.sln in the
 current directory with Microsoft Visual Studio 2010 or Microsoft
@@ -11,15 +11,10 @@ This will build C5 in file C5/bin/Release/C5.dll
 
 Building all in the C5.sln solution will also build these projects:
 
-  * The 'PreProcess' project generates some of the C5 sources by
-    preprocessing files.  This is necessary for the C5 build.
-
-  * The 'docNet' project generates on-line documentation; see below.
-
   * The 'UserGuideExample' project compiles the examples from chapter
     11 of the technical report ITU-TR-2006-76
 
-  * The 'nunit' project compiles the unit tests but does not run them;
+  * The 'C5.Tests' project compiles the unit tests but does not run them;
     see below.  An enormous number of compilation errors will result
     unless you have NUnit 2 installed.  The project is configured for
     NUnit version 2.5.9 and was tested with that version.
@@ -30,19 +25,8 @@ The build should complete with a few dozen compilation warnings.
 
 Generating the online documentation
 
- * Build C5 in Debug mode
-
- * Run docNet/dodoc.cmd, e.g. by double-clicking in Explorer
-
- * Press return
-
-The generation process should take less than 20 seconds.
-
-The generated documentation is in directory docNet/docbuild/ and
-subdirectories.  The start page is docNet/docbuild/frames.htm
-
-Note: The generated online documentation is currently incomplete.
-Please refer to the Technical Report (ITU-TR-2006-76) instead.
+Documentation can be built using Sandcastle (http://sandcastle.codeplex.com/)
+along with Sandcastle Help File Builder (http://shfb.codeplex.com/)
 
 ------------------------------------------------------------
 
@@ -52,14 +36,14 @@ Prerequisites:
 
  * You must have NUnit installed (version 2.5.x). 
 
- * The nunit project (nunit/nunit.csproj) must include a reference to
+ * The C5.Tests project (C5.Tests/C5.Tests.csproj) must include a reference to
    to the installed nunit.framework.dll.  Add the reference by
    right-clicking "References" under "nunit" in Visual Studio's
    Solution Explorer.
 
 Steps to build and run unit tests:
 
- * Build the project called "nunit".  
+ * Build the project called "C5.Tests".  
 
  * Start NUnit, select File > Open > nunit/bin/Debug/nunit.dll, or
    simply double-click nunit/bin/Debug/nunit.dll
