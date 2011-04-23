@@ -21,7 +21,6 @@
 
 
 using System;
-using System.Diagnostics;
 using SCG = System.Collections.Generic;
 
 namespace C5
@@ -652,7 +651,7 @@ namespace C5
             }
             else
             {
-                Debug.Assert(Taggroups == 0);
+                System.Diagnostics.Debug.Assert(Taggroups == 0);
 
                 TagGroup newgroup = new TagGroup();
 
@@ -735,7 +734,7 @@ namespace C5
             int ptgt = taggroup.first.prev.taggroup.tag;
             int ntgt = taggroup.last.next.taggroup.tag;
 
-            Debug.Assert(ptgt + 1 <= ntgt - 1);
+            System.Diagnostics.Debug.Assert(ptgt + 1 <= ntgt - 1);
 
             int ofs = wordsize - hibits;
             int newtgs = (taggroup.count - 1) / hisize;
@@ -802,7 +801,7 @@ namespace C5
             int lob = pred.first.prev.taggroup.tag, upb = succ.last.next.taggroup.tag;
             int delta = upb / (count + 1) - lob / (count + 1);
 
-            Debug.Assert(delta > 0);
+            System.Diagnostics.Debug.Assert(delta > 0);
             for (int i = 0; i < count; i++)
             {
                 pred.tag = lob + (i + 1) * delta;

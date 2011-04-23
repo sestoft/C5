@@ -58,14 +58,14 @@ namespace C5UnitTests.hashtable.dictionary
         [SetUp]
         public void Init()
         {
-            Debugging.UseDeterministicHashing = true;
+            Debug.UseDeterministicHashing = true;
             coll = Factory.New<int, int>();
             rad16 = new RadixFormatProvider(16);
         }
         [TearDown]
         public void Dispose()
         {
-            Debugging.UseDeterministicHashing = false;
+            Debug.UseDeterministicHashing = false;
             coll = null;
             rad16 = null;
         }

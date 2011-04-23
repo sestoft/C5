@@ -58,13 +58,13 @@ namespace C5UnitTests.hashtable.bag
         [SetUp]
         public void Init()
         {
-            Debugging.UseDeterministicHashing = true;
+            Debug.UseDeterministicHashing = true;
             coll = Factory.New<int>(); rad16 = new RadixFormatProvider(16);
         }
         [TearDown]
         public void Dispose()
         {
-            Debugging.UseDeterministicHashing = false;
+            Debug.UseDeterministicHashing = false;
             coll = null; rad16 = null;
         }
         [Test]
@@ -202,7 +202,7 @@ namespace C5UnitTests.hashtable.bag
         [SetUp]
         public void Init()
         {
-            Debugging.UseDeterministicHashing = true;
+            Debug.UseDeterministicHashing = true;
             hashbag = new HashBag<int>();
         }
 
@@ -402,7 +402,7 @@ namespace C5UnitTests.hashtable.bag
         [TearDown]
         public void Dispose()
         {
-            Debugging.UseDeterministicHashing = false;
+            Debug.UseDeterministicHashing = false;
             hashbag = null;
         }
     }
@@ -416,7 +416,7 @@ namespace C5UnitTests.hashtable.bag
         [SetUp]
         public void Init()
         {
-            Debugging.UseDeterministicHashing = true;
+            Debug.UseDeterministicHashing = true;
             list = new HashBag<int>(TenEqualityComparer.Default);
             pred = delegate(int i) { return i % 5 == 0; };
         }
@@ -424,7 +424,7 @@ namespace C5UnitTests.hashtable.bag
         [TearDown]
         public void Dispose()
         {
-            Debugging.UseDeterministicHashing = false;
+            Debug.UseDeterministicHashing = false;
             list = null;
         }
 
@@ -475,7 +475,7 @@ namespace C5UnitTests.hashtable.bag
         [SetUp]
         public void Init()
         {
-            Debugging.UseDeterministicHashing = true;
+            Debug.UseDeterministicHashing = true;
             hashbag = new HashBag<int>();
             a = new int[10];
             for (int i = 0; i < 10; i++)
@@ -486,7 +486,7 @@ namespace C5UnitTests.hashtable.bag
         [TearDown]
         public void Dispose()
         {
-            Debugging.UseDeterministicHashing = false;
+            Debug.UseDeterministicHashing = false;
             hashbag = null;
         }
 

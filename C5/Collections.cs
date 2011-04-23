@@ -22,7 +22,6 @@
 #define IMPROVED_COLLECTION_HASHFUNCTION
 
 using System;
-using System.Diagnostics;
 using SCG = System.Collections.Generic;
 namespace C5
 {
@@ -1208,7 +1207,7 @@ namespace C5
         /// <param name="newsize">The (new) size of the (base) collection.</param>
         protected virtual void expand(int newcapacity, int newsize)
         {
-            Debug.Assert(newcapacity >= newsize);
+            System.Diagnostics.Debug.Assert(newcapacity >= newsize);
 
             int newlength = array.Length;
 

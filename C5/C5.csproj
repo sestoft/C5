@@ -63,7 +63,7 @@
   <ItemGroup>
     <Compile Include="arrays\CircularQueue.cs" />
     <Compile Include="arrays\HashedArrayList.cs" />
-    <Compile Include="Debugging.cs" />
+    <Compile Include="Debug.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

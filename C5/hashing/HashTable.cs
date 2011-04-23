@@ -26,7 +26,6 @@
 #define RANDOMINTERHASHING
 
 using System;
-using System.Diagnostics;
 using SCG = System.Collections.Generic;
 
 namespace C5
@@ -830,7 +829,7 @@ namespace C5
         public HashSet(int capacity, double fill, SCG.IEqualityComparer<T> itemequalityComparer)
             : base(itemequalityComparer)
         {
-            _randomhashfactor = (Debugging.UseDeterministicHashing) ? 1529784659 : (2 * (uint)Random.Next() + 1) * 1529784659;
+            _randomhashfactor = (Debug.UseDeterministicHashing) ? 1529784659 : (2 * (uint)Random.Next() + 1) * 1529784659;
 
             if (fill < 0.1 || fill > 0.9)
                 throw new ArgumentException("Fill outside valid range [0.1, 0.9]");
@@ -1128,7 +1127,7 @@ namespace C5
 #endif
             }
 
-            Debug.Assert(size == index);
+            System.Diagnostics.Debug.Assert(size == index);
             return res;
         }
 
