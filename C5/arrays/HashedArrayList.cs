@@ -640,10 +640,8 @@ namespace C5
         /// </summary>
         /// <exception cref="NoSuchItemException"> if this list is empty.</exception>
         /// <value>The first item in this list.</value>
-        [Tested]
         public virtual T First
         {
-            [Tested]
             get
             {
                 validitycheck();
@@ -659,10 +657,8 @@ namespace C5
         /// </summary>
         /// <exception cref="NoSuchItemException"> if this list is empty.</exception>
         /// <value>The last item in this list.</value>
-        [Tested]
         public virtual T Last
         {
-            [Tested]
             get
             {
                 validitycheck();
@@ -680,12 +676,9 @@ namespace C5
         /// </summary>
         /// <value>True if the <code>Remove()</code> operation removes from the
         /// start of the list, false if it removes from the end. The default for a new array list is false.</value>
-        [Tested]
         public virtual bool FIFO
         {
-            [Tested]
             get { validitycheck(); return fIFO; }
-            [Tested]
             set { updatecheck(); fIFO = value; }
         }
 
@@ -707,10 +700,8 @@ namespace C5
         /// if the item already is present somewhere else in the list.</exception>
         /// <value>The index'th item of this list.</value>
         /// <param name="index">The index of the item to fetch or store.</param>
-        [Tested]
         public virtual T this[int index]
         {
-            [Tested]
             get
             {
                 validitycheck();
@@ -719,7 +710,6 @@ namespace C5
 
                 return array[offset + index];
             }
-            [Tested]
             set
             {
                 updatecheck();
@@ -762,7 +752,6 @@ namespace C5
         /// If the item is already present in the list.</exception>
         /// <param name="index">The index at which to insert.</param>
         /// <param name="item">The item to insert.</param>
-        [Tested]
         public virtual void Insert(int index, T item)
         {
             updatecheck();
@@ -805,7 +794,6 @@ namespace C5
         /// contains duplicates or some item already  present in the list.</exception>
         /// <param name="index">Index to start inserting at</param>
         /// <param name="items">Items to insert</param>
-        [Tested]
         public virtual void InsertAll(int index, SCG.IEnumerable<T> items)
         {
             updatecheck();
@@ -867,7 +855,6 @@ namespace C5
         /// </summary>
         /// <exception cref="DuplicateNotAllowedException">If the item is already in the list</exception>
         /// <param name="item">The item to insert.</param>
-        [Tested]
         public virtual void InsertFirst(T item)
         {
             updatecheck();
@@ -881,7 +868,6 @@ namespace C5
         /// </summary>
         /// <exception cref="DuplicateNotAllowedException">If the item is already in the list</exception>
         /// <param name="item">The item to insert.</param>
-        [Tested]
         public virtual void InsertLast(T item)
         {
             updatecheck();
@@ -898,7 +884,6 @@ namespace C5
         /// </summary>
         /// <param name="filter">The filter delegate defining the predicate.</param>
         /// <returns>The new list.</returns>
-        [Tested]
         public virtual IList<T> FindAll(Func<T, bool> filter)
         {
             validitycheck();
@@ -932,7 +917,6 @@ namespace C5
         /// <typeparam name="V">The type of items of the new list</typeparam>
         /// <param name="mapper">The delegate defining the map.</param>
         /// <returns>The new list.</returns>
-        [Tested]
         public virtual IList<V> Map<V>(Func<T, V> mapper)
         {
             validitycheck();
@@ -985,7 +969,6 @@ namespace C5
         /// </summary>
         /// <exception cref="NoSuchItemException"> if this list is empty.</exception>
         /// <returns>The removed item.</returns>
-        [Tested]
         public virtual T Remove()
         {
             updatecheck();
@@ -1002,7 +985,6 @@ namespace C5
         /// </summary>
         /// <exception cref="NoSuchItemException"> if this list is empty.</exception>
         /// <returns>The removed item.</returns>
-        [Tested]
         public virtual T RemoveFirst()
         {
             updatecheck();
@@ -1020,7 +1002,6 @@ namespace C5
         /// </summary>
         /// <exception cref="NoSuchItemException"> if this list is empty.</exception>
         /// <returns>The removed item.</returns>
-        [Tested]
         public virtual T RemoveLast()
         {
             updatecheck();
@@ -1040,7 +1021,6 @@ namespace C5
         /// <param name="start">The index in this list of the start of the view.</param>
         /// <param name="count">The size of the view.</param>
         /// <returns>The new list view.</returns>
-        [Tested]
         public virtual IList<T> View(int start, int count)
         {
             validitycheck();
@@ -1063,7 +1043,6 @@ namespace C5
         /// </summary>
         /// <param name="item">The item to find.</param>
         /// <returns>The new list view.</returns>
-        [Tested]
         public virtual IList<T> ViewOf(T item)
         {
             int index = indexOf(item);
@@ -1079,7 +1058,6 @@ namespace C5
         /// </summary>
         /// <param name="item">The item to find.</param>
         /// <returns>The new list view.</returns>
-        [Tested]
         public virtual IList<T> LastViewOf(T item)
         {
             int index = lastIndexOf(item);
@@ -1092,15 +1070,13 @@ namespace C5
         /// Null if this list is not a view.
         /// </summary>
         /// <value>Underlying list for view.</value>
-        [Tested]
-        public virtual IList<T> Underlying { [Tested]get { return underlying; } }
+        public virtual IList<T> Underlying { get { return underlying; } }
 
 
         /// <summary>
         /// </summary>
         /// <value>Offset for this list view or 0 for an underlying list.</value>
-        [Tested]
-        public virtual int Offset { [Tested]get { return offset; } }
+        public virtual int Offset { get { return offset; } }
 
         /// <summary>
         /// 
@@ -1116,7 +1092,6 @@ namespace C5
         /// would bring either end of the view outside the underlying list.</exception>
         /// <param name="offset">The signed amount to slide: positive to slide
         /// towards the end.</param>
-        [Tested]
         public virtual IList<T> Slide(int offset)
         {
             if (!TrySlide(offset, size))
@@ -1134,7 +1109,6 @@ namespace C5
         /// <param name="offset">The signed amount to slide: positive to slide
         /// towards the end.</param>
         /// <param name="size">The new size of the view.</param>
-        [Tested]
         public virtual IList<T> Slide(int offset, int size)
         {
             if (!TrySlide(offset, size))
@@ -1148,7 +1122,6 @@ namespace C5
         /// <exception cref="NotAViewException"> if this list is not a view.</exception>
         /// <param name="offset"></param>
         /// <returns></returns>
-        [Tested]
         public virtual bool TrySlide(int offset)
         {
             return TrySlide(offset, size);
@@ -1161,7 +1134,6 @@ namespace C5
         /// <param name="offset"></param>
         /// <param name="size"></param>
         /// <returns></returns>
-        [Tested]
         public virtual bool TrySlide(int offset, int size)
         {
             updatecheck();
@@ -1198,7 +1170,6 @@ namespace C5
         /// <summary>
         /// Reverst the list so the items are in the opposite sequence order.
         /// </summary>
-        [Tested]
         public virtual void Reverse()
         {
             updatecheck();
@@ -1223,7 +1194,6 @@ namespace C5
         /// </summary>
         /// <exception cref="NotComparableException">if T is not comparable</exception>
         /// <returns>True if the list is sorted, else false.</returns>
-        [Tested]
         public bool IsSorted() { return IsSorted(Comparer<T>.Default); }
 
         /// <summary>
@@ -1231,7 +1201,6 @@ namespace C5
         /// </summary>
         /// <param name="c">The comparer defining the sorting order.</param>
         /// <returns>True if the list is sorted, else false.</returns>
-        [Tested]
         public virtual bool IsSorted(SCG.IComparer<T> c)
         {
             validitycheck();
@@ -1258,7 +1227,6 @@ namespace C5
         /// Sort the items of the list according to a specific sorting order.
         /// </summary>
         /// <param name="comparer">The comparer defining the sorting order.</param>
-        [Tested]
         public virtual void Sort(SCG.IComparer<T> comparer)
         {
             updatecheck();
@@ -1309,7 +1277,6 @@ namespace C5
         /// </summary>
         /// <param name="item">Item to search for.</param>
         /// <returns>Index of item from start.</returns>
-        [Tested]
         public virtual int IndexOf(T item) { validitycheck(); return indexOf(item); }
 
 
@@ -1318,7 +1285,6 @@ namespace C5
         /// </summary>
         /// <param name="item">Item to search for.</param>
         /// <returns>Index of item from the end.</returns>
-        [Tested]
         public virtual int LastIndexOf(T item) { validitycheck(); return lastIndexOf(item); }
 
 
@@ -1329,7 +1295,6 @@ namespace C5
         /// &gt;= the size of the collection.</exception>
         /// <param name="index">The index of the item to remove.</param>
         /// <returns>The removed item.</returns>
-        [Tested]
         public virtual T RemoveAt(int index)
         {
             updatecheck();
@@ -1349,7 +1314,6 @@ namespace C5
         /// and <code>count</code> does not describe a valid interval in the list</exception> 
         /// <param name="start">The index of the first item to remove.</param>
         /// <param name="count">The number of items to remove.</param>
-        [Tested]
         public virtual void RemoveInterval(int start, int count)
         {
             updatecheck();
@@ -1388,10 +1352,8 @@ namespace C5
         /// relevant).
         /// </summary>
         /// <value>Speed.Linear</value>
-        [Tested]
         public virtual Speed ContainsSpeed
         {
-            [Tested]
             get
             {
                 return Speed.Constant;
@@ -1403,7 +1365,6 @@ namespace C5
         /// 
         /// </summary>
         /// <returns></returns>
-        [Tested]
         public override int GetUnsequencedHashCode()
         { validitycheck(); return base.GetUnsequencedHashCode(); }
 
@@ -1412,7 +1373,6 @@ namespace C5
         /// </summary>
         /// <param name="that"></param>
         /// <returns></returns>
-        [Tested]
         public override bool UnsequencedEquals(ICollection<T> that)
         { validitycheck(); return base.UnsequencedEquals(that); }
 
@@ -1422,7 +1382,6 @@ namespace C5
         /// </summary>
         /// <param name="item">The value to check for.</param>
         /// <returns>True if the items is in this collection.</returns>
-        [Tested]
         public virtual bool Contains(T item)
         { validitycheck(); return indexOf(item) >= 0; }
 
@@ -1434,7 +1393,6 @@ namespace C5
         /// </summary>
         /// <param name="item">The value to look for.</param>
         /// <returns>True if the items is in this collection.</returns>
-        [Tested]
         public virtual bool Find(ref T item)
         {
             validitycheck();
@@ -1459,7 +1417,6 @@ namespace C5
         /// </summary>
         /// <param name="item">Value to update.</param>
         /// <returns>True if the item was found and hence updated.</returns>
-        [Tested]
         public virtual bool Update(T item)
         {
             T olditem;
@@ -1497,7 +1454,6 @@ namespace C5
         /// </summary>
         /// <param name="item">The value to look for.</param>
         /// <returns>True if the item was found (hence not added).</returns>
-        [Tested]
         public virtual bool FindOrAdd(ref T item)
         {
             updatecheck();
@@ -1517,7 +1473,6 @@ namespace C5
         /// </summary>
         /// <param name="item">Value to update.</param>
         /// <returns>True if the item was found and hence updated.</returns>
-        [Tested]
         public virtual bool UpdateOrAdd(T item)
         {
             updatecheck();
@@ -1552,7 +1507,6 @@ namespace C5
         /// </summary>
         /// <param name="item">The value to remove.</param>
         /// <returns>True if the item was found (and removed).</returns>
-        [Tested]
         public virtual bool Remove(T item)
         {
             updatecheck();
@@ -1578,7 +1532,6 @@ namespace C5
         /// <param name="item">The value to remove.</param>
         /// <param name="removeditem">The removed value.</param>
         /// <returns>True if the item was found (and removed).</returns>
-        [Tested]
         public virtual bool Remove(T item, out T removeditem)
         {
             updatecheck();
@@ -1603,7 +1556,6 @@ namespace C5
         /// Matching items will be removed from the front. Current implementation is not optimal.
         /// </summary>
         /// <param name="items">The items to remove.</param>
-        [Tested]
         public virtual void RemoveAll(SCG.IEnumerable<T> items)
         {
             updatecheck();
@@ -1724,7 +1676,6 @@ namespace C5
         /// <summary>
         /// Remove all items from this collection, resetting internal array size.
         /// </summary>
-        [Tested]
         public override void Clear()
         {
             if (underlying == null)
@@ -1748,7 +1699,6 @@ namespace C5
         /// Items are retained front first.  
         /// </summary>
         /// <param name="items">The items to retain.</param>
-        [Tested]
         public virtual void RetainAll(SCG.IEnumerable<T> items)
         {
             updatecheck();
@@ -1874,7 +1824,6 @@ namespace C5
         /// </summary>
         /// <param name="items">The </param>
         /// <returns>True if all values in <code>items</code>is in this collection.</returns>
-        [Tested]
         public virtual bool ContainsAll(SCG.IEnumerable<T> items)
         {
             validitycheck();
@@ -1893,7 +1842,6 @@ namespace C5
         /// </summary>
         /// <param name="item">The value to count.</param>
         /// <returns>The number of copies found.</returns>
-        [Tested]
         public virtual int ContainsCount(T item)
         {
             validitycheck();
@@ -1929,7 +1877,6 @@ namespace C5
         /// Remove all items equal to a given one.
         /// </summary>
         /// <param name="item">The value to remove.</param>
-        [Tested]
         public virtual void RemoveAllCopies(T item)
         {
             Remove(item);
@@ -1942,7 +1889,6 @@ namespace C5
         /// Check the integrity of the internal data structures of this array list.
         /// </summary>
         /// <returns>True if check does not fail.</returns>
-        [Tested]
         public override bool Check()
         {
             bool retval = true;
@@ -2030,10 +1976,8 @@ namespace C5
         /// 
         /// </summary>
         /// <value>True, indicating array list has bag semantics.</value>
-        [Tested]
         public virtual bool AllowsDuplicates
         {
-            [Tested]
             get
             {
                 return false;
@@ -2060,7 +2004,6 @@ namespace C5
         /// </summary>
         /// <param name="item">The item to add.</param>
         /// <returns>True</returns>
-        [Tested]
         public virtual bool Add(T item)
         {
             updatecheck();
@@ -2078,7 +2021,6 @@ namespace C5
         /// Add the elements from another collection to this collection.
         /// </summary>
         /// <param name="items"></param>
-        [Tested]
         public virtual void AddAll(SCG.IEnumerable<T> items)
         {
             updatecheck();
@@ -2138,7 +2080,6 @@ namespace C5
         /// <code>foreach (T x in coll.Backwards()) {...}</code>
         /// </summary>
         /// <returns>The backwards collection.</returns>
-        [Tested]
         IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards() { return Backwards(); }
 
         #endregion
@@ -2148,8 +2089,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value>The number of items in this collection</value>
-        [Tested]
-        public override int Count { [Tested]get { validitycheck(); return size; } }
+        public override int Count { get { validitycheck(); return size; } }
         #endregion
 
         #region IEnumerable<T> Members
@@ -2158,7 +2098,6 @@ namespace C5
         /// Create an enumerator for the collection
         /// </summary>
         /// <returns>The enumerator</returns>
-        [Tested]
         public override SCG.IEnumerator<T> GetEnumerator()
         {
             validitycheck();

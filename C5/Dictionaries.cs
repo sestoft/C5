@@ -58,7 +58,6 @@ namespace C5
         /// Pretty print an entry
         /// </summary>
         /// <returns>(key, value)</returns>
-        [Tested]
         public override string ToString() { return "(" + Key + ", " + Value + ")"; }
 
 
@@ -67,7 +66,6 @@ namespace C5
         /// </summary>
         /// <param name="obj">The other object</param>
         /// <returns>True if obj is an entry of the same type and has the same key and value</returns>
-        [Tested]
         public override bool Equals(object obj)
         {
             if (!(obj is KeyValuePair<K, V>))
@@ -81,7 +79,6 @@ namespace C5
         /// Get the hash code of the pair.
         /// </summary>
         /// <returns>The hash code</returns>
-        [Tested]
         public override int GetHashCode() { return EqualityComparer<K>.Default.GetHashCode(Key) + 13984681 * EqualityComparer<V>.Default.GetHashCode(Value); }
 
         /// <summary>
@@ -179,9 +176,10 @@ namespace C5
         /// <param name="entry1">First entry</param>
         /// <param name="entry2">Second entry</param>
         /// <returns>The result of comparing the keys</returns>
-        [Tested]
         public int Compare(KeyValuePair<K, V> entry1, KeyValuePair<K, V> entry2)
-        { return comparer.Compare(entry1.Key, entry2.Key); }
+        {
+            return comparer.Compare(entry1.Key, entry2.Key);
+        }
     }
 
 
@@ -219,7 +217,6 @@ namespace C5
         /// </summary>
         /// <param name="entry">The entry</param>
         /// <returns>The hash code of the key</returns>
-        [Tested]
         public int GetHashCode(KeyValuePair<K, V> entry) { return keyequalityComparer.GetHashCode(entry.Key); }
 
 
@@ -229,9 +226,10 @@ namespace C5
         /// <param name="entry1">First entry</param>
         /// <param name="entry2">Second entry</param>
         /// <returns>True if keys are equal</returns>
-        [Tested]
         public bool Equals(KeyValuePair<K, V> entry1, KeyValuePair<K, V> entry2)
-        { return keyequalityComparer.Equals(entry1.Key, entry2.Key); }
+        {
+            return keyequalityComparer.Equals(entry1.Key, entry2.Key);
+        }
     }
 
 
@@ -340,7 +338,6 @@ namespace C5
         /// <exception cref="DuplicateNotAllowedException"> if there already is an entry with the same key. </exception>
         /// <param name="key">Key to add</param>
         /// <param name="value">Value to add</param>
-        [Tested]
         public virtual void Add(K key, V value)
         {
             KeyValuePair<K, V> p = new KeyValuePair<K, V>(key, value);
@@ -373,7 +370,6 @@ namespace C5
         /// </summary>
         /// <param name="key">The key of the entry to remove</param>
         /// <returns>True if an entry was found (and removed)</returns>
-        [Tested]
         public virtual bool Remove(K key)
         {
             KeyValuePair<K, V> p = new KeyValuePair<K, V>(key);
@@ -388,7 +384,6 @@ namespace C5
         /// <param name="key">The key of the entry to remove</param>
         /// <param name="value">On exit, the value of the removed entry</param>
         /// <returns>True if an entry was found (and removed)</returns>
-        [Tested]
         public virtual bool Remove(K key, out V value)
         {
             KeyValuePair<K, V> p = new KeyValuePair<K, V>(key);
@@ -409,7 +404,6 @@ namespace C5
         /// <summary>
         /// Remove all entries from the dictionary
         /// </summary>
-        [Tested]
         public virtual void Clear() { pairs.Clear(); }
 
         /// <summary>
@@ -423,7 +417,6 @@ namespace C5
         /// </summary>
         /// <param name="key">The key to look for</param>
         /// <returns>True if key was found</returns>
-        [Tested]
         public virtual bool Contains(K key)
         {
             KeyValuePair<K, V> p = new KeyValuePair<K, V>(key);
@@ -465,7 +458,6 @@ namespace C5
         /// <param name="key">The key to look for</param>
         /// <param name="value">On exit, the value of the entry</param>
         /// <returns>True if key was found</returns>
-        [Tested]
         public virtual bool Find(K key, out V value)
         {
             return Find(ref key, out value);
@@ -502,7 +494,6 @@ namespace C5
         /// <param name="key">The key to look for</param>
         /// <param name="value">The new value</param>
         /// <returns>True if key was found</returns>
-        [Tested]
         public virtual bool Update(K key, V value)
         {
             KeyValuePair<K, V> p = new KeyValuePair<K, V>(key, value);
@@ -536,7 +527,6 @@ namespace C5
         /// <param name="value">On entry the value to add if the key is not found.
         /// On exit the value found if any.</param>
         /// <returns>True if key was found</returns>
-        [Tested]
         public virtual bool FindOrAdd(K key, ref V value)
         {
             KeyValuePair<K, V> p = new KeyValuePair<K, V>(key, value);
@@ -559,7 +549,6 @@ namespace C5
         /// <param name="key">The key to look for</param>
         /// <param name="value">The value to add or replace with.</param>
         /// <returns>True if entry was updated.</returns>
-        [Tested]
         public virtual bool UpdateOrAdd(K key, V value)
         {
             return pairs.UpdateOrAdd(new KeyValuePair<K, V>(key, value));
@@ -597,7 +586,6 @@ namespace C5
 
             public override V Choose() { return pairs.Choose().Value; }
 
-            [Tested]
             public override SCG.IEnumerator<V> GetEnumerator()
             {
                 //Updatecheck is performed by the pairs enumerator
@@ -607,8 +595,7 @@ namespace C5
 
             public override bool IsEmpty { get { return pairs.IsEmpty; } }
 
-            [Tested]
-            public override int Count { [Tested]get { return pairs.Count; } }
+            public override int Count { get { return pairs.Count; } }
 
             public override Speed CountSpeed { get { return Speed.Constant; } }
         }
@@ -626,7 +613,6 @@ namespace C5
 
             public override K Choose() { return pairs.Choose().Key; }
 
-            [Tested]
             public override SCG.IEnumerator<K> GetEnumerator()
             {
                 foreach (KeyValuePair<K, V> p in pairs)
@@ -635,8 +621,7 @@ namespace C5
 
             public override bool IsEmpty { get { return pairs.IsEmpty; } }
 
-            [Tested]
-            public override int Count { [Tested]get { return pairs.Count; } }
+            public override int Count { get { return pairs.Count; } }
 
             public override Speed CountSpeed { get { return pairs.CountSpeed; } }
         }
@@ -646,16 +631,14 @@ namespace C5
         /// 
         /// </summary>
         /// <value>A collection containg the all the keys of the dictionary</value>
-        [Tested]
-        public virtual ICollectionValue<K> Keys { [Tested]get { return new KeysCollection(pairs); } }
+        public virtual ICollectionValue<K> Keys { get { return new KeysCollection(pairs); } }
 
 
         /// <summary>
         /// 
         /// </summary>
         /// <value>A collection containing all the values of the dictionary</value>
-        [Tested]
-        public virtual ICollectionValue<V> Values { [Tested]get { return new ValuesCollection(pairs); } }
+        public virtual ICollectionValue<V> Values { get { return new ValuesCollection(pairs); } }
 
         /// <summary>
         /// 
@@ -669,10 +652,8 @@ namespace C5
         /// </summary>
         /// <exception cref="NoSuchItemException"> On get if no entry is found. </exception>
         /// <value>The value corresponding to the key</value>
-        [Tested]
         public virtual V this[K key]
         {
-            [Tested]
             get
             {
                 KeyValuePair<K, V> p = new KeyValuePair<K, V>(key);
@@ -682,7 +663,6 @@ namespace C5
                 else
                     throw new NoSuchItemException("Key '" + key.ToString() + "' not present in Dictionary");
             }
-            [Tested]
             set
             { pairs.UpdateOrAdd(new KeyValuePair<K, V>(key, value)); }
         }
@@ -692,15 +672,13 @@ namespace C5
         /// 
         /// </summary>
         /// <value>True if dictionary is read  only</value>
-        [Tested]
-        public virtual bool IsReadOnly { [Tested]get { return pairs.IsReadOnly; } }
+        public virtual bool IsReadOnly { get { return pairs.IsReadOnly; } }
 
 
         /// <summary>
         /// Check the integrity of the internal data structures of this dictionary.
         /// </summary>
         /// <returns>True if check does not fail.</returns>
-        [Tested]
         public virtual bool Check() { return pairs.Check(); }
 
         #endregion
@@ -718,15 +696,13 @@ namespace C5
         /// 
         /// </summary>
         /// <value>The number of entrues in the dictionary</value>
-        [Tested]
-        public override int Count { [Tested]get { return pairs.Count; } }
+        public override int Count { get { return pairs.Count; } }
 
         /// <summary>
         /// 
         /// </summary>
         /// <value>The number of entrues in the dictionary</value>
-        [Tested]
-        public override Speed CountSpeed { [Tested]get { return pairs.CountSpeed; } }
+        public override Speed CountSpeed { get { return pairs.CountSpeed; } }
 
         /// <summary>
         /// Choose some entry in this Dictionary. 
@@ -739,7 +715,6 @@ namespace C5
         /// Create an enumerator for the collection of entries of the dictionary
         /// </summary>
         /// <returns>The enumerator</returns>
-        [Tested]
         public override SCG.IEnumerator<KeyValuePair<K, V>> GetEnumerator()
         {
             return pairs.GetEnumerator(); ;
@@ -813,7 +788,6 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The predecessor, if any</param>
         /// <returns>True if key has a predecessor</returns>
-        [Tested]
         public bool TryPredecessor(K key, out KeyValuePair<K, V> res)
         {
             return sortedpairs.TryPredecessor(new KeyValuePair<K, V>(key), out res);
@@ -826,7 +800,6 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The successor, if any</param>
         /// <returns>True if the key has a successor</returns>
-        [Tested]
         public bool TrySuccessor(K key, out KeyValuePair<K, V> res)
         {
             return sortedpairs.TrySuccessor(new KeyValuePair<K, V>(key), out res);
@@ -839,7 +812,6 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The predecessor, if any</param>
         /// <returns>True if key has a weak predecessor</returns>
-        [Tested]
         public bool TryWeakPredecessor(K key, out KeyValuePair<K, V> res)
         {
             return sortedpairs.TryWeakPredecessor(new KeyValuePair<K, V>(key), out res);
@@ -852,7 +824,6 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The weak successor, if any</param>
         /// <returns>True if the key has a weak successor</returns>
-        [Tested]
         public bool TryWeakSuccessor(K key, out KeyValuePair<K, V> res)
         {
             return sortedpairs.TryWeakSuccessor(new KeyValuePair<K, V>(key), out res);
@@ -865,7 +836,6 @@ namespace C5
         /// <exception cref="NoSuchItemException"></exception>
         /// <param name="key">The key</param>
         /// <returns>The entry</returns>
-        [Tested]
         public KeyValuePair<K, V> Predecessor(K key)
         {
             return sortedpairs.Predecessor(new KeyValuePair<K, V>(key));
@@ -878,7 +848,6 @@ namespace C5
         /// <exception cref="NoSuchItemException"></exception>
         /// <param name="key">The key</param>
         /// <returns>The entry</returns>
-        [Tested]
         public KeyValuePair<K, V> Successor(K key)
         {
             return sortedpairs.Successor(new KeyValuePair<K, V>(key));
@@ -891,7 +860,6 @@ namespace C5
         /// <exception cref="NoSuchItemException"></exception>
         /// <param name="key">The key</param>
         /// <returns>The entry</returns>
-        [Tested]
         public KeyValuePair<K, V> WeakPredecessor(K key)
         {
             return sortedpairs.WeakPredecessor(new KeyValuePair<K, V>(key));
@@ -904,7 +872,6 @@ namespace C5
         /// <exception cref="NoSuchItemException"></exception>
         /// <param name="key">The key</param>
         /// <returns>The entry</returns>
-        [Tested]
         public KeyValuePair<K, V> WeakSuccessor(K key)
         {
             return sortedpairs.WeakSuccessor(new KeyValuePair<K, V>(key));
@@ -1099,7 +1066,7 @@ namespace C5
 
             public override bool IsEmpty { get { return sorteddict.IsEmpty; } }
 
-            public override int Count { [Tested]get { return sorteddict.Count; } }
+            public override int Count { get { return sorteddict.Count; } }
 
             public override Speed CountSpeed { get { return sorteddict.CountSpeed; } }
 

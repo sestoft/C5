@@ -67,7 +67,6 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attributes.cs" />
     <Compile Include="Builtin.cs" />
     <Compile Include="Comparer.cs">
       <SubType>Code</SubType>

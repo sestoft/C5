@@ -128,7 +128,6 @@ namespace C5
         /// 
         /// </summary>
         /// <param name="item"></param>
-        [Tested]
         public virtual void Enqueue(T item)
         {
             if (!original)
@@ -147,7 +146,6 @@ namespace C5
         /// 
         /// </summary>
         /// <returns></returns>
-        [Tested]
         public virtual T Dequeue()
         {
             if (!original)
@@ -221,7 +219,6 @@ namespace C5
         /// 
         /// </summary>
         /// <returns></returns>
-        [Tested]
         public override T Choose()
         {
             if (size == 0)

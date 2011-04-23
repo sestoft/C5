@@ -288,7 +288,6 @@ namespace C5
         /// <exception cref="NoSuchItemException"/> if queue is empty
         /// </summary>
         /// <returns>The least item.</returns>
-        [Tested]
         public T FindMin()
         {
             if (size == 0)
@@ -303,7 +302,6 @@ namespace C5
         /// <exception cref="NoSuchItemException"/> if queue is empty
         /// </summary>
         /// <returns>The removed item.</returns>
-        [Tested]
         public T DeleteMin()
         {
             IPriorityQueueHandle<T> handle = null;
@@ -316,7 +314,6 @@ namespace C5
         /// <exception cref="NoSuchItemException"/> if queue is empty
         /// </summary>
         /// <returns>The largest item.</returns>
-        [Tested]
         public T FindMax()
         {
             if (size == 0)
@@ -333,7 +330,6 @@ namespace C5
         /// <exception cref="NoSuchItemException"/> if queue is empty
         /// </summary>
         /// <returns>The removed item.</returns>
-        [Tested]
         public T DeleteMax()
         {
             IPriorityQueueHandle<T> handle = null;
@@ -362,8 +358,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value>True since this collection has bag semantics</value>
-        [Tested]
-        public bool AllowsDuplicates { [Tested]get { return true; } }
+        public bool AllowsDuplicates { get { return true; } }
 
         /// <summary>
         /// Value is null since this collection has no equality concept for its items. 
@@ -385,7 +380,6 @@ namespace C5
         /// </summary>
         /// <param name="item">The item to add.</param>
         /// <returns>True</returns>
-        [Tested]
         public bool Add(T item)
         {
             stamp++;
@@ -478,7 +472,6 @@ namespace C5
         /// to this collection. 
         /// </summary>
         /// <param name="items">The items to add</param>
-        [Tested]
         public void AddAll(SCG.IEnumerable<T> items)
         {
             stamp++;
@@ -502,15 +495,13 @@ namespace C5
         /// 
         /// </summary>
         /// <value>True if this collection is empty.</value>
-        [Tested]
-        public override bool IsEmpty { [Tested]get { return size == 0; } }
+        public override bool IsEmpty { get { return size == 0; } }
 
         /// <summary>
         /// 
         /// </summary>
         /// <value>The size of this collection</value>
-        [Tested]
-        public override int Count { [Tested]get { return size; } }
+        public override int Count { get { return size; } }
 
 
         /// <summary>
@@ -541,7 +532,6 @@ namespace C5
         /// but in the internal table order.</para>
         /// </summary>
         /// <returns>The enumerator(SIC)</returns>
-        [Tested]
         public override SCG.IEnumerator<T> GetEnumerator()
         {
             int mystamp = stamp;
@@ -632,7 +622,6 @@ namespace C5
         /// Only avaliable in DEBUG builds???
         /// </summary>
         /// <returns>True if check does not fail.</returns>
-        [Tested]
         public bool Check()
         {
             if (size == 0)
@@ -669,7 +658,6 @@ namespace C5
         /// <exception cref="InvalidPriorityQueueHandleException">if the handle is invalid for this queue</exception>
         /// <param name="handle">The reference into the heap</param>
         /// <returns></returns>
-        [Tested]
         public T this[IPriorityQueueHandle<T> handle]
         {
             get
@@ -734,7 +722,6 @@ namespace C5
         /// necessarily the same priority queue object.</param>
         /// <param name="item">The item to add.</param>
         /// <returns>True since item will always be added unless the call throws an exception.</returns>
-        [Tested]
         public bool Add(ref IPriorityQueueHandle<T> handle, T item)
         {
             stamp++;
@@ -759,7 +746,6 @@ namespace C5
         /// <exception cref="InvalidPriorityQueueHandleException">if the handle is invalid</exception>
         /// <param name="handle">The handle for the item. The handle will be invalidated, but reusable.</param>
         /// <returns>The deleted item</returns>
-        [Tested]
         public T Delete(IPriorityQueueHandle<T> handle)
         {
             stamp++;
@@ -873,7 +859,6 @@ namespace C5
         /// <param name="handle">The handle for the old item</param>
         /// <param name="item">The new item</param>
         /// <returns>The old item</returns>
-        [Tested]
         public T Replace(IPriorityQueueHandle<T> handle, T item)
         {
             stamp++;

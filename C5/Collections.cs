@@ -43,7 +43,6 @@ namespace C5
         /// </summary>
         /// <param name="items">The enumerable to count</param>
         /// <returns>The size of the enumerable</returns>
-        [Tested]
         protected static int countItems(SCG.IEnumerable<T> items)
         {
             ICollectionValue<T> jtems = items as ICollectionValue<T>;
@@ -462,7 +461,6 @@ namespace C5
         /// or the array does not have room for the items.</exception>
         /// <param name="array">The array to copy to.</param>
         /// <param name="index">The starting index.</param>
-        [Tested]
         public virtual void CopyTo(T[] array, int index)
         {
             if (index < 0 || index + Count > array.Length)
@@ -476,7 +474,6 @@ namespace C5
         /// enumerator would output them).
         /// </summary>
         /// <returns>The array</returns>
-        //[Tested]
         public virtual T[] ToArray()
         {
             T[] res = new T[Count];
@@ -491,7 +488,6 @@ namespace C5
         /// Apply an single argument action, <see cref="T:Action`1"/> to this enumerable
         /// </summary>
         /// <param name="action">The action delegate</param>
-        [Tested]
         public virtual void Apply(Action<T> action)
         {
             foreach (T item in this)
@@ -507,7 +503,6 @@ namespace C5
         /// (<see cref="T:Func`2"/> with <code>R = bool</code>) 
         /// defining the predicate</param>
         /// <returns>True if such an item exists</returns>
-        [Tested]
         public virtual bool Exists(Func<T, bool> predicate)
         {
             foreach (T item in this)
@@ -544,7 +539,6 @@ namespace C5
         /// (<see cref="T:Func`2"/> with <code>R = bool</code>) 
         /// defining the predicate</param>
         /// <returns>True if all items satisfies the predicate</returns>
-        [Tested]
         public virtual bool All(Func<T, bool> predicate)
         {
             foreach (T item in this)
@@ -634,7 +628,7 @@ namespace C5
         /// <code>Forwards</code> if same, else <code>Backwards</code>
         /// </summary>
         /// <value>The enumeration direction relative to the original collection.</value>
-        public virtual EnumerationDirection Direction { [Tested]get { return EnumerationDirection.Forwards; } }
+        public virtual EnumerationDirection Direction { get { return EnumerationDirection.Forwards; } }
 
         /// <summary>
         /// 
@@ -717,7 +711,6 @@ namespace C5
         ///  if the range does not fit within collection size.</exception>
         /// <param name="start">start of range</param>
         /// <param name="count">size of range</param>
-        [Tested]
         protected void checkRange(int start, int count)
         {
             if (start < 0 || count < 0 || start + count > size)
@@ -731,7 +724,6 @@ namespace C5
         /// <param name="items">The collection to compute hash code for</param>
         /// <param name="itemequalityComparer">The item equalityComparer</param>
         /// <returns>The hash code</returns>
-        [Tested]
         public static int ComputeHashCode(ICollectionValue<T> items, SCG.IEqualityComparer<T> itemequalityComparer)
         {
             int h = 0;
@@ -785,7 +777,6 @@ namespace C5
         /// <param name="collection2">The second collection</param>
         /// <param name="itemequalityComparer">The item equalityComparer to use for comparison</param>
         /// <returns>True if equal</returns>
-        [Tested]
         public static bool StaticEquals(ICollection<T> collection1, ICollection<T> collection2, SCG.IEqualityComparer<T> itemequalityComparer)
         {
             if (object.ReferenceEquals(collection1, collection2))
@@ -923,8 +914,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value>True if this collection is read only</value>
-        [Tested]
-        public virtual bool IsReadOnly { [Tested]get { return isReadOnlyBase; } }
+        public virtual bool IsReadOnly { get { return isReadOnlyBase; } }
 
         #endregion
 
@@ -933,8 +923,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value>The size of this collection</value>
-        [Tested]
-        public override int Count { [Tested]get { return size; } }
+        public override int Count { get { return size; } }
 
         /// <summary>
         /// The value is symbolic indicating the type of asymptotic complexity
@@ -960,8 +949,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value>True if this collection is empty</value>
-        [Tested]
-        public override bool IsEmpty { [Tested]get { return size == 0; } }
+        public override bool IsEmpty { get { return size == 0; } }
 
         #endregion
 
@@ -990,7 +978,7 @@ namespace C5
         /// <code>Forwards</code> if same, else <code>Backwards</code>
         /// </summary>
         /// <value>The enumeration direction relative to the original collection.</value>
-        public virtual EnumerationDirection Direction { [Tested]get { return EnumerationDirection.Forwards; } }
+        public virtual EnumerationDirection Direction { get { return EnumerationDirection.Forwards; } }
 
         /// <summary>
         /// 
@@ -1050,7 +1038,6 @@ namespace C5
         /// <param name="items">The collection to compute hash code for</param>
         /// <param name="itemequalityComparer">The item equalityComparer</param>
         /// <returns>The hash code</returns>
-        [Tested]
         public static int ComputeHashCode(ISequenced<T> items, SCG.IEqualityComparer<T> itemequalityComparer)
         {
             //NOTE: It must be possible to devise a much stronger combined hashcode, 
@@ -1076,7 +1063,6 @@ namespace C5
         /// <param name="collection2">The second collection</param>
         /// <param name="itemequalityComparer">The item equalityComparer to use for comparison</param>
         /// <returns>True if equal</returns>
-        [Tested]
         public static bool StaticEquals(ISequenced<T> collection1, ISequenced<T> collection2, SCG.IEqualityComparer<T> itemequalityComparer)
         {
             if (object.ReferenceEquals(collection1, collection2))
@@ -1144,8 +1130,7 @@ namespace C5
         /// <code>Forwards</code> if same, else <code>Backwards</code>
         /// </summary>
         /// <value>The enumeration direction relative to the original collection.</value>
-        [Tested]
-        public override EnumerationDirection Direction { [Tested]get { return EnumerationDirection.Forwards; } }
+        public override EnumerationDirection Direction { get { return EnumerationDirection.Forwards; } }
 
         /// <summary>
         /// Check if there exists an item  that satisfies a
@@ -1285,10 +1270,8 @@ namespace C5
         /// <value>The directed collection of items in a specific index interval.</value>
         /// <param name="start">The low index of the interval (inclusive).</param>
         /// <param name="count">The size of the range.</param>
-        [Tested]
         public virtual IDirectedCollectionValue<T> this[int start, int count]
         {
-            [Tested]
             get
             {
                 checkRange(start, count);
@@ -1302,7 +1285,6 @@ namespace C5
         /// <summary>
         /// Remove all items and reset size of internal array container.
         /// </summary>
-        [Tested]
         public virtual void Clear()
         {
             updatecheck();
@@ -1315,7 +1297,6 @@ namespace C5
         /// Create an array containing (copies) of the items of this collection in enumeration order.
         /// </summary>
         /// <returns>The new array</returns>
-        [Tested]
         public override T[] ToArray()
         {
             T[] res = new T[size];
@@ -1329,7 +1310,6 @@ namespace C5
         /// Perform an internal consistency (invariant) test on the array base.
         /// </summary>
         /// <returns>True if test succeeds.</returns>
-        [Tested]
         public virtual bool Check()
         {
             bool retval = true;
@@ -1361,7 +1341,6 @@ namespace C5
         /// opposite enumeration sequence.
         /// </summary>
         /// <returns>The mirrored collection.</returns>
-        [Tested]
         public override IDirectedCollectionValue<T> Backwards() { return this[0, size].Backwards(); }
 
         #endregion
@@ -1379,7 +1358,6 @@ namespace C5
         /// Create an enumerator for this array based collection.
         /// </summary>
         /// <returns>The enumerator</returns>
-        [Tested]
         public override SCG.IEnumerator<T> GetEnumerator()
         {
             int thestamp = stamp, theend = size + offset, thestart = offset;
@@ -1423,8 +1401,7 @@ namespace C5
             /// </summary>
             /// <exception cref="CollectionModifiedException">if underlying collection has been modified.</exception>
             /// <value>The number of items in the range</value>
-            [Tested]
-            public override int Count { [Tested]get { thebase.modifycheck(stamp); return count; } }
+            public override int Count { get { thebase.modifycheck(stamp); return count; } }
 
             /// <summary>
             /// The value is symbolic indicating the type of asymptotic complexity
@@ -1456,7 +1433,6 @@ namespace C5
             /// </summary>
             /// <exception cref="CollectionModifiedException">if underlying collection has been modified.</exception>
             /// <returns>The enumerator</returns>
-            [Tested]
             public override SCG.IEnumerator<T> GetEnumerator()
             {
                 for (int i = 0; i < count; i++)
@@ -1473,7 +1449,6 @@ namespace C5
             /// </summary>
             /// <exception cref="CollectionModifiedException">if underlying collection has been modified.</exception>
             /// <returns>The mirrored collection.</returns>
-            [Tested]
             public override IDirectedCollectionValue<T> Backwards()
             {
                 thebase.modifycheck(stamp);
@@ -1497,10 +1472,8 @@ namespace C5
             /// </summary>
             /// <exception cref="CollectionModifiedException">if underlying collection has been modified.</exception>
             /// <value>The enumeration direction relative to the original collection.</value>
-            [Tested]
             public override EnumerationDirection Direction
             {
-                [Tested]
                 get
                 {
                     thebase.modifycheck(stamp);
