@@ -57,7 +57,7 @@ Collection Classes for C#</em>, although the library may be used from VB.NET, F#
 and other CLI languages, not just C#. It has nothing to do with a Microsoft
 Dynamics product that used to be called Concorde C5/Damgaard C5/Navision C5, nor a 
 real-time operation system called C5 (or Chorus), nor the C5 Corporation (system
-visualization), nor an Eclipse plug-in called C5, nor with cars such as the Citro&euml;n 
+visualization), nor an Eclipse plug-in called C5, nor with cars such as the Citro&amp;euml;n 
 C5 or Corvette C5 or Clive Sinclair's ill-fated C5 concept vehicle.
 
 The name may be inspired by the versatile C4 plastic explosive known from e.g.
