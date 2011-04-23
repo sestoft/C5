@@ -1,0 +1,11 @@
+﻿# Untracked files:
+*ReSharper*
+packages/*
+C5.suo
+C5/bin/*
+C5/obj/*
+C5/C5.csproj.user
+C5.Tests/bin/*
+C5.Tests/obj/*
+UserGuideExamples/bin/*
+UserGuideExamples/obj/*
