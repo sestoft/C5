@@ -100,7 +100,7 @@ namespace C5
                     return cachedComparer = (SCG.IComparer<T>)(c.GetConstructor(new Type[0]).Invoke(null));
                 }
 
-                if (t.GetInterface("System.IComparable") != null)
+                if (typeof(IComparable).IsAssignableFrom(t))
                 {
                     Type c = naturalComparerO.MakeGenericType(new Type[] { t });
 
