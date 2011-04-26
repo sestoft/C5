@@ -220,7 +220,7 @@ namespace C5
     /// of the main stream generic collection interfaces and the priority queue interface,
     /// <see cref="T:C5.ICollection`1"/> and <see cref="T:C5.IPriorityQueue`1"/>.
     /// </summary>
-    public interface IExtensible<T> : ICollectionValue<T>, ICloneable
+    public interface IExtensible<T> : ICollectionValue<T>
     {
         /// <summary>
         /// If true any call of an updating operation will throw an
@@ -1562,7 +1562,7 @@ namespace C5
     /// A dictionary with keys of type K and values of type V. Equivalent to a
     /// finite partial map from K to V.
     /// </summary>
-    public interface IDictionary<K, V> : ICollectionValue<KeyValuePair<K, V>>, ICloneable
+    public interface IDictionary<K, V> : ICollectionValue<KeyValuePair<K, V>>
     {
         /// <summary>
         /// The key equalityComparer.

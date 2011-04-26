@@ -1050,22 +1050,5 @@ namespace C5
         }
 
         #endregion
-
-        #region ICloneable Members
-
-        /// <summary>
-        /// Make a shallow copy of this IntervalHeap.
-        /// </summary>
-        /// <returns></returns>
-        public virtual object Clone()
-        {
-            IntervalHeap<T> clone = new IntervalHeap<T>(size, comparer, itemequalityComparer);
-            clone.AddAll(this);
-            return clone;
-        }
-
-        #endregion
-
     }
-
 }

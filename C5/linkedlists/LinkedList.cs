@@ -2640,21 +2640,6 @@ namespace C5
         }
         #endregion
 
-        #region ICloneable Members
-
-        /// <summary>
-        /// Make a shallow copy of this LinkedList.
-        /// </summary>
-        /// <returns></returns>
-        public virtual object Clone()
-        {
-            LinkedList<T> clone = new LinkedList<T>(itemequalityComparer);
-            clone.AddAll(this);
-            return clone;
-        }
-
-        #endregion
-
         #region System.Collections.Generic.IList<T> Members
 
         void System.Collections.Generic.IList<T>.RemoveAt(int index)

@@ -3101,21 +3101,6 @@ namespace C5
         }
         #endregion
 
-        #region ICloneable Members
-
-        /// <summary>
-        /// Make a shallow copy of this HashedLinkedList.
-        /// </summary>
-        /// <returns></returns>
-        public virtual object Clone()
-        {
-            HashedLinkedList<T> clone = new HashedLinkedList<T>(itemequalityComparer);
-            clone.AddAll(this);
-            return clone;
-        }
-
-        #endregion
-
         #region System.Collections.Generic.IList<T> Members
 
         void System.Collections.Generic.IList<T>.RemoveAt(int index)

@@ -1403,21 +1403,5 @@ namespace C5
         { return Backwards(); }
 
         #endregion
-
-        #region ICloneable Members
-
-        /// <summary>
-        /// Make a shallow copy of this SortedArray.
-        /// </summary>
-        /// <returns></returns>
-        public virtual object Clone()
-        {
-            SortedArray<T> clone = new SortedArray<T>(size, comparer, itemequalityComparer);
-            clone.AddSorted(this);
-            return clone;
-        }
-
-        #endregion
-
     }
 }

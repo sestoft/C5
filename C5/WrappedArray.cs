@@ -831,21 +831,6 @@ namespace C5
 
         #endregion
 
-        #region ICloneable Members
-
-        /// <summary>
-        /// Make a shallow copy of this WrappedArray.
-        /// 
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public virtual object Clone()
-        {
-            return new WrappedArray<T>(innerlist.ToArray());
-        }
-
-        #endregion
-
         #region System.Collections.Generic.IList<T> Members
 
         void System.Collections.Generic.IList<T>.RemoveAt(int index)

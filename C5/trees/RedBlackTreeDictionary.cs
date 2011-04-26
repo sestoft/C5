@@ -64,17 +64,5 @@ namespace C5
             res.pairs = (TreeSet<KeyValuePair<K, V>>)((TreeSet<KeyValuePair<K, V>>)sortedpairs).Snapshot();
             return res;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public override object Clone()
-        {
-            TreeDictionary<K, V> clone = new TreeDictionary<K, V>(Comparer, EqualityComparer);
-            clone.sortedpairs.AddSorted(sortedpairs);
-            return clone;
-        }
-
     }
 }

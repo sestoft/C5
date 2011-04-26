@@ -37,13 +37,13 @@ namespace C5UnitTests.arrays.circularqueue
       new C5UnitTests.Templates.Events.StackTester<CollectionOfInt>().Test(factory);
     }
 
-    [Test]
-    public void Extensible()
-    {
-      //TODO: Test Circular Queue for Clone(?) and Serializable 
-      //C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-      //C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-    }
+    //[Test]
+    //public void Extensible()
+    //{
+    //  TODO: Test Circular Queue for Clone(?) and Serializable 
+    //  C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
+    //  C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
+    //}
   }
 
   //[TestFixture]

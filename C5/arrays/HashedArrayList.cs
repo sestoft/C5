@@ -2141,21 +2141,6 @@ namespace C5
 
         #endregion
 
-        #region ICloneable Members
-
-        /// <summary>
-        /// Make a shallow copy of this HashedArrayList.
-        /// </summary>
-        /// <returns></returns>
-        public virtual object Clone()
-        {
-            HashedArrayList<T> clone = new HashedArrayList<T>(size, itemequalityComparer);
-            clone.AddAll(this);
-            return clone;
-        }
-
-        #endregion
-
         #region ISerializable Members
         /*
     /// <summary>

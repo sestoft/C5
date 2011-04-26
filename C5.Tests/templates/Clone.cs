@@ -24,45 +24,45 @@ using NUnit.Framework;
 
 namespace C5UnitTests.Templates.Extensible
 {
-  class Clone
-  {
-    public static void Tester<U>() where U : class, IExtensible<int>, new()
-    {
-      U extensible = new U();
-      RealTester<U>(extensible);
-      extensible.Add(12);
-      extensible.Add(23);
-      extensible.Add(56);
-      RealTester<U>(extensible);
-    }
+  //class Clone
+  //{
+  //  public static void Tester<U>() where U : class, IExtensible<int>, new()
+  //  {
+  //    U extensible = new U();
+  //    RealTester<U>(extensible);
+  //    extensible.Add(12);
+  //    extensible.Add(23);
+  //    extensible.Add(56);
+  //    RealTester<U>(extensible);
+  //  }
 
-    public static void ViewTester<U>() where U : class, IList<int>, new()
-    {
-      U baselist = new U();
-      baselist.Add(12);
-      baselist.Add(23);
-      baselist.Add(56);
-      baselist.Add(112);
-      baselist.Add(123);
-      baselist.Add(156);
-      U view = (U)baselist.View(2, 2);
-      RealTester<U>(view);
-    }
+  //  public static void ViewTester<U>() where U : class, IList<int>, new()
+  //  {
+  //    U baselist = new U();
+  //    baselist.Add(12);
+  //    baselist.Add(23);
+  //    baselist.Add(56);
+  //    baselist.Add(112);
+  //    baselist.Add(123);
+  //    baselist.Add(156);
+  //    U view = (U)baselist.View(2, 2);
+  //    RealTester<U>(view);
+  //  }
 
-    public static void RealTester<U>(U extensible) where U : class, IExtensible<int>, new()
-    {
-      object clone = extensible.Clone();
-      Assert.IsNotNull(clone);
-      Assert.AreEqual(typeof(U), clone.GetType(),
-        string.Format("Wrong type '{0}' of clone of '{1}'", clone.GetType(), typeof(U)));
-      U theClone = clone as U;
-      Assert.IsTrue(theClone.Check(), "Clone does not pass Check()");
-      if (typeof(ICollection<int>).IsAssignableFrom(typeof(U)))
-        Assert.IsTrue(EqualityComparer<U>.Default.Equals(extensible, theClone), "Clone has wrong contents");
-      else //merely extensible
-        Assert.IsTrue(IC.eq(theClone, extensible.ToArray()), "Clone has wrong contents");
-    }
-  }
+  //  public static void RealTester<U>(U extensible) where U : class, IExtensible<int>, new()
+  //  {
+  //    object clone = extensible.Clone();
+  //    Assert.IsNotNull(clone);
+  //    Assert.AreEqual(typeof(U), clone.GetType(),
+  //      string.Format("Wrong type '{0}' of clone of '{1}'", clone.GetType(), typeof(U)));
+  //    U theClone = clone as U;
+  //    Assert.IsTrue(theClone.Check(), "Clone does not pass Check()");
+  //    if (typeof(ICollection<int>).IsAssignableFrom(typeof(U)))
+  //      Assert.IsTrue(EqualityComparer<U>.Default.Equals(extensible, theClone), "Clone has wrong contents");
+  //    else //merely extensible
+  //      Assert.IsTrue(IC.eq(theClone, extensible.ToArray()), "Clone has wrong contents");
+  //  }
+  //}
 
   //class Serialization
   //{

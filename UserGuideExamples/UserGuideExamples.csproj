@@ -53,7 +53,6 @@
     <Compile Include="AnagramTreeBag.cs" />
     <None Include="Antipatterns.cs" />
     <Compile Include="BipartiteMatching.cs" />
-    <Compile Include="Cloning.cs" />
     <Compile Include="CollectionCollection.cs" />
     <Compile Include="CollectionSanity.cs" />
     <Compile Include="EventPatterns.cs" />
@@ -99,9 +98,6 @@
       <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
       <Name>C5</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Makefile" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

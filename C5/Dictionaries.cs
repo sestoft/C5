@@ -726,13 +726,6 @@ namespace C5
         {
             return Showing.ShowDictionary<K, V>(this, stringbuilder, ref rest, formatProvider);
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public abstract object Clone();
-
     }
 
     /// <summary>
@@ -1245,28 +1238,6 @@ namespace C5
 
             IDirectedEnumerable<K> IDirectedEnumerable<K>.Backwards() { return Backwards(); }
             #endregion
-
-            #region ICloneable Members
-
-            //TODO: test
-            /// <summary>
-            /// Make a shallow copy of this SortedKeysCollection.
-            /// </summary>
-            /// <returns></returns>
-            public virtual object Clone()
-            {
-                //
-                SortedArrayDictionary<K, V> dictclone = new SortedArrayDictionary<K, V>(sortedpairs.Count, comparer, EqualityComparer);
-                SortedArray<KeyValuePair<K, V>> sortedpairsclone = (SortedArray<KeyValuePair<K, V>>)(dictclone.sortedpairs);
-                foreach (K key in sorteddict.Keys)
-                {
-                    sortedpairsclone.Add(new KeyValuePair<K, V>(key, default(V)));
-                }
-                return new SortedKeysCollection(dictclone, sortedpairsclone, comparer, EqualityComparer);
-            }
-
-            #endregion
-
         }
 
         /// <summary>
@@ -1283,7 +1254,7 @@ namespace C5
 
     }
 
-    class SortedArrayDictionary<K, V> : SortedDictionaryBase<K, V>, IDictionary<K, V>, ISortedDictionary<K, V>
+    class SortedArrayDictionary<K, V> : SortedDictionaryBase<K, V>
     {
         #region Constructors
 
@@ -1318,17 +1289,5 @@ namespace C5
             pairs = sortedpairs = new SortedArray<KeyValuePair<K, V>>(capacity, new KeyValuePairComparer<K, V>(comparer));
         }
         #endregion
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public override object Clone()
-        {
-            SortedArrayDictionary<K, V> clone = new SortedArrayDictionary<K, V>(Comparer, EqualityComparer);
-            clone.sortedpairs.AddSorted(sortedpairs);
-            return clone;
-        }
-
     }
 }

@@ -4032,23 +4032,6 @@ namespace C5
                 return false;
         }
         #endregion
-
-        #region ICloneable Members
-
-        /// <summary>
-        /// Make a shallow copy of this TreeBag.
-        /// </summary>
-        /// <returns></returns>
-        public virtual object Clone()
-        {
-            TreeBag<T> clone = new TreeBag<T>(comparer, EqualityComparer);
-            //TODO: make sure the TreeBag AddSorted copies tree bags smartly!!!
-            clone.AddSorted(this);
-            return clone;
-        }
-
-        #endregion
-
     }
 }
 

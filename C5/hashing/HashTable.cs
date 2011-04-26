@@ -1586,22 +1586,5 @@ namespace C5
         }
 
         #endregion
-
-        #region ICloneable Members
-
-        /// <summary>
-        /// Make a shallow copy of this HashSet.
-        /// </summary>
-        /// <returns></returns>
-        public virtual object Clone()
-        {
-            HashSet<T> clone = new HashSet<T>(size > 0 ? size : 1, itemequalityComparer);
-            //TODO: make sure this really adds in the counting bag way!
-            clone.AddAll(this);
-            return clone;
-        }
-
-        #endregion
-
     }
 }

@@ -2117,21 +2117,6 @@ namespace C5
 
         #endregion
 
-        #region ICloneable Members
-
-        /// <summary>
-        /// Make a shallow copy of this ArrayList.
-        /// </summary>
-        /// <returns></returns>
-        public virtual object Clone()
-        {
-            ArrayList<T> clone = new ArrayList<T>(size, itemequalityComparer);
-            clone.AddAll(this);
-            return clone;
-        }
-
-        #endregion
-
         #region ISerializable Members
         /*
     /// <summary>

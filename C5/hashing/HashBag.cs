@@ -619,24 +619,6 @@ namespace C5
         }
         #endregion
 
-        #region ICloneable Members
-
-        /// <summary>
-        /// Make a shallow copy of this HashBag.
-        /// </summary>
-        /// <returns></returns>
-        public virtual object Clone()
-        {
-            //TODO: make sure this 
-            HashBag<T> clone = new HashBag<T>(dict.Count > 0 ? dict.Count : 1, itemequalityComparer);
-            //TODO: make sure this really adds in the counting bag way!
-            clone.AddAll(this);
-            return clone;
-        }
-
-        #endregion
-
-
         #region Diagnostics
         /// <summary>
         /// Test internal structure of data (invariants)

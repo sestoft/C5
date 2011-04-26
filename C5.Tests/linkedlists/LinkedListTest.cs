@@ -42,14 +42,14 @@ namespace C5UnitTests.linkedlists.plain
             new C5UnitTests.Templates.Events.StackTester<CollectionOfInt>().Test(factory);
         }
 
-        [Test]
-        public void Extensible()
-        {
-            C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-            C5UnitTests.Templates.Extensible.Clone.ViewTester<CollectionOfInt>();
-            //C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-            //C5UnitTests.Templates.Extensible.Serialization.ViewTester<CollectionOfInt>();
-        }
+        //[Test]
+        //public void Extensible()
+        //{
+        //    C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
+        //    C5UnitTests.Templates.Extensible.Clone.ViewTester<CollectionOfInt>();
+        //    C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
+        //    C5UnitTests.Templates.Extensible.Serialization.ViewTester<CollectionOfInt>();
+        //}
 
         [Test]
         public void List()

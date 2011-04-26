@@ -3820,23 +3820,6 @@ namespace C5
                 return false;
         }
         #endregion
-
-        #region ICloneable Members
-
-        /// <summary>
-        /// Make a shallow copy of this TreeSet.
-        /// </summary>
-        /// <returns></returns>
-        public virtual object Clone()
-        {
-            TreeSet<T> clone = new TreeSet<T>(comparer, EqualityComparer);
-            //TODO: make sure the TreeBag AddSorted copies tree bags smartly!!!
-            clone.AddSorted(this);
-            return clone;
-        }
-
-        #endregion
-
     }
 }
 

@@ -83,12 +83,12 @@ namespace C5UnitTests.trees.TreeBag
             new C5UnitTests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory);
         }
 
-        [Test]
-        public void Extensible()
-        {
-            C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-            //C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-        }
+        //[Test]
+        //public void Extensible()
+        //{
+        //    C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
+        //    C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
+        //}
     }
 
     static class Factory

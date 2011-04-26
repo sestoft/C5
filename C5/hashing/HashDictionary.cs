@@ -60,17 +60,5 @@ namespace C5
         {
             pairs = new HashSet<KeyValuePair<K, V>>(capacity, fill, new KeyValuePairEqualityComparer<K, V>(keyequalityComparer));
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public override object Clone()
-        {
-            HashDictionary<K, V> clone = new HashDictionary<K, V>(EqualityComparer);
-            clone.pairs.AddAll(pairs);
-            return clone;
-        }
-
     }
 }

@@ -36,8 +36,10 @@ namespace RandomSelection
         {
             ArrayList<int> list = new ArrayList<int>(), copy1, copy2;
             list.AddAll(new[] { 2, 3, 5, 7, 11, 13, 17, 19 });
-            copy1 = (ArrayList<int>)list.Clone();
-            copy2 = (ArrayList<int>)list.Clone();
+            copy1 = new ArrayList<int>();
+            copy1.AddAll(list);
+            copy2 = new ArrayList<int>();
+            copy2.AddAll(list);
             const int N = 7;
             Console.WriteLine("-- With replacement:");
             foreach (int x in RandomWith(list, N))

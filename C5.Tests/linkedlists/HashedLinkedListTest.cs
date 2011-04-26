@@ -39,14 +39,14 @@ namespace C5UnitTests.linkedlists.hashed
             new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory);
         }
 
-        [Test]
-        public void Extensible()
-        {
-            C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-            C5UnitTests.Templates.Extensible.Clone.ViewTester<CollectionOfInt>();
-            //C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-            //C5UnitTests.Templates.Extensible.Serialization.ViewTester<CollectionOfInt>();
-        }
+        //[Test]
+        //public void Extensible()
+        //{
+        //    C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
+        //    C5UnitTests.Templates.Extensible.Clone.ViewTester<CollectionOfInt>();
+        //    C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
+        //    C5UnitTests.Templates.Extensible.Serialization.ViewTester<CollectionOfInt>();
+        //}
 
         [Test]
         public void List()
