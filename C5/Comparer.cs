@@ -116,7 +116,6 @@ namespace C5
     /// A natural generic IComparer for an IComparable&lt;T&gt; item type
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    [Serializable]
     public class NaturalComparer<T> : SCG.IComparer<T>
         where T : IComparable<T>
     {
@@ -133,7 +132,6 @@ namespace C5
     /// A natural generic IComparer for a System.IComparable item type
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    [Serializable]
     public class NaturalComparerO<T> : SCG.IComparer<T> where T : System.IComparable
     {
         /// <summary>
@@ -149,7 +147,6 @@ namespace C5
     /// A generic comparer for type T based on a Comparison[T] delegate
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    [Serializable]
     public class DelegateComparer<T> : SCG.IComparer<T>
     {
         readonly Comparison<T> cmp;

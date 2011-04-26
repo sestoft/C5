@@ -38,11 +38,11 @@ namespace C5UnitTests.hashtable.dictionary
             new C5UnitTests.Templates.Events.DictionaryTester<DictionaryIntToInt>().Test(factory);
         }
 
-        [Test]
-        public void TestSerialize()
-        {
-            C5UnitTests.Templates.Extensible.Serialization.DTester<DictionaryIntToInt>();
-        }
+        //[Test]
+        //public void TestSerialize()
+        //{
+        //    C5UnitTests.Templates.Extensible.Serialization.DTester<DictionaryIntToInt>();
+        //}
     }
 
     static class Factory

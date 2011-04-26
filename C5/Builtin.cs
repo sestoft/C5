@@ -63,7 +63,6 @@ namespace C5
     #endregion
 
     #region sbyte comparer and equality comparer
-    [Serializable]
     class SByteComparer : SCG.IComparer<sbyte>
     {
         public int Compare(sbyte item1, sbyte item2)
@@ -77,7 +76,6 @@ namespace C5
     /// <para>This class is a singleton and the instance can be accessed
     /// via the static <see cref="P:C5.SByteEqualityComparer.Default"/> property</para>
     /// </summary>
-    [Serializable]
     [CLSCompliant(false)]
     public class SByteEqualityComparer : SCG.IEqualityComparer<sbyte>
     {
@@ -149,7 +147,6 @@ namespace C5
     #endregion
 
     #region short comparer and equality comparer
-    [Serializable]
     class ShortComparer : SCG.IComparer<short>
     {
         public int Compare(short item1, short item2)
@@ -163,7 +160,6 @@ namespace C5
     /// <para>This class is a singleton and the instance can be accessed
     /// via the static <see cref="P:C5.ShortEqualityComparer.Default"/> property</para>
     /// </summary>
-    [Serializable]
     public class ShortEqualityComparer : SCG.IEqualityComparer<short>
     {
         static ShortEqualityComparer cached;
@@ -194,7 +190,6 @@ namespace C5
     #endregion
 
     #region ushort comparer and equality comparer
-    [Serializable]
     class UShortComparer : SCG.IComparer<ushort>
     {
         public int Compare(ushort item1, ushort item2)
@@ -208,7 +203,6 @@ namespace C5
     /// <para>This class is a singleton and the instance can be accessed
     /// via the static <see cref="P:C5.UShortEqualityComparer.Default"/> property</para>
     /// </summary>
-    [Serializable]
     [CLSCompliant(false)]
     public class UShortEqualityComparer : SCG.IEqualityComparer<ushort>
     {
@@ -240,7 +234,6 @@ namespace C5
     #endregion
 
     #region int comparer and equality comparer
-    [Serializable]
     class IntComparer : SCG.IComparer<int>
     {
         public int Compare(int item1, int item2)
@@ -254,7 +247,6 @@ namespace C5
     /// <para>This class is a singleton and the instance can be accessed
     /// via the static <see cref="P:C5.IntEqualityComparer.Default"/> property</para>
     /// </summary>
-    [Serializable]
     public class IntEqualityComparer : SCG.IEqualityComparer<int>
     {
         static IntEqualityComparer cached;
@@ -284,7 +276,6 @@ namespace C5
     #endregion
 
     #region uint comparer and equality comparer
-    [Serializable]
     class UIntComparer : SCG.IComparer<uint>
     {
         public int Compare(uint item1, uint item2)
@@ -298,7 +289,6 @@ namespace C5
     /// <para>This class is a singleton and the instance can be accessed
     /// via the static <see cref="P:C5.UIntEqualityComparer.Default"/> property</para>
     /// </summary>
-    [Serializable]
     [CLSCompliant(false)]
     public class UIntEqualityComparer : SCG.IEqualityComparer<uint>
     {
@@ -329,7 +319,6 @@ namespace C5
     #endregion
 
     #region long comparer and equality comparer
-    [Serializable]
     class LongComparer : SCG.IComparer<long>
     {
         public int Compare(long item1, long item2)
@@ -343,7 +332,6 @@ namespace C5
     /// <para>This class is a singleton and the instance can be accessed
     /// via the static <see cref="P:C5.LongEqualityComparer.Default"/> property</para>
     /// </summary>
-    [Serializable]
     public class LongEqualityComparer : SCG.IEqualityComparer<long>
     {
         static LongEqualityComparer cached;
@@ -372,7 +360,6 @@ namespace C5
     #endregion
 
     #region ulong comparer and equality comparer
-    [Serializable]
     class ULongComparer : SCG.IComparer<ulong>
     {
         public int Compare(ulong item1, ulong item2)
@@ -386,7 +373,6 @@ namespace C5
     /// <para>This class is a singleton and the instance can be accessed
     /// via the static <see cref="P:C5.ULongEqualityComparer.Default"/> property</para>
     /// </summary>
-    [Serializable]
     [CLSCompliant(false)]
     public class ULongEqualityComparer : SCG.IEqualityComparer<ulong>
     {
@@ -499,7 +485,6 @@ namespace C5
     #endregion
 
     #region decimal comparer and equality comparer
-    [Serializable]
     class DecimalComparer : SCG.IComparer<decimal>
     {
         public int Compare(decimal item1, decimal item2)
@@ -513,7 +498,6 @@ namespace C5
     /// <para>This class is a singleton and the instance can be accessed
     /// via the static <see cref="P:C5.DecimalEqualityComparer.Default"/> property</para>
     /// </summary>
-    [Serializable]
     public class DecimalEqualityComparer : SCG.IEqualityComparer<decimal>
     {
         static DecimalEqualityComparer cached;

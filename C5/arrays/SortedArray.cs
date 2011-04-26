@@ -26,7 +26,6 @@ namespace C5
     /// <summary>
     /// A collection class implementing a sorted dynamic array data structure.
     /// </summary>
-    [Serializable]
     public class SortedArray<T> : ArrayBase<T>, IIndexedSorted<T>
     {
         #region Features

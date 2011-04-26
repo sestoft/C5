@@ -28,7 +28,6 @@ namespace C5
     /// <summary>
     /// A list collection class based on a doubly linked list data structure.
     /// </summary>
-    [Serializable]
     public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
     {
         #region Fields
@@ -504,7 +503,6 @@ namespace C5
         /// <summary>
         /// An individual cell in the linked list
         /// </summary>
-        [Serializable]
         class Node
         {
             public Node prev;
@@ -551,7 +549,6 @@ namespace C5
         /// able to tell the sequence order of two nodes without having to scan through
         /// the list.
         /// </summary>
-        [Serializable]
         class TagGroup
         {
             internal int tag, count;

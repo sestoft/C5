@@ -87,7 +87,7 @@ namespace C5UnitTests.trees.TreeBag
         public void Extensible()
         {
             C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-            C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
+            //C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
         }
     }
 

@@ -41,7 +41,7 @@ namespace C5UnitTests.hashtable.set
         public void Extensible()
         {
             C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-            C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
+            //C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
         }
     }
 

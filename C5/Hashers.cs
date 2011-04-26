@@ -19,11 +19,8 @@
  SOFTWARE.
 */
 
-using C5;
 using System;
 using System.Reflection;
-using System.Reflection.Emit;
-using System.Diagnostics;
 using SCG = System.Collections.Generic;
 
 namespace C5
@@ -149,7 +146,6 @@ namespace C5
     /// A default item equalityComparer calling through to
     /// the GetHashCode and Equals methods inherited from System.Object.
     /// </summary>
-    [Serializable]
     public sealed class NaturalEqualityComparer<T> : SCG.IEqualityComparer<T>
     {
         static NaturalEqualityComparer<T> cached;
@@ -191,7 +187,6 @@ namespace C5
     /// and in general saves a runtime type check.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    [Serializable]
     public class EquatableEqualityComparer<T> : SCG.IEqualityComparer<T> where T : IEquatable<T>
     {
         static EquatableEqualityComparer<T> cached = new EquatableEqualityComparer<T>();
@@ -224,7 +219,6 @@ namespace C5
     /// A equalityComparer for a reference type that uses reference equality for equality and the hash code from object as hash code.
     /// </summary>
     /// <typeparam name="T">The item type. Must be a reference type.</typeparam>
-    [Serializable]
     public class ReferenceEqualityComparer<T> : SCG.IEqualityComparer<T> where T : class
     {
         static ReferenceEqualityComparer<T> cached;
@@ -265,7 +259,6 @@ namespace C5
     /// <para><b>Note: this will give a new EqualityComparer each time created!</b></para>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    [Serializable]
     public class ComparerZeroHashCodeEqualityComparer<T> : SCG.IEqualityComparer<T>
     {
         SCG.IComparer<T> comparer;
@@ -301,7 +294,6 @@ namespace C5
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="W"></typeparam>
-    [Serializable]
     public class SequencedCollectionEqualityComparer<T, W> : SCG.IEqualityComparer<T>
         where T : ISequenced<W>
     {
@@ -337,7 +329,6 @@ namespace C5
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="W"></typeparam>
-    [Serializable]
     public class UnsequencedCollectionEqualityComparer<T, W> : SCG.IEqualityComparer<T>
         where T : ICollection<W>
     {

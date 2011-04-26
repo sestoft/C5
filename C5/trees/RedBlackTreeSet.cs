@@ -40,7 +40,6 @@ namespace C5
     /// <i>TODO: discuss persistence and its useful usage modes. Warn about the space
     /// leak possible with other usage modes.</i>
     /// </summary>
-    [Serializable]
     public class TreeSet<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted<T>
     {
         #region Fields
@@ -129,7 +128,6 @@ namespace C5
         /// <summary>
         /// The type of node in a Red-Black binary tree
         /// </summary>
-        [Serializable]
         class Node
         {
             public bool red = true;
@@ -3197,7 +3195,6 @@ namespace C5
             return ((TreeSet<T>)_snapshot).generation;
         }
 
-        [Serializable]
         class SnapRef
         {
             public SnapRef Prev, Next;

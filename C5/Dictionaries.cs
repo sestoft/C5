@@ -26,7 +26,6 @@ namespace C5
     /// <summary>
     /// An entry in a dictionary from K to V.
     /// </summary>
-    [Serializable]
     public struct KeyValuePair<K, V> : IEquatable<KeyValuePair<K, V>>, IShowable
     {
         /// <summary>
@@ -152,7 +151,6 @@ namespace C5
     /// Default comparer for dictionary entries in a sorted dictionary.
     /// Entry comparisons only look at keys and uses an externally defined comparer for that.
     /// </summary>
-    [Serializable]
     public class KeyValuePairComparer<K, V> : SCG.IComparer<KeyValuePair<K, V>>
     {
         SCG.IComparer<K> comparer;
@@ -188,7 +186,6 @@ namespace C5
     /// Default equalityComparer for dictionary entries.
     /// Operations only look at keys and uses an externaly defined equalityComparer for that.
     /// </summary>
-    [Serializable]
     public sealed class KeyValuePairEqualityComparer<K, V> : SCG.IEqualityComparer<KeyValuePair<K, V>>
     {
         SCG.IEqualityComparer<K> keyequalityComparer;
@@ -239,7 +236,6 @@ namespace C5
     /// <i>See the source code for <see cref="T:C5.HashDictionary`2"/> for an example</i>
     /// 
     /// </summary>
-    [Serializable]
     public abstract class DictionaryBase<K, V> : CollectionValueBase<KeyValuePair<K, V>>, IDictionary<K, V>
     {
         /// <summary>
@@ -424,7 +420,6 @@ namespace C5
             return pairs.Contains(p);
         }
 
-        [Serializable]
         class LiftedEnumerable<H> : SCG.IEnumerable<KeyValuePair<K, V>> where H : K
         {
             SCG.IEnumerable<H> keys;
@@ -574,7 +569,6 @@ namespace C5
 
 
         #region Keys,Values support classes
-        [Serializable]
         internal class ValuesCollection : CollectionValueBase<V>, ICollectionValue<V>
         {
             ICollection<KeyValuePair<K, V>> pairs;
@@ -602,7 +596,6 @@ namespace C5
 
 
 
-        [Serializable]
         internal class KeysCollection : CollectionValueBase<K>, ICollectionValue<K>
         {
             ICollection<KeyValuePair<K, V>> pairs;
@@ -747,7 +740,6 @@ namespace C5
     /// <i>See the source code for <see cref="T:C5.TreeDictionary`2"/> for an example</i>
     /// 
     /// </summary>
-    [Serializable]
     public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISortedDictionary<K, V>
     {
         #region Fields
@@ -1009,7 +1001,6 @@ namespace C5
         }
 
         #endregion
-        [Serializable]
         class KeyValuePairComparable : IComparable<KeyValuePair<K, V>>
         {
             IComparable<K> cutter;
@@ -1021,7 +1012,6 @@ namespace C5
             public bool Equals(KeyValuePair<K, V> other) { return cutter.Equals(other.Key); }
         }
 
-        [Serializable]
         class ProjectedDirectedEnumerable : MappedDirectedEnumerable<KeyValuePair<K, V>, K>
         {
             public ProjectedDirectedEnumerable(IDirectedEnumerable<KeyValuePair<K, V>> directedpairs) : base(directedpairs) { }
@@ -1030,7 +1020,6 @@ namespace C5
 
         }
 
-        [Serializable]
         class ProjectedDirectedCollectionValue : MappedDirectedCollectionValue<KeyValuePair<K, V>, K>
         {
             public ProjectedDirectedCollectionValue(IDirectedCollectionValue<KeyValuePair<K, V>> directedpairs) : base(directedpairs) { }
@@ -1039,7 +1028,6 @@ namespace C5
 
         }
 
-        [Serializable]
         class SortedKeysCollection : SequencedBase<K>, ISorted<K>
         {
             ISortedDictionary<K, V> sorteddict;
@@ -1295,7 +1283,6 @@ namespace C5
 
     }
 
-    [Serializable]
     class SortedArrayDictionary<K, V> : SortedDictionaryBase<K, V>, IDictionary<K, V>, ISortedDictionary<K, V>
     {
         #region Constructors

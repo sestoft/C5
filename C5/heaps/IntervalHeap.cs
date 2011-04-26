@@ -28,7 +28,6 @@ namespace C5
     /// A priority queue class based on an interval heap data structure.
     /// </summary>
     /// <typeparam name="T">The item type</typeparam>
-    [Serializable]
     public class IntervalHeap<T> : CollectionValueBase<T>, IPriorityQueue<T>
     {
         #region Events
@@ -42,7 +41,6 @@ namespace C5
         #endregion
 
         #region Fields
-        [Serializable]
         struct Interval
         {
             internal T first, last; internal Handle firsthandle, lasthandle;
@@ -637,7 +635,6 @@ namespace C5
 
         #region IPriorityQueue<T> Members
 
-        [Serializable]
         class Handle : IPriorityQueueHandle<T>
         {
             /// <summary>

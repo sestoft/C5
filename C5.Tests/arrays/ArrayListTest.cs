@@ -45,8 +45,8 @@ namespace C5UnitTests.arrays.list
         {
             C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
             C5UnitTests.Templates.Extensible.Clone.ViewTester<CollectionOfInt>();
-            C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-            C5UnitTests.Templates.Extensible.Serialization.ViewTester<CollectionOfInt>();
+            //C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
+            //C5UnitTests.Templates.Extensible.Serialization.ViewTester<CollectionOfInt>();
         }
 
         [Test]

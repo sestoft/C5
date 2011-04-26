@@ -36,7 +36,6 @@ namespace C5
     /// Each distinct item is only kept in one place in the tree - together with the number
     /// of times it is a member of the bag. Thus, if two items that are equal according
     /// </summary>
-    [Serializable]
     public class TreeBag<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted<T>
     {
         #region Fields
@@ -125,7 +124,6 @@ namespace C5
         /// <summary>
         /// The type of node in a Red-Black binary tree
         /// </summary>
-        [Serializable]
         class Node
         {
             public bool red = true;
@@ -3403,7 +3401,6 @@ namespace C5
             return ((TreeBag<T>)_snapshot).generation;
         }
 
-        [Serializable]
         class SnapRef
         {
             public SnapRef Prev, Next;

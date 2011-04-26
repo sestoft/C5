@@ -33,7 +33,6 @@ namespace C5
     /// When the FIFO property is set to true the class will function as a (FIFO) queue
     /// but very inefficiently, use a LinkedList (<see cref="T:C5.LinkedList`1"/>) instead.</i>
     /// </summary>
-    [Serializable]
     public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
     {
         #region Fields
