@@ -2797,7 +2797,7 @@ namespace C5
         private bool checkViews()
         {
             if (underlying != null)
-                throw new InternalException(System.Reflection.MethodInfo.GetCurrentMethod() + " called on a view");
+                throw new InternalException("checkViews() called on a view");
             if (views == null)
                 return true;
             bool retval = true;
