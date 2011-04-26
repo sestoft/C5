@@ -97,14 +97,14 @@ namespace C5
                 {
                     Type c = naturalComparer.MakeGenericType(new Type[] { t });
 
-                    return cachedComparer = (SCG.IComparer<T>)(c.GetConstructor(System.Type.EmptyTypes).Invoke(null));
+                    return cachedComparer = (SCG.IComparer<T>)(c.GetConstructor(new Type[0]).Invoke(null));
                 }
 
                 if (t.GetInterface("System.IComparable") != null)
                 {
                     Type c = naturalComparerO.MakeGenericType(new Type[] { t });
 
-                    return cachedComparer = (SCG.IComparer<T>)(c.GetConstructor(System.Type.EmptyTypes).Invoke(null));
+                    return cachedComparer = (SCG.IComparer<T>)(c.GetConstructor(new Type[0]).Invoke(null));
                 }
 
                 throw new NotComparableException(string.Format("Cannot make comparer for type {0}", t));
