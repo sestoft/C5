@@ -26,7 +26,7 @@ namespace C5
     /// <summary>
     /// A generic collection, that can be enumerated backwards.
     /// </summary>
-    public interface IDirectedEnumerable<T> : SCG.IEnumerable<T>
+    public interface IDirectedEnumerable<out T> : SCG.IEnumerable<T>
     {
         /// <summary>
         /// Create a collection containing the same items as this collection, but
