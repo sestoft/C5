@@ -19,8 +19,6 @@
  SOFTWARE.
 */
 
-#define IMPROVED_COLLECTION_HASHFUNCTION
-
 using System;
 using SCG = System.Collections.Generic;
 namespace C5
@@ -724,7 +722,6 @@ namespace C5
         {
             int h = 0;
 
-#if IMPROVED_COLLECTION_HASHFUNCTION
             //But still heuristic: 
             //Note: the three odd factors should really be random, 
             //but there will be a problem with serialization/deserialization!
@@ -755,12 +752,7 @@ namespace C5
                       }
                   }
                   */
-#else
-            foreach (T item in items)
-				h ^= itemequalityComparer.GetHashCode(item);
 
-			return (items.Count << 16) + h;
-#endif
         }
 
         static Type isortedtype = typeof(ISorted<T>);

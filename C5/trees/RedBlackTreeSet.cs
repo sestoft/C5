@@ -19,8 +19,6 @@
  SOFTWARE.
 */
 
-#define MAINTAIN_SIZE
-
 using System;
 using SCG = System.Collections.Generic;
 
@@ -138,9 +136,7 @@ namespace C5
 
             public Node right;
 
-#if MAINTAIN_SIZE
             public int size = 1;
-#endif
 
             //TODO: move everything into (separate) Extra
             public int generation;
@@ -673,9 +669,8 @@ namespace C5
                     child.generation = generation;
                     Node.update(ref cursor, comp > 0, child, maxsnapid, generation);
 
-#if MAINTAIN_SIZE
                     cursor.size++;
-#endif
+
                     dirs[level] = comp;
                     break;
                 }
@@ -696,9 +691,7 @@ namespace C5
                 cursor = path[--level];
                 path[level] = null;
                 Node.update(ref cursor, dirs[level] > 0, child, maxsnapid, generation);
-#if MAINTAIN_SIZE
                 cursor.size++;
-#endif
                 int comp = dirs[level];
                 Node childsibling = comp > 0 ? cursor.right : cursor.left;
 
@@ -723,9 +716,7 @@ namespace C5
                         cursor = path[--level];
                         Node.update(ref cursor, dirs[level] > 0, child, maxsnapid, generation);
                         path[level] = null;
-#if MAINTAIN_SIZE
                         cursor.size++;
-#endif
                     }
                 }
                 else
@@ -779,7 +770,6 @@ namespace C5
 
                     cursor.red = false;
 
-#if MAINTAIN_SIZE
                     Node n;
 
 
@@ -788,7 +778,6 @@ namespace C5
                     n = cursor.left;
                     n.size = (n.left == null ? 0 : n.left.size) + (n.right == null ? 0 : n.right.size) + 1;
                     cursor.size += n.size + 1;
-#endif
 
                     if (level == 0)
                     {
@@ -802,9 +791,7 @@ namespace C5
                         path[level] = null;
                         Node.update(ref cursor, dirs[level] > 0, child, maxsnapid, generation);
 
-#if MAINTAIN_SIZE
                         cursor.size++;
-#endif
                         break;
                     }
                 }
@@ -818,9 +805,7 @@ namespace C5
                 path[level] = null;
                 if (stillmore)
                     stillmore = Node.update(ref cursor, dirs[level] > 0, child, maxsnapid, generation);
-#if MAINTAIN_SIZE
                 cursor.size++;
-#endif
             }
 
             root = cursor;
@@ -955,9 +940,7 @@ namespace C5
                     top.right = null;
                     rest.left = top;
                     top = rest;
-#if MAINTAIN_SIZE
                     top.size = 1 + red;
-#endif
                     rest = rest.right;
                     red--;
                 }
@@ -987,9 +970,7 @@ namespace C5
                 top.left = left;
                 top.red = false;
                 top.right = maketreer(ref rest, blackheight - 1, maxred, red - lred);
-#if MAINTAIN_SIZE
                 top.size = (maxred << 1) - 1 + red;
-#endif
                 return top;
             }
         }
@@ -1283,7 +1264,6 @@ namespace C5
             }
             else
             {
-#warning for bag implementation: count is wrong
                 if (ActiveEvents != 0)
                     raiseForUpdate(item, olditem, 1);
                 return true;
@@ -1436,9 +1416,7 @@ namespace C5
             Node.update(ref cursor, comp > 0, newchild, maxsnapid, generation);
 
             childsibling = comp > 0 ? cursor.right : cursor.left;
-#if MAINTAIN_SIZE
             cursor.size--;
-#endif
 
             //Stage 4: demote till we must rotate
             Node farnephew = null, nearnephew = null;
@@ -1480,9 +1458,7 @@ namespace C5
                     comp = dirs[level];
                     childsibling = comp > 0 ? cursor.right : cursor.left;
                     Node.update(ref cursor, comp > 0, child, maxsnapid, generation);
-#if MAINTAIN_SIZE
                     cursor.size--;
-#endif
                 }
             }
 
@@ -1538,11 +1514,9 @@ namespace C5
                         childsibling.red = false;
                         nearnephew.red = true;
                         fargrandnephew.red = false;
-#if MAINTAIN_SIZE
                         cursor.size = parent.size;
                         nearnephew.size = cursor.size - 1 - farnephew.size;
                         parent.size = nearnephew.size - 1 - fargrandnephew.size;
-#endif
                     }
                     else if (neargrandnephew != null && neargrandnephew.red)
                     {//Case 2+1c
@@ -1566,12 +1540,10 @@ namespace C5
 
                         cursor = childsibling;
                         childsibling.red = false;
-#if MAINTAIN_SIZE
                         cursor.size = parent.size;
                         parent.size = 1 + (parent.left == null ? 0 : parent.left.size) + (parent.right == null ? 0 : parent.right.size);
                         nearnephew.size = 1 + (nearnephew.left == null ? 0 : nearnephew.left.size) + (nearnephew.right == null ? 0 : nearnephew.right.size);
                         neargrandnephew.size = 1 + parent.size + nearnephew.size;
-#endif
                     }
                     else
                     {//Case 2 only
@@ -1581,10 +1553,8 @@ namespace C5
                         cursor = childsibling;
                         childsibling.red = false;
                         nearnephew.red = true;
-#if MAINTAIN_SIZE
                         cursor.size = parent.size;
                         parent.size -= farnephew.size + 1;
-#endif
                     }
                 }
                 else if (farnephew != null && farnephew.red)
@@ -1608,10 +1578,8 @@ namespace C5
                     parent.red = false;
                     farnephew.red = false;
 
-#if MAINTAIN_SIZE
                     cursor.size = parent.size;
                     parent.size -= farnephew.size + 1;
-#endif
                 }
                 else if (nearnephew != null && nearnephew.red)
                 {//Case 1c
@@ -1636,11 +1604,9 @@ namespace C5
                     cursor = nearnephew;
                     cursor.red = parent.red;
                     parent.red = false;
-#if MAINTAIN_SIZE
                     cursor.size = parent.size;
                     parent.size = 1 + (parent.left == null ? 0 : parent.left.size) + (parent.right == null ? 0 : parent.right.size);
                     childsibling.size = 1 + (childsibling.left == null ? 0 : childsibling.left.size) + (childsibling.right == null ? 0 : childsibling.right.size);
-#endif
                 }
                 else
                 {//Case 1a can't happen
@@ -1660,9 +1626,7 @@ namespace C5
                     path[level] = null;
                     Node.update(ref cursor, dirs[level] > 0, swap, maxsnapid, generation);
 
-#if MAINTAIN_SIZE
                     cursor.size--;
-#endif
                 }
             }
 
@@ -1676,9 +1640,7 @@ namespace C5
                 if (child != (dirs[level] > 0 ? cursor.left : cursor.right))
                     Node.update(ref cursor, dirs[level] > 0, child, maxsnapid, generation);
 
-#if MAINTAIN_SIZE
                 cursor.size--;
-#endif
             }
 
             root = cursor;
@@ -2018,7 +1980,6 @@ namespace C5
         {
             if (isSnapShot)
                 throw new NotSupportedException("Indexing not supported for snapshots");
-#if MAINTAIN_SIZE
             Node next = root;
 
             if (i >= 0 && i < size)
@@ -2040,9 +2001,7 @@ namespace C5
                 }
 
             throw new IndexOutOfRangeException();
-#else
-			throw new NotSupportedException();
-#endif
+
         }
 
 
@@ -2082,7 +2041,6 @@ namespace C5
         {
             if (isSnapShot)
                 throw new NotSupportedException("Indexing not supported for snapshots");
-#if MAINTAIN_SIZE
             int ind = 0; Node next = root;
 
             while (next != null)
@@ -2110,7 +2068,6 @@ namespace C5
                     }
                 }
             }
-#endif
             upper = ~ind;
             return ~ind;
         }
@@ -2157,7 +2114,6 @@ namespace C5
             if (!isValid)
                 throw new ViewDisposedException("Snapshot has been disposed");
             updatecheck();
-#if MAINTAIN_SIZE
             if (i < 0 || i >= size)
                 throw new IndexOutOfRangeException("Index out of range for sequenced collectionvalue");
 
@@ -2199,9 +2155,7 @@ namespace C5
 
             removeIterativePhase2(cursor, level);
             return retval;
-#else
-			throw new NotSupportedException();
-#endif
+
         }
 
 
@@ -2287,7 +2241,6 @@ namespace C5
 
             public override SCG.IEnumerator<T> GetEnumerator()
             {
-#if MAINTAIN_SIZE
                 tree.modifycheck(stamp);
 
                 Node cursor = tree.root;
@@ -2396,9 +2349,7 @@ namespace C5
                     }
                 }
 
-#else
-			throw new NotSupportedException();
-#endif
+
             }
 
 
@@ -2899,7 +2850,6 @@ namespace C5
         {
             if (isSnapShot)
                 throw new NotSupportedException("Indexing not supported for snapshots");
-#if MAINTAIN_SIZE
             int ind = 0, comp = 0; Node next = root;
 
             while (next != null)
@@ -2924,9 +2874,7 @@ namespace C5
 
             //if we get here, we are at the same side of the whole collection:
             return ind;
-#else
-			throw new NotSupportedException("Code compiled w/o size!");
-#endif
+
         }
 
 
@@ -3616,11 +3564,8 @@ namespace C5
             {
                 minidump(n.right, space + "  ");
                 Logger.Log(string.Format("{0} {4} (size={1}, items={8}, h={2}, gen={3}, id={6}){7}", space + n.item,
-#if MAINTAIN_SIZE
  n.size,
-#else
-				0,
-#endif
+
  0,
  n.generation,
  n.red ? "RED" : "BLACK",
@@ -3700,11 +3645,9 @@ namespace C5
             res = massert(!(n.red && redp), n, "RED parent of RED node") && res;
             res = massert(n.left == null || n.right != null || n.left.red, n, "Left child black, but right child empty") && res;
             res = massert(n.right == null || n.left != null || n.right.red, n, "Right child black, but left child empty") && res;
-#if MAINTAIN_SIZE
             bool sb = n.size == (n.left == null ? 0 : n.left.size) + (n.right == null ? 0 : n.right.size) + 1;
 
             res = massert(sb, n, "Bad size") && res;
-#endif
             min = max = n.item;
 
             T otherext;
@@ -3811,9 +3754,7 @@ namespace C5
                 bool res = rbminicheck(root, false, out min, out max, out blackheight);
                 res = massert(blackheight == blackdepth, root, "bad blackh/d") && res;
                 res = massert(!root.red, root, "root is red") && res;
-#if MAINTAIN_SIZE
                 res = massert(root.size == size, root, "count!=root.size") && res;
-#endif
                 return !res;
             }
             else

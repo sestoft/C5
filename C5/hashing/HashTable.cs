@@ -19,12 +19,6 @@
  SOFTWARE.
 */
 
-#define LINEARPROBINGnot
-#define REFBUCKET
-#define SHRINKnot
-#define INTERHASHINGnot
-#define RANDOMINTERHASHING
-
 using System;
 using SCG = System.Collections.Generic;
 
@@ -77,27 +71,10 @@ namespace C5
         }
 
 
-
-        static Feature features = Feature.Dummy
-#if REFBUCKET
- | Feature.RefTypeBucket
-#else
- | Feature.ValueTypeBucket
-#endif
-#if SHRINK
-		| Feature.ShrinkTable
-#endif
-#if LINEARPROBING
- | Feature.LinearProbing
-#else
- | Feature.Chaining
-#endif
-#if INTERHASHING
-		| Feature.InterHashing
-#elif RANDOMINTERHASHING
- | Feature.RandomInterHashing
-#endif
-;
+        private static Feature features = Feature.Dummy
+                                          | Feature.RefTypeBucket
+                                          | Feature.Chaining
+                                          | Feature.RandomInterHashing;
 
 
         /// <summary>
@@ -113,19 +90,12 @@ namespace C5
 
         Bucket[] table;
 
-#if !REFBUCKET
-    bool defaultvalid = false;
-
-    T defaultitem;
-#endif
         double fillfactor = 0.66;
 
         int resizethreshhold;
 
-#if RANDOMINTERHASHING
         private static readonly Random Random = new Random();
         uint _randomhashfactor;
-#endif
 
         #endregion
 
@@ -140,20 +110,12 @@ namespace C5
         #endregion
 
         #region Bucket nested class(es)
-#if REFBUCKET
         class Bucket
         {
             internal T item;
 
             internal int hashval; //Cache!
 
-#if LINEARPROBING
-      internal Bucket(T item, int hashval)
-      {
-        this.item = item;
-        this.hashval = hashval;
-      }
-#else
             internal Bucket overflow;
 
             internal Bucket(T item, int hashval, Bucket overflow)
@@ -162,54 +124,7 @@ namespace C5
                 this.hashval = hashval;
                 this.overflow = overflow;
             }
-#endif
         }
-#else
-    struct Bucket
-    {
-      internal T item;
-
-      internal int hashval; //Cache!
-
-#if LINEARPROBING
-      internal Bucket(T item, int hashval)
-      {
-        this.item = item;
-        this.hashval = hashval;
-      }
-#else
-			internal OverflowBucket overflow;
-
-
-			internal Bucket(T item, int hashval)
-			{
-				this.item = item;
-				this.hashval = hashval;
-				this.overflow = default(OverflowBucket);
-			}
-#endif
-    }
-
-
-#if !LINEARPROBING
-		class OverflowBucket
-		{
-			internal T item;
-
-			internal int hashval; //Cache!
-
-			internal OverflowBucket overflow;
-
-
-			internal OverflowBucket(T item, int hashval, OverflowBucket overflow)
-			{
-				this.item = item;
-				this.hashval = hashval;
-				this.overflow = overflow;
-			}
-		}
-#endif
-#endif
 
         #endregion
 
@@ -217,23 +132,12 @@ namespace C5
 
         bool equals(T i1, T i2) { return itemequalityComparer.Equals(i1, i2); }
 
-#if !REFBUCKET
-    bool isnull(T item) { return itemequalityComparer.Equals(item, default(T)); }
-#endif
-
         int gethashcode(T item) { return itemequalityComparer.GetHashCode(item); }
 
 
         int hv2i(int hashval)
         {
-#if INTERHASHING
-			//Note: *inverse  mod 2^32 is -1503427877
-			return (int)(((uint)hashval * 1529784659) >>bitsc); 
-#elif RANDOMINTERHASHING
             return (int)(((uint)hashval * _randomhashfactor) >> bitsc);
-#else
-			return indexmask & hashval;
-#endif
         }
 
 
@@ -267,28 +171,6 @@ namespace C5
             {
                 Bucket b = table[i];
 
-#if LINEARPROBING
-#if REFBUCKET
-        if (b != null)
-        {
-          int j = hv2i(b.hashval);
-
-          while (newtable[j] != null) { j = indexmask & (j + 1); }
-
-          newtable[j] = b;
-        }
-#else
-        if (!isnull(b.item))
-        {
-          int j = hv2i(b.hashval);
-
-          while (!isnull(newtable[j].item)) { j = indexmask & (j + 1); }
-
-          newtable[j] = b;
-        }
-#endif
-#else
-#if REFBUCKET
                 while (b != null)
                 {
                     int j = hv2i(b.hashval);
@@ -296,47 +178,13 @@ namespace C5
                     newtable[j] = new Bucket(b.item, b.hashval, newtable[j]);
                     b = b.overflow;
                 }
-#else
-				if (!isnull(b.item))
-				{
-					insert(b.item, b.hashval, newtable);
 
-					OverflowBucket ob = b.overflow;
-
-					while (ob != null)
-					{
-						insert(ob.item, ob.hashval, newtable);
-						ob = ob.overflow;
-					}
-				}
-#endif
-#endif
             }
 
             table = newtable;
             resizethreshhold = (int)(table.Length * fillfactor);
             Logger.Log(string.Format(string.Format("Resize to {0} bits done", bits)));
         }
-
-#if REFBUCKET
-#else
-#if LINEARPROBING
-#else
-		//Only for resize!!!
-		private void insert(T item, int hashval, Bucket[] t)
-		{
-			int i = hv2i(hashval);
-			Bucket b = t[i];
-
-			if (!isnull(b.item))
-			{
-				t[i].overflow = new OverflowBucket(item, hashval, b.overflow);
-			}
-			else
-				t[i] = new Bucket(item, hashval);
-		}
-#endif
-#endif
 
         /// <summary>
         /// Search for an item equal (according to itemequalityComparer) to the supplied item.  
@@ -349,85 +197,6 @@ namespace C5
         private bool searchoradd(ref T item, bool add, bool update, bool raise)
         {
 
-#if LINEARPROBING
-#if REFBUCKET
-      int hashval = gethashcode(item);
-      int i = hv2i(hashval);
-      Bucket b = table[i];
-
-      while (b != null)
-      {
-        T olditem = b.item;
-        if (equals(olditem, item))
-        {
-          if (update)
-            b.item = item;
-          else
-            item = olditem;
-
-          if (raise && update)
-            raiseForUpdate(item, olditem);
-          return true;
-        }
-
-        b = table[i = indexmask & (i + 1)];
-      }
-
-      if (!add) goto notfound;
-
-      table[i] = new Bucket(item, hashval);
-
-#else
-      if (isnull(item))
-      {
-        if (defaultvalid)
-        {
-          T olditem = defaultitem;
-          if (update)
-            defaultitem = item;
-          else
-            item = defaultitem;
-
-          if (raise && update)
-            raiseForUpdate(item, olditem);
-          return true;
-        }
-
-        if (!add) goto notfound;
-
-        defaultvalid = true;
-        defaultitem = item;
-      }
-      else
-      {
-        int hashval = gethashcode(item);
-        int i = hv2i(hashval);
-        T t = table[i].item;
-
-        while (!isnull(t))
-        {
-          if (equals(t, item))
-          {
-            if (update)
-              table[i].item = item;
-            else
-              item = t;
-
-            if (raise && update)
-              raiseForUpdate(item, t);
-            return true;
-          }
-
-          t = table[i = indexmask & (i + 1)].item;
-        }
-
-        if (!add) goto notfound;
-
-        table[i] = new Bucket(item, hashval);
-      }
-#endif
-#else
-#if REFBUCKET
             int hashval = gethashcode(item);
             int i = hv2i(hashval);
             Bucket b = table[i], bold = null;
@@ -464,102 +233,6 @@ namespace C5
 
                 table[i] = new Bucket(item, hashval, null);
             }
-#else
-			if (isnull(item))
-			{
-        if (defaultvalid)
-        {
-          T olditem = defaultitem;
-          if (update)
-            defaultitem = item;
-          else
-            item = defaultitem;
-
-          if (raise && update)
-            raiseForUpdate(item, olditem);
-          return true;
-        }
-
-				if (!add) goto notfound;
-
-				defaultvalid = true;
-				defaultitem = item;
-			}
-			else
-			{
-				int hashval = gethashcode(item);
-				int i = hv2i(hashval);
-				Bucket b = table[i];
-
-				if (!isnull(b.item))
-				{
-					if (equals(b.item, item))
-					{
-						if (update)
-							table[i].item = item;
-						else
-							item = b.item;
-
-            if (raise && update)
-              raiseForUpdate(item, b.item);
-            return true;
-					}
-
-					OverflowBucket ob = table[i].overflow;
-
-					if (ob == null)
-					{
-						if (!add) goto notfound;
-
-						table[i].overflow = new OverflowBucket(item, hashval, null);
-					}
-					else
-					{
-            T olditem = ob.item;
-						while (ob.overflow != null)
-						{
-              if (equals(item, olditem))
-              {
-                if (update)
-                  ob.item = item;
-                else
-                  item = olditem;
-
-                if (raise && update)
-                  raiseForUpdate(item, olditem);
-                return true;
-              }
-
-							ob = ob.overflow;
-              olditem = ob.item;
-						}
-
-            if (equals(item, olditem))
-            {
-              if (update)
-                ob.item = item;
-              else
-                item = olditem;
-
-              if (raise && update)
-                raiseForUpdate(item, olditem);
-              return true;
-            }
-
-						if (!add) goto notfound;
-
-						ob.overflow = new OverflowBucket(item, hashval, null);
-					}
-				}
-				else
-				{
-					if (!add) goto notfound;
-
-					table[i] = new Bucket(item, hashval);
-				}
-			}
-#endif
-#endif
             size++;
             if (size > resizethreshhold)
                 expand();
@@ -577,102 +250,6 @@ namespace C5
 
             if (size == 0)
                 return false;
-#if LINEARPROBING
-#if REFBUCKET
-      int hashval = gethashcode(item);
-      int index = hv2i(hashval);
-      Bucket b = table[index];
-
-      while (b != null)
-      {
-        if (equals(item, b.item))
-        {
-          //ref
-          item = table[index].item;
-          table[index] = null;
-
-          //Algorithm R
-          int j = (index + 1) & indexmask;
-
-          b = table[j];
-          while (b != null)
-          {
-            int k = hv2i(b.hashval);
-
-            if ((k <= index && index < j) || (index < j && j < k) || (j < k && k <= index))
-            //if (index > j ? (j < k && k <= index): (k <= index || j < k) )
-            {
-              table[index] = b;
-              table[j] = null;
-              index = j;
-            }
-
-            j = (j + 1) & indexmask;
-            b = table[j];
-          }
-
-          goto found;
-        }
-
-        b = table[index = indexmask & (index + 1)];
-      }
-      return false;
-#else
-      if (isnull(item))
-      {
-        if (!defaultvalid)
-          return false;
-
-        //ref
-        item = defaultitem;
-        defaultvalid = false;
-        defaultitem = default(T); //No spaceleaks!
-      }
-      else
-      {
-        int hashval = gethashcode(item);
-        int index = hv2i(hashval);
-        T t = table[index].item;
-
-        while (!isnull(t))
-        {
-          if (equals(item, t))
-          {
-            //ref
-            item = table[index].item;
-            table[index].item = default(T);
-
-            //algorithm R
-            int j = (index + 1) & indexmask;
-            Bucket b = table[j];
-
-            while (!isnull(b.item))
-            {
-              int k = hv2i(b.hashval);
-
-              if ((k <= index && index < j) || (index < j && j < k) || (j < k && k <= index))
-              {
-                table[index] = b;
-                table[j].item = default(T);
-                index = j;
-              }
-
-              j = (j + 1) & indexmask;
-              b = table[j];
-            }
-
-            goto found;
-          }
-
-          t = table[index = indexmask & (index + 1)].item;
-        }
-
-        return false;
-      }
-#endif
-    found:
-#else
-#if REFBUCKET
             int hashval = gethashcode(item);
             int index = hv2i(hashval);
             Bucket b = table[index], bold;
@@ -703,72 +280,6 @@ namespace C5
                 item = b.item;
                 bold.overflow = b.overflow;
             }
-
-#else
-			if (isnull(item))
-			{
-				if (!defaultvalid)
-					return false;
-
-				//ref
-				item = defaultitem;
-				defaultvalid = false;
-				defaultitem = default(T); //No spaceleaks!
-			}
-			else
-			{
-				int hashval = gethashcode(item);
-				int index = hv2i(hashval);
-				Bucket b = table[index];
-				OverflowBucket ob = b.overflow;
-
-				if (equals(item, b.item))
-				{
-					//ref
-					item = b.item;
-					if (ob == null)
-					{
-						table[index] = new Bucket();
-					}
-					else
-					{
-						b = new Bucket(ob.item, ob.hashval);
-						b.overflow = ob.overflow;
-						table[index] = b;
-					}
-				}
-				else
-				{
-					if (ob == null)
-						return false;
-
-					if (equals(item, ob.item)) 
-					{
-						//ref
-						item=ob.item;
-						table[index].overflow = ob.overflow;
-					}
-					else
-					{
-						while (ob.overflow != null)
-							if (equals(item, ob.overflow.item))
-							{
-								//ref
-								item = ob.overflow.item;
-								break;
-							}
-							else
-								ob = ob.overflow;
-
-						if (ob.overflow == null)
-							return false;
-
-						ob.overflow = ob.overflow.overflow;
-					}
-				}
-			}
-#endif
-#endif
             size--;
 
             return true;
@@ -783,10 +294,6 @@ namespace C5
             size = 0;
             table = new Bucket[indexmask + 1];
             resizethreshhold = (int)(table.Length * fillfactor);
-#if !REFBUCKET
-      defaultitem = default(T);
-      defaultvalid = false;
-#endif
         }
 
         #endregion
@@ -934,10 +441,6 @@ namespace C5
             updatecheck();
             if (remove(ref item))
             {
-#if SHRINK
-				if (size<resizethreshhold/2 && resizethreshhold>8)
-					shrink();
-#endif
                 raiseForRemove(item);
                 return true;
             }
@@ -958,10 +461,6 @@ namespace C5
             removeditem = item;
             if (remove(ref removeditem))
             {
-#if SHRINK
-				if (size<resizethreshhold/2 && resizethreshhold>8)
-					shrink();
-#endif
                 raiseForRemove(removeditem);
                 return true;
             }
@@ -982,17 +481,7 @@ namespace C5
             T jtem;
             foreach (var item in items)
             { jtem = item; if (remove(ref jtem) && raise) raiseHandler.Remove(jtem); }
-#if SHRINK
-			if (size < resizethreshhold / 2 && resizethreshhold > 16)
-			{
-				int newlength = table.Length;
 
-				while (newlength >= 32 && newlength * fillfactor / 2 > size)
-					newlength /= 2;
-
-				resize(newlength - 1);
-			}
-#endif
             if (raise) raiseHandler.Raise();
         }
 
@@ -1045,10 +534,7 @@ namespace C5
 
             table = aux.table;
             size = aux.size;
-#if !REFBUCKET
-      defaultvalid = aux.defaultvalid;
-      defaultitem = aux.defaultitem;
-#endif
+
             indexmask = aux.indexmask;
             resizethreshhold = aux.resizethreshhold;
             bits = aux.bits;
@@ -1086,43 +572,14 @@ namespace C5
             T[] res = new T[size];
             int index = 0;
 
-#if !REFBUCKET
-      if (defaultvalid)
-        res[index++] = defaultitem;
-#endif
             for (int i = 0; i < table.Length; i++)
             {
                 Bucket b = table[i];
-#if LINEARPROBING
-#if REFBUCKET
-        if (b != null)
-          res[index++] = b.item;
-#else
-        if (!isnull(b.item))
-          res[index++] = b.item;
-#endif
-#else
-#if REFBUCKET
                 while (b != null)
                 {
                     res[index++] = b.item;
                     b = b.overflow;
                 }
-#else
-				if (!isnull(b.item))
-				{
-					res[index++] = b.item;
-
-					OverflowBucket ob = b.overflow;
-
-					while (ob != null)
-					{
-						res[index++] = ob.item;
-						ob = ob.overflow;
-					}
-				}
-#endif
-#endif
             }
 
             System.Diagnostics.Debug.Assert(size == index);
@@ -1173,12 +630,8 @@ namespace C5
             int len = table.Length;
             if (size == 0)
                 throw new NoSuchItemException();
-#if REFBUCKET
             do { if (++lastchosen >= len) lastchosen = 0; } while (table[lastchosen] == null);
-#else
-      if (defaultvalid) return defaultitem;
-      do { if (++lastchosen >= len) lastchosen = 0; } while (isnull(table[lastchosen].item));
-#endif
+
             return table[lastchosen].item;
         }
 
@@ -1192,42 +645,13 @@ namespace C5
             int mystamp = stamp;
             int len = table.Length;
 
-#if LINEARPROBING
-#if REFBUCKET
-      while (++index < len)
-      {
-        if (mystamp != stamp) throw new CollectionModifiedException();
-
-        if (table[index] != null) yield return table[index].item;
-      }
-#else
-      if (defaultvalid)
-        yield return defaultitem;
-
-      while (++index < len)
-      {
-        if (mystamp != stamp) throw new CollectionModifiedException();
-
-        T item = table[index].item;
-
-        if (!isnull(item)) yield return item;
-      }
-#endif
-#else
-#if REFBUCKET
             Bucket b = null;
-#else
-			OverflowBucket ob = null;
 
-			if (defaultvalid)
-				yield return defaultitem;
-#endif
             while (true)
             {
                 if (mystamp != stamp)
                     throw new CollectionModifiedException();
 
-#if REFBUCKET
                 if (b == null || b.overflow == null)
                 {
                     do
@@ -1243,29 +667,7 @@ namespace C5
                     b = b.overflow;
                     yield return b.item;
                 }
-#else
-				if (ob != null && ob.overflow != null)
-				{
-					ob = ob.overflow;
-					yield return ob.item;
-				}
-				else if (index >= 0 && ob == null && (ob = table[index].overflow) != null)
-				{
-					yield return  ob.item;
-				}
-				else
-				{
-					do
-					{
-						if (++index >= len) yield break;
-					} while (isnull(table[index].item));
-
-          yield return table[index].item;
-          ob = null;
-				}
-#endif
             }
-#endif
         }
 
         #endregion
@@ -1348,94 +750,6 @@ namespace C5
         public virtual bool Check()
         {
             int count = 0;
-#if LINEARPROBING
-      int lasthole = table.Length - 1;
-
-#if REFBUCKET
-      while (lasthole >= 0 && table[lasthole] != null)
-#else
-      while (lasthole >= 0 && !isnull(table[lasthole].item))
-#endif
-      {
-        lasthole--;
-        count++;
-      }
-
-      if (lasthole < 0)
-      {
-        Logger.Log(string.Format("Table is completely filled!"));
-        return false;
-      }
-
-      for (int cellindex = lasthole + 1, s = table.Length; cellindex < s; cellindex++)
-      {
-        Bucket b = table[cellindex];
-        int hashindex = hv2i(b.hashval);
-
-        if (hashindex <= lasthole || hashindex > cellindex)
-        {
-          Logger.Log(string.Format("Bad cell item={0}, hashval={1}, hashindex={2}, cellindex={3}, lasthole={4}", b.item, b.hashval, hashindex, cellindex, lasthole));
-          return false;
-        }
-      }
-
-      int latesthole = -1;
-
-      for (int cellindex = 0; cellindex < lasthole; cellindex++)
-      {
-        Bucket b = table[cellindex];
-
-#if REFBUCKET
-        if (b != null)
-#else
-        if (!isnull(b.item))
-#endif
-        {
-          count++;
-
-          int hashindex = hv2i(b.hashval);
-
-          if (cellindex < hashindex && hashindex <= lasthole)
-          {
-            Logger.Log(string.Format("Bad cell item={0}, hashval={1}, hashindex={2}, cellindex={3}, latesthole={4}", b.item, b.hashval, hashindex, cellindex, latesthole));
-            return false;
-          }
-        }
-        else
-        {
-          latesthole = cellindex;
-          break;
-        }
-      }
-
-      for (int cellindex = latesthole + 1; cellindex < lasthole; cellindex++)
-      {
-        Bucket b = table[cellindex];
-
-#if REFBUCKET
-        if (b != null)
-#else
-        if (!isnull(b.item))
-#endif
-        {
-          count++;
-
-          int hashindex = hv2i(b.hashval);
-
-          if (hashindex <= latesthole || cellindex < hashindex)
-          {
-            Logger.Log(string.Format("Bad cell item={0}, hashval={1}, hashindex={2}, cellindex={3}, latesthole={4}", b.item, b.hashval, hashindex, cellindex, latesthole));
-            return false;
-          }
-        }
-        else
-        {
-          latesthole = cellindex;
-        }
-      }
-
-      return true;
-#else
             bool retval = true;
 
             if (bitsc != 32 - bits)
@@ -1463,7 +777,6 @@ namespace C5
             {
                 int level = 0;
                 Bucket b = table[i];
-#if REFBUCKET
                 while (b != null)
                 {
                     if (i != hv2i(b.hashval))
@@ -1476,32 +789,6 @@ namespace C5
                     level++;
                     b = b.overflow;
                 }
-#else
-				if (!isnull(b.item))
-				{
-					count++;
-					if (i != hv2i(b.hashval))
-					{
-						Logger.Log(string.Format("Bad cell item={0}, hashval={1}, index={2}, level={3}", b.item, b.hashval, i, level));
-						retval = false;
-					}
-
-					OverflowBucket ob = b.overflow;
-
-					while (ob != null)
-					{
-						level++;
-						count++;
-						if (i != hv2i(ob.hashval))
-						{
-							Logger.Log(string.Format("Bad cell item={0}, hashval={1}, index={2}, level={3}", b.item, b.hashval, i, level));
-							retval = false;
-						}
-
-						ob = ob.overflow;
-					}
-				}
-#endif
             }
 
             if (count != size)
@@ -1511,7 +798,6 @@ namespace C5
             }
 
             return retval;
-#endif
         }
 
 
@@ -1522,36 +808,9 @@ namespace C5
         public ISortedDictionary<int, int> BucketCostDistribution()
         {
             TreeDictionary<int, int> res = new TreeDictionary<int, int>();
-#if LINEARPROBING
-      int count = 0;
-#if REFBUCKET
-      while (table[count] != null)
-#else
-      while (!isnull(table[count].item))
-#endif
-        count++;
-      for (int i = table.Length - 1; i >= 0; i--)
-      {
-#if REFBUCKET
-        if (table[i] != null)
-#else
-        if (!isnull(table[i].item))
-#endif
-          count++;
-        else
-          count = 0;
-        if (res.Contains(count))
-          res[count]++;
-        else
-          res[count] = 1;
-      }
-
-      return res;
-#else
             for (int i = 0, s = table.Length; i < s; i++)
             {
                 int count = 0;
-#if REFBUCKET
                 Bucket b = table[i];
 
                 while (b != null)
@@ -1559,22 +818,6 @@ namespace C5
                     count++;
                     b = b.overflow;
                 }
-#else
-				Bucket b = table[i];
-
-				if (!isnull(b.item))
-				{
-					count = 1;
-
-					OverflowBucket ob = b.overflow;
-
-					while (ob != null)
-					{
-						count++;
-						ob = ob.overflow;
-					}
-				}
-#endif
                 if (res.Contains(count))
                     res[count]++;
                 else
@@ -1582,7 +825,6 @@ namespace C5
             }
 
             return res;
-#endif
         }
 
         #endregion
