@@ -20,7 +20,6 @@
 */
 
 using System;
-using System.Collections.Generic;
 using C5;
 using NUnit.Framework;
 using SCG = System.Collections.Generic;
@@ -521,7 +520,7 @@ namespace C5UnitTests.support
                     throw new NotImplementedException();
                 }
 
-                void IExtensible<int>.AddAll(IEnumerable<int> enumerable)
+                void IExtensible<int>.AddAll(SCG.IEnumerable<int> enumerable)
                 {
                     throw new NotImplementedException();
                 }
