@@ -81,7 +81,6 @@
     <Compile Include="ThisFun.cs" />
     <Compile Include="Toposort.cs" />
     <Compile Include="TreeTraversal.cs" />
-    <Compile Include="Try.cs" />
     <Compile Include="ViewPatterns.cs" />
     <Compile Include="Views.cs" />
     <Compile Include="WrappedArray.cs" />

@@ -31,19 +31,11 @@ namespace C5
     /// <typeparam name="T"></typeparam>
     public static class EqualityComparer<T>
     {
-        readonly static Type isequenced = typeof(ISequenced<>);
+        private static SCG.IEqualityComparer<T> _default;
 
-        readonly static Type icollection = typeof(ICollection<>);
+        readonly static Type OrderedcollectionequalityComparer = typeof(SequencedCollectionEqualityComparer<,>);
 
-        readonly static Type orderedcollectionequalityComparer = typeof(SequencedCollectionEqualityComparer<,>);
-
-        readonly static Type unorderedcollectionequalityComparer = typeof(UnsequencedCollectionEqualityComparer<,>);
-
-        readonly static Type equalityequalityComparer = typeof(EquatableEqualityComparer<>);
-
-        readonly static Type iequalitytype = typeof(IEquatable<T>);
-
-        static SCG.IEqualityComparer<T> cachedDefault = null;
+        readonly static Type UnorderedcollectionequalityComparer = typeof(UnsequencedCollectionEqualityComparer<,>);
 
         //TODO: find the right word for initialized+invocation 
         /// <summary>
@@ -72,113 +64,45 @@ namespace C5
         {
             get
             {
-                if (cachedDefault != null)
-                    return cachedDefault;
-
-                Type t = typeof(T);
-
-                if (t.IsValueType)
+                if (_default != null)
                 {
-                    return SCG.EqualityComparer<T>.Default;
+                    return _default;
                 }
-                Type[] interfaces = t.GetInterfaces();
-                if (t.IsGenericType && t.GetGenericTypeDefinition().Equals(isequenced))
-                    return createAndCache(orderedcollectionequalityComparer.MakeGenericType(new Type[] { t, t.GetGenericArguments()[0] }));
+
+                var t = typeof(T);
+
+                var interfaces = t.GetInterfaces();
+                if (t.IsGenericType && t.GetGenericTypeDefinition().Equals(typeof(ISequenced<>)))
+                {
+                    return CreateAndCache(OrderedcollectionequalityComparer.MakeGenericType(new[] {t, t.GetGenericArguments()[0]}));
+                }
                 foreach (Type ty in interfaces)
                 {
-                    if (ty.IsGenericType && ty.GetGenericTypeDefinition().Equals(isequenced))
-                        return createAndCache(orderedcollectionequalityComparer.MakeGenericType(new Type[] { t, ty.GetGenericArguments()[0] }));
+                    if (ty.IsGenericType && ty.GetGenericTypeDefinition().Equals(typeof(ISequenced<>)))
+                    {
+                        return CreateAndCache(OrderedcollectionequalityComparer.MakeGenericType(new[] { t, ty.GetGenericArguments()[0] }));
+                    }
                 }
-                if (t.IsGenericType && t.GetGenericTypeDefinition().Equals(icollection))
-                    return createAndCache(unorderedcollectionequalityComparer.MakeGenericType(new Type[] { t, t.GetGenericArguments()[0] }));
+                if (t.IsGenericType && t.GetGenericTypeDefinition().Equals(typeof(ICollection<>)))
+                {
+                    return CreateAndCache(UnorderedcollectionequalityComparer.MakeGenericType(new[] { t, t.GetGenericArguments()[0] }));
+                }
                 foreach (Type ty in interfaces)
                 {
-                    if (ty.IsGenericType && ty.GetGenericTypeDefinition().Equals(icollection))
-                        return createAndCache(unorderedcollectionequalityComparer.MakeGenericType(new Type[] { t, ty.GetGenericArguments()[0] }));
+                    if (ty.IsGenericType && ty.GetGenericTypeDefinition().Equals(typeof(ICollection<>)))
+                    {
+                        return CreateAndCache(UnorderedcollectionequalityComparer.MakeGenericType(new[] { t, ty.GetGenericArguments()[0] }));
+                    }
                 }
-                if (iequalitytype.IsAssignableFrom(t))
-                    return createAndCache(equalityequalityComparer.MakeGenericType(new Type[] { t }));
-                else
-                    return cachedDefault = NaturalEqualityComparer<T>.Default;
+                
+                return _default = SCG.EqualityComparer<T>.Default;
             }
         }
-        static SCG.IEqualityComparer<T> createAndCache(Type equalityComparertype)
+
+        private static SCG.IEqualityComparer<T> CreateAndCache(Type equalityComparertype)
         {
-            return cachedDefault = (SCG.IEqualityComparer<T>)(equalityComparertype.GetProperty("Default", BindingFlags.Static | BindingFlags.Public).GetValue(null, null));
+            return _default = (SCG.IEqualityComparer<T>)(equalityComparertype.GetProperty("Default", BindingFlags.Static | BindingFlags.Public).GetValue(null, null));
         }
-    }
-
-    /// <summary>
-    /// A default item equalityComparer calling through to
-    /// the GetHashCode and Equals methods inherited from System.Object.
-    /// </summary>
-    public sealed class NaturalEqualityComparer<T> : SCG.IEqualityComparer<T>
-    {
-        static NaturalEqualityComparer<T> cached;
-        NaturalEqualityComparer() { }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <value></value>
-        public static NaturalEqualityComparer<T> Default { get { return cached ?? (cached = new NaturalEqualityComparer<T>()); } }
-        //TODO: check if null check is reasonable
-        //Answer: if we have struct C<T> { T t; int i;} and implement GetHashCode as
-        //the sum of hashcodes, and T may be any type, we cannot make the null check 
-        //inside the definition of C<T> in a reasonable way.
-        /// <summary>
-        /// Get the hash code with respect to this item equalityComparer
-        /// </summary>
-        /// <param name="item">The item</param>
-        /// <returns>The hash code</returns>
-        public int GetHashCode(T item) { return item == null ? 0 : item.GetHashCode(); }
-
-        /// <summary>
-        /// Check if two items are equal with respect to this item equalityComparer
-        /// </summary>
-        /// <param name="item1">first item</param>
-        /// <param name="item2">second item</param>
-        /// <returns>True if equal</returns>
-        public bool Equals(T item1, T item2)
-        {
-            return item1 == null ? item2 == null : item1.Equals(item2);
-        }
-    }
-
-    /// <summary>
-    /// A default equality comparer for a type T that implements System.IEquatable<typeparamref name="T"/>. 
-    /// 
-    /// The equality comparer forwards calls to GetHashCode and Equals to the IEquatable methods 
-    /// on T, so Equals(T) is called, not Equals(object). 
-    /// This will save boxing abd unboxing if T is a value type
-    /// and in general saves a runtime type check.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class EquatableEqualityComparer<T> : SCG.IEqualityComparer<T> where T : IEquatable<T>
-    {
-        static EquatableEqualityComparer<T> cached = new EquatableEqualityComparer<T>();
-        EquatableEqualityComparer() { }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <value></value>
-        public static EquatableEqualityComparer<T> Default
-        {
-            get { return cached ?? (cached = new EquatableEqualityComparer<T>()); }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        public int GetHashCode(T item) { return item == null ? 0 : item.GetHashCode(); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="item1"></param>
-        /// <param name="item2"></param>
-        /// <returns></returns>
-        public bool Equals(T item1, T item2) { return item1 == null ? item2 == null : item1.Equals(item2); }
     }
 
     /// <summary>

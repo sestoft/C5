@@ -35,7 +35,7 @@ namespace C5UnitTests.support
         {
             class ABT : ArrayBase<string>
             {
-                public ABT() : base(8, NaturalEqualityComparer<string>.Default) { }
+                public ABT() : base(8, C5.EqualityComparer<string>.Default) { }
 
                 public override string Choose() { if (size > 0) return array[0]; throw new NoSuchItemException(); }
 
@@ -77,13 +77,6 @@ namespace C5UnitTests.support
                     return d < that.d ? -1 : d == that.d ? 0 : 1;
                 }
                 public bool Equals(dbl that) { return d == that.d; }
-            }
-
-            [Test]
-            [ExpectedException(typeof(NotComparableException))]
-            public void NotComparable()
-            {
-                SCG.IComparer<object> foo = SCG.Comparer<object>.Default;
             }
 
             [Test]
@@ -199,7 +192,7 @@ namespace C5UnitTests.support
             [Test]
             public void ReftypeequalityComparer()
             {
-                SCG.IEqualityComparer<string> h = NaturalEqualityComparer<string>.Default;
+                SCG.IEqualityComparer<string> h = C5.EqualityComparer<string>.Default;
                 string s = "bamse";
                 string t = "bamse";
                 string u = "bimse";
@@ -213,7 +206,7 @@ namespace C5UnitTests.support
             [Test]
             public void ValuetypeequalityComparer()
             {
-                SCG.IEqualityComparer<double> h = NaturalEqualityComparer<double>.Default;
+                SCG.IEqualityComparer<double> h = C5.EqualityComparer<double>.Default;
                 double s = 3.4;
                 double t = 3.4;
                 double u = 5.7;
