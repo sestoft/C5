@@ -63,13 +63,14 @@
   <ItemGroup>
     <Compile Include="arrays\CircularQueue.cs" />
     <Compile Include="arrays\HashedArrayList.cs" />
+    <Compile Include="Builtin.cs" />
+    <Compile Include="Comparer.cs" />
+    <Compile Include="Comparers\Comparer.cs" />
+    <Compile Include="Comparers\ComparerFactory.cs" />
+    <Compile Include="Comparers\EqualityComparer.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Builtin.cs" />
-    <Compile Include="Comparer.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Enums.cs" />
