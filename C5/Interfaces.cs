@@ -1199,7 +1199,7 @@ namespace C5
     /// Usually there will also be constructors without a comparer argument, in which case the 
     /// comparer should be the defalt comparer for the item type, <see cref="P:C5.Comparer`1.Default"/>.</para>
     /// 
-    /// <para>The comparer of the sorted collection is available as the <code>Comparer</code> property 
+    /// <para>The comparer of the sorted collection is available as the <code>SCG.Comparer</code> property 
     /// (<see cref="P:C5.ISorted`1.Comparer"/>).</para>
     /// 
     /// <para>The methods are grouped according to
@@ -2008,7 +2008,7 @@ namespace C5
     /// and never throw exceptions.</i>
     /// <i>This interface is identical to System.Collections.Generic.IComparer&lt;T&gt;</i>
     /// </summary>
-    public interface IComparer<T>
+    public interface ISCG.Comparer<T>
     {
       /// <summary>
       /// Compare two items with respect to this item comparer

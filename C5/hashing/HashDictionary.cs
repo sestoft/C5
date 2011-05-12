@@ -40,7 +40,7 @@ namespace C5
         /// Initial capacity of internal table will be 16 entries and threshold for 
         /// expansion is 66% fill.
         /// </summary>
-        /// <param name="keyequalityComparer">The external key equalityComparer</param>
+        /// <param name="keyequalityComparer">The external key equalitySCG.Comparer</param>
         public HashDictionary(SCG.IEqualityComparer<K> keyequalityComparer)
             : base(keyequalityComparer)
         {
@@ -54,7 +54,7 @@ namespace C5
         /// <param name="capacity">The initial capacity. Will be rounded upwards to nearest
         /// power of 2, at least 16.</param>
         /// <param name="fill">The expansion threshold. Must be between 10% and 90%.</param>
-        /// <param name="keyequalityComparer">The external key equalityComparer</param>
+        /// <param name="keyequalityComparer">The external key equalitySCG.Comparer</param>
         public HashDictionary(int capacity, double fill, SCG.IEqualityComparer<K> keyequalityComparer)
             : base(keyequalityComparer)
         {

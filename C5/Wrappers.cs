@@ -1591,7 +1591,7 @@ namespace C5
         /// </summary>
         /// <exception cref="NotComparableException">if T is not comparable</exception>
         /// <returns>True if the list is sorted, else false.</returns>
-        public bool IsSorted() { return innerlist.IsSorted(Comparer<T>.Default); }
+        public bool IsSorted() { return innerlist.IsSorted(SCG.Comparer<T>.Default); }
 
         /// <summary>
         /// Check if wrapped list is sorted

@@ -40,8 +40,7 @@ namespace SortingPermutation
             ArrayList<int> res = new ArrayList<int>(lst.Count);
             for (int i = 0; i < lst.Count; i++)
                 res.Add(i);
-            res.Sort(new DelegateComparer<int>
-                     (delegate(int i, int j) { return lst[i].CompareTo(lst[j]); }));
+            res.Sort(C5.Comparers.ComparerFactory<int>.CreateComparer((i, j) => lst[i].CompareTo(lst[j])));
             return res;
         }
 

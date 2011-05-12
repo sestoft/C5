@@ -52,7 +52,7 @@ namespace C5
         /// <param name="array">Array to sort</param>
         public static void IntroSort<T>(T[] array)
         {
-            new Sorter<T>(array, Comparer<T>.Default).IntroSort(0, array.Length);
+            new Sorter<T>(array, SCG.Comparer<T>.Default).IntroSort(0, array.Length);
         }
 
 

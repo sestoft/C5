@@ -676,7 +676,7 @@ namespace C5UnitTests.trees.TreeBag
         [ExpectedException(typeof(NullReferenceException))]
         public void NullEqualityComparerinConstructor4()
         {
-            new TreeBag<int>(Comparer<int>.Default, null);
+            new TreeBag<int>(SCG.Comparer<int>.Default, null);
         }
 
         [Test]
@@ -2825,8 +2825,8 @@ namespace C5UnitTests.trees.TreeBag
             [SetUp]
             public void Init()
             {
-                dit = new TreeBag<int>(Comparer<int>.Default, EqualityComparer<int>.Default);
-                dat = new TreeBag<int>(Comparer<int>.Default, EqualityComparer<int>.Default);
+                dit = new TreeBag<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
+                dat = new TreeBag<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
                 dut = new TreeBag<int>(new RevIC(), EqualityComparer<int>.Default);
             }
 
@@ -2921,8 +2921,8 @@ namespace C5UnitTests.trees.TreeBag
             [SetUp]
             public void Init()
             {
-                dit = new TreeBag<int>(Comparer<int>.Default, EqualityComparer<int>.Default);
-                dat = new TreeBag<int>(Comparer<int>.Default, EqualityComparer<int>.Default);
+                dit = new TreeBag<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
+                dat = new TreeBag<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
                 dut = new TreeBag<int>(new RevIC(), EqualityComparer<int>.Default);
             }
 

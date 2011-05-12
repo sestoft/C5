@@ -254,7 +254,7 @@ namespace C5
         /// Create an interval heap with natural item comparer and prescribed initial capacity
         /// </summary>
         /// <param name="capacity">The initial capacity</param>
-        public IntervalHeap(int capacity) : this(capacity, Comparer<T>.Default, EqualityComparer<T>.Default) { }
+        public IntervalHeap(int capacity) : this(capacity, SCG.Comparer<T>.Default, EqualityComparer<T>.Default) { }
 
 
         /// <summary>

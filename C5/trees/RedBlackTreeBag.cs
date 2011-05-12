@@ -221,7 +221,7 @@ namespace C5
         /// </summary>
         /// <exception cref="NotComparableException">If <code>T</code> is not comparable.
         /// </exception>
-        public TreeBag() : this(Comparer<T>.Default, EqualityComparer<T>.Default) { }
+        public TreeBag() : this(SCG.Comparer<T>.Default, EqualityComparer<T>.Default) { }
 
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace C5
         /// item equalityComparer, assumed consistent.
         /// </summary>
         /// <param name="comparer">The external comparer</param>
-        /// <param name="equalityComparer">The external item equalityComparer</param>
+        /// <param name="equalityComparer">The external item equalitySCG.Comparer</param>
         public TreeBag(SCG.IComparer<T> comparer, SCG.IEqualityComparer<T> equalityComparer)
             : base(equalityComparer)
         {

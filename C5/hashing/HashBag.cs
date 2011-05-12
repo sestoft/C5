@@ -63,7 +63,7 @@ namespace C5
         /// Create a hash bag with external item equalityComparer, prescribed initial table size and default fill threshold (66%)
         /// </summary>
         /// <param name="capacity">Initial table size (rounded to power of 2, at least 16)</param>
-        /// <param name="itemequalityComparer">The external item equalityComparer</param>
+        /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
         public HashBag(int capacity, SCG.IEqualityComparer<T> itemequalityComparer)
             : base(itemequalityComparer)
         {
@@ -76,7 +76,7 @@ namespace C5
         /// </summary>
         /// <param name="capacity">Initial table size (rounded to power of 2, at least 16)</param>
         /// <param name="fill">Fill threshold (valid range 10% to 90%)</param>
-        /// <param name="itemequalityComparer">The external item equalityComparer</param>
+        /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
         public HashBag(int capacity, double fill, SCG.IEqualityComparer<T> itemequalityComparer)
             : base(itemequalityComparer)
         {

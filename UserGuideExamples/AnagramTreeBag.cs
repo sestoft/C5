@@ -88,7 +88,7 @@ namespace AnagramTreeBag
 
         public static TreeBag<char> AnagramClass(String s)
         {
-            TreeBag<char> anagram = new TreeBag<char>(Comparer<char>.Default, EqualityComparer<char>.Default);
+            TreeBag<char> anagram = new TreeBag<char>(SCG.Comparer<char>.Default, EqualityComparer<char>.Default);
             foreach (char c in s)
                 anagram.Add(c);
             return anagram;

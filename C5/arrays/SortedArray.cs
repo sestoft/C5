@@ -131,7 +131,7 @@ namespace C5
         /// </exception>
         /// <param name="capacity">The capacity</param>
         public SortedArray(int capacity)
-            : this(capacity, Comparer<T>.Default, EqualityComparer<T>.Default) { }
+            : this(capacity, SCG.Comparer<T>.Default, EqualityComparer<T>.Default) { }
 
 
         /// <summary>

@@ -200,7 +200,7 @@ namespace C5
         /// <summary>
         /// Create an entry equalityComparer from a specified item equalityComparer for the keys
         /// </summary>
-        /// <param name="keyequalityComparer">The key equalityComparer</param>
+        /// <param name="keyequalityComparer">The key equalitySCG.Comparer</param>
         public KeyValuePairEqualityComparer(SCG.IEqualityComparer<K> keyequalityComparer)
         {
             if (keyequalityComparer == null)
@@ -1258,7 +1258,7 @@ namespace C5
     {
         #region Constructors
 
-        public SortedArrayDictionary() : this(Comparer<K>.Default, EqualityComparer<K>.Default) { }
+        public SortedArrayDictionary() : this(SCG.Comparer<K>.Default, EqualityComparer<K>.Default) { }
 
         /// <summary>
         /// Create a red-black tree dictionary using an external comparer for keys.

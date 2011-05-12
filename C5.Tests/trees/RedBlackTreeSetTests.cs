@@ -426,7 +426,7 @@ namespace C5UnitTests.trees.TreeSet
         [ExpectedException(typeof(NullReferenceException))]
         public void NullEqualityComparerinConstructor4()
         {
-            new TreeSet<int>(Comparer<int>.Default, null);
+            new TreeSet<int>(SCG.Comparer<int>.Default, null);
         }
 
         [Test]
@@ -2844,8 +2844,8 @@ namespace C5UnitTests.trees.TreeSet
             [SetUp]
             public void Init()
             {
-                dit = new TreeSet<int>(Comparer<int>.Default, EqualityComparer<int>.Default);
-                dat = new TreeSet<int>(Comparer<int>.Default, EqualityComparer<int>.Default);
+                dit = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
+                dat = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
                 dut = new TreeSet<int>(new RevIC(), EqualityComparer<int>.Default);
             }
 
@@ -2940,8 +2940,8 @@ namespace C5UnitTests.trees.TreeSet
             [SetUp]
             public void Init()
             {
-                dit = new TreeSet<int>(Comparer<int>.Default, EqualityComparer<int>.Default);
-                dat = new TreeSet<int>(Comparer<int>.Default, EqualityComparer<int>.Default);
+                dit = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
+                dat = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
                 dut = new TreeSet<int>(new RevIC(), EqualityComparer<int>.Default);
             }
 

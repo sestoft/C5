@@ -36,7 +36,7 @@ namespace C5
         /// Create a red-black tree dictionary using the natural comparer for keys.
         /// <exception cref="ArgumentException"/> if the key type K is not comparable.
         /// </summary>
-        public TreeDictionary() : this(Comparer<K>.Default, EqualityComparer<K>.Default) { }
+        public TreeDictionary() : this(SCG.Comparer<K>.Default, EqualityComparer<K>.Default) { }
 
         /// <summary>
         /// Create a red-black tree dictionary using an external comparer for keys.

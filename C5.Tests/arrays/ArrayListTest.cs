@@ -3196,7 +3196,7 @@ namespace C5UnitTests.arrays.list
             public void Init()
             {
                 dit = new ArrayList<int>();
-                dat = new TreeSet<int>(Comparer<int>.Default, EqualityComparer<int>.Default);
+                dat = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
                 dut = new ArrayList<int>();
                 dit.Add(2); dit.Add(1);
                 dat.Add(1); dat.Add(2);
@@ -3247,7 +3247,7 @@ namespace C5UnitTests.arrays.list
             public void Init()
             {
                 dit = new ArrayList<int>();
-                dat = new TreeSet<int>(Comparer<int>.Default, EqualityComparer<int>.Default);
+                dat = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
                 dut = new ArrayList<int>();
                 dit.Add(2); dit.Add(1);
                 dat.Add(1); dat.Add(2);
@@ -3298,7 +3298,7 @@ namespace C5UnitTests.arrays.list
             [SetUp]
             public void Init()
             {
-                dit = new TreeSet<int>(Comparer<int>.Default, EqualityComparer<int>.Default);
+                dit = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
                 dat = new ArrayList<int>();
                 dut = new ArrayList<int>();
                 dot = new ArrayList<int>();
@@ -3356,7 +3356,7 @@ namespace C5UnitTests.arrays.list
             [SetUp]
             public void Init()
             {
-                dit = new TreeSet<int>(Comparer<int>.Default, EqualityComparer<int>.Default);
+                dit = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
                 dat = new ArrayList<int>();
                 dut = new ArrayList<int>();
                 dot = new ArrayList<int>();

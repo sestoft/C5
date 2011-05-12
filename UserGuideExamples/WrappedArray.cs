@@ -181,11 +181,5 @@ namespace WrappedArray {
     public static void Sort<T>(T[] arr, int i, int n, SCG.IComparer<T> cmp) {
       new WrappedArray<T>(arr).View(i, n).Sort(cmp);
     }  
-    
-    // System.Array.Sort(T[], Comparison)
-
-    public static void Sort<T>(T[] arr, Comparison<T> csn) {
-      new WrappedArray<T>(arr).Sort(new DelegateComparer<T>(csn));
-    }  
   }
 }

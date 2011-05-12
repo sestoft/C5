@@ -609,7 +609,7 @@ namespace C5
         /// <summary>
         /// Create an array list with external item equalityComparer and initial capacity 8 items.
         /// </summary>
-        /// <param name="itemequalityComparer">The external item equalityComparer</param>
+        /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
         public HashedArrayList(SCG.IEqualityComparer<T> itemequalityComparer) : this(8, itemequalityComparer) { }
 
 
@@ -624,7 +624,7 @@ namespace C5
         /// Create an array list with external item equalityComparer and prescribed initial capacity.
         /// </summary>
         /// <param name="capacity">The prescribed capacity</param>
-        /// <param name="itemequalityComparer">The external item equalityComparer</param>
+        /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
         public HashedArrayList(int capacity, SCG.IEqualityComparer<T> itemequalityComparer)
             : base(capacity, itemequalityComparer)
         {
@@ -1193,7 +1193,7 @@ namespace C5
         /// </summary>
         /// <exception cref="NotComparableException">if T is not comparable</exception>
         /// <returns>True if the list is sorted, else false.</returns>
-        public bool IsSorted() { return IsSorted(Comparer<T>.Default); }
+        public bool IsSorted() { return IsSorted(SCG.Comparer<T>.Default); }
 
         /// <summary>
         /// Check if this list is sorted according to a specific sorting order.
@@ -1218,7 +1218,7 @@ namespace C5
         /// <exception cref="InvalidOperationException">if T is not comparable</exception>
         public virtual void Sort()
         {
-            Sort(Comparer<T>.Default);
+            Sort(SCG.Comparer<T>.Default);
         }
 
 

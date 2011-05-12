@@ -463,7 +463,7 @@ namespace C5
         /// <summary>
         /// Create a linked list with en external item equalityComparer
         /// </summary>
-        /// <param name="itemequalityComparer">The external equalityComparer</param>
+        /// <param name="itemequalityComparer">The external equalitySCG.Comparer</param>
         public LinkedList(SCG.IEqualityComparer<T> itemequalityComparer)
             : base(itemequalityComparer)
         {
@@ -1369,7 +1369,7 @@ namespace C5
         /// </summary>
         /// <exception cref="NotComparableException">if T is not comparable</exception>
         /// <returns>True if the list is sorted, else false.</returns>
-        public bool IsSorted() { return IsSorted(Comparer<T>.Default); }
+        public bool IsSorted() { return IsSorted(SCG.Comparer<T>.Default); }
 
         /// <summary>
         /// Check if this list is sorted according to a specific sorting order.
@@ -1407,7 +1407,7 @@ namespace C5
         /// The sorting is stable.
         /// </summary>
         /// <exception cref="InvalidOperationException">if T is not comparable</exception>
-        public virtual void Sort() { Sort(Comparer<T>.Default); }
+        public virtual void Sort() { Sort(SCG.Comparer<T>.Default); }
 
         // Sort the linked list using mergesort
         /// <summary>

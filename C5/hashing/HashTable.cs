@@ -311,7 +311,7 @@ namespace C5
         /// Create a hash set with external item equalityComparer and default fill threshold (66%)
         /// and initial table size (16).
         /// </summary>
-        /// <param name="itemequalityComparer">The external item equalityComparer</param>
+        /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
         public HashSet(SCG.IEqualityComparer<T> itemequalityComparer)
             : this(16, itemequalityComparer) { }
 
@@ -320,7 +320,7 @@ namespace C5
         /// Create a hash set with external item equalityComparer and default fill threshold (66%)
         /// </summary>
         /// <param name="capacity">Initial table size (rounded to power of 2, at least 16)</param>
-        /// <param name="itemequalityComparer">The external item equalityComparer</param>
+        /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
         public HashSet(int capacity, SCG.IEqualityComparer<T> itemequalityComparer)
             : this(capacity, 0.66, itemequalityComparer) { }
 
@@ -330,7 +330,7 @@ namespace C5
         /// </summary>
         /// <param name="capacity">Initial table size (rounded to power of 2, at least 16)</param>
         /// <param name="fill">Fill threshold (in range 10% to 90%)</param>
-        /// <param name="itemequalityComparer">The external item equalityComparer</param>
+        /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
         public HashSet(int capacity, double fill, SCG.IEqualityComparer<T> itemequalityComparer)
             : base(itemequalityComparer)
         {

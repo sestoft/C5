@@ -83,13 +83,13 @@ namespace C5UnitTests.support
             [ExpectedException(typeof(NotComparableException))]
             public void NotComparable()
             {
-                SCG.IComparer<object> foo = C5.Comparer<object>.Default;
+                SCG.IComparer<object> foo = SCG.Comparer<object>.Default;
             }
 
             [Test]
             public void GenericC()
             {
-                SCG.IComparer<dbl> h = new NaturalComparer<dbl>();
+                SCG.IComparer<dbl> h = SCG.Comparer<dbl>.Default;
                 dbl s = new dbl(3.4);
                 dbl t = new dbl(3.4);
                 dbl u = new dbl(7.4);
@@ -102,7 +102,7 @@ namespace C5UnitTests.support
             [Test]
             public void OrdinaryC()
             {
-                SCG.IComparer<string> h = new NaturalComparerO<string>();
+                SCG.IComparer<string> h = SCG.Comparer<string>.Default;
                 string s = "bamse";
                 string t = "bamse";
                 string u = "bimse";
@@ -115,36 +115,36 @@ namespace C5UnitTests.support
             [Test]
             public void GenericCViaBuilder()
             {
-                SCG.IComparer<dbl> h = C5.Comparer<dbl>.Default;
+                SCG.IComparer<dbl> h = SCG.Comparer<dbl>.Default;
                 dbl s = new dbl(3.4);
                 dbl t = new dbl(3.4);
                 dbl u = new dbl(7.4);
 
                 Assert.AreEqual(0, h.Compare(s, t));
                 Assert.IsTrue(h.Compare(s, u) < 0);
-                Assert.AreSame(h, C5.Comparer<dbl>.Default);
+                Assert.AreSame(h, SCG.Comparer<dbl>.Default);
             }
 
 
             [Test]
             public void OrdinaryCViaBuilder()
             {
-                SCG.IComparer<string> h = C5.Comparer<string>.Default;
+                SCG.IComparer<string> h = SCG.Comparer<string>.Default;
                 string s = "bamse";
                 string t = "bamse";
                 string u = "bimse";
 
                 Assert.AreEqual(0, h.Compare(s, t));
                 Assert.IsTrue(h.Compare(s, u) < 0);
-                Assert.AreSame(h, C5.Comparer<string>.Default);
+                Assert.AreSame(h, SCG.Comparer<string>.Default);
 
             }
 
             public void ComparerViaBuilderTest<T>(T item1, T item2)
                 where T : IComparable<T>
             {
-                SCG.IComparer<T> h = C5.Comparer<T>.Default;
-                Assert.AreSame(h, C5.Comparer<T>.Default);
+                SCG.IComparer<T> h = SCG.Comparer<T>.Default;
+                Assert.AreSame(h, SCG.Comparer<T>.Default);
                 Assert.AreEqual(0, h.Compare(item1, item1));
                 Assert.AreEqual(0, h.Compare(item2, item2));
                 Assert.IsTrue(h.Compare(item1, item2) < 0);
@@ -174,22 +174,22 @@ namespace C5UnitTests.support
             [Test]
             public void IntComparerViaBuilder()
             {
-                SCG.IComparer<int> h = C5.Comparer<int>.Default;
+                SCG.IComparer<int> h = SCG.Comparer<int>.Default;
                 int s = 4;
                 int t = 4;
                 int u = 5;
 
                 Assert.AreEqual(0, h.Compare(s, t));
                 Assert.IsTrue(h.Compare(s, u) < 0);
-                Assert.AreSame(h, C5.Comparer<int>.Default);
+                Assert.AreSame(h, SCG.Comparer<int>.Default);
             }
 
             [Test]
             public void Nulls()
             {
-                Assert.IsTrue(C5.Comparer<string>.Default.Compare(null, "abe") < 0);
-                Assert.IsTrue(C5.Comparer<string>.Default.Compare(null, null) == 0);
-                Assert.IsTrue(C5.Comparer<string>.Default.Compare("abe", null) > 0);
+                Assert.IsTrue(SCG.Comparer<string>.Default.Compare(null, "abe") < 0);
+                Assert.IsTrue(SCG.Comparer<string>.Default.Compare(null, null) == 0);
+                Assert.IsTrue(SCG.Comparer<string>.Default.Compare("abe", null) > 0);
             }
         }
 

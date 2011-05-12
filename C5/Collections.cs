@@ -716,7 +716,7 @@ namespace C5
         /// Compute the unsequenced hash code of a collection
         /// </summary>
         /// <param name="items">The collection to compute hash code for</param>
-        /// <param name="itemequalityComparer">The item equalityComparer</param>
+        /// <param name="itemequalityComparer">The item equalitySCG.Comparer</param>
         /// <returns>The hash code</returns>
         public static int ComputeHashCode(ICollectionValue<T> items, SCG.IEqualityComparer<T> itemequalityComparer)
         {
@@ -1022,7 +1022,7 @@ namespace C5
         /// Compute the unsequenced hash code of a collection
         /// </summary>
         /// <param name="items">The collection to compute hash code for</param>
-        /// <param name="itemequalityComparer">The item equalityComparer</param>
+        /// <param name="itemequalityComparer">The item equalitySCG.Comparer</param>
         /// <returns>The hash code</returns>
         public static int ComputeHashCode(ISequenced<T> items, SCG.IEqualityComparer<T> itemequalityComparer)
         {

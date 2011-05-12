@@ -313,7 +313,7 @@ namespace C5UnitTests.arrays.sorted
         [ExpectedException(typeof(NullReferenceException))]
         public void NullEqualityComparerinConstructor4()
         {
-            new SortedArray<int>(5, Comparer<int>.Default, null);
+            new SortedArray<int>(5, SCG.Comparer<int>.Default, null);
         }
 
         [Test]
@@ -2306,8 +2306,8 @@ namespace C5UnitTests.arrays.sorted
             [SetUp]
             public void Init()
             {
-                dit = new SortedArray<int>(8, Comparer<int>.Default, EqualityComparer<int>.Default);
-                dat = new SortedArray<int>(8, Comparer<int>.Default, EqualityComparer<int>.Default);
+                dit = new SortedArray<int>(8, SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
+                dat = new SortedArray<int>(8, SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
                 dut = new SortedArray<int>(8, new RevIC(), EqualityComparer<int>.Default);
             }
 
@@ -2402,8 +2402,8 @@ namespace C5UnitTests.arrays.sorted
             [SetUp]
             public void Init()
             {
-                dit = new SortedArray<int>(8, Comparer<int>.Default, EqualityComparer<int>.Default);
-                dat = new SortedArray<int>(8, Comparer<int>.Default, EqualityComparer<int>.Default);
+                dit = new SortedArray<int>(8, SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
+                dat = new SortedArray<int>(8, SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
                 dut = new SortedArray<int>(8, new RevIC(), EqualityComparer<int>.Default);
             }
 

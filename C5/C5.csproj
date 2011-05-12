@@ -63,7 +63,6 @@
   <ItemGroup>
     <Compile Include="arrays\CircularQueue.cs" />
     <Compile Include="arrays\HashedArrayList.cs" />
-    <Compile Include="Comparer.cs" />
     <Compile Include="Comparers\Comparer.cs" />
     <Compile Include="Comparers\ComparerFactory.cs" />
     <Compile Include="Comparers\EqualityComparer.cs" />
