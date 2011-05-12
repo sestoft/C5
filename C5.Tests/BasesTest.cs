@@ -223,17 +223,6 @@ namespace C5UnitTests.support
                 Assert.IsFalse(h.Equals(s, u));
             }
 
-            internal class REHTest { public override int GetHashCode() { return 37; } }
-
-            [Test]
-            public void ReferenceEqualityEqualityComparerTest()
-            {
-                REHTest rehtest = new REHTest();
-                SCG.IEqualityComparer<REHTest> equalityComparer = ReferenceEqualityComparer<REHTest>.Default;
-                Assert.AreEqual(37, rehtest.GetHashCode());
-                Assert.IsFalse(equalityComparer.GetHashCode(rehtest) == 37);
-            }
-
             [Test]
             public void ReftypeequalityComparerViaBuilder()
             {

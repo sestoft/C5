@@ -216,44 +216,6 @@ namespace C5
     }
 
     /// <summary>
-    /// A equalityComparer for a reference type that uses reference equality for equality and the hash code from object as hash code.
-    /// </summary>
-    /// <typeparam name="T">The item type. Must be a reference type.</typeparam>
-    public class ReferenceEqualityComparer<T> : SCG.IEqualityComparer<T> where T : class
-    {
-        static ReferenceEqualityComparer<T> cached;
-        ReferenceEqualityComparer() { }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <value></value>
-        public static ReferenceEqualityComparer<T> Default
-        {
-            get { return cached ?? (cached = new ReferenceEqualityComparer<T>()); }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        public int GetHashCode(T item)
-        {
-            return System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(item);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="i1"></param>
-        /// <param name="i2"></param>
-        /// <returns></returns>
-        public bool Equals(T i1, T i2)
-        {
-            return object.ReferenceEquals(i1, i2);
-        }
-    }
-
-    /// <summary>
     /// An equalityComparer compatible with a given comparer. All hash codes are 0, 
     /// meaning that anything based on hash codes will be quite inefficient.
     /// <para><b>Note: this will give a new EqualityComparer each time created!</b></para>

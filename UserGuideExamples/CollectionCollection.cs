@@ -69,14 +69,6 @@ namespace CollectionCollection
             Equalities("Unsequenced equality", hs3.EqualityComparer);
             hs3.Add(col1); hs3.Add(col2); hs3.Add(col3);
             Console.WriteLine("hs3.Count = {0}", hs3.Count);
-
-            // Reference equality and hasher
-            SCG.IEqualityComparer<IList<int>> refEqEqualityComparer
-              = ReferenceEqualityComparer<IList<int>>.Default;
-            HashSet<IList<int>> hs4 = new HashSet<IList<int>>(refEqEqualityComparer);
-            Equalities("Reference equality", hs4.EqualityComparer);
-            hs4.Add(col1); hs4.Add(col2); hs4.Add(col3);
-            Console.WriteLine("hs4.Count = {0}", hs4.Count);
         }
 
         public static void Equalities(String msg, SCG.IEqualityComparer<IList<int>> equalityComparer)
