@@ -81,7 +81,7 @@ namespace C5UnitTests.arrays.hashed
             public void Init()
             {
                 list = new HashedArrayList<int>(TenEqualityComparer.Default);
-                seen = new CollectionEventList<int>(IntEqualityComparer.Default);
+                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
             }
 
             private void listen() { seen.Listen(list, EventTypeEnum.All); }
@@ -464,7 +464,7 @@ namespace C5UnitTests.arrays.hashed
             public void Init()
             {
                 list = new ArrayList<int>(TenEqualityComparer.Default);
-                seen = new CollectionEventList<int>(IntEqualityComparer.Default);
+                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
             }
 
             private void listen() { seen.Listen(list, EventTypeEnum.All); }

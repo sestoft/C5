@@ -79,41 +79,7 @@ namespace C5
 
                 if (t.IsValueType)
                 {
-                    if (t.Equals(typeof(char)))
-                        return cachedDefault = (SCG.IEqualityComparer<T>)(CharEqualityComparer.Default);
-
-                    if (t.Equals(typeof(sbyte)))
-                        return cachedDefault = (SCG.IEqualityComparer<T>)(SByteEqualityComparer.Default);
-
-                    if (t.Equals(typeof(byte)))
-                        return cachedDefault = (SCG.IEqualityComparer<T>)(ByteEqualityComparer.Default);
-
-                    if (t.Equals(typeof(short)))
-                        return cachedDefault = (SCG.IEqualityComparer<T>)(ShortEqualityComparer.Default);
-
-                    if (t.Equals(typeof(ushort)))
-                        return cachedDefault = (SCG.IEqualityComparer<T>)(UShortEqualityComparer.Default);
-
-                    if (t.Equals(typeof(int)))
-                        return cachedDefault = (SCG.IEqualityComparer<T>)(IntEqualityComparer.Default);
-
-                    if (t.Equals(typeof(uint)))
-                        return cachedDefault = (SCG.IEqualityComparer<T>)(UIntEqualityComparer.Default);
-
-                    if (t.Equals(typeof(long)))
-                        return cachedDefault = (SCG.IEqualityComparer<T>)(LongEqualityComparer.Default);
-
-                    if (t.Equals(typeof(ulong)))
-                        return cachedDefault = (SCG.IEqualityComparer<T>)(ULongEqualityComparer.Default);
-
-                    if (t.Equals(typeof(float)))
-                        return cachedDefault = (SCG.IEqualityComparer<T>)(FloatEqualityComparer.Default);
-
-                    if (t.Equals(typeof(double)))
-                        return cachedDefault = (SCG.IEqualityComparer<T>)(DoubleEqualityComparer.Default);
-
-                    if (t.Equals(typeof(decimal)))
-                        return cachedDefault = (SCG.IEqualityComparer<T>)(DecimalEqualityComparer.Default);
+                    return SCG.EqualityComparer<T>.Default;
                 }
                 Type[] interfaces = t.GetInterfaces();
                 if (t.IsGenericType && t.GetGenericTypeDefinition().Equals(isequenced))

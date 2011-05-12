@@ -56,41 +56,7 @@ namespace C5
 
                 if (t.IsValueType)
                 {
-                    if (t.Equals(typeof(char)))
-                        return cachedComparer = (SCG.IComparer<T>)(new CharComparer());
-
-                    if (t.Equals(typeof(sbyte)))
-                        return cachedComparer = (SCG.IComparer<T>)(new SByteComparer());
-
-                    if (t.Equals(typeof(byte)))
-                        return cachedComparer = (SCG.IComparer<T>)(new ByteComparer());
-
-                    if (t.Equals(typeof(short)))
-                        return cachedComparer = (SCG.IComparer<T>)(new ShortComparer());
-
-                    if (t.Equals(typeof(ushort)))
-                        return cachedComparer = (SCG.IComparer<T>)(new UShortComparer());
-
-                    if (t.Equals(typeof(int)))
-                        return cachedComparer = (SCG.IComparer<T>)(new IntComparer());
-
-                    if (t.Equals(typeof(uint)))
-                        return cachedComparer = (SCG.IComparer<T>)(new UIntComparer());
-
-                    if (t.Equals(typeof(long)))
-                        return cachedComparer = (SCG.IComparer<T>)(new LongComparer());
-
-                    if (t.Equals(typeof(ulong)))
-                        return cachedComparer = (SCG.IComparer<T>)(new ULongComparer());
-
-                    if (t.Equals(typeof(float)))
-                        return cachedComparer = (SCG.IComparer<T>)(new FloatComparer());
-
-                    if (t.Equals(typeof(double)))
-                        return cachedComparer = (SCG.IComparer<T>)(new DoubleComparer());
-
-                    if (t.Equals(typeof(decimal)))
-                        return cachedComparer = (SCG.IComparer<T>)(new DecimalComparer());
+                    return SCG.Comparer<T>.Default;
                 }
 
                 if (typeof(IComparable<T>).IsAssignableFrom(t))

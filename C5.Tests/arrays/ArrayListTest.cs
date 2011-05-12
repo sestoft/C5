@@ -74,7 +74,7 @@ namespace C5UnitTests.arrays.list
             public void Init()
             {
                 list = new ArrayList<int>(TenEqualityComparer.Default);
-                seen = new CollectionEventList<int>(IntEqualityComparer.Default);
+                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
             }
 
             private void listen() { seen.Listen(list, EventTypeEnum.Added); }
@@ -547,7 +547,7 @@ namespace C5UnitTests.arrays.list
             public void Init()
             {
                 list = new ArrayList<int>(TenEqualityComparer.Default);
-                seen = new CollectionEventList<int>(IntEqualityComparer.Default);
+                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
             }
 
             private void listen() { seen.Listen(list, EventTypeEnum.All); }

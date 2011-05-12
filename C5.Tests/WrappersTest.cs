@@ -40,7 +40,7 @@ namespace C5UnitTests.wrappers
             {
                 list = new ArrayList<int>(TenEqualityComparer.Default);
                 guarded = new GuardedList<int>(list);
-                seen = new CollectionEventList<int>(IntEqualityComparer.Default);
+                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
             }
 
             private void listen() { seen.Listen(guarded, EventTypeEnum.All); }
@@ -514,7 +514,7 @@ namespace C5UnitTests.wrappers
             {
                 list = new ArrayList<int>(TenEqualityComparer.Default);
                 guarded = new GuardedList<int>(list);
-                seen = new CollectionEventList<int>(IntEqualityComparer.Default);
+                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
             }
 
             private void listen() { seen.Listen(guarded, EventTypeEnum.All); }
@@ -622,7 +622,7 @@ namespace C5UnitTests.wrappers
                 Assert.AreEqual(Speed.Constant, wrapped.CountSpeed);
                 Assert.AreEqual(EnumerationDirection.Forwards, wrapped.Direction);
                 Assert.AreEqual(false, wrapped.DuplicatesByCounting);
-                Assert.AreEqual(IntEqualityComparer.Default, wrapped.EqualityComparer);
+                Assert.AreEqual(System.Collections.Generic.EqualityComparer<int>.Default, wrapped.EqualityComparer);
                 Assert.AreEqual(true, wrapped.Exists(is4));
                 Assert.IsTrue(IC.eq(wrapped.Filter(is4), 4));
                 int j = 5;
@@ -744,7 +744,7 @@ namespace C5UnitTests.wrappers
                 Assert.AreEqual(Speed.Constant, wrapped.CountSpeed);
                 Assert.AreEqual(EnumerationDirection.Forwards, wrapped.Direction);
                 Assert.AreEqual(false, wrapped.DuplicatesByCounting);
-                Assert.AreEqual(IntEqualityComparer.Default, wrapped.EqualityComparer);
+                Assert.AreEqual(System.Collections.Generic.EqualityComparer<int>.Default, wrapped.EqualityComparer);
                 Assert.AreEqual(true, wrapped.Exists(is4));
                 Assert.IsTrue(IC.eq(wrapped.Filter(is4), 4));
                 int j = 5;
