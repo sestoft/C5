@@ -20,46 +20,37 @@
 */
 
 using System;
+using System.Linq;
 using System.Reflection;
 using SCG = System.Collections.Generic;
 
 namespace C5
 {
     /// <summary>
-    /// Utility class for building default generic equalityComparers.
+    /// Utility class for building default generic equality comparers.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public static class EqualityComparer<T>
     {
         private static SCG.IEqualityComparer<T> _default;
 
-        readonly static Type OrderedcollectionequalityComparer = typeof(SequencedCollectionEqualityComparer<,>);
+        readonly static Type SequencedCollectionEqualityComparer = typeof(SequencedCollectionEqualityComparer<,>);
 
-        readonly static Type UnorderedcollectionequalityComparer = typeof(UnsequencedCollectionEqualityComparer<,>);
+        readonly static Type UnsequencedCollectionEqualityComparer = typeof(UnsequencedCollectionEqualityComparer<,>);
 
-        //TODO: find the right word for initialized+invocation 
         /// <summary>
         /// A default generic equality comparer for type T. The procedure is as follows:
         /// <list>
-        /// <item>If T is a primitive type (char, sbyte, byte, short, ushort, int, uint, float, double, decimal), 
-        /// the equalityComparer will be a standard equalityComparer for that type</item>
         /// <item>If the actual generic argument T implements the generic interface
         /// <see cref="T:C5.ISequenced`1"/> for some value W of its generic parameter T,
         /// the equalityComparer will be <see cref="T:C5.SequencedCollectionEqualityComparer`2"/></item>
         /// <item>If the actual generic argument T implements 
         /// <see cref="T:C5.ICollection`1"/> for some value W of its generic parameter T,
         /// the equalityComparer will be <see cref="T:C5.UnsequencedCollectionEqualityComparer`2"/></item>
-        /// <item>If T is a type implementing <see cref="T:C5.IEquatable`1"/>, the equalityComparer
-        /// will be <see cref="T:C5.EquatableEqualityComparer`1"/></item>
-        /// <item>If T is a type not implementing <see cref="T:C5.IEquatable`1"/>, the equalityComparer
-        /// will be <see cref="T:C5.NaturalEqualityComparer`1"/> </item>
+        /// <item>Otherwise the SCG.EqualityComparer&lt;T&gt;.Default is returned</item>
         /// </list>   
-        /// The <see cref="T:C5.IEqualityComparer`1"/> object is constructed when this class is initialised, i.e. 
-        /// its static constructors called. Thus, the property will be the same object 
-        /// for the duration of an invocation of the runtime, but a value serialized in 
-        /// another invocation and deserialized here will not be the same object.
         /// </summary>
-        /// <value></value>
+        /// <value>The comparer</value>
         public static SCG.IEqualityComparer<T> Default
         {
             get
@@ -69,32 +60,31 @@ namespace C5
                     return _default;
                 }
 
-                var t = typeof(T);
+                var type = typeof(T);
+                var interfaces = type.GetInterfaces();
 
-                var interfaces = t.GetInterfaces();
-                if (t.IsGenericType && t.GetGenericTypeDefinition().Equals(typeof(ISequenced<>)))
+                if (type.IsGenericType && type.GetGenericTypeDefinition().Equals(typeof(ISequenced<>)))
                 {
-                    return CreateAndCache(OrderedcollectionequalityComparer.MakeGenericType(new[] {t, t.GetGenericArguments()[0]}));
+                    return CreateAndCache(SequencedCollectionEqualityComparer.MakeGenericType(new[] { type, type.GetGenericArguments()[0] }));
                 }
-                foreach (Type ty in interfaces)
+
+                var isequenced = interfaces.FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition().Equals(typeof(ISequenced<>)));
+                if (isequenced != null)
                 {
-                    if (ty.IsGenericType && ty.GetGenericTypeDefinition().Equals(typeof(ISequenced<>)))
-                    {
-                        return CreateAndCache(OrderedcollectionequalityComparer.MakeGenericType(new[] { t, ty.GetGenericArguments()[0] }));
-                    }
+                    return CreateAndCache(SequencedCollectionEqualityComparer.MakeGenericType(new[] { type, isequenced.GetGenericArguments()[0] }));
                 }
-                if (t.IsGenericType && t.GetGenericTypeDefinition().Equals(typeof(ICollection<>)))
+
+                if (type.IsGenericType && type.GetGenericTypeDefinition().Equals(typeof(ICollection<>)))
                 {
-                    return CreateAndCache(UnorderedcollectionequalityComparer.MakeGenericType(new[] { t, t.GetGenericArguments()[0] }));
+                    return CreateAndCache(UnsequencedCollectionEqualityComparer.MakeGenericType(new[] { type, type.GetGenericArguments()[0] }));
                 }
-                foreach (Type ty in interfaces)
+
+                var icollection = interfaces.FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition().Equals(typeof(ICollection<>)));
+                if (icollection != null)
                 {
-                    if (ty.IsGenericType && ty.GetGenericTypeDefinition().Equals(typeof(ICollection<>)))
-                    {
-                        return CreateAndCache(UnorderedcollectionequalityComparer.MakeGenericType(new[] { t, ty.GetGenericArguments()[0] }));
-                    }
+                    return CreateAndCache(UnsequencedCollectionEqualityComparer.MakeGenericType(new[] { type, icollection.GetGenericArguments()[0] }));
                 }
-                
+
                 return _default = SCG.EqualityComparer<T>.Default;
             }
         }
@@ -115,8 +105,8 @@ namespace C5
     {
         SCG.IComparer<T> comparer;
         /// <summary>
-        /// Create a trivial <see cref="T:C5.IEqualityComparer`1"/> compatible with the 
-        /// <see cref="T:C5.IComparer`1"/> <code>comparer</code>
+        /// Create a trivial <see cref="T:System.Collections.Generic.IEqualityComparer`1"/> compatible with the 
+        /// <see cref="T:System.Collections.Generic.IComparer`1"/> <code>comparer</code>
         /// </summary>
         /// <param name="comparer"></param>
         public ComparerZeroHashCodeEqualityComparer(SCG.IComparer<T> comparer)
