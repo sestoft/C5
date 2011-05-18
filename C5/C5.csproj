@@ -1,26 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D70489CD-ABDA-48FF-BD1E-BE3F7495BE71}</ProjectGuid>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D02E0664-C56C-4C3F-98E5-C8EC881A8439}</ProjectGuid>
     <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>C5</RootNamespace>
-    <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>C5</AssemblyName>
-    <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <StartupObject>
-    </StartupObject>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile1</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,7 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\C5.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -40,81 +30,53 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugSnk|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\DebugSnk\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;STRONGNAME</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseSnk|AnyCPU' ">
-    <OutputPath>bin\ReleaseSnk\</OutputPath>
-    <DefineConstants>TRACE;STRONGNAME</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System">
-    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="arrays\ArrayList.cs" />
     <Compile Include="arrays\CircularQueue.cs" />
     <Compile Include="arrays\HashedArrayList.cs" />
+    <Compile Include="arrays\SortedArray.cs" />
+    <Compile Include="Collections.cs" />
     <Compile Include="Comparers\Comparer.cs" />
     <Compile Include="Comparers\ComparerFactory.cs" />
     <Compile Include="Comparers\EqualityComparer.cs" />
     <Compile Include="Debug.cs" />
-    <Compile Include="Logger.cs" />
+    <Compile Include="Dictionaries.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="Events.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="Formatting.cs" />
     <Compile Include="Hashers.cs" />
-    <Compile Include="Events.cs" />
-    <Compile Include="Collections.cs">
-    </Compile>
-    <Compile Include="Dictionaries.cs">
-    </Compile>
-    <Compile Include="Interfaces.cs">
-    </Compile>
+    <Compile Include="hashing\HashBag.cs" />
+    <Compile Include="hashing\HashDictionary.cs" />
+    <Compile Include="hashing\HashTable.cs" />
+    <Compile Include="heaps\IntervalHeap.cs" />
+    <Compile Include="Interfaces.cs" />
     <Compile Include="linkedlists\HashedLinkedList.cs" />
+    <Compile Include="linkedlists\LinkedList.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="MappedEnumerators.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Random.cs" />
     <Compile Include="Records.cs" />
     <Compile Include="Sorting.cs" />
+    <Compile Include="trees\RedBlackTreeBag.cs" />
+    <Compile Include="trees\RedBlackTreeDictionary.cs" />
+    <Compile Include="trees\RedBlackTreeSet.cs" />
     <Compile Include="ViewSupport.cs" />
-    <Compile Include="MappedEnumerators.cs" />
     <Compile Include="WrappedArray.cs" />
-    <Compile Include="Wrappers.cs">
-    </Compile>
-    <Compile Include="arrays\ArrayList.cs">
-    </Compile>
-    <Compile Include="arrays\SortedArray.cs">
-    </Compile>
-    <Compile Include="hashing\HashBag.cs">
-    </Compile>
-    <Compile Include="hashing\HashDictionary.cs">
-    </Compile>
-    <Compile Include="hashing\HashTable.cs">
-    </Compile>
-    <Compile Include="heaps\IntervalHeap.cs">
-    </Compile>
-    <Compile Include="linkedlists\LinkedList.cs">
-    </Compile>
-    <Compile Include="trees\RedBlackTreeSet.cs">
-    </Compile>
-    <Compile Include="trees\RedBlackTreeBag.cs">
-    </Compile>
-    <Compile Include="trees\RedBlackTreeDictionary.cs">
-    </Compile>
+    <Compile Include="Wrappers.cs" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

@@ -198,7 +198,6 @@ namespace C5
     /// An exception thrown by an operation that need to construct a natural
     /// comparer for a type.
     /// </summary>
-    [Serializable]
     public class NotComparableException : Exception
     {
         /// <summary>

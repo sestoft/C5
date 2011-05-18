@@ -4,7 +4,6 @@
 using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("C5")]
 [assembly: AssemblyDescription("The C5 Generic Collection Library for C# and CLI")]
@@ -16,7 +15,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("2.0.0.0")]
 [assembly: AssemblyFileVersion("2.0.0.0")]
-[assembly: ComVisible(false)]
-[assembly: Guid("0c9bb377-cde9-404c-9b1c-dc7c3b1add29")]
 [assembly: CLSCompliant(true)]
 [assembly: InternalsVisibleTo("C5.Tests")]
