@@ -2004,16 +2004,7 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="val">On exit: the value if found</param>
         /// <returns>True if found</returns>
-        public bool Find(K key, out V val) { return dict.Find(key, out val); }
-
-        /// <summary>
-        /// Search for a key in the wrapped dictionary, reporting the value if found
-        /// </summary>
-        /// <param name="key">The key</param>
-        /// <param name="val">On exit: the value if found</param>
-        /// <returns>True if found</returns>
         public bool Find(ref K key, out V val) { return dict.Find(ref key, out val); }
-
 
         /// <summary>
         /// </summary>

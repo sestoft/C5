@@ -149,7 +149,7 @@ namespace Anagrams
             {
                 TreeBag<char> anagram = AnagramClass(s);
                 TreeSet<String> anagramClass;
-                if (!classes.Find(anagram, out anagramClass))
+                if (!classes.Find(ref anagram, out anagramClass))
                     classes[anagram] = anagramClass = new TreeSet<String>();
                 anagramClass.Add(s);
             }

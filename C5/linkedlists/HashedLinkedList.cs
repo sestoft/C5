@@ -145,7 +145,7 @@ namespace C5
         #region Searching
         bool contains(T item, out Node node)
         {
-            if (dict.Find(item, out node))
+            if (dict.Find(ref item, out node))
                 return insideview(node);
 
             return false;
@@ -2027,7 +2027,7 @@ namespace C5
         {
             validitycheck();
             Node node;
-            if (!dict.Find(item, out node) || !insideview(node))
+            if (!dict.Find(ref item, out node) || !insideview(node))
                 return ~size;
             node = startsentinel.next;
             int index = 0;
@@ -3084,7 +3084,7 @@ namespace C5
                 Node n = startsentinel.next, n2;
                 while (n != endsentinel)
                 {
-                    if (!dict.Find(n.item, out n2))
+                    if (!dict.Find(ref n.item, out n2))
                     {
                         Logger.Log(string.Format("Item in list but not dict: {0}", n.item));
                         retval = false;

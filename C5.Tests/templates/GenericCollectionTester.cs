@@ -27,61 +27,61 @@ using SCG = System.Collections.Generic;
 
 namespace C5UnitTests.Templates
 {
-  public abstract class GenericCollectionTester<U, W>
-  {
-    protected CircularQueue<MethodInfo> testMethods;
-    public GenericCollectionTester()
+    public abstract class GenericCollectionTester<U, W>
     {
-      testMethods = new CircularQueue<MethodInfo>();
-      foreach (MethodInfo minfo in this.GetType().GetMethods())
-      {
-        if (minfo.GetParameters().Length == 0 &&
-             minfo.GetCustomAttributes(typeof(TestAttribute), false).Length > 0)
-          testMethods.Enqueue(minfo);
-      }
-    }
-
-    public virtual void Test(Func<U> factory)
-    {
-      foreach (MethodInfo minfo in testMethods)
-      {
-        foreach (W testSpec in GetSpecs())
+        protected CircularQueue<MethodInfo> testMethods;
+        public GenericCollectionTester()
         {
-          SetUp(factory(), testSpec);
-          //Console.WriteLine("Testing {0}, with method {1} and testSpec {{{2}}}", typeof(U), minfo.Name, testSpec);
-          try
-          {
-            minfo.Invoke(this, null);
-          }
-          catch (TargetInvocationException)
-          {
-            //if (e.InnerException is ExpectedExceptionAttribute)
-            //{
-            //}
-            //else
-            throw;
-          }
-          //tearDown
+            testMethods = new CircularQueue<MethodInfo>();
+            foreach (MethodInfo minfo in this.GetType().GetMethods())
+            {
+                if (minfo.GetParameters().Length == 0 &&
+                     minfo.GetCustomAttributes(typeof(TestAttribute), false).Length > 0)
+                    testMethods.Enqueue(minfo);
+            }
         }
-      }
+
+        public virtual void Test(Func<U> factory)
+        {
+            foreach (MethodInfo minfo in testMethods)
+            {
+                foreach (W testSpec in GetSpecs())
+                {
+                    SetUp(factory(), testSpec);
+                    //Console.WriteLine("Testing {0}, with method {1} and testSpec {{{2}}}", typeof(U), minfo.Name, testSpec);
+                    try
+                    {
+                        minfo.Invoke(this, null);
+                    }
+                    catch (TargetInvocationException)
+                    {
+                        //if (e.InnerException is ExpectedExceptionAttribute)
+                        //{
+                        //}
+                        //else
+                        throw;
+                    }
+                    //tearDown
+                }
+            }
+        }
+
+        public abstract void SetUp(U collection, W testSpec);
+        public abstract SCG.IEnumerable<W> GetSpecs();
     }
 
-    public abstract void SetUp(U collection, W testSpec);
-    public abstract SCG.IEnumerable<W> GetSpecs();
-  }
-
-  public abstract class GenericCollectionTester<U> : GenericCollectionTester<U, int>
-  {
-    public override System.Collections.Generic.IEnumerable<int> GetSpecs()
+    public abstract class GenericCollectionTester<U> : GenericCollectionTester<U, int>
     {
-      return new int[] { 0 };
-    }
+        public override System.Collections.Generic.IEnumerable<int> GetSpecs()
+        {
+            return new int[] { 0 };
+        }
 
-    public override void SetUp(U collection, int testSpec)
-    {
-      SetUp(collection);
-    }
+        public override void SetUp(U collection, int testSpec)
+        {
+            SetUp(collection);
+        }
 
-    public abstract void SetUp(object collection);
-  }
+        public abstract void SetUp(object collection);
+    }
 }

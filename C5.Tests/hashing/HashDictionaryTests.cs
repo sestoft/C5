@@ -210,9 +210,10 @@ namespace C5UnitTests.hashtable.dictionary
             Assert.IsFalse(dict.Remove("A", out s));
 
             //
-            Assert.IsTrue(dict.Find("T", out s));
+            string t = "T", a = "A";
+            Assert.IsTrue(dict.Find(ref t, out s));
             Assert.AreEqual("XYZ", s);
-            Assert.IsFalse(dict.Find("A", out s));
+            Assert.IsFalse(dict.Find(ref a, out s));
 
             //
             Assert.IsTrue(dict.Update("R", "UHU"));

@@ -74,7 +74,7 @@ namespace MultiCollection
     public bool Add(K k, V v)
     {
       W w;
-      if (!dict.Find(k, out w)) 
+      if (!dict.Find(ref k, out w)) 
         dict.Add(k,w = new W());
       return w.Add(v);
     }
@@ -82,7 +82,7 @@ namespace MultiCollection
     public bool Remove(K k, V v)
     {
       W w;
-      if (dict.Find(k, out w) && w.Remove(v))
+      if (dict.Find(ref k, out w) && w.Remove(v))
       {
         if (w.Count == 0)
           dict.Remove(k);

@@ -453,17 +453,6 @@ namespace C5
         /// <param name="key">The key to look for</param>
         /// <param name="value">On exit, the value of the entry</param>
         /// <returns>True if key was found</returns>
-        public virtual bool Find(K key, out V value)
-        {
-            return Find(ref key, out value);
-        }
-        /// <summary>
-        /// Check if there is an entry with a specified key and report the corresponding
-        /// value if found. This can be seen as a safe form of "val = this[key]".
-        /// </summary>
-        /// <param name="key">The key to look for</param>
-        /// <param name="value">On exit, the value of the entry</param>
-        /// <returns>True if key was found</returns>
         public virtual bool Find(ref K key, out V value)
         {
             KeyValuePair<K, V> p = new KeyValuePair<K, V>(key);

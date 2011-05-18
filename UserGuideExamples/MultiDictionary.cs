@@ -128,7 +128,7 @@ namespace MultiDictionary1 {
 
     public virtual void Add(K k, V v) {
       ICollection<V> values;
-      if (!base.Find(k, out values) || values == null) {
+      if (!base.Find(ref k, out values) || values == null) {
         values = new HashSet<V>();
         Add(k, values);
       } 
@@ -140,7 +140,7 @@ namespace MultiDictionary1 {
 
     public virtual bool Remove(K k, V v) {
       ICollection<V> values;
-      if (base.Find(k, out values) && values != null) {
+      if (base.Find(ref k, out values) && values != null) {
         if (values.Remove(v)) {
           if (values.IsEmpty)
             base.Remove(k);
@@ -154,7 +154,7 @@ namespace MultiDictionary1 {
 
     public override bool Contains(K k) { 
       ICollection<V> values;
-      return base.Find(k, out values) && values != null && !values.IsEmpty;
+      return base.Find(ref k, out values) && values != null && !values.IsEmpty;
     }
 
     // Determine whether each key in ks is associated with a value
@@ -171,7 +171,7 @@ namespace MultiDictionary1 {
     public override ICollection<V> this[K k] {
       get {
         ICollection<V> values;
-        return base.Find(k, out values) && values != null ? values : new HashSet<V>();
+        return base.Find(ref k, out values) && values != null ? values : new HashSet<V>();
       }
       set {
         base[k] = value;
@@ -351,7 +351,7 @@ namespace MultiDictionary2 {
 
     public virtual void Add(K k, V v) {
       ICollection<V> values;
-      if (!base.Find(k, out values) || values == null) {
+      if (!base.Find(ref k, out values) || values == null) {
         values = new HashSet<V>();
         Add(k, values);
       } 
@@ -363,7 +363,7 @@ namespace MultiDictionary2 {
 
     public virtual bool Remove(K k, V v) {
       ICollection<V> values;
-      if (base.Find(k, out values) && values != null) {
+      if (base.Find(ref k, out values) && values != null) {
         if (values.Remove(v)) {
           if (values.IsEmpty)
             base.Remove(k);
@@ -377,7 +377,7 @@ namespace MultiDictionary2 {
 
     public override bool Contains(K k) { 
       ICollection<V> values;
-      return Find(k, out values) && values != null && !values.IsEmpty;
+      return Find(ref k, out values) && values != null && !values.IsEmpty;
     }
 
     // Determine whether each key in ks is associated with a value
@@ -394,7 +394,7 @@ namespace MultiDictionary2 {
     public override ICollection<V> this[K k] {
       get {
         ICollection<V> values;
-        return base.Find(k, out values) && values != null ? values : new HashSet<V>();
+        return base.Find(ref k, out values) && values != null ? values : new HashSet<V>();
       }
       set {
         base[k] = value;
@@ -484,7 +484,7 @@ namespace MultiDictionary2 {
 
     public virtual void Add(K k, V v) {
       VC values;
-      if (!base.Find(k, out values) || values == null) {
+      if (!base.Find(ref k, out values) || values == null) {
         values = new VC();
         Add(k, values);
       } 
@@ -496,7 +496,7 @@ namespace MultiDictionary2 {
 
     public virtual bool Remove(K k, V v) {
       VC values;
-      if (base.Find(k, out values) && values != null) {
+      if (base.Find(ref k, out values) && values != null) {
         if (values.Remove(v)) {
           if (values.IsEmpty)
             base.Remove(k);
@@ -510,7 +510,7 @@ namespace MultiDictionary2 {
 
     public override bool Contains(K k) { 
       VC values;
-      return Find(k, out values) && values != null && !values.IsEmpty;
+      return Find(ref k, out values) && values != null && !values.IsEmpty;
     }
 
     // Determine whether each key in ks is associated with a value
@@ -527,7 +527,7 @@ namespace MultiDictionary2 {
     public override VC this[K k] {
       get {
         VC values;
-        return base.Find(k, out values) && values != null ? values : new VC();
+        return base.Find(ref k, out values) && values != null ? values : new VC();
       }
       set {
         base[k] = value;

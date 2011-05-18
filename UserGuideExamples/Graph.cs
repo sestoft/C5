@@ -511,11 +511,12 @@ namespace Graph
         {
           HashDictionary<V, E> edgeset;
           //TODO: utilize upcoming FindOrAddSome operation
-          if (!graph.Find(edge.start, out edgeset))
+            V start = edge.start, end = edge.end;
+          if (!graph.Find(ref start, out edgeset))
             graph.Add(edge.start, edgeset = new HashDictionary<V, E>());
           if (!edgeset.UpdateOrAdd(edge.end, edge.edgedata))
             edgecount++;
-          if (!graph.Find(edge.end, out edgeset))
+          if (!graph.Find(ref end, out edgeset))
             graph.Add(edge.end, edgeset = new HashDictionary<V, E>());
           edgeset.UpdateOrAdd(edge.start, edge.edgedata);
         }
@@ -538,11 +539,12 @@ namespace Graph
         HashDictionary<V, E> edgeset;
         if (edge.start.Equals(edge.end))
           throw new ApplicationException("Edge has equal start and end");
-        if (!graph.Find(edge.start, out edgeset))
+          V start = edge.start, end = edge.end;
+        if (!graph.Find(ref start, out edgeset))
           throw new ApplicationException("Edge has unknown start");
         if (!edgeset.UpdateOrAdd(edge.end, edge.edgedata))
           edgecount++;
-        if (!graph.Find(edge.end, out edgeset))
+        if (!graph.Find(ref end, out edgeset))
           throw new ApplicationException("Edge has unknown end");
         edgeset.UpdateOrAdd(edge.start, edge.edgedata);
       }
@@ -616,7 +618,7 @@ namespace Graph
     {
       bool retval = false;
       HashDictionary<V, E> edgeset;
-      if (graph.Find(start, out edgeset))
+      if (graph.Find(ref start, out edgeset))
         retval = !edgeset.UpdateOrAdd(end, edgedata);
       else
       {
@@ -624,7 +626,7 @@ namespace Graph
         edgeset[end] = edgedata;
         retval = true;
       }
-      if (graph.Find(end, out edgeset))
+      if (graph.Find(ref end, out edgeset))
         edgeset.UpdateOrAdd(start, edgedata);
       else
       {
@@ -639,7 +641,7 @@ namespace Graph
     public bool RemoveVertex(V vertex)
     {
       HashDictionary<V, E> edgeset;
-      if (!graph.Find(vertex, out edgeset))
+      if (!graph.Find(ref vertex, out edgeset))
         return false;
       foreach (V othervertex in edgeset.Keys)
         graph[othervertex].Remove(vertex); //Assert retval==true
@@ -651,7 +653,7 @@ namespace Graph
     public bool RemoveEdge(V start, V end, out E edgedata)
     {
       HashDictionary<V, E> edgeset;
-      if (!graph.Find(start, out edgeset))
+      if (!graph.Find(ref start, out edgeset))
       {
         edgedata = default(E);
         return false;
@@ -666,12 +668,12 @@ namespace Graph
     public bool FindEdge(V start, V end, out E edgedata)
     {
       HashDictionary<V, E> edges;
-      if (!graph.Find(start, out edges))
+      if (!graph.Find(ref start, out edges))
       {
         edgedata = default(E);
         return false;
       }
-      return edges.Find(end, out edgedata);
+      return edges.Find(ref end, out edgedata);
     }
 
     public IGraph<V, E, W> SubGraph(ICollectionValue<V> vs)
@@ -760,7 +762,7 @@ namespace Graph
         }
 
         HashDictionary<V, E> adjacent;
-        if (graph.Find(v, out adjacent))
+        if (graph.Find(ref v, out adjacent))
         {
           foreach (KeyValuePair<V, E> p in adjacent)
           {
@@ -812,7 +814,7 @@ namespace Graph
       {
         before(v);
         HashDictionary<V, E> adjacent;
-        if (graph.Find(v, out adjacent))
+        if (graph.Find(ref v, out adjacent))
           foreach (KeyValuePair<V, E> p in adjacent)
           {
             V end = p.Key;
@@ -863,14 +865,14 @@ namespace Graph
           current = e.end;
         }
         HashDictionary<V, E> adjacentnodes;
-        if (graph.Find(current, out adjacentnodes))
+        if (graph.Find(ref current, out adjacentnodes))
           foreach (KeyValuePair<V, E> adjacent in adjacentnodes)
           {
             V end = adjacent.Key;
             E edgedata = adjacent.Value;
             W dist = weight.Weight(edgedata), olddist;
             if (accumulated && !current.Equals(start)) dist = weight.Add(currentdist, weight.Weight(edgedata));
-            if (!seen.Find(end, out h))
+            if (!seen.Find(ref end, out h))
             {
               h = null;
               fringe.Add(ref h, dist);
@@ -908,7 +910,7 @@ namespace Graph
       ArrayList<Edge<V, E>> path = new ArrayList<Edge<V, E>>();
       Edge<V, E> edge;
       V v = end;
-      while (backtrack.Find(v, out edge))
+      while (backtrack.Find(ref v, out edge))
       {
         path.Add(edge);
         v = edge.start;

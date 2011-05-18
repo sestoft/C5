@@ -828,8 +828,9 @@ namespace C5
                 }
                 foreach (T item in collection1)
                 {
+                    var i = item;
                     int count;
-                    if (dict.Find(item, out count) && count > 0)
+                    if (dict.Find(ref i, out count) && count > 0)
                         dict[item] = count - 1;
                     else
                         return false;

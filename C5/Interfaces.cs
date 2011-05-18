@@ -1675,16 +1675,6 @@ namespace C5
         /// <returns>True if key was found</returns>
         bool Contains(K key);
 
-
-        /// <summary>
-        /// Check if there is an entry with a specified key and report the corresponding
-        /// value if found. This can be seen as a safe form of "val = this[key]".
-        /// </summary>
-        /// <param name="key">The key to look for</param>
-        /// <param name="val">On exit, the value of the entry</param>
-        /// <returns>True if key was found</returns>
-        bool Find(K key, out V val);
-
         /// <summary>
         /// Check if there is an entry with a specified key and report the corresponding
         /// value if found. This can be seen as a safe form of "val = this[key]".
