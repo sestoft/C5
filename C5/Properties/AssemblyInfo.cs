@@ -6,8 +6,8 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("C5.UserGuideExamples")]
-[assembly: AssemblyDescription("User guide examples for C5")]
+[assembly: AssemblyTitle("C5")]
+[assembly: AssemblyDescription("The C5 Generic Collection Library for C# and CLI")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("IT University of Copenhagen")]
 [assembly: AssemblyProduct("C5")]
