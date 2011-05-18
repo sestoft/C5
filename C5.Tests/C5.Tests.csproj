@@ -58,13 +58,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="arrays\CircularQueueTest.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="BasesTest.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="InterfacesTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Records.cs" />
     <Compile Include="Sorting.cs">
       <SubType>Code</SubType>

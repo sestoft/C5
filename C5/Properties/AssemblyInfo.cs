@@ -1,36 +1,22 @@
-/*
- Copyright (c) 2003-2010 Niels Kokholm and Peter Sestoft
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
-*/
+﻿// This file is part of the C5 Generic Collection Library for C# and CLI
+// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
 
 using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("The C5 Generic Collection Library for C# and CLI")]
-[assembly: AssemblyDescription(".NET 4.0 Beta release")]
+[assembly: AssemblyTitle("C5.UserGuideExamples")]
+[assembly: AssemblyDescription("User guide examples for C5")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("(c) 2003-2011 Niels Kokholm and Peter Sestoft and Rasmus Nielsen")]
+[assembly: AssemblyCompany("IT University of Copenhagen")]
+[assembly: AssemblyProduct("C5")]
+[assembly: AssemblyCopyright("Copyright © Niels Kokholm, Peter Sestoft, and Rasmus Nielsen 2003-2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("2.0.0.0")]
-[assembly: InternalsVisibleTo("C5.Tests")]
+[assembly: AssemblyFileVersion("2.0.0.0")]
+[assembly: ComVisible(false)]
+[assembly: Guid("0c9bb377-cde9-404c-9b1c-dc7c3b1add29")]
 [assembly: CLSCompliant(true)]
+[assembly: InternalsVisibleTo("C5.Tests")]
