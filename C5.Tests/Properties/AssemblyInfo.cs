@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("C5.Tests")]
 [assembly: AssemblyDescription("Unit testing suite for C5")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("IT University of Copenhagen")]
+[assembly: AssemblyCompany("Niels Kokholm, Peter Sestoft, Rasmus Nielsen")]
 [assembly: AssemblyProduct("C5")]
 [assembly: AssemblyCopyright("Copyright © Niels Kokholm, Peter Sestoft, and Rasmus Nielsen 2003-2011")]
 [assembly: AssemblyTrademark("")]
