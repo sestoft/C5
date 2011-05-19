@@ -101,7 +101,7 @@ namespace C5
     /// <para><b>Note: this will give a new EqualityComparer each time created!</b></para>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ComparerZeroHashCodeEqualityComparer<T> : SCG.IEqualityComparer<T>
+    internal class ComparerZeroHashCodeEqualityComparer<T> : SCG.IEqualityComparer<T>
     {
         SCG.IComparer<T> comparer;
         /// <summary>
