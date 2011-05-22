@@ -76,19 +76,20 @@ The C5 implementation was originally built on .NET 2.0 and has only recently bee
 upgraded to .NET 4.0. It does not (yet) use a great number of the new features 
 introduced with C# 3 and 4, notably LINQ and covariant and contravariant type parameters.
 
-The library builds and runs on the latest versions of Mono.
+C5 builds and runs on the latest versions of Mono.
+
+C5 is a portable library supporting .NET 4.0, Silverlight, Windows Phone 7, and Xbox 360.
 
 == Getting Started
 
-1. C5 will be made available through NuGet when the 2.0 branch is out of beta.
+1. Get C5 from NuGet: <tt>PM> Install-Package C5</tt>
 
 2. Documentation is built using Sandcastle (http://sandcastle.codeplex.com/) and
    Sandcastle Help File Builder (http://shfb.codeplex.com/), and the
    <tt>C5.shfbproj</tt> file.
 
-3. Building the unit test project requires NUnit. Visual Studio 2010 users can install 
-   it using the NuGet Package Manager Console by typing: <tt>Install-Package
-   Install-Package NUnit</tt>.
+3. Building the unit test project requires NUnit. If you have NuGet installed it 
+   should automatically add the reference.
    
    There are more than 1400 NUnit test cases which should execute in less
    than 30 seconds. All should pass.
@@ -97,7 +98,7 @@ The library builds and runs on the latest versions of Mono.
 
 C5 is released under a BSD-style license:
 
-Copyright (c) 2003-2011 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen.
+Copyright Niels Kokholm and Peter Sestoft and Rasmus Nielsen 2003-2011.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
