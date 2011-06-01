@@ -84,11 +84,15 @@ C5 is a portable library supporting .NET 4.0, Silverlight, Windows Phone 7, and 
 
 1. Get C5 from NuGet: <tt>PM> Install-Package C5</tt>
 
-2. Documentation is built using Sandcastle (http://sandcastle.codeplex.com/) and
+2. C5 is built using the Portable Library Tools extension 
+   (http://visualstudiogallery.msdn.microsoft.com/b0e0b5e9-e138-410b-ad10-00cb3caf4981)
+   this extension is required to open the C5.csproj in Visual Studio.
+
+3. Documentation is built using Sandcastle (http://sandcastle.codeplex.com/) and
    Sandcastle Help File Builder (http://shfb.codeplex.com/), and the
    <tt>C5.shfbproj</tt> file.
-
-3. Building the unit test project requires NUnit. If you have NuGet installed it 
+ 
+4. Building the unit test project requires NUnit. If you have NuGet installed it 
    should automatically add the reference.
    
    There are more than 1400 NUnit test cases which should execute in less
