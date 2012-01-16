@@ -13,7 +13,6 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyCopyright("Copyright © Niels Kokholm, Peter Sestoft, and Rasmus Nielsen 2003-2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.0.0.0")]
+[assembly: AssemblyVersion("2.0.*")]
 [assembly: CLSCompliant(true)]
 [assembly: InternalsVisibleTo("C5.Tests")]
