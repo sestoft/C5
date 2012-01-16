@@ -1,8 +1,15 @@
 RELEASE NOTES FOR C5 GENERIC COLLECTION LIBRARY FOR C#/CLI
 ------------------------------
-Release 2.0.0 of 2011-?-?
 
- * The version on Github is currently a 2.0.0 pre-release.
+Release C5.2.0.4398.21073 of 2012-01-16
+
+ * Included .xml file in build.
+ * Includes System.Core from the Portable Library Tools in build.
+ * Fixed binary search bug in SortedArray.
+
+Release 2.0.0 of 2011-05-23
+
+ * The new .NET 4.0, Silverlight, and Windows Phone version.
    It is not backwards compatible with the 1.0 branch.
 
 Release 1.1.1 of 2010-12-17
@@ -10,7 +17,6 @@ Release 1.1.1 of 2010-12-17
  * Fixed 5 bugs found since the 1.1.0 release.  Only one of this is
    likely to break code: the specification and implementation of the
    range indexer this[i,n] on TreeSet was wrong.
-
 
 Release 1.1.0 of 2008-02-10
 
