@@ -65,7 +65,7 @@ namespace C5
 
         #region Fields
 
-        SCG.IComparer<T> comparer;
+        readonly SCG.IComparer<T> _comparer;
 
         #endregion
 
@@ -74,26 +74,33 @@ namespace C5
         /// 
         /// </summary>
         /// <param name="item">The item to search for</param>
-        /// <param name="mid">The least index, mid, for which array[mid] >= item</param>
+        /// <param name="middle">The least index, middle, for which array[middle] >= item</param>
         /// <returns>True if item found</returns>
-        private bool binarySearch(T item, out int mid)
+        private bool BinarySearch(T item, out int middle)
         {
-            int bot = 0, top = size;
+            int bottom = 0, top = size;
 
-            mid = top / 2;
-            while (top > bot)
+            middle = top / 2;
+
+            while (top > bottom)
             {
-                int c;
+                int comparer;
 
-                if ((c = comparer.Compare(array[mid], item)) == 0)
+                if ((comparer = _comparer.Compare(array[middle], item)) == 0)
+                {
                     return true;
+                }
 
-                if (c > 0)
-                { top = mid; }
+                if (comparer > 0)
+                { 
+                    top = middle; 
+                }
                 else
-                { bot = mid + 1; }
+                {
+                    bottom = middle + 1;
+                }
 
-                mid = (bot + top) / 2;
+                middle = bottom + ((top - bottom) / 2); 
             }
 
             return false;
@@ -103,7 +110,7 @@ namespace C5
         {
             int ind;
 
-            if (binarySearch(item, out ind))
+            if (BinarySearch(item, out ind))
                 return ind;
 
             return ~ind;
@@ -177,7 +184,7 @@ namespace C5
         {
             if (comparer == null)
                 throw new NullReferenceException("Comparer cannot be null");
-            this.comparer = comparer;
+            this._comparer = comparer;
         }
 
         #endregion
@@ -193,7 +200,7 @@ namespace C5
         {
             int lo;
 
-            binarySearch(bot, out lo);
+            BinarySearch(bot, out lo);
             return size - lo;
         }
 
@@ -208,8 +215,8 @@ namespace C5
         {
             int lo, hi;
 
-            binarySearch(bot, out lo);
-            binarySearch(top, out hi);
+            BinarySearch(bot, out lo);
+            BinarySearch(top, out hi);
             return hi > lo ? hi - lo : 0;
         }
 
@@ -223,7 +230,7 @@ namespace C5
         {
             int hi;
 
-            binarySearch(top, out hi);
+            BinarySearch(top, out hi);
             return hi;
         }
 
@@ -237,7 +244,7 @@ namespace C5
         {
             int lo;
 
-            binarySearch(bot, out lo);
+            BinarySearch(bot, out lo);
             return new Range(this, lo, size - lo, true);
         }
 
@@ -252,8 +259,8 @@ namespace C5
         {
             int lo, hi;
 
-            binarySearch(bot, out lo);
-            binarySearch(top, out hi);
+            BinarySearch(bot, out lo);
+            BinarySearch(top, out hi);
 
             int sz = hi - lo;
 
@@ -270,7 +277,7 @@ namespace C5
         {
             int hi;
 
-            binarySearch(top, out hi);
+            BinarySearch(top, out hi);
             return new Range(this, 0, hi, true);
         }
 
@@ -283,7 +290,7 @@ namespace C5
         /// <returns>The new indexed sorted collection.</returns>
         public IIndexedSorted<T> FindAll(Func<T, bool> f)
         {
-            SortedArray<T> res = new SortedArray<T>(comparer);
+            SortedArray<T> res = new SortedArray<T>(_comparer);
             int j = 0, rescap = res.array.Length;
 
             for (int i = 0; i < size; i++)
@@ -348,7 +355,7 @@ namespace C5
         public bool TryPredecessor(T item, out T res)
         {
             int lo;
-            binarySearch(item, out lo);
+            BinarySearch(item, out lo);
             if (lo == 0)
             {
                 res = default(T);
@@ -372,7 +379,7 @@ namespace C5
         public bool TrySuccessor(T item, out T res)
         {
             int hi;
-            if (binarySearch(item, out hi))
+            if (BinarySearch(item, out hi))
                 hi++;
             if (hi >= size)
             {
@@ -398,7 +405,7 @@ namespace C5
         {
             int lo;
 
-            if (!binarySearch(item, out lo))
+            if (!BinarySearch(item, out lo))
                 lo--;
 
             if (lo < 0)
@@ -425,7 +432,7 @@ namespace C5
         {
             int hi;
 
-            binarySearch(item, out hi);
+            BinarySearch(item, out hi);
             if (hi >= size)
             {
                 res = default(T);
@@ -451,7 +458,7 @@ namespace C5
         {
             int lo;
 
-            binarySearch(item, out lo);
+            BinarySearch(item, out lo);
             if (lo == 0)
                 throw new NoSuchItemException();
 
@@ -471,7 +478,7 @@ namespace C5
         {
             int hi;
 
-            if (binarySearch(item, out hi)) hi++;
+            if (BinarySearch(item, out hi)) hi++;
 
             if (hi >= size)
                 throw new NoSuchItemException();
@@ -492,7 +499,7 @@ namespace C5
         {
             int lo;
 
-            if (!binarySearch(item, out lo)) lo--;
+            if (!BinarySearch(item, out lo)) lo--;
 
             if (lo < 0)
                 throw new NoSuchItemException();
@@ -513,7 +520,7 @@ namespace C5
         {
             int hi;
 
-            binarySearch(item, out hi);
+            BinarySearch(item, out hi);
             if (hi >= size)
                 throw new NoSuchItemException();
 
@@ -645,20 +652,20 @@ namespace C5
             updatecheck();
 
             int j = 0, i = 0, c = -1, itemcount = countItems(items), numAdded = 0;
-            SortedArray<T> res = new SortedArray<T>(size + itemcount, comparer);
+            SortedArray<T> res = new SortedArray<T>(size + itemcount, _comparer);
             T lastitem = default(T);
             T[] addedItems = new T[itemcount];
 
             foreach (T item in items)
             {
-                while (i < size && (c = comparer.Compare(array[i], item)) <= 0)
+                while (i < size && (c = _comparer.Compare(array[i], item)) <= 0)
                 {
                     lastitem = res.array[j++] = array[i++];
                     if (c == 0)
                         goto next;
                 }
 
-                if (j > 0 && comparer.Compare(lastitem, item) >= 0)
+                if (j > 0 && _comparer.Compare(lastitem, item) >= 0)
                     throw new ArgumentException("Argument not sorted");
 
                 addedItems[numAdded++] = lastitem = res.array[j++] = item;
@@ -682,7 +689,7 @@ namespace C5
         {
             int lowind;
 
-            binarySearch(low, out lowind);
+            BinarySearch(low, out lowind);
             if (lowind == size)
                 return;
 
@@ -706,8 +713,8 @@ namespace C5
         {
             int lowind, highind;
 
-            binarySearch(low, out lowind);
-            binarySearch(hi, out highind);
+            BinarySearch(low, out lowind);
+            BinarySearch(hi, out highind);
             if (highind <= lowind)
                 return;
 
@@ -731,7 +738,7 @@ namespace C5
         {
             int highind;
 
-            binarySearch(hi, out highind);
+            BinarySearch(hi, out highind);
             if (highind == 0)
                 return;
 
@@ -788,7 +795,7 @@ namespace C5
         {
             int ind;
 
-            return binarySearch(item, out ind);
+            return BinarySearch(item, out ind);
         }
 
 
@@ -803,7 +810,7 @@ namespace C5
         {
             int ind;
 
-            if (binarySearch(item, out ind))
+            if (BinarySearch(item, out ind))
             {
                 item = array[ind];
                 return true;
@@ -827,7 +834,7 @@ namespace C5
 
             int ind;
 
-            if (binarySearch(item, out ind))
+            if (BinarySearch(item, out ind))
             {
                 item = array[ind];
                 return true;
@@ -867,7 +874,7 @@ namespace C5
 
             int ind;
 
-            if (binarySearch(item, out ind))
+            if (BinarySearch(item, out ind))
             {
                 olditem = array[ind];
                 array[ind] = item;
@@ -902,7 +909,7 @@ namespace C5
 
             int ind;
 
-            if (binarySearch(item, out ind))
+            if (BinarySearch(item, out ind))
             {
                 olditem = array[ind];
                 array[ind] = item;
@@ -932,7 +939,7 @@ namespace C5
             int ind;
 
             updatecheck();
-            if (binarySearch(item, out ind))
+            if (BinarySearch(item, out ind))
             {
                 T removeditem = array[ind];
                 Array.Copy(array, ind + 1, array, ind, size - ind - 1);
@@ -960,7 +967,7 @@ namespace C5
             int ind;
 
             updatecheck();
-            if (binarySearch(item, out ind))
+            if (BinarySearch(item, out ind))
             {
                 removeditem = array[ind];
                 Array.Copy(array, ind + 1, array, ind, size - ind - 1);
@@ -991,7 +998,7 @@ namespace C5
             int ind, j = 0;
 
             foreach (T item in items)
-                if (binarySearch(item, out ind))
+                if (BinarySearch(item, out ind))
                     toremove[ind >> 5] |= 1 << (ind & 31);
 
             for (int i = 0; i < size; i++)
@@ -1023,7 +1030,7 @@ namespace C5
             int ind, j = 0;
 
             foreach (T item in items)
-                if (binarySearch(item, out ind))
+                if (BinarySearch(item, out ind))
                     toretain[ind >> 5] |= 1 << (ind & 31);
 
             for (int i = 0; i < size; i++)
@@ -1049,7 +1056,7 @@ namespace C5
             int tmp;
 
             foreach (T item in items)
-                if (!binarySearch(item, out tmp))
+                if (!BinarySearch(item, out tmp))
                     return false;
 
             return true;
@@ -1066,7 +1073,7 @@ namespace C5
         {
             int tmp;
 
-            return binarySearch(item, out tmp) ? 1 : 0;
+            return BinarySearch(item, out tmp) ? 1 : 0;
         }
 
         /// <summary>
@@ -1114,7 +1121,7 @@ namespace C5
                     return false;
                 }
 
-                if (i > 0 && comparer.Compare(array[i], array[i - 1]) <= 0)
+                if (i > 0 && _comparer.Compare(array[i], array[i - 1]) <= 0)
                 {
                     Logger.Log(string.Format("Inversion at index {0}", i));
                     retval = false;
@@ -1154,7 +1161,7 @@ namespace C5
 
             int ind;
 
-            if (binarySearch(item, out ind)) return false;
+            if (BinarySearch(item, out ind)) return false;
 
             insert(ind, item);
             raiseForAdd(item);
@@ -1189,7 +1196,7 @@ namespace C5
             toadd = 0;
             foreach (T item in items) newarr[size + toadd++] = item;
 
-            Sorting.IntroSort<T>(newarr, size, toadd, comparer);
+            Sorting.IntroSort<T>(newarr, size, toadd, _comparer);
 
             int j = 0, i = 0, numAdded = 0;
             T lastitem = default(T);
@@ -1199,10 +1206,10 @@ namespace C5
             //while merging the old and new collection
             for (int k = size, klimit = size + toadd; k < klimit; k++)
             {
-                while (i < size && comparer.Compare(array[i], newarr[k]) <= 0)
+                while (i < size && _comparer.Compare(array[i], newarr[k]) <= 0)
                     lastitem = newarr[j++] = array[i++];
 
-                if (j == 0 || comparer.Compare(lastitem, newarr[k]) < 0)
+                if (j == 0 || _comparer.Compare(lastitem, newarr[k]) < 0)
                     addedItems[numAdded++] = lastitem = newarr[j++] = newarr[k];
             }
 
@@ -1295,7 +1302,7 @@ namespace C5
         /// The comparer object supplied at creation time for this collection
         /// </summary>
         /// <value>The comparer</value>
-        public SCG.IComparer<T> Comparer { get { return comparer; } }
+        public SCG.IComparer<T> Comparer { get { return _comparer; } }
 
         #endregion
 
