@@ -14,3 +14,6 @@ C5.Tests/bin/*
 C5.Tests/obj/*
 C5.UserGuideExamples/bin/*
 C5.UserGuideExamples/obj/*
+
+# Include
+!/.nuget/*
