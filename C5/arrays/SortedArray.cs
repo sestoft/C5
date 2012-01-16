@@ -28,31 +28,6 @@ namespace C5
     /// </summary>
     public class SortedArray<T> : ArrayBase<T>, IIndexedSorted<T>
     {
-        #region Features
-        /// <summary>
-        /// A debugging artifact. To be removed.
-        /// </summary>
-        [Flags]
-        public enum Feature : short
-        {
-            /// <summary>
-            /// A debugging artifact. To be removed.
-            /// </summary>
-            Standard = 0
-        }
-
-
-        static Feature features = Feature.Standard;
-
-
-        /// <summary>
-        /// A debugging artifact. To be removed.
-        /// </summary>
-        /// <value></value>
-        public static Feature Features { get { return features; } }
-
-        #endregion
-
         #region Events
 
         /// <summary>
