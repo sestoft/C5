@@ -1,5 +1,6 @@
 # Untracked files:
 *.pidb
+*.nupkg
 *.userprefs
 *ReSharper*
 packages/*
