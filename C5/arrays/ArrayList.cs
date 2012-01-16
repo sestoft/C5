@@ -1,4 +1,3 @@
-
 /*
  Copyright (c) 2003-2006 Niels Kokholm and Peter Sestoft
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -2145,7 +2144,7 @@ namespace C5
       info.AddValue("sz", size);
       info.AddValue("eq", EqualityComparer);
       for (int i = 0; i < size; i++)
-			{
+            {
         info.AddValue("elem" + i, array[i + offset]);
       }
     }
