@@ -1,15 +1,15 @@
 # Untracked files:
+*.docstates
 *.pidb
 *.nupkg
+*.suo
 *.userprefs
+*.user
 *ReSharper*
 packages/*
 Help/*
-C5.sln.docstates
-C5.suo
 C5/bin/*
 C5/obj/*
-C5/C5.csproj.user
 C5.Tests/bin/*
 C5.Tests/obj/*
 C5.UserGuideExamples/bin/*
