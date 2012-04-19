@@ -100,9 +100,9 @@ C5 is a portable library supporting .NET 4.0, Silverlight, Windows Phone 7, and 
    
 == C5 on Mono
 
-C5 can be built on Mono using the C5.Mono.sln solution:
+1. Open C5.Mono.sln with MonoDevelop to build C5.Mono.dll or
 
-<tt>xbuild C5.Mono.sln</tt>
+2. Build manually using <tt>xbuild C5.Mono.sln</tt>.
 
 == License
 
