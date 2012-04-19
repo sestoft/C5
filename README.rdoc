@@ -88,7 +88,7 @@ C5 is a portable library supporting .NET 4.0, Silverlight, Windows Phone 7, and 
    (http://visualstudiogallery.msdn.microsoft.com/b0e0b5e9-e138-410b-ad10-00cb3caf4981)
    this extension is required to open the C5.csproj in Visual Studio.
 
-3. Documentation is built using Sandcastle (http://sandcastle.codeplex.com/) and
+3. Documentation can be built using Sandcastle (http://sandcastle.codeplex.com/) and
    Sandcastle Help File Builder (http://shfb.codeplex.com/), and the
    <tt>C5.shfbproj</tt> file.
  
@@ -97,12 +97,18 @@ C5 is a portable library supporting .NET 4.0, Silverlight, Windows Phone 7, and 
    
    There are more than 1400 NUnit test cases which should execute in less
    than 30 seconds. All should pass.
+   
+== C5 on Mono
+
+C5 can be built on Mono using the C5.Mono.sln solution:
+
+<tt>xbuild C5.Mono.sln</tt>
 
 == License
 
 C5 is released under a BSD-style license:
 
-Copyright Niels Kokholm and Peter Sestoft and Rasmus Nielsen 2003-2011.
+Copyright Niels Kokholm and Peter Sestoft and Rasmus Nielsen 2003-2012.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -129,7 +129,6 @@
     <VisualStudio>
     </VisualStudio>
   </ProjectExtensions>
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <ItemGroup>
     <ProjectReference Include="..\C5\C5.Mono.csproj">
       <Project>{1BD0D1BD-512B-4228-B02D-B50ADAF000B3}</Project>

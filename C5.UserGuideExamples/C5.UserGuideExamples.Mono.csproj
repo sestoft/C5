@@ -71,6 +71,7 @@
     <Compile Include="Views.cs" />
     <Compile Include="WrappedArray.cs" />
   </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <ItemGroup>
     <EmbeddedResource Include="GCHForm.resx">
       <DependentUpon>GCHForm.cs</DependentUpon>
@@ -82,8 +83,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <ItemGroup>
     <ProjectReference Include="..\C5\C5.Mono.csproj">
       <Project>{1BD0D1BD-512B-4228-B02D-B50ADAF000B3}</Project>
