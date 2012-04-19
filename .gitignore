@@ -5,6 +5,7 @@
 *.suo
 *.userprefs
 *.user
+.DS_store
 *ReSharper*
 packages/*
 Help/*
@@ -14,6 +15,7 @@ C5.Tests/bin/*
 C5.Tests/obj/*
 C5.UserGuideExamples/bin/*
 C5.UserGuideExamples/obj/*
+test-results/*
 
 # Include
 !/.nuget/*
