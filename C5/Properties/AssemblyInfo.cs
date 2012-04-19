@@ -15,4 +15,4 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("2.0.*")]
 [assembly: CLSCompliant(true)]
-[assembly: InternalsVisibleTo("C5.Tests")]
+[assembly: InternalsVisibleTo("C5.Tests.Mono")]
