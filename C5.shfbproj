@@ -20,8 +20,14 @@
     <Language>en-US</Language>
     <HelpFileFormat>HtmlHelp1, MSHelpViewer, Website</HelpFileFormat>
     <DocumentationSources>
-      <DocumentationSource sourceFile="C5\bin\Debug\C5.dll" />
-<DocumentationSource sourceFile="C5\bin\Debug\C5.xml" /></DocumentationSources>
+      <DocumentationSource sourceFile="C5\bin\Release\C5.dll" />
+      <DocumentationSource sourceFile="C5\bin\Release\C5.xml" />
+    </DocumentationSources>
+    <PresentationStyle>Prototype</PresentationStyle>
+    <SelfBranded>True</SelfBranded>
+    <FrameworkVersion>Portable 4.0</FrameworkVersion>
+    <BuildAssemblerVerbosity>OnlyErrors</BuildAssemblerVerbosity>
+    <IndentHtml>True</IndentHtml>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in
        order for Visual Studio to perform the build.  The others are optional
