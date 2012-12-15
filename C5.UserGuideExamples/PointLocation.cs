@@ -33,24 +33,33 @@ namespace PointLocation
     /// </summary>
     public struct Edge<T>
     {
-        public double xs, ys, xe, ye;
+        public readonly double xs, ys, xe, ye;
 
-        public T right, left;
+        public readonly T right, left;
 
-        public Edge(double xs, double ys, double xe, double ye, T right, T left)
-        {
-            this.xs = xs;
-            this.ys = ys;
-            this.xe = xe;
-            this.ye = ye;
-            this.right = right;
-            this.left = left;
-        }
+        public Edge (double xs, double ys, double xe, double ye, T right, T left)
+		{
+			if (xs < xe) {
+				this.xs = xs;
+				this.ys = ys;
+				this.xe = xe;
+				this.ye = ye;
+				this.right = right;
+				this.left = left;
+			} else {
+				this.xs = xe;
+				this.ys = ye;
+				this.xe = xs;
+				this.ye = ys;
+				this.right = left;
+				this.left = right;
+			}
+		}
 
 
         public T Cell(bool upper)
         {
-            return (DoubleComparer.StaticCompare(xs, xe) < 0) == upper ? left : right;
+            return upper ? left : right;
         }
 
 
