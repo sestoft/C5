@@ -31,7 +31,7 @@ namespace PointLocation
     /// A line segment with associated data of type T for the cell 
     /// to its right respectively left.
     /// </summary>
-    public struct Edge<T>
+    public struct Edge<T> : IComparable<Edge<T>>
     {
         public readonly double xs, ys, xe, ye;
 
@@ -67,6 +67,38 @@ namespace PointLocation
         {
             return string.Format("[({0:G5};{1:G5})->({2:G5};{3:G5})/R:{4} L:{5}]", xs, ys, xe, ye, right, left);
         }
+
+		public int CompareTo (Edge<T> other)
+		{
+			double dx, dy, thisotherx, thisothery;
+			int res = 1;
+			if (other.xs < this.xs) {
+				dx = other.xe - other.xs;
+				dy = other.ye - other.ys;
+				thisotherx = this.xs - other.xs;
+				thisothery = this.ys - other.ys;
+				res = -1;
+			} else {
+				dx = this.xe - this.xs;
+				dy = this.ye - this.ys;
+				if (this.ys == other.ys && this.xs == other.xs) {
+					thisotherx = other.xe - this.xs;
+					thisothery = other.ye - this.ys;
+				} else {
+					thisotherx = other.xs - this.xs;
+					thisothery = other.ys - this.ys;
+				}
+			}
+			double det = dx * thisothery - dy * thisotherx;
+			if (det > 0)
+				res = -1 * res;
+			//else if (det < 0) res = 1 * res;
+			else if (det == 0) {
+				if (this.xs == other.xs && this.xe == other.xe && this.ys == other.ys && this.ye == other.ye)
+					res = 0;
+			}
+			return res;
+		}
     }
 
 
