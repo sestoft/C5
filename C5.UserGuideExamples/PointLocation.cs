@@ -143,8 +143,6 @@ namespace PointLocation
     {
         private TreeDictionary<double, ISorted<Edge<T>>> htree;
 
-        private EdgeComparer<T> lc = new EdgeComparer<T>();
-
         private SCG.IComparer<EndPoint> epc = new EndPoint(0, 0, true, 0);
 
         private DoubleComparer dc = new DoubleComparer();
@@ -201,7 +199,7 @@ namespace PointLocation
             //htree.Clear();
             htree = new TreeDictionary<double, ISorted<Edge<T>>>(dc);
 
-            TreeSet<Edge<T>> vtree = new TreeSet<Edge<T>>(lc);
+            TreeSet<Edge<T>> vtree = new TreeSet<Edge<T>>();
             double lastx = Double.NegativeInfinity;
 
             foreach (KeyValuePair<EndPoint, Edge<T>> p in endpoints)
@@ -210,14 +208,11 @@ namespace PointLocation
                 {
                     //Put an empty snapshot at -infinity!
                     htree[lastx] = (ISorted<Edge<T>>)(vtree.Snapshot());
-                    lc.X = lastx = p.Key.x;
-                    lc.compareToRight = false;
+                    lastx = p.Key.x;
                 }
 
                 if (p.Key.start)
                 {
-                    if (!lc.compareToRight)
-                        lc.compareToRight = true;
                     Debug.Assert(vtree.Check());
                     bool chk = vtree.Add(p.Value);
                     Debug.Assert(vtree.Check());
@@ -226,8 +221,6 @@ namespace PointLocation
                 }
                 else
                 {
-                    Debug.Assert(!lc.compareToRight);
-
                     Debug.Assert(vtree.Check("C"));
 
                     bool chk = vtree.Remove(p.Value);
@@ -236,7 +229,6 @@ namespace PointLocation
                     Debug.Assert(chk, "edge was not removed!", "" + p.Value);
                 }
             }
-            lc.compareToRight = true;
 
             htree[lastx] = (TreeSet<Edge<T>>)(vtree.Snapshot());
             built = true;
@@ -390,31 +382,6 @@ namespace PointLocation
         }
 
         public bool Equals(Edge<T> a) { return CompareTo(a) == 0; }
-    }
-
-    /// <summary>
-    /// Compare two edges at a given x coordinate:
-    /// Compares the y-coordinate  to the immediate right of x of the two edges.
-    /// Assumes edges to be compared are not vertical.
-    /// </summary>
-    class EdgeComparer<T> : SCG.IComparer<Edge<T>>
-    {
-        private double x;
-
-        public bool compareToRight = true;
-
-        public double X { get { return x; } set { x = value; } }
-
-        public int Compare(Edge<T> line1, Edge<T> line2)
-        {
-            double a1 = (line1.ye - line1.ys) / (line1.xe - line1.xs);
-            double a2 = (line2.ye - line2.ys) / (line2.xe - line2.xs);
-            double ya = a1 * (x - line1.xs) + line1.ys;
-            double yb = a2 * (x - line2.xs) + line2.ys;
-            int c = DoubleComparer.StaticCompare(ya, yb);
-
-            return c != 0 ? c : (compareToRight ? 1 : -1) * DoubleComparer.StaticCompare(a1, a2);
-        }
     }
 
     namespace Test
