@@ -143,39 +143,38 @@ namespace PointLocation
     {
         private TreeDictionary<double, ISorted<Edge<T>>> htree;
 
-        private SCG.IComparer<EndPoint> epc = new EndPoint(0, 0, true, 0);
-
-        private DoubleComparer dc = new DoubleComparer();
-
-        private TreeDictionary<EndPoint, Edge<T>> endpoints;
-
-        private int count;
+        private TreeDictionary<double, KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>> endpoints;
 
         private bool built = false;
 
         public PointLocator()
         {
             //htree = new TreeDictionary<double,TreeSet<Edge<T>>>(dc);
-            endpoints = new TreeDictionary<EndPoint, Edge<T>>(epc);
+            endpoints = new TreeDictionary<double, KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>>();
         }
 
         public PointLocator(SCG.IEnumerable<Edge<T>> edges)
         {
             //htree = new TreeDictionary<double,TreeSet<Edge<T>>>(dc);
-            endpoints = new TreeDictionary<EndPoint, Edge<T>>(epc);
+			endpoints = new TreeDictionary<double, KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>>();
             foreach (Edge<T> edge in edges)
                 add(edge);
         }
 
         private void add(Edge<T> edge)
         {
-            int c = DoubleComparer.StaticCompare(edge.xs, edge.xe);
-
-            if (c == 0)
+            if (edge.xs == edge.xe)
                 return;
 
-            endpoints.Add(new EndPoint(edge.xs, edge.ys, c < 0, count), edge);
-            endpoints.Add(new EndPoint(edge.xe, edge.ye, c > 0, count++), edge);
+			if (! endpoints.Contains(edge.xs))
+				endpoints.Add(edge.xs, new KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>(new LinkedList<Edge<T>>(), new LinkedList<Edge<T>>()));
+			KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>> kv;
+			kv = endpoints[edge.xs];
+			kv.Key.Add(edge);
+			if (! endpoints.Contains(edge.xe))
+				endpoints.Add(edge.xe, new KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>(new LinkedList<Edge<T>>(), new LinkedList<Edge<T>>()));
+			kv = endpoints[edge.xe];
+			kv.Value.Add(edge);
         }
 
         public void Add(Edge<T> edge)
@@ -197,40 +196,36 @@ namespace PointLocation
         public void Build()
         {
             //htree.Clear();
-            htree = new TreeDictionary<double, ISorted<Edge<T>>>(dc);
+            htree = new TreeDictionary<double, ISorted<Edge<T>>>();
 
             TreeSet<Edge<T>> vtree = new TreeSet<Edge<T>>();
-            double lastx = Double.NegativeInfinity;
 
-            foreach (KeyValuePair<EndPoint, Edge<T>> p in endpoints)
+			htree[Double.NegativeInfinity] = (ISorted<Edge<T>>)(vtree.Snapshot());
+
+            foreach (KeyValuePair<double, KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>> p in endpoints)
             {
-                if (dc.Compare(p.Key.x, lastx) > 0)
-                {
-                    //Put an empty snapshot at -infinity!
-                    htree[lastx] = (ISorted<Edge<T>>)(vtree.Snapshot());
-                    lastx = p.Key.x;
-                }
-
-                if (p.Key.start)
+				foreach (Edge<T> e in p.Value.Value)
+				{
+					Debug.Assert(vtree.Check("C"));
+					
+					bool chk = vtree.Remove(e);
+					Debug.Assert(vtree.Check("D"));
+					
+					Debug.Assert(chk, "edge was not removed!", "" + e);
+				}
+				
+				foreach (Edge<T> e in p.Value.Key) 
                 {
                     Debug.Assert(vtree.Check());
-                    bool chk = vtree.Add(p.Value);
-                    Debug.Assert(vtree.Check());
+                    bool chk = vtree.Add(e);
+					Debug.Assert(vtree.Check());
 
-                    Debug.Assert(chk, "edge was not added!", "" + p.Value);
+                    Debug.Assert(chk, "edge was not added!", "" + e);
                 }
-                else
-                {
-                    Debug.Assert(vtree.Check("C"));
 
-                    bool chk = vtree.Remove(p.Value);
-                    Debug.Assert(vtree.Check("D"));
-
-                    Debug.Assert(chk, "edge was not removed!", "" + p.Value);
-                }
+				htree[p.Key] = (ISorted<Edge<T>>)(vtree.Snapshot());
             }
 
-            htree[lastx] = (TreeSet<Edge<T>>)(vtree.Snapshot());
             built = true;
         }
 
@@ -313,61 +308,16 @@ namespace PointLocation
             else
                 Console.WriteLine("({0}; {1}): -", x, y);
         }
-
-        /// <summary>
-        /// Endpoint of an edge with ordering/comparison according to x
-        /// coordinates with arbitration by the id field. 
-        /// The client is assumed to keep the ids unique.
-        /// </summary>
-        public /*private*/ struct EndPoint : SCG.IComparer<EndPoint>
-        {
-            public double x, y;
-
-            public bool start;
-
-            private int id;
-
-
-            public EndPoint(double x, double y, bool left, int id)
-            {
-                this.x = x; this.y = y; this.start = left; this.id = id;
-            }
-
-
-            public int Compare(EndPoint a, EndPoint b)
-            {
-                int c = DoubleComparer.StaticCompare(a.x, b.x);
-
-                return c != 0 ? c : (a.start && !b.start) ? 1 : (!a.start && b.start) ? -1 : a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
-            }
-        }
-    }
-
-    /// <summary>
-    /// Compare two doubles with tolerance. 
-    /// </summary>
-    class DoubleComparer : SCG.IComparer<double>
-    {
-        private const double eps = 1E-10;
-
-        public int Compare(double a, double b)
-        {
-            return a > b + eps ? 1 : a < b - eps ? -1 : 0;
-        }
-
-        public static int StaticCompare(double a, double b)
-        {
-            return a > b + eps ? 1 : a < b - eps ? -1 : 0;
-        }
     }
 
     /// <summary>
     /// Compare a given point (x,y) to edges: is the point above, at or below
     /// the edge. Assumes edges not vertical. 
-    /// </summary>
+	/// Uses crossproduct to compute the result.
+	/// </summary>
     class PointComparer<T> : IComparable<Edge<T>>
     {
-        private double x, y;
+        private readonly double x, y;
 
         public PointComparer(double x, double y)
         {
@@ -376,9 +326,17 @@ namespace PointLocation
 
         public int CompareTo(Edge<T> a)
         {
-            double ya = (a.ye - a.ys) / (a.xe - a.xs) * (x - a.xs) + a.ys;
-
-            return DoubleComparer.StaticCompare(y, ya);
+			int res = 0;
+			double abx = a.xe - a.xs;
+			double aby = a.ye - a.ys;
+			double atx = x - a.xs;
+			double aty = y - a.ys;
+			double det = abx * aty - aby * atx;
+			if (det > 0)
+				res = 1;
+			else if (det < 0)
+				res = -1;
+			return res;
         }
 
         public bool Equals(Edge<T> a) { return CompareTo(a) == 0; }
