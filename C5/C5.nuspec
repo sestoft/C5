@@ -16,23 +16,20 @@
     <tags>Generics Collections Heap TreeSet PriorityQueue</tags>
   </metadata>
   <files>
-    <file src="bin\Release\*.dll" target="lib\" /> 
-    <file src="bin\Release\*.pdb" target="lib\" /> 
-    <file src="bin\Release\*.xml" target="lib\" /> 
-    <file src="bin\Release\*.dll" target="lib\net40\" /> 
-    <file src="bin\Release\*.pdb" target="lib\net40\" /> 
-    <file src="bin\Release\*.xml" target="lib\net40\" /> 
-    <file src="bin\Release\*.dll" target="lib\sl40\" /> 
-    <file src="bin\Release\*.pdb" target="lib\sl40\" /> 
-    <file src="bin\Release\*.xml" target="lib\sl40\" /> 
-    <file src="bin\Release\*.dll" target="lib\sl50\" /> 
-    <file src="bin\Release\*.pdb" target="lib\sl50\" /> 
-    <file src="bin\Release\*.xml" target="lib\sl50\" /> 
-    <file src="bin\Release\*.dll" target="lib\sl3-wp\" /> 
-    <file src="bin\Release\*.pdb" target="lib\sl3-wp\" /> 
-    <file src="bin\Release\*.xml" target="lib\sl3-wp\" /> 
-    <file src="bin\Release\*.dll" target="lib\sl4-wp71\" /> 
-    <file src="bin\Release\*.pdb" target="lib\sl4-wp71\" /> 
-    <file src="bin\Release\*.xml" target="lib\sl4-wp71\" /> 
+    <file src="bin\Release\C5.dll" target="lib\net40\" /> 
+    <file src="bin\Release\C5.pdb" target="lib\net40\" /> 
+    <file src="bin\Release\C5.xml" target="lib\net40\" /> 
+    <file src="bin\Release\C5.dll" target="lib\sl40\" /> 
+    <file src="bin\Release\C5.pdb" target="lib\sl40\" /> 
+    <file src="bin\Release\C5.xml" target="lib\sl40\" /> 
+    <file src="bin\Release\C5.dll" target="lib\sl50\" /> 
+    <file src="bin\Release\C5.pdb" target="lib\sl50\" /> 
+    <file src="bin\Release\C5.xml" target="lib\sl50\" /> 
+    <file src="bin\Release\C5.dll" target="lib\sl3-wp\" /> 
+    <file src="bin\Release\C5.pdb" target="lib\sl3-wp\" /> 
+    <file src="bin\Release\C5.xml" target="lib\sl3-wp\" /> 
+    <file src="bin\Release\C5.dll" target="lib\sl4-wp71\" /> 
+    <file src="bin\Release\C5.pdb" target="lib\sl4-wp71\" /> 
+    <file src="bin\Release\C5.xml" target="lib\sl4-wp71\" /> 
   </files>
 </package>
