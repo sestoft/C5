@@ -5,6 +5,7 @@
 *.suo
 *.userprefs
 *.user
+*.DotSettings
 .DS_store
 *ReSharper*
 packages/*
