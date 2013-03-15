@@ -1,12 +1,12 @@
 RELEASE NOTES FOR C5 GENERIC COLLECTION LIBRARY FOR C#/CLI
 ------------------------------
 
-Release C5. 2.1.4492.18142 of 2012-04-19
+Release 2.1.4492.18142 of 2012-04-19
 
  * Full support for Mono.
  * C5 can now be built for Mono using the C5.Mono.sln file. 
 
-Release C5.2.0.4398.21073 of 2012-01-16
+Release 2.0.4398.21073 of 2012-01-16
 
  * Included .xml file in build.
  * Includes System.Core from the Portable Library Tools in build.

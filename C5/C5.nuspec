@@ -11,7 +11,7 @@
     <iconUrl>https://github.com/sestoft/C5/raw/master/images/icon-nuget.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Updated .nuspec to support Portable Libraries</releaseNotes>
+    <releaseNotes>Strong named assembly, moved comparers to C5 namespace</releaseNotes>
     <copyright>Copyright 2013</copyright>
     <tags>Generics Collections Heap TreeSet PriorityQueue</tags>
   </metadata>

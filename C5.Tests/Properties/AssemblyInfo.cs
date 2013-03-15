@@ -12,6 +12,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright © Niels Kokholm, Peter Sestoft, and Rasmus Nielsen 2003-2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("2.1.*")]
+[assembly: AssemblyVersion("2.2.*")]
 [assembly: ComVisible(false)]
 [assembly: Guid("db865c83-8334-4f17-8bdd-2026d35943a6")]
