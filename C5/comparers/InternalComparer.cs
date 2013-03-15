@@ -4,14 +4,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace C5.Comparers
+namespace C5
 {
     /// <summary>
     /// Defines a method that a type implements to compare two objects.
     /// This class is intentionally declared internal - use the ComparerFactory to create an instance.
     /// </summary>
     /// <typeparam name="T">The type of objects to compare.</typeparam>
-    internal class Comparer<T> : IComparer<T>
+    internal class InternalComparer<T> : IComparer<T>
     {
         private readonly Func<T, T, int> _compare;
 
@@ -19,7 +19,7 @@ namespace C5.Comparers
         /// Constructs a comparer using one Func delegate.
         /// </summary>
         /// <param name="compare">The compare function.</param>
-        public Comparer(Func<T, T, int> compare)
+        public InternalComparer(Func<T, T, int> compare)
         {
             _compare = compare;
         }

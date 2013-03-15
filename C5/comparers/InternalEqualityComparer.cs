@@ -4,14 +4,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace C5.Comparers
+namespace C5
 {
     /// <summary>
     /// Defines methods to support the comparison of objects for equality.
     /// This class is intentionally declared internal - use the ComparerFactory to create an instance.
     /// </summary>
     /// <typeparam name="T">The type of objects to compare.</typeparam>
-    internal class EqualityComparer<T> : IEqualityComparer<T>
+    internal class InternalEqualityComparer<T> : IEqualityComparer<T>
     {
         private readonly Func<T, T, bool> _equals;
         private readonly Func<T, int> _getHashCode;
@@ -21,7 +21,7 @@ namespace C5.Comparers
         /// </summary>
         /// <param name="equals">The equals function.</param>
         /// <param name="getHashCode">The get hash code function.</param>
-        public EqualityComparer(Func<T, T, bool> equals, Func<T, int> getHashCode)
+        public InternalEqualityComparer(Func<T, T, bool> equals, Func<T, int> getHashCode)
         {
             _equals = equals;
             _getHashCode = getHashCode;

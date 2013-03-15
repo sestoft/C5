@@ -17,7 +17,7 @@ namespace TestSortedArray
         public static void Main(String[] args)
         {
             // SortedArray<Object> sarr = new SortedArray<Object>();
-            var lexico = C5.Comparers.ComparerFactory<Rec<string, int>>.CreateComparer(
+            var lexico = ComparerFactory<Rec<string, int>>.CreateComparer(
                 (r1, r2) =>
                     {
                         int order = r1.X1.CompareTo(r2.X1);

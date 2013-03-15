@@ -47,9 +47,9 @@
     <Compile Include="arrays\HashedArrayList.cs" />
     <Compile Include="arrays\SortedArray.cs" />
     <Compile Include="Collections.cs" />
-    <Compile Include="Comparers\Comparer.cs" />
-    <Compile Include="Comparers\ComparerFactory.cs" />
-    <Compile Include="Comparers\EqualityComparer.cs" />
+    <Compile Include="comparers\InternalComparer.cs" />
+    <Compile Include="comparers\ComparerFactory.cs" />
+    <Compile Include="comparers\InternalEqualityComparer.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="Dictionaries.cs" />
     <Compile Include="Enums.cs" />

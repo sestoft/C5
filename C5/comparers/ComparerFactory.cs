@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace C5.Comparers
+namespace C5
 {
     /// <summary>
     /// Factory class to create comparers and equality comparers using Func delegates
@@ -19,7 +19,7 @@ namespace C5.Comparers
         /// <returns>The comparer</returns>
         public static IComparer<T> CreateComparer(Func<T, T, int> comparer)
         {
-            return new Comparer<T>(comparer);
+            return new InternalComparer<T>(comparer);
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace C5.Comparers
         /// <returns>The equality comparer.</returns>
         public static IEqualityComparer<T> CreateEqualityComparer(Func<T, T, bool> equals, Func<T, int> getHashCode)
         {
-            return new EqualityComparer<T>(equals, getHashCode);
+            return new InternalEqualityComparer<T>(equals, getHashCode);
         }
     }
 }
