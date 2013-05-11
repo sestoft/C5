@@ -60,128 +60,93 @@ namespace C5
         #endregion
 
         #region Util
-        bool heapifyMin(int i)
-        {
-            bool swappedroot = false;
-            int cell = i, currentmin = cell;
-            T currentitem = heap[cell].first;
-            Handle currenthandle = heap[cell].firsthandle;
+        // heapifyMin and heapifyMax and their auxiliaries
 
-            // bug20080222.txt
-            {
-                T other = heap[cell].last;
-                if (2 * cell + 1 < size && comparer.Compare(currentitem, other) > 0)
-                {
-                    swappedroot = true;
-                    Handle otherhandle = heap[cell].lasthandle;
-                    updateLast(cell, currentitem, currenthandle);
-                    currentitem = other;
-                    currenthandle = otherhandle;
-                }
-            }
+        private void swapFirstWithLast(int cell1, int cell2) {
+          T first = heap[cell1].first;
+          Handle firsthandle = heap[cell1].firsthandle;
+          updateFirst(cell1, heap[cell2].last, heap[cell2].lasthandle);
+          updateLast(cell2, first, firsthandle);
+        }
 
-            T minitem = currentitem;
-            Handle minhandle = currenthandle;
+        private void swapLastWithLast(int cell1, int cell2) {
+          T last = heap[cell2].last;
+          Handle lasthandle = heap[cell2].lasthandle;
+          updateLast(cell2, heap[cell1].last, heap[cell1].lasthandle);
+          updateLast(cell1, last, lasthandle);
+        }
 
-            while (true)
-            {
-                int l = 2 * cell + 1, r = l + 1;
-                T lv, rv;
+        private void swapFirstWithFirst(int cell1, int cell2) {
+          T first = heap[cell2].first;
+          Handle firsthandle = heap[cell2].firsthandle;
+          updateFirst(cell2, heap[cell1].first, heap[cell1].firsthandle);
+          updateFirst(cell1, first, firsthandle);
+        }
 
-                if (2 * l < size && comparer.Compare(lv = heap[l].first, minitem) < 0)
-                { currentmin = l; minitem = lv; }
+        bool heapifyMin(int cell) {
+          bool swappedroot = false;
+          // If first > last, swap them
+          if (2 * cell + 1 < size && comparer.Compare(heap[cell].first, heap[cell].last) > 0) {
+            swappedroot = true;
+            swapFirstWithLast(cell, cell);
+          }
 
-                if (2 * r < size && comparer.Compare(rv = heap[r].first, minitem) < 0)
-                { currentmin = r; minitem = rv; }
+          int currentmin = cell, l = 2 * cell + 1, r = l + 1;
+          if (2 * l < size && comparer.Compare(heap[l].first, heap[currentmin].first) < 0) 
+            currentmin = l;
+          if (2 * r < size && comparer.Compare(heap[r].first, heap[currentmin].first) < 0) 
+            currentmin = r; 
 
-                if (currentmin == cell)
-                    break;
-
-                minhandle = heap[currentmin].firsthandle;
-                updateFirst(cell, minitem, minhandle);
-                cell = currentmin;
-
-                //Maybe swap first and last
-                T other = heap[cell].last;
-                if (2 * currentmin + 1 < size && comparer.Compare(currentitem, other) > 0)
-                {
-                    Handle otherhandle = heap[cell].lasthandle;
-                    updateLast(cell, currentitem, currenthandle);
-                    currentitem = other;
-                    currenthandle = otherhandle;
-                }
-
-
-                minitem = currentitem;
-                minhandle = currenthandle;
-            }
-
-            if (cell != i || swappedroot)
-                updateFirst(cell, minitem, minhandle);
-            return swappedroot;
+          if (currentmin != cell) {
+            // cell has at least one daughter, and it contains the min
+            swapFirstWithFirst(currentmin, cell);
+            heapifyMin(currentmin);
+          }
+          return swappedroot;
         }
 
 
-        bool heapifyMax(int i)
-        {
-            bool swappedroot = false;
-            int cell = i, currentmax = cell;
-            T currentitem = heap[cell].last;
-            Handle currenthandle = heap[cell].lasthandle;
+        bool heapifyMax(int cell) {
+          bool swappedroot = false;
+          if (2 * cell + 1 < size && comparer.Compare(heap[cell].last, heap[cell].first) < 0) {
+            swappedroot = true;
+            swapFirstWithLast(cell, cell);
+          }
 
-            // bug20080222.txt
-            {
-                T other = heap[cell].first;
-                if (2 * cell + 1 < size && comparer.Compare(currentitem, other) < 0)
-                {
-                    swappedroot = true;
-                    Handle otherhandle = heap[cell].firsthandle;
-                    updateFirst(cell, currentitem, currenthandle);
-                    currentitem = other;
-                    currenthandle = otherhandle;
-                }
+          int currentmax = cell, l = 2 * cell + 1, r = l + 1;
+          bool firstmax = false;  // currentmax's first field holds max
+          if (2 * l + 1 < size) {  // both l.first and l.last exist
+            if (comparer.Compare(heap[l].last, heap[currentmax].last) > 0)
+              currentmax = l;
+          }
+          else if (2 * l + 1 == size) {  // only l.first exists
+            if (comparer.Compare(heap[l].first, heap[currentmax].last) > 0) {
+              currentmax = l;
+              firstmax = true;
             }
+          }
 
-            T maxitem = currentitem;
-            Handle maxhandle = currenthandle;
-
-            while (true)
-            {
-                int l = 2 * cell + 1, r = l + 1;
-                T lv, rv;
-
-                if (2 * l + 1 < size && comparer.Compare(lv = heap[l].last, maxitem) > 0)
-                { currentmax = l; maxitem = lv; }
-
-                if (2 * r + 1 < size && comparer.Compare(rv = heap[r].last, maxitem) > 0)
-                { currentmax = r; maxitem = rv; }
-
-                if (currentmax == cell)
-                    break;
-
-                maxhandle = heap[currentmax].lasthandle;
-                updateLast(cell, maxitem, maxhandle);
-                cell = currentmax;
-
-                //Maybe swap first and last
-                T other = heap[cell].first;
-                if (comparer.Compare(currentitem, other) < 0)
-                {
-                    Handle otherhandle = heap[cell].firsthandle;
-                    updateFirst(cell, currentitem, currenthandle);
-                    currentitem = other;
-                    currenthandle = otherhandle;
-                }
-
-                maxitem = currentitem;
-                maxhandle = currenthandle;
+          if (2 * r + 1 < size) {  // both r.first and r.last exist
+            if (comparer.Compare(heap[r].last, heap[currentmax].last) > 0)
+              currentmax = r;
+          }
+          else if (2 * r + 1 == size) {  // only r.first exists
+            if (comparer.Compare(heap[r].first, heap[currentmax].last) > 0) {
+              currentmax = r;
+              firstmax = true;
             }
+          }
 
-            if (cell != i || swappedroot) //Check could be better?
-                updateLast(cell, maxitem, maxhandle);
-            return swappedroot;
+          if (currentmax != cell) {
+            // The cell has at least one daughter, and it contains the max
+            if (firstmax)
+              swapFirstWithLast(currentmax, cell);
+            else
+              swapLastWithLast(currentmax, cell);
+            heapifyMax(currentmax);
+          }
+          return swappedroot;
         }
-
 
         void bubbleUpMin(int i)
         {
@@ -545,6 +510,11 @@ namespace C5
         #endregion
 
         #region Diagnostics
+
+      // Check invariants: 
+      // * first <= last in a cell if both are valid
+      // * a parent interval (cell) contains both its daughter intervals (cells)
+      // * a handle, if non-null, points to the cell it is associated with
         private bool check(int i, T min, T max)
         {
             bool retval = true;
