@@ -1787,6 +1787,49 @@ namespace C5UnitTests.trees.TreeBag
 
 
             [Test]
+            public void Bug20120422_1() {
+              var coll = new C5.TreeBag<string>();
+              coll.Add("C");
+              var snap = coll.Snapshot();
+              coll.Add("C");  
+              Assert.AreEqual(2, coll.ContainsCount("C"));
+            }
+
+            [Test]
+            public void Bug20120422_2() {
+              var coll = new C5.TreeBag<string>();
+              coll.Add("B"); coll.Add("A"); coll.Add("C"); 
+              var snap1 = coll.Snapshot();
+              coll.Add("C");
+              Assert.AreEqual(2, coll.ContainsCount("C"));
+              Assert.IsTrue(coll.Check());
+              coll.Add("A");
+              Assert.AreEqual(2, coll.ContainsCount("A"));
+              Assert.AreEqual(2, coll.ContainsCount("C"));
+              Assert.IsTrue(coll.Check());
+              coll.Add("B");
+              Assert.IsTrue(coll.Check());
+              Assert.AreEqual(2, coll.ContainsCount("B"));
+              Assert.AreEqual(2, coll.ContainsCount("A"));
+              Assert.AreEqual(2, coll.ContainsCount("C"));
+              var snap2 = coll.Snapshot();
+              coll.Add("C");
+              Assert.AreEqual(3, coll.ContainsCount("C"));
+              Assert.IsTrue(coll.Check());
+              coll.Add("A");
+              Assert.AreEqual(3, coll.ContainsCount("A"));
+              Assert.AreEqual(3, coll.ContainsCount("C"));
+              Assert.IsTrue(coll.Check());
+              coll.Add("B");
+              Assert.IsTrue(coll.Check());
+              Assert.AreEqual(3, coll.ContainsCount("B"));
+              Assert.AreEqual(3, coll.ContainsCount("A"));
+              Assert.AreEqual(3, coll.ContainsCount("C"));
+              coll.RemoveAt(8);
+              Assert.AreEqual(2, coll.ContainsCount("C"));
+            }
+
+            [Test]
             public void EnumerationWithAdd()
             {
                 int[] orig = new int[] { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19 };
