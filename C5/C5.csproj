@@ -1,91 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D02E0664-C56C-4C3F-98E5-C8EC881A8439}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{9B6F0EC0-D315-40E3-A3B3-0C2C76F52017}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>C5</RootNamespace>
     <AssemblyName>C5</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile1</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\C5\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\C5.xml</DocumentationFile>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
+    <OutputPath>bin\Release</OutputPath>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\C5.xml</DocumentationFile>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>C5.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="arrays\ArrayList.cs" />
-    <Compile Include="arrays\CircularQueue.cs" />
-    <Compile Include="arrays\HashedArrayList.cs" />
-    <Compile Include="arrays\SortedArray.cs" />
-    <Compile Include="Collections.cs" />
-    <Compile Include="comparers\InternalComparer.cs" />
-    <Compile Include="comparers\ComparerFactory.cs" />
-    <Compile Include="comparers\InternalEqualityComparer.cs" />
-    <Compile Include="Debug.cs" />
-    <Compile Include="Dictionaries.cs" />
-    <Compile Include="Enums.cs" />
-    <Compile Include="Events.cs" />
-    <Compile Include="Exceptions.cs" />
-    <Compile Include="Formatting.cs" />
-    <Compile Include="Hashers.cs" />
-    <Compile Include="hashing\HashBag.cs" />
-    <Compile Include="hashing\HashDictionary.cs" />
-    <Compile Include="hashing\HashTable.cs" />
-    <Compile Include="heaps\IntervalHeap.cs" />
-    <Compile Include="Interfaces.cs" />
-    <Compile Include="linkedlists\HashedLinkedList.cs" />
-    <Compile Include="linkedlists\LinkedList.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="MappedEnumerators.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Random.cs" />
-    <Compile Include="Records.cs" />
-    <Compile Include="Sorting.cs" />
-    <Compile Include="trees\RedBlackTreeBag.cs" />
-    <Compile Include="trees\RedBlackTreeDictionary.cs" />
-    <Compile Include="trees\RedBlackTreeSet.cs" />
-    <Compile Include="ViewSupport.cs" />
-    <Compile Include="WrappedArray.cs" />
-    <Compile Include="Wrappers.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="C5.snk" />
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -95,4 +41,48 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C5.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Collections.cs" />
+    <Compile Include="Debug.cs" />
+    <Compile Include="Dictionaries.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="Events.cs" />
+    <Compile Include="Exceptions.cs" />
+    <Compile Include="Formatting.cs" />
+    <Compile Include="Hashers.cs" />
+    <Compile Include="Interfaces.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="MappedEnumerators.cs" />
+    <Compile Include="Random.cs" />
+    <Compile Include="Records.cs" />
+    <Compile Include="Sorting.cs" />
+    <Compile Include="ViewSupport.cs" />
+    <Compile Include="WrappedArray.cs" />
+    <Compile Include="Wrappers.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="arrays\ArrayList.cs" />
+    <Compile Include="arrays\CircularQueue.cs" />
+    <Compile Include="arrays\HashedArrayList.cs" />
+    <Compile Include="arrays\SortedArray.cs" />
+    <Compile Include="comparers\ComparerFactory.cs" />
+    <Compile Include="comparers\InternalComparer.cs" />
+    <Compile Include="comparers\InternalEqualityComparer.cs" />
+    <Compile Include="hashing\HashBag.cs" />
+    <Compile Include="hashing\HashDictionary.cs" />
+    <Compile Include="hashing\HashTable.cs" />
+    <Compile Include="heaps\IntervalHeap.cs" />
+    <Compile Include="linkedlists\HashedLinkedList.cs" />
+    <Compile Include="linkedlists\LinkedList.cs" />
+    <Compile Include="trees\RedBlackTreeBag.cs" />
+    <Compile Include="trees\RedBlackTreeDictionary.cs" />
+    <Compile Include="trees\RedBlackTreeSet.cs" />
+  </ItemGroup>
 </Project>
