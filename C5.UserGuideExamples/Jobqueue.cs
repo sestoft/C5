@@ -33,14 +33,8 @@ class MyJobQueueTest {
     JobQueue jq = new JobQueue();
     // One user submits three jobs at time=27
     Rid rid1 = jq.Submit(new Ip("62.150.83.11"), 27),
-        rid2 = jq.Submit(new Ip("62.150.83.11"), 27),
         rid3 = jq.Submit(new Ip("62.150.83.11"), 27);
     // One job is executed
-    jq.ExecuteOne();
-    // Another user submits two jobs at time=55
-    Rid rid4 = jq.Submit(new Ip("130.225.17.5"), 55),
-        rid5 = jq.Submit(new Ip("130.225.17.5"), 55);
-    // One more job is executed
     jq.ExecuteOne();
     // The first user tries to cancel his first and last job
     jq.Cancel(rid1);

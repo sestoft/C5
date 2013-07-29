@@ -1126,7 +1126,6 @@ namespace Graph
       fused.Print(Console.Out);
 
       //Console.WriteLine("========= Remove fake vertices and perform shortcuts =========");
-      IList<Vplus> fusedtour = fused.EulerTour();
       HashSet<V> seen = new HashSet<V>();
       IList<V> tour = new ArrayList<V>();
 

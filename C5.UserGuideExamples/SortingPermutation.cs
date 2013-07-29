@@ -64,10 +64,10 @@ namespace SortingPermutation
         private class KeyValueComparer<T> : SCG.IComparer<KeyValuePair<T, int>>
           where T : IComparable<T>
         {
-            private readonly IList<T> lst;
+			readonly IList<T> lst;
             public KeyValueComparer(IList<T> lst)
             {
-                this.lst = lst;
+				this.lst = lst;
             }
             public int Compare(KeyValuePair<T, int> p1, KeyValuePair<T, int> p2)
             {

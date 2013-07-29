@@ -624,7 +624,6 @@ namespace GNfaToDfa
     public static void Main(String[] args) {
       Regex a = new Sym("A");
       Regex b = new Sym("B");
-      Regex c = new Sym("C");
       Regex abStar = new Star(new Alt(a, b));
       Regex bb = new Seq(b, b);
       Regex r = new Seq(abStar, new Seq(a, b));
