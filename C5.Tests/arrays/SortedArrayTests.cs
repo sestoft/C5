@@ -6,10 +6,10 @@
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,7 +18,6 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-
 using System;
 using C5;
 using NUnit.Framework;
@@ -26,147 +25,156 @@ using SCG = System.Collections.Generic;
 
 namespace C5UnitTests.arrays.sorted
 {
-    using CollectionOfInt = SortedArray<int>;
+	using CollectionOfInt = SortedArray<int>;
 
-    [TestFixture]
-    public class GenericTesters
-    {
-        [Test]
-        public void TestEvents()
-        {
-            Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
-            new C5UnitTests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory);
-        }
+	[TestFixture]
+	public class GenericTesters
+	{
+		[Test]
+		public void TestEvents ()
+		{
+			Func<CollectionOfInt> factory = delegate() {
+				return new CollectionOfInt (TenEqualityComparer.Default);
+			};
+			new C5UnitTests.Templates.Events.SortedIndexedTester<CollectionOfInt> ().Test (factory);
+		}
+		//[Test]
+		//public void Extensible()
+		//{
+		//    C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
+		//    C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
+		//}
+	}
 
-        //[Test]
-        //public void Extensible()
-        //{
-        //    C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-        //}
-    }
+	static class Factory
+	{
+		public static ICollection<T> New<T> ()
+		{
+			return new SortedArray<T> ();
+		}
+	}
 
-    static class Factory
-    {
-        public static ICollection<T> New<T>() { return new SortedArray<T>(); }
-    }
+	[TestFixture]
+	public class Formatting
+	{
+		ICollection<int> coll;
+		IFormatProvider rad16;
 
+		[SetUp]
+		public void Init ()
+		{
+			coll = Factory.New<int> ();
+			rad16 = new RadixFormatProvider (16);
+		}
 
-    [TestFixture]
-    public class Formatting
-    {
-        ICollection<int> coll;
-        IFormatProvider rad16;
-        [SetUp]
-        public void Init() { coll = Factory.New<int>(); rad16 = new RadixFormatProvider(16); }
-        [TearDown]
-        public void Dispose() { coll = null; rad16 = null; }
-        [Test]
-        public void Format()
-        {
-            Assert.AreEqual("{  }", coll.ToString());
-            coll.AddAll(new int[] { -4, 28, 129, 65530 });
-            Assert.AreEqual("{ -4, 28, 129, 65530 }", coll.ToString());
-            Assert.AreEqual("{ -4, 1C, 81, FFFA }", coll.ToString(null, rad16));
-            Assert.AreEqual("{ -4, 28, 129... }", coll.ToString("L14", null));
-            Assert.AreEqual("{ -4, 1C, 81... }", coll.ToString("L14", rad16));
-        }
-    }
+		[TearDown]
+		public void Dispose ()
+		{
+			coll = null;
+			rad16 = null;
+		}
 
-    [TestFixture]
-    public class Ranges
-    {
-        private SortedArray<int> array;
+		[Test]
+		public void Format ()
+		{
+			Assert.AreEqual ("{  }", coll.ToString ());
+			coll.AddAll (new int[] { -4, 28, 129, 65530 });
+			Assert.AreEqual ("{ -4, 28, 129, 65530 }", coll.ToString ());
+			Assert.AreEqual ("{ -4, 1C, 81, FFFA }", coll.ToString (null, rad16));
+			Assert.AreEqual ("{ -4, 28, 129... }", coll.ToString ("L14", null));
+			Assert.AreEqual ("{ -4, 1C, 81... }", coll.ToString ("L14", rad16));
+		}
+	}
 
-        private SCG.IComparer<int> c;
+	[TestFixture]
+	public class Ranges
+	{
+		private SortedArray<int> array;
+		private SCG.IComparer<int> c;
 
+		[SetUp]
+		public void Init ()
+		{
+			c = new IC ();
+			array = new SortedArray<int> (c);
+			for (int i = 1; i <= 10; i++) {
+				array.Add (i * 2);
+			}
+		}
 
-        [SetUp]
-        public void Init()
-        {
-            c = new IC();
-            array = new SortedArray<int>(c);
-            for (int i = 1; i <= 10; i++)
-            {
-                array.Add(i * 2);
-            }
-        }
+		[Test]
+		public void Enumerator ()
+		{
+			SCG.IEnumerator<int> e = array.RangeFromTo (5, 17).GetEnumerator ();
+			int i = 3;
 
+			while (e.MoveNext()) {
+				Assert.AreEqual (2 * i++, e.Current);
+			}
 
-        [Test]
-        public void Enumerator()
-        {
-            SCG.IEnumerator<int> e = array.RangeFromTo(5, 17).GetEnumerator();
-            int i = 3;
+			Assert.AreEqual (9, i);
+		}
 
-            while (e.MoveNext())
-            {
-                Assert.AreEqual(2 * i++, e.Current);
-            }
+		[Test]
+		[ExpectedException(typeof(CollectionModifiedException))]
+		public void Enumerator3 ()
+		{
+			SCG.IEnumerator<int> e = array.RangeFromTo (5, 17).GetEnumerator ();
 
-            Assert.AreEqual(9, i);
-        }
+			e.MoveNext ();
+			array.Add (67);
+			e.MoveNext ();
+		}
 
+		[Test]
+		public void Remove ()
+		{
+			int[] all = new int[] { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 };
 
-        [Test]
-        [ExpectedException(typeof(CollectionModifiedException))]
-        public void Enumerator3()
-        {
-            SCG.IEnumerator<int> e = array.RangeFromTo(5, 17).GetEnumerator();
+			array.RemoveRangeFrom (18);
+			Assert.IsTrue (IC.eq (array, new int[] { 2, 4, 6, 8, 10, 12, 14, 16 }));
+			array.RemoveRangeFrom (28);
+			Assert.IsTrue (IC.eq (array, new int[] { 2, 4, 6, 8, 10, 12, 14, 16 }));
+			array.RemoveRangeFrom (13);
+			Assert.IsTrue (IC.eq (array, new int[] { 2, 4, 6, 8, 10, 12 }));
+			array.RemoveRangeFrom (2);
+			Assert.IsTrue (IC.eq (array));
+			foreach (int i in all)
+				array.Add (i);
 
-            e.MoveNext();
-            array.Add(67);
-            e.MoveNext();
-        }
+			array.RemoveRangeTo (10);
+			Assert.IsTrue (IC.eq (array, new int[] { 10, 12, 14, 16, 18, 20 }));
+			array.RemoveRangeTo (2);
+			Assert.IsTrue (IC.eq (array, new int[] { 10, 12, 14, 16, 18, 20 }));
+			array.RemoveRangeTo (21);
+			Assert.IsTrue (IC.eq (array));
+			foreach (int i in all)
+				array.Add (i);
 
+			array.RemoveRangeFromTo (4, 8);
+			Assert.IsTrue (IC.eq (array, 2, 8, 10, 12, 14, 16, 18, 20));
+			array.RemoveRangeFromTo (14, 28);
+			Assert.IsTrue (IC.eq (array, 2, 8, 10, 12));
+			array.RemoveRangeFromTo (0, 9);
+			Assert.IsTrue (IC.eq (array, 10, 12));
+			array.RemoveRangeFromTo (0, 81);
+			Assert.IsTrue (IC.eq (array));
+		}
 
-        [Test]
-        public void Remove()
-        {
-            int[] all = new int[] { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 };
+		[Test]
+		public void Normal ()
+		{
+			int[] all = new int[] { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 };
 
-            array.RemoveRangeFrom(18);
-            Assert.IsTrue(IC.eq(array, new int[] { 2, 4, 6, 8, 10, 12, 14, 16 }));
-            array.RemoveRangeFrom(28);
-            Assert.IsTrue(IC.eq(array, new int[] { 2, 4, 6, 8, 10, 12, 14, 16 }));
-            array.RemoveRangeFrom(13);
-            Assert.IsTrue(IC.eq(array, new int[] { 2, 4, 6, 8, 10, 12 }));
-            array.RemoveRangeFrom(2);
-            Assert.IsTrue(IC.eq(array));
-            foreach (int i in all) array.Add(i);
-
-            array.RemoveRangeTo(10);
-            Assert.IsTrue(IC.eq(array, new int[] { 10, 12, 14, 16, 18, 20 }));
-            array.RemoveRangeTo(2);
-            Assert.IsTrue(IC.eq(array, new int[] { 10, 12, 14, 16, 18, 20 }));
-            array.RemoveRangeTo(21);
-            Assert.IsTrue(IC.eq(array));
-            foreach (int i in all) array.Add(i);
-
-            array.RemoveRangeFromTo(4, 8);
-            Assert.IsTrue(IC.eq(array, 2, 8, 10, 12, 14, 16, 18, 20));
-            array.RemoveRangeFromTo(14, 28);
-            Assert.IsTrue(IC.eq(array, 2, 8, 10, 12));
-            array.RemoveRangeFromTo(0, 9);
-            Assert.IsTrue(IC.eq(array, 10, 12));
-            array.RemoveRangeFromTo(0, 81);
-            Assert.IsTrue(IC.eq(array));
-        }
-
-        [Test]
-        public void Normal()
-        {
-            int[] all = new int[] { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 };
-
-            Assert.IsTrue(IC.eq(array, all));
-            Assert.IsTrue(IC.eq(array.RangeAll(), all));
-            Assert.AreEqual(10, array.RangeAll().Count);
-            Assert.IsTrue(IC.eq(array.RangeFrom(11), new int[] { 12, 14, 16, 18, 20 }));
-            Assert.AreEqual(5, array.RangeFrom(11).Count);
-            Assert.IsTrue(IC.eq(array.RangeFrom(12), new int[] { 12, 14, 16, 18, 20 }));
-            Assert.IsTrue(IC.eq(array.RangeFrom(2), all));
-            Assert.IsTrue(IC.eq(array.RangeFrom(1), all));
-            Assert.IsTrue(IC.eq(array.RangeFrom(21), new int[] { }));
+			Assert.IsTrue (IC.eq (array, all));
+			Assert.IsTrue (IC.eq (array.RangeAll (), all));
+			Assert.AreEqual (10, array.RangeAll ().Count);
+			Assert.IsTrue (IC.eq (array.RangeFrom (11), new int[] { 12, 14, 16, 18, 20 }));
+			Assert.AreEqual (5, array.RangeFrom (11).Count);
+			Assert.IsTrue (IC.eq (array.RangeFrom (12), new int[] { 12, 14, 16, 18, 20 }));
+			Assert.IsTrue (IC.eq (array.RangeFrom (2), all));
+			Assert.IsTrue (IC.eq (array.RangeFrom (1), all));
+			Assert.IsTrue (IC.eq (array.RangeFrom (21), new int[] { }));
             Assert.IsTrue(IC.eq(array.RangeFrom(20), new int[] { 20 }));
             Assert.IsTrue(IC.eq(array.RangeTo(8), new int[] { 2, 4, 6 }));
             Assert.IsTrue(IC.eq(array.RangeTo(7), new int[] { 2, 4, 6 }));

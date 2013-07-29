@@ -6,10 +6,10 @@
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,87 +18,94 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-
 using System;
 using C5;
 using NUnit.Framework;
 
-
 namespace C5UnitTests.wrappers
 {
-    namespace events
-    {
-        [TestFixture]
-        public class IList_
-        {
-            private ArrayList<int> list;
-            ICollectionValue<int> guarded;
-            CollectionEventList<int> seen;
+	namespace events
+	{
+		[TestFixture]
+		public class IList_
+		{
+			private ArrayList<int> list;
+			ICollectionValue<int> guarded;
+			CollectionEventList<int> seen;
 
-            [SetUp]
-            public void Init()
-            {
-                list = new ArrayList<int>(TenEqualityComparer.Default);
-                guarded = new GuardedList<int>(list);
-                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
-            }
+			[SetUp]
+			public void Init ()
+			{
+				list = new ArrayList<int> (TenEqualityComparer.Default);
+				guarded = new GuardedList<int> (list);
+				seen = new CollectionEventList<int> (System.Collections.Generic.EqualityComparer<int>.Default);
+			}
 
-            private void listen() { seen.Listen(guarded, EventTypeEnum.All); }
+			private void listen ()
+			{
+				seen.Listen (guarded, EventTypeEnum.All);
+			}
 
-            [Test]
-            public void Listenable()
-            {
-                Assert.AreEqual(EventTypeEnum.All, guarded.ListenableEvents);
-                Assert.AreEqual(EventTypeEnum.None, guarded.ActiveEvents);
-                listen();
-                Assert.AreEqual(EventTypeEnum.All, guarded.ActiveEvents);
-            }
+			[Test]
+			public void Listenable ()
+			{
+				Assert.AreEqual (EventTypeEnum.All, guarded.ListenableEvents);
+				Assert.AreEqual (EventTypeEnum.None, guarded.ActiveEvents);
+				listen ();
+				Assert.AreEqual (EventTypeEnum.All, guarded.ActiveEvents);
+			}
 
-            [Test]
-            public void SetThis()
-            {
-                list.Add(4); list.Add(56); list.Add(8);
-                listen();
-                list[1] = 45;
-                seen.Check(new CollectionEvent<int>[] {
-          new CollectionEvent<int>(EventTypeEnum.Removed, new ItemCountEventArgs<int>(56, 1), guarded),
-          new CollectionEvent<int>(EventTypeEnum.RemovedAt, new ItemAtEventArgs<int>(56,1), guarded),
-          new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(45, 1), guarded),
-          new CollectionEvent<int>(EventTypeEnum.Inserted, new ItemAtEventArgs<int>(45,1), guarded),
-          new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), guarded)
-          });
-            }
+			[Test]
+			public void SetThis ()
+			{
+				list.Add (4);
+				list.Add (56);
+				list.Add (8);
+				listen ();
+				list [1] = 45;
+				seen.Check (new CollectionEvent<int>[] {
+					new CollectionEvent<int>(EventTypeEnum.Removed, new ItemCountEventArgs<int>(56, 1), guarded),
+					new CollectionEvent<int>(EventTypeEnum.RemovedAt, new ItemAtEventArgs<int>(56,1), guarded),
+					new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(45, 1), guarded),
+					new CollectionEvent<int>(EventTypeEnum.Inserted, new ItemAtEventArgs<int>(45,1), guarded),
+					new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), guarded)
+				});
+			}
 
-            [Test]
-            public void Insert()
-            {
-                list.Add(4); list.Add(56); list.Add(8);
-                listen();
-                list.Insert(1, 45);
-                seen.Check(new CollectionEvent<int>[] {
-          new CollectionEvent<int>(EventTypeEnum.Inserted, new ItemAtEventArgs<int>(45,1), guarded),
-          new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(45, 1), guarded),
-          new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), guarded)
-          });
-            }
+			[Test]
+			public void Insert ()
+			{
+				list.Add (4);
+				list.Add (56);
+				list.Add (8);
+				listen ();
+				list.Insert (1, 45);
+				seen.Check (new CollectionEvent<int>[] {
+					new CollectionEvent<int>(EventTypeEnum.Inserted, new ItemAtEventArgs<int>(45,1), guarded),
+					new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(45, 1), guarded),
+					new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), guarded)
+				});
+			}
 
-            [Test]
-            public void InsertAll()
-            {
-                list.Add(4); list.Add(56); list.Add(8);
-                listen();
-                list.InsertAll(1, new int[] { 666, 777, 888 });
-                //seen.Print(Console.Error);
-                seen.Check(new CollectionEvent<int>[] {
-          new CollectionEvent<int>(EventTypeEnum.Inserted, new ItemAtEventArgs<int>(666,1), guarded),
-          new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(666, 1), guarded),
-          new CollectionEvent<int>(EventTypeEnum.Inserted, new ItemAtEventArgs<int>(777,2), guarded),
-          new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(777, 1), guarded),
-          new CollectionEvent<int>(EventTypeEnum.Inserted, new ItemAtEventArgs<int>(888,3), guarded),
-          new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(888, 1), guarded),
-          new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), guarded)
-          });
-                list.InsertAll(1, new int[] { });
+			[Test]
+			public void InsertAll ()
+			{
+				list.Add (4);
+				list.Add (56);
+				list.Add (8);
+				listen ();
+				list.InsertAll (1, new int[] { 666, 777, 888 });
+				//seen.Print(Console.Error);
+				seen.Check (new CollectionEvent<int>[] {
+					new CollectionEvent<int>(EventTypeEnum.Inserted, new ItemAtEventArgs<int>(666,1), guarded),
+					new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(666, 1), guarded),
+					new CollectionEvent<int>(EventTypeEnum.Inserted, new ItemAtEventArgs<int>(777,2), guarded),
+					new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(777, 1), guarded),
+					new CollectionEvent<int>(EventTypeEnum.Inserted, new ItemAtEventArgs<int>(888,3), guarded),
+					new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(888, 1), guarded),
+					new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), guarded)
+				});
+				list.InsertAll (1, new int[] { });
                 seen.Check(new CollectionEvent<int>[] { });
             }
 
@@ -247,7 +254,7 @@ namespace C5UnitTests.wrappers
                 seen.Check(new CollectionEvent<int>[] { });
                 val = 67;
                 list.FindOrAdd(ref val);
-                seen.Check(new CollectionEvent<int>[] { 
+                seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(67, 1), guarded),
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), guarded)
         });
@@ -267,7 +274,7 @@ namespace C5UnitTests.wrappers
         });
                 val = 67;
                 list.UpdateOrAdd(val);
-                seen.Check(new CollectionEvent<int>[] { 
+                seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(67, 1), guarded),
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), guarded)
         });
@@ -279,7 +286,7 @@ namespace C5UnitTests.wrappers
         });
                 val = 67;
                 list.UpdateOrAdd(81, out val);
-                seen.Check(new CollectionEvent<int>[] { 
+                seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(81, 1), guarded),
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), guarded)
         });

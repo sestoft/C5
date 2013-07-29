@@ -6,10 +6,10 @@
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,243 +18,244 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-
 using System;
 using SCG = System.Collections.Generic;
+
 namespace C5
 {
-    /// <summary>
-    /// An entry in a dictionary from K to V.
-    /// </summary>
-    public struct KeyValuePair<K, V> : IEquatable<KeyValuePair<K, V>>, IShowable
-    {
-        /// <summary>
-        /// The key field of the entry
-        /// </summary>
-        public K Key;
+	/// <summary>
+	/// An entry in a dictionary from K to V.
+	/// </summary>
+	public struct KeyValuePair<K, V> : IEquatable<KeyValuePair<K, V>>, IShowable
+	{
+		/// <summary>
+		/// The key field of the entry
+		/// </summary>
+		public K Key;
+		/// <summary>
+		/// The value field of the entry
+		/// </summary>
+		public V Value;
 
-        /// <summary>
-        /// The value field of the entry
-        /// </summary>
-        public V Value;
+		/// <summary>
+		/// Create an entry with specified key and value
+		/// </summary>
+		/// <param name="key">The key</param>
+		/// <param name="value">The value</param>
+		public KeyValuePair (K key, V value)
+		{
+			Key = key;
+			Value = value;
+		}
 
-        /// <summary>
-        /// Create an entry with specified key and value
-        /// </summary>
-        /// <param name="key">The key</param>
-        /// <param name="value">The value</param>
-        public KeyValuePair(K key, V value) { Key = key; Value = value; }
+		/// <summary>
+		/// Create an entry with a specified key. The value will be the default value of type <code>V</code>.
+		/// </summary>
+		/// <param name="key">The key</param>
+		public KeyValuePair (K key)
+		{
+			Key = key;
+			Value = default(V);
+		}
 
+		/// <summary>
+		/// Pretty print an entry
+		/// </summary>
+		/// <returns>(key, value)</returns>
+		public override string ToString ()
+		{
+			return "(" + Key + ", " + Value + ")";
+		}
 
-        /// <summary>
-        /// Create an entry with a specified key. The value will be the default value of type <code>V</code>.
-        /// </summary>
-        /// <param name="key">The key</param>
-        public KeyValuePair(K key) { Key = key; Value = default(V); }
+		/// <summary>
+		/// Check equality of entries.
+		/// </summary>
+		/// <param name="obj">The other object</param>
+		/// <returns>True if obj is an entry of the same type and has the same key and value</returns>
+		public override bool Equals (object obj)
+		{
+			if (!(obj is KeyValuePair<K, V>))
+				return false;
+			KeyValuePair<K, V> other = (KeyValuePair<K, V>)obj;
+			return Equals (other);
+		}
 
+		/// <summary>
+		/// Get the hash code of the pair.
+		/// </summary>
+		/// <returns>The hash code</returns>
+		public override int GetHashCode ()
+		{
+			return EqualityComparer<K>.Default.GetHashCode (Key) + 13984681 * EqualityComparer<V>.Default.GetHashCode (Value);
+		}
 
-        /// <summary>
-        /// Pretty print an entry
-        /// </summary>
-        /// <returns>(key, value)</returns>
-        public override string ToString() { return "(" + Key + ", " + Value + ")"; }
+		/// <summary>
+		///
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
+		public bool Equals (KeyValuePair<K, V> other)
+		{
+			return EqualityComparer<K>.Default.Equals (Key, other.Key) && EqualityComparer<V>.Default.Equals (Value, other.Value);
+		}
 
+		/// <summary>
+		///
+		/// </summary>
+		/// <param name="pair1"></param>
+		/// <param name="pair2"></param>
+		/// <returns></returns>
+		public static bool operator == (KeyValuePair<K, V> pair1, KeyValuePair<K, V> pair2)
+		{
+			return pair1.Equals (pair2);
+		}
 
-        /// <summary>
-        /// Check equality of entries. 
-        /// </summary>
-        /// <param name="obj">The other object</param>
-        /// <returns>True if obj is an entry of the same type and has the same key and value</returns>
-        public override bool Equals(object obj)
-        {
-            if (!(obj is KeyValuePair<K, V>))
-                return false;
-            KeyValuePair<K, V> other = (KeyValuePair<K, V>)obj;
-            return Equals(other);
-        }
+		/// <summary>
+		///
+		/// </summary>
+		/// <param name="pair1"></param>
+		/// <param name="pair2"></param>
+		/// <returns></returns>
+		public static bool operator != (KeyValuePair<K, V> pair1, KeyValuePair<K, V> pair2)
+		{
+			return !pair1.Equals (pair2);
+		}
+		#region IShowable Members
+		/// <summary>
+		///
+		/// </summary>
+		/// <param name="stringbuilder"></param>
+		/// <param name="formatProvider"></param>
+		/// <param name="rest"></param>
+		/// <returns></returns>
+		public bool Show (System.Text.StringBuilder stringbuilder, ref int rest, IFormatProvider formatProvider)
+		{
+			if (rest < 0)
+				return false;
+			if (!Showing.Show (Key, stringbuilder, ref rest, formatProvider))
+				return false;
+			stringbuilder.Append (" => ");
+			rest -= 4;
+			if (!Showing.Show (Value, stringbuilder, ref rest, formatProvider))
+				return false;
+			return rest >= 0;
+		}
+		#endregion
+		#region IFormattable Members
+		/// <summary>
+		///
+		/// </summary>
+		/// <param name="format"></param>
+		/// <param name="formatProvider"></param>
+		/// <returns></returns>
+		public string ToString (string format, IFormatProvider formatProvider)
+		{
+			return Showing.ShowString (this, format, formatProvider);
+		}
+		#endregion
+	}
 
+	/// <summary>
+	/// Default comparer for dictionary entries in a sorted dictionary.
+	/// Entry comparisons only look at keys and uses an externally defined comparer for that.
+	/// </summary>
+	public class KeyValuePairComparer<K, V> : SCG.IComparer<KeyValuePair<K, V>>
+	{
+		SCG.IComparer<K> comparer;
 
-        /// <summary>
-        /// Get the hash code of the pair.
-        /// </summary>
-        /// <returns>The hash code</returns>
-        public override int GetHashCode() { return EqualityComparer<K>.Default.GetHashCode(Key) + 13984681 * EqualityComparer<V>.Default.GetHashCode(Value); }
+		/// <summary>
+		/// Create an entry comparer for a item comparer of the keys
+		/// </summary>
+		/// <param name="comparer">Comparer of keys</param>
+		public KeyValuePairComparer (SCG.IComparer<K> comparer)
+		{
+			if (comparer == null)
+				throw new NullReferenceException ();
+			this.comparer = comparer;
+		}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
-        public bool Equals(KeyValuePair<K, V> other)
-        {
-            return EqualityComparer<K>.Default.Equals(Key, other.Key) && EqualityComparer<V>.Default.Equals(Value, other.Value);
-        }
+		/// <summary>
+		/// Compare two entries
+		/// </summary>
+		/// <param name="entry1">First entry</param>
+		/// <param name="entry2">Second entry</param>
+		/// <returns>The result of comparing the keys</returns>
+		public int Compare (KeyValuePair<K, V> entry1, KeyValuePair<K, V> entry2)
+		{
+			return comparer.Compare (entry1.Key, entry2.Key);
+		}
+	}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pair1"></param>
-        /// <param name="pair2"></param>
-        /// <returns></returns>
-        public static bool operator ==(KeyValuePair<K, V> pair1, KeyValuePair<K, V> pair2) { return pair1.Equals(pair2); }
+	/// <summary>
+	/// Default equalityComparer for dictionary entries.
+	/// Operations only look at keys and uses an externaly defined equalityComparer for that.
+	/// </summary>
+	public sealed class KeyValuePairEqualityComparer<K, V> : SCG.IEqualityComparer<KeyValuePair<K, V>>
+	{
+		SCG.IEqualityComparer<K> keyequalityComparer;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pair1"></param>
-        /// <param name="pair2"></param>
-        /// <returns></returns>
-        public static bool operator !=(KeyValuePair<K, V> pair1, KeyValuePair<K, V> pair2) { return !pair1.Equals(pair2); }
+		/// <summary>
+		/// Create an entry equalityComparer using the default equalityComparer for keys
+		/// </summary>
+		public KeyValuePairEqualityComparer ()
+		{
+			keyequalityComparer = EqualityComparer<K>.Default;
+		}
 
-        #region IShowable Members
+		/// <summary>
+		/// Create an entry equalityComparer from a specified item equalityComparer for the keys
+		/// </summary>
+		/// <param name="keyequalityComparer">The key equalitySCG.Comparer</param>
+		public KeyValuePairEqualityComparer (SCG.IEqualityComparer<K> keyequalityComparer)
+		{
+			if (keyequalityComparer == null)
+				throw new NullReferenceException ("Key equality comparer cannot be null");
+			this.keyequalityComparer = keyequalityComparer;
+		}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="stringbuilder"></param>
-        /// <param name="formatProvider"></param>
-        /// <param name="rest"></param>
-        /// <returns></returns>
-        public bool Show(System.Text.StringBuilder stringbuilder, ref int rest, IFormatProvider formatProvider)
-        {
-            if (rest < 0)
-                return false;
-            if (!Showing.Show(Key, stringbuilder, ref rest, formatProvider))
-                return false;
-            stringbuilder.Append(" => ");
-            rest -= 4;
-            if (!Showing.Show(Value, stringbuilder, ref rest, formatProvider))
-                return false;
-            return rest >= 0;
-        }
-        #endregion
+		/// <summary>
+		/// Get the hash code of the entry
+		/// </summary>
+		/// <param name="entry">The entry</param>
+		/// <returns>The hash code of the key</returns>
+		public int GetHashCode (KeyValuePair<K, V> entry)
+		{
+			return keyequalityComparer.GetHashCode (entry.Key);
+		}
 
-        #region IFormattable Members
+		/// <summary>
+		/// Test two entries for equality
+		/// </summary>
+		/// <param name="entry1">First entry</param>
+		/// <param name="entry2">Second entry</param>
+		/// <returns>True if keys are equal</returns>
+		public bool Equals (KeyValuePair<K, V> entry1, KeyValuePair<K, V> entry2)
+		{
+			return keyequalityComparer.Equals (entry1.Key, entry2.Key);
+		}
+	}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="format"></param>
-        /// <param name="formatProvider"></param>
-        /// <returns></returns>
-        public string ToString(string format, IFormatProvider formatProvider)
-        {
-            return Showing.ShowString(this, format, formatProvider);
-        }
+	/// <summary>
+	/// A base class for implementing a dictionary based on a set collection implementation.
+	/// <i>See the source code for <see cref="T:C5.HashDictionary`2"/> for an example</i>
+	///
+	/// </summary>
+	public abstract class DictionaryBase<K, V> : CollectionValueBase<KeyValuePair<K, V>>, IDictionary<K, V>
+	{
+		/// <summary>
+		/// The set collection of entries underlying this dictionary implementation
+		/// </summary>
+		protected ICollection<KeyValuePair<K, V>> pairs;
+		SCG.IEqualityComparer<K> keyequalityComparer;
+		#region Events
+		ProxyEventBlock<KeyValuePair<K, V>> eventBlock;
 
-        #endregion
-    }
-
-
-
-    /// <summary>
-    /// Default comparer for dictionary entries in a sorted dictionary.
-    /// Entry comparisons only look at keys and uses an externally defined comparer for that.
-    /// </summary>
-    public class KeyValuePairComparer<K, V> : SCG.IComparer<KeyValuePair<K, V>>
-    {
-        SCG.IComparer<K> comparer;
-
-
-        /// <summary>
-        /// Create an entry comparer for a item comparer of the keys
-        /// </summary>
-        /// <param name="comparer">Comparer of keys</param>
-        public KeyValuePairComparer(SCG.IComparer<K> comparer)
-        {
-            if (comparer == null)
-                throw new NullReferenceException();
-            this.comparer = comparer;
-        }
-
-
-        /// <summary>
-        /// Compare two entries
-        /// </summary>
-        /// <param name="entry1">First entry</param>
-        /// <param name="entry2">Second entry</param>
-        /// <returns>The result of comparing the keys</returns>
-        public int Compare(KeyValuePair<K, V> entry1, KeyValuePair<K, V> entry2)
-        {
-            return comparer.Compare(entry1.Key, entry2.Key);
-        }
-    }
-
-
-
-    /// <summary>
-    /// Default equalityComparer for dictionary entries.
-    /// Operations only look at keys and uses an externaly defined equalityComparer for that.
-    /// </summary>
-    public sealed class KeyValuePairEqualityComparer<K, V> : SCG.IEqualityComparer<KeyValuePair<K, V>>
-    {
-        SCG.IEqualityComparer<K> keyequalityComparer;
-
-
-        /// <summary>
-        /// Create an entry equalityComparer using the default equalityComparer for keys
-        /// </summary>
-        public KeyValuePairEqualityComparer() { keyequalityComparer = EqualityComparer<K>.Default; }
-
-
-        /// <summary>
-        /// Create an entry equalityComparer from a specified item equalityComparer for the keys
-        /// </summary>
-        /// <param name="keyequalityComparer">The key equalitySCG.Comparer</param>
-        public KeyValuePairEqualityComparer(SCG.IEqualityComparer<K> keyequalityComparer)
-        {
-            if (keyequalityComparer == null)
-                throw new NullReferenceException("Key equality comparer cannot be null");
-            this.keyequalityComparer = keyequalityComparer;
-        }
-
-
-        /// <summary>
-        /// Get the hash code of the entry
-        /// </summary>
-        /// <param name="entry">The entry</param>
-        /// <returns>The hash code of the key</returns>
-        public int GetHashCode(KeyValuePair<K, V> entry) { return keyequalityComparer.GetHashCode(entry.Key); }
-
-
-        /// <summary>
-        /// Test two entries for equality
-        /// </summary>
-        /// <param name="entry1">First entry</param>
-        /// <param name="entry2">Second entry</param>
-        /// <returns>True if keys are equal</returns>
-        public bool Equals(KeyValuePair<K, V> entry1, KeyValuePair<K, V> entry2)
-        {
-            return keyequalityComparer.Equals(entry1.Key, entry2.Key);
-        }
-    }
-
-
-
-    /// <summary>
-    /// A base class for implementing a dictionary based on a set collection implementation.
-    /// <i>See the source code for <see cref="T:C5.HashDictionary`2"/> for an example</i>
-    /// 
-    /// </summary>
-    public abstract class DictionaryBase<K, V> : CollectionValueBase<KeyValuePair<K, V>>, IDictionary<K, V>
-    {
-        /// <summary>
-        /// The set collection of entries underlying this dictionary implementation
-        /// </summary>
-        protected ICollection<KeyValuePair<K, V>> pairs;
-
-        SCG.IEqualityComparer<K> keyequalityComparer;
-
-        #region Events
-        ProxyEventBlock<KeyValuePair<K, V>> eventBlock;
-
-        /// <summary>
-        /// The change event. Will be raised for every change operation on the collection.
-        /// </summary>
-        public override event CollectionChangedHandler<KeyValuePair<K, V>> CollectionChanged
-        {
-            add { (eventBlock ?? (eventBlock = new ProxyEventBlock<KeyValuePair<K, V>>(this, pairs))).CollectionChanged += value; }
-            remove { if (eventBlock != null) eventBlock.CollectionChanged -= value; }
+		/// <summary>
+		/// The change event. Will be raised for every change operation on the collection.
+		/// </summary>
+		public override event CollectionChangedHandler<KeyValuePair<K, V>> CollectionChanged {
+			add { (eventBlock ?? (eventBlock = new ProxyEventBlock<KeyValuePair<K, V>> (this, pairs))).CollectionChanged += value; }
+			remove { if (eventBlock != null) eventBlock.CollectionChanged -= value; }
         }
 
         /// <summary>
@@ -285,7 +286,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public override EventTypeEnum ListenableEvents
         {
@@ -296,7 +297,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public override EventTypeEnum ActiveEvents
         {
@@ -309,7 +310,7 @@ namespace C5
         #endregion
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="keyequalityComparer"></param>
         protected DictionaryBase(SCG.IEqualityComparer<K> keyequalityComparer)
@@ -322,7 +323,7 @@ namespace C5
         #region IDictionary<K,V> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public virtual SCG.IEqualityComparer<K> EqualityComparer { get { return keyequalityComparer; } }
@@ -346,7 +347,7 @@ namespace C5
         /// Add the entries from a collection of <see cref="T:C5.KeyValuePair`2"/> pairs to this dictionary.
         /// <para><b>TODO: add restrictions L:K and W:V when the .Net SDK allows it </b></para>
         /// </summary>
-        /// <exception cref="DuplicateNotAllowedException"> 
+        /// <exception cref="DuplicateNotAllowedException">
         /// If the input contains duplicate keys or a key already present in this dictionary.</exception>
         /// <param name="entries"></param>
         public virtual void AddAll<L, W>(SCG.IEnumerable<KeyValuePair<L, W>> entries)
@@ -403,7 +404,7 @@ namespace C5
         public virtual void Clear() { pairs.Clear(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public virtual Speed ContainsSpeed { get { return pairs.ContainsSpeed; } }
@@ -437,7 +438,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="keys"></param>
         /// <returns></returns>
@@ -487,7 +488,7 @@ namespace C5
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
@@ -610,25 +611,25 @@ namespace C5
         #endregion
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value>A collection containg the all the keys of the dictionary</value>
         public virtual ICollectionValue<K> Keys { get { return new KeysCollection(pairs); } }
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value>A collection containing all the values of the dictionary</value>
         public virtual ICollectionValue<V> Values { get { return new ValuesCollection(pairs); } }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public virtual Func<K, V> Func { get { return delegate(K k) { return this[k]; }; } }
 
         /// <summary>
-        /// Indexer by key for dictionary. 
+        /// Indexer by key for dictionary.
         /// <para>The get method will throw an exception if no entry is found. </para>
         /// <para>The set method behaves like <see cref="M:C5.DictionaryBase`2.UpdateOrAdd(`0,`1)"/>.</para>
         /// </summary>
@@ -651,7 +652,7 @@ namespace C5
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value>True if dictionary is read  only</value>
         public virtual bool IsReadOnly { get { return pairs.IsReadOnly; } }
@@ -668,26 +669,26 @@ namespace C5
         #region ICollectionValue<KeyValuePair<K,V>> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value>True if this collection is empty.</value>
         public override bool IsEmpty { get { return pairs.IsEmpty; } }
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value>The number of entrues in the dictionary</value>
         public override int Count { get { return pairs.Count; } }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value>The number of entrues in the dictionary</value>
         public override Speed CountSpeed { get { return pairs.CountSpeed; } }
 
         /// <summary>
-        /// Choose some entry in this Dictionary. 
+        /// Choose some entry in this Dictionary.
         /// </summary>
         /// <exception cref="NoSuchItemException">if collection is empty.</exception>
         /// <returns></returns>
@@ -705,7 +706,7 @@ namespace C5
         #endregion
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="stringbuilder"></param>
         /// <param name="rest"></param>
@@ -720,20 +721,20 @@ namespace C5
     /// <summary>
     /// A base class for implementing a sorted dictionary based on a sorted set collection implementation.
     /// <i>See the source code for <see cref="T:C5.TreeDictionary`2"/> for an example</i>
-    /// 
+    ///
     /// </summary>
     public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISortedDictionary<K, V>
     {
         #region Fields
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected ISorted<KeyValuePair<K, V>> sortedpairs;
         SCG.IComparer<K> keycomparer;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="keycomparer"></param>
         /// <param name="keyequalityComparer"></param>
@@ -750,7 +751,7 @@ namespace C5
         public SCG.IComparer<K> Comparer { get { return keycomparer; } }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public new ISorted<K> Keys { get { return new SortedKeysCollection(this, sortedpairs, keycomparer, EqualityComparer); } }
@@ -856,7 +857,7 @@ namespace C5
         #region ISortedDictionary<K,V> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public KeyValuePair<K, V> FindMin()
@@ -865,7 +866,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public KeyValuePair<K, V> DeleteMin()
@@ -874,7 +875,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public KeyValuePair<K, V> FindMax()
@@ -883,7 +884,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public KeyValuePair<K, V> DeleteMax()
@@ -892,7 +893,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="cutter"></param>
         /// <param name="lowEntry"></param>
@@ -906,7 +907,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="bot"></param>
         /// <returns></returns>
@@ -916,7 +917,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="bot"></param>
         /// <param name="top"></param>
@@ -927,7 +928,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="top"></param>
         /// <returns></returns>
@@ -937,7 +938,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public IDirectedCollectionValue<KeyValuePair<K, V>> RangeAll()
@@ -946,7 +947,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="items"></param>
         public void AddSorted(SCG.IEnumerable<KeyValuePair<K, V>> items)
@@ -955,7 +956,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="lowKey"></param>
         public void RemoveRangeFrom(K lowKey)
@@ -964,7 +965,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="lowKey"></param>
         /// <param name="highKey"></param>
@@ -974,7 +975,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="highKey"></param>
         public void RemoveRangeTo(K highKey)
@@ -1013,7 +1014,7 @@ namespace C5
         class SortedKeysCollection : SequencedBase<K>, ISorted<K>
         {
             ISortedDictionary<K, V> sorteddict;
-            //TODO: eliminate this. Only problem is the Find method because we lack method on dictionary that also 
+            //TODO: eliminate this. Only problem is the Find method because we lack method on dictionary that also
             //      returns the actual key.
             ISorted<KeyValuePair<K, V>> sortedpairs;
             SCG.IComparer<K> comparer;
@@ -1138,7 +1139,7 @@ namespace C5
             public int ContainsCount(K item) { return sorteddict.Contains(item) ? 1 : 0; }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             /// <returns></returns>
             public virtual ICollectionValue<K> UniqueItems()
@@ -1147,7 +1148,7 @@ namespace C5
             }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             /// <returns></returns>
             public virtual ICollectionValue<KeyValuePair<K, int>> ItemMultiplicities()
@@ -1230,7 +1231,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="stringbuilder"></param>
         /// <param name="rest"></param>
@@ -1256,7 +1257,7 @@ namespace C5
         public SortedArrayDictionary(SCG.IComparer<K> comparer) : this(comparer, new ComparerZeroHashCodeEqualityComparer<K>(comparer)) { }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="comparer"></param>
         /// <param name="equalityComparer"></param>
@@ -1267,7 +1268,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="comparer"></param>
         /// <param name="equalityComparer"></param>
