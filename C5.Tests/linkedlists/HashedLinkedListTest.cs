@@ -2238,7 +2238,6 @@ namespace C5UnitTests.linkedlists.hashed
                     {
                         list = new HashedLinkedList<int>();
                         for (int k = 0; k < 6; k++) list.Add(k);
-                        HashedLinkedList<int> v = (HashedLinkedList<int>)list.View(i, j);
                         list.Remove(3);
                         Assert.IsTrue(list.Check(), "list check after Remove, i=" + i + ", j=" + j);
                     }
@@ -2256,7 +2255,6 @@ namespace C5UnitTests.linkedlists.hashed
                     {
                         list = new HashedLinkedList<int>();
                         for (int k = 0; k < 6; k++) list.Add(k);
-                        HashedLinkedList<int> v = (HashedLinkedList<int>)list.View(i, j);
                         list.RemoveAll(list2);
                         Assert.IsTrue(list.Check(), "list check after RemoveAll, i=" + i + ", j=" + j);
                     }
@@ -2411,7 +2409,6 @@ namespace C5UnitTests.linkedlists.hashed
                     {
                         list = new HashedLinkedList<int>();
                         list.AddAll(list2);
-                        HashedLinkedList<int> v = (HashedLinkedList<int>)list.View(i, j);
                         list.RemoveAllCopies(2);
                         Assert.IsTrue(list.Check(), "list check after RemoveAllCopies, i=" + i + ", j=" + j);
                     }

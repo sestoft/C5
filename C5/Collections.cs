@@ -755,8 +755,6 @@ namespace C5
 
         }
 
-        static Type isortedtype = typeof(ISorted<T>);
-
         /// <summary>
         /// Examine if collection1 and collection2 are equal as unsequenced collections
         /// using the specified item equalityComparer (assumed compatible with the two collections).

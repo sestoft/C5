@@ -1670,10 +1670,8 @@ namespace C5UnitTests.arrays.sorted
             [ExpectedException(typeof(ArgumentException), ExpectedMessage = "mapper not monotonic")]
             public void BadMap()
             {
-                for (int i = 0; i < 11; i++)
-                    array.Add(i * i * i);
-
-                ISorted<string> res = array.Map(new Func<int, string>(badmap), new SC());
+                for (int i = 0; i < 11; i++) array.Add(i * i * i);
+				ISorted<string> res = array.Map(new Func<int, string>(badmap), new SC());
             }
 
 

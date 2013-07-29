@@ -2301,7 +2301,6 @@ namespace C5UnitTests.linkedlists.plain
                     {
                         list = new LinkedList<int>();
                         for (int k = 0; k < 6; k++) list.Add(k);
-                        LinkedList<int> v = (LinkedList<int>)list.View(i, j);
                         list.RemoveAll(list2);
                         Assert.IsTrue(list.Check(), "list check after RemoveAll, i=" + i + ", j=" + j);
                     }
