@@ -1,15 +1,13 @@
-= Welcome to The C5 Generic Collection Library for C# and CLI
-
+# Welcome to The C5 Generic Collection Library for C# and CLI
 The C5 library is a set of generic collection classes (or container classes)
 for the C# programming language and other generics-enabled languages on
-version 4.0 of the CLI platform, as implemented by Microsoft .NET and Mono.
+version 4.5 of the CLI platform, as implemented by Microsoft .NET and Mono.
 
 The C5 library provides a wide range of classic data structures, rich
 funcionality, the best possible asymptotic time complexity, documented
 performance, and a thoroughly tested implementation.
 
-== Goals of the C5 library
-
+## Goals of the C5 library
 The overall goal is for C5 to be a generic collection library for the C#
 programming language and the Common Language Infrastructure (CLI) whose 
 functionality, efficiency and quality meets or exeeds what is available for 
@@ -21,8 +19,7 @@ and the published critique of these.
 However, it contains functionality and a regularity of design that considerably
 exceeds that of the standard libraries for those languages.
 
-== Why yet another generic collection library
-
+## Why yet another generic collection library?
 There are already other generic collection libraries for C#/CLI, including the
 System.Collections.Generic namespace introduced with .NET 2.0 and Wintellect's 
 Power Collections for .NET by Peter Golde (http://powercollections.codeplex.com/).
@@ -50,8 +47,7 @@ queue handles, ...) of C5.
 Thus, in our opinion, C5 provides the most powerful, well-structured and scalable
 generic collections library available for C#/CLI. 
 
-== What does the name C5 stand for?
-
+## What does the name C5 stand for?
 This is not entirely clear, but it may stand for <em>Copenhagen Comprehensive
 Collection Classes for C#</em>, although the library may be used from VB.NET, F#
 and other CLI languages, not just C#. It has nothing to do with a Microsoft
@@ -64,8 +60,7 @@ The name may be inspired by the versatile C4 plastic explosive known from e.g.
 James Bond movies.
 
 All trademarks belong to their owners.
-
-== State of completion
+## State of completion
 
 At the time of writing, library design and implementation are complete, and extensive
 unit tests have been written and applied systematically.
@@ -80,8 +75,7 @@ C5 builds and runs on the latest versions of Mono.
 
 C5 is a portable library supporting .NET 4.0, Silverlight, Windows Phone 7, and Xbox 360.
 
-== Getting Started
-
+## Getting Started
 1. Get C5 from NuGet: <tt>PM> Install-Package C5</tt>
 
 2. C5 is built using the Portable Library Tools extension 
@@ -101,14 +95,11 @@ C5 is a portable library supporting .NET 4.0, Silverlight, Windows Phone 7, and 
    There are more than 1430 NUnit test cases which should execute in less
    than 30 seconds. All should pass.
    
-== C5 on Mono
-
+### C5 on Mono
 1. Open C5.csproj with Xamarin Studio (Mono 3.0) to build C5.dll or
-
 2. Build manually using <tt>xbuild C5.Mono.csproj</tt>.
 
-== License
-
+## License
 C5 is released under a BSD-style license:
 
 Copyright Niels Kokholm, Peter Sestoft, and Rasmus Nielsen 2003-2013.
