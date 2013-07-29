@@ -6,10 +6,10 @@
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,202 +18,174 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-
 using System;
 using SCG = System.Collections.Generic;
+
 namespace C5
 {
-    /// <summary>
-    /// A read-only wrapper class for a generic enumerator
-    /// </summary>
-    public class GuardedEnumerator<T> : SCG.IEnumerator<T>
-    {
-        #region Fields
+	/// <summary>
+	/// A read-only wrapper class for a generic enumerator
+	/// </summary>
+	public class GuardedEnumerator<T> : SCG.IEnumerator<T>
+	{
+		#region Fields
+		SCG.IEnumerator<T> enumerator;
+		#endregion
+		#region Constructor
+		/// <summary>
+		/// Create a wrapper around a generic enumerator
+		/// </summary>
+		/// <param name="enumerator">The enumerator to wrap</param>
+		public GuardedEnumerator (SCG.IEnumerator<T> enumerator)
+		{
+			this.enumerator = enumerator;
+		}
+		#endregion
+		#region IEnumerator<T> Members
+		/// <summary>
+		/// Move wrapped enumerator to next item, or the first item if
+		/// this is the first call to MoveNext.
+		/// </summary>
+		/// <returns>True if enumerator is valid now</returns>
+		public bool MoveNext ()
+		{
+			return enumerator.MoveNext ();
+		}
 
-        SCG.IEnumerator<T> enumerator;
+		/// <summary>
+		/// Undefined if enumerator is not valid (MoveNext hash been called returning true)
+		/// </summary>
+		/// <value>The current item of the wrapped enumerator.</value>
+		public T Current { get { return enumerator.Current; } }
+		#endregion
+		#region IDisposable Members
+		//TODO: consider possible danger of calling through to Dispose.
+		/// <summary>
+		/// Dispose wrapped enumerator.
+		/// </summary>
+		public void Dispose ()
+		{
+			enumerator.Dispose ();
+		}
+		#endregion
+		#region IEnumerator Members
+		object System.Collections.IEnumerator.Current {
+			get { return enumerator.Current; }
+		}
 
-        #endregion
+		void System.Collections.IEnumerator.Reset ()
+		{
+			enumerator.Reset ();
+		}
+		#endregion
+	}
 
-        #region Constructor
+	/// <summary>
+	/// A read-only wrapper class for a generic enumerable
+	///
+	/// <i>This is mainly interesting as a base of other guard classes</i>
+	/// </summary>
+	public class GuardedEnumerable<T> : SCG.IEnumerable<T>
+	{
+		#region Fields
+		SCG.IEnumerable<T> enumerable;
+		#endregion
+		#region Constructor
+		/// <summary>
+		/// Wrap an enumerable in a read-only wrapper
+		/// </summary>
+		/// <param name="enumerable">The enumerable to wrap</param>
+		public GuardedEnumerable (SCG.IEnumerable<T> enumerable)
+		{
+			this.enumerable = enumerable;
+		}
+		#endregion
+		#region SCG.IEnumerable<T> Members
+		/// <summary>
+		/// Get an enumerator from the wrapped enumerable
+		/// </summary>
+		/// <returns>The enumerator (itself wrapped)</returns>
+		public SCG.IEnumerator<T> GetEnumerator ()
+		{
+			return new GuardedEnumerator<T> (enumerable.GetEnumerator ());
+		}
+		#endregion
+		#region IEnumerable Members
+		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator ()
+		{
+			return GetEnumerator ();
+		}
+		#endregion
+	}
 
-        /// <summary>
-        /// Create a wrapper around a generic enumerator
-        /// </summary>
-        /// <param name="enumerator">The enumerator to wrap</param>
-        public GuardedEnumerator(SCG.IEnumerator<T> enumerator)
-        { this.enumerator = enumerator; }
-
-        #endregion
-
-        #region IEnumerator<T> Members
-
-        /// <summary>
-        /// Move wrapped enumerator to next item, or the first item if
-        /// this is the first call to MoveNext. 
-        /// </summary>
-        /// <returns>True if enumerator is valid now</returns>
-        public bool MoveNext() { return enumerator.MoveNext(); }
-
-
-        /// <summary>
-        /// Undefined if enumerator is not valid (MoveNext hash been called returning true)
-        /// </summary>
-        /// <value>The current item of the wrapped enumerator.</value>
-        public T Current { get { return enumerator.Current; } }
-
-        #endregion
-
-        #region IDisposable Members
-
-        //TODO: consider possible danger of calling through to Dispose. 
-        /// <summary>
-        /// Dispose wrapped enumerator.
-        /// </summary>
-        public void Dispose() { enumerator.Dispose(); }
-
-        #endregion
-
-
-        #region IEnumerator Members
-
-        object System.Collections.IEnumerator.Current
-        {
-            get { return enumerator.Current; }
-        }
-
-        void System.Collections.IEnumerator.Reset()
-        {
-            enumerator.Reset();
-        }
-
-        #endregion
-    }
-
-
-
-    /// <summary>
-    /// A read-only wrapper class for a generic enumerable
-    ///
-    /// <i>This is mainly interesting as a base of other guard classes</i>
-    /// </summary>
-    public class GuardedEnumerable<T> : SCG.IEnumerable<T>
-    {
-        #region Fields
-
-        SCG.IEnumerable<T> enumerable;
-
-        #endregion
-
-        #region Constructor
-
-        /// <summary>
-        /// Wrap an enumerable in a read-only wrapper
-        /// </summary>
-        /// <param name="enumerable">The enumerable to wrap</param>
-        public GuardedEnumerable(SCG.IEnumerable<T> enumerable)
-        { this.enumerable = enumerable; }
-
-        #endregion
-
-        #region SCG.IEnumerable<T> Members
-
-        /// <summary>
-        /// Get an enumerator from the wrapped enumerable
-        /// </summary>
-        /// <returns>The enumerator (itself wrapped)</returns>
-        public SCG.IEnumerator<T> GetEnumerator()
-        { return new GuardedEnumerator<T>(enumerable.GetEnumerator()); }
-
-        #endregion
-
-        #region IEnumerable Members
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        #endregion
-
-    }
-
-
-
-    /// <summary>
-    /// A read-only wrapper for a generic directed enumerable
-    ///
-    /// <i>This is mainly interesting as a base of other guard classes</i>
-    /// </summary>
-    public class GuardedDirectedEnumerable<T> : GuardedEnumerable<T>, IDirectedEnumerable<T>
-    {
-        #region Fields
-
-        IDirectedEnumerable<T> directedenumerable;
-
-        #endregion
-
-        #region Constructor
-
-        /// <summary>
-        /// Wrap a directed enumerable in a read-only wrapper
-        /// </summary>
-        /// <param name="directedenumerable">the collection to wrap</param>
-        public GuardedDirectedEnumerable(IDirectedEnumerable<T> directedenumerable)
+	/// <summary>
+	/// A read-only wrapper for a generic directed enumerable
+	///
+	/// <i>This is mainly interesting as a base of other guard classes</i>
+	/// </summary>
+	public class GuardedDirectedEnumerable<T> : GuardedEnumerable<T>, IDirectedEnumerable<T>
+	{
+		#region Fields
+		IDirectedEnumerable<T> directedenumerable;
+		#endregion
+		#region Constructor
+		/// <summary>
+		/// Wrap a directed enumerable in a read-only wrapper
+		/// </summary>
+		/// <param name="directedenumerable">the collection to wrap</param>
+		public GuardedDirectedEnumerable (IDirectedEnumerable<T> directedenumerable)
             : base(directedenumerable)
-        { this.directedenumerable = directedenumerable; }
+		{
+			this.directedenumerable = directedenumerable;
+		}
+		#endregion
+		#region IDirectedEnumerable<T> Members
+		/// <summary>
+		/// Get a enumerable that enumerates the wrapped collection in the opposite direction
+		/// </summary>
+		/// <returns>The mirrored enumerable</returns>
+		public IDirectedEnumerable<T> Backwards ()
+		{
+			return new GuardedDirectedEnumerable<T> (directedenumerable.Backwards ());
+		}
 
-        #endregion
-
-        #region IDirectedEnumerable<T> Members
-
-        /// <summary>
-        /// Get a enumerable that enumerates the wrapped collection in the opposite direction
-        /// </summary>
-        /// <returns>The mirrored enumerable</returns>
-        public IDirectedEnumerable<T> Backwards()
-        { return new GuardedDirectedEnumerable<T>(directedenumerable.Backwards()); }
-
-
-        /// <summary>
-        /// <code>Forwards</code> if same, else <code>Backwards</code>
-        /// </summary>
-        /// <value>The enumeration direction relative to the original collection.</value>
-        public EnumerationDirection Direction
+		/// <summary>
+		/// <code>Forwards</code> if same, else <code>Backwards</code>
+		/// </summary>
+		/// <value>The enumeration direction relative to the original collection.</value>
+		public EnumerationDirection Direction
         { get { return directedenumerable.Direction; } }
+		#endregion
+	}
 
-        #endregion
-    }
+	/// <summary>
+	/// A read-only wrapper for an ICollectionValue&lt;T&gt;
+	///
+	/// <i>This is mainly interesting as a base of other guard classes</i>
+	/// </summary>
+	public class GuardedCollectionValue<T> : GuardedEnumerable<T>, ICollectionValue<T>
+	{
+		#region Events
+		/// <summary>
+		/// The ListenableEvents value of the wrapped collection
+		/// </summary>
+		/// <value></value>
+		public virtual EventTypeEnum ListenableEvents { get { return collectionvalue.ListenableEvents; } }
 
+		/// <summary>
+		/// The ActiveEvents value of the wrapped collection
+		/// </summary>
+		/// <value></value>
+		public virtual EventTypeEnum ActiveEvents { get { return collectionvalue.ActiveEvents; } }
 
+		ProxyEventBlock<T> eventBlock;
 
-    /// <summary>
-    /// A read-only wrapper for an ICollectionValue&lt;T&gt;
-    ///
-    /// <i>This is mainly interesting as a base of other guard classes</i>
-    /// </summary>
-    public class GuardedCollectionValue<T> : GuardedEnumerable<T>, ICollectionValue<T>
-    {
-        #region Events
-        /// <summary>
-        /// The ListenableEvents value of the wrapped collection
-        /// </summary>
-        /// <value></value>
-        public virtual EventTypeEnum ListenableEvents { get { return collectionvalue.ListenableEvents; } }
-
-        /// <summary>
-        /// The ActiveEvents value of the wrapped collection
-        /// </summary>
-        /// <value></value>
-        public virtual EventTypeEnum ActiveEvents { get { return collectionvalue.ActiveEvents; } }
-
-        ProxyEventBlock<T> eventBlock;
-        /// <summary>
-        /// The change event. Will be raised for every change operation on the collection.
-        /// </summary>
-        public event CollectionChangedHandler<T> CollectionChanged
-        {
-            add { (eventBlock ?? (eventBlock = new ProxyEventBlock<T>(this, collectionvalue))).CollectionChanged += value; }
-            remove { if (eventBlock != null) eventBlock.CollectionChanged -= value; }
+		/// <summary>
+		/// The change event. Will be raised for every change operation on the collection.
+		/// </summary>
+		public event CollectionChangedHandler<T> CollectionChanged {
+			add { (eventBlock ?? (eventBlock = new ProxyEventBlock<T> (this, collectionvalue))).CollectionChanged += value; }
+			remove { if (eventBlock != null) eventBlock.CollectionChanged -= value; }
         }
 
         /// <summary>
@@ -299,7 +271,7 @@ namespace C5
         /// in terms of the size of this collection (worst-case or amortized as
         /// relevant).
         /// </summary>
-        /// <value>A characterization of the speed of the 
+        /// <value>A characterization of the speed of the
         /// <code>Count</code> property in this collection.</value>
         public virtual Speed CountSpeed { get { return collectionvalue.CountSpeed; } }
 
@@ -328,13 +300,13 @@ namespace C5
         /// Check if there exists an item  that satisfies a
         /// specific predicate in the wrapped enumerable.
         /// </summary>
-        /// <param name="filter">A filter delegate 
+        /// <param name="filter">A filter delegate
         /// (<see cref="T:C5.Filter`1"/>) defining the predicate</param>
         /// <returns>True is such an item exists</returns>
         public virtual bool Exists(Func<T, bool> filter) { return collectionvalue.Exists(filter); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="item"></param>
@@ -344,13 +316,13 @@ namespace C5
         /// <summary>
         /// Check if all items in the wrapped enumerable satisfies a specific predicate.
         /// </summary>
-        /// <param name="filter">A filter delegate 
+        /// <param name="filter">A filter delegate
         /// (<see cref="T:C5.Filter`1"/>) defining the predicate</param>
         /// <returns>True if all items satisfies the predicate</returns>
         public virtual bool All(Func<T, bool> filter) { return collectionvalue.All(filter); }
 
         /// <summary>
-        /// Create an enumerable, enumerating the items of this collection that satisfies 
+        /// Create an enumerable, enumerating the items of this collection that satisfies
         /// a certain condition.
         /// </summary>
         /// <param name="filter">The T->bool filter delegate defining the condition</param>
@@ -358,7 +330,7 @@ namespace C5
         public virtual SCG.IEnumerable<T> Filter(Func<T, bool> filter) { return collectionvalue.Filter(filter); }
 
         /// <summary>
-        /// Choose some item of this collection. 
+        /// Choose some item of this collection.
         /// </summary>
         /// <exception cref="NoSuchItemException">if collection is empty.</exception>
         /// <returns></returns>
@@ -369,7 +341,7 @@ namespace C5
         #region IShowable Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="stringbuilder"></param>
         /// <param name="formatProvider"></param>
@@ -384,7 +356,7 @@ namespace C5
         #region IFormattable Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="format"></param>
         /// <param name="formatProvider"></param>
@@ -435,7 +407,7 @@ namespace C5
         { return new GuardedDirectedCollectionValue<T>(directedcollection.Backwards()); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="predicate"></param>
         /// <param name="item"></param>
@@ -504,14 +476,14 @@ namespace C5
         public virtual Speed ContainsSpeed { get { return collection.ContainsSpeed; } }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public virtual int GetUnsequencedHashCode()
         { return collection.GetUnsequencedHashCode(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="that"></param>
         /// <returns></returns>
@@ -535,13 +507,13 @@ namespace C5
         public virtual int ContainsCount(T item) { return collection.ContainsCount(item); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public virtual ICollectionValue<T> UniqueItems() { return new GuardedCollectionValue<T>(collection.UniqueItems()); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public virtual ICollectionValue<KeyValuePair<T, int>> ItemMultiplicities() { return new GuardedCollectionValue<KeyValuePair<T, int>>(collection.ItemMultiplicities()); }
@@ -553,7 +525,7 @@ namespace C5
         /// <returns>True if so</returns>
         public virtual bool ContainsAll(SCG.IEnumerable<T> items) { return collection.ContainsAll(items); }
 
-        /// <summary> 
+        /// <summary>
         /// Search for an item in the wrapped collection
         /// </summary>
         /// <param name="item">On entry the item to look for, on exit the equivalent item found (if any)</param>
@@ -671,7 +643,7 @@ namespace C5
 
         //TODO: the equalityComparer should be guarded
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public virtual SCG.IEqualityComparer<T> EqualityComparer { get { return collection.EqualityComparer; } }
@@ -679,7 +651,7 @@ namespace C5
         /// <summary>
         /// By convention this is true for any collection with set semantics.
         /// </summary>
-        /// <value>True if only one representative of a group of equal items 
+        /// <value>True if only one representative of a group of equal items
         /// is kept in the collection together with the total count.</value>
         public virtual bool DuplicatesByCounting { get { return collection.DuplicatesByCounting; } }
 
@@ -742,7 +714,7 @@ namespace C5
         /// Check if there exists an item  that satisfies a
         /// specific predicate in this collection and return the index of the first one.
         /// </summary>
-        /// <param name="predicate">A delegate 
+        /// <param name="predicate">A delegate
         /// (<see cref="T:Func`2"/> with <code>R == bool</code>) defining the predicate</param>
         /// <returns>the index, if found, a negative value else</returns>
         public int FindIndex(Func<T, bool> predicate)
@@ -764,7 +736,7 @@ namespace C5
         /// Check if there exists an item  that satisfies a
         /// specific predicate in this collection and return the index of the last one.
         /// </summary>
-        /// <param name="predicate">A delegate 
+        /// <param name="predicate">A delegate
         /// (<see cref="T:Func`2"/> with <code>R == bool</code>) defining the predicate</param>
         /// <returns>the index, if found, a negative value else</returns>
         public int FindLastIndex(Func<T, bool> predicate)
@@ -787,14 +759,14 @@ namespace C5
         #region ISequenced<T> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public int GetSequencedHashCode()
         { return sequenced.GetSequencedHashCode(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="that"></param>
         /// <returns></returns>
@@ -813,7 +785,7 @@ namespace C5
         { return new GuardedDirectedCollectionValue<T>(sequenced.Backwards()); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="predicate"></param>
         /// <param name="item"></param>
@@ -908,7 +880,7 @@ namespace C5
         /// <summary>
         /// Find the predecessor of the item in the wrapped sorted collection
         /// </summary>
-        /// <exception cref="NoSuchItemException"> if no such element exists </exception>    
+        /// <exception cref="NoSuchItemException"> if no such element exists </exception>
         /// <param name="item">The item</param>
         /// <returns>The predecessor</returns>
         public T Predecessor(T item) { return sorted.Predecessor(item); }
@@ -917,7 +889,7 @@ namespace C5
         /// <summary>
         /// Find the Successor of the item in the wrapped sorted collection
         /// </summary>
-        /// <exception cref="NoSuchItemException"> if no such element exists </exception>    
+        /// <exception cref="NoSuchItemException"> if no such element exists </exception>
         /// <param name="item">The item</param>
         /// <returns>The Successor</returns>
         public T Successor(T item) { return sorted.Successor(item); }
@@ -926,7 +898,7 @@ namespace C5
         /// <summary>
         /// Find the weak predecessor of the item in the wrapped sorted collection
         /// </summary>
-        /// <exception cref="NoSuchItemException"> if no such element exists </exception>    
+        /// <exception cref="NoSuchItemException"> if no such element exists </exception>
         /// <param name="item">The item</param>
         /// <returns>The weak predecessor</returns>
         public T WeakPredecessor(T item) { return sorted.WeakPredecessor(item); }
@@ -935,7 +907,7 @@ namespace C5
         /// <summary>
         /// Find the weak Successor of the item in the wrapped sorted collection
         /// </summary>
-        /// <exception cref="NoSuchItemException"> if no such element exists </exception>    
+        /// <exception cref="NoSuchItemException"> if no such element exists </exception>
         /// <param name="item">The item</param>
         /// <returns>The weak Successor</returns>
         public T WeakSuccessor(T item) { return sorted.WeakSuccessor(item); }
@@ -955,7 +927,7 @@ namespace C5
 
 
         /// <summary>
-        /// Get the specified range from the wrapped collection. 
+        /// Get the specified range from the wrapped collection.
         /// (The current implementation erroneously does not wrap the result.)
         /// </summary>
         /// <param name="bot"></param>
@@ -964,7 +936,7 @@ namespace C5
 
 
         /// <summary>
-        /// Get the specified range from the wrapped collection. 
+        /// Get the specified range from the wrapped collection.
         /// (The current implementation erroneously does not wrap the result.)
         /// </summary>
         /// <param name="bot"></param>
@@ -975,7 +947,7 @@ namespace C5
 
 
         /// <summary>
-        /// Get the specified range from the wrapped collection. 
+        /// Get the specified range from the wrapped collection.
         /// (The current implementation erroneously does not wrap the result.)
         /// </summary>
         /// <param name="top"></param>
@@ -984,7 +956,7 @@ namespace C5
 
 
         /// <summary>
-        /// Get the specified range from the wrapped collection. 
+        /// Get the specified range from the wrapped collection.
         /// (The current implementation erroneously does not wrap the result.)
         /// </summary>
         /// <returns></returns>
@@ -1100,7 +1072,7 @@ namespace C5
         #region IIndexedSorted<T> Members
 
         /// <summary>
-        /// Get the specified range from the wrapped collection. 
+        /// Get the specified range from the wrapped collection.
         /// (The current implementation erroneously does not wrap the result.)
         /// </summary>
         /// <param name="bot"></param>
@@ -1110,7 +1082,7 @@ namespace C5
 
 
         /// <summary>
-        /// Get the specified range from the wrapped collection. 
+        /// Get the specified range from the wrapped collection.
         /// (The current implementation erroneously does not wrap the result.)
         /// </summary>
         /// <param name="bot"></param>
@@ -1121,7 +1093,7 @@ namespace C5
 
 
         /// <summary>
-        /// Get the specified range from the wrapped collection. 
+        /// Get the specified range from the wrapped collection.
         /// (The current implementation erroneously does not wrap the result.)
         /// </summary>
         /// <param name="top"></param>
@@ -1180,13 +1152,13 @@ namespace C5
         #region IIndexed<T> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value>The i'th item of the wrapped sorted collection</value>
         public T this[int i] { get { return indexedsorted[i]; } }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public virtual Speed IndexingSpeed { get { return indexedsorted.IndexingSpeed; } }
@@ -1245,8 +1217,8 @@ namespace C5
     /// <summary>
     /// A read-only wrapper for a generic list collection
     /// <i>Suitable as a wrapper for LinkedList, HashedLinkedList, ArrayList and HashedArray.
-    /// <see cref="T:C5.LinkedList`1"/>, 
-    /// <see cref="T:C5.HashedLinkedList`1"/>, 
+    /// <see cref="T:C5.LinkedList`1"/>,
+    /// <see cref="T:C5.HashedLinkedList`1"/>,
     /// <see cref="T:C5.ArrayList`1"/> or
     /// <see cref="T:C5.HashedArray`1"/>.
     /// </i>
@@ -1272,7 +1244,7 @@ namespace C5
             : base(list)
         {
             this.innerlist = list;
-            // If wrapping a list view, make innerlist = the view, and make 
+            // If wrapping a list view, make innerlist = the view, and make
             // underlying = a guarded version of the view's underlying list
             if (list.Underlying != null)
                 underlying = new GuardedList<T>(list.Underlying, null, false);
@@ -1288,14 +1260,14 @@ namespace C5
         #region IList<T> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value>The first item of the wrapped list</value>
         public T First { get { return innerlist.First; } }
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value>The last item of the wrapped list</value>
         public T Last { get { return innerlist.Last; } }
@@ -1312,7 +1284,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public virtual bool IsFixedSize
         {
@@ -1331,7 +1303,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public virtual Speed IndexingSpeed { get { return innerlist.IndexingSpeed; } }
@@ -1481,13 +1453,13 @@ namespace C5
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value>The offset of the wrapped list as a view.</value>
         public int Offset { get { return innerlist.Offset; } }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public virtual bool IsValid { get { return innerlist.IsValid; } }
@@ -1526,7 +1498,7 @@ namespace C5
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
         /// <param name="offset"></param>
@@ -1540,7 +1512,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
         /// <param name="offset"></param>
@@ -1555,7 +1527,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="otherView"></param>
         /// <returns></returns>
@@ -1587,7 +1559,7 @@ namespace C5
 
         /// <summary>
         /// Check if wrapped list is sorted according to the default sorting order
-        /// for the item type T, as defined by the <see cref="T:C5.Comparer`1"/> class 
+        /// for the item type T, as defined by the <see cref="T:C5.Comparer`1"/> class
         /// </summary>
         /// <exception cref="NotComparableException">if T is not comparable</exception>
         /// <returns>True if the list is sorted, else false.</returns>
@@ -1685,7 +1657,7 @@ namespace C5
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
         /// <returns>-</returns>
@@ -1693,7 +1665,7 @@ namespace C5
         { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
         /// <returns>-</returns>
@@ -1705,7 +1677,7 @@ namespace C5
         #region IQueue<T> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
         /// <returns>-</returns>
@@ -1713,7 +1685,7 @@ namespace C5
         { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
         /// <returns>-</returns>
@@ -1815,7 +1787,7 @@ namespace C5
 
     /// <summary>
     /// A read-only wrapper for a generic indexable queue (allows indexing).
-    /// 
+    ///
     /// <para>Suitable for wrapping a <see cref="T:C5.CircularQueue`1"/></para>
     /// </summary>
     /// <typeparam name="T">The item type.</typeparam>
@@ -1839,7 +1811,7 @@ namespace C5
 
         #region IQueue<T> Members
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public bool AllowsDuplicates { get { return queue.AllowsDuplicates; } }
@@ -1852,7 +1824,7 @@ namespace C5
         public T this[int i] { get { return queue[i]; } }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
         /// <returns>-</returns>
@@ -1860,7 +1832,7 @@ namespace C5
         { throw new ReadOnlyCollectionException("Queue cannot be modified through this guard object"); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
         /// <returns>-</returns>
@@ -1896,7 +1868,7 @@ namespace C5
         #region IDictionary<K,V> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public SCG.IEqualityComparer<K> EqualityComparer { get { return dict.EqualityComparer; } }
@@ -1931,7 +1903,7 @@ namespace C5
         public ICollectionValue<V> Values { get { return dict.Values; } }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public virtual Func<K, V> Func { get { return delegate(K k) { return this[k]; }; } }
 
@@ -1944,7 +1916,7 @@ namespace C5
         { throw new ReadOnlyCollectionException(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
         /// <param name="items"></param>
@@ -1979,7 +1951,7 @@ namespace C5
         { throw new ReadOnlyCollectionException(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public Speed ContainsSpeed { get { return dict.ContainsSpeed; } }
@@ -1992,7 +1964,7 @@ namespace C5
         public bool Contains(K key) { return dict.Contains(key); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="keys"></param>
         /// <returns></returns>
@@ -2102,7 +2074,7 @@ namespace C5
         public SCG.IComparer<K> Comparer { get { return sorteddict.Comparer; } }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public new ISorted<K> Keys { get { return null; } }
@@ -2159,7 +2131,7 @@ namespace C5
         /// Get the entry in the wrapped dictionary whose key is the
         /// predecessor of a specified key.
         /// </summary>
-        /// <exception cref="NoSuchItemException"> if no such entry exists </exception>    
+        /// <exception cref="NoSuchItemException"> if no such entry exists </exception>
         /// <param name="key">The key</param>
         /// <returns>The entry</returns>
         public KeyValuePair<K, V> Predecessor(K key)
@@ -2169,7 +2141,7 @@ namespace C5
         /// Get the entry in the wrapped dictionary whose key is the
         /// successor of a specified key.
         /// </summary>
-        /// <exception cref="NoSuchItemException"> if no such entry exists </exception>    
+        /// <exception cref="NoSuchItemException"> if no such entry exists </exception>
         /// <param name="key">The key</param>
         /// <returns>The entry</returns>
         public KeyValuePair<K, V> Successor(K key)
@@ -2180,7 +2152,7 @@ namespace C5
         /// Get the entry in the wrapped dictionary whose key is the
         /// weak predecessor of a specified key.
         /// </summary>
-        /// <exception cref="NoSuchItemException"> if no such entry exists </exception>    
+        /// <exception cref="NoSuchItemException"> if no such entry exists </exception>
         /// <param name="key">The key</param>
         /// <returns>The entry</returns>
         public KeyValuePair<K, V> WeakPredecessor(K key)
@@ -2191,14 +2163,14 @@ namespace C5
         /// Get the entry in the wrapped dictionary whose key is the
         /// weak successor of a specified key.
         /// </summary>
-        /// <exception cref="NoSuchItemException"> if no such entry exists </exception>    
+        /// <exception cref="NoSuchItemException"> if no such entry exists </exception>
         /// <param name="key">The key</param>
         /// <returns>The entry</returns>
         public KeyValuePair<K, V> WeakSuccessor(K key)
         { return sorteddict.WeakSuccessor(key); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public KeyValuePair<K, V> FindMin()
@@ -2207,7 +2179,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
         /// <returns></returns>
@@ -2215,7 +2187,7 @@ namespace C5
         { throw new ReadOnlyCollectionException(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public KeyValuePair<K, V> FindMax()
@@ -2224,7 +2196,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
         /// <returns></returns>
@@ -2232,7 +2204,7 @@ namespace C5
         { throw new ReadOnlyCollectionException(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="c"></param>
         /// <param name="lowEntry"></param>
@@ -2246,7 +2218,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="bot"></param>
         /// <returns></returns>
@@ -2256,7 +2228,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="bot"></param>
         /// <param name="top"></param>
@@ -2267,7 +2239,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="top"></param>
         /// <returns></returns>
@@ -2277,7 +2249,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public IDirectedCollectionValue<KeyValuePair<K, V>> RangeAll()
@@ -2286,7 +2258,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
         /// <param name="items"></param>
@@ -2294,7 +2266,7 @@ namespace C5
         { throw new ReadOnlyCollectionException(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
         /// <param name="low"></param>
@@ -2302,7 +2274,7 @@ namespace C5
         { throw new ReadOnlyCollectionException(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
         /// <param name="low"></param>
@@ -2311,7 +2283,7 @@ namespace C5
         { throw new ReadOnlyCollectionException(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
         /// <param name="hi"></param>

@@ -6,10 +6,10 @@
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,22 +18,20 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-
 using System;
 using C5;
 using NUnit.Framework;
 using SCG = System.Collections.Generic;
 
-
 namespace C5UnitTests.interfaces
 {
-  [TestFixture]
-  public class ICollectionsTests
-  {
-    public void TryC5Coll(ICollection<double> coll)
-    {
-      Assert.AreEqual(0, coll.Count);
-      double[] arr = { };
+	[TestFixture]
+	public class ICollectionsTests
+	{
+		public void TryC5Coll (ICollection<double> coll)
+		{
+			Assert.AreEqual (0, coll.Count);
+			double[] arr = { };
       coll.CopyTo(arr, 0);
       Assert.IsFalse(coll.IsReadOnly);
       coll.Add(2.3);
@@ -145,7 +143,7 @@ namespace C5UnitTests.interfaces
       Assert.AreEqual(b2, list[0]);
       Assert.AreEqual(b1, list[1]);
       list.RemoveAt(1);
-      Assert.AreEqual(b2, list[0]); 
+      Assert.AreEqual(b2, list[0]);
       list.Clear();
       Assert.AreEqual(0, list.Count);
       list.Remove(b1);
@@ -227,7 +225,7 @@ namespace C5UnitTests.interfaces
       Assert.IsFalse(list.IsSynchronized);
       Assert.AreNotEqual(null, list.SyncRoot);
       Assert.AreEqual(list.SyncRoot, ((System.Collections.IList)mylist).SyncRoot);
-      Assert.IsTrue(list.Contains(b1)); 
+      Assert.IsTrue(list.Contains(b1));
       Assert.IsTrue(list.Contains(b2));
       Assert.IsTrue(list.Contains(c1));
       Assert.IsFalse(list.Contains(c2));
@@ -407,18 +405,18 @@ namespace C5UnitTests.interfaces
 
       Assert.IsFalse(dict.Update("U", "D1"));
       Assert.IsFalse(dict.Contains("U"));
-      
+
       Assert.IsTrue(dict.Update("R", "A2", out old));
       Assert.AreEqual("A2", dict["R"]);
       Assert.AreEqual("A1", old);
-      
+
       Assert.IsFalse(dict.Update("U", "D2", out old));
       Assert.AreEqual(null, old);
       Assert.IsFalse(dict.Contains("U"));
 
       Assert.IsTrue(dict.UpdateOrAdd("R", "A3"));
       Assert.AreEqual("A3", dict["R"]);
-      
+
       Assert.IsFalse(dict.UpdateOrAdd("U", "D3"));
       Assert.IsTrue(dict.Contains("U"));
       Assert.AreEqual("D3", dict["U"]);
@@ -426,7 +424,7 @@ namespace C5UnitTests.interfaces
       Assert.IsTrue(dict.UpdateOrAdd("R", "A4", out old));
       Assert.AreEqual("A4", dict["R"]);
       Assert.AreEqual("A3", old);
-      
+
       Assert.IsTrue(dict.UpdateOrAdd("U", "D4", out old));
       Assert.IsTrue(dict.Contains("U"));
       Assert.AreEqual("D4", dict["U"]);

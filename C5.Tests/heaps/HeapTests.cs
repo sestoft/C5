@@ -6,10 +6,10 @@
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,78 +18,82 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-
 using System;
 using C5;
 using NUnit.Framework;
 
 namespace C5UnitTests.heaps
 {
-    using CollectionOfInt = IntervalHeap<int>;
+	using CollectionOfInt = IntervalHeap<int>;
 
-    [TestFixture]
-    public class GenericTesters
-    {
-        [Test]
-        public void TestEvents()
-        {
-            Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
-            new C5UnitTests.Templates.Events.PriorityQueueTester<CollectionOfInt>().Test(factory);
-        }
+	[TestFixture]
+	public class GenericTesters
+	{
+		[Test]
+		public void TestEvents ()
+		{
+			Func<CollectionOfInt> factory = delegate() {
+				return new CollectionOfInt (TenEqualityComparer.Default);
+			};
+			new C5UnitTests.Templates.Events.PriorityQueueTester<CollectionOfInt> ().Test (factory);
+		}
+		//[Test]
+		//public void Extensible()
+		//{
+		//    C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
+		//    C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
+		//}
+	}
 
-        //[Test]
-        //public void Extensible()
-        //{
-        //    C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-        //}
-    }
+	[TestFixture]
+	public class Events
+	{
+		IPriorityQueue<int> queue;
+		ArrayList<KeyValuePair<Acts, int>> events;
 
-    [TestFixture]
-    public class Events
-    {
-        IPriorityQueue<int> queue;
-        ArrayList<KeyValuePair<Acts, int>> events;
+		[SetUp]
+		public void Init ()
+		{
+			queue = new IntervalHeap<int> ();
+			events = new ArrayList<KeyValuePair<Acts, int>> ();
+		}
 
+		[TearDown]
+		public void Dispose ()
+		{
+			queue = null;
+			events = null;
+		}
 
-        [SetUp]
-        public void Init()
-        {
-            queue = new IntervalHeap<int>();
-            events = new ArrayList<KeyValuePair<Acts, int>>();
-        }
+		[Test]
+		public void Listenable ()
+		{
+			Assert.AreEqual (EventTypeEnum.Basic, queue.ListenableEvents);
+		}
 
+		enum Acts
+		{
+			Add,
+			Remove,
+			Changed
+		}
 
-        [TearDown]
-        public void Dispose() { queue = null; events = null; }
-
-        [Test]
-        public void Listenable()
-        {
-            Assert.AreEqual(EventTypeEnum.Basic, queue.ListenableEvents);
-        }
-
-        enum Acts
-        {
-            Add, Remove, Changed
-        }
-
-        [Test]
-        public void Direct()
-        {
-            CollectionChangedHandler<int> cch;
-            ItemsAddedHandler<int> iah;
-            ItemsRemovedHandler<int> irh;
-            Assert.AreEqual(EventTypeEnum.None, queue.ActiveEvents);
-            queue.CollectionChanged += (cch = new CollectionChangedHandler<int>(queue_CollectionChanged));
-            Assert.AreEqual(EventTypeEnum.Changed, queue.ActiveEvents);
-            queue.ItemsAdded += (iah = new ItemsAddedHandler<int>(queue_ItemAdded));
-            Assert.AreEqual(EventTypeEnum.Changed | EventTypeEnum.Added, queue.ActiveEvents);
-            queue.ItemsRemoved += (irh = new ItemsRemovedHandler<int>(queue_ItemRemoved));
-            Assert.AreEqual(EventTypeEnum.Changed | EventTypeEnum.Added | EventTypeEnum.Removed, queue.ActiveEvents);
-            queue.Add(34);
-            queue.Add(56);
-            queue.AddAll(new int[] { });
+		[Test]
+		public void Direct ()
+		{
+			CollectionChangedHandler<int> cch;
+			ItemsAddedHandler<int> iah;
+			ItemsRemovedHandler<int> irh;
+			Assert.AreEqual (EventTypeEnum.None, queue.ActiveEvents);
+			queue.CollectionChanged += (cch = new CollectionChangedHandler<int> (queue_CollectionChanged));
+			Assert.AreEqual (EventTypeEnum.Changed, queue.ActiveEvents);
+			queue.ItemsAdded += (iah = new ItemsAddedHandler<int> (queue_ItemAdded));
+			Assert.AreEqual (EventTypeEnum.Changed | EventTypeEnum.Added, queue.ActiveEvents);
+			queue.ItemsRemoved += (irh = new ItemsRemovedHandler<int> (queue_ItemRemoved));
+			Assert.AreEqual (EventTypeEnum.Changed | EventTypeEnum.Added | EventTypeEnum.Removed, queue.ActiveEvents);
+			queue.Add (34);
+			queue.Add (56);
+			queue.AddAll (new int[] { });
             queue.Add(34);
             queue.Add(12);
             queue.DeleteMax();
@@ -97,7 +101,7 @@ namespace C5UnitTests.heaps
             queue.AddAll(new int[] { 4, 5, 6, 2 });
             Assert.AreEqual(17, events.Count);
             int[] vals = { 34, 0, 56, 0, 34, 0, 12, 0, 56, 0, 12, 0, 4, 5, 6, 2, 0 };
-            Acts[] acts = { Acts.Add, Acts.Changed, Acts.Add, Acts.Changed, Acts.Add, Acts.Changed, Acts.Add, Acts.Changed, 
+            Acts[] acts = { Acts.Add, Acts.Changed, Acts.Add, Acts.Changed, Acts.Add, Acts.Changed, Acts.Add, Acts.Changed,
                 Acts.Remove, Acts.Changed, Acts.Remove, Acts.Changed, Acts.Add, Acts.Add, Acts.Add, Acts.Add, Acts.Changed };
             for (int i = 0; i < vals.Length; i++)
             {
@@ -129,7 +133,7 @@ namespace C5UnitTests.heaps
             queue.AddAll(new int[] { 4, 5, 6, 2 });
             Assert.AreEqual(17, events.Count);
             int[] vals = { 34, 0, 56, 0, 34, 0, 12, 0, 56, 0, 12, 0, 4, 5, 6, 2, 0 };
-            Acts[] acts = { Acts.Add, Acts.Changed, Acts.Add, Acts.Changed, Acts.Add, Acts.Changed, Acts.Add, Acts.Changed, 
+            Acts[] acts = { Acts.Add, Acts.Changed, Acts.Add, Acts.Changed, Acts.Add, Acts.Changed, Acts.Add, Acts.Changed,
                 Acts.Remove, Acts.Changed, Acts.Remove, Acts.Changed, Acts.Add, Acts.Add, Acts.Add, Acts.Add, Acts.Changed };
             for (int i = 0; i < vals.Length; i++)
             {
@@ -269,7 +273,7 @@ namespace C5UnitTests.heaps
       }
 
       /// <summary>
-      /// bug20070504.txt by Viet Yen Nguyen 
+      /// bug20070504.txt by Viet Yen Nguyen
       /// </summary>
       [Test]
       public void Replace3() {
@@ -624,7 +628,7 @@ namespace C5UnitTests.heaps
 
       /// <summary>
       /// Cases related to bug20130208 (Iulian Nitescu <iulian@live.co.uk>)
-      /// and bug20130505 (perpetual, via Github) 
+      /// and bug20130505 (perpetual, via Github)
       /// </summary>
 
       [Test]

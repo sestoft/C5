@@ -109,6 +109,7 @@
     <Reference Include="nunit.framework">
       <HintPath>..\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
     <None Include="C5.snk" />
@@ -132,4 +133,10 @@
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\C5\C5.csproj">
+      <Project>{9B6F0EC0-D315-40E3-A3B3-0C2C76F52017}</Project>
+      <Name>C5</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
