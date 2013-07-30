@@ -68,12 +68,12 @@ unit tests have been written and applied systematically.
 Most of the library API documentation is in place but requires proof-reading.
 
 The C5 implementation was originally built on .NET 2.0 and has only recently been 
-upgraded to .NET 4.0. It does not (yet) use a great number of the new features 
+upgraded to .NET 4.5. It does not (yet) use a great number of the new features 
 introduced with C# 3 and 4, notably LINQ and covariant and contravariant type parameters.
 
 C5 builds and runs on the latest versions of Mono.
 
-C5 is a portable library supporting .NET 4.0, Silverlight, Windows Phone 7, and Xbox 360.
+C5 is a flexible and extensive library, supporting .NET 4.5, Silverlight, Windows Phone 7, and Xbox 360.
 
 ## Getting Started
 1. Get C5 from NuGet: <tt>PM> Install-Package C5</tt>
