@@ -6,10 +6,10 @@
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,12 +18,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-
 // C5 example: Keyword recognition 2004-12-20
-
-// Compile with 
-//   csc /r:C5.dll KeywordRecognition.cs 
-
+// Compile with
+//   csc /r:C5.dll KeywordRecognition.cs
 using System;
 using System.Diagnostics;
 using C5;
@@ -31,12 +28,10 @@ using SCG = System.Collections.Generic;
 
 namespace KeywordRecognition
 {
-
-    class KeywordRecognition
-    {
-        // Array of 77 keywords:
-
-        static readonly String[] keywordArray = 
+	class KeywordRecognition
+	{
+		// Array of 77 keywords:
+		static readonly String[] keywordArray =
     { "abstract", "as", "base", "bool", "break", "byte", "case", "catch",
       "char", "checked", "class", "const", "continue", "decimal", "default",
       "delegate", "do", "double", "else", "enum", "event", "explicit",

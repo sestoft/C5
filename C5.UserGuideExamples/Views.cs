@@ -6,10 +6,10 @@
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,32 +18,29 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-
 // C5 example: Views 2004-12-29 OBSOLETE
-
-// Compile with 
-//   csc /r:C5.dll Views.cs 
-
+// Compile with
+//   csc /r:C5.dll Views.cs
 using System;
 using C5;
 
 namespace Views
 {
-    class Views
-    {
-        public static void Main(String[] args)
-        {
-            IList<char> lst = new LinkedList<char>();
-            lst.AddAll(new char[] { 'a', 'b', 'c', 'd' });
-            IList<char>
-              A = lst.View(0, 2),
-              B = lst.View(2, 0),
-              C = lst.View(2, 1),
-              D = lst.View(3, 1),
-              E = lst.View(4, 0),
-              F = lst.View(1, 2),
-              G = lst.View(0, 4);
-            IList<char>[] views = { A, B, C, D, E, F, G };
+	class Views
+	{
+		public static void Main (String[] args)
+		{
+			IList<char> lst = new LinkedList<char> ();
+			lst.AddAll (new char[] { 'a', 'b', 'c', 'd' });
+			IList<char>
+			A = lst.View (0, 2),
+			B = lst.View (2, 0),
+			C = lst.View (2, 1),
+			D = lst.View (3, 1),
+			E = lst.View (4, 0),
+			F = lst.View (1, 2),
+			G = lst.View (0, 4);
+			IList<char>[] views = { A, B, C, D, E, F, G };
             Console.WriteLine("ABCDEFG overlaps with:");
             foreach (IList<char> u in views)
             {

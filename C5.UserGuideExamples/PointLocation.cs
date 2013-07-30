@@ -6,10 +6,10 @@
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -27,7 +27,7 @@ namespace PointLocation
 {
 	//public enum Site { Cell,Edge,Outside}
 	/// <summary>
-	/// A line segment with associated data of type T for the cell 
+	/// A line segment with associated data of type T for the cell
 	/// to its right respectively left.
 	/// </summary>
 	public struct Edge<T> : IComparable<Edge<T>>
@@ -101,7 +101,7 @@ namespace PointLocation
 	/// A data structure for point location in a plane divided into
 	/// cells by edges. This is the classical use of persistent trees
 	/// by Sarnak and Tarjan [?]. See de Berg et al for alternatives.
-	/// 
+	///
 	/// The internal data is an outer sorted dictionary that maps each
 	/// x coordinate of an endpoint of some edge to an inner sorted set
 	/// of the edges crossing or touching the vertical line at that x
@@ -109,7 +109,7 @@ namespace PointLocation
 	/// to the immediate right of x. Lookup of a point (x,y) is done by
 	/// finding the predecessor of x cell the outer dictionary and then locating
 	/// the edges above and below (x,y) by searching in the inner sorted set.
-	/// 
+	///
 	/// The creation of the inner sorted sets is done by maintaining a
 	/// (persistent) tree of edges, inserting and deleting edges according
 	/// to a horzontal sweep of the edges while saving a snapshot of the
@@ -130,7 +130,7 @@ namespace PointLocation
 	/// for large problems.
 	///
 	/// The code assumes that the given set of edges is correct, in particular
-	/// that they do not touch at interior points (e.g. cross or coincide). 
+	/// that they do not touch at interior points (e.g. cross or coincide).
 	/// </summary>
 
 	public class PointLocator<T>
@@ -197,13 +197,13 @@ namespace PointLocation
 			foreach (KeyValuePair<double, KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>> p in endpoints) {
 				foreach (Edge<T> e in p.Value.Value) {
 					System.Diagnostics.Debug.Assert (vtree.Check ("C"));
-					
+
 					bool chk = vtree.Remove (e);
 					System.Diagnostics.Debug.Assert (vtree.Check ("D"));
-					
+
 					System.Diagnostics.Debug.Assert (chk, "edge was not removed!", "" + e);
 				}
-				
+
 				foreach (Edge<T> e in p.Value.Key) {
 					System.Diagnostics.Debug.Assert (vtree.Check ());
 					bool chk = vtree.Add (e);
@@ -296,7 +296,7 @@ namespace PointLocation
 
 	/// <summary>
 	/// Compare a given point (x,y) to edges: is the point above, at or below
-	/// the edge. Assumes edges not vertical. 
+	/// the edge. Assumes edges not vertical.
 	/// Uses crossproduct to compute the result.
 	/// </summary>
 	class PointComparer<T> : IComparable<Edge<T>>
@@ -544,7 +544,7 @@ namespace PointLocation
 				return "";//cell + ";" + cell;
 				/*if (cell < 0 || cell < 0 || cell >= maxi || cell >= maxj)
                   return "Outside";
-	    
+
                   return string.Format("{0}{1}", i2l(cell), cell);*/
 			}
 
@@ -702,7 +702,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (5, 0, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 1, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				//pl.Place(1, 1, out x); System.Diagnostics.Debug.Assert(x == 0);
@@ -714,7 +714,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (5, 1, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 2, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 2, out x);
@@ -726,7 +726,7 @@ namespace PointLocation
 				//pl.Place(4, 2, out x); System.Diagnostics.Debug.Assert(x == 0);
 				pl.Place (5, 2, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 3, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 3, out x);
@@ -739,7 +739,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (5, 3, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 4, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 4, out x);
@@ -751,7 +751,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (5, 4, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 5, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 5, out x);
@@ -799,7 +799,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (8, 0, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 1, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				//pl.Place(1, 1, out x); System.Diagnostics.Debug.Assert(x == 0);
@@ -817,7 +817,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (8, 1, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 2, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 2, out x);
@@ -836,7 +836,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (8, 2, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 3, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 3, out x);
@@ -854,7 +854,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (8, 3, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 4, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 4, out x);
@@ -872,7 +872,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (8, 4, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 5, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 5, out x);
@@ -889,7 +889,7 @@ namespace PointLocation
 				//pl.Place(7, 5, out x); System.Diagnostics.Debug.Assert(x == 0);
 				pl.Place (8, 5, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 6, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 6, out x);
@@ -907,7 +907,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (8, 6, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 7, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 7, out x);
@@ -926,7 +926,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (8, 7, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 8, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 8, out x);
@@ -944,7 +944,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (8, 8, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 9, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 9, out x);
@@ -991,7 +991,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (7, 0, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 1, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				//pl.Place(1, 1, out x); System.Diagnostics.Debug.Assert(x == 0);
@@ -1007,7 +1007,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (7, 1, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 2, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 2, out x);
@@ -1023,7 +1023,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (7, 2, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 3, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 3, out x);
@@ -1039,7 +1039,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (7, 3, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 4, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 4, out x);
@@ -1056,7 +1056,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (7, 4, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 5, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 5, out x);
@@ -1073,7 +1073,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (7, 5, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 6, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 6, out x);
@@ -1089,7 +1089,7 @@ namespace PointLocation
 				//pl.Place(6, 6, out x); System.Diagnostics.Debug.Assert(x == 0);
 				pl.Place (7, 6, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 7, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 7, out x);
@@ -1141,7 +1141,7 @@ namespace PointLocation
 				pl.Build ();
 
 				int x;
-				
+
 				pl.Place (0, 0, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 0, out x);
@@ -1188,7 +1188,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (22, 0, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 1, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 1, out x);
@@ -1231,7 +1231,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (22, 1, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 2, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 2, out x);
@@ -1275,7 +1275,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (22, 2, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 3, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 3, out x);
@@ -1319,7 +1319,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (22, 3, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 4, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 4, out x);
@@ -1355,7 +1355,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (22, 4, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 5, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 5, out x);
@@ -1401,7 +1401,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (22, 5, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 6, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 6, out x);
@@ -1445,7 +1445,7 @@ namespace PointLocation
 				//pl.Place(21, 6, out x); System.Diagnostics.Debug.Assert(x == 0);
 				pl.Place (22, 6, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 7, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 7, out x);
@@ -1491,7 +1491,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (22, 7, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 8, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 8, out x);
@@ -1536,7 +1536,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (22, 8, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 9, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				//pl.Place(1, 9, out x); System.Diagnostics.Debug.Assert(x == 0);
@@ -1579,7 +1579,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (22, 9, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 10, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 10, out x);
@@ -1624,7 +1624,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (22, 10, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 11, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 11, out x);
@@ -1668,7 +1668,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (22, 11, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 12, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 12, out x);
@@ -1713,7 +1713,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (22, 12, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 13, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 13, out x);
@@ -1758,7 +1758,7 @@ namespace PointLocation
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (22, 13, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
-				
+
 				pl.Place (0, 14, out x);
 				System.Diagnostics.Debug.Assert (x == 0);
 				pl.Place (1, 14, out x);

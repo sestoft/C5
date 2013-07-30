@@ -1,17 +1,16 @@
 // C5 example
 // 2004-11
-
 using System;
 using C5;
 using SCG = System.Collections.Generic;
 
 namespace SortingPermutation
 {
-    class MyTest
-    {
-        public static void Main(String[] args)
-        {
-            String[] cities = { "Tokyo", "Beijing", "Hangzhou", "Kyoto", "Beijing", "Copenhagen", "Seattle" };
+	class MyTest
+	{
+		public static void Main (String[] args)
+		{
+			String[] cities = { "Tokyo", "Beijing", "Hangzhou", "Kyoto", "Beijing", "Copenhagen", "Seattle" };
             IList<String> alst = new ArrayList<String>();
             alst.AddAll(cities);
             foreach (int i in MySort.GetPermutation1(alst))
@@ -44,8 +43,8 @@ namespace SortingPermutation
             return res;
         }
 
-        // Stable and fairly fast both for array lists and linked lists, 
-        // but does copy the collection's items. 
+        // Stable and fairly fast both for array lists and linked lists,
+        // but does copy the collection's items.
 
         public static ArrayList<int> GetPermutation2<T>(IList<T> lst)
           where T : IComparable<T>
