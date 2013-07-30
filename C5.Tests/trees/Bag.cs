@@ -6,10 +6,10 @@
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,510 +18,500 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-
 using System;
 using C5;
 using NUnit.Framework;
 using SCG = System.Collections.Generic;
 
-
 namespace C5UnitTests.trees.TreeBag
 {
-    using CollectionOfInt = TreeBag<int>;
-
-
-    [TestFixture]
-    public class NewTest
-    {
-        // Repro for bug20091113:
-        [Test]
-        public void A()
-        {
-            var list = new TreeBag<long>();
-            // Sequence generated in FindNodeRandomTest
-            // Manually pruned by sestoft 2009-11-14
-            list.Add(553284);
-            list.Add(155203);
-            list.Add(316201);
-            list.Add(263469);
-            list.Add(263469);
-
-            //list.dump();   // OK
-            list.Remove(316201);
-            //list.dump();   // Not OK
-            Assert.IsTrue(list.Check());
-        }
-        [Test]
-        public void B()
-        {
-            var l = 100;
-            for (int r = 0; r < l; r++)
-            {
-                var list = new TreeBag<int>();
-                for (int i = 0; i < l; i++)
-                {
-                    list.Add(l - i);
-                    list.Add(l - i);
-                    list.Add(l - i);
-                }
-                list.Remove(r);
-                list.Remove(r);
-                //list.dump();
-                list.Remove(r);
-                Assert.IsTrue(list.Check("removing" + r));
-            }
-        }
-    }
-
-    [TestFixture]
-    public class GenericTesters
-    {
-        [Test]
-        public void TestEvents()
-        {
-            Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
-            new C5UnitTests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory);
-        }
-
-        //[Test]
-        //public void Extensible()
-        //{
-        //    C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-        //}
-    }
-
-    static class Factory
-    {
-        public static ICollection<T> New<T>() { return new TreeBag<T>(); }
-    }
-
-
-    [TestFixture]
-    public class Formatting
-    {
-        ICollection<int> coll;
-        IFormatProvider rad16;
-        [SetUp]
-        public void Init() { coll = Factory.New<int>(); rad16 = new RadixFormatProvider(16); }
-        [TearDown]
-        public void Dispose() { coll = null; rad16 = null; }
-        [Test]
-        public void Format()
-        {
-            Assert.AreEqual("{{  }}", coll.ToString());
-            coll.AddAll(new int[] { -4, 28, 129, 65530, -4, 28 });
-            Assert.AreEqual("{{ -4(*2), 28(*2), 129(*1), 65530(*1) }}", coll.ToString());
-            Assert.AreEqual("{{ -4(*2), 1C(*2), 81(*1), FFFA(*1) }}", coll.ToString(null, rad16));
-            Assert.AreEqual("{{ -4(*2), 28(*2)... }}", coll.ToString("L18", null));
-            Assert.AreEqual("{{ -4(*2), 1C(*2)... }}", coll.ToString("L18", rad16));
-        }
-    }
-
-    [TestFixture]
-    public class Combined
-    {
-        private IIndexedSorted<KeyValuePair<int, int>> lst;
-
-
-        [SetUp]
-        public void Init()
-        {
-            lst = new TreeBag<KeyValuePair<int, int>>(new KeyValuePairComparer<int, int>(new IC()));
-            for (int i = 0; i < 10; i++)
-                lst.Add(new KeyValuePair<int, int>(i, i + 30));
-        }
-
-
-        [TearDown]
-        public void Dispose() { lst = null; }
-
-
-        [Test]
-        public void Find()
-        {
-            KeyValuePair<int, int> p = new KeyValuePair<int, int>(3, 78);
-
-            Assert.IsTrue(lst.Find(ref p));
-            Assert.AreEqual(3, p.Key);
-            Assert.AreEqual(33, p.Value);
-            p = new KeyValuePair<int, int>(13, 78);
-            Assert.IsFalse(lst.Find(ref p));
-        }
-
-
-        [Test]
-        public void FindOrAdd()
-        {
-            KeyValuePair<int, int> p = new KeyValuePair<int, int>(3, 78);
-
-            Assert.IsTrue(lst.FindOrAdd(ref p));
-            Assert.AreEqual(3, p.Key);
-            Assert.AreEqual(33, p.Value);
-            p = new KeyValuePair<int, int>(13, 79);
-            Assert.IsFalse(lst.FindOrAdd(ref p));
-            Assert.AreEqual(13, lst[11].Key);
-            Assert.AreEqual(79, lst[11].Value);
-        }
-
-
-        [Test]
-        public void Update()
-        {
-            KeyValuePair<int, int> p = new KeyValuePair<int, int>(3, 78);
-
-            Assert.IsTrue(lst.Update(p));
-            Assert.AreEqual(3, lst[3].Key);
-            Assert.AreEqual(78, lst[3].Value);
-            p = new KeyValuePair<int, int>(13, 78);
-            Assert.IsFalse(lst.Update(p));
-        }
-
-
-        [Test]
-        public void UpdateOrAdd1()
-        {
-            KeyValuePair<int, int> p = new KeyValuePair<int, int>(3, 78);
-
-            Assert.IsTrue(lst.UpdateOrAdd(p));
-            Assert.AreEqual(3, lst[3].Key);
-            Assert.AreEqual(78, lst[3].Value);
-            p = new KeyValuePair<int, int>(13, 79);
-            Assert.IsFalse(lst.UpdateOrAdd(p));
-            Assert.AreEqual(13, lst[10].Key);
-            Assert.AreEqual(79, lst[10].Value);
-        }
-
-        [Test]
-        public void UpdateOrAdd2()
-        {
-            ICollection<String> coll = new TreeBag<String>();
-            // s1 and s2 are distinct objects but contain the same text:
-            String old, s1 = "abc", s2 = ("def" + s1).Substring(3);
-            Assert.IsFalse(coll.UpdateOrAdd(s1, out old));
-            Assert.AreEqual(null, old);
-            Assert.IsTrue(coll.UpdateOrAdd(s2, out old));
-            Assert.IsTrue(Object.ReferenceEquals(s1, old));
-            Assert.IsFalse(Object.ReferenceEquals(s2, old));
-        }
-
-        [Test]
-        public void RemoveWithReturn()
-        {
-            KeyValuePair<int, int> p = new KeyValuePair<int, int>(3, 78);
-
-            Assert.IsTrue(lst.Remove(p, out p));
-            Assert.AreEqual(3, p.Key);
-            Assert.AreEqual(33, p.Value);
-            Assert.AreEqual(4, lst[3].Key);
-            Assert.AreEqual(34, lst[3].Value);
-            p = new KeyValuePair<int, int>(13, 78);
-            Assert.IsFalse(lst.Remove(p, out p));
-        }
-    }
-
-
-    [TestFixture]
-    public class Simple
-    {
-        private TreeBag<string> bag;
-
-
-        [SetUp]
-        public void Init()
-        {
-            bag = new TreeBag<string>(new SC());
-        }
-
-
-        [TearDown]
-        public void Dispose()
-        {
-            bag = null;
-        }
-
-        [Test]
-        public void Initial()
-        {
-            bool res;
-
-            Assert.IsFalse(bag.IsReadOnly);
-            Assert.AreEqual(0, bag.Count, "new bag should be empty");
-            Assert.AreEqual(0, bag.ContainsCount("A"));
-            Assert.AreEqual(0, bag.ContainsCount("B"));
-            Assert.AreEqual(0, bag.ContainsCount("C"));
-            Assert.IsFalse(bag.Contains("A"));
-            Assert.IsFalse(bag.Contains("B"));
-            Assert.IsFalse(bag.Contains("C"));
-            bag.Add("A");
-            Assert.AreEqual(1, bag.Count);
-            Assert.AreEqual(1, bag.ContainsCount("A"));
-            Assert.AreEqual(0, bag.ContainsCount("B"));
-            Assert.AreEqual(0, bag.ContainsCount("C"));
-            Assert.IsTrue(bag.Contains("A"));
-            Assert.IsFalse(bag.Contains("B"));
-            Assert.IsFalse(bag.Contains("C"));
-            bag.Add("C");
-            Assert.AreEqual(2, bag.Count);
-            Assert.AreEqual(1, bag.ContainsCount("A"));
-            Assert.AreEqual(0, bag.ContainsCount("B"));
-            Assert.AreEqual(1, bag.ContainsCount("C"));
-            Assert.IsTrue(bag.Contains("A"));
-            Assert.IsFalse(bag.Contains("B"));
-            Assert.IsTrue(bag.Contains("C"));
-            bag.Add("C");
-            Assert.AreEqual(3, bag.Count);
-            Assert.AreEqual(1, bag.ContainsCount("A"));
-            Assert.AreEqual(0, bag.ContainsCount("B"));
-            Assert.AreEqual(2, bag.ContainsCount("C"));
-            Assert.IsTrue(bag.Contains("A"));
-            Assert.IsFalse(bag.Contains("B"));
-            Assert.IsTrue(bag.Contains("C"));
-            bag.Add("B");
-            bag.Add("C");
-            Assert.AreEqual(5, bag.Count);
-            Assert.AreEqual(1, bag.ContainsCount("A"));
-            Assert.AreEqual(1, bag.ContainsCount("B"));
-            Assert.AreEqual(3, bag.ContainsCount("C"));
-            Assert.IsTrue(bag.Contains("A"));
-            Assert.IsTrue(bag.Contains("B"));
-            Assert.IsTrue(bag.Contains("C"));
-            res = bag.Remove("C");
-            Assert.AreEqual(4, bag.Count);
-            Assert.AreEqual(1, bag.ContainsCount("A"));
-            Assert.AreEqual(1, bag.ContainsCount("B"));
-            Assert.AreEqual(2, bag.ContainsCount("C"));
-            Assert.IsTrue(bag.Contains("A"));
-            Assert.IsTrue(bag.Contains("B"));
-            Assert.IsTrue(bag.Contains("C"));
-            res = bag.Remove("A");
-            Assert.AreEqual(3, bag.Count);
-            Assert.AreEqual(0, bag.ContainsCount("A"));
-            Assert.AreEqual(1, bag.ContainsCount("B"));
-            Assert.AreEqual(2, bag.ContainsCount("C"));
-            Assert.IsFalse(bag.Contains("A"));
-            Assert.IsTrue(bag.Contains("B"));
-            Assert.IsTrue(bag.Contains("C"));
-            bag.RemoveAllCopies("C");
-            Assert.AreEqual(1, bag.Count);
-            Assert.AreEqual(0, bag.ContainsCount("A"));
-            Assert.AreEqual(1, bag.ContainsCount("B"));
-            Assert.AreEqual(0, bag.ContainsCount("C"));
-            Assert.IsFalse(bag.Contains("A"));
-            Assert.IsTrue(bag.Contains("B"));
-            Assert.IsFalse(bag.Contains("C"));
-            Assert.IsFalse(bag.Contains("Z"));
-            Assert.IsFalse(bag.Remove("Z"));
-            bag.RemoveAllCopies("Z");
-            Assert.AreEqual(1, bag.Count);
-            Assert.AreEqual(0, bag.ContainsCount("A"));
-            Assert.AreEqual(1, bag.ContainsCount("B"));
-            Assert.AreEqual(0, bag.ContainsCount("C"));
-            Assert.IsFalse(bag.Contains("A"));
-            Assert.IsTrue(bag.Contains("B"));
-            Assert.IsFalse(bag.Contains("C"));
-            Assert.IsFalse(bag.Contains("Z"));
-        }
-    }
-
-    [TestFixture]
-    public class FindOrAdd
-    {
-        private TreeBag<KeyValuePair<int, string>> bag;
-
-
-        [SetUp]
-        public void Init()
-        {
-            bag = new TreeBag<KeyValuePair<int, string>>(new KeyValuePairComparer<int, string>(new IC()));
-        }
-
-
-        [TearDown]
-        public void Dispose()
-        {
-            bag = null;
-        }
-
-
-        [Test]
-        public void Test()
-        {
-            KeyValuePair<int, string> p = new KeyValuePair<int, string>(3, "tre");
-            Assert.IsFalse(bag.FindOrAdd(ref p));
-            p.Value = "drei";
-            Assert.IsTrue(bag.FindOrAdd(ref p));
-            Assert.AreEqual("tre", p.Value);
-            p.Value = "three";
-            Assert.AreEqual(2, bag.ContainsCount(p));
-            Assert.AreEqual("tre", bag[0].Value);
-        }
-    }
-
-
-    [TestFixture]
-    public class Enumerators
-    {
-        private TreeBag<string> bag;
-
-        private SCG.IEnumerator<string> bagenum;
-
-
-        [SetUp]
-        public void Init()
-        {
-            bag = new TreeBag<string>(new SC());
-            foreach (string s in new string[] { "A", "B", "A", "A", "B", "C", "D", "B" })
-                bag.Add(s);
-
-            bagenum = bag.GetEnumerator();
-        }
-
-
-        [TearDown]
-        public void Dispose()
-        {
-            bagenum = null;
-            bag = null;
-        }
-
-
-        [Test]
-        [ExpectedException(typeof(CollectionModifiedException))]
-        public void MoveNextOnModified()
-        {
-            //TODO: also problem before first MoveNext!!!!!!!!!!
-            bagenum.MoveNext();
-            bag.Add("T");
-            bagenum.MoveNext();
-        }
-
-
-        [Test]
-        public void NormalUse()
-        {
-            Assert.IsTrue(bagenum.MoveNext());
-            Assert.AreEqual(bagenum.Current, "A");
-            Assert.IsTrue(bagenum.MoveNext());
-            Assert.AreEqual(bagenum.Current, "A");
-            Assert.IsTrue(bagenum.MoveNext());
-            Assert.AreEqual(bagenum.Current, "A");
-            Assert.IsTrue(bagenum.MoveNext());
-            Assert.AreEqual(bagenum.Current, "B");
-            Assert.IsTrue(bagenum.MoveNext());
-            Assert.AreEqual(bagenum.Current, "B");
-            Assert.IsTrue(bagenum.MoveNext());
-            Assert.AreEqual(bagenum.Current, "B");
-            Assert.IsTrue(bagenum.MoveNext());
-            Assert.AreEqual(bagenum.Current, "C");
-            Assert.IsTrue(bagenum.MoveNext());
-            Assert.AreEqual(bagenum.Current, "D");
-            Assert.IsFalse(bagenum.MoveNext());
-        }
-    }
-
-    [TestFixture]
-    public class Ranges
-    {
-        private TreeBag<int> tree;
-
-        private SCG.IComparer<int> c;
-
-
-        [SetUp]
-        public void Init()
-        {
-            c = new IC();
-            tree = new TreeBag<int>(c);
-            for (int i = 1; i <= 10; i++)
-            {
-                tree.Add(i * 2); tree.Add(i);
-            }
-        }
-
-
-        [Test]
-        public void Enumerator()
-        {
-            SCG.IEnumerator<int> e = tree.RangeFromTo(5, 17).GetEnumerator();
-            int i = 0;
-            int[] all = new int[] { 5, 6, 6, 7, 8, 8, 9, 10, 10, 12, 14, 16 };
-            while (e.MoveNext())
-            {
-                Assert.AreEqual(all[i++], e.Current);
-            }
-
-            Assert.AreEqual(12, i);
-        }
-
-
-        [Test]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void Enumerator2()
-        {
-            SCG.IEnumerator<int> e = tree.RangeFromTo(5, 17).GetEnumerator();
-            int i = e.Current;
-        }
-
-
-        [Test]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void Enumerator3()
-        {
-            SCG.IEnumerator<int> e = tree.RangeFromTo(5, 17).GetEnumerator();
-
-            while (e.MoveNext()) ;
-
-            int i = e.Current;
-        }
-
-
-        [Test]
-        public void Remove()
-        {
-            int[] all = new int[] { 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 8, 8, 9, 10, 10, 12, 14, 16, 18, 20 };
-
-            tree.RemoveRangeFrom(18);
-            Assert.IsTrue(IC.eq(tree, new int[] { 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 8, 8, 9, 10, 10, 12, 14, 16 }));
-            tree.RemoveRangeFrom(28);
-            Assert.IsTrue(IC.eq(tree, new int[] { 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 8, 8, 9, 10, 10, 12, 14, 16 }));
-            tree.RemoveRangeFrom(1);
-            Assert.IsTrue(IC.eq(tree));
-            foreach (int i in all) tree.Add(i);
-
-            tree.RemoveRangeTo(10);
-            Assert.IsTrue(IC.eq(tree, new int[] { 10, 10, 12, 14, 16, 18, 20 }));
-            tree.RemoveRangeTo(2);
-            Assert.IsTrue(IC.eq(tree, new int[] { 10, 10, 12, 14, 16, 18, 20 }));
-            tree.RemoveRangeTo(21);
-            Assert.IsTrue(IC.eq(tree));
-            foreach (int i in all) tree.Add(i);
-
-            tree.RemoveRangeFromTo(4, 8);
-            Assert.IsTrue(IC.eq(tree, 1, 2, 2, 3, 8, 8, 9, 10, 10, 12, 14, 16, 18, 20));
-            tree.RemoveRangeFromTo(14, 28);
-            Assert.IsTrue(IC.eq(tree, 1, 2, 2, 3, 8, 8, 9, 10, 10, 12));
-            tree.RemoveRangeFromTo(0, 9);
-            Assert.IsTrue(IC.eq(tree, 9, 10, 10, 12));
-            tree.RemoveRangeFromTo(0, 81);
-            Assert.IsTrue(IC.eq(tree));
-        }
-
-
-        [Test]
-        public void Normal()
-        {
-            int[] all = new int[] { 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 8, 8, 9, 10, 10, 12, 14, 16, 18, 20 };
-
-            Assert.IsTrue(IC.eq(tree, all));
-            Assert.IsTrue(IC.eq(tree.RangeAll(), all));
-            Assert.AreEqual(20, tree.RangeAll().Count);
-            Assert.IsTrue(IC.eq(tree.RangeFrom(11), new int[] { 12, 14, 16, 18, 20 }));
-            Assert.AreEqual(5, tree.RangeFrom(11).Count);
-            Assert.IsTrue(IC.eq(tree.RangeFrom(12), new int[] { 12, 14, 16, 18, 20 }));
-            Assert.IsTrue(IC.eq(tree.RangeFrom(1), all));
-            Assert.IsTrue(IC.eq(tree.RangeFrom(0), all));
-            Assert.IsTrue(IC.eq(tree.RangeFrom(21), new int[] { }));
+	using CollectionOfInt = TreeBag<int>;
+
+	[TestFixture]
+	public class NewTest
+	{
+		// Repro for bug20091113:
+		[Test]
+		public void A ()
+		{
+			var list = new TreeBag<long> ();
+			// Sequence generated in FindNodeRandomTest
+			// Manually pruned by sestoft 2009-11-14
+			list.Add (553284);
+			list.Add (155203);
+			list.Add (316201);
+			list.Add (263469);
+			list.Add (263469);
+
+			//list.dump();   // OK
+			list.Remove (316201);
+			//list.dump();   // Not OK
+			Assert.IsTrue (list.Check ());
+		}
+
+		[Test]
+		public void B ()
+		{
+			var l = 100;
+			for (int r = 0; r < l; r++) {
+				var list = new TreeBag<int> ();
+				for (int i = 0; i < l; i++) {
+					list.Add (l - i);
+					list.Add (l - i);
+					list.Add (l - i);
+				}
+				list.Remove (r);
+				list.Remove (r);
+				//list.dump();
+				list.Remove (r);
+				Assert.IsTrue (list.Check ("removing" + r));
+			}
+		}
+	}
+
+	[TestFixture]
+	public class GenericTesters
+	{
+		[Test]
+		public void TestEvents ()
+		{
+			Func<CollectionOfInt> factory = delegate() {
+				return new CollectionOfInt (TenEqualityComparer.Default);
+			};
+			new C5UnitTests.Templates.Events.SortedIndexedTester<CollectionOfInt> ().Test (factory);
+		}
+		//[Test]
+		//public void Extensible()
+		//{
+		//    C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
+		//    C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
+		//}
+	}
+
+	static class Factory
+	{
+		public static ICollection<T> New<T> ()
+		{
+			return new TreeBag<T> ();
+		}
+	}
+
+	[TestFixture]
+	public class Formatting
+	{
+		ICollection<int> coll;
+		IFormatProvider rad16;
+
+		[SetUp]
+		public void Init ()
+		{
+			coll = Factory.New<int> ();
+			rad16 = new RadixFormatProvider (16);
+		}
+
+		[TearDown]
+		public void Dispose ()
+		{
+			coll = null;
+			rad16 = null;
+		}
+
+		[Test]
+		public void Format ()
+		{
+			Assert.AreEqual ("{{  }}", coll.ToString ());
+			coll.AddAll (new int[] { -4, 28, 129, 65530, -4, 28 });
+			Assert.AreEqual ("{{ -4(*2), 28(*2), 129(*1), 65530(*1) }}", coll.ToString ());
+			Assert.AreEqual ("{{ -4(*2), 1C(*2), 81(*1), FFFA(*1) }}", coll.ToString (null, rad16));
+			Assert.AreEqual ("{{ -4(*2), 28(*2)... }}", coll.ToString ("L18", null));
+			Assert.AreEqual ("{{ -4(*2), 1C(*2)... }}", coll.ToString ("L18", rad16));
+		}
+	}
+
+	[TestFixture]
+	public class Combined
+	{
+		private IIndexedSorted<KeyValuePair<int, int>> lst;
+
+		[SetUp]
+		public void Init ()
+		{
+			lst = new TreeBag<KeyValuePair<int, int>> (new KeyValuePairComparer<int, int> (new IC ()));
+			for (int i = 0; i < 10; i++)
+				lst.Add (new KeyValuePair<int, int> (i, i + 30));
+		}
+
+		[TearDown]
+		public void Dispose ()
+		{
+			lst = null;
+		}
+
+		[Test]
+		public void Find ()
+		{
+			KeyValuePair<int, int> p = new KeyValuePair<int, int> (3, 78);
+
+			Assert.IsTrue (lst.Find (ref p));
+			Assert.AreEqual (3, p.Key);
+			Assert.AreEqual (33, p.Value);
+			p = new KeyValuePair<int, int> (13, 78);
+			Assert.IsFalse (lst.Find (ref p));
+		}
+
+		[Test]
+		public void FindOrAdd ()
+		{
+			KeyValuePair<int, int> p = new KeyValuePair<int, int> (3, 78);
+
+			Assert.IsTrue (lst.FindOrAdd (ref p));
+			Assert.AreEqual (3, p.Key);
+			Assert.AreEqual (33, p.Value);
+			p = new KeyValuePair<int, int> (13, 79);
+			Assert.IsFalse (lst.FindOrAdd (ref p));
+			Assert.AreEqual (13, lst [11].Key);
+			Assert.AreEqual (79, lst [11].Value);
+		}
+
+		[Test]
+		public void Update ()
+		{
+			KeyValuePair<int, int> p = new KeyValuePair<int, int> (3, 78);
+
+			Assert.IsTrue (lst.Update (p));
+			Assert.AreEqual (3, lst [3].Key);
+			Assert.AreEqual (78, lst [3].Value);
+			p = new KeyValuePair<int, int> (13, 78);
+			Assert.IsFalse (lst.Update (p));
+		}
+
+		[Test]
+		public void UpdateOrAdd1 ()
+		{
+			KeyValuePair<int, int> p = new KeyValuePair<int, int> (3, 78);
+
+			Assert.IsTrue (lst.UpdateOrAdd (p));
+			Assert.AreEqual (3, lst [3].Key);
+			Assert.AreEqual (78, lst [3].Value);
+			p = new KeyValuePair<int, int> (13, 79);
+			Assert.IsFalse (lst.UpdateOrAdd (p));
+			Assert.AreEqual (13, lst [10].Key);
+			Assert.AreEqual (79, lst [10].Value);
+		}
+
+		[Test]
+		public void UpdateOrAdd2 ()
+		{
+			ICollection<String> coll = new TreeBag<String> ();
+			// s1 and s2 are distinct objects but contain the same text:
+			String old, s1 = "abc", s2 = ("def" + s1).Substring (3);
+			Assert.IsFalse (coll.UpdateOrAdd (s1, out old));
+			Assert.AreEqual (null, old);
+			Assert.IsTrue (coll.UpdateOrAdd (s2, out old));
+			Assert.IsTrue (Object.ReferenceEquals (s1, old));
+			Assert.IsFalse (Object.ReferenceEquals (s2, old));
+		}
+
+		[Test]
+		public void RemoveWithReturn ()
+		{
+			KeyValuePair<int, int> p = new KeyValuePair<int, int> (3, 78);
+
+			Assert.IsTrue (lst.Remove (p, out p));
+			Assert.AreEqual (3, p.Key);
+			Assert.AreEqual (33, p.Value);
+			Assert.AreEqual (4, lst [3].Key);
+			Assert.AreEqual (34, lst [3].Value);
+			p = new KeyValuePair<int, int> (13, 78);
+			Assert.IsFalse (lst.Remove (p, out p));
+		}
+	}
+
+	[TestFixture]
+	public class Simple
+	{
+		private TreeBag<string> bag;
+
+		[SetUp]
+		public void Init ()
+		{
+			bag = new TreeBag<string> (new SC ());
+		}
+
+		[TearDown]
+		public void Dispose ()
+		{
+			bag = null;
+		}
+
+		[Test]
+		public void Initial ()
+		{
+			bool res;
+
+			Assert.IsFalse (bag.IsReadOnly);
+			Assert.AreEqual (0, bag.Count, "new bag should be empty");
+			Assert.AreEqual (0, bag.ContainsCount ("A"));
+			Assert.AreEqual (0, bag.ContainsCount ("B"));
+			Assert.AreEqual (0, bag.ContainsCount ("C"));
+			Assert.IsFalse (bag.Contains ("A"));
+			Assert.IsFalse (bag.Contains ("B"));
+			Assert.IsFalse (bag.Contains ("C"));
+			bag.Add ("A");
+			Assert.AreEqual (1, bag.Count);
+			Assert.AreEqual (1, bag.ContainsCount ("A"));
+			Assert.AreEqual (0, bag.ContainsCount ("B"));
+			Assert.AreEqual (0, bag.ContainsCount ("C"));
+			Assert.IsTrue (bag.Contains ("A"));
+			Assert.IsFalse (bag.Contains ("B"));
+			Assert.IsFalse (bag.Contains ("C"));
+			bag.Add ("C");
+			Assert.AreEqual (2, bag.Count);
+			Assert.AreEqual (1, bag.ContainsCount ("A"));
+			Assert.AreEqual (0, bag.ContainsCount ("B"));
+			Assert.AreEqual (1, bag.ContainsCount ("C"));
+			Assert.IsTrue (bag.Contains ("A"));
+			Assert.IsFalse (bag.Contains ("B"));
+			Assert.IsTrue (bag.Contains ("C"));
+			bag.Add ("C");
+			Assert.AreEqual (3, bag.Count);
+			Assert.AreEqual (1, bag.ContainsCount ("A"));
+			Assert.AreEqual (0, bag.ContainsCount ("B"));
+			Assert.AreEqual (2, bag.ContainsCount ("C"));
+			Assert.IsTrue (bag.Contains ("A"));
+			Assert.IsFalse (bag.Contains ("B"));
+			Assert.IsTrue (bag.Contains ("C"));
+			bag.Add ("B");
+			bag.Add ("C");
+			Assert.AreEqual (5, bag.Count);
+			Assert.AreEqual (1, bag.ContainsCount ("A"));
+			Assert.AreEqual (1, bag.ContainsCount ("B"));
+			Assert.AreEqual (3, bag.ContainsCount ("C"));
+			Assert.IsTrue (bag.Contains ("A"));
+			Assert.IsTrue (bag.Contains ("B"));
+			Assert.IsTrue (bag.Contains ("C"));
+			res = bag.Remove ("C");
+			Assert.AreEqual (4, bag.Count);
+			Assert.AreEqual (1, bag.ContainsCount ("A"));
+			Assert.AreEqual (1, bag.ContainsCount ("B"));
+			Assert.AreEqual (2, bag.ContainsCount ("C"));
+			Assert.IsTrue (bag.Contains ("A"));
+			Assert.IsTrue (bag.Contains ("B"));
+			Assert.IsTrue (bag.Contains ("C"));
+			res = bag.Remove ("A");
+			Assert.AreEqual (3, bag.Count);
+			Assert.AreEqual (0, bag.ContainsCount ("A"));
+			Assert.AreEqual (1, bag.ContainsCount ("B"));
+			Assert.AreEqual (2, bag.ContainsCount ("C"));
+			Assert.IsFalse (bag.Contains ("A"));
+			Assert.IsTrue (bag.Contains ("B"));
+			Assert.IsTrue (bag.Contains ("C"));
+			bag.RemoveAllCopies ("C");
+			Assert.AreEqual (1, bag.Count);
+			Assert.AreEqual (0, bag.ContainsCount ("A"));
+			Assert.AreEqual (1, bag.ContainsCount ("B"));
+			Assert.AreEqual (0, bag.ContainsCount ("C"));
+			Assert.IsFalse (bag.Contains ("A"));
+			Assert.IsTrue (bag.Contains ("B"));
+			Assert.IsFalse (bag.Contains ("C"));
+			Assert.IsFalse (bag.Contains ("Z"));
+			Assert.IsFalse (bag.Remove ("Z"));
+			bag.RemoveAllCopies ("Z");
+			Assert.AreEqual (1, bag.Count);
+			Assert.AreEqual (0, bag.ContainsCount ("A"));
+			Assert.AreEqual (1, bag.ContainsCount ("B"));
+			Assert.AreEqual (0, bag.ContainsCount ("C"));
+			Assert.IsFalse (bag.Contains ("A"));
+			Assert.IsTrue (bag.Contains ("B"));
+			Assert.IsFalse (bag.Contains ("C"));
+			Assert.IsFalse (bag.Contains ("Z"));
+		}
+	}
+
+	[TestFixture]
+	public class FindOrAdd
+	{
+		private TreeBag<KeyValuePair<int, string>> bag;
+
+		[SetUp]
+		public void Init ()
+		{
+			bag = new TreeBag<KeyValuePair<int, string>> (new KeyValuePairComparer<int, string> (new IC ()));
+		}
+
+		[TearDown]
+		public void Dispose ()
+		{
+			bag = null;
+		}
+
+		[Test]
+		public void Test ()
+		{
+			KeyValuePair<int, string> p = new KeyValuePair<int, string> (3, "tre");
+			Assert.IsFalse (bag.FindOrAdd (ref p));
+			p.Value = "drei";
+			Assert.IsTrue (bag.FindOrAdd (ref p));
+			Assert.AreEqual ("tre", p.Value);
+			p.Value = "three";
+			Assert.AreEqual (2, bag.ContainsCount (p));
+			Assert.AreEqual ("tre", bag [0].Value);
+		}
+	}
+
+	[TestFixture]
+	public class Enumerators
+	{
+		private TreeBag<string> bag;
+		private SCG.IEnumerator<string> bagenum;
+
+		[SetUp]
+		public void Init ()
+		{
+			bag = new TreeBag<string> (new SC ());
+			foreach (string s in new string[] { "A", "B", "A", "A", "B", "C", "D", "B" })
+				bag.Add (s);
+
+			bagenum = bag.GetEnumerator ();
+		}
+
+		[TearDown]
+		public void Dispose ()
+		{
+			bagenum = null;
+			bag = null;
+		}
+
+		[Test]
+		[ExpectedException(typeof(CollectionModifiedException))]
+		public void MoveNextOnModified ()
+		{
+			//TODO: also problem before first MoveNext!!!!!!!!!!
+			bagenum.MoveNext ();
+			bag.Add ("T");
+			bagenum.MoveNext ();
+		}
+
+		[Test]
+		public void NormalUse ()
+		{
+			Assert.IsTrue (bagenum.MoveNext ());
+			Assert.AreEqual (bagenum.Current, "A");
+			Assert.IsTrue (bagenum.MoveNext ());
+			Assert.AreEqual (bagenum.Current, "A");
+			Assert.IsTrue (bagenum.MoveNext ());
+			Assert.AreEqual (bagenum.Current, "A");
+			Assert.IsTrue (bagenum.MoveNext ());
+			Assert.AreEqual (bagenum.Current, "B");
+			Assert.IsTrue (bagenum.MoveNext ());
+			Assert.AreEqual (bagenum.Current, "B");
+			Assert.IsTrue (bagenum.MoveNext ());
+			Assert.AreEqual (bagenum.Current, "B");
+			Assert.IsTrue (bagenum.MoveNext ());
+			Assert.AreEqual (bagenum.Current, "C");
+			Assert.IsTrue (bagenum.MoveNext ());
+			Assert.AreEqual (bagenum.Current, "D");
+			Assert.IsFalse (bagenum.MoveNext ());
+		}
+	}
+
+	[TestFixture]
+	public class Ranges
+	{
+		private TreeBag<int> tree;
+		private SCG.IComparer<int> c;
+
+		[SetUp]
+		public void Init ()
+		{
+			c = new IC ();
+			tree = new TreeBag<int> (c);
+			for (int i = 1; i <= 10; i++) {
+				tree.Add (i * 2);
+				tree.Add (i);
+			}
+		}
+
+		[Test]
+		public void Enumerator ()
+		{
+			SCG.IEnumerator<int> e = tree.RangeFromTo (5, 17).GetEnumerator ();
+			int i = 0;
+			int[] all = new int[] { 5, 6, 6, 7, 8, 8, 9, 10, 10, 12, 14, 16 };
+			while (e.MoveNext()) {
+				Assert.AreEqual (all [i++], e.Current);
+			}
+
+			Assert.AreEqual (12, i);
+		}
+
+		[Test]
+		[ExpectedException(typeof(InvalidOperationException))]
+		public void Enumerator2 ()
+		{
+			SCG.IEnumerator<int> e = tree.RangeFromTo (5, 17).GetEnumerator ();
+			int i = e.Current;
+		}
+
+		[Test]
+		[ExpectedException(typeof(InvalidOperationException))]
+		public void Enumerator3 ()
+		{
+			SCG.IEnumerator<int> e = tree.RangeFromTo (5, 17).GetEnumerator ();
+
+			while (e.MoveNext())
+				;
+
+			int i = e.Current;
+		}
+
+		[Test]
+		public void Remove ()
+		{
+			int[] all = new int[] { 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 8, 8, 9, 10, 10, 12, 14, 16, 18, 20 };
+
+			tree.RemoveRangeFrom (18);
+			Assert.IsTrue (IC.eq (tree, new int[] { 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 8, 8, 9, 10, 10, 12, 14, 16 }));
+			tree.RemoveRangeFrom (28);
+			Assert.IsTrue (IC.eq (tree, new int[] { 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 8, 8, 9, 10, 10, 12, 14, 16 }));
+			tree.RemoveRangeFrom (1);
+			Assert.IsTrue (IC.eq (tree));
+			foreach (int i in all)
+				tree.Add (i);
+
+			tree.RemoveRangeTo (10);
+			Assert.IsTrue (IC.eq (tree, new int[] { 10, 10, 12, 14, 16, 18, 20 }));
+			tree.RemoveRangeTo (2);
+			Assert.IsTrue (IC.eq (tree, new int[] { 10, 10, 12, 14, 16, 18, 20 }));
+			tree.RemoveRangeTo (21);
+			Assert.IsTrue (IC.eq (tree));
+			foreach (int i in all)
+				tree.Add (i);
+
+			tree.RemoveRangeFromTo (4, 8);
+			Assert.IsTrue (IC.eq (tree, 1, 2, 2, 3, 8, 8, 9, 10, 10, 12, 14, 16, 18, 20));
+			tree.RemoveRangeFromTo (14, 28);
+			Assert.IsTrue (IC.eq (tree, 1, 2, 2, 3, 8, 8, 9, 10, 10, 12));
+			tree.RemoveRangeFromTo (0, 9);
+			Assert.IsTrue (IC.eq (tree, 9, 10, 10, 12));
+			tree.RemoveRangeFromTo (0, 81);
+			Assert.IsTrue (IC.eq (tree));
+		}
+
+		[Test]
+		public void Normal ()
+		{
+			int[] all = new int[] { 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 8, 8, 9, 10, 10, 12, 14, 16, 18, 20 };
+
+			Assert.IsTrue (IC.eq (tree, all));
+			Assert.IsTrue (IC.eq (tree.RangeAll (), all));
+			Assert.AreEqual (20, tree.RangeAll ().Count);
+			Assert.IsTrue (IC.eq (tree.RangeFrom (11), new int[] { 12, 14, 16, 18, 20 }));
+			Assert.AreEqual (5, tree.RangeFrom (11).Count);
+			Assert.IsTrue (IC.eq (tree.RangeFrom (12), new int[] { 12, 14, 16, 18, 20 }));
+			Assert.IsTrue (IC.eq (tree.RangeFrom (1), all));
+			Assert.IsTrue (IC.eq (tree.RangeFrom (0), all));
+			Assert.IsTrue (IC.eq (tree.RangeFrom (21), new int[] { }));
             Assert.IsTrue(IC.eq(tree.RangeFrom(20), new int[] { 20 }));
             Assert.IsTrue(IC.eq(tree.RangeTo(8), new int[] { 1, 2, 2, 3, 4, 4, 5, 6, 6, 7 }));
             Assert.IsTrue(IC.eq(tree.RangeTo(7), new int[] { 1, 2, 2, 3, 4, 4, 5, 6, 6 }));
@@ -1791,14 +1781,14 @@ namespace C5UnitTests.trees.TreeBag
               var coll = new C5.TreeBag<string>();
               coll.Add("C");
               var snap = coll.Snapshot();
-              coll.Add("C");  
+              coll.Add("C");
               Assert.AreEqual(2, coll.ContainsCount("C"));
             }
 
             [Test]
             public void Bug20120422_2() {
               var coll = new C5.TreeBag<string>();
-              coll.Add("B"); coll.Add("A"); coll.Add("C"); 
+              coll.Add("B"); coll.Add("A"); coll.Add("C");
               var snap1 = coll.Snapshot();
               coll.Add("C");
               Assert.AreEqual(2, coll.ContainsCount("C"));
@@ -2345,10 +2335,8 @@ namespace C5UnitTests.trees.TreeBag
             [ExpectedException(typeof(ArgumentException), ExpectedMessage = "mapper not monotonic")]
             public void BadMap()
             {
-                for (int i = 0; i < 11; i++)
-                    tree.Add(i * i * i);
-
-                ISorted<string> res = tree.Map(new Func<int, string>(badmap), new SC());
+                for (int i = 0; i < 11; i++) tree.Add(i * i * i);
+				ISorted<string> res = tree.Map(new Func<int, string>(badmap), new SC());
             }
 
 
@@ -2784,7 +2772,7 @@ namespace C5UnitTests.trees.TreeBag
             [Test]
             public void GetRangeBug20090616()
             {
-                C5.TreeBag<double> tree = new C5.TreeBag<double>() { 
+                C5.TreeBag<double> tree = new C5.TreeBag<double>() {
           0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 3.0, 3.0, 4.0 };
                 for (int start = 0; start <= tree.Count - 2; start++)
                 {
@@ -2817,7 +2805,7 @@ namespace C5UnitTests.trees.TreeBag
             [Test]
             public void GetRangeBackwardsBug20090616()
             {
-                C5.TreeBag<double> tree = new C5.TreeBag<double>() { 
+                C5.TreeBag<double> tree = new C5.TreeBag<double>() {
           0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 3.0, 3.0, 4.0 };
                 for (int start = 0; start <= tree.Count - 2; start++)
                 {

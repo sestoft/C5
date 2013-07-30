@@ -6,10 +6,10 @@
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,119 +18,139 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-
 using System;
 using C5;
 using NUnit.Framework;
 using SCG = System.Collections.Generic;
 
-
 namespace C5UnitTests.arrays.hashed
 {
-    using CollectionOfInt = HashedArrayList<int>;
+	using CollectionOfInt = HashedArrayList<int>;
 
-    [TestFixture]
-    public class GenericTesters
-    {
-        [Test]
-        public void TestEvents()
-        {
-            Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
-            new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory);
-        }
+	[TestFixture]
+	public class GenericTesters
+	{
+		[Test]
+		public void TestEvents ()
+		{
+			Func<CollectionOfInt> factory = delegate() {
+				return new CollectionOfInt (TenEqualityComparer.Default);
+			};
+			new C5UnitTests.Templates.Events.ListTester<CollectionOfInt> ().Test (factory);
+		}
+		//[Test]
+		//public void Extensible()
+		//{
+		//    C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
+		//    C5UnitTests.Templates.Extensible.Clone.ViewTester<CollectionOfInt>();
+		//    C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
+		//    C5UnitTests.Templates.Extensible.Serialization.ViewTester<CollectionOfInt>();
+		//}
+		[Test]
+		public void List ()
+		{
+			C5UnitTests.Templates.List.Dispose.Tester<CollectionOfInt> ();
+			C5UnitTests.Templates.List.SCG_IList.Tester<CollectionOfInt> ();
+		}
+	}
 
-        //[Test]
-        //public void Extensible()
-        //{
-        //    C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5UnitTests.Templates.Extensible.Clone.ViewTester<CollectionOfInt>();
-        //    C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-        //    C5UnitTests.Templates.Extensible.Serialization.ViewTester<CollectionOfInt>();
-        //}
+	static class Factory
+	{
+		public static ICollection<T> New<T> ()
+		{
+			return new HashedArrayList<T> ();
+		}
+	}
+	namespace Events
+	{
+		class TenEqualityComparer : SCG.IEqualityComparer<int>
+		{
+			TenEqualityComparer ()
+			{
+			}
 
-        [Test]
-        public void List()
-        {
-            C5UnitTests.Templates.List.Dispose.Tester<CollectionOfInt>();
-            C5UnitTests.Templates.List.SCG_IList.Tester<CollectionOfInt>();
-        }
-    }
+			public static TenEqualityComparer Default { get { return new TenEqualityComparer (); } }
 
-    static class Factory
-    {
-        public static ICollection<T> New<T>() { return new HashedArrayList<T>(); }
-    }
+			public int GetHashCode (int item)
+			{
+				return (item / 10).GetHashCode ();
+			}
 
-    namespace Events
-    {
-        class TenEqualityComparer : SCG.IEqualityComparer<int>
-        {
-            TenEqualityComparer() { }
-            public static TenEqualityComparer Default { get { return new TenEqualityComparer(); } }
-            public int GetHashCode(int item) { return (item / 10).GetHashCode(); }
-            public bool Equals(int item1, int item2) { return item1 / 10 == item2 / 10; }
-        }
+			public bool Equals (int item1, int item2)
+			{
+				return item1 / 10 == item2 / 10;
+			}
+		}
 
-        [TestFixture]
-        public class IList_
-        {
-            private HashedArrayList<int> list;
-            CollectionEventList<int> seen;
+		[TestFixture]
+		public class IList_
+		{
+			private HashedArrayList<int> list;
+			CollectionEventList<int> seen;
 
-            [SetUp]
-            public void Init()
-            {
-                list = new HashedArrayList<int>(TenEqualityComparer.Default);
-                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
-            }
+			[SetUp]
+			public void Init ()
+			{
+				list = new HashedArrayList<int> (TenEqualityComparer.Default);
+				seen = new CollectionEventList<int> (System.Collections.Generic.EqualityComparer<int>.Default);
+			}
 
-            private void listen() { seen.Listen(list, EventTypeEnum.All); }
+			private void listen ()
+			{
+				seen.Listen (list, EventTypeEnum.All);
+			}
 
-            [Test]
-            public void SetThis()
-            {
-                list.Add(4); list.Add(56); list.Add(8);
-                listen();
-                list[1] = 45;
-                seen.Check(new CollectionEvent<int>[] {
-          new CollectionEvent<int>(EventTypeEnum.Removed, new ItemCountEventArgs<int>(56, 1), list),
-          new CollectionEvent<int>(EventTypeEnum.RemovedAt, new ItemAtEventArgs<int>(56,1), list),
-          new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(45, 1), list),
-          new CollectionEvent<int>(EventTypeEnum.Inserted, new ItemAtEventArgs<int>(45,1), list),
-          new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), list)
-          });
-            }
+			[Test]
+			public void SetThis ()
+			{
+				list.Add (4);
+				list.Add (56);
+				list.Add (8);
+				listen ();
+				list [1] = 45;
+				seen.Check (new CollectionEvent<int>[] {
+					new CollectionEvent<int>(EventTypeEnum.Removed, new ItemCountEventArgs<int>(56, 1), list),
+					new CollectionEvent<int>(EventTypeEnum.RemovedAt, new ItemAtEventArgs<int>(56,1), list),
+					new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(45, 1), list),
+					new CollectionEvent<int>(EventTypeEnum.Inserted, new ItemAtEventArgs<int>(45,1), list),
+					new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), list)
+				});
+			}
 
-            [Test]
-            public void Insert()
-            {
-                list.Add(4); list.Add(56); list.Add(8);
-                listen();
-                list.Insert(1, 45);
-                seen.Check(new CollectionEvent<int>[] {
-          new CollectionEvent<int>(EventTypeEnum.Inserted, new ItemAtEventArgs<int>(45,1), list),
-          new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(45, 1), list),
-          new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), list)
-          });
-            }
+			[Test]
+			public void Insert ()
+			{
+				list.Add (4);
+				list.Add (56);
+				list.Add (8);
+				listen ();
+				list.Insert (1, 45);
+				seen.Check (new CollectionEvent<int>[] {
+					new CollectionEvent<int>(EventTypeEnum.Inserted, new ItemAtEventArgs<int>(45,1), list),
+					new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(45, 1), list),
+					new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), list)
+				});
+			}
 
-            [Test]
-            public void InsertAll()
-            {
-                list.Add(4); list.Add(56); list.Add(8);
-                listen();
-                list.InsertAll(1, new int[] { 666, 777, 888 });
-                //seen.Print(Console.Error);
-                seen.Check(new CollectionEvent<int>[] {
-          new CollectionEvent<int>(EventTypeEnum.Inserted, new ItemAtEventArgs<int>(666,1), list),
-          new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(666, 1), list),
-          new CollectionEvent<int>(EventTypeEnum.Inserted, new ItemAtEventArgs<int>(777,2), list),
-          new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(777, 1), list),
-          new CollectionEvent<int>(EventTypeEnum.Inserted, new ItemAtEventArgs<int>(888,3), list),
-          new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(888, 1), list),
-          new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), list)
-          });
-                list.InsertAll(1, new int[] { });
+			[Test]
+			public void InsertAll ()
+			{
+				list.Add (4);
+				list.Add (56);
+				list.Add (8);
+				listen ();
+				list.InsertAll (1, new int[] { 666, 777, 888 });
+				//seen.Print(Console.Error);
+				seen.Check (new CollectionEvent<int>[] {
+					new CollectionEvent<int>(EventTypeEnum.Inserted, new ItemAtEventArgs<int>(666,1), list),
+					new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(666, 1), list),
+					new CollectionEvent<int>(EventTypeEnum.Inserted, new ItemAtEventArgs<int>(777,2), list),
+					new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(777, 1), list),
+					new CollectionEvent<int>(EventTypeEnum.Inserted, new ItemAtEventArgs<int>(888,3), list),
+					new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(888, 1), list),
+					new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), list)
+				});
+				list.InsertAll (1, new int[] { });
                 seen.Check(new CollectionEvent<int>[] { });
             }
 
@@ -279,7 +299,7 @@ namespace C5UnitTests.arrays.hashed
                 seen.Check(new CollectionEvent<int>[] { });
                 val = 67;
                 list.FindOrAdd(ref val);
-                seen.Check(new CollectionEvent<int>[] { 
+                seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(67, 1), list),
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), list)
         });
@@ -299,7 +319,7 @@ namespace C5UnitTests.arrays.hashed
         });
                 val = 67;
                 list.UpdateOrAdd(val);
-                seen.Check(new CollectionEvent<int>[] { 
+                seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(67, 1), list),
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), list)
         });
@@ -311,7 +331,7 @@ namespace C5UnitTests.arrays.hashed
         });
                 val = 67;
                 list.UpdateOrAdd(81, out val);
-                seen.Check(new CollectionEvent<int>[] { 
+                seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(81, 1), list),
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), list)
         });
@@ -2739,7 +2759,6 @@ namespace C5UnitTests.arrays.hashed
                     {
                         list = new HashedArrayList<int>();
                         for (int k = 0; k < 6; k++) list.Add(k);
-                        HashedArrayList<int> v = (HashedArrayList<int>)list.View(i, j);
                         list.Remove(3);
                         Assert.IsTrue(list.Check(), "list check after Remove, i=" + i + ", j=" + j);
                     }
@@ -2757,7 +2776,6 @@ namespace C5UnitTests.arrays.hashed
                     {
                         list = new HashedArrayList<int>();
                         for (int k = 0; k < 6; k++) list.Add(k);
-                        HashedArrayList<int> v = (HashedArrayList<int>)list.View(i, j);
                         list.RemoveAll(list2);
                         Assert.IsTrue(list.Check(), "list check after RemoveAll, i=" + i + ", j=" + j);
                     }
@@ -2911,7 +2929,6 @@ namespace C5UnitTests.arrays.hashed
                     {
                         list = new HashedArrayList<int>();
                         list.AddAll(list2);
-                        HashedArrayList<int> v = (HashedArrayList<int>)list.View(i, j);
                         list.RemoveAllCopies(2);
                         Assert.IsTrue(list.Check(), "list check after RemoveAllCopies, i=" + i + ", j=" + j);
                     }
