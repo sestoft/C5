@@ -10,7 +10,7 @@
     <projectUrl>http://www.itu.dk/research/c5/</projectUrl>
     <iconUrl>https://github.com/sestoft/C5/raw/master/images/icon-nuget.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>The C5 Generic Collection Library for C# and CLI is a comprehensive collection library supporting lists, sets, bags, dictionaries, priority queues, (FIFO) queues, and (LIFO) stacks. C5 runs on .NET 4.0, Silverlight 4, Windows Phone 7, Xbox 360, and Mono.</description>
+    <description>The C5 Generic Collection Library for C# and CLI is a comprehensive collection library supporting lists, sets, bags, dictionaries, priority queues, (FIFO) queues, and (LIFO) stacks. C5 runs on .NET 4.0, Silverlight 4, Windows Phone 8, and Mono.</description>
     <releaseNotes>Fixed a bug in IntervalHeap FindMin()</releaseNotes>
     <copyright>Copyright 2013</copyright>
     <tags>Generics Collections Heap TreeSet PriorityQueue</tags>
