@@ -1,9 +1,9 @@
 RELEASE NOTES FOR C5 GENERIC COLLECTION LIBRARY FOR C#/CLI
 ------------------------------
 
-Release 2.2.5073.25655 of 2013-11-21
+Release 2.2.5073.27396 of 2013-11-21
 
- * Reintroduced support for Mono 2.0 in NuGet package, thanks to LHCGreg
+ * Update to PCL profile in NuGet package
 
 Release 2.2.4822.42600 of 2013-03-15
 
