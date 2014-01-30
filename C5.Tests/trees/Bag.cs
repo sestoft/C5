@@ -813,6 +813,123 @@ namespace C5UnitTests.trees.TreeBag
     }
 
     [TestFixture]
+    public class UniqueItemCount
+    {
+        private TreeBag<int> list;
+
+        [SetUp]
+        public void Init() { list = new TreeBag<int>(); }
+
+        [TearDown]
+        public void Dispose() { list = null; }
+
+        [Test]
+        public void Test1()
+        {
+            Assert.AreEqual(list.UniqueItems().Count, list.uniqueCount);
+            Assert.AreEqual(list.ItemMultiplicities().Count, list.uniqueCount);
+            list.AddAll(new int[] { 7, 9, 7 });
+            Assert.AreEqual(2, list.uniqueCount);
+            Assert.AreEqual(list.UniqueItems().Count, list.uniqueCount);
+            Assert.AreEqual(list.ItemMultiplicities().Count, list.uniqueCount);
+
+            list.Remove(7);
+            Assert.AreEqual(2, list.uniqueCount);
+            Assert.AreEqual(list.UniqueItems().Count, list.uniqueCount);
+            Assert.AreEqual(list.ItemMultiplicities().Count, list.uniqueCount);
+
+            list.Remove(7);
+            Assert.AreEqual(1, list.uniqueCount);
+            Assert.AreEqual(list.UniqueItems().Count, list.uniqueCount);
+            Assert.AreEqual(list.ItemMultiplicities().Count, list.uniqueCount);
+        }
+
+        [Test]
+        public void Test2()
+        {
+            list.AddSorted(new int[] { 7, 8, 9, 10, 10 });
+            Assert.AreEqual(4, list.uniqueCount);
+            Assert.AreEqual(list.UniqueItems().Count, list.uniqueCount);
+            Assert.AreEqual(list.ItemMultiplicities().Count, list.uniqueCount);
+        }
+
+        [Test]
+        public void Test3()
+        {
+            Assert.AreEqual(list.UniqueItems().Count, list.uniqueCount);
+            Assert.AreEqual(list.ItemMultiplicities().Count, list.uniqueCount);
+            list.Add(7);
+            list.Add(9);
+            list.Add(7);
+            Assert.AreEqual(2, list.uniqueCount);
+            Assert.AreEqual(list.UniqueItems().Count, list.uniqueCount);
+            Assert.AreEqual(list.ItemMultiplicities().Count, list.uniqueCount);
+
+            list.Remove(7);
+            Assert.AreEqual(2, list.uniqueCount);
+            Assert.AreEqual(list.UniqueItems().Count, list.uniqueCount);
+            Assert.AreEqual(list.ItemMultiplicities().Count, list.uniqueCount);
+
+            list.Remove(7);
+            Assert.AreEqual(1, list.uniqueCount);
+            Assert.AreEqual(list.UniqueItems().Count, list.uniqueCount);
+            Assert.AreEqual(list.ItemMultiplicities().Count, list.uniqueCount);
+        }
+
+        [Test]
+        public void Test_FindOrAdd()
+        {
+            list.AddSorted(new int[] { 7, 8, 9, 10, 10 });
+            int tmp = 7;
+            list.FindOrAdd(ref tmp);
+            Assert.AreEqual(4, list.uniqueCount);
+            Assert.AreEqual(list.UniqueItems().Count, list.uniqueCount);
+            Assert.AreEqual(list.ItemMultiplicities().Count, list.uniqueCount);
+
+            tmp = 11;
+            list.FindOrAdd(ref tmp);
+            Assert.AreEqual(5, list.uniqueCount);
+            Assert.AreEqual(list.UniqueItems().Count, list.uniqueCount);
+            Assert.AreEqual(list.ItemMultiplicities().Count, list.uniqueCount);
+        }
+
+        [Test]
+        public void Test_RemoveAllCopies()
+        {
+            list.AddSorted(new int[] { 7, 8, 8, 9, 10, 10 });
+            list.RemoveAllCopies(10);
+            Assert.AreEqual(3, list.uniqueCount);
+            Assert.AreEqual(list.UniqueItems().Count, list.uniqueCount);
+            Assert.AreEqual(list.ItemMultiplicities().Count, list.uniqueCount);
+        }
+
+        [Test]
+        public void Test_DeleteMinMax()
+        {
+            list.AddAll(new int[] { 7, 9, 9, 7 });
+            Assert.AreEqual(2, list.uniqueCount);
+            Assert.AreEqual(list.UniqueItems().Count, list.uniqueCount);
+            Assert.AreEqual(list.ItemMultiplicities().Count, list.uniqueCount);
+
+            list.DeleteMin();
+            Assert.AreEqual(2, list.uniqueCount);
+            Assert.AreEqual(list.UniqueItems().Count, list.uniqueCount);
+            Assert.AreEqual(list.ItemMultiplicities().Count, list.uniqueCount);
+
+            list.DeleteMax();
+            Assert.AreEqual(2, list.uniqueCount);
+            Assert.AreEqual(list.UniqueItems().Count, list.uniqueCount);
+            Assert.AreEqual(list.ItemMultiplicities().Count, list.uniqueCount);
+
+            list.DeleteMax();
+            Assert.AreEqual(1, list.uniqueCount);
+            Assert.AreEqual(list.UniqueItems().Count, list.uniqueCount);
+            Assert.AreEqual(list.ItemMultiplicities().Count, list.uniqueCount);
+        }
+    }
+
+
+    [TestFixture]
     public class ArrayTest
     {
         private TreeBag<int> tree;
