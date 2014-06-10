@@ -36,6 +36,7 @@ namespace C5
     /// Each distinct item is only kept in one place in the tree - together with the number
     /// of times it is a member of the bag. Thus, if two items that are equal according
     /// </summary>
+    [Serializable]
     public class TreeBag<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted<T>
     {
         #region Fields
@@ -124,6 +125,7 @@ namespace C5
         /// <summary>
         /// The type of node in a Red-Black binary tree
         /// </summary>
+        [Serializable]
         class Node
         {
             public bool red = true;
@@ -260,6 +262,7 @@ namespace C5
         /// of subtrees waiting to be enumerated. Currently only used for the tree set 
         /// enumerators (tree bag enumerators use an iterator block based enumerator).
         /// </summary>
+        [Serializable]
         internal class Enumerator : SCG.IEnumerator<T>
         {
             #region Private Fields
@@ -407,6 +410,7 @@ namespace C5
         /// An enumerator for a snapshot of a node copy persistent red-black tree
         /// collection.
         /// </summary>
+        [Serializable]
         internal class SnapEnumerator : SCG.IEnumerator<T>
         {
             #region Private Fields
@@ -2068,6 +2072,7 @@ namespace C5
 
 
         //TODO: make work with snapshots
+        [Serializable]
         class Multiplicities : CollectionValueBase<KeyValuePair<T, int>>, ICollectionValue<KeyValuePair<T, int>>
         {
             TreeBag<T> treebag;
@@ -2428,6 +2433,7 @@ namespace C5
         }
 
         #region Interval nested class
+        [Serializable]
         class Interval : DirectedCollectionValueBase<T>, IDirectedCollectionValue<T>
         {
             readonly int start, length, stamp;
@@ -3404,6 +3410,7 @@ namespace C5
             return ((TreeBag<T>)_snapshot).generation;
         }
 
+        [Serializable]
         class SnapRef
         {
             public SnapRef Prev, Next;
@@ -3494,6 +3501,7 @@ namespace C5
 
         #region TreeBag.Range nested class
 
+        [Serializable]
         internal class Range : DirectedCollectionValueBase<T>, IDirectedCollectionValue<T>
         {
             //We actually need exclusive upper and lower bounds, and flags to 
@@ -3531,6 +3539,7 @@ namespace C5
 
             #region TreeBag.Range.Enumerator nested class
 
+            [Serializable]
             internal class Enumerator : SCG.IEnumerator<T>
             {
                 #region Private Fields

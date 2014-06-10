@@ -27,6 +27,7 @@ namespace C5
     /// <summary>
     /// A set collection class based on linear hashing
     /// </summary>
+    [Serializable]
     public class HashSet<T> : CollectionBase<T>, ICollection<T>
     {
         #region Feature
@@ -110,6 +111,7 @@ namespace C5
         #endregion
 
         #region Bucket nested class(es)
+        [Serializable]
         class Bucket
         {
             internal T item;

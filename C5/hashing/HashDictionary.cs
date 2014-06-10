@@ -19,6 +19,7 @@
  SOFTWARE.
 */
 
+using System;
 using SCG = System.Collections.Generic;
 
 namespace C5
@@ -26,6 +27,7 @@ namespace C5
     /// <summary>
     /// A generic dictionary class based on a hash set class <see cref="T:C5.HashSet`1"/>. 
     /// </summary>
+    [Serializable]
     public class HashDictionary<K, V> : DictionaryBase<K, V>, IDictionary<K, V>
     {
         /// <summary>

@@ -27,6 +27,7 @@ namespace C5
     /// <summary>
     /// A bag collection based on a hash table of (item,count) pairs. 
     /// </summary>
+    [Serializable]
     public class HashBag<T> : CollectionBase<T>, ICollection<T>
     {
         #region Fields

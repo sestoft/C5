@@ -71,6 +71,7 @@ namespace C5
     /// Holds the real events for a collection
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    [Serializable]
     internal sealed class EventBlock<T>
     {
         internal EventTypeEnum events;
@@ -191,6 +192,7 @@ namespace C5
     /// This should really be nested in Guarded collection value, only have a guardereal field
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    [Serializable]
     internal sealed class ProxyEventBlock<T>
     {
         ICollectionValue<T> proxy, real;
@@ -335,6 +337,7 @@ namespace C5
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    [Serializable]
     public class ItemAtEventArgs<T> : EventArgs
     {
         /// <summary>
@@ -365,6 +368,7 @@ namespace C5
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    [Serializable]
     public class ItemCountEventArgs<T> : EventArgs
     {
         /// <summary>
@@ -396,6 +400,7 @@ namespace C5
     /// <summary>
     /// 
     /// </summary>
+    [Serializable]
     public class ClearedEventArgs : EventArgs
     {
         /// <summary>
@@ -426,6 +431,7 @@ namespace C5
     /// <summary>
     /// 
     /// </summary>
+    [Serializable]
     public class ClearedRangeEventArgs : ClearedEventArgs
     {
         //WE could let this be of type int? to  allow 

@@ -38,6 +38,7 @@ namespace C5
     /// <i>TODO: discuss persistence and its useful usage modes. Warn about the space
     /// leak possible with other usage modes.</i>
     /// </summary>
+    [Serializable]
     public class TreeSet<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted<T>
     {
         #region Fields
@@ -126,6 +127,7 @@ namespace C5
         /// <summary>
         /// The type of node in a Red-Black binary tree
         /// </summary>
+        [Serializable]
         class Node
         {
             public bool red = true;
@@ -259,6 +261,7 @@ namespace C5
         /// of subtrees waiting to be enumerated. Currently only used for the tree set 
         /// enumerators (tree bag enumerators use an iterator block based enumerator).
         /// </summary>
+        [Serializable]
         internal class Enumerator : SCG.IEnumerator<T>
         {
             #region Private Fields
@@ -406,6 +409,7 @@ namespace C5
         /// An enumerator for a snapshot of a node copy persistent red-black tree
         /// collection.
         /// </summary>
+        [Serializable]
         internal class SnapEnumerator : SCG.IEnumerator<T>
         {
             #region Private Fields
@@ -2207,6 +2211,7 @@ namespace C5
         }
 
         #region Interval nested class
+        [Serializable]
         class Interval : DirectedCollectionValueBase<T>, IDirectedCollectionValue<T>
         {
             readonly int start, length, stamp;
@@ -3143,6 +3148,7 @@ namespace C5
             return ((TreeSet<T>)_snapshot).generation;
         }
 
+        [Serializable]
         class SnapRef
         {
             public SnapRef Prev, Next;
@@ -3233,6 +3239,7 @@ namespace C5
 
         #region TreeSet.Range nested class
 
+        [Serializable]
         internal class Range : DirectedCollectionValueBase<T>, IDirectedCollectionValue<T>
         {
             //We actually need exclusive upper and lower bounds, and flags to 
@@ -3270,6 +3277,7 @@ namespace C5
 
             #region TreeSet.Range.Enumerator nested class
 
+            [Serializable]
             internal class Enumerator : SCG.IEnumerator<T>
             {
                 #region Private Fields

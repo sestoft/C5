@@ -25,6 +25,7 @@ namespace C5
     /// <summary>
     /// A utility class with functions for sorting arrays with respect to an IComparer&lt;T&gt;
     /// </summary>
+    [Serializable]
     public class Sorting
     {
         Sorting() { }
@@ -89,7 +90,7 @@ namespace C5
             new Sorter<T>(array, comparer).HeapSort(start, start + count);
         }
 
-
+        [Serializable]
         class Sorter<T>
         {
             T[] a;
