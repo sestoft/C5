@@ -1,10 +1,10 @@
-﻿// This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
-
-using System;
+﻿using System;
 using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
 [assembly: AssemblyTitle("C5")]
 [assembly: AssemblyDescription("The C5 Generic Collection Library for C# and CLI is a comprehensive collection library supporting lists, sets, bags, dictionaries, priority queues, (FIFO) queues, and (LIFO) stacks. C5 runs on .NET 4.0, Silverlight 4, Windows Phone 7, Xbox 360, and Mono.")]
 [assembly: AssemblyConfiguration("")]
@@ -14,7 +14,14 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: CLSCompliant(true)]
-[assembly: InternalsVisibleTo("C5.Tests,PublicKey=00240000048000009400000006020000002400005253413100040000010001002d07581667cbf8caf9786ac8d5257eb2c77eb2643a1af1bb89d4286e27a3ff5d805408c9f1a0a392d2f478ca2b9c68e43cdcdcea2d7cf0618dd8ba48858bf5fc74c7fc2af7a29f936398c0f61a2165d08ac4fcc8e8ad04e24633b7ca31a7c13f750ae75e53cea55ced97d3289fd100dbe2661a802bf8bd2acb0b6893ef3fb79c,PublicKeyToken=282361b99ded7e8e")]
+
+// Setting ComVisible to false makes the types in this assembly not visible 
+// to COM components.  If you need to access a type in this assembly from 
+// COM, set the ComVisible attribute to true on that type.
+[assembly: ComVisible(false)]
+
+// The following GUID is for the ID of the typelib if this project is exposed to COM
+[assembly: Guid("383b2493-e536-4c03-bd05-c64b86b4a143")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -28,3 +35,4 @@ using System.Runtime.CompilerServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("2.2.*")]
 [assembly: AssemblyFileVersion("2.2.0.0")]
+
