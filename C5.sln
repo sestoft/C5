@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C5.NET35", "C5.NET35\C5.NET
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C5.NET40", "C5.NET40\C5.NET40.csproj", "{97E3C57E-D543-42C2-90FD-E239C5D11AD2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C5.NET40.Tests", "C5.NET40.Tests\C5.NET40.Tests.csproj", "{D5422FF7-8BAF-4CB4-96D0-E18488F9F366}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{97E3C57E-D543-42C2-90FD-E239C5D11AD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97E3C57E-D543-42C2-90FD-E239C5D11AD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97E3C57E-D543-42C2-90FD-E239C5D11AD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5422FF7-8BAF-4CB4-96D0-E18488F9F366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5422FF7-8BAF-4CB4-96D0-E18488F9F366}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5422FF7-8BAF-4CB4-96D0-E18488F9F366}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5422FF7-8BAF-4CB4-96D0-E18488F9F366}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
