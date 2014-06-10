@@ -1,6 +1,11 @@
 RELEASE NOTES FOR C5 GENERIC COLLECTION LIBRARY FOR C#/CLI
 ------------------------------
 
+Release 2.3.0.0 of 2014-06-10
+
+ * Added .NET 4.0 build which reintroduces support for serialization
+ * Added .NET 3.5 build
+
 Release 2.2.5073.27396 of 2013-11-21
 
  * Update to PCL profile in NuGet package
