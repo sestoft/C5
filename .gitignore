@@ -42,7 +42,7 @@ local.properties
 *.user
 *.sln.docstates
 *.DotSettings
-*.nupkg
+#*.nupkg
 packages/
 
 
