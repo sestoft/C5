@@ -80,7 +80,7 @@ C5 is a portable library supporting .NET 4.0, Silverlight, Windows Phone 8, and 
 
 == Getting Started
 
-1. Get C5 from NuGet: <tt>PM> Install-Package C5</tt>
+1. Get C5 from NuGet[https://www.nuget.org/packages/C5]: <tt>PM> Install-Package C5</tt>
 
 2. C5 is built using the Portable Library Tools extension 
    (http://visualstudiogallery.msdn.microsoft.com/b0e0b5e9-e138-410b-ad10-00cb3caf4981)
