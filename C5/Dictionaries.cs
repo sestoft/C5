@@ -75,6 +75,15 @@ namespace C5
 
 
         /// <summary>
+        /// Create an instance of the KeyValuePair using type inference.
+        /// </summary>
+        public static KeyValuePair<K, V> Create<K, V>(K key, V value)
+        {
+            return new KeyValuePair<K, V>(key, value);
+        }
+
+
+        /// <summary>
         /// Get the hash code of the pair.
         /// </summary>
         /// <returns>The hash code</returns>
