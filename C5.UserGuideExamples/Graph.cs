@@ -209,7 +209,7 @@ namespace Graph
     int ComponentCount { get;}
 
     /// <summary>
-    /// Compute the connnected components of this graph. 
+    /// Compute the connected components of this graph. 
     /// </summary>
     /// <returns>A collection of (vertex,component) pairs, where the first part of the
     /// pair is some vertex in the component.</returns>
@@ -228,7 +228,7 @@ namespace Graph
     /// <summary>
     /// Traverse an undirected graph in either BFS or DFS order, performing the action 
     /// <code>act</code> on each vertex. 
-    /// The start vertex of each component of the graph is undefinded. 
+    /// The start vertex of each component of the graph is undefined. 
     /// </summary>
     /// <param name="bfs">True if BFS, false if DFS</param>
     /// <param name="act"></param>
@@ -252,7 +252,7 @@ namespace Graph
     /// <param name="beforevertex">Action to perform when a vertex is first encountered.</param>
     /// <param name="aftervertex">Action to perform when all edges out of a vertex has been handles.</param>
     /// <param name="onfollow">Action to perform as an edge is traversed.</param>
-    /// <param name="onfollowed">Action to perform when an edge is travesed back.</param>
+    /// <param name="onfollowed">Action to perform when an edge is traversed back.</param>
     /// <param name="onnotfollowed">Action to perform when an edge (a backedge)is seen, but not followed.</param>
     void DepthFirstSearch(V start, System.Action<V> beforevertex, System.Action<V> aftervertex,
             System.Action<Edge<V, E>> onfollow, System.Action<Edge<V, E>> onfollowed, System.Action<Edge<V, E>> onnotfollowed);
@@ -270,7 +270,7 @@ namespace Graph
     void PriorityFirstTraverse(bool accumulating, V start, EdgeAction<V, E, W> act);
 
     /// <summary>
-    /// Compute the (a) shortest path from start to end. THrow an exception if end cannot be reached rom start.
+    /// Compute the (a) shortest path from start to end. Throw an exception if end cannot be reached from start.
     /// </summary>
     /// <param name="weight"></param>
     /// <param name="start"></param>
@@ -280,7 +280,7 @@ namespace Graph
 
     /// <summary>
     /// Compute the Distance from start to end, i.e. the total weight of a shortest path from start to end. 
-    /// Throw an exception if end cannot be reached rom start.
+    /// Throw an exception if end cannot be reached from start.
     /// </summary>
     /// <param name="start"></param>
     /// <param name="end"></param>
@@ -330,7 +330,7 @@ namespace Graph
 /// an edge of the graph in a particular traversal direction.
 /// </summary>
 /// <typeparam name="V">The type of a vertex.</typeparam>
-/// <typeparam name="E">The type of data asociated with edges.</typeparam>
+/// <typeparam name="E">The type of data associated with edges.</typeparam>
   struct Edge<V, E>
   {
     static SCG.IEqualityComparer<V> vequalityComparer = EqualityComparer<V>.Default;
@@ -437,7 +437,7 @@ namespace Graph
 /// The "extra" parameter is for additional information supplied by the traversal 
 /// algorithm. 
 /// The intention of the bool return value is that returning false is a signal to the
-/// traversal algorithm to abandon the traversl because the user has already found
+/// traversal algorithm to abandon the traversal because the user has already found
 /// what he was looking for.
 /// </summary>
 /// <typeparam name="V"></typeparam>
@@ -1140,7 +1140,7 @@ namespace Graph
     }
 
     /// <summary>
-    /// (Refer to the litterature, Vazirani)
+    /// (Refer to the literature, Vazirani)
     /// 
     /// (Describe: MST+Euler+shortcuts)
     /// </summary>
@@ -1234,7 +1234,7 @@ namespace Graph
   }
 
 /// <summary>
-/// Attribute used for marking which examples use a particuler graph method
+/// Attribute used for marking which examples use a particular graph method
 /// </summary>
   class UsedByAttribute : Attribute
   {
@@ -1323,7 +1323,7 @@ namespace Graph
     }
 
     /// <summary>
-    /// Create edges of a graph correspondingto a "wheel" shape: the ecnter and equidistant 
+    /// Create edges of a graph corresponding to a "wheel" shape: the ecnter and equidistant 
     /// points around the perimeter. The edgedata and edge weights are the euclidean distances.
     /// </summary>
     /// <param name="complete">True means the graph will be complete, false that the graph
@@ -1433,7 +1433,7 @@ namespace Graph
     /// <summary>
     /// This example examines the two variants of a priority-first search:
     ///  with accumulated weights, leading to shortest paths from start;
-    ///  with non-acumulated weights, leading to a minimum spanning tree.
+    ///  with non-accumulated weights, leading to a minimum spanning tree.
     /// </summary>
     [ExampleDescription("Priority-first-search with and without accumulated weights")]
     static void testPFS()
@@ -1444,7 +1444,7 @@ namespace Graph
       g.PriorityFirstTraverse(false,
           "P0",
           delegate(Edge<string, double> e, double d) { Console.WriteLine("Edge: {0}, at distance {1}", e, d); return true; });
-      Console.WriteLine("========= PFS accumulated weights (-> Shortst paths from start) =========");
+      Console.WriteLine("========= PFS accumulated weights (-> Shortest paths from start) =========");
       g.PriorityFirstTraverse(true,
           "P0",
           delegate(Edge<string, double> e, double d) { Console.WriteLine("Edge: {0}, at distance {1}", e, d); return true; });

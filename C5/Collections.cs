@@ -891,7 +891,7 @@ namespace C5
         /// <summary>
         /// Check if it is valid to perform update operations, and if so increment stamp.
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException">If colection is read-only</exception>
+        /// <exception cref="ReadOnlyCollectionException">If collection is read-only</exception>
         protected virtual void updatecheck()
         {
             if (isReadOnlyBase)
@@ -1437,7 +1437,7 @@ namespace C5
 
 
             /// <summary>
-            /// Create a araay collection range with the same contents as this one, but 
+            /// Create an array collection range with the same contents as this one, but 
             /// opposite enumeration sequence.
             /// </summary>
             /// <exception cref="CollectionModifiedException">if underlying collection has been modified.</exception>

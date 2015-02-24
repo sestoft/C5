@@ -185,7 +185,7 @@ namespace C5
 
     /// <summary>
     /// Default equalityComparer for dictionary entries.
-    /// Operations only look at keys and uses an externaly defined equalityComparer for that.
+    /// Operations only look at keys and uses an externally defined equalityComparer for that.
     /// </summary>
     [Serializable]
     public sealed class KeyValuePairEqualityComparer<K, V> : SCG.IEqualityComparer<KeyValuePair<K, V>>
@@ -616,7 +616,7 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <value>A collection containg the all the keys of the dictionary</value>
+        /// <value>A collection containing all the keys of the dictionary</value>
         public virtual ICollectionValue<K> Keys { get { return new KeysCollection(pairs); } }
 
 
@@ -681,13 +681,13 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <value>The number of entrues in the dictionary</value>
+        /// <value>The number of entries in the dictionary</value>
         public override int Count { get { return pairs.Count; } }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <value>The number of entrues in the dictionary</value>
+        /// <value>The number of entries in the dictionary</value>
         public override Speed CountSpeed { get { return pairs.CountSpeed; } }
 
         /// <summary>

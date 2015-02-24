@@ -588,7 +588,7 @@ namespace C5
 
         /// <summary>
         /// Check the integrity of the internal data structures of this collection.
-        /// Only avaliable in DEBUG builds???
+        /// Only available in DEBUG builds???
         /// </summary>
         /// <returns>True if check does not fail.</returns>
         public bool Check()
