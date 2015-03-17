@@ -26,6 +26,7 @@ namespace C5
     /// <summary>
     /// An entry in a dictionary from K to V.
     /// </summary>
+    [Serializable]
     public struct KeyValuePair<K, V> : IEquatable<KeyValuePair<K, V>>, IShowable
     {
         /// <summary>
