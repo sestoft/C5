@@ -111,7 +111,7 @@ C5 is a portable library supporting .NET 4.0, Silverlight, Windows Phone 8, and 
 
 == License
 
-C5 is released under a BSD-style license:
+C5 is released under the {MIT License}[http://opensource.org/licenses/MIT]:
 
 Copyright Niels Kokholm, Peter Sestoft, and Rasmus Nielsen 2003-2014.
 
