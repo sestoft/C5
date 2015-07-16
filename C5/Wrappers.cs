@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2006 Niels Kokholm and Peter Sestoft
+ Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -26,6 +26,7 @@ namespace C5
     /// <summary>
     /// A read-only wrapper class for a generic enumerator
     /// </summary>
+    [Serializable]
     public class GuardedEnumerator<T> : SCG.IEnumerator<T>
     {
         #region Fields
@@ -96,6 +97,7 @@ namespace C5
     ///
     /// <i>This is mainly interesting as a base of other guard classes</i>
     /// </summary>
+    [Serializable]
     public class GuardedEnumerable<T> : SCG.IEnumerable<T>
     {
         #region Fields
@@ -144,6 +146,7 @@ namespace C5
     ///
     /// <i>This is mainly interesting as a base of other guard classes</i>
     /// </summary>
+    [Serializable]
     public class GuardedDirectedEnumerable<T> : GuardedEnumerable<T>, IDirectedEnumerable<T>
     {
         #region Fields
@@ -191,6 +194,7 @@ namespace C5
     ///
     /// <i>This is mainly interesting as a base of other guard classes</i>
     /// </summary>
+    [Serializable]
     public class GuardedCollectionValue<T> : GuardedEnumerable<T>, ICollectionValue<T>
     {
         #region Events
@@ -404,6 +408,7 @@ namespace C5
     ///
     /// <i>This is mainly interesting as a base of other guard classes</i>
     /// </summary>
+    [Serializable]
     public class GuardedDirectedCollectionValue<T> : GuardedCollectionValue<T>, IDirectedCollectionValue<T>
     {
         #region Fields
@@ -468,6 +473,7 @@ namespace C5
     /// <i>Suitable for wrapping hash tables, <see cref="T:C5.HashSet`1"/>
     /// and <see cref="T:C5.HashBag`1"/>  </i></para>
     /// </summary>
+    [Serializable]
     public class GuardedCollection<T> : GuardedCollectionValue<T>, ICollection<T>
     {
         #region Fields
@@ -720,6 +726,7 @@ namespace C5
     ///
     /// <i>This is mainly interesting as a base of other guard classes</i>
     /// </summary>
+    [Serializable]
     public class GuardedSequenced<T> : GuardedCollection<T>, ISequenced<T>
     {
         #region Fields
@@ -845,6 +852,7 @@ namespace C5
     ///
     /// <i>This is mainly interesting as a base of other guard classes</i>
     /// </summary>
+    [Serializable]
     public class GuardedSorted<T> : GuardedSequenced<T>, ISorted<T>
     {
         #region Fields
@@ -1077,6 +1085,7 @@ namespace C5
     ///
     /// <i>Suitable for wrapping TreeSet, TreeBag and SortedArray</i>
     /// </summary>
+    [Serializable]
     public class GuardedIndexedSorted<T> : GuardedSorted<T>, IIndexedSorted<T>
     {
         #region Fields
@@ -1251,6 +1260,7 @@ namespace C5
     /// <see cref="T:C5.HashedArray`1"/>.
     /// </i>
     /// </summary>
+    [Serializable]
     public class GuardedList<T> : GuardedSequenced<T>, IList<T>, SCG.IList<T>
     {
         #region Fields
@@ -1819,6 +1829,7 @@ namespace C5
     /// <para>Suitable for wrapping a <see cref="T:C5.CircularQueue`1"/></para>
     /// </summary>
     /// <typeparam name="T">The item type.</typeparam>
+    [Serializable]
     public class GuardedQueue<T> : GuardedDirectedCollectionValue<T>, IQueue<T>
     {
         #region Fields
@@ -1875,6 +1886,7 @@ namespace C5
     ///
     /// <i>Suitable for wrapping a HashDictionary. <see cref="T:C5.HashDictionary`2"/></i>
     /// </summary>
+    [Serializable]
     public class GuardedDictionary<K, V> : GuardedCollectionValue<KeyValuePair<K, V>>, IDictionary<K, V>
     {
         #region Fields
@@ -2073,6 +2085,7 @@ namespace C5
     ///
     /// <i>Suitable for wrapping a Dictionary. <see cref="T:C5.Dictionary`2"/></i>
     /// </summary>
+    [Serializable]
     public class GuardedSortedDictionary<K, V> : GuardedDictionary<K, V>, ISortedDictionary<K, V>
     {
         #region Fields

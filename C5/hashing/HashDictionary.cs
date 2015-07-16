@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2006 Niels Kokholm and Peter Sestoft
+ Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -19,6 +19,7 @@
  SOFTWARE.
 */
 
+using System;
 using SCG = System.Collections.Generic;
 
 namespace C5
@@ -26,6 +27,7 @@ namespace C5
     /// <summary>
     /// A generic dictionary class based on a hash set class <see cref="T:C5.HashSet`1"/>. 
     /// </summary>
+    [Serializable]
     public class HashDictionary<K, V> : DictionaryBase<K, V>, IDictionary<K, V>
     {
         /// <summary>

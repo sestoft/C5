@@ -80,7 +80,7 @@ C5 is a portable library supporting .NET 4.0, Silverlight, Windows Phone 8, and 
 
 == Getting Started
 
-1. Get C5 from NuGet: <tt>PM> Install-Package C5</tt>
+1. Get C5 from NuGet[https://www.nuget.org/packages/C5]: <tt>PM> Install-Package C5</tt>
 
 2. C5 is built using the Portable Library Tools extension 
    (http://visualstudiogallery.msdn.microsoft.com/b0e0b5e9-e138-410b-ad10-00cb3caf4981)
@@ -95,6 +95,10 @@ C5 is a portable library supporting .NET 4.0, Silverlight, Windows Phone 8, and 
    
    To run the tests, start NUnit, open project C5/C5.Tests/bin/Debug/C5.Tests.dll, 
    press Run.
+   
+   Alternatively you can install either ReSharper or the NUnit Test Adapter for 
+   Visual Studio 2012 and 2013 (http://nunit.org/index.php?p=vsTestAdapter&r=2.6.2)
+   and run the tests from inside Visual Studio.
 
    There are more than 1430 NUnit test cases which should execute in less
    than 30 seconds. All should pass.
@@ -109,7 +113,7 @@ C5 is a portable library supporting .NET 4.0, Silverlight, Windows Phone 8, and 
 
 C5 is released under a BSD-style license:
 
-Copyright Niels Kokholm, Peter Sestoft, and Rasmus Nielsen 2003-2013.
+Copyright Niels Kokholm, Peter Sestoft, and Rasmus Nielsen 2003-2014.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

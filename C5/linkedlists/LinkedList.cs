@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2006 Niels Kokholm and Peter Sestoft
+ Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -27,6 +27,7 @@ namespace C5
     /// <summary>
     /// A list collection class based on a doubly linked list data structure.
     /// </summary>
+    [Serializable]
     public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
     {
         #region Fields
@@ -488,6 +489,7 @@ namespace C5
         /// <summary>
         /// An individual cell in the linked list
         /// </summary>
+        [Serializable]
         class Node
         {
             public Node prev;
@@ -522,6 +524,7 @@ namespace C5
         #endregion
 
         #region Position, PositionComparer and ViewHandler nested types
+        [Serializable]
         class PositionComparer : SCG.IComparer<Position>
         {
             static PositionComparer _default;
@@ -664,6 +667,7 @@ namespace C5
 
         #region Range nested class
 
+        [Serializable]
         class Range : DirectedCollectionValueBase<T>, IDirectedCollectionValue<T>
         {
             int start, count, rangestamp;
@@ -2662,7 +2666,7 @@ namespace C5
         }
 
         [Obsolete]
-        Object System.Collections.ICollection.SyncRoot
+        object System.Collections.ICollection.SyncRoot
         {
             // Presumably safe to use the startsentinel (of type Node, always != null) as SyncRoot
             // since the class Node is private.

@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2006 Niels Kokholm and Peter Sestoft
+ Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -26,6 +26,7 @@ namespace C5
     /// <summary>
     /// A base class for implementing an IEnumerable&lt;T&gt;
     /// </summary>
+    [Serializable]
     public abstract class EnumerableBase<T> : SCG.IEnumerable<T>
     {
         /// <summary>
@@ -68,6 +69,7 @@ namespace C5
     /// <summary>
     /// Base class for classes implementing ICollectionValue[T]
     /// </summary>
+    [Serializable]
     public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionValue<T>, IShowable
     {
         #region Event handling
@@ -371,6 +373,7 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
+        [Serializable]
         protected class RaiseForRemoveAllHandler
         {
             CollectionValueBase<T> collection;
@@ -617,6 +620,7 @@ namespace C5
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    [Serializable]
     public abstract class DirectedCollectionValueBase<T> : CollectionValueBase<T>, IDirectedCollectionValue<T>
     {
         /// <summary>
@@ -657,6 +661,7 @@ namespace C5
     /// <summary>
     /// Base class (abstract) for ICollection implementations.
     /// </summary>
+    [Serializable]
     public abstract class CollectionBase<T> : CollectionValueBase<T>
     {
         #region Fields
@@ -955,6 +960,7 @@ namespace C5
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    [Serializable]
     public abstract class DirectedCollectionBase<T> : CollectionBase<T>, IDirectedCollectionValue<T>
     {
         /// <summary>
@@ -1000,6 +1006,7 @@ namespace C5
     /// <summary>
     /// Base class (abstract) for sequenced collection implementations.
     /// </summary>
+    [Serializable]
     public abstract class SequencedBase<T> : DirectedCollectionBase<T>, IDirectedCollectionValue<T>
     {
         #region Fields
@@ -1161,6 +1168,7 @@ namespace C5
     /// <summary>
     /// Base class for collection classes of dynamic array type implementations.
     /// </summary>
+    [Serializable]
     public abstract class ArrayBase<T> : SequencedBase<T>
     {
         #region Fields
@@ -1358,6 +1366,7 @@ namespace C5
         /// <summary>
         /// A helper class for defining results of interval queries on array based collections.
         /// </summary>
+        [Serializable]
         protected class Range : DirectedCollectionValueBase<T>, IDirectedCollectionValue<T>
         {
             int start, count, delta, stamp;

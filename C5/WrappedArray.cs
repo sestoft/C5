@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2006 Niels Kokholm and Peter Sestoft
+ Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -30,8 +30,10 @@ namespace C5
     /// size of the array will be invalid (and throw <see cref="T:C5.FixedSizeCollectionException"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    [Serializable]
     public class WrappedArray<T> : IList<T>, SCG.IList<T>
     {
+        [Serializable]
         class InnerList : ArrayList<T>
         {
             internal InnerList(T[] array) { this.array = array; size = array.Length; }

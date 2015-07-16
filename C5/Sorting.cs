@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2006 Niels Kokholm and Peter Sestoft
+ Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -25,6 +25,7 @@ namespace C5
     /// <summary>
     /// A utility class with functions for sorting arrays with respect to an IComparer&lt;T&gt;
     /// </summary>
+    [Serializable]
     public class Sorting
     {
         Sorting() { }
@@ -89,7 +90,7 @@ namespace C5
             new Sorter<T>(array, comparer).HeapSort(start, start + count);
         }
 
-
+        [Serializable]
         class Sorter<T>
         {
             T[] a;

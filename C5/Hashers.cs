@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2006 Niels Kokholm and Peter Sestoft
+ Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -30,6 +30,7 @@ namespace C5
     /// Utility class for building default generic equality comparers.
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    [Serializable]
     public static class EqualityComparer<T>
     {
         private static SCG.IEqualityComparer<T> _default;
@@ -101,6 +102,7 @@ namespace C5
     /// <para><b>Note: this will give a new EqualityComparer each time created!</b></para>
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    [Serializable]
     internal class ComparerZeroHashCodeEqualityComparer<T> : SCG.IEqualityComparer<T>
     {
         SCG.IComparer<T> comparer;
@@ -136,6 +138,7 @@ namespace C5
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="W"></typeparam>
+    [Serializable]
     public class SequencedCollectionEqualityComparer<T, W> : SCG.IEqualityComparer<T>
         where T : ISequenced<W>
     {
@@ -171,6 +174,7 @@ namespace C5
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="W"></typeparam>
+    [Serializable]
     public class UnsequencedCollectionEqualityComparer<T, W> : SCG.IEqualityComparer<T>
         where T : ICollection<W>
     {

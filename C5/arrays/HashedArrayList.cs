@@ -1,6 +1,6 @@
 
 /*
- Copyright (c) 2003-2006 Niels Kokholm and Peter Sestoft
+ Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -33,6 +33,7 @@ namespace C5
     /// When the FIFO property is set to true the class will function as a (FIFO) queue
     /// but very inefficiently, use a LinkedList (<see cref="T:C5.LinkedList`1"/>) instead.</i>
     /// </summary>
+    [Serializable]
     public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
     {
         #region Fields
@@ -500,6 +501,7 @@ namespace C5
         #endregion
 
         #region Position, PositionComparer and ViewHandler nested types
+        [Serializable]
         class PositionComparer : SCG.IComparer<Position>
         {
             public int Compare(Position a, Position b)
