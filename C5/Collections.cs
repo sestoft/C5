@@ -20,6 +20,7 @@
 */
 
 using System;
+using System.Collections;
 using SCG = System.Collections.Generic;
 namespace C5
 {
@@ -57,7 +58,7 @@ namespace C5
 
         #region IEnumerable Members
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
@@ -635,7 +636,7 @@ namespace C5
         /// <returns></returns>
         public abstract IDirectedCollectionValue<T> Backwards();
 
-        IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards() { return this.Backwards(); }
+        IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards() { return Backwards(); }
 
         /// <summary>
         /// Check if there exists an item  that satisfies a
@@ -772,7 +773,7 @@ namespace C5
         /// <returns>True if equal</returns>
         public static bool StaticEquals(ICollection<T> collection1, ICollection<T> collection2, SCG.IEqualityComparer<T> itemequalityComparer)
         {
-            if (object.ReferenceEquals(collection1, collection2))
+            if (ReferenceEquals(collection1, collection2))
                 return true;
 
             // bug20070227:
@@ -883,7 +884,7 @@ namespace C5
         /// <param name="thestamp">The stamp identifying the target time</param>
         protected virtual void modifycheck(int thestamp)
         {
-            if (this.stamp != thestamp)
+            if (stamp != thestamp)
                 throw new CollectionModifiedException();
         }
 
@@ -980,7 +981,7 @@ namespace C5
         /// <returns></returns>
         public abstract IDirectedCollectionValue<T> Backwards();
 
-        IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards() { return this.Backwards(); }
+        IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards() { return Backwards(); }
 
         /// <summary>
         /// Check if there exists an item  that satisfies a
@@ -1059,7 +1060,7 @@ namespace C5
         /// <returns>True if equal</returns>
         public static bool StaticEquals(ISequenced<T> collection1, ISequenced<T> collection2, SCG.IEqualityComparer<T> itemequalityComparer)
         {
-            if (object.ReferenceEquals(collection1, collection2))
+            if (ReferenceEquals(collection1, collection2))
                 return true;
 
             if (collection1.Count != collection2.Count)
@@ -1182,6 +1183,19 @@ namespace C5
         /// base dynamic array and may be positive for an updatable view into a base dynamic array.
         /// </summary>
         protected int offset;
+         
+        private readonly Enumerator _internalEnumerator = new Enumerator(); 
+        /// <summary>
+        /// 
+        /// </summary> 
+       
+        protected Enumerator InternalEnumerator
+        {
+            get
+            {
+                return _internalEnumerator;
+            }
+        }
         #endregion
 
         #region Util
@@ -1345,6 +1359,78 @@ namespace C5
         /// <returns></returns>
         public override T Choose() { if (size > 0) return array[size - 1]; throw new NoSuchItemException(); }
 
+        /// <summary>
+        /// 
+        /// </summary> 
+        [Serializable]
+        public class Enumerator : SCG.IEnumerator<T>, IDisposable, IEnumerator
+        {
+            private ArrayBase<T> _internalList;
+
+            private  int _index;
+            private int _theStamp;
+            private int _end;
+           // private T current;
+            private readonly object _object = new object();
+            private readonly object _object2 = new object();
+            private T current;
+            internal void UpdateReference(ArrayBase<T> list, int start, int end, int theStamp)
+            {
+                lock (_object2)
+                {
+                    _internalList = list;
+                    _index = start;
+                    _end = end;
+
+                    current = default(T);
+                    _theStamp = theStamp;
+                }
+             
+            }
+
+
+            public void Dispose()
+            {
+                //Do nothing
+            }
+
+            public bool MoveNext()
+            {
+                lock (_object)
+                {
+                    ArrayBase<T> list = _internalList;
+                    list.modifycheck(_theStamp);
+
+                    if (_index < _end)
+                    {
+                        lock (_object2)
+                        {
+                            current = list.array[_index];
+                            _index++;
+                        }
+                        return true;
+                    }
+
+                    current = default(T);
+                    return false;
+                }
+
+                // _index = _internalList.size + 1;
+             
+            }
+
+            public void Reset()
+            {
+
+            }
+
+            public T Current { get { return current; } }
+
+            object IEnumerator.Current
+            {
+                get { return current; }
+            }
+        }
         #region IEnumerable<T> Members
         /// <summary>
         /// Create an enumerator for this array based collection.
@@ -1353,12 +1439,10 @@ namespace C5
         public override SCG.IEnumerator<T> GetEnumerator()
         {
             int thestamp = stamp, theend = size + offset, thestart = offset;
+             
+            InternalEnumerator.UpdateReference(this, thestart, theend, thestamp);
 
-            for (int i = thestart; i < theend; i++)
-            {
-                modifycheck(thestamp);
-                yield return array[i];
-            }
+            return InternalEnumerator;
         }
         #endregion
 
@@ -1454,7 +1538,7 @@ namespace C5
             }
 
 
-            IDirectedEnumerable<T> C5.IDirectedEnumerable<T>.Backwards()
+            IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards()
             {
                 return Backwards();
             }
