@@ -881,7 +881,7 @@ namespace C5
         /// </summary>
         /// <exception cref="CollectionModifiedException"> if this collection has been updated 
         /// since a target time</exception>
-        /// <param name="thestamp">The stamp identifying the target time</param>
+        /// <param name="thestamp">The stamp identifying the target time</param
         protected virtual void modifycheck(int thestamp)
         {
             if (stamp != thestamp)
@@ -1384,6 +1384,7 @@ namespace C5
             private int _theStamp;
             private int _end;
             private T current;
+
             internal void UpdateReference(ArrayBase<T> list, int start, int end, int theStamp)
             {
                 _internalList = list;
@@ -1403,7 +1404,9 @@ namespace C5
             public bool MoveNext()
             {
                 ArrayBase<T> list = _internalList;
-                list.modifycheck(_theStamp);
+                 
+                if (list.stamp != _theStamp)
+                    throw new CollectionModifiedException();
 
                 if (_index < _end)
                 {
@@ -1416,8 +1419,6 @@ namespace C5
 
                 current = default(T);
                 return false;
-
-                // _index = _internalList.size + 1;
             }
 
             public void Reset()
@@ -1455,7 +1456,7 @@ namespace C5
             int thestamp = stamp, theend = size + offset, thestart = offset;
 
             var enumerator = !IsMainThread ? InternalEnumerator.Clone() : InternalEnumerator;
-          
+
             enumerator.UpdateReference(this, thestart, theend, thestamp);
 
             return enumerator;
