@@ -1183,12 +1183,12 @@ namespace C5
         /// base dynamic array and may be positive for an updatable view into a base dynamic array.
         /// </summary>
         protected int offset;
-         
-        private readonly Enumerator _internalEnumerator = new Enumerator(); 
+
+        private readonly Enumerator _internalEnumerator = new Enumerator();
         /// <summary>
         /// 
         /// </summary> 
-       
+
         protected Enumerator InternalEnumerator
         {
             get
@@ -1251,6 +1251,12 @@ namespace C5
 
         #region Constructors
 
+        static int mainThreadId;
+        // If called in the non main thread, will return false;
+        public static bool IsMainThread
+        {
+            get { return System.Threading.Thread.CurrentThread.ManagedThreadId == mainThreadId; }
+        }
         /// <summary>
         /// Create an empty ArrayBase object.
         /// </summary>
@@ -1263,6 +1269,13 @@ namespace C5
             int newlength = 8;
             while (newlength < capacity) newlength *= 2;
             array = new T[newlength];
+
+            //reference to the main thread. 
+
+            // In Main method:
+            mainThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
+
+
         }
 
         #endregion
@@ -1367,25 +1380,18 @@ namespace C5
         {
             private ArrayBase<T> _internalList;
 
-            private  int _index;
+            private int _index;
             private int _theStamp;
             private int _end;
-           // private T current;
-            private readonly object _object = new object();
-            private readonly object _object2 = new object();
             private T current;
             internal void UpdateReference(ArrayBase<T> list, int start, int end, int theStamp)
             {
-                lock (_object2)
-                {
-                    _internalList = list;
-                    _index = start;
-                    _end = end;
+                _internalList = list;
+                _index = start;
+                _end = end;
 
-                    current = default(T);
-                    _theStamp = theStamp;
-                }
-             
+                current = default(T);
+                _theStamp = theStamp;
             }
 
 
@@ -1396,32 +1402,29 @@ namespace C5
 
             public bool MoveNext()
             {
-                lock (_object)
+                ArrayBase<T> list = _internalList;
+                list.modifycheck(_theStamp);
+
+                if (_index < _end)
                 {
-                    ArrayBase<T> list = _internalList;
-                    list.modifycheck(_theStamp);
 
-                    if (_index < _end)
-                    {
-                        lock (_object2)
-                        {
-                            current = list.array[_index];
-                            _index++;
-                        }
-                        return true;
-                    }
+                    current = list.array[_index];
+                    _index++;
 
-                    current = default(T);
-                    return false;
+                    return true;
                 }
 
+                current = default(T);
+                return false;
+
                 // _index = _internalList.size + 1;
-             
             }
 
             public void Reset()
             {
-
+                _index = 0;
+                current = default(T);
+                _end = 0;
             }
 
             public T Current { get { return current; } }
@@ -1429,6 +1432,17 @@ namespace C5
             object IEnumerator.Current
             {
                 get { return current; }
+            }
+
+            public Enumerator Clone()
+            {
+                var enumerator = new Enumerator
+                {
+                    _internalList = _internalList,
+                    current = default(T),
+
+                };
+                return enumerator;
             }
         }
         #region IEnumerable<T> Members
@@ -1439,10 +1453,12 @@ namespace C5
         public override SCG.IEnumerator<T> GetEnumerator()
         {
             int thestamp = stamp, theend = size + offset, thestart = offset;
-             
-            InternalEnumerator.UpdateReference(this, thestart, theend, thestamp);
 
-            return InternalEnumerator;
+            var enumerator = !IsMainThread ? InternalEnumerator.Clone() : InternalEnumerator;
+          
+            enumerator.UpdateReference(this, thestart, theend, thestamp);
+
+            return enumerator;
         }
         #endregion
 
