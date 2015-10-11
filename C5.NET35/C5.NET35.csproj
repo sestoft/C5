@@ -74,6 +74,9 @@
     <Compile Include="..\C5\Dictionaries.cs">
       <Link>Dictionaries.cs</Link>
     </Compile>
+    <Compile Include="..\C5\Enumerable.cs">
+      <Link>Enumerable.cs</Link>
+    </Compile>
     <Compile Include="..\C5\Enums.cs">
       <Link>Enums.cs</Link>
     </Compile>
@@ -152,7 +155,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files (x86)\Unity\Editor\Data\MonoBleedingEdge\lib\mono\4.0\pdb2mdb.exe" "$(TargetPath)"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

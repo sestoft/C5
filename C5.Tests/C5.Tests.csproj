@@ -48,6 +48,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="arrays\CircularQueueTest.cs" />
+    <Compile Include="arrays\CollectionCacheTest.cs" />
     <Compile Include="BasesTest.cs">
       <SubType>Code</SubType>
     </Compile>

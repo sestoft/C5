@@ -27,7 +27,7 @@ namespace C5
     /// <summary>
     /// A base class for implementing an IEnumerable&lt;T&gt;
     /// </summary>
-    [Serializable]
+  
     public abstract class EnumerableBase<T> : SCG.IEnumerable<T>
     {
         /// <summary>
@@ -35,7 +35,7 @@ namespace C5
         /// </summary>
         /// <returns>The enumerator</returns>
         public abstract SCG.IEnumerator<T> GetEnumerator();
-
+ 
         /// <summary>
         /// Count the number of items in an enumerable by enumeration
         /// </summary>
@@ -574,7 +574,7 @@ namespace C5
         /// Create an enumerator for this collection.
         /// </summary>
         /// <returns>The enumerator</returns>
-        public override abstract SCG.IEnumerator<T> GetEnumerator();
+       // public override abstract SCG.IEnumerator<T> GetEnumerator();
 
         #region IShowable Members
 
@@ -614,7 +614,6 @@ namespace C5
         {
             return ToString(null, null);
         }
-
     }
 
     /// <summary>
@@ -675,7 +674,7 @@ namespace C5
         /// <summary>
         /// The current stamp value
         /// </summary>
-        protected int stamp;
+        public int stamp { get; protected set; }
 
         /// <summary>
         /// The number of items in the collection
@@ -947,14 +946,7 @@ namespace C5
         public override bool IsEmpty { get { return size == 0; } }
 
         #endregion
-
-        #region IEnumerable<T> Members
-        /// <summary>
-        /// Create an enumerator for this collection.
-        /// </summary>
-        /// <returns>The enumerator</returns>
-        public override abstract SCG.IEnumerator<T> GetEnumerator();
-        #endregion
+ 
     }
 
     /// <summary>
@@ -1119,7 +1111,7 @@ namespace C5
         /// Create an enumerator for this collection.
         /// </summary>
         /// <returns>The enumerator</returns>
-        public override abstract SCG.IEnumerator<T> GetEnumerator();
+      //  public override abstract SCG.IEnumerator<T> GetEnumerator();
 
         /// <summary>
         /// <code>Forwards</code> if same, else <code>Backwards</code>
@@ -1184,18 +1176,12 @@ namespace C5
         /// </summary>
         protected int offset;
 
-        private readonly Enumerator _internalEnumerator = new Enumerator();
+        private readonly Enumerator<T> _internalEnumerator;
+        public  readonly WhereEnumerator<T> _internalWhereEnumerator = new WhereEnumerator<T>();
         /// <summary>
         /// 
         /// </summary> 
 
-        protected Enumerator InternalEnumerator
-        {
-            get
-            {
-                return _internalEnumerator;
-            }
-        }
         #endregion
 
         #region Util
@@ -1251,12 +1237,7 @@ namespace C5
 
         #region Constructors
 
-        static int mainThreadId;
-        // If called in the non main thread, will return false;
-        public static bool IsMainThread
-        {
-            get { return System.Threading.Thread.CurrentThread.ManagedThreadId == mainThreadId; }
-        }
+
         /// <summary>
         /// Create an empty ArrayBase object.
         /// </summary>
@@ -1270,18 +1251,20 @@ namespace C5
             while (newlength < capacity) newlength *= 2;
             array = new T[newlength];
 
-            //reference to the main thread. 
-
-            // In Main method:
-            mainThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
-
-
+            _internalEnumerator = new Enumerator<T>(this);
+            _internalWhereEnumerator = new WhereEnumerator<T>();
         }
+
+
 
         #endregion
 
         #region IIndexed members
 
+        public T this[int index]
+        {
+            get { return array[index]; }
+        }
         /// <summary>
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">If the arguments does not describe a 
@@ -1375,76 +1358,16 @@ namespace C5
         /// <summary>
         /// 
         /// </summary> 
-        [Serializable]
-        public class Enumerator : SCG.IEnumerator<T>, IDisposable, IEnumerator
+ 
+        public EnumerableBase<T> Where(Func<T, bool> predicate)
         {
-            private ArrayBase<T> _internalList;
+            int thestamp = stamp, theend = size + offset, thestart = offset;
 
-            private int _index;
-            private int _theStamp;
-            private int _end;
-            private T current;
+            var enumerator = (WhereEnumerator<T>)_internalWhereEnumerator.GetEnumerator();
 
-            internal void UpdateReference(ArrayBase<T> list, int start, int end, int theStamp)
-            {
-                _internalList = list;
-                _index = start;
-                _end = end;
+            enumerator.UpdateReference(this, thestart, theend, thestamp, predicate);
 
-                current = default(T);
-                _theStamp = theStamp;
-            }
-
-
-            public void Dispose()
-            {
-                //Do nothing
-            }
-
-            public bool MoveNext()
-            {
-                ArrayBase<T> list = _internalList;
-                 
-                if (list.stamp != _theStamp)
-                    throw new CollectionModifiedException();
-
-                if (_index < _end)
-                {
-
-                    current = list.array[_index];
-                    _index++;
-
-                    return true;
-                }
-
-                current = default(T);
-                return false;
-            }
-
-            public void Reset()
-            {
-                _index = 0;
-                current = default(T);
-                _end = 0;
-            }
-
-            public T Current { get { return current; } }
-
-            object IEnumerator.Current
-            {
-                get { return current; }
-            }
-
-            public Enumerator Clone()
-            {
-                var enumerator = new Enumerator
-                {
-                    _internalList = _internalList,
-                    current = default(T),
-
-                };
-                return enumerator;
-            }
+            return enumerator;
         }
         #region IEnumerable<T> Members
         /// <summary>
@@ -1455,12 +1378,15 @@ namespace C5
         {
             int thestamp = stamp, theend = size + offset, thestart = offset;
 
-            var enumerator = !IsMainThread ? InternalEnumerator.Clone() : InternalEnumerator;
+            var enumerator = (Enumerator<T>)_internalEnumerator.GetEnumerator();
 
             enumerator.UpdateReference(this, thestart, theend, thestamp);
 
             return enumerator;
         }
+
+
+
         #endregion
 
         #region Range nested class
