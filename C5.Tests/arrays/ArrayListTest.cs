@@ -40,6 +40,7 @@ namespace C5UnitTests.arrays.list
             new C5UnitTests.Templates.Events.StackTester<CollectionOfInt>().Test(factory);
         }
 
+
         //[Test]
         //public void Extensible()
         //{
@@ -875,6 +876,31 @@ namespace C5UnitTests.arrays.list
                 e.MoveNext();
                 list.Add(99);
                 e.MoveNext();
+            }
+
+            
+            [Test]
+            //[ExpectedException(typeof(MultipleEnumerationException))]
+            public void MultipleEnumeration()
+            {
+                list.Add(5);
+                list.Add(8);
+                list.Add(5);
+
+                int index = 0;
+                foreach (var item in list)
+                {
+                    foreach (var item2  in list)
+                    {
+                        foreach (var i in list)
+                        {
+                            index++;
+                        }
+                      
+                    }
+                } 
+
+                Assert.IsTrue(index == list.Count * list.Count * list.Count);
             }
 
             [TearDown]

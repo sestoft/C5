@@ -48,7 +48,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="arrays\CircularQueueTest.cs" />
-    <Compile Include="arrays\CollectionCacheTest.cs" />
     <Compile Include="BasesTest.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -114,17 +113,17 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\C5\C5.csproj">
-      <Project>{d02e0664-c56c-4c3f-98e5-c8ec881a8439}</Project>
-      <Name>C5</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="C5.snk" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\C5\C5.csproj">
+      <Project>{d02e0664-c56c-4c3f-98e5-c8ec881a8439}</Project>
+      <Name>C5</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <PropertyGroup>

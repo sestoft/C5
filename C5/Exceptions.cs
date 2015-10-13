@@ -87,6 +87,19 @@ namespace C5
     }
 
     /// <summary>
+    /// 
+    /// </summary>
+    [Serializable]
+    public class MultipleEnumerationException : Exception
+    {
+        public MultipleEnumerationException()
+        {
+            
+        }
+
+        public MultipleEnumerationException(string message) : base(message) { }
+    }
+    /// <summary>
     /// An exception thrown by enumerators, range views etc. when accessed after 
     /// the underlying collection has been modified.
     /// </summary>

@@ -61,8 +61,6 @@
     <Compile Include="arrays\HashedArrayList.cs" />
     <Compile Include="arrays\SortedArray.cs" />
     <Compile Include="Enumerable.cs" />
-    <Compile Include="EnumerableCache.cs" />
-    <Compile Include="LinqExtension.cs" />
     <Compile Include="SerializableAttribute.cs" />
     <Compile Include="Collections.cs" />
     <Compile Include="comparers\InternalComparer.cs" />
