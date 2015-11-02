@@ -1363,17 +1363,17 @@ namespace C5
             //-1 means an iterator is not in use. 
             private int _iteratorState;
 
-            private static int mainThreadId;
+            private static int _mainThreadId;
             // If called in the non main thread, will return false;
             private static bool IsMainThread
             {
-                get { return System.Threading.Thread.CurrentThread.ManagedThreadId == mainThreadId; }
+                get { return System.Threading.Thread.CurrentThread.ManagedThreadId == _mainThreadId; }
             }
 
             public Enumerator(ArrayBase<T> list)
             {
                 _internalList = list;
-                mainThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
+                _mainThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
                 _iteratorState = -1;
             }
 
@@ -1474,7 +1474,6 @@ namespace C5
 
             enumerator.UpdateReference(this, thestart, theend, thestamp);
 
-
             return enumerator;
         }
 
@@ -1493,12 +1492,14 @@ namespace C5
 
             ArrayBase<T> thebase;
 
+            private readonly RangeEnumerator _rangeInternalEnumerator;
 
             internal Range(ArrayBase<T> thebase, int start, int count, bool forwards)
             {
                 this.thebase = thebase; stamp = thebase.stamp;
                 delta = forwards ? 1 : -1;
                 this.start = start + thebase.offset; this.count = count;
+                _rangeInternalEnumerator = new RangeEnumerator(thebase);
             }
 
             /// <summary>
@@ -1548,11 +1549,16 @@ namespace C5
             /// <returns>The enumerator</returns>
             public override SCG.IEnumerator<T> GetEnumerator()
             {
-                for (int i = 0; i < count; i++)
-                {
-                    thebase.modifycheck(stamp);
-                    yield return thebase.array[start + delta * i];
-                }
+                //                for (int i = 0; i < count; i++)
+                //                {
+                //                    thebase.modifycheck(stamp);
+                //                    yield return thebase.array[start + delta * i];
+                //                }
+                var enumerator = (RangeEnumerator)_rangeInternalEnumerator.GetEnumerator();
+
+                enumerator.UpdateReference(thebase, start, delta, stamp, count);
+
+                return enumerator;
             }
 
 
@@ -1579,6 +1585,108 @@ namespace C5
                 return Backwards();
             }
 
+            private class RangeEnumerator : SCG.IEnumerator<T>, SCG.IEnumerable<T>, IDisposable
+            {
+                private ArrayBase<T> _rangeEnumeratorArrayBase;
+
+
+                private static int _mainThreadId;
+
+                private int _start;
+                private int _count;
+                private int _theStamp;
+                private int _delta;
+                private int _index;
+
+                //-1 means an iterator is not in use. 
+                private int _iteratorState;
+
+                public RangeEnumerator(ArrayBase<T> internalList)
+                {
+                    _rangeEnumeratorArrayBase = internalList;
+                    _iteratorState = -1;
+                    _index = 0;
+                }
+
+                internal void UpdateReference(ArrayBase<T> list, int start, int delta, int theStamp, int count)
+                {
+                    _count = count;
+                    _start = start;
+                    _delta = delta;
+                    _rangeEnumeratorArrayBase = list;
+                    Current = default(T);
+                    _theStamp = theStamp;
+                }
+                private static bool IsMainThread
+                {
+                    get { return System.Threading.Thread.CurrentThread.ManagedThreadId == _mainThreadId; }
+                }
+                public void Dispose()
+                {
+                    _iteratorState = -1;
+                }
+                private RangeEnumerator Clone()
+                {
+                    var enumerator = new RangeEnumerator(_rangeEnumeratorArrayBase)
+                    {
+                        Current = default(T),
+
+                    };
+                    return enumerator;
+                }
+
+                public bool MoveNext()
+                {
+                    ArrayBase<T> list = _rangeEnumeratorArrayBase;
+
+                    list.modifycheck(_theStamp);
+
+                    if (_index < _count)
+                    {
+                        Current = list.array[_start + _delta * _index];
+                        _index++;
+                        return true;
+                    }
+
+                    Current = default(T);
+                    return false;
+                }
+
+                public void Reset()
+                {
+                    _index = 0;
+                    Current = default(T);
+                }
+
+                public T Current { get; private set; }
+
+                object IEnumerator.Current
+                {
+                    get { return Current; }
+                }
+
+                public SCG.IEnumerator<T> GetEnumerator()
+                {
+                    RangeEnumerator enumerator;
+                    if (IsMainThread)
+                    {
+                        enumerator = _iteratorState != -1 ? Clone() : this;
+
+                        _iteratorState = 0;
+                    }
+                    else
+                    {
+                        enumerator = Clone();
+                    }
+
+                    return enumerator;
+                }
+
+                IEnumerator IEnumerable.GetEnumerator()
+                {
+                    return GetEnumerator();
+                }
+            }
 
             /// <summary>
             /// <code>Forwards</code> if same, else <code>Backwards</code>
