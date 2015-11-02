@@ -1353,7 +1353,7 @@ namespace C5
         #region Private Enumerator
 
         [Serializable]
-        private class Enumerator : SCG.IEnumerator<T>, SCG.IEnumerable<T>, IDisposable
+        private class Enumerator : MemorySafeEnumerator<T>
         {
             private ArrayBase<T> _internalList;
 
@@ -1362,19 +1362,12 @@ namespace C5
             private int _end;
             //-1 means an iterator is not in use. 
             private int _iteratorState;
+ 
 
-            private static int _mainThreadId;
-            // If called in the non main thread, will return false;
-            private static bool IsMainThread
-            {
-                get { return System.Threading.Thread.CurrentThread.ManagedThreadId == _mainThreadId; }
-            }
-
-            public Enumerator(ArrayBase<T> list)
+            public Enumerator(ArrayBase<T> list) 
             {
                 _internalList = list;
-                _mainThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
-                _iteratorState = -1;
+               
             }
 
             internal void UpdateReference(ArrayBase<T> list, int start, int end, int theStamp)
@@ -1392,7 +1385,7 @@ namespace C5
                 _iteratorState = -1;
             }
 
-            public bool MoveNext()
+            public override bool MoveNext()
             {
                 ArrayBase<T> list = _internalList;
 
@@ -1411,23 +1404,14 @@ namespace C5
                 return false;
             }
 
-            public void Reset()
+            public override void Reset()
             {
                 _anIndex = 0;
                 Current = default(T);
             }
 
-            /// <summary>
-            /// 
-            /// </summary>
-            public T Current { get; private set; }
 
-            object IEnumerator.Current
-            {
-                get { return Current; }
-            }
-
-            private Enumerator Clone()
+            protected override MemorySafeEnumerator<T> Clone()
             {
                 var enumerator = new Enumerator(_internalList)
                 {
@@ -1435,29 +1419,7 @@ namespace C5
 
                 };
                 return enumerator;
-            }
-
-            public SCG.IEnumerator<T> GetEnumerator()
-            {
-                Enumerator enumerator;
-                if (IsMainThread)
-                {
-                    enumerator = _iteratorState != -1 ? Clone() : this;
-
-                    _iteratorState = 0;
-                }
-                else
-                {
-                    enumerator = Clone();
-                }
-
-                return enumerator;
-            }
-
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return GetEnumerator();
-            }
+            } 
         }
         #endregion
         #region IEnumerable<T> Members
@@ -1585,12 +1547,9 @@ namespace C5
                 return Backwards();
             }
 
-            private class RangeEnumerator : SCG.IEnumerator<T>, SCG.IEnumerable<T>, IDisposable
+            private sealed class RangeEnumerator : MemorySafeEnumerator<T>
             {
                 private ArrayBase<T> _rangeEnumeratorArrayBase;
-
-
-                private static int _mainThreadId;
 
                 private int _start;
                 private int _count;
@@ -1598,13 +1557,11 @@ namespace C5
                 private int _delta;
                 private int _index;
 
-                //-1 means an iterator is not in use. 
-                private int _iteratorState;
 
                 public RangeEnumerator(ArrayBase<T> internalList)
                 {
                     _rangeEnumeratorArrayBase = internalList;
-                    _iteratorState = -1;
+                    IteratorState = -1;
                     _index = 0;
                 }
 
@@ -1617,15 +1574,9 @@ namespace C5
                     Current = default(T);
                     _theStamp = theStamp;
                 }
-                private static bool IsMainThread
-                {
-                    get { return System.Threading.Thread.CurrentThread.ManagedThreadId == _mainThreadId; }
-                }
-                public void Dispose()
-                {
-                    _iteratorState = -1;
-                }
-                private RangeEnumerator Clone()
+
+
+                protected override MemorySafeEnumerator<T> Clone()
                 {
                     var enumerator = new RangeEnumerator(_rangeEnumeratorArrayBase)
                     {
@@ -1635,7 +1586,7 @@ namespace C5
                     return enumerator;
                 }
 
-                public bool MoveNext()
+                public override bool MoveNext()
                 {
                     ArrayBase<T> list = _rangeEnumeratorArrayBase;
 
@@ -1652,40 +1603,11 @@ namespace C5
                     return false;
                 }
 
-                public void Reset()
+                public override void Reset()
                 {
                     _index = 0;
                     Current = default(T);
-                }
-
-                public T Current { get; private set; }
-
-                object IEnumerator.Current
-                {
-                    get { return Current; }
-                }
-
-                public SCG.IEnumerator<T> GetEnumerator()
-                {
-                    RangeEnumerator enumerator;
-                    if (IsMainThread)
-                    {
-                        enumerator = _iteratorState != -1 ? Clone() : this;
-
-                        _iteratorState = 0;
-                    }
-                    else
-                    {
-                        enumerator = Clone();
-                    }
-
-                    return enumerator;
-                }
-
-                IEnumerator IEnumerable.GetEnumerator()
-                {
-                    return GetEnumerator();
-                }
+                } 
             }
 
             /// <summary>

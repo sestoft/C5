@@ -1,13 +1,70 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Collections.Generic; 
 
 namespace C5
 {
-     
 
+    [Serializable]
+    internal abstract class MemorySafeEnumerator<T> : IEnumerator<T>, IEnumerable<T>, IDisposable
+    {
+        protected static int MainThreadId;
+
+        //-1 means an iterator is not in use. 
+        protected int IteratorState;
+
+       
+        protected static bool IsMainThread
+        {
+            get { return System.Threading.Thread.CurrentThread.ManagedThreadId == MainThreadId; }
+        }
+
+        protected MemorySafeEnumerator()
+        {
+             MainThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
+             IteratorState = -1;
+        }
+
+        protected abstract MemorySafeEnumerator<T> Clone();
+
+        public abstract bool MoveNext();
+
+        public abstract void Reset();
+
+        public T Current { get; protected set; }
+
+        object IEnumerator.Current
+        {
+            get { return Current; }
+        }
+
+        public virtual void Dispose()
+        {
+            IteratorState = -1;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            MemorySafeEnumerator<T> enumerator;
+            if (IsMainThread)
+            {
+                enumerator = IteratorState != -1 ? Clone() : this;
+
+                IteratorState = 0;
+            }
+            else
+            {
+                enumerator = Clone();
+            }
+
+            return enumerator;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
    
 
     //[Serializable]
