@@ -20,52 +20,9 @@
 */
 
 using System;
-using System.Collections;
 using SCG = System.Collections.Generic;
 namespace C5
 {
-    /// <summary>
-    /// A base class for implementing an IEnumerable&lt;T&gt;
-    /// </summary>
-
-    public abstract class EnumerableBase<T> : SCG.IEnumerable<T>
-    {
-        /// <summary>
-        /// Create an enumerator for this collection.
-        /// </summary>
-        /// <returns>The enumerator</returns>
-        public abstract SCG.IEnumerator<T> GetEnumerator();
-
-        /// <summary>
-        /// Count the number of items in an enumerable by enumeration
-        /// </summary>
-        /// <param name="items">The enumerable to count</param>
-        /// <returns>The size of the enumerable</returns>
-        protected static int countItems(SCG.IEnumerable<T> items)
-        {
-            ICollectionValue<T> jtems = items as ICollectionValue<T>;
-
-            if (jtems != null)
-                return jtems.Count;
-
-            int count = 0;
-
-            using (SCG.IEnumerator<T> e = items.GetEnumerator())
-                while (e.MoveNext()) count++;
-
-            return count;
-        }
-
-        #region IEnumerable Members
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        #endregion
-    }
-
 
     /// <summary>
     /// Base class for classes implementing ICollectionValue[T]
@@ -1244,14 +1201,14 @@ namespace C5
         /// <param name="capacity">The initial capacity of the internal array container.
         /// Will be rounded upwards to the nearest power of 2 greater than or equal to 8.</param>
         /// <param name="itemequalityComparer">The item equalityComparer to use, primarily for item equality</param>
-        protected ArrayBase(int capacity, SCG.IEqualityComparer<T> itemequalityComparer)
+        protected ArrayBase(int capacity, SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
             : base(itemequalityComparer)
         {
             int newlength = 8;
             while (newlength < capacity) newlength *= 2;
             array = new T[newlength];
 
-            _internalEnumerator = new Enumerator(this);
+            _internalEnumerator = new Enumerator(this, memoryType);
         }
 
 
@@ -1364,7 +1321,8 @@ namespace C5
             private int _iteratorState;
  
 
-            public Enumerator(ArrayBase<T> list) 
+            public Enumerator(ArrayBase<T> list, MemoryType memoryType)
+                :base(memoryType)
             {
                 _internalList = list;
                
@@ -1413,7 +1371,7 @@ namespace C5
 
             protected override MemorySafeEnumerator<T> Clone()
             {
-                var enumerator = new Enumerator(_internalList)
+                var enumerator = new Enumerator(_internalList, MemoryType)
                 {
                     Current = default(T),
 
@@ -1429,7 +1387,6 @@ namespace C5
         /// <returns>The enumerator</returns>
         public override SCG.IEnumerator<T> GetEnumerator()
         {
-
             int thestamp = stamp, theend = size + offset, thestart = offset;
 
             var enumerator = (Enumerator)_internalEnumerator.GetEnumerator();
@@ -1438,9 +1395,6 @@ namespace C5
 
             return enumerator;
         }
-
-
-
         #endregion
 
         #region Range nested class
@@ -1456,12 +1410,12 @@ namespace C5
 
             private readonly RangeEnumerator _rangeInternalEnumerator;
 
-            internal Range(ArrayBase<T> thebase, int start, int count, bool forwards)
+            internal Range(ArrayBase<T> thebase, int start, int count, bool forwards, MemoryType memoryType = MemoryType.Safe)
             {
                 this.thebase = thebase; stamp = thebase.stamp;
                 delta = forwards ? 1 : -1;
                 this.start = start + thebase.offset; this.count = count;
-                _rangeInternalEnumerator = new RangeEnumerator(thebase);
+                _rangeInternalEnumerator = new RangeEnumerator(thebase,memoryType);
             }
 
             /// <summary>
@@ -1511,11 +1465,6 @@ namespace C5
             /// <returns>The enumerator</returns>
             public override SCG.IEnumerator<T> GetEnumerator()
             {
-                //                for (int i = 0; i < count; i++)
-                //                {
-                //                    thebase.modifycheck(stamp);
-                //                    yield return thebase.array[start + delta * i];
-                //                }
                 var enumerator = (RangeEnumerator)_rangeInternalEnumerator.GetEnumerator();
 
                 enumerator.UpdateReference(thebase, start, delta, stamp, count);
@@ -1558,7 +1507,8 @@ namespace C5
                 private int _index;
 
 
-                public RangeEnumerator(ArrayBase<T> internalList)
+                public RangeEnumerator(ArrayBase<T> internalList, MemoryType memoryType)
+                    : base(memoryType)
                 {
                     _rangeEnumeratorArrayBase = internalList;
                     IteratorState = -1;
@@ -1578,7 +1528,7 @@ namespace C5
 
                 protected override MemorySafeEnumerator<T> Clone()
                 {
-                    var enumerator = new RangeEnumerator(_rangeEnumeratorArrayBase)
+                    var enumerator = new RangeEnumerator(_rangeEnumeratorArrayBase, MemoryType)
                     {
                         Current = default(T),
 

@@ -75,6 +75,9 @@
     <Compile Include="..\C5\Dictionaries.cs">
       <Link>Dictionaries.cs</Link>
     </Compile>
+    <Compile Include="..\C5\EnumerableBase.cs">
+      <Link>EnumerableBase.cs</Link>
+    </Compile>
     <Compile Include="..\C5\Enums.cs">
       <Link>Enums.cs</Link>
     </Compile>

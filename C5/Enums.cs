@@ -95,4 +95,20 @@ namespace C5
     /// </summary>
     Backwards
   }
+
+    /// <summary>
+    /// It specifies the memory type of the internal enumerator adopted.
+    /// </summary>
+    public enum MemoryType
+    {
+        /// <summary>
+        /// Normal is the usual operator type. A new instance of an enumerable/enumerator is returned
+        /// for multithread safety purposes.
+        /// </summary>
+        Normal,
+        /// <summary>
+        /// MemorySafe is the same enumerable/enumerator instance.  
+        /// </summary>
+        Safe
+    }
 }

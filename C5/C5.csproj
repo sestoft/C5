@@ -60,6 +60,7 @@
     <Compile Include="arrays\CircularQueue.cs" />
     <Compile Include="arrays\HashedArrayList.cs" />
     <Compile Include="arrays\SortedArray.cs" />
+    <Compile Include="EnumerableBase.cs" />
     <Compile Include="MemorySafeEnumerator.cs" />
     <Compile Include="SerializableAttribute.cs" />
     <Compile Include="Collections.cs" />

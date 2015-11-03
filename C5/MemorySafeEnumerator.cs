@@ -4,23 +4,24 @@ using System.Collections.Generic;
 
 namespace C5
 {
-
     [Serializable]
     internal abstract class MemorySafeEnumerator<T> : IEnumerator<T>, IEnumerable<T>, IDisposable
     {
-        protected static int MainThreadId;
+        private static int MainThreadId;
 
         //-1 means an iterator is not in use. 
         protected int IteratorState;
 
+        protected MemoryType MemoryType { get; private set; }
        
         protected static bool IsMainThread
         {
             get { return System.Threading.Thread.CurrentThread.ManagedThreadId == MainThreadId; }
         }
 
-        protected MemorySafeEnumerator()
+        protected MemorySafeEnumerator(MemoryType memoryType)
         {
+             MemoryType = memoryType;
              MainThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
              IteratorState = -1;
         }
@@ -46,7 +47,7 @@ namespace C5
         public IEnumerator<T> GetEnumerator()
         {
             MemorySafeEnumerator<T> enumerator;
-            if (IsMainThread)
+            if (IsMainThread && MemoryType == MemoryType.Safe)
             {
                 enumerator = IteratorState != -1 ? Clone() : this;
 
