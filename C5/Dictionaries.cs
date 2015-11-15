@@ -651,11 +651,9 @@ namespace C5
 
             public override SCG.IEnumerator<V> GetEnumerator()
             {
-                _internalEnumerator.UpdateReference(pairs);
-                return _internalEnumerator.GetEnumerator();
                 //Updatecheck is performed by the pairs enumerator
-                //foreach (KeyValuePair<K, V> p in pairs)
-                //    yield return p.Value;
+                _internalEnumerator.UpdateReference(pairs);
+                return _internalEnumerator.GetEnumerator(); 
             }
 
             public override bool IsEmpty { get { return pairs.IsEmpty; } }
@@ -1169,6 +1167,88 @@ namespace C5
         [Serializable]
         class SortedKeysCollection : SequencedBase<K>, ISorted<K>
         {
+
+            #region Private Enumerator
+
+            [Serializable]
+            private class KeyEnumerator : MemorySafeEnumerator<K>
+            {
+                private ICollection<KeyValuePair<K, V>> _internalList;
+
+                private SCG.IEnumerator<KeyValuePair<K, V>> _internalEnumerator;
+
+                //-1 means an iterator is not in use. 
+                private int _iteratorState;
+
+
+                public KeyEnumerator(ICollection<KeyValuePair<K, V>> list, MemoryType memoryType)
+                    : base(memoryType)
+                {
+                    _internalList = list;
+                }
+
+                internal void UpdateReference(ICollection<KeyValuePair<K, V>> list)
+                {
+                    _internalList = list;
+                    Current = default(K);
+                }
+
+
+                public void Dispose()
+                {
+                    _iteratorState = -1;
+                    _internalEnumerator.Dispose();
+                    _internalEnumerator = null;
+                }
+
+                public override bool MoveNext()
+                {
+                    ICollection<KeyValuePair<K, V>> list = _internalList;
+
+                   if (IteratorState == 0)
+                        _internalEnumerator = list.GetEnumerator();
+
+                    IteratorState = 1;
+                 
+                    if (_internalEnumerator.MoveNext())
+                    {
+                        Current = _internalEnumerator.Current.Key;
+                        return true;
+                    }
+
+                    IteratorState = 0;
+                    return false;
+                }
+
+                public override void Reset()
+                {
+                    try
+                    {
+                        _internalEnumerator.Reset();
+                    }
+                    catch
+                    {
+                    }
+                    finally
+                    {
+                        Current = default(K);
+                    }
+                }
+
+
+                protected override MemorySafeEnumerator<K> Clone()
+                {
+                    var enumerator = new KeyEnumerator(_internalList, MemoryType)
+                    {
+                        Current = default(K)
+                    };
+                    return enumerator;
+                }
+            }
+            #endregion
+
+            private readonly KeyEnumerator _internalEnumerator;
+          
             ISortedDictionary<K, V> sorteddict;
             //TODO: eliminate this. Only problem is the Find method because we lack method on dictionary that also 
             //      returns the actual key.
@@ -1181,14 +1261,17 @@ namespace C5
                 this.sorteddict = sorteddict;
                 this.sortedpairs = sortedpairs;
                 this.comparer = comparer;
+                _internalEnumerator = new KeyEnumerator(sortedpairs, MemoryType.Safe);
             }
 
             public override K Choose() { return sorteddict.Choose().Key; }
 
             public override SCG.IEnumerator<K> GetEnumerator()
             {
-                foreach (KeyValuePair<K, V> p in sorteddict)
-                    yield return p.Key;
+                _internalEnumerator.UpdateReference(sortedpairs);
+                return _internalEnumerator.GetEnumerator();
+//                foreach (KeyValuePair<K, V> p in sorteddict)
+//                    yield return p.Key;
             }
 
             public override bool IsEmpty { get { return sorteddict.IsEmpty; } }

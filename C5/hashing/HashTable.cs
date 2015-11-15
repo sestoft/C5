@@ -691,6 +691,9 @@ namespace C5
 
             public void Reset()
             {
+                Current = default(T);
+                _index = -1;
+                b = null;
             }
 
             /// <summary>
