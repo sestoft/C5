@@ -430,6 +430,9 @@ namespace C5
             public LiftedEnumerable(SCG.IEnumerable<H> keys) { this.keys = keys; }
             public SCG.IEnumerator<KeyValuePair<K, V>> GetEnumerator() { foreach (H key in keys) yield return new KeyValuePair<K, V>(key); }
 
+
+
+
             #region IEnumerable Members
 
             System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
@@ -569,16 +572,90 @@ namespace C5
 
 
             internal ValuesCollection(ICollection<KeyValuePair<K, V>> pairs)
-            { this.pairs = pairs; }
+            {
+                this.pairs = pairs;
+                _internalEnumerator = new ValueEnumerator(pairs, MemoryType.Safe);
+            }
+
+            private readonly ValueEnumerator _internalEnumerator;
+
+            #region Private Enumerator
+
+            [Serializable]
+            private class ValueEnumerator : MemorySafeEnumerator<V>
+            {
+                private ICollection<KeyValuePair<K, V>> _internalList;
+
+                private SCG.IEnumerator<KeyValuePair<K, V>> _internalEnumerator;
+
+                //-1 means an iterator is not in use. 
+                private int _iteratorState;
+
+
+                public ValueEnumerator(ICollection<KeyValuePair<K, V>> list, MemoryType memoryType)
+                    : base(memoryType)
+                {
+                    _internalList = list;
+                }
+
+                internal void UpdateReference(ICollection<KeyValuePair<K, V>> list)
+                {
+                    _internalList = list;
+                    Current = default(V);
+                }
+
+
+                public void Dispose()
+                {
+                    _iteratorState = -1;
+                }
+
+                public override bool MoveNext()
+                {
+                    ICollection<KeyValuePair<K, V>> list = _internalList;
+
+                    if (_internalEnumerator == null)
+                        _internalEnumerator = list.GetEnumerator();
+
+                    if (_internalEnumerator.MoveNext())
+                    {
+                        Current = _internalEnumerator.Current.Value;
+                        return true;
+                    }
+
+
+
+                    Current = default(V);
+                    return false;
+                }
+
+                public override void Reset()
+                {
+                    Current = default(V);
+                }
+
+
+                protected override MemorySafeEnumerator<V> Clone()
+                {
+                    var enumerator = new ValueEnumerator(_internalList, MemoryType)
+                    {
+                        Current = default(V)
+                    };
+                    return enumerator;
+                }
+            }
+            #endregion
 
 
             public override V Choose() { return pairs.Choose().Value; }
 
             public override SCG.IEnumerator<V> GetEnumerator()
             {
+                _internalEnumerator.UpdateReference(pairs);
+                return _internalEnumerator.GetEnumerator();
                 //Updatecheck is performed by the pairs enumerator
-                foreach (KeyValuePair<K, V> p in pairs)
-                    yield return p.Value;
+                //foreach (KeyValuePair<K, V> p in pairs)
+                //    yield return p.Value;
             }
 
             public override bool IsEmpty { get { return pairs.IsEmpty; } }
@@ -593,16 +670,87 @@ namespace C5
         {
             ICollection<KeyValuePair<K, V>> pairs;
 
+            private readonly KeyEnumerator  _internalEnumerator;
+             
+            #region Private Enumerator
+
+            [Serializable]
+            private class KeyEnumerator : MemorySafeEnumerator<K>
+            {
+                private ICollection<KeyValuePair<K, V>> _internalList;
+
+                private SCG.IEnumerator<KeyValuePair<K, V>> _internalEnumerator;
+                 
+                //-1 means an iterator is not in use. 
+                private int _iteratorState;
+
+
+                public KeyEnumerator(ICollection<KeyValuePair<K, V>> list, MemoryType memoryType)
+                    : base(memoryType)
+                {
+                    _internalList = list;
+                }
+
+                internal void UpdateReference(ICollection<KeyValuePair<K, V>> list)
+                {  
+                    _internalList = list;
+                    Current = default(K); 
+                }
+
+
+                public void Dispose()
+                {
+                    _iteratorState = -1;
+                }
+
+                public override bool MoveNext()
+                {
+                    ICollection<KeyValuePair<K, V>> list = _internalList;
+
+                    if (_internalEnumerator == null)
+                        _internalEnumerator = list.GetEnumerator();
+
+                    if (_internalEnumerator.MoveNext())
+                    {
+                        Current = _internalEnumerator.Current.Key;
+                        return true;
+                    }
+
+                  
+
+                    Current = default(K);
+                    return false;
+                }
+
+                public override void Reset()
+                {
+                    Current = default(K);
+                }
+
+
+                protected override MemorySafeEnumerator<K> Clone()
+                {
+                    var enumerator = new KeyEnumerator(_internalList, MemoryType)
+                    {
+                        Current = default(K)
+                    };
+                    return enumerator;
+                }
+            }
+            #endregion
 
             internal KeysCollection(ICollection<KeyValuePair<K, V>> pairs)
-            { this.pairs = pairs; }
+            {
+                this.pairs = pairs;
+                _internalEnumerator = new KeyEnumerator(pairs, MemoryType.Safe);
+            }
 
             public override K Choose() { return pairs.Choose().Key; }
 
             public override SCG.IEnumerator<K> GetEnumerator()
             {
-                foreach (KeyValuePair<K, V> p in pairs)
-                    yield return p.Key;
+                _internalEnumerator.UpdateReference(pairs);
+                return _internalEnumerator.GetEnumerator();
             }
 
             public override bool IsEmpty { get { return pairs.IsEmpty; } }
