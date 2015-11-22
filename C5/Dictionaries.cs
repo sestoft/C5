@@ -248,6 +248,9 @@ namespace C5
 
         SCG.IEqualityComparer<K> keyequalityComparer;
 
+        private readonly KeysCollection _keyCollection;
+        private readonly ValuesCollection _valueCollection;
+
         #region Events
         ProxyEventBlock<KeyValuePair<K, V>> eventBlock;
 
@@ -315,11 +318,13 @@ namespace C5
         /// 
         /// </summary>
         /// <param name="keyequalityComparer"></param>
-        protected DictionaryBase(SCG.IEqualityComparer<K> keyequalityComparer)
+        protected DictionaryBase(SCG.IEqualityComparer<K> keyequalityComparer, MemoryType memoryType)
         {
             if (keyequalityComparer == null)
                 throw new NullReferenceException("Key equality comparer cannot be null");
             this.keyequalityComparer = keyequalityComparer;
+            _keyCollection = new KeysCollection(pairs);
+            _valueCollection = new ValuesCollection(pairs);
         }
 
         #region IDictionary<K,V> Members
@@ -450,6 +455,9 @@ namespace C5
         /// <returns></returns>
         public virtual bool ContainsAll<H>(SCG.IEnumerable<H> keys) where H : K
         {
+            if (MemoryType == MemoryType.Strict)
+                throw new Exception("The use of ContainsAll generates garbage as it still uses a non-memory safe enumerator");
+
             return pairs.ContainsAll(new LiftedEnumerable<H>(keys));
         }
 
@@ -568,13 +576,13 @@ namespace C5
         [Serializable]
         internal class ValuesCollection : CollectionValueBase<V>, ICollectionValue<V>
         {
-            ICollection<KeyValuePair<K, V>> pairs;
+            ICollection<KeyValuePair<K, V>> _pairs;
 
 
             internal ValuesCollection(ICollection<KeyValuePair<K, V>> pairs)
             {
-                this.pairs = pairs;
-                _internalEnumerator = new ValueEnumerator(pairs, MemoryType.Safe);
+                _pairs = pairs;
+                _internalEnumerator = new ValueEnumerator(pairs, MemoryType);
             }
 
             private readonly ValueEnumerator _internalEnumerator;
@@ -647,29 +655,34 @@ namespace C5
             #endregion
 
 
-            public override V Choose() { return pairs.Choose().Value; }
+            public override V Choose() { return _pairs.Choose().Value; }
 
             public override SCG.IEnumerator<V> GetEnumerator()
             {
                 //Updatecheck is performed by the pairs enumerator
-                _internalEnumerator.UpdateReference(pairs);
-                return _internalEnumerator.GetEnumerator(); 
+                _internalEnumerator.UpdateReference(_pairs);
+                return _internalEnumerator.GetEnumerator();
             }
 
-            public override bool IsEmpty { get { return pairs.IsEmpty; } }
+            public override bool IsEmpty { get { return _pairs.IsEmpty; } }
 
-            public override int Count { get { return pairs.Count; } }
+            public override int Count { get { return _pairs.Count; } }
 
             public override Speed CountSpeed { get { return Speed.Constant; } }
+
+            public void Update(ICollection<KeyValuePair<K, V>> keyValuePairs)
+            {
+                _pairs = keyValuePairs;
+            }
         }
 
         [Serializable]
         internal class KeysCollection : CollectionValueBase<K>, ICollectionValue<K>
         {
-            ICollection<KeyValuePair<K, V>> pairs;
+            ICollection<KeyValuePair<K, V>> _pairs;
 
-            private readonly KeyEnumerator  _internalEnumerator;
-             
+            private readonly KeyEnumerator _internalEnumerator;
+
             #region Private Enumerator
 
             [Serializable]
@@ -678,7 +691,7 @@ namespace C5
                 private ICollection<KeyValuePair<K, V>> _internalList;
 
                 private SCG.IEnumerator<KeyValuePair<K, V>> _internalEnumerator;
-                 
+
                 //-1 means an iterator is not in use. 
                 private int _iteratorState;
 
@@ -690,9 +703,9 @@ namespace C5
                 }
 
                 internal void UpdateReference(ICollection<KeyValuePair<K, V>> list)
-                {  
+                {
                     _internalList = list;
-                    Current = default(K); 
+                    Current = default(K);
                 }
 
 
@@ -714,7 +727,7 @@ namespace C5
                         return true;
                     }
 
-                  
+
 
                     Current = default(K);
                     return false;
@@ -739,23 +752,29 @@ namespace C5
 
             internal KeysCollection(ICollection<KeyValuePair<K, V>> pairs)
             {
-                this.pairs = pairs;
-                _internalEnumerator = new KeyEnumerator(pairs, MemoryType.Safe);
+                _pairs = pairs;
+
+                _internalEnumerator = new KeyEnumerator(pairs, MemoryType);
             }
 
-            public override K Choose() { return pairs.Choose().Key; }
+            public void Update(ICollection<KeyValuePair<K, V>> pairs)
+            {
+                _pairs = pairs;
+            }
+
+            public override K Choose() { return _pairs.Choose().Key; }
 
             public override SCG.IEnumerator<K> GetEnumerator()
             {
-                _internalEnumerator.UpdateReference(pairs);
+                _internalEnumerator.UpdateReference(_pairs);
                 return _internalEnumerator.GetEnumerator();
             }
 
-            public override bool IsEmpty { get { return pairs.IsEmpty; } }
+            public override bool IsEmpty { get { return _pairs.IsEmpty; } }
 
-            public override int Count { get { return pairs.Count; } }
+            public override int Count { get { return _pairs.Count; } }
 
-            public override Speed CountSpeed { get { return pairs.CountSpeed; } }
+            public override Speed CountSpeed { get { return _pairs.CountSpeed; } }
         }
         #endregion
 
@@ -763,14 +782,29 @@ namespace C5
         /// 
         /// </summary>
         /// <value>A collection containg the all the keys of the dictionary</value>
-        public virtual ICollectionValue<K> Keys { get { return new KeysCollection(pairs); } }
+        public virtual ICollectionValue<K> Keys
+        {
+            get
+            {
+                _keyCollection.Update(pairs);
+                return _keyCollection;
+
+            }
+        }
 
 
         /// <summary>
         /// 
         /// </summary>
         /// <value>A collection containing all the values of the dictionary</value>
-        public virtual ICollectionValue<V> Values { get { return new ValuesCollection(pairs); } }
+        public virtual ICollectionValue<V> Values
+        {
+            get
+            {
+                _valueCollection.Update(pairs);
+                return _valueCollection;
+            }
+        }
 
         /// <summary>
         /// 
@@ -888,7 +922,8 @@ namespace C5
         /// </summary>
         /// <param name="keycomparer"></param>
         /// <param name="keyequalityComparer"></param>
-        protected SortedDictionaryBase(SCG.IComparer<K> keycomparer, SCG.IEqualityComparer<K> keyequalityComparer) : base(keyequalityComparer) { this.keycomparer = keycomparer; }
+        /// <param name="memoryType">The memory type of the enumerator used to iterate the collection.</param>
+        protected SortedDictionaryBase(SCG.IComparer<K> keycomparer, SCG.IEqualityComparer<K> keyequalityComparer, MemoryType memoryType = MemoryType.Normal) : base(keyequalityComparer, memoryType) { this.keycomparer = keycomparer; }
 
         #endregion
 
@@ -1205,11 +1240,11 @@ namespace C5
                 {
                     ICollection<KeyValuePair<K, V>> list = _internalList;
 
-                   if (IteratorState == 0)
+                    if (IteratorState == 0)
                         _internalEnumerator = list.GetEnumerator();
 
                     IteratorState = 1;
-                 
+
                     if (_internalEnumerator.MoveNext())
                     {
                         Current = _internalEnumerator.Current.Key;
@@ -1248,7 +1283,7 @@ namespace C5
             #endregion
 
             private readonly KeyEnumerator _internalEnumerator;
-          
+
             ISortedDictionary<K, V> sorteddict;
             //TODO: eliminate this. Only problem is the Find method because we lack method on dictionary that also 
             //      returns the actual key.
@@ -1270,8 +1305,8 @@ namespace C5
             {
                 _internalEnumerator.UpdateReference(sortedpairs);
                 return _internalEnumerator.GetEnumerator();
-//                foreach (KeyValuePair<K, V> p in sorteddict)
-//                    yield return p.Key;
+                //                foreach (KeyValuePair<K, V> p in sorteddict)
+                //                    yield return p.Key;
             }
 
             public override bool IsEmpty { get { return sorteddict.IsEmpty; } }

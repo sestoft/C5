@@ -97,18 +97,23 @@ namespace C5
   }
 
     /// <summary>
-    /// It specifies the memory type of the internal enumerator adopted.
+    /// It specifies the memory type strategy of the internal enumerator implemented to iterate over the collection.
     /// </summary>
     public enum MemoryType
     {
         /// <summary>
-        /// Normal is the usual operator type. A new instance of an enumerable/enumerator is returned
+        /// Normal is the usual operator type. A new instance of an enumerator is always returned
         /// for multithread safety purposes.
         /// </summary>
         Normal,
         /// <summary>
-        /// MemorySafe is the same enumerable/enumerator instance.  
+        /// Safe returns the same enumerator instance and updates references or a new instance in case of multiple enumeration and multithread access  
         /// </summary>
-        Safe
+        Safe,
+        /// <summary>
+        /// Strict always returns the same enumerator instance. An exception is raised if the collection is enumerated more than once or
+        /// if the collection is accessed by multiple threads concurrently.
+        /// </summary>
+        Strict
     }
 }

@@ -805,10 +805,14 @@ namespace C5UnitTests.arrays.list
         public class GetEnumerator
         {
             private ArrayList<int> list;
-
+            private ArrayList<int> strictList;
 
             [SetUp]
-            public void Init() { list = new ArrayList<int>(); }
+            public void Init()
+            {
+                list = new ArrayList<int>();
+                strictList = new ArrayList<int>(MemoryType.Strict);
+            }
 
 
             [Test]
@@ -878,9 +882,20 @@ namespace C5UnitTests.arrays.list
                 e.MoveNext();
             }
 
-            
             [Test]
-            //[ExpectedException(typeof(MultipleEnumerationException))]
+            [ExpectedException(typeof(MultipleEnumerationException))]
+            public void MultipleEnumerationRaiseMultipleEnumerationExceptionWhenMemoryModeIsStrict()
+            {
+                list.Add(5);
+                list.Add(8);
+                list.Add(5);
+                foreach (var item in strictList)
+                {
+                    foreach (var item2 in strictList)
+                    {
+                    }
+                }
+            }
             public void MultipleEnumeration()
             {
                 list.Add(5);
@@ -890,15 +905,15 @@ namespace C5UnitTests.arrays.list
                 int index = 0;
                 foreach (var item in list)
                 {
-                    foreach (var item2  in list)
+                    foreach (var item2 in list)
                     {
                         foreach (var i in list)
                         {
                             index++;
                         }
-                      
+
                     }
-                } 
+                }
 
                 Assert.IsTrue(index == list.Count * list.Count * list.Count);
             }

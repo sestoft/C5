@@ -387,6 +387,10 @@ namespace C5
 
         #endregion
 
+
+
+        internal MemoryType MemoryType{ get; set; }
+
         /// <summary>
         /// Check if collection is empty.
         /// </summary>
@@ -651,11 +655,13 @@ namespace C5
         /// 
         /// </summary>
         /// <param name="itemequalityComparer"></param>
-        protected CollectionBase(SCG.IEqualityComparer<T> itemequalityComparer)
+        protected CollectionBase(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
         {
             if (itemequalityComparer == null)
                 throw new NullReferenceException("Item EqualityComparer cannot be null.");
             this.itemequalityComparer = itemequalityComparer;
+
+            MemoryType = memoryType;
         }
 
         #region Util
@@ -1194,16 +1200,17 @@ namespace C5
 
         #region Constructors
 
-
         /// <summary>
         /// Create an empty ArrayBase object.
         /// </summary>
         /// <param name="capacity">The initial capacity of the internal array container.
         /// Will be rounded upwards to the nearest power of 2 greater than or equal to 8.</param>
         /// <param name="itemequalityComparer">The item equalityComparer to use, primarily for item equality</param>
+        /// <param name="memoryType">The type of memory for the enumerator used to iterate the collection</param>
         protected ArrayBase(int capacity, SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
             : base(itemequalityComparer)
         {
+            MemoryType = memoryType;
             int newlength = 8;
             while (newlength < capacity) newlength *= 2;
             array = new T[newlength];
@@ -1314,23 +1321,21 @@ namespace C5
         {
             private ArrayBase<T> _internalList;
 
-            private int _anIndex;
+            private int _internalIncrementalIndex;
             private int _theStamp;
             private int _end;
             //-1 means an iterator is not in use. 
-            private int _iteratorState;
- 
 
             public Enumerator(ArrayBase<T> list, MemoryType memoryType)
-                :base(memoryType)
+                : base(memoryType)
             {
                 _internalList = list;
-               
+
             }
 
             internal void UpdateReference(ArrayBase<T> list, int start, int end, int theStamp)
             {
-                _anIndex = start;
+                _internalIncrementalIndex = start;
                 _end = end;
                 _internalList = list;
                 Current = default(T);
@@ -1339,8 +1344,7 @@ namespace C5
 
 
             public void Dispose()
-            {
-                _iteratorState = -1;
+            { 
             }
 
             public override bool MoveNext()
@@ -1350,10 +1354,10 @@ namespace C5
                 if (list.stamp != _theStamp)
                     throw new CollectionModifiedException();
 
-                if (_anIndex < _end)
+                if (_internalIncrementalIndex < _end)
                 {
-                    Current = list.array[_anIndex];
-                    _anIndex++;
+                    Current = list.array[_internalIncrementalIndex];
+                    _internalIncrementalIndex++;
 
                     return true;
                 }
@@ -1364,7 +1368,7 @@ namespace C5
 
             public override void Reset()
             {
-                _anIndex = 0;
+                _internalIncrementalIndex = 0;
                 Current = default(T);
             }
 
@@ -1377,7 +1381,7 @@ namespace C5
 
                 };
                 return enumerator;
-            } 
+            }
         }
         #endregion
         #region IEnumerable<T> Members
@@ -1410,12 +1414,13 @@ namespace C5
 
             private readonly RangeEnumerator _rangeInternalEnumerator;
 
-            internal Range(ArrayBase<T> thebase, int start, int count, bool forwards, MemoryType memoryType = MemoryType.Safe)
+            internal Range(ArrayBase<T> thebase, int start, int count, bool forwards, MemoryType memoryType = MemoryType.Normal)
             {
+
                 this.thebase = thebase; stamp = thebase.stamp;
                 delta = forwards ? 1 : -1;
                 this.start = start + thebase.offset; this.count = count;
-                _rangeInternalEnumerator = new RangeEnumerator(thebase,memoryType);
+                _rangeInternalEnumerator = new RangeEnumerator(thebase, memoryType);
             }
 
             /// <summary>
@@ -1557,7 +1562,7 @@ namespace C5
                 {
                     _index = 0;
                     Current = default(T);
-                } 
+                }
             }
 
             /// <summary>

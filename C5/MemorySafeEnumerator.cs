@@ -47,16 +47,43 @@ namespace C5
         public IEnumerator<T> GetEnumerator()
         {
             MemorySafeEnumerator<T> enumerator;
-            if (IsMainThread && MemoryType == MemoryType.Safe)
-            {
-                enumerator = IteratorState != -1 ? Clone() : this;
 
-                IteratorState = 0;
-            }
-            else
+            switch (MemoryType)
             {
-                enumerator = Clone();
+                case MemoryType.Normal:
+                    enumerator = Clone();
+                    break;
+                case MemoryType.Safe:
+                    if (IsMainThread)
+                    {
+                        enumerator = IteratorState != -1 ? Clone() : this;
+
+                        IteratorState = 0;
+                    }
+                    else
+                    {
+                        enumerator = Clone();
+                    }
+                    break;
+                case MemoryType.Strict:
+                    if (!IsMainThread)
+                    {
+                        throw new Exception("Multithread access detected! In Strict memory mode is not possible to iterate the collection from different threads");
+                    }
+
+                    if (IteratorState != -1)
+                    {
+                        throw new MultipleEnumerationException("Multiple Enumeration detected! In Strict memory mode is not possible to iterate the collection multiple times");
+                    }
+
+                    enumerator = this;
+                    IteratorState = 0;
+
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
+           
 
             return enumerator;
         }
@@ -66,7 +93,7 @@ namespace C5
             return GetEnumerator();
         }
     }
-   
+
 
     //[Serializable]
     //public class WhereEnumerator<T> : EnumerableBase<T>, IEnumerator<T>, IEnumerable<T>
@@ -79,7 +106,7 @@ namespace C5
     //    private int _end;
 
     //    private int _state;
-         
+
     //    private Func<T, bool> _predicate;
 
     //    static int mainThreadId;
@@ -123,7 +150,6 @@ namespace C5
     //            _wrapperEnumerator = (Enumerator<T>)list.GetEnumerator();
     //        else
     //            _wrapperEnumerator.UpdateReference(list, _index, _end, _theStamp);
-
 
 
     //        if (_index < _end)

@@ -43,8 +43,9 @@ namespace C5
         /// expansion is 66% fill.
         /// </summary>
         /// <param name="keyequalityComparer">The external key equalitySCG.Comparer</param>
-        public HashDictionary(SCG.IEqualityComparer<K> keyequalityComparer)
-            : base(keyequalityComparer)
+        /// <param name="memoryType">The memory type of the enumerator used to iterate the collection</param>
+        public HashDictionary(SCG.IEqualityComparer<K> keyequalityComparer, MemoryType memoryType = MemoryType.Normal)
+            : base(keyequalityComparer, memoryType)
         {
             pairs = new HashSet<KeyValuePair<K, V>>(new KeyValuePairEqualityComparer<K, V>(keyequalityComparer));
         }
@@ -57,8 +58,9 @@ namespace C5
         /// power of 2, at least 16.</param>
         /// <param name="fill">The expansion threshold. Must be between 10% and 90%.</param>
         /// <param name="keyequalityComparer">The external key equalitySCG.Comparer</param>
-        public HashDictionary(int capacity, double fill, SCG.IEqualityComparer<K> keyequalityComparer)
-            : base(keyequalityComparer)
+        /// <param name="memoryType">The memory type of the enumerator used to iterate the collection</param>
+        public HashDictionary(int capacity, double fill, SCG.IEqualityComparer<K> keyequalityComparer, MemoryType memoryType = MemoryType.Normal)
+            : base(keyequalityComparer, memoryType)
         {
             pairs = new HashSet<KeyValuePair<K, V>>(capacity, fill, new KeyValuePairEqualityComparer<K, V>(keyequalityComparer));
         }

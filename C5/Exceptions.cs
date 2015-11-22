@@ -87,7 +87,8 @@ namespace C5
     }
 
     /// <summary>
-    /// 
+    /// An exception thrown by the MemorySafeEnumerator if the collection is enumerated multiple times when the 
+    /// memory mode is set to Strict 
     /// </summary>
     [Serializable]
     public class MultipleEnumerationException : Exception
