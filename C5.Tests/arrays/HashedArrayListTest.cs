@@ -29,30 +29,28 @@ namespace C5UnitTests.arrays.hashed
 {
     using CollectionOfInt = HashedArrayList<int>;
 
-    [TestFixture]
-    public class GenericTesters
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class GenericTesters : BaseMemoryType
     {
         [Test]
         public void TestEvents()
         {
             Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
-            new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory, TODO);
+            new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory, MemoryType);
         }
 
-        //[Test]
-        //public void Extensible()
-        //{
-        //    C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5UnitTests.Templates.Extensible.Clone.ViewTester<CollectionOfInt>();
-        //    C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-        //    C5UnitTests.Templates.Extensible.Serialization.ViewTester<CollectionOfInt>();
-        //}
-
+     
         [Test]
         public void List()
         {
             C5UnitTests.Templates.List.Dispose.Tester<CollectionOfInt>();
             C5UnitTests.Templates.List.SCG_IList.Tester<CollectionOfInt>();
+        }
+
+        public GenericTesters(MemoryType memoryType) : base(memoryType)
+        {
         }
     }
 
@@ -71,8 +69,10 @@ namespace C5UnitTests.arrays.hashed
             public bool Equals(int item1, int item2) { return item1 / 10 == item2 / 10; }
         }
 
-        [TestFixture]
-        public class IList_
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+        public class IList_ : BaseMemoryType
         {
             private HashedArrayList<int> list;
             CollectionEventList<int> seen;
@@ -80,8 +80,8 @@ namespace C5UnitTests.arrays.hashed
             [SetUp]
             public void Init()
             {
-                list = new HashedArrayList<int>(TenEqualityComparer.Default);
-                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
+                list = new HashedArrayList<int>(TenEqualityComparer.Default, MemoryType);
+                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default, MemoryType);
             }
 
             private void listen() { seen.Listen(list, EventTypeEnum.All); }
@@ -451,6 +451,10 @@ namespace C5UnitTests.arrays.hashed
 
             [TearDown]
             public void Dispose() { list = null; seen = null; }
+
+            public IList_(MemoryType memoryType) : base(memoryType)
+            {
+            }
         }
 
         [TestFixture]

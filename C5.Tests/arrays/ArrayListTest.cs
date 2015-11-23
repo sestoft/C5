@@ -550,7 +550,7 @@ namespace C5UnitTests.arrays.list
         }
 
         [TestFixture]
-        public class StackQueue
+        public class StackQueue : BaseMemoryType
         {
 
             private ArrayList<int> list;
@@ -559,8 +559,8 @@ namespace C5UnitTests.arrays.list
             [SetUp]
             public void Init()
             {
-                list = new ArrayList<int>(TenEqualityComparer.Default);
-                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
+                list = new ArrayList<int>(TenEqualityComparer.Default, MemoryType);
+                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default, MemoryType);
             }
 
             private void listen() { seen.Listen(list, EventTypeEnum.All); }
@@ -620,6 +620,10 @@ namespace C5UnitTests.arrays.list
 
             [TearDown]
             public void Dispose() { list = null; seen = null; }
+
+            public StackQueue(MemoryType memoryType) : base(memoryType)
+            {
+            }
         }
     }
 
@@ -938,7 +942,7 @@ namespace C5UnitTests.arrays.list
     namespace CollectionOrSink
     {
         [TestFixture]
-        public class Formatting :BaseMemoryType
+        public class Formatting : BaseMemoryType
         {
             ICollection<int> coll;
             IFormatProvider rad16;
@@ -955,6 +959,10 @@ namespace C5UnitTests.arrays.list
                 Assert.AreEqual("[ 0:-4, 1:1C, 2:81, 3:FFFA ]", coll.ToString(null, rad16));
                 Assert.AreEqual("[ 0:-4, 1:28... ]", coll.ToString("L14", null));
                 Assert.AreEqual("[ 0:-4, 1:1C... ]", coll.ToString("L14", rad16));
+            }
+
+            public Formatting(MemoryType memoryType) : base(memoryType)
+            {
             }
         }
 
