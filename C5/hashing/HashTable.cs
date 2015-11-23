@@ -303,12 +303,22 @@ namespace C5
         #endregion
 
         #region Constructors
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public HashSet() 
+            : this(MemoryType.Normal)
+        {
+                
+        }
+
         /// <summary>
         /// Create a hash set with natural item equalityComparer and default fill threshold (66%)
         /// and initial table size (16).
         /// </summary>
-        public HashSet()
-            : this(EqualityComparer<T>.Default) { }
+        public HashSet(MemoryType memoryType = MemoryType.Normal)
+            : this(EqualityComparer<T>.Default, memoryType) { }
 
 
         /// <summary>
@@ -316,8 +326,9 @@ namespace C5
         /// and initial table size (16).
         /// </summary>
         /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
-        public HashSet(SCG.IEqualityComparer<T> itemequalityComparer)
-            : this(16, itemequalityComparer) { }
+        /// <param name="memoryType"></param>
+        public HashSet(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
+            : this(16, itemequalityComparer, memoryType) { }
 
 
         /// <summary>
@@ -325,8 +336,9 @@ namespace C5
         /// </summary>
         /// <param name="capacity">Initial table size (rounded to power of 2, at least 16)</param>
         /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
-        public HashSet(int capacity, SCG.IEqualityComparer<T> itemequalityComparer)
-            : this(capacity, 0.66, itemequalityComparer) { }
+        /// <param name="memoryType"></param>
+        public HashSet(int capacity, SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
+            : this(capacity, 0.66, itemequalityComparer, memoryType) { }
 
 
         /// <summary>
@@ -335,8 +347,9 @@ namespace C5
         /// <param name="capacity">Initial table size (rounded to power of 2, at least 16)</param>
         /// <param name="fill">Fill threshold (in range 10% to 90%)</param>
         /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
-        public HashSet(int capacity, double fill, SCG.IEqualityComparer<T> itemequalityComparer)
-            : base(itemequalityComparer)
+        /// <param name="memoryType"></param>
+        public HashSet(int capacity, double fill, SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
+            : base(itemequalityComparer, memoryType)
         {
             _randomhashfactor = (Debug.UseDeterministicHashing) ? 1529784659 : (2 * (uint)Random.Next() + 1) * 1529784659;
 
@@ -755,12 +768,7 @@ namespace C5
         /// <returns>The enumerator</returns>
         public override SCG.IEnumerator<T> GetEnumerator()
         {
-
             var enumerator = (HashEnumerator)_internalEnumerator.GetEnumerator();
-
-            //if (_internalEnumerator.Stamp != stamp)
-            //    throw new CollectionModifiedException();
-
 
             enumerator.UpdateReference(this, stamp);
 

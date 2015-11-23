@@ -26,15 +26,16 @@ namespace C5UnitTests.arrays.circularqueue
 {
   using CollectionOfInt = CircularQueue<int>;
 
-  [TestFixture]
-  public class GenericTesters
+     
+    [TestFixture]
+  public class GenericTesters : BaseMemoryType
   {
     [Test]
     public void TestEvents()
     {
       Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(); };
-      new C5UnitTests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory);
-      new C5UnitTests.Templates.Events.StackTester<CollectionOfInt>().Test(factory);
+      new C5UnitTests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory, MemoryType);
+      new C5UnitTests.Templates.Events.StackTester<CollectionOfInt>().Test(factory, MemoryType);
     }
 
     //[Test]
@@ -44,6 +45,9 @@ namespace C5UnitTests.arrays.circularqueue
     //  C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
     //  C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
     //}
+        public GenericTesters(MemoryType memoryType) : base(memoryType)
+        {
+        }
   }
 
   //[TestFixture]

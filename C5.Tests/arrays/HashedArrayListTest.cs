@@ -36,7 +36,7 @@ namespace C5UnitTests.arrays.hashed
         public void TestEvents()
         {
             Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
-            new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory);
+            new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory, TODO);
         }
 
         //[Test]

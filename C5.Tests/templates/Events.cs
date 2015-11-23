@@ -34,11 +34,11 @@ namespace C5UnitTests.Templates.Events
         protected EventTypeEnum listenTo;
         protected void listen() { seen.Listen(collection, listenTo); }
 
-        public override void SetUp(TCollection list, EventTypeEnum testSpec)
+        public override void SetUp(TCollection list, EventTypeEnum testSpec, MemoryType memoryType)
         {
             this.collection = list;
             listenTo = testSpec;
-            seen = new CollectionEventList<TItem>(EqualityComparer<TItem>.Default);
+            seen = new CollectionEventList<TItem>(EqualityComparer<TItem>.Default,memoryType);
         }
 
         public SCG.IEnumerable<EventTypeEnum> SpecsBasic

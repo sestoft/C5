@@ -37,9 +37,9 @@ namespace C5UnitTests.linkedlists.plain
         public void TestEvents()
         {
             Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
-            new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory);
-            new C5UnitTests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory);
-            new C5UnitTests.Templates.Events.StackTester<CollectionOfInt>().Test(factory);
+            new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory, TODO);
+            new C5UnitTests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory, TODO);
+            new C5UnitTests.Templates.Events.StackTester<CollectionOfInt>().Test(factory, TODO);
         }
 
         //[Test]

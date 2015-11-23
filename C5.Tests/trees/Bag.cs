@@ -80,7 +80,7 @@ namespace C5UnitTests.trees.TreeBag
         public void TestEvents()
         {
             Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
-            new C5UnitTests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory);
+            new C5UnitTests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory, TODO);
         }
 
         //[Test]

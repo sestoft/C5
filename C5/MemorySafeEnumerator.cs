@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using System.Threading;
 
 namespace C5
 {
@@ -68,7 +69,7 @@ namespace C5
                 case MemoryType.Strict:
                     if (!IsMainThread)
                     {
-                        throw new Exception("Multithread access detected! In Strict memory mode is not possible to iterate the collection from different threads");
+                        throw new ConcurrentEnumerationException("Multithread access detected! In Strict memory mode is not possible to iterate the collection from different threads");
                     }
 
                     if (IteratorState != -1)

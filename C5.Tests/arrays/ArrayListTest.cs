@@ -28,16 +28,18 @@ namespace C5UnitTests.arrays.list
 {
     using CollectionOfInt = ArrayList<int>;
 
-    [TestFixture]
-    public class GenericTesters
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class GenericTesters : BaseMemoryType
     {
         [Test]
         public void TestEvents()
         {
-            Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
-            new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory);
-            new C5UnitTests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory);
-            new C5UnitTests.Templates.Events.StackTester<CollectionOfInt>().Test(factory);
+            Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default, MemoryType); };
+            new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory, MemoryType);
+            new C5UnitTests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory, MemoryType);
+            new C5UnitTests.Templates.Events.StackTester<CollectionOfInt>().Test(factory, MemoryType);
         }
 
 
@@ -56,17 +58,23 @@ namespace C5UnitTests.arrays.list
             C5UnitTests.Templates.List.Dispose.Tester<CollectionOfInt>();
             C5UnitTests.Templates.List.SCG_IList.Tester<CollectionOfInt>();
         }
+
+        public GenericTesters(MemoryType memoryType) : base(memoryType)
+        {
+        }
     }
 
     static class Factory
     {
-        public static ICollection<T> New<T>() { return new ArrayList<T>(); }
+        public static ICollection<T> New<T>(MemoryType memoryType) { return new ArrayList<T>(memoryType); }
     }
 
     namespace Events
     {
-        [TestFixture]
-        public class IList_
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+        public class IList_ : BaseMemoryType
         {
             private ArrayList<int> list;
             CollectionEventList<int> seen;
@@ -74,8 +82,8 @@ namespace C5UnitTests.arrays.list
             [SetUp]
             public void Init()
             {
-                list = new ArrayList<int>(TenEqualityComparer.Default);
-                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
+                list = new ArrayList<int>(TenEqualityComparer.Default, MemoryType);
+                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default, MemoryType);
             }
 
             private void listen() { seen.Listen(list, EventTypeEnum.Added); }
@@ -535,6 +543,10 @@ namespace C5UnitTests.arrays.list
             {
                 throw new NotImplementedException();
             }
+
+            public IList_(MemoryType memoryType) : base(memoryType)
+            {
+            }
         }
 
         [TestFixture]
@@ -886,9 +898,9 @@ namespace C5UnitTests.arrays.list
             [ExpectedException(typeof(MultipleEnumerationException))]
             public void MultipleEnumerationRaiseMultipleEnumerationExceptionWhenMemoryModeIsStrict()
             {
-                list.Add(5);
-                list.Add(8);
-                list.Add(5);
+                strictList.Add(5);
+                strictList.Add(8);
+                strictList.Add(5);
                 foreach (var item in strictList)
                 {
                     foreach (var item2 in strictList)
@@ -926,12 +938,12 @@ namespace C5UnitTests.arrays.list
     namespace CollectionOrSink
     {
         [TestFixture]
-        public class Formatting
+        public class Formatting :BaseMemoryType
         {
             ICollection<int> coll;
             IFormatProvider rad16;
             [SetUp]
-            public void Init() { coll = Factory.New<int>(); rad16 = new RadixFormatProvider(16); }
+            public void Init() { coll = Factory.New<int>(MemoryType); rad16 = new RadixFormatProvider(16); }
             [TearDown]
             public void Dispose() { coll = null; rad16 = null; }
             [Test]

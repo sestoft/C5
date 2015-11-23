@@ -33,7 +33,7 @@ namespace C5UnitTests.hashtable.bag
         public void TestEvents()
         {
             Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
-            new C5UnitTests.Templates.Events.CollectionTester<CollectionOfInt>().Test(factory);
+            new C5UnitTests.Templates.Events.CollectionTester<CollectionOfInt>().Test(factory, TODO);
         }
 
         //[Test]

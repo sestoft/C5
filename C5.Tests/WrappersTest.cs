@@ -28,8 +28,10 @@ namespace C5UnitTests.wrappers
 {
     namespace events
     {
-        [TestFixture]
-        public class IList_
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+        public class IList_ : BaseMemoryType
         {
             private ArrayList<int> list;
             ICollectionValue<int> guarded;
@@ -40,7 +42,7 @@ namespace C5UnitTests.wrappers
             {
                 list = new ArrayList<int>(TenEqualityComparer.Default);
                 guarded = new GuardedList<int>(list);
-                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
+                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default, MemoryType);
             }
 
             private void listen() { seen.Listen(guarded, EventTypeEnum.All); }
@@ -499,6 +501,10 @@ namespace C5UnitTests.wrappers
             void w_ItemRemovedAt(object sender, ItemAtEventArgs<int> eventArgs)
             {
                 throw new NotImplementedException();
+            }
+
+            public IList_(MemoryType memoryType) : base(memoryType)
+            {
             }
         }
 
