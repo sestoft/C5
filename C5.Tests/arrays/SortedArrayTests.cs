@@ -28,14 +28,16 @@ namespace C5UnitTests.arrays.sorted
 {
     using CollectionOfInt = SortedArray<int>;
 
-    [TestFixture]
-    public class GenericTesters
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class GenericTesters : BaseMemoryType
     {
         [Test]
         public void TestEvents()
         {
             Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
-            new C5UnitTests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory, TODO);
+            new C5UnitTests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory, MemoryType);
         }
 
         //[Test]
@@ -44,21 +46,26 @@ namespace C5UnitTests.arrays.sorted
         //    C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
         //    C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
         //}
+        public GenericTesters(MemoryType memoryType) : base(memoryType)
+        {
+        }
     }
 
     static class Factory
     {
-        public static ICollection<T> New<T>() { return new SortedArray<T>(); }
+        public static ICollection<T> New<T>(MemoryType memoryType) { return new SortedArray<T>(memoryType); }
     }
 
 
-    [TestFixture]
-    public class Formatting
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class Formatting : BaseMemoryType
     {
         ICollection<int> coll;
         IFormatProvider rad16;
         [SetUp]
-        public void Init() { coll = Factory.New<int>(); rad16 = new RadixFormatProvider(16); }
+        public void Init() { coll = Factory.New<int>(MemoryType); rad16 = new RadixFormatProvider(16); }
         [TearDown]
         public void Dispose() { coll = null; rad16 = null; }
         [Test]
@@ -70,6 +77,10 @@ namespace C5UnitTests.arrays.sorted
             Assert.AreEqual("{ -4, 1C, 81, FFFA }", coll.ToString(null, rad16));
             Assert.AreEqual("{ -4, 28, 129... }", coll.ToString("L14", null));
             Assert.AreEqual("{ -4, 1C, 81... }", coll.ToString("L14", rad16));
+        }
+
+        public Formatting(MemoryType memoryType) : base(memoryType)
+        {
         }
     }
 

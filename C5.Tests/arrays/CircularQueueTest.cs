@@ -26,8 +26,10 @@ namespace C5UnitTests.arrays.circularqueue
 {
   using CollectionOfInt = CircularQueue<int>;
 
-     
-    [TestFixture]
+
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
   public class GenericTesters : BaseMemoryType
   {
     [Test]

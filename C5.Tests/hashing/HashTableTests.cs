@@ -221,8 +221,10 @@ namespace C5UnitTests.hashtable.set
 
     namespace CollectionOrSink
     {
-        [TestFixture]
-        public class Formatting
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+        public class Formatting : BaseMemoryType
         {
             ICollection<int> coll;
             IFormatProvider rad16;
@@ -230,7 +232,7 @@ namespace C5UnitTests.hashtable.set
             public void Init()
             {
                 Debug.UseDeterministicHashing = true;
-                coll = Factory.New<int>(); rad16 = new RadixFormatProvider(16);
+                coll = Factory.New<int>(MemoryType); rad16 = new RadixFormatProvider(16);
             }
             [TearDown]
             public void Dispose()
@@ -248,6 +250,10 @@ namespace C5UnitTests.hashtable.set
                 Assert.AreEqual("{ FFFA, -4, 1C, 81 }", coll.ToString(null, rad16));
                 Assert.AreEqual("{ 65530, -4, ... }", coll.ToString("L14", null));
                 Assert.AreEqual("{ FFFA, -4, ... }", coll.ToString("L14", rad16));
+            }
+
+            public Formatting(MemoryType memoryType) : base(memoryType)
+            {
             }
         }
 

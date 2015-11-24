@@ -508,8 +508,10 @@ namespace C5UnitTests.wrappers
             }
         }
 
-        [TestFixture]
-        public class StackQueue
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+        public class StackQueue : BaseMemoryType
         {
             private ArrayList<int> list;
             ICollectionValue<int> guarded;
@@ -518,9 +520,9 @@ namespace C5UnitTests.wrappers
             [SetUp]
             public void Init()
             {
-                list = new ArrayList<int>(TenEqualityComparer.Default);
+                list = new ArrayList<int>(TenEqualityComparer.Default, MemoryType);
                 guarded = new GuardedList<int>(list);
-                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
+                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default, MemoryType);
             }
 
             private void listen() { seen.Listen(guarded, EventTypeEnum.All); }
@@ -581,6 +583,10 @@ namespace C5UnitTests.wrappers
 
             [TearDown]
             public void Dispose() { list = null; seen = null; }
+
+            public StackQueue(MemoryType memoryType) : base(memoryType)
+            {
+            }
         }
 
 

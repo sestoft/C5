@@ -28,14 +28,16 @@ namespace C5UnitTests.hashtable.dictionary
 {
     using DictionaryIntToInt = HashDictionary<int, int>;
 
-    [TestFixture]
-    public class GenericTesters
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class GenericTesters : BaseMemoryType
     {
         [Test]
         public void TestEvents()
         {
-            Func<DictionaryIntToInt> factory = delegate() { return new DictionaryIntToInt(TenEqualityComparer.Default); };
-            new C5UnitTests.Templates.Events.DictionaryTester<DictionaryIntToInt>().Test(factory, TODO);
+            Func<DictionaryIntToInt> factory = delegate() { return new DictionaryIntToInt(TenEqualityComparer.Default, MemoryType); };
+            new C5UnitTests.Templates.Events.DictionaryTester<DictionaryIntToInt>().Test(factory, MemoryType);
         }
 
         //[Test]
@@ -43,6 +45,9 @@ namespace C5UnitTests.hashtable.dictionary
         //{
         //    C5UnitTests.Templates.Extensible.Serialization.DTester<DictionaryIntToInt>();
         //}
+        public GenericTesters(MemoryType memoryType) : base(memoryType)
+        {
+        }
     }
 
     static class Factory

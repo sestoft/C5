@@ -35,7 +35,7 @@ namespace C5UnitTests.trees.TreeSet
         public void TestEvents()
         {
             Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
-            new C5UnitTests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory, TODO);
+            new C5UnitTests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory, MemoryType.Normal);
         }
 
         //[Test]

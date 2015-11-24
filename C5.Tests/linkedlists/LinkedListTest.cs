@@ -29,17 +29,19 @@ namespace C5UnitTests.linkedlists.plain
 {
     using CollectionOfInt = LinkedList<int>;
 
-    [TestFixture]
-    public class GenericTesters
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class GenericTesters : BaseMemoryType
     {
 
         [Test]
         public void TestEvents()
         {
             Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
-            new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory, TODO);
-            new C5UnitTests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory, TODO);
-            new C5UnitTests.Templates.Events.StackTester<CollectionOfInt>().Test(factory, TODO);
+            new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory, MemoryType);
+            new C5UnitTests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory, MemoryType);
+            new C5UnitTests.Templates.Events.StackTester<CollectionOfInt>().Test(factory, MemoryType);
         }
 
         //[Test]
@@ -56,6 +58,10 @@ namespace C5UnitTests.linkedlists.plain
         {
             C5UnitTests.Templates.List.Dispose.Tester<CollectionOfInt>();
             C5UnitTests.Templates.List.SCG_IList.Tester<CollectionOfInt>();
+        }
+
+        public GenericTesters(MemoryType memoryType) : base(memoryType)
+        {
         }
     }
 
