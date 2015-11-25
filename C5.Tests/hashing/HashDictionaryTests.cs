@@ -52,11 +52,13 @@ namespace C5UnitTests.hashtable.dictionary
 
     static class Factory
     {
-        public static IDictionary<K, V> New<K, V>() { return new HashDictionary<K, V>(); }
+        public static IDictionary<K, V> New<K, V>(MemoryType memoryType) { return new HashDictionary<K, V>(memoryType); }
     }
 
-    [TestFixture]
-    public class Formatting
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class Formatting : BaseMemoryType
     {
         IDictionary<int, int> coll;
         IFormatProvider rad16;
@@ -64,7 +66,7 @@ namespace C5UnitTests.hashtable.dictionary
         public void Init()
         {
             Debug.UseDeterministicHashing = true;
-            coll = Factory.New<int, int>();
+            coll = Factory.New<int, int>(MemoryType);
             rad16 = new RadixFormatProvider(16);
         }
         [TearDown]
@@ -84,10 +86,16 @@ namespace C5UnitTests.hashtable.dictionary
             Assert.AreEqual("{ 45 => 89, ... }", coll.ToString("L14", null));
             Assert.AreEqual("{ 2D => 59, ... }", coll.ToString("L14", rad16));
         }
+
+        public Formatting(MemoryType memoryType) : base(memoryType)
+        {
+        }
     }
 
-    [TestFixture]
-    public class HashDict
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class HashDict : BaseMemoryType
     {
         private HashDictionary<string, string> dict;
 
@@ -95,22 +103,21 @@ namespace C5UnitTests.hashtable.dictionary
         [SetUp]
         public void Init()
         {
-            dict = new HashDictionary<string, string>();
-            //dict = TreeDictionary<string,string>.MakeNaturalO<string,string>();
+            dict = new HashDictionary<string, string>(MemoryType); 
         }
 
         [Test]
         [ExpectedException(typeof(NullReferenceException))]
         public void NullEqualityComparerinConstructor1()
         {
-            new HashDictionary<int, int>(null);
+            new HashDictionary<int, int>(null, MemoryType);
         }
 
         [Test]
         [ExpectedException(typeof(NullReferenceException))]
         public void NullEqualityComparerinConstructor2()
         {
-            new HashDictionary<int, int>(5, 0.5, null);
+            new HashDictionary<int, int>(5, 0.5, null, MemoryType);
         }
 
         [Test]
@@ -273,17 +280,23 @@ namespace C5UnitTests.hashtable.dictionary
                 Assert.AreEqual(7 * i + 1, dict2[16 * i]);
             Assert.IsTrue(dict.Check());
         }
+
+        public HashDict(MemoryType memoryType) : base(memoryType)
+        {
+        }
     }
 
-    [TestFixture]
-    public class Enumerators
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class Enumerators : BaseMemoryType
     {
         private HashDictionary<string, string> _dict;
 
         [SetUp]
         public void Init()
         {
-            _dict = new HashDictionary<string, string>();
+            _dict = new HashDictionary<string, string>(MemoryType);
             _dict["S"] = "A";
             _dict["T"] = "B";
             _dict["R"] = "C";
@@ -334,6 +347,10 @@ namespace C5UnitTests.hashtable.dictionary
             Assert.IsTrue(pairs.Contains(new SCG.KeyValuePair<string, string>("R", "C")));
             Assert.IsTrue(pairs.Contains(new SCG.KeyValuePair<string, string>("S", "A")));
             Assert.IsTrue(pairs.Contains(new SCG.KeyValuePair<string, string>("T", "B")));
+        }
+
+        public Enumerators(MemoryType memoryType) : base(memoryType)
+        {
         }
     }
 }

@@ -661,7 +661,7 @@ namespace C5
             {
                 //Updatecheck is performed by the pairs enumerator
                 _internalEnumerator.UpdateReference(_pairs);
-                return _internalEnumerator.GetEnumerator();
+                return _internalEnumerator;
             }
 
             public override bool IsEmpty { get { return _pairs.IsEmpty; } }
@@ -767,7 +767,7 @@ namespace C5
             public override SCG.IEnumerator<K> GetEnumerator()
             {
                 _internalEnumerator.UpdateReference(_pairs);
-                return _internalEnumerator.GetEnumerator();
+                return _internalEnumerator;
             }
 
             public override bool IsEmpty { get { return _pairs.IsEmpty; } }

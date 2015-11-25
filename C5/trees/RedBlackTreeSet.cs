@@ -534,36 +534,6 @@ namespace C5
 
         #region IEnumerable<T> Members
 
-        private SCG.IEnumerator<T> getEnumerator(Node node, int origstamp)
-        {
-            if (node == null)
-                yield break;
-
-            if (node.left != null)
-            {
-                SCG.IEnumerator<T> child = getEnumerator(node.left, origstamp);
-
-                while (child.MoveNext())
-                {
-                    modifycheck(origstamp);
-                    yield return child.Current;
-                }
-            }
-
-            modifycheck(origstamp);
-            yield return node.item;
-            if (node.right != null)
-            {
-                SCG.IEnumerator<T> child = getEnumerator(node.right, origstamp);
-
-                while (child.MoveNext())
-                {
-                    modifycheck(origstamp);
-                    yield return child.Current;
-                }
-            }
-        }
-
         /// <summary>
         /// 
         /// </summary>

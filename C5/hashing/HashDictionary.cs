@@ -35,7 +35,7 @@ namespace C5
         /// Initial capacity of internal table will be 16 entries and threshold for 
         /// expansion is 66% fill.
         /// </summary>
-        public HashDictionary() : this(EqualityComparer<K>.Default) { }
+        public HashDictionary(MemoryType memoryType = MemoryType.Normal) : this(EqualityComparer<K>.Default, memoryType) { }
 
         /// <summary>
         /// Create a hash dictionary using a custom equalityComparer for the keys.
