@@ -38,10 +38,10 @@ namespace C5
 		class InnerList : ArrayList<T>
 		{
 			internal InnerList ( T [] array, MemoryType memoryType )
+				: base(memoryType)
 			{ 
 				this.array = array;
-				size = array.Length;
-				MemoryType = memoryType;
+				size = array.Length; 
 			}
 		}
 
