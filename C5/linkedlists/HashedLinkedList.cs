@@ -473,9 +473,13 @@ namespace C5
         /// Create a linked list with en external item equalityComparer
         /// </summary>
         /// <param name="itemequalityComparer">The external equalitySCG.Comparer</param>
-        public HashedLinkedList(SCG.IEqualityComparer<T> itemequalityComparer)
-            : base(itemequalityComparer)
+		/// <param name = "memoryType"></param> 
+		public HashedLinkedList(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
+			: base(itemequalityComparer, memoryType)
         {
+			if ( memoryType != MemoryType.Normal )
+				throw new Exception ( "HashedLinkedList doesn't support MemoryType Strict or Safe" );
+			
             offset = 0;
             size = stamp = 0;
             startsentinel = new Node(default(T));
@@ -492,10 +496,15 @@ namespace C5
             dict = new HashDictionary<T, Node>(itemequalityComparer);
         }
 
+		public HashedLinkedList ( ) : this(EqualityComparer<T>.Default)
+		{
+			
+		}
+
         /// <summary>
         /// Create a linked list with the natural item equalityComparer
         /// </summary>
-        public HashedLinkedList() : this(EqualityComparer<T>.Default) { }
+		public HashedLinkedList(MemoryType memoryType = MemoryType.Normal) : this(EqualityComparer<T>.Default, memoryType) { }
 
         #endregion
 

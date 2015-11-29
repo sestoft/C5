@@ -44,8 +44,8 @@ namespace C5UnitTests.linkedlists.hashed
         [Test]
         public void List()
         {
-            C5UnitTests.Templates.List.Dispose.Tester<CollectionOfInt>();
-            C5UnitTests.Templates.List.SCG_IList.Tester<CollectionOfInt>();
+			C5UnitTests.Templates.List.Dispose.Tester<CollectionOfInt>();
+			C5UnitTests.Templates.List.SCG_IList.Tester<CollectionOfInt>();
         }
 
         public GenericTesters(MemoryType memoryType) : base(memoryType)

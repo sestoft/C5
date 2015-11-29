@@ -257,14 +257,20 @@ namespace C5UnitTests.hashtable.set
             }
         }
 
-        [TestFixture]
-        public class CollectionOrSink
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+		public class CollectionOrSink : BaseMemoryType
         {
             private HashSet<int> hashset;
 
+			public CollectionOrSink (MemoryType memoryType ) : base(memoryType)
+			{
+				
+			}
 
             [SetUp]
-            public void Init() { hashset = new HashSet<int>(); }
+			public void Init() { hashset = new HashSet<int>(MemoryType); }
 
             [Test]
             public void Choose()
@@ -319,17 +325,25 @@ namespace C5UnitTests.hashtable.set
             public void Dispose() { hashset = null; }
         }
 
-        [TestFixture]
-        public class FindPredicate
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+		public class FindPredicate : BaseMemoryType
         {
             private HashSet<int> list;
             Func<int, bool> pred;
+
+			public FindPredicate (MemoryType memoryType ) : base(memoryType)
+			{
+
+			}
+
 
             [SetUp]
             public void Init()
             {
                 Debug.UseDeterministicHashing = true;
-                list = new HashSet<int>(TenEqualityComparer.Default);
+				list = new HashSet<int>(TenEqualityComparer.Default, MemoryType);
                 pred = delegate(int i) { return i % 5 == 0; };
             }
 
@@ -353,13 +367,20 @@ namespace C5UnitTests.hashtable.set
             }
         }
 
-        [TestFixture]
-        public class UniqueItems
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+		public class UniqueItems : BaseMemoryType
         {
             private HashSet<int> list;
 
+			public UniqueItems (MemoryType memoryType ) : base(memoryType)
+			{
+
+			}
+
             [SetUp]
-            public void Init() { list = new HashSet<int>(); }
+			public void Init() { list = new HashSet<int>(MemoryType); }
 
             [TearDown]
             public void Dispose() { list = null; }
@@ -375,19 +396,25 @@ namespace C5UnitTests.hashtable.set
             }
         }
 
-        [TestFixture]
-        public class ArrayTest
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+		public class ArrayTest : BaseMemoryType
         {
             private HashSet<int> hashset;
 
             int[] a;
 
+			public ArrayTest (MemoryType memoryType ) : base(memoryType)
+			{
+				
+			}
 
             [SetUp]
             public void Init()
             {
                 Debug.UseDeterministicHashing = true;
-                hashset = new HashSet<int>();
+				hashset = new HashSet<int>(MemoryType);
                 a = new int[10];
                 for (int i = 0; i < 10; i++)
                     a[i] = 1000 + i;

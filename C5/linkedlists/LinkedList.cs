@@ -465,9 +465,11 @@ namespace C5
         /// Create a linked list with en external item equalityComparer
         /// </summary>
         /// <param name="itemequalityComparer">The external equalitySCG.Comparer</param>
-        public LinkedList(SCG.IEqualityComparer<T> itemequalityComparer)
-            : base(itemequalityComparer)
+		public LinkedList(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
+			: base(itemequalityComparer, memoryType)
         {
+			if ( memoryType != MemoryType.Normal )
+				throw new Exception ( "LinkedList doesn't support MemoryType Strict or Safe" );
             offset = 0;
             size = stamp = 0;
             startsentinel = new Node(default(T));

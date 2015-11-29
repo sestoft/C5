@@ -655,7 +655,8 @@ namespace C5
         /// 
         /// </summary>
         /// <param name="itemequalityComparer"></param>
-        protected CollectionBase(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
+		/// <param name = "memoryType"></param>
+        protected CollectionBase(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType)
         {
             if (itemequalityComparer == null)
                 throw new NullReferenceException("Item EqualityComparer cannot be null.");
@@ -923,7 +924,8 @@ namespace C5
         /// 
         /// </summary>
         /// <param name="itemequalityComparer"></param>
-        protected DirectedCollectionBase(SCG.IEqualityComparer<T> itemequalityComparer) : base(itemequalityComparer) { }
+		/// <param name = "memoryType"></param>
+		protected DirectedCollectionBase(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType) : base(itemequalityComparer, memoryType) { }
         /// <summary>
         /// <code>Forwards</code> if same, else <code>Backwards</code>
         /// </summary>
@@ -975,7 +977,8 @@ namespace C5
         /// 
         /// </summary>
         /// <param name="itemequalityComparer"></param>
-        protected SequencedBase(SCG.IEqualityComparer<T> itemequalityComparer) : base(itemequalityComparer) { }
+		/// <param name = "memoryType"></param>
+		protected SequencedBase(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType) : base(itemequalityComparer, memoryType) { }
 
         #region Util
 
@@ -1207,10 +1210,9 @@ namespace C5
         /// Will be rounded upwards to the nearest power of 2 greater than or equal to 8.</param>
         /// <param name="itemequalityComparer">The item equalityComparer to use, primarily for item equality</param>
         /// <param name="memoryType">The type of memory for the enumerator used to iterate the collection</param>
-        protected ArrayBase(int capacity, SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
-            : base(itemequalityComparer)
-        {
-            MemoryType = memoryType;
+        protected ArrayBase(int capacity, SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType)
+			: base(itemequalityComparer, memoryType)
+        { 
             int newlength = 8;
             while (newlength < capacity) newlength *= 2;
             array = new T[newlength];
