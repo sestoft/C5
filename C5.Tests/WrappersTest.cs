@@ -594,10 +594,16 @@ namespace C5UnitTests.wrappers
 
     namespace wrappedarray
     {
-        [TestFixture]
-        public class Basic
+		[TestFixture(MemoryType.Normal)]
+		[TestFixture(MemoryType.Strict)]
+		[TestFixture(MemoryType.Safe)]
+		public class Basic : BaseMemoryType
         {
-
+			public Basic (MemoryType memoryType )
+				:base(memoryType)
+			{
+				
+			}
             [SetUp]
             public void Init()
             {
@@ -611,7 +617,7 @@ namespace C5UnitTests.wrappers
             [Test]
             public void NoExc()
             {
-                WrappedArray<int> wrapped = new WrappedArray<int>(new int[] { 4, 6, 5 });
+				WrappedArray<int> wrapped = new WrappedArray<int>(new int[] { 4, 6, 5 }, MemoryType);
                 Assert.AreEqual(6, wrapped[1]);
                 Assert.IsTrue(IC.eq(wrapped[1, 2], 6, 5));
                 //
@@ -680,7 +686,7 @@ namespace C5UnitTests.wrappers
             [Test]
             public void WithExc()
             {
-                WrappedArray<int> wrapped = new WrappedArray<int>(new int[] { 3, 4, 6, 5, 7 });
+				WrappedArray<int> wrapped = new WrappedArray<int>(new int[] { 3, 4, 6, 5, 7 }, MemoryType);
                 //
                 try { wrapped.Add(1); Assert.Fail("No throw"); }
                 catch (FixedSizeCollectionException) { }
@@ -731,7 +737,7 @@ namespace C5UnitTests.wrappers
             public void View()
             {
                 int[] inner = new int[] { 3, 4, 6, 5, 7 };
-                WrappedArray<int> outerwrapped = new WrappedArray<int>(inner);
+				WrappedArray<int> outerwrapped = new WrappedArray<int>(inner, MemoryType);
                 WrappedArray<int> wrapped = (WrappedArray<int>)outerwrapped.View(1, 3);
                 //
                 Assert.AreEqual(6, wrapped[1]);
@@ -814,7 +820,7 @@ namespace C5UnitTests.wrappers
             public void ViewWithExc()
             {
                 int[] inner = new int[] { 3, 4, 6, 5, 7 };
-                WrappedArray<int> outerwrapped = new WrappedArray<int>(inner);
+				WrappedArray<int> outerwrapped = new WrappedArray<int>(inner, MemoryType);
                 WrappedArray<int> wrapped = (WrappedArray<int>)outerwrapped.View(1, 3);
                 //
                 try { wrapped.Add(1); Assert.Fail("No throw"); }
