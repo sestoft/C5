@@ -939,6 +939,40 @@ namespace C5UnitTests.arrays.list
                     }
                 }
             }
+
+             [Test]
+            public void MultipleSeparateEnumeration()
+            {
+                list.Add(5);
+                list.Add(8);
+                list.Add(5);
+                foreach (var item in list)
+                {
+                    
+                }
+
+                 int j = 0;
+                foreach (var item2 in list)
+                {
+                    switch (j)
+                    {
+                        case 0:
+                            Assert.AreEqual(item2,5);
+                            break;
+                        case 1:
+                             Assert.AreEqual(item2,8);
+                            break;
+                        case 2:
+                            Assert.AreEqual(item2, 5);
+                            break;
+                    }
+                    j++;
+                }
+
+                Assert.AreEqual(j, 3);
+            }
+
+
             public void MultipleEnumeration()
             {
                 list.Add(5);

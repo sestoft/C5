@@ -17,7 +17,7 @@ namespace C5
        
         protected static bool IsMainThread
         {
-            get { return System.Threading.Thread.CurrentThread.ManagedThreadId == MainThreadId; }
+            get { return Thread.CurrentThread.ManagedThreadId == MainThreadId; }
         }
 
         protected MemorySafeEnumerator(MemoryType memoryType)

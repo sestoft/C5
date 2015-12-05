@@ -518,6 +518,8 @@ namespace C5
         /// <returns>The filtered enumerable</returns>
         public virtual SCG.IEnumerable<T> Filter(Func<T, bool> predicate)
         {
+            if (MemoryType == MemoryType.Strict) throw new Exception("This is not a memory safe function and cannot be used in MemoryType.Strict");
+
             foreach (T item in this)
                 if (predicate(item))
                     yield return item;
