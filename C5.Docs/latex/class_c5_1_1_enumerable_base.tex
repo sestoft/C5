@@ -1,0 +1,73 @@
+\hypertarget{class_c5_1_1_enumerable_base}{}\section{C5.\+Enumerable\+Base$<$ T $>$ Class Template Reference}
+\label{class_c5_1_1_enumerable_base}\index{C5.\+Enumerable\+Base$<$ T $>$@{C5.\+Enumerable\+Base$<$ T $>$}}
+
+
+A base class for implementing an I\+Enumerable$<$T$>$  
+
+
+Inheritance diagram for C5.\+Enumerable\+Base$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.109228cm]{class_c5_1_1_enumerable_base}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+abstract S\+C\+G.\+I\+Enumerator$<$ T $>$ \hyperlink{class_c5_1_1_enumerable_base_ad8893620ea9cc4e7d41c17d26769d237}{Get\+Enumerator} ()
+\begin{DoxyCompactList}\small\item\em Create an enumerator for this collection. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static int \hyperlink{class_c5_1_1_enumerable_base_ad696d9c2a4370aa2e7611961bf3f815a}{count\+Items} (S\+C\+G.\+I\+Enumerable$<$ T $>$ items)
+\begin{DoxyCompactList}\small\item\em Count the number of items in an enumerable by enumeration \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A base class for implementing an I\+Enumerable$<$T$>$ 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_enumerable_base_ad696d9c2a4370aa2e7611961bf3f815a}{}\index{C5\+::\+Enumerable\+Base@{C5\+::\+Enumerable\+Base}!count\+Items@{count\+Items}}
+\index{count\+Items@{count\+Items}!C5\+::\+Enumerable\+Base@{C5\+::\+Enumerable\+Base}}
+\subsubsection[{count\+Items(\+S\+C\+G.\+I\+Enumerable$<$ T $>$ items)}]{\setlength{\rightskip}{0pt plus 5cm}static int {\bf C5.\+Enumerable\+Base}$<$ T $>$.count\+Items (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Enumerable$<$ T $>$}]{items}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}\label{class_c5_1_1_enumerable_base_ad696d9c2a4370aa2e7611961bf3f815a}
+
+
+Count the number of items in an enumerable by enumeration 
+
+
+\begin{DoxyParams}{Parameters}
+{\em items} & The enumerable to count\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The size of the enumerable
+\end{DoxyReturn}
+\hypertarget{class_c5_1_1_enumerable_base_ad8893620ea9cc4e7d41c17d26769d237}{}\index{C5\+::\+Enumerable\+Base@{C5\+::\+Enumerable\+Base}!Get\+Enumerator@{Get\+Enumerator}}
+\index{Get\+Enumerator@{Get\+Enumerator}!C5\+::\+Enumerable\+Base@{C5\+::\+Enumerable\+Base}}
+\subsubsection[{Get\+Enumerator()}]{\setlength{\rightskip}{0pt plus 5cm}abstract S\+C\+G.\+I\+Enumerator$<$T$>$ {\bf C5.\+Enumerable\+Base}$<$ T $>$.Get\+Enumerator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{class_c5_1_1_enumerable_base_ad8893620ea9cc4e7d41c17d26769d237}
+
+
+Create an enumerator for this collection. 
+
+\begin{DoxyReturn}{Returns}
+The enumerator
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_ae8f40668f13afb6cb05501446a3bcc4e}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_ab23965434fba5e39a15eb4c0eb3c4901}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_a0ce81bee1c45ccbc3105698a4f4692a8}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_ae6c2dc2f2aa8c9952d3267a37e9de01a}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_base_1_1_range_af6396c46d77d98185e8587c024dd9316}{C5.\+Array\+Base$<$ T $>$.\+Range}, \hyperlink{class_c5_1_1_array_base_a84a54c5fa039db32e27ca45c6b0cea85}{C5.\+Array\+Base$<$ T $>$}, \hyperlink{class_c5_1_1_sequenced_base_a07d117175b630fd7f87f6e61b05259dc}{C5.\+Sequenced\+Base$<$ T $>$}, \hyperlink{class_c5_1_1_collection_base_a3b4b98e2606afecb948019412c4c2533}{C5.\+Collection\+Base$<$ T $>$}, \hyperlink{class_c5_1_1_hash_set_a4c404a22695abc0f6b47bf74d3d34034}{C5.\+Hash\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_hash_bag_a621d77b2f8a7c3a826aace4be1d809b2}{C5.\+Hash\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_bag_a2c00797c0e29dd52efa05f219b4c9c7e}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_af9dd4aece1415276e1ede1ded6904179}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_collection_value_base_a0e8b891322ed9987a18f1a1ac87d2d4f}{C5.\+Collection\+Value\+Base$<$ T $>$}, \hyperlink{class_c5_1_1_interval_heap_a09556ba66252a46d94456587bc877561}{C5.\+Interval\+Heap$<$ T $>$}, \hyperlink{class_c5_1_1_circular_queue_ae1ab5e745ced280db9b9a175a66dc5b4}{C5.\+Circular\+Queue$<$ T $>$}, and \hyperlink{class_c5_1_1_mapped_directed_enumerable_a20cbeb4a43b678a5d3d4f6d0c3e5497b}{C5.\+Mapped\+Directed\+Enumerable$<$ T, V $>$}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_collections_8cs}{Collections.\+cs}\end{DoxyCompactItemize}

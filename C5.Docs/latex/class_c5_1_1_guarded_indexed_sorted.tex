@@ -1,0 +1,403 @@
+\hypertarget{class_c5_1_1_guarded_indexed_sorted}{}\section{C5.\+Guarded\+Indexed\+Sorted$<$ T $>$ Class Template Reference}
+\label{class_c5_1_1_guarded_indexed_sorted}\index{C5.\+Guarded\+Indexed\+Sorted$<$ T $>$@{C5.\+Guarded\+Indexed\+Sorted$<$ T $>$}}
+
+
+Read-\/only wrapper for indexed sorted collections  
+
+
+Inheritance diagram for C5.\+Guarded\+Indexed\+Sorted$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.577465cm]{class_c5_1_1_guarded_indexed_sorted}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c5_1_1_guarded_indexed_sorted_ae5ded6570af9716bb93a42e5dea55656}{Guarded\+Indexed\+Sorted} (\hyperlink{interface_c5_1_1_i_indexed_sorted}{I\+Indexed\+Sorted}$<$ T $>$ list)
+\begin{DoxyCompactList}\small\item\em Wrap an indexed sorted collection in a read-\/only wrapper \end{DoxyCompactList}\item 
+new \hyperlink{interface_c5_1_1_i_directed_collection_value}{I\+Directed\+Collection\+Value}$<$ T $>$ \hyperlink{class_c5_1_1_guarded_indexed_sorted_a4234ea1cd38561949156953beb98a19e}{Range\+From} (T bot)
+\begin{DoxyCompactList}\small\item\em Get the specified range from the wrapped collection. (The current implementation erroneously does not wrap the result.) \end{DoxyCompactList}\item 
+new \hyperlink{interface_c5_1_1_i_directed_collection_value}{I\+Directed\+Collection\+Value}$<$ T $>$ \hyperlink{class_c5_1_1_guarded_indexed_sorted_a039a34453e6451fce027438afed623b0}{Range\+From\+To} (T bot, T top)
+\begin{DoxyCompactList}\small\item\em Get the specified range from the wrapped collection. (The current implementation erroneously does not wrap the result.) \end{DoxyCompactList}\item 
+new \hyperlink{interface_c5_1_1_i_directed_collection_value}{I\+Directed\+Collection\+Value}$<$ T $>$ \hyperlink{class_c5_1_1_guarded_indexed_sorted_a99cbd7079a015107d98567b63398aa77}{Range\+To} (T top)
+\begin{DoxyCompactList}\small\item\em Get the specified range from the wrapped collection. (The current implementation erroneously does not wrap the result.) \end{DoxyCompactList}\item 
+int \hyperlink{class_c5_1_1_guarded_indexed_sorted_a8cf3d09d8c435ac0200efc34561e1a86}{Count\+From} (T bot)
+\begin{DoxyCompactList}\small\item\em Report the number of items in the specified range of the wrapped collection \end{DoxyCompactList}\item 
+int \hyperlink{class_c5_1_1_guarded_indexed_sorted_af8a01e371525dfae61ddc323e16e1f9e}{Count\+From\+To} (T bot, T top)
+\begin{DoxyCompactList}\small\item\em Report the number of items in the specified range of the wrapped collection \end{DoxyCompactList}\item 
+int \hyperlink{class_c5_1_1_guarded_indexed_sorted_abfdc8d50b6ea0bf7493fbcf77c4ae19a}{Count\+To} (T top)
+\begin{DoxyCompactList}\small\item\em Report the number of items in the specified range of the wrapped collection \end{DoxyCompactList}\item 
+\hyperlink{interface_c5_1_1_i_indexed_sorted}{I\+Indexed\+Sorted}$<$ T $>$ \hyperlink{class_c5_1_1_guarded_indexed_sorted_ab5bc00909aa5b210f3de4f09e674d7b0}{Find\+All} (Func$<$ T, bool $>$ f)
+\begin{DoxyCompactList}\small\item\em Run Find\+All on the wrapped collection with the indicated filter. The result will {\bfseries not} be read-\/only. \end{DoxyCompactList}\item 
+\hyperlink{interface_c5_1_1_i_indexed_sorted}{I\+Indexed\+Sorted}$<$ V $>$ \hyperlink{class_c5_1_1_guarded_indexed_sorted_a9f01bb786e4abb2c27d3d38aedd47a70}{Map$<$ V $>$} (Func$<$ T, V $>$ m, S\+C\+G.\+I\+Comparer$<$ V $>$ c)
+\begin{DoxyCompactList}\small\item\em Run Map on the wrapped collection with the indicated mapper. The result will {\bfseries not} be read-\/only. \end{DoxyCompactList}\item 
+int \hyperlink{class_c5_1_1_guarded_indexed_sorted_aa13e57faa854dd70f28ac2dd8bb6f888}{Index\+Of} (T item)
+\begin{DoxyCompactList}\small\item\em Find the (first) index of an item in the wrapped collection \end{DoxyCompactList}\item 
+int \hyperlink{class_c5_1_1_guarded_indexed_sorted_a782d9e939a68f246af69adba83584164}{Last\+Index\+Of} (T item)
+\begin{DoxyCompactList}\small\item\em Find the last index of an item in the wrapped collection \end{DoxyCompactList}\item 
+T \hyperlink{class_c5_1_1_guarded_indexed_sorted_a0e84a6bb3bf610cdf68aa2583dc78155}{Remove\+At} (int i)
+\item 
+void \hyperlink{class_c5_1_1_guarded_indexed_sorted_a2c43f17a32750da03b1aa64a6300a091}{Remove\+Interval} (int start, int count)
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+T \hyperlink{class_c5_1_1_guarded_indexed_sorted_a56e09512c3d2bfccb720141d7239cdc5}{this\mbox{[}int i\mbox{]}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+virtual \hyperlink{namespace_c5_a615ba88dcdaa8d5a3c5f833a73d7fad6}{Speed} \hyperlink{class_c5_1_1_guarded_indexed_sorted_a57f771060cc1af22826097d4f7fa002f}{Indexing\+Speed}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\hyperlink{interface_c5_1_1_i_directed_collection_value}{I\+Directed\+Collection\+Value}$<$ T $>$ \hyperlink{class_c5_1_1_guarded_indexed_sorted_a5c5994179a814f8eb2d75007fe5aa628}{this\mbox{[}int start, int end\mbox{]}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Read-\/only wrapper for indexed sorted collections 
+
+{\itshape Suitable for wrapping \hyperlink{class_c5_1_1_tree_set}{Tree\+Set}, \hyperlink{class_c5_1_1_tree_bag}{Tree\+Bag} and \hyperlink{class_c5_1_1_sorted_array}{Sorted\+Array}} 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_c5_1_1_guarded_indexed_sorted_ae5ded6570af9716bb93a42e5dea55656}{}\index{C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}!Guarded\+Indexed\+Sorted@{Guarded\+Indexed\+Sorted}}
+\index{Guarded\+Indexed\+Sorted@{Guarded\+Indexed\+Sorted}!C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}}
+\subsubsection[{Guarded\+Indexed\+Sorted(\+I\+Indexed\+Sorted$<$ T $>$ list)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Guarded\+Indexed\+Sorted}$<$ T $>$.{\bf Guarded\+Indexed\+Sorted} (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Indexed\+Sorted}$<$ T $>$}]{list}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_indexed_sorted_ae5ded6570af9716bb93a42e5dea55656}
+
+
+Wrap an indexed sorted collection in a read-\/only wrapper 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & the indexed sorted collection\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_guarded_indexed_sorted_a8cf3d09d8c435ac0200efc34561e1a86}{}\index{C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}!Count\+From@{Count\+From}}
+\index{Count\+From@{Count\+From}!C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}}
+\subsubsection[{Count\+From(\+T bot)}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+Guarded\+Indexed\+Sorted}$<$ T $>$.Count\+From (
+\begin{DoxyParamCaption}
+\item[{T}]{bot}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_indexed_sorted_a8cf3d09d8c435ac0200efc34561e1a86}
+
+
+Report the number of items in the specified range of the wrapped collection 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bot} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_indexed_sorted_afec472803ce8298d60dfc5dfb2f8f925}{C5.\+I\+Indexed\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_indexed_sorted_af8a01e371525dfae61ddc323e16e1f9e}{}\index{C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}!Count\+From\+To@{Count\+From\+To}}
+\index{Count\+From\+To@{Count\+From\+To}!C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}}
+\subsubsection[{Count\+From\+To(\+T bot, T top)}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+Guarded\+Indexed\+Sorted}$<$ T $>$.Count\+From\+To (
+\begin{DoxyParamCaption}
+\item[{T}]{bot, }
+\item[{T}]{top}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_indexed_sorted_af8a01e371525dfae61ddc323e16e1f9e}
+
+
+Report the number of items in the specified range of the wrapped collection 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bot} & \\
+\hline
+{\em top} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_indexed_sorted_a6b8dd3c5325621b9a81a7e5167328773}{C5.\+I\+Indexed\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_indexed_sorted_abfdc8d50b6ea0bf7493fbcf77c4ae19a}{}\index{C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}!Count\+To@{Count\+To}}
+\index{Count\+To@{Count\+To}!C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}}
+\subsubsection[{Count\+To(\+T top)}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+Guarded\+Indexed\+Sorted}$<$ T $>$.Count\+To (
+\begin{DoxyParamCaption}
+\item[{T}]{top}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_indexed_sorted_abfdc8d50b6ea0bf7493fbcf77c4ae19a}
+
+
+Report the number of items in the specified range of the wrapped collection 
+
+
+\begin{DoxyParams}{Parameters}
+{\em top} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_indexed_sorted_ae69946df07200b99fa1336681223680a}{C5.\+I\+Indexed\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_indexed_sorted_ab5bc00909aa5b210f3de4f09e674d7b0}{}\index{C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}!Find\+All@{Find\+All}}
+\index{Find\+All@{Find\+All}!C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}}
+\subsubsection[{Find\+All(\+Func$<$ T, bool $>$ f)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Indexed\+Sorted}$<$T$>$ {\bf C5.\+Guarded\+Indexed\+Sorted}$<$ T $>$.Find\+All (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{f}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_indexed_sorted_ab5bc00909aa5b210f3de4f09e674d7b0}
+
+
+Run Find\+All on the wrapped collection with the indicated filter. The result will {\bfseries not} be read-\/only. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em f} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_indexed_sorted_a0919e5cb5b659d0de7c206a3c3bc033d}{C5.\+I\+Indexed\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_indexed_sorted_aa13e57faa854dd70f28ac2dd8bb6f888}{}\index{C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}!Index\+Of@{Index\+Of}}
+\index{Index\+Of@{Index\+Of}!C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}}
+\subsubsection[{Index\+Of(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+Guarded\+Indexed\+Sorted}$<$ T $>$.Index\+Of (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_indexed_sorted_aa13e57faa854dd70f28ac2dd8bb6f888}
+
+
+Find the (first) index of an item in the wrapped collection 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_indexed_abad58598415e0383ddbc9275db69d92a}{C5.\+I\+Indexed$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_indexed_sorted_a782d9e939a68f246af69adba83584164}{}\index{C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}!Last\+Index\+Of@{Last\+Index\+Of}}
+\index{Last\+Index\+Of@{Last\+Index\+Of}!C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}}
+\subsubsection[{Last\+Index\+Of(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+Guarded\+Indexed\+Sorted}$<$ T $>$.Last\+Index\+Of (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_indexed_sorted_a782d9e939a68f246af69adba83584164}
+
+
+Find the last index of an item in the wrapped collection 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_indexed_a50f274e0f7b4cd2e54db4cb61a003b95}{C5.\+I\+Indexed$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_indexed_sorted_a9f01bb786e4abb2c27d3d38aedd47a70}{}\index{C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}!Map$<$ V $>$@{Map$<$ V $>$}}
+\index{Map$<$ V $>$@{Map$<$ V $>$}!C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}}
+\subsubsection[{Map$<$ V $>$(\+Func$<$ T, V $>$ m, S\+C\+G.\+I\+Comparer$<$ V $>$ c)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Indexed\+Sorted}$<$V$>$ {\bf C5.\+Guarded\+Indexed\+Sorted}$<$ T $>$.Map$<$ V $>$ (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, V $>$}]{m, }
+\item[{S\+C\+G.\+I\+Comparer$<$ V $>$}]{c}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_indexed_sorted_a9f01bb786e4abb2c27d3d38aedd47a70}
+
+
+Run Map on the wrapped collection with the indicated mapper. The result will {\bfseries not} be read-\/only. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em m} & \\
+\hline
+{\em c} & The comparer to use in the result\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_indexed_sorted_ab895a7e04cffcc97f6f0ef5e7c00b171}{C5.\+I\+Indexed\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_indexed_sorted_a4234ea1cd38561949156953beb98a19e}{}\index{C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}!Range\+From@{Range\+From}}
+\index{Range\+From@{Range\+From}!C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}}
+\subsubsection[{Range\+From(\+T bot)}]{\setlength{\rightskip}{0pt plus 5cm}new {\bf I\+Directed\+Collection\+Value}$<$T$>$ {\bf C5.\+Guarded\+Indexed\+Sorted}$<$ T $>$.Range\+From (
+\begin{DoxyParamCaption}
+\item[{T}]{bot}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_indexed_sorted_a4234ea1cd38561949156953beb98a19e}
+
+
+Get the specified range from the wrapped collection. (The current implementation erroneously does not wrap the result.) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bot} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_indexed_sorted_a798fe33ccf02cdb90e7966bf73d100eb}{C5.\+I\+Indexed\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_indexed_sorted_a039a34453e6451fce027438afed623b0}{}\index{C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}!Range\+From\+To@{Range\+From\+To}}
+\index{Range\+From\+To@{Range\+From\+To}!C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}}
+\subsubsection[{Range\+From\+To(\+T bot, T top)}]{\setlength{\rightskip}{0pt plus 5cm}new {\bf I\+Directed\+Collection\+Value}$<$T$>$ {\bf C5.\+Guarded\+Indexed\+Sorted}$<$ T $>$.Range\+From\+To (
+\begin{DoxyParamCaption}
+\item[{T}]{bot, }
+\item[{T}]{top}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_indexed_sorted_a039a34453e6451fce027438afed623b0}
+
+
+Get the specified range from the wrapped collection. (The current implementation erroneously does not wrap the result.) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bot} & \\
+\hline
+{\em top} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_indexed_sorted_a7fd04b75c6f1e86867f8a27309067a5d}{C5.\+I\+Indexed\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_indexed_sorted_a99cbd7079a015107d98567b63398aa77}{}\index{C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}!Range\+To@{Range\+To}}
+\index{Range\+To@{Range\+To}!C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}}
+\subsubsection[{Range\+To(\+T top)}]{\setlength{\rightskip}{0pt plus 5cm}new {\bf I\+Directed\+Collection\+Value}$<$T$>$ {\bf C5.\+Guarded\+Indexed\+Sorted}$<$ T $>$.Range\+To (
+\begin{DoxyParamCaption}
+\item[{T}]{top}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_indexed_sorted_a99cbd7079a015107d98567b63398aa77}
+
+
+Get the specified range from the wrapped collection. (The current implementation erroneously does not wrap the result.) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em top} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_indexed_sorted_a62820d898864d45d9029d9df06ab3c5d}{C5.\+I\+Indexed\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_indexed_sorted_a0e84a6bb3bf610cdf68aa2583dc78155}{}\index{C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}!Remove\+At@{Remove\+At}}
+\index{Remove\+At@{Remove\+At}!C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}}
+\subsubsection[{Remove\+At(int i)}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Guarded\+Indexed\+Sorted}$<$ T $>$.Remove\+At (
+\begin{DoxyParamCaption}
+\item[{int}]{i}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_indexed_sorted_a0e84a6bb3bf610cdf68aa2583dc78155}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em i} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_indexed_ac741e6d3d7c6a30bb8a013bb29591ca4}{C5.\+I\+Indexed$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_indexed_sorted_a2c43f17a32750da03b1aa64a6300a091}{}\index{C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}!Remove\+Interval@{Remove\+Interval}}
+\index{Remove\+Interval@{Remove\+Interval}!C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}}
+\subsubsection[{Remove\+Interval(int start, int count)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Guarded\+Indexed\+Sorted}$<$ T $>$.Remove\+Interval (
+\begin{DoxyParamCaption}
+\item[{int}]{start, }
+\item[{int}]{count}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_indexed_sorted_a2c43f17a32750da03b1aa64a6300a091}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em start} & \\
+\hline
+{\em count} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_indexed_aa9d2a1706ba0361079d31c02bad3e810}{C5.\+I\+Indexed$<$ T $>$}.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{class_c5_1_1_guarded_indexed_sorted_a57f771060cc1af22826097d4f7fa002f}{}\index{C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}!Indexing\+Speed@{Indexing\+Speed}}
+\index{Indexing\+Speed@{Indexing\+Speed}!C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}}
+\subsubsection[{Indexing\+Speed}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Speed} {\bf C5.\+Guarded\+Indexed\+Sorted}$<$ T $>$.Indexing\+Speed\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_indexed_sorted_a57f771060cc1af22826097d4f7fa002f}
+
+
+
+
+\hypertarget{class_c5_1_1_guarded_indexed_sorted_a56e09512c3d2bfccb720141d7239cdc5}{}\index{C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}!this\mbox{[}int i\mbox{]}@{this[int i]}}
+\index{this\mbox{[}int i\mbox{]}@{this[int i]}!C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}}
+\subsubsection[{this[int i]}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Guarded\+Indexed\+Sorted}$<$ T $>$.this\mbox{[}int i\mbox{]}\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_indexed_sorted_a56e09512c3d2bfccb720141d7239cdc5}
+
+
+
+
+The i\textquotesingle{}th item of the wrapped sorted collection\hypertarget{class_c5_1_1_guarded_indexed_sorted_a5c5994179a814f8eb2d75007fe5aa628}{}\index{C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}!this\mbox{[}int start, int end\mbox{]}@{this[int start, int end]}}
+\index{this\mbox{[}int start, int end\mbox{]}@{this[int start, int end]}!C5\+::\+Guarded\+Indexed\+Sorted@{C5\+::\+Guarded\+Indexed\+Sorted}}
+\subsubsection[{this[int start, int end]}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Directed\+Collection\+Value}$<$T$>$ {\bf C5.\+Guarded\+Indexed\+Sorted}$<$ T $>$.this\mbox{[}int start, int end\mbox{]}\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_indexed_sorted_a5c5994179a814f8eb2d75007fe5aa628}
+
+
+
+
+A directed collection of the items in the indicated interval of the wrapped collection
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_wrappers_8cs}{Wrappers.\+cs}\end{DoxyCompactItemize}

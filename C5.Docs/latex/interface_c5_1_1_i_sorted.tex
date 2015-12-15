@@ -1,0 +1,662 @@
+\hypertarget{interface_c5_1_1_i_sorted}{}\section{C5.\+I\+Sorted$<$ T $>$ Interface Template Reference}
+\label{interface_c5_1_1_i_sorted}\index{C5.\+I\+Sorted$<$ T $>$@{C5.\+I\+Sorted$<$ T $>$}}
+
+
+A sorted collection, i.\+e. a collection where items are maintained and can be searched for in sorted order. Thus the sequence order is given as a sorting order.  
+
+
+Inheritance diagram for C5.\+I\+Sorted$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.380281cm]{interface_c5_1_1_i_sorted}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+T \hyperlink{interface_c5_1_1_i_sorted_ad7a7fc9df9ff4fd5e5ab399c5703f995}{Find\+Min} ()
+\begin{DoxyCompactList}\small\item\em Find the current least item of this sorted collection. \end{DoxyCompactList}\item 
+T \hyperlink{interface_c5_1_1_i_sorted_ad30bc55d0c81e695896d459422b76954}{Delete\+Min} ()
+\begin{DoxyCompactList}\small\item\em Remove the least item from this sorted collection. \end{DoxyCompactList}\item 
+T \hyperlink{interface_c5_1_1_i_sorted_a9321a921a443cfd8411534fbef19ab00}{Find\+Max} ()
+\begin{DoxyCompactList}\small\item\em Find the current largest item of this sorted collection. \end{DoxyCompactList}\item 
+T \hyperlink{interface_c5_1_1_i_sorted_a58b26b758745ad2146252b9e5ff2965b}{Delete\+Max} ()
+\begin{DoxyCompactList}\small\item\em Remove the largest item from this sorted collection. \end{DoxyCompactList}\item 
+bool \hyperlink{interface_c5_1_1_i_sorted_ad8189cb7e5d50d33a24a75641eaeab34}{Try\+Predecessor} (T item, out T res)
+\begin{DoxyCompactList}\small\item\em Find the strict predecessor of item in the sorted collection, that is, the greatest item in the collection smaller than the item. \end{DoxyCompactList}\item 
+bool \hyperlink{interface_c5_1_1_i_sorted_a578a0b4db8e2b04543c72d1bf645ce65}{Try\+Successor} (T item, out T res)
+\begin{DoxyCompactList}\small\item\em Find the strict successor of item in the sorted collection, that is, the least item in the collection greater than the supplied value. \end{DoxyCompactList}\item 
+bool \hyperlink{interface_c5_1_1_i_sorted_aeabd71eb284ab4130d190b60a2f64584}{Try\+Weak\+Predecessor} (T item, out T res)
+\begin{DoxyCompactList}\small\item\em Find the weak predecessor of item in the sorted collection, that is, the greatest item in the collection smaller than or equal to the item. \end{DoxyCompactList}\item 
+bool \hyperlink{interface_c5_1_1_i_sorted_ace630ae0bea6fd7772e6e9fa21ea2567}{Try\+Weak\+Successor} (T item, out T res)
+\begin{DoxyCompactList}\small\item\em Find the weak successor of item in the sorted collection, that is, the least item in the collection greater than or equal to the supplied value. \end{DoxyCompactList}\item 
+T \hyperlink{interface_c5_1_1_i_sorted_a973bf071df358a008bdfed289a38ff71}{Predecessor} (T item)
+\begin{DoxyCompactList}\small\item\em Find the strict predecessor in the sorted collection of a particular value, that is, the largest item in the collection less than the supplied value. \end{DoxyCompactList}\item 
+T \hyperlink{interface_c5_1_1_i_sorted_a6620b9769f5125157e254d8077744515}{Successor} (T item)
+\begin{DoxyCompactList}\small\item\em Find the strict successor in the sorted collection of a particular value, that is, the least item in the collection greater than the supplied value. \end{DoxyCompactList}\item 
+T \hyperlink{interface_c5_1_1_i_sorted_aac28eacc400148e84e0d24e14709a9f7}{Weak\+Predecessor} (T item)
+\begin{DoxyCompactList}\small\item\em Find the weak predecessor in the sorted collection of a particular value, that is, the largest item in the collection less than or equal to the supplied value. \end{DoxyCompactList}\item 
+T \hyperlink{interface_c5_1_1_i_sorted_a52c5bf3983dfb2378ec431206d1ee8ce}{Weak\+Successor} (T item)
+\begin{DoxyCompactList}\small\item\em Find the weak successor in the sorted collection of a particular value, that is, the least item in the collection greater than or equal to the supplied value. \end{DoxyCompactList}\item 
+bool \hyperlink{interface_c5_1_1_i_sorted_a7acdf0ef5765c2554e5efa8df856c2b4}{Cut} (I\+Comparable$<$ T $>$ cut\+Function, out T low, out bool low\+Is\+Valid, out T high, out bool high\+Is\+Valid)
+\begin{DoxyCompactList}\small\item\em Given a \char`\"{}cut\char`\"{} function from the items of the sorted collection to \end{DoxyCompactList}\item 
+\hyperlink{interface_c5_1_1_i_directed_enumerable}{I\+Directed\+Enumerable}$<$ T $>$ \hyperlink{interface_c5_1_1_i_sorted_a0eabf2b7418467cf0ee1cfb15b6b9e34}{Range\+From} (T bot)
+\begin{DoxyCompactList}\small\item\em Query this sorted collection for items greater than or equal to a supplied value. \end{DoxyCompactList}\item 
+\hyperlink{interface_c5_1_1_i_directed_enumerable}{I\+Directed\+Enumerable}$<$ T $>$ \hyperlink{interface_c5_1_1_i_sorted_a66a3e2a57ca820b3a67b2f8d99e3c7cb}{Range\+From\+To} (T bot, T top)
+\begin{DoxyCompactList}\small\item\em Query this sorted collection for items between two supplied values. \end{DoxyCompactList}\item 
+\hyperlink{interface_c5_1_1_i_directed_enumerable}{I\+Directed\+Enumerable}$<$ T $>$ \hyperlink{interface_c5_1_1_i_sorted_a438ee04db17957587e7651f4c010814a}{Range\+To} (T top)
+\begin{DoxyCompactList}\small\item\em Query this sorted collection for items less than a supplied value. \end{DoxyCompactList}\item 
+\hyperlink{interface_c5_1_1_i_directed_collection_value}{I\+Directed\+Collection\+Value}$<$ T $>$ \hyperlink{interface_c5_1_1_i_sorted_ad90021b06a8976cc8c043104cf8e1ca4}{Range\+All} ()
+\begin{DoxyCompactList}\small\item\em Create a directed collection with the same items as this collection. \end{DoxyCompactList}\item 
+void \hyperlink{interface_c5_1_1_i_sorted_a51dd21143c9438dc9f841a9d7b6f6b3f}{Add\+Sorted} (S\+C\+G.\+I\+Enumerable$<$ T $>$ items)
+\begin{DoxyCompactList}\small\item\em Add all the items from another collection with an enumeration order that is increasing in the items. \end{DoxyCompactList}\item 
+void \hyperlink{interface_c5_1_1_i_sorted_ab6f6647d63da58ce3b6d837fd73ff0a1}{Remove\+Range\+From} (T low)
+\begin{DoxyCompactList}\small\item\em Remove all items of this collection above or at a supplied threshold. \end{DoxyCompactList}\item 
+void \hyperlink{interface_c5_1_1_i_sorted_a3d2125d5a4b4c5ce0fb34fcb8be0fa72}{Remove\+Range\+From\+To} (T low, T hi)
+\begin{DoxyCompactList}\small\item\em Remove all items of this collection between two supplied thresholds. \end{DoxyCompactList}\item 
+void \hyperlink{interface_c5_1_1_i_sorted_ad2e5ddc9c56ecf42340571bdfabf5d22}{Remove\+Range\+To} (T hi)
+\begin{DoxyCompactList}\small\item\em Remove all items of this collection below a supplied threshold. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+S\+C\+G.\+I\+Comparer$<$ T $>$ \hyperlink{interface_c5_1_1_i_sorted_a8daa86df3d094c47142596d1c102726c}{Comparer}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The comparer object supplied at creation time for this sorted collection. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A sorted collection, i.\+e. a collection where items are maintained and can be searched for in sorted order. Thus the sequence order is given as a sorting order. 
+
+The sorting order is defined by a comparer, an object of type I\+Comparer$<$T$>$ (T\+:\+C5.\+I\+Comparer`1). Implementors of this interface will normally let the user define the comparer as an argument to a constructor. Usually there will also be constructors without a comparer argument, in which case the comparer should be the defalt comparer for the item type, P\+:\+C5.\+Comparer`1.\+Default.
+
+The comparer of the sorted collection is available as the {\ttfamily S\+C\+G.\+Comparer} property (P\+:\+C5.\+I\+Sorted`1.\+Comparer).
+
+The methods are grouped according to 
+\begin{DoxyItemize}
+\item Extrema\+: report or report and delete an extremal item. This is reminiscent of simplified priority queues. 
+\item Nearest neighbor\+: report predecessor or successor in the collection of an item. Cut belongs to this group. 
+\item Range\+: report a view of a range of elements or remove all elements in a range. 
+\item Add\+Sorted\+: add a collection of items known to be sorted in the same order (should be faster) (to be removed?) 
+\end{DoxyItemize}
+
+Since this interface extends \hyperlink{interface_c5_1_1_i_sequenced}{I\+Sequenced}$<$T$>$, sorted collections will also have an item equality\+Comparer (P\+:\+C5.\+I\+Extensible`1.\+Equality\+Comparer). This equality\+Comparer will not be used in connection with the inner workings of the sorted collection, but will be used if the sorted collection is used as an item in a collection of unsequenced or sequenced collections, (T\+:\+C5.\+I\+Collection`1 and T\+:\+C5.\+I\+Sequenced`1)
+
+Note that code may check if two sorted collections has the same sorting order by checking if the Comparer properties are equal. This is done a few places in this library for optimization purposes.
+
+\subsection{Member Function Documentation}
+\hypertarget{interface_c5_1_1_i_sorted_a51dd21143c9438dc9f841a9d7b6f6b3f}{}\index{C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}!Add\+Sorted@{Add\+Sorted}}
+\index{Add\+Sorted@{Add\+Sorted}!C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}}
+\subsubsection[{Add\+Sorted(\+S\+C\+G.\+I\+Enumerable$<$ T $>$ items)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+I\+Sorted}$<$ T $>$.Add\+Sorted (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Enumerable$<$ T $>$}]{items}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_sorted_a51dd21143c9438dc9f841a9d7b6f6b3f}
+
+
+Add all the items from another collection with an enumeration order that is increasing in the items. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Argument\+Exception} & if the enumerated items turns out not to be in increasing order.\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em items} & The collection to add.\\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{class_c5_1_1_guarded_sorted_a5dfe71d83337e50a8d38002c7836680d}{C5.\+Guarded\+Sorted$<$ T $>$}, \hyperlink{class_c5_1_1_tree_bag_a79df33146e96a2d3e5bbfd70f804950b}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_af24a9110aa1b562a8c3a159307e1bb38}{C5.\+Tree\+Set$<$ T $>$}, and \hyperlink{class_c5_1_1_sorted_array_a5c8c56e280e5441f600c13214356ad8f}{C5.\+Sorted\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_sorted_a7acdf0ef5765c2554e5efa8df856c2b4}{}\index{C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}!Cut@{Cut}}
+\index{Cut@{Cut}!C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}}
+\subsubsection[{Cut(\+I\+Comparable$<$ T $>$ cut\+Function, out T low, out bool low\+Is\+Valid, out T high, out bool high\+Is\+Valid)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+I\+Sorted}$<$ T $>$.Cut (
+\begin{DoxyParamCaption}
+\item[{I\+Comparable$<$ T $>$}]{cut\+Function, }
+\item[{out T}]{low, }
+\item[{out bool}]{low\+Is\+Valid, }
+\item[{out T}]{high, }
+\item[{out bool}]{high\+Is\+Valid}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_sorted_a7acdf0ef5765c2554e5efa8df856c2b4}
+
+
+Given a \char`\"{}cut\char`\"{} function from the items of the sorted collection to 
+
+{\ttfamily int} whose only sign changes when going through items in increasing order can be 
+\begin{DoxyItemize}
+\item from positive to zero 
+\item from positive to negative 
+\item from zero to negative 
+\end{DoxyItemize}The \char`\"{}cut\char`\"{} function is supplied as the {\ttfamily Compare\+To} method of an object {\ttfamily c} implementing {\ttfamily I\+Comparable$<$T$>$}. A typical example is the case where {\ttfamily T} is comparable and {\ttfamily cut\+Function} is itself of type {\ttfamily T}. 
+
+This method performs a search in the sorted collection for the ranges in which the \char`\"{}cut\char`\"{} function is negative, zero respectively positive. If {\ttfamily T} is comparable and {\ttfamily c} is of type {\ttfamily T}, this is a safe way (no exceptions thrown) to find predecessor and successor of {\ttfamily c}. 
+
+If the supplied cut function does not satisfy the sign-\/change condition, the result of this call is undefined. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cut\+Function} & The cut function 
+\begin{DoxyCode}
+T
+\end{DoxyCode}
+ to 
+\begin{DoxyCode}
+\textcolor{keywordtype}{int}
+\end{DoxyCode}
+, given by the 
+\begin{DoxyCode}
+CompareTo
+\end{DoxyCode}
+ method of an object implementing 
+\begin{DoxyCode}
+IComparable<T>
+\end{DoxyCode}
+.\\
+\hline
+{\em low} & Returns the largest item in the collection, where the cut function is positive (if any).\\
+\hline
+{\em low\+Is\+Valid} & Returns true if the cut function is positive somewhere on this collection.\\
+\hline
+{\em high} & Returns the least item in the collection, where the cut function is negative (if any).\\
+\hline
+{\em high\+Is\+Valid} & Returns true if the cut function is negative somewhere on this collection.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the cut function is zero somewhere on this collection.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_acc49acf645ee2aa64441c97d693cf111}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_a3676dcb09ca7c5a0100befd8925cbcdb}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_sorted_a0372f6f2e220c389973eea8201390a27}{C5.\+Guarded\+Sorted$<$ T $>$}, and \hyperlink{class_c5_1_1_sorted_array_a8a2867620de19b2b3bb305b28b6ec03f}{C5.\+Sorted\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_sorted_a58b26b758745ad2146252b9e5ff2965b}{}\index{C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}!Delete\+Max@{Delete\+Max}}
+\index{Delete\+Max@{Delete\+Max}!C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}}
+\subsubsection[{Delete\+Max()}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+I\+Sorted}$<$ T $>$.Delete\+Max (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_sorted_a58b26b758745ad2146252b9e5ff2965b}
+
+
+Remove the largest item from this sorted collection. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if the collection is empty.\\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+The removed item.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_a8badc5e1f0108389b265baf622cf9482}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_ab9f0604e15a251e7dada671729d263aa}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_ac11ab35ceca944626fadd61d6cd32480}{C5.\+Sorted\+Array$<$ T $>$}, and \hyperlink{class_c5_1_1_guarded_sorted_a24f97b59e6d0e9efb7cc7be97f739cd5}{C5.\+Guarded\+Sorted$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_sorted_ad30bc55d0c81e695896d459422b76954}{}\index{C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}!Delete\+Min@{Delete\+Min}}
+\index{Delete\+Min@{Delete\+Min}!C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}}
+\subsubsection[{Delete\+Min()}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+I\+Sorted}$<$ T $>$.Delete\+Min (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_sorted_ad30bc55d0c81e695896d459422b76954}
+
+
+Remove the least item from this sorted collection. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if the collection is empty.\\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+The removed item.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_a3179d4112ccd6c99b0a8089315181418}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_ae64fd01cde0d44fb7aa465653f8ca691}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_ac1ca139859ae18a23085b15de92e813f}{C5.\+Sorted\+Array$<$ T $>$}, and \hyperlink{class_c5_1_1_guarded_sorted_a7cc91f7815ef8e6e43006289e0ab7305}{C5.\+Guarded\+Sorted$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_sorted_a9321a921a443cfd8411534fbef19ab00}{}\index{C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}!Find\+Max@{Find\+Max}}
+\index{Find\+Max@{Find\+Max}!C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}}
+\subsubsection[{Find\+Max()}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+I\+Sorted}$<$ T $>$.Find\+Max (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_sorted_a9321a921a443cfd8411534fbef19ab00}
+
+
+Find the current largest item of this sorted collection. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if the collection is empty.\\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+The largest item.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_a287455da0a4818bfc2a1e56584f09c8c}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_a05966d4907a457e68f5bf5743658ef12}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_aa5fd2c518f5a88dfcc1ea487d6a3bad6}{C5.\+Sorted\+Array$<$ T $>$}, and \hyperlink{class_c5_1_1_guarded_sorted_ab6f7371f2bdec615b28c075493ef70d8}{C5.\+Guarded\+Sorted$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_sorted_ad7a7fc9df9ff4fd5e5ab399c5703f995}{}\index{C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}!Find\+Min@{Find\+Min}}
+\index{Find\+Min@{Find\+Min}!C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}}
+\subsubsection[{Find\+Min()}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+I\+Sorted}$<$ T $>$.Find\+Min (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_sorted_ad7a7fc9df9ff4fd5e5ab399c5703f995}
+
+
+Find the current least item of this sorted collection. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if the collection is empty.\\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+The least item.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_a1849cab66d006e4686cb2d43972e7ebe}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_aae32ac970e89acfba84ebab15612295c}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_ae728f91290bd2f4c1e9316ef5173b4dd}{C5.\+Sorted\+Array$<$ T $>$}, and \hyperlink{class_c5_1_1_guarded_sorted_a74fbcdd950a8673bc61e09539470748a}{C5.\+Guarded\+Sorted$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_sorted_a973bf071df358a008bdfed289a38ff71}{}\index{C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}!Predecessor@{Predecessor}}
+\index{Predecessor@{Predecessor}!C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}}
+\subsubsection[{Predecessor(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+I\+Sorted}$<$ T $>$.Predecessor (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_sorted_a973bf071df358a008bdfed289a38ff71}
+
+
+Find the strict predecessor in the sorted collection of a particular value, that is, the largest item in the collection less than the supplied value. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if no such element exists (the supplied value is less than or equal to the minimum of this collection.)\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to find the predecessor for.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The predecessor.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_a4e71f3361784108ccadab66f46e4aa07}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_ae6709f8b11615490b30aca17edbd8d17}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_sorted_afd96c13a6d58d8db800b8ba78f843e29}{C5.\+Guarded\+Sorted$<$ T $>$}, and \hyperlink{class_c5_1_1_sorted_array_a78cd04c4e73c5ab03b3dcaaf2f9a1811}{C5.\+Sorted\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_sorted_ad90021b06a8976cc8c043104cf8e1ca4}{}\index{C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}!Range\+All@{Range\+All}}
+\index{Range\+All@{Range\+All}!C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}}
+\subsubsection[{Range\+All()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Directed\+Collection\+Value}$<$T$>$ {\bf C5.\+I\+Sorted}$<$ T $>$.Range\+All (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_sorted_ad90021b06a8976cc8c043104cf8e1ca4}
+
+
+Create a directed collection with the same items as this collection. 
+
+The returned collection is not a copy but a view into the collection.
+
+The view is fragile in the sense that changes to the underlying collection will invalidate the view so that further operations on the view throws Invalid\+View exceptions.
+
+\begin{DoxyReturn}{Returns}
+The result directed collection.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_acf45ec3c91638538bb0a6a319c6d272a}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_aba645a9d9b6a5f5787df7e4393d5f60e}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_sorted_a810e407c33bdf337c32ceb9c2d9773ad}{C5.\+Guarded\+Sorted$<$ T $>$}, and \hyperlink{class_c5_1_1_sorted_array_a5bb2adf677c908fcb82b3230ddbf1ac7}{C5.\+Sorted\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_sorted_a0eabf2b7418467cf0ee1cfb15b6b9e34}{}\index{C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}!Range\+From@{Range\+From}}
+\index{Range\+From@{Range\+From}!C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}}
+\subsubsection[{Range\+From(\+T bot)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Directed\+Enumerable}$<$T$>$ {\bf C5.\+I\+Sorted}$<$ T $>$.Range\+From (
+\begin{DoxyParamCaption}
+\item[{T}]{bot}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_sorted_a0eabf2b7418467cf0ee1cfb15b6b9e34}
+
+
+Query this sorted collection for items greater than or equal to a supplied value. 
+
+The returned collection is not a copy but a view into the collection.
+
+The view is fragile in the sense that changes to the underlying collection will invalidate the view so that further operations on the view throws Invalid\+View exceptions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em bot} & The lower bound (inclusive).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The result directed collection.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_a2f3f53133e1b7589fc0434bc9f15c090}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_a597970cf26c053ec8e3eeb72abc05849}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{interface_c5_1_1_i_indexed_sorted_a798fe33ccf02cdb90e7966bf73d100eb}{C5.\+I\+Indexed\+Sorted$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_indexed_sorted_a4234ea1cd38561949156953beb98a19e}{C5.\+Guarded\+Indexed\+Sorted$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_sorted_ac163fd0c999d9bd1581a2313c716b573}{C5.\+Guarded\+Sorted$<$ T $>$}, and \hyperlink{class_c5_1_1_sorted_array_a54dfeacd3329e925177d9abdaa720b82}{C5.\+Sorted\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_sorted_a66a3e2a57ca820b3a67b2f8d99e3c7cb}{}\index{C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}!Range\+From\+To@{Range\+From\+To}}
+\index{Range\+From\+To@{Range\+From\+To}!C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}}
+\subsubsection[{Range\+From\+To(\+T bot, T top)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Directed\+Enumerable}$<$T$>$ {\bf C5.\+I\+Sorted}$<$ T $>$.Range\+From\+To (
+\begin{DoxyParamCaption}
+\item[{T}]{bot, }
+\item[{T}]{top}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_sorted_a66a3e2a57ca820b3a67b2f8d99e3c7cb}
+
+
+Query this sorted collection for items between two supplied values. 
+
+The returned collection is not a copy but a view into the collection.
+
+The view is fragile in the sense that changes to the underlying collection will invalidate the view so that further operations on the view throws Invalid\+View exceptions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em bot} & The lower bound (inclusive).\\
+\hline
+{\em top} & The upper bound (exclusive).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The result directed collection.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_a5896f33ee9ac13dc5ae15df67db70683}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_a02a6d760946f1810f5b9ccdefe942142}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{interface_c5_1_1_i_indexed_sorted_a7fd04b75c6f1e86867f8a27309067a5d}{C5.\+I\+Indexed\+Sorted$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_indexed_sorted_a039a34453e6451fce027438afed623b0}{C5.\+Guarded\+Indexed\+Sorted$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_sorted_a4654fa234e549063c0a820662e6b8e9e}{C5.\+Guarded\+Sorted$<$ T $>$}, and \hyperlink{class_c5_1_1_sorted_array_aea0cffb0031187ea06e1412dd1676d8a}{C5.\+Sorted\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_sorted_a438ee04db17957587e7651f4c010814a}{}\index{C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}!Range\+To@{Range\+To}}
+\index{Range\+To@{Range\+To}!C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}}
+\subsubsection[{Range\+To(\+T top)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Directed\+Enumerable}$<$T$>$ {\bf C5.\+I\+Sorted}$<$ T $>$.Range\+To (
+\begin{DoxyParamCaption}
+\item[{T}]{top}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_sorted_a438ee04db17957587e7651f4c010814a}
+
+
+Query this sorted collection for items less than a supplied value. 
+
+The returned collection is not a copy but a view into the collection.
+
+The view is fragile in the sense that changes to the underlying collection will invalidate the view so that further operations on the view throws Invalid\+View exceptions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em top} & The upper bound (exclusive).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The result directed collection.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_a44f45590537870cc8ec683fed36c5816}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_a985e0d37430ea38bd4280e9a8550324d}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{interface_c5_1_1_i_indexed_sorted_a62820d898864d45d9029d9df06ab3c5d}{C5.\+I\+Indexed\+Sorted$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_indexed_sorted_a99cbd7079a015107d98567b63398aa77}{C5.\+Guarded\+Indexed\+Sorted$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_sorted_a21305628969a9beaa6e0f0d06fb171a6}{C5.\+Guarded\+Sorted$<$ T $>$}, and \hyperlink{class_c5_1_1_sorted_array_ac6751141ca64a0e0dd3e5d45a7f4e4b2}{C5.\+Sorted\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_sorted_ab6f6647d63da58ce3b6d837fd73ff0a1}{}\index{C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}!Remove\+Range\+From@{Remove\+Range\+From}}
+\index{Remove\+Range\+From@{Remove\+Range\+From}!C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}}
+\subsubsection[{Remove\+Range\+From(\+T low)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+I\+Sorted}$<$ T $>$.Remove\+Range\+From (
+\begin{DoxyParamCaption}
+\item[{T}]{low}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_sorted_ab6f6647d63da58ce3b6d837fd73ff0a1}
+
+
+Remove all items of this collection above or at a supplied threshold. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em low} & The lower threshold (inclusive).\\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_a566bc783eb912a68b0b731b546390347}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_ac4f7986dc66d6611037fe87fec51cfbf}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_sorted_a50fb581a7fdc2aa8565fb7aeeccd4cd1}{C5.\+Guarded\+Sorted$<$ T $>$}, and \hyperlink{class_c5_1_1_sorted_array_a82f037857ba7f8c6c101e7a5ef366729}{C5.\+Sorted\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_sorted_a3d2125d5a4b4c5ce0fb34fcb8be0fa72}{}\index{C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}!Remove\+Range\+From\+To@{Remove\+Range\+From\+To}}
+\index{Remove\+Range\+From\+To@{Remove\+Range\+From\+To}!C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}}
+\subsubsection[{Remove\+Range\+From\+To(\+T low, T hi)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+I\+Sorted}$<$ T $>$.Remove\+Range\+From\+To (
+\begin{DoxyParamCaption}
+\item[{T}]{low, }
+\item[{T}]{hi}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_sorted_a3d2125d5a4b4c5ce0fb34fcb8be0fa72}
+
+
+Remove all items of this collection between two supplied thresholds. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em low} & The lower threshold (inclusive).\\
+\hline
+{\em hi} & The upper threshold (exclusive).\\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_ab903b91a8b86e51adf73ea790121538a}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_a5b8587c9e2fdf326551f8c672d240135}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_sorted_aa778f695d7e887a7ca4672ccdd06a689}{C5.\+Guarded\+Sorted$<$ T $>$}, and \hyperlink{class_c5_1_1_sorted_array_ac2dd3e5ecdc1ec54f177d2462d36f9bc}{C5.\+Sorted\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_sorted_ad2e5ddc9c56ecf42340571bdfabf5d22}{}\index{C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}!Remove\+Range\+To@{Remove\+Range\+To}}
+\index{Remove\+Range\+To@{Remove\+Range\+To}!C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}}
+\subsubsection[{Remove\+Range\+To(\+T hi)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+I\+Sorted}$<$ T $>$.Remove\+Range\+To (
+\begin{DoxyParamCaption}
+\item[{T}]{hi}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_sorted_ad2e5ddc9c56ecf42340571bdfabf5d22}
+
+
+Remove all items of this collection below a supplied threshold. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em hi} & The upper threshold (exclusive).\\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_af07045f29933302275398a9a5337c03f}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_a24d70b5745a9d56f5fefc37151daddf1}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_sorted_a913a700b2bdd5fb9582c818360468c3a}{C5.\+Guarded\+Sorted$<$ T $>$}, and \hyperlink{class_c5_1_1_sorted_array_aaadeceeaba297251cbd6329276ee1544}{C5.\+Sorted\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_sorted_a6620b9769f5125157e254d8077744515}{}\index{C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}!Successor@{Successor}}
+\index{Successor@{Successor}!C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}}
+\subsubsection[{Successor(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+I\+Sorted}$<$ T $>$.Successor (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_sorted_a6620b9769f5125157e254d8077744515}
+
+
+Find the strict successor in the sorted collection of a particular value, that is, the least item in the collection greater than the supplied value. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if no such element exists (the supplied value is greater than or equal to the maximum of this collection.)\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to find the successor for.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The successor.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_a50478f4fcbf3584d311b36a88beb3b8e}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_a0412f41387a36c86f9eb504928e15442}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_sorted_a042b2d69142f8957f0fec4958e67a99a}{C5.\+Guarded\+Sorted$<$ T $>$}, and \hyperlink{class_c5_1_1_sorted_array_aaf182a3bcdbb2036f461305d43e4af65}{C5.\+Sorted\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_sorted_ad8189cb7e5d50d33a24a75641eaeab34}{}\index{C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}!Try\+Predecessor@{Try\+Predecessor}}
+\index{Try\+Predecessor@{Try\+Predecessor}!C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}}
+\subsubsection[{Try\+Predecessor(\+T item, out T res)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+I\+Sorted}$<$ T $>$.Try\+Predecessor (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{out T}]{res}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_sorted_ad8189cb7e5d50d33a24a75641eaeab34}
+
+
+Find the strict predecessor of item in the sorted collection, that is, the greatest item in the collection smaller than the item. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to find the predecessor for.\\
+\hline
+{\em res} & The predecessor, if any; otherwise the default value for T.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if item has a predecessor; otherwise false.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_adf6e07683fa2f4d1bd95998fc9b91bee}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_aa6449c864850016d6cba16c8fdb74b7e}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_sorted_a5d51f1d79c4ad4c84684f6102562d44a}{C5.\+Guarded\+Sorted$<$ T $>$}, and \hyperlink{class_c5_1_1_sorted_array_afa5264236859d6629a4262e9f9c7af28}{C5.\+Sorted\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_sorted_a578a0b4db8e2b04543c72d1bf645ce65}{}\index{C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}!Try\+Successor@{Try\+Successor}}
+\index{Try\+Successor@{Try\+Successor}!C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}}
+\subsubsection[{Try\+Successor(\+T item, out T res)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+I\+Sorted}$<$ T $>$.Try\+Successor (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{out T}]{res}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_sorted_a578a0b4db8e2b04543c72d1bf645ce65}
+
+
+Find the strict successor of item in the sorted collection, that is, the least item in the collection greater than the supplied value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to find the successor for.\\
+\hline
+{\em res} & The successor, if any; otherwise the default value for T.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if item has a successor; otherwise false.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_a8c1bee7d26507a90a7b95f0d807edb4e}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_ab274b61375263411d60daf0c1e0dc96c}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_sorted_a7a8a2a146dc48c07818e434f14473dac}{C5.\+Guarded\+Sorted$<$ T $>$}, and \hyperlink{class_c5_1_1_sorted_array_a6445fe3f34bb42ba79d96501b19c82c2}{C5.\+Sorted\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_sorted_aeabd71eb284ab4130d190b60a2f64584}{}\index{C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}!Try\+Weak\+Predecessor@{Try\+Weak\+Predecessor}}
+\index{Try\+Weak\+Predecessor@{Try\+Weak\+Predecessor}!C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}}
+\subsubsection[{Try\+Weak\+Predecessor(\+T item, out T res)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+I\+Sorted}$<$ T $>$.Try\+Weak\+Predecessor (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{out T}]{res}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_sorted_aeabd71eb284ab4130d190b60a2f64584}
+
+
+Find the weak predecessor of item in the sorted collection, that is, the greatest item in the collection smaller than or equal to the item. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to find the weak predecessor for.\\
+\hline
+{\em res} & The weak predecessor, if any; otherwise the default value for T.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if item has a weak predecessor; otherwise false.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_a970521eadc2a157952c9d32526b21ac9}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_a4e81634611ccdf789245ef2d6d6e3dd2}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_sorted_ac0895c0ec8adf94a479c0a22b337b122}{C5.\+Guarded\+Sorted$<$ T $>$}, and \hyperlink{class_c5_1_1_sorted_array_acf2cf7e17444a174ba50c8cbd9330d73}{C5.\+Sorted\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_sorted_ace630ae0bea6fd7772e6e9fa21ea2567}{}\index{C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}!Try\+Weak\+Successor@{Try\+Weak\+Successor}}
+\index{Try\+Weak\+Successor@{Try\+Weak\+Successor}!C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}}
+\subsubsection[{Try\+Weak\+Successor(\+T item, out T res)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+I\+Sorted}$<$ T $>$.Try\+Weak\+Successor (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{out T}]{res}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_sorted_ace630ae0bea6fd7772e6e9fa21ea2567}
+
+
+Find the weak successor of item in the sorted collection, that is, the least item in the collection greater than or equal to the supplied value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to find the weak successor for.\\
+\hline
+{\em res} & The weak successor, if any; otherwise the default value for T.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if item has a weak successor; otherwise false.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_aa319fccaa62e5d30b7f7a3a2d0b93459}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_aa5c8e3d8fde3c5546cac86cfa9f0a1d2}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_sorted_a0f00bb7238c3bc374aa085205448f533}{C5.\+Guarded\+Sorted$<$ T $>$}, and \hyperlink{class_c5_1_1_sorted_array_a9234da9f9e4e5d2922b0447d02372c35}{C5.\+Sorted\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_sorted_aac28eacc400148e84e0d24e14709a9f7}{}\index{C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}!Weak\+Predecessor@{Weak\+Predecessor}}
+\index{Weak\+Predecessor@{Weak\+Predecessor}!C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}}
+\subsubsection[{Weak\+Predecessor(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+I\+Sorted}$<$ T $>$.Weak\+Predecessor (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_sorted_aac28eacc400148e84e0d24e14709a9f7}
+
+
+Find the weak predecessor in the sorted collection of a particular value, that is, the largest item in the collection less than or equal to the supplied value. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if no such element exists (the supplied value is less than the minimum of this collection.)\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to find the weak predecessor for.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The weak predecessor.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_a7769d690994a68b4728278d08763253e}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_af51bcd7b59ffe0f474aa371ff96457b4}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_sorted_ae5fed4839e2e079fc0c07e141c7b51e3}{C5.\+Guarded\+Sorted$<$ T $>$}, and \hyperlink{class_c5_1_1_sorted_array_a893c217065005c0e4b75ea88df22ced8}{C5.\+Sorted\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_sorted_a52c5bf3983dfb2378ec431206d1ee8ce}{}\index{C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}!Weak\+Successor@{Weak\+Successor}}
+\index{Weak\+Successor@{Weak\+Successor}!C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}}
+\subsubsection[{Weak\+Successor(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+I\+Sorted}$<$ T $>$.Weak\+Successor (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_sorted_a52c5bf3983dfb2378ec431206d1ee8ce}
+
+
+Find the weak successor in the sorted collection of a particular value, that is, the least item in the collection greater than or equal to the supplied value. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if no such element exists (the supplied value is greater than the maximum of this collection.)\\
+\hline
+\end{DoxyExceptions}
+param name=\char`\"{}item\char`\"{}$>$The item to find the weak successor for.
+
+\begin{DoxyReturn}{Returns}
+The weak successor.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_a1f6fe0ae505406d028570bd1d4a75ecb}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_ac32c85f8be8aa3a4029bd815531dab2d}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_sorted_a6a3aeb46c7bf83990651ce69a53f9fc6}{C5.\+Guarded\+Sorted$<$ T $>$}, and \hyperlink{class_c5_1_1_sorted_array_a31ed0e58fcef110ab3e62e7e69aebc2e}{C5.\+Sorted\+Array$<$ T $>$}.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{interface_c5_1_1_i_sorted_a8daa86df3d094c47142596d1c102726c}{}\index{C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}!Comparer@{Comparer}}
+\index{Comparer@{Comparer}!C5\+::\+I\+Sorted@{C5\+::\+I\+Sorted}}
+\subsubsection[{Comparer}]{\setlength{\rightskip}{0pt plus 5cm}S\+C\+G.\+I\+Comparer$<$T$>$ {\bf C5.\+I\+Sorted}$<$ T $>$.Comparer\hspace{0.3cm}{\ttfamily [get]}}\label{interface_c5_1_1_i_sorted_a8daa86df3d094c47142596d1c102726c}
+
+
+The comparer object supplied at creation time for this sorted collection. 
+
+The comparer
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_interfaces_8cs}{Interfaces.\+cs}\end{DoxyCompactItemize}

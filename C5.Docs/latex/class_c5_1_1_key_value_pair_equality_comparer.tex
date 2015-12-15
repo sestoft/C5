@@ -1,0 +1,108 @@
+\hypertarget{class_c5_1_1_key_value_pair_equality_comparer}{}\section{C5.\+Key\+Value\+Pair\+Equality\+Comparer$<$ K, V $>$ Class Template Reference}
+\label{class_c5_1_1_key_value_pair_equality_comparer}\index{C5.\+Key\+Value\+Pair\+Equality\+Comparer$<$ K, V $>$@{C5.\+Key\+Value\+Pair\+Equality\+Comparer$<$ K, V $>$}}
+
+
+Default equality\+Comparer for dictionary entries. Operations only look at keys and uses an externaly defined equality\+Comparer for that.  
+
+
+Inheritance diagram for C5.\+Key\+Value\+Pair\+Equality\+Comparer$<$ K, V $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_c5_1_1_key_value_pair_equality_comparer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c5_1_1_key_value_pair_equality_comparer_a143d9d11c9253af4f3a2232e4e3f6c3a}{Key\+Value\+Pair\+Equality\+Comparer} ()
+\begin{DoxyCompactList}\small\item\em Create an entry equality\+Comparer using the default equality\+Comparer for keys \end{DoxyCompactList}\item 
+\hyperlink{class_c5_1_1_key_value_pair_equality_comparer_a6a43b85adaf59be05f1ac2871889580c}{Key\+Value\+Pair\+Equality\+Comparer} (S\+C\+G.\+I\+Equality\+Comparer$<$ K $>$ keyequality\+Comparer)
+\begin{DoxyCompactList}\small\item\em Create an entry equality\+Comparer from a specified item equality\+Comparer for the keys \end{DoxyCompactList}\item 
+int \hyperlink{class_c5_1_1_key_value_pair_equality_comparer_a5fe3f2c92ca80bd8025478b1430d1b58}{Get\+Hash\+Code} (\hyperlink{struct_c5_1_1_key_value_pair}{Key\+Value\+Pair}$<$ K, V $>$ entry)
+\begin{DoxyCompactList}\small\item\em Get the hash code of the entry \end{DoxyCompactList}\item 
+bool \hyperlink{class_c5_1_1_key_value_pair_equality_comparer_a8b3336df0597e2d9bd6e0651ad3f8cc8}{Equals} (\hyperlink{struct_c5_1_1_key_value_pair}{Key\+Value\+Pair}$<$ K, V $>$ entry1, \hyperlink{struct_c5_1_1_key_value_pair}{Key\+Value\+Pair}$<$ K, V $>$ entry2)
+\begin{DoxyCompactList}\small\item\em Test two entries for equality \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Default equality\+Comparer for dictionary entries. Operations only look at keys and uses an externaly defined equality\+Comparer for that. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_c5_1_1_key_value_pair_equality_comparer_a143d9d11c9253af4f3a2232e4e3f6c3a}{}\index{C5\+::\+Key\+Value\+Pair\+Equality\+Comparer@{C5\+::\+Key\+Value\+Pair\+Equality\+Comparer}!Key\+Value\+Pair\+Equality\+Comparer@{Key\+Value\+Pair\+Equality\+Comparer}}
+\index{Key\+Value\+Pair\+Equality\+Comparer@{Key\+Value\+Pair\+Equality\+Comparer}!C5\+::\+Key\+Value\+Pair\+Equality\+Comparer@{C5\+::\+Key\+Value\+Pair\+Equality\+Comparer}}
+\subsubsection[{Key\+Value\+Pair\+Equality\+Comparer()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Key\+Value\+Pair\+Equality\+Comparer}$<$ K, V $>$.{\bf Key\+Value\+Pair\+Equality\+Comparer} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_key_value_pair_equality_comparer_a143d9d11c9253af4f3a2232e4e3f6c3a}
+
+
+Create an entry equality\+Comparer using the default equality\+Comparer for keys 
+
+\hypertarget{class_c5_1_1_key_value_pair_equality_comparer_a6a43b85adaf59be05f1ac2871889580c}{}\index{C5\+::\+Key\+Value\+Pair\+Equality\+Comparer@{C5\+::\+Key\+Value\+Pair\+Equality\+Comparer}!Key\+Value\+Pair\+Equality\+Comparer@{Key\+Value\+Pair\+Equality\+Comparer}}
+\index{Key\+Value\+Pair\+Equality\+Comparer@{Key\+Value\+Pair\+Equality\+Comparer}!C5\+::\+Key\+Value\+Pair\+Equality\+Comparer@{C5\+::\+Key\+Value\+Pair\+Equality\+Comparer}}
+\subsubsection[{Key\+Value\+Pair\+Equality\+Comparer(\+S\+C\+G.\+I\+Equality\+Comparer$<$ K $>$ keyequality\+Comparer)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Key\+Value\+Pair\+Equality\+Comparer}$<$ K, V $>$.{\bf Key\+Value\+Pair\+Equality\+Comparer} (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Equality\+Comparer$<$ K $>$}]{keyequality\+Comparer}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_key_value_pair_equality_comparer_a6a43b85adaf59be05f1ac2871889580c}
+
+
+Create an entry equality\+Comparer from a specified item equality\+Comparer for the keys 
+
+
+\begin{DoxyParams}{Parameters}
+{\em keyequality\+Comparer} & The key equality\+S\+C\+G.\+Comparer\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_key_value_pair_equality_comparer_a8b3336df0597e2d9bd6e0651ad3f8cc8}{}\index{C5\+::\+Key\+Value\+Pair\+Equality\+Comparer@{C5\+::\+Key\+Value\+Pair\+Equality\+Comparer}!Equals@{Equals}}
+\index{Equals@{Equals}!C5\+::\+Key\+Value\+Pair\+Equality\+Comparer@{C5\+::\+Key\+Value\+Pair\+Equality\+Comparer}}
+\subsubsection[{Equals(\+Key\+Value\+Pair$<$ K, V $>$ entry1, Key\+Value\+Pair$<$ K, V $>$ entry2)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Key\+Value\+Pair\+Equality\+Comparer}$<$ K, V $>$.Equals (
+\begin{DoxyParamCaption}
+\item[{{\bf Key\+Value\+Pair}$<$ K, V $>$}]{entry1, }
+\item[{{\bf Key\+Value\+Pair}$<$ K, V $>$}]{entry2}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_key_value_pair_equality_comparer_a8b3336df0597e2d9bd6e0651ad3f8cc8}
+
+
+Test two entries for equality 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entry1} & First entry\\
+\hline
+{\em entry2} & Second entry\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if keys are equal
+\end{DoxyReturn}
+\hypertarget{class_c5_1_1_key_value_pair_equality_comparer_a5fe3f2c92ca80bd8025478b1430d1b58}{}\index{C5\+::\+Key\+Value\+Pair\+Equality\+Comparer@{C5\+::\+Key\+Value\+Pair\+Equality\+Comparer}!Get\+Hash\+Code@{Get\+Hash\+Code}}
+\index{Get\+Hash\+Code@{Get\+Hash\+Code}!C5\+::\+Key\+Value\+Pair\+Equality\+Comparer@{C5\+::\+Key\+Value\+Pair\+Equality\+Comparer}}
+\subsubsection[{Get\+Hash\+Code(\+Key\+Value\+Pair$<$ K, V $>$ entry)}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+Key\+Value\+Pair\+Equality\+Comparer}$<$ K, V $>$.Get\+Hash\+Code (
+\begin{DoxyParamCaption}
+\item[{{\bf Key\+Value\+Pair}$<$ K, V $>$}]{entry}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_key_value_pair_equality_comparer_a5fe3f2c92ca80bd8025478b1430d1b58}
+
+
+Get the hash code of the entry 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entry} & The entry\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The hash code of the key
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_dictionaries_8cs}{Dictionaries.\+cs}\end{DoxyCompactItemize}

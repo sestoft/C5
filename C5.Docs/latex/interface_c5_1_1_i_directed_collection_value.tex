@@ -1,0 +1,88 @@
+\hypertarget{interface_c5_1_1_i_directed_collection_value}{}\section{C5.\+I\+Directed\+Collection\+Value$<$ T $>$ Interface Template Reference}
+\label{interface_c5_1_1_i_directed_collection_value}\index{C5.\+I\+Directed\+Collection\+Value$<$ T $>$@{C5.\+I\+Directed\+Collection\+Value$<$ T $>$}}
+
+
+A sized generic collection, that can be enumerated backwards.  
+
+
+Inheritance diagram for C5.\+I\+Directed\+Collection\+Value$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.536964cm]{interface_c5_1_1_i_directed_collection_value}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+new \hyperlink{interface_c5_1_1_i_directed_collection_value}{I\+Directed\+Collection\+Value}$<$ T $>$ \hyperlink{interface_c5_1_1_i_directed_collection_value_ae5665ed396ea2801266c4b2bfb3dae41}{Backwards} ()
+\begin{DoxyCompactList}\small\item\em Create a collection containing the same items as this collection, but whose enumerator will enumerate the items backwards. The new collection will become invalid if the original is modified. Method typically used as in \end{DoxyCompactList}\item 
+bool \hyperlink{interface_c5_1_1_i_directed_collection_value_a93725b1f694e0d1cf5827e481ea467b7}{Find\+Last} (Func$<$ T, bool $>$ predicate, out T item)
+\begin{DoxyCompactList}\small\item\em Check if there exists an item that satisfies a specific predicate in this collection and return the first one in enumeration order. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A sized generic collection, that can be enumerated backwards. 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interface_c5_1_1_i_directed_collection_value_ae5665ed396ea2801266c4b2bfb3dae41}{}\index{C5\+::\+I\+Directed\+Collection\+Value@{C5\+::\+I\+Directed\+Collection\+Value}!Backwards@{Backwards}}
+\index{Backwards@{Backwards}!C5\+::\+I\+Directed\+Collection\+Value@{C5\+::\+I\+Directed\+Collection\+Value}}
+\subsubsection[{Backwards()}]{\setlength{\rightskip}{0pt plus 5cm}new {\bf I\+Directed\+Collection\+Value}$<$T$>$ {\bf C5.\+I\+Directed\+Collection\+Value}$<$ T $>$.Backwards (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_directed_collection_value_ae5665ed396ea2801266c4b2bfb3dae41}
+
+
+Create a collection containing the same items as this collection, but whose enumerator will enumerate the items backwards. The new collection will become invalid if the original is modified. Method typically used as in 
+
+{\ttfamily foreach (T x in \hyperlink{namespace_c5_aad282676794e49130eb8caed289395f8a9d1104e419414f4c268be7211fb8fc4a}{coll.\+Backwards()}) \{...\}} 
+
+\begin{DoxyReturn}{Returns}
+The backwards collection.
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_directed_enumerable_a826d9e7f29272dea7ebd48a38757df9e}{C5.\+I\+Directed\+Enumerable$<$ T $>$}.
+
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_aa8d9bd7240bf759fc52c3a14b1f2e43a}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_a27bc1208dc4fb8e7e1e3be048354ec7b}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_linked_list_ad0fbbf15338c5aae4278a5e44f8d9c69}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_aa96b744c5e2f0db894b8c9ed9606c240}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_base_1_1_range_a296cf1453eb618368fdc14f7abc4f4c2}{C5.\+Array\+Base$<$ T $>$.\+Range}, \hyperlink{class_c5_1_1_array_base_a11fbdc5f71bb41de404f3bd91e3a92b3}{C5.\+Array\+Base$<$ T $>$}, \hyperlink{class_c5_1_1_directed_collection_base_a9a4c7d6571ff7d78ea5adcb0d8264ff1}{C5.\+Directed\+Collection\+Base$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_sequenced_a5bbddf444037001d526931116e6b16e7}{C5.\+Guarded\+Sequenced$<$ T $>$}, \hyperlink{class_c5_1_1_wrapped_array_a2039f22afabd1b152a48ed687dd4e13a}{C5.\+Wrapped\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_directed_collection_value_base_a66d4222e083371d053e609efeecac740}{C5.\+Directed\+Collection\+Value\+Base$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_directed_collection_value_a14e2ad2eb0afbaf5e1ad2e970db81a5b}{C5.\+Guarded\+Directed\+Collection\+Value$<$ T $>$}, and \hyperlink{class_c5_1_1_circular_queue_a9df19a0a07cd854a59df4d3f976cf169}{C5.\+Circular\+Queue$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_directed_collection_value_a93725b1f694e0d1cf5827e481ea467b7}{}\index{C5\+::\+I\+Directed\+Collection\+Value@{C5\+::\+I\+Directed\+Collection\+Value}!Find\+Last@{Find\+Last}}
+\index{Find\+Last@{Find\+Last}!C5\+::\+I\+Directed\+Collection\+Value@{C5\+::\+I\+Directed\+Collection\+Value}}
+\subsubsection[{Find\+Last(\+Func$<$ T, bool $>$ predicate, out T item)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+I\+Directed\+Collection\+Value}$<$ T $>$.Find\+Last (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{predicate, }
+\item[{out T}]{item}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_directed_collection_value_a93725b1f694e0d1cf5827e481ea467b7}
+
+
+Check if there exists an item that satisfies a specific predicate in this collection and return the first one in enumeration order. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em predicate} & A delegate (T\+:\+Func`2 with 
+\begin{DoxyCode}
+R == \textcolor{keywordtype}{bool}
+\end{DoxyCode}
+) defining the predicate\\
+\hline
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True is such an item exists
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_directed_collection_base_a5dd3482ac69a6ef10092748c9953785b}{C5.\+Directed\+Collection\+Base$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_sequenced_a4741f8cd5c5fa8fb3d6b7a71268cdefb}{C5.\+Guarded\+Sequenced$<$ T $>$}, \hyperlink{class_c5_1_1_wrapped_array_a4917a0c9bba4103b8e63df21b3f9804d}{C5.\+Wrapped\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_directed_collection_value_base_af3d97f14823310f6afd1980d181a4f82}{C5.\+Directed\+Collection\+Value\+Base$<$ T $>$}, and \hyperlink{class_c5_1_1_guarded_directed_collection_value_a755cdf8f197ed79d7616a2b2527d718d}{C5.\+Guarded\+Directed\+Collection\+Value$<$ T $>$}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_interfaces_8cs}{Interfaces.\+cs}\end{DoxyCompactItemize}

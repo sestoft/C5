@@ -1,0 +1,100 @@
+\hypertarget{class_c5_1_1_sequenced_collection_equality_comparer}{}\section{C5.\+Sequenced\+Collection\+Equality\+Comparer$<$ T, W $>$ Class Template Reference}
+\label{class_c5_1_1_sequenced_collection_equality_comparer}\index{C5.\+Sequenced\+Collection\+Equality\+Comparer$<$ T, W $>$@{C5.\+Sequenced\+Collection\+Equality\+Comparer$<$ T, W $>$}}
+
+
+Prototype for a sequenced equality\+Comparer for something (T) that implements \hyperlink{interface_c5_1_1_i_sequenced}{I\+Sequenced}\mbox{[}W\mbox{]}. This will use \hyperlink{interface_c5_1_1_i_sequenced}{I\+Sequenced}\mbox{[}W\mbox{]} specific implementations of the equality comparer operations.  
+
+
+Inheritance diagram for C5.\+Sequenced\+Collection\+Equality\+Comparer$<$ T, W $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_c5_1_1_sequenced_collection_equality_comparer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{class_c5_1_1_sequenced_collection_equality_comparer_a2a311403828c52a93aaed029ad34bb50}{Get\+Hash\+Code} (T collection)
+\begin{DoxyCompactList}\small\item\em Get the hash code with respect to this sequenced equality\+Comparer \end{DoxyCompactList}\item 
+bool \hyperlink{class_c5_1_1_sequenced_collection_equality_comparer_a5eb3b401c398fc22745a43f79ab285da}{Equals} (T collection1, T collection2)
+\begin{DoxyCompactList}\small\item\em Check if two items are equal with respect to this sequenced equality\+Comparer \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_c5_1_1_sequenced_collection_equality_comparer}{Sequenced\+Collection\+Equality\+Comparer}$<$ T, W $>$ \hyperlink{class_c5_1_1_sequenced_collection_equality_comparer_a08533bba877e245d646cc4226a4d2222}{Default}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Prototype for a sequenced equality\+Comparer for something (T) that implements \hyperlink{interface_c5_1_1_i_sequenced}{I\+Sequenced}\mbox{[}W\mbox{]}. This will use \hyperlink{interface_c5_1_1_i_sequenced}{I\+Sequenced}\mbox{[}W\mbox{]} specific implementations of the equality comparer operations. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & \\
+\hline
+{\em W} & \\
+\hline
+\end{DoxyTemplParams}
+\begin{Desc}
+\item[Type Constraints]\begin{description}
+\item[{\em T} : {\em \hyperlink{interface_c5_1_1_i_sequenced}{I\+Sequenced}$<$W$>$}]\end{description}
+\end{Desc}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_sequenced_collection_equality_comparer_a5eb3b401c398fc22745a43f79ab285da}{}\index{C5\+::\+Sequenced\+Collection\+Equality\+Comparer@{C5\+::\+Sequenced\+Collection\+Equality\+Comparer}!Equals@{Equals}}
+\index{Equals@{Equals}!C5\+::\+Sequenced\+Collection\+Equality\+Comparer@{C5\+::\+Sequenced\+Collection\+Equality\+Comparer}}
+\subsubsection[{Equals(\+T collection1, T collection2)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Sequenced\+Collection\+Equality\+Comparer}$<$ T, W $>$.Equals (
+\begin{DoxyParamCaption}
+\item[{T}]{collection1, }
+\item[{T}]{collection2}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_sequenced_collection_equality_comparer_a5eb3b401c398fc22745a43f79ab285da}
+
+
+Check if two items are equal with respect to this sequenced equality\+Comparer 
+
+
+\begin{DoxyParams}{Parameters}
+{\em collection1} & first collection\\
+\hline
+{\em collection2} & second collection\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if equal
+\end{DoxyReturn}
+\hypertarget{class_c5_1_1_sequenced_collection_equality_comparer_a2a311403828c52a93aaed029ad34bb50}{}\index{C5\+::\+Sequenced\+Collection\+Equality\+Comparer@{C5\+::\+Sequenced\+Collection\+Equality\+Comparer}!Get\+Hash\+Code@{Get\+Hash\+Code}}
+\index{Get\+Hash\+Code@{Get\+Hash\+Code}!C5\+::\+Sequenced\+Collection\+Equality\+Comparer@{C5\+::\+Sequenced\+Collection\+Equality\+Comparer}}
+\subsubsection[{Get\+Hash\+Code(\+T collection)}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+Sequenced\+Collection\+Equality\+Comparer}$<$ T, W $>$.Get\+Hash\+Code (
+\begin{DoxyParamCaption}
+\item[{T}]{collection}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_sequenced_collection_equality_comparer_a2a311403828c52a93aaed029ad34bb50}
+
+
+Get the hash code with respect to this sequenced equality\+Comparer 
+
+
+\begin{DoxyParams}{Parameters}
+{\em collection} & The collection\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The hash code
+\end{DoxyReturn}
+
+
+\subsection{Property Documentation}
+\hypertarget{class_c5_1_1_sequenced_collection_equality_comparer_a08533bba877e245d646cc4226a4d2222}{}\index{C5\+::\+Sequenced\+Collection\+Equality\+Comparer@{C5\+::\+Sequenced\+Collection\+Equality\+Comparer}!Default@{Default}}
+\index{Default@{Default}!C5\+::\+Sequenced\+Collection\+Equality\+Comparer@{C5\+::\+Sequenced\+Collection\+Equality\+Comparer}}
+\subsubsection[{Default}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Sequenced\+Collection\+Equality\+Comparer}$<$T, W$>$ {\bf C5.\+Sequenced\+Collection\+Equality\+Comparer}$<$ T, W $>$.Default\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{class_c5_1_1_sequenced_collection_equality_comparer_a08533bba877e245d646cc4226a4d2222}
+
+
+
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_hashers_8cs}{Hashers.\+cs}\end{DoxyCompactItemize}

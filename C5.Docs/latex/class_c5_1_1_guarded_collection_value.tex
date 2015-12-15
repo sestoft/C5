@@ -1,0 +1,402 @@
+\hypertarget{class_c5_1_1_guarded_collection_value}{}\section{C5.\+Guarded\+Collection\+Value$<$ T $>$ Class Template Reference}
+\label{class_c5_1_1_guarded_collection_value}\index{C5.\+Guarded\+Collection\+Value$<$ T $>$@{C5.\+Guarded\+Collection\+Value$<$ T $>$}}
+
+
+A read-\/only wrapper for an \hyperlink{interface_c5_1_1_i_collection_value}{I\+Collection\+Value}$<$T$>$  
+
+
+Inheritance diagram for C5.\+Guarded\+Collection\+Value$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.357976cm]{class_c5_1_1_guarded_collection_value}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c5_1_1_guarded_collection_value_ae5023d32e21e4f2a340f6b3dc49ffc47}{Guarded\+Collection\+Value} (\hyperlink{interface_c5_1_1_i_collection_value}{I\+Collection\+Value}$<$ T $>$ collectionvalue)
+\begin{DoxyCompactList}\small\item\em Wrap a \hyperlink{interface_c5_1_1_i_collection_value}{I\+Collection\+Value}$<$T$>$ in a read-\/only wrapper \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_c5_1_1_guarded_collection_value_ae8d04b8fd3c59fe20bdc4a99fb1134f2}{Copy\+To} (T\mbox{[}$\,$\mbox{]} a, int i)
+\begin{DoxyCompactList}\small\item\em Copy the items of the wrapped collection to an array \end{DoxyCompactList}\item 
+virtual T\mbox{[}$\,$\mbox{]} \hyperlink{class_c5_1_1_guarded_collection_value_ab492c6c9d057b13d2ccbb7ebc259a4f6}{To\+Array} ()
+\begin{DoxyCompactList}\small\item\em Create an array from the items of the wrapped collection \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_c5_1_1_guarded_collection_value_a212d1ea950a6096f846987476c9e2aa6}{Apply} (Action$<$ T $>$ a)
+\begin{DoxyCompactList}\small\item\em Apply a delegate to all items of the wrapped enumerable. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_guarded_collection_value_a0c3c6dfb00cd3206e56939a8a49ff622}{Exists} (Func$<$ T, bool $>$ filter)
+\begin{DoxyCompactList}\small\item\em Check if there exists an item that satisfies a specific predicate in the wrapped enumerable. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_guarded_collection_value_a7bccfb81326892afd0ae30ac5e55cdaa}{Find} (Func$<$ T, bool $>$ filter, out T item)
+\item 
+virtual bool \hyperlink{class_c5_1_1_guarded_collection_value_a0fda465306c55a4dde41b5eecdb1180a}{All} (Func$<$ T, bool $>$ filter)
+\begin{DoxyCompactList}\small\item\em Check if all items in the wrapped enumerable satisfies a specific predicate. \end{DoxyCompactList}\item 
+virtual S\+C\+G.\+I\+Enumerable$<$ T $>$ \hyperlink{class_c5_1_1_guarded_collection_value_a69ab914af51ee2fefc9a0e874e544b3f}{Filter} (Func$<$ T, bool $>$ filter)
+\begin{DoxyCompactList}\small\item\em Create an enumerable, enumerating the items of this collection that satisfies a certain condition. \end{DoxyCompactList}\item 
+virtual T \hyperlink{class_c5_1_1_guarded_collection_value_ac1c427d873e650f819d6c662515dadd1}{Choose} ()
+\begin{DoxyCompactList}\small\item\em Choose some item of this collection. \end{DoxyCompactList}\item 
+bool \hyperlink{class_c5_1_1_guarded_collection_value_afa61d34466d122adfde482979c147e9c}{Show} (System.\+Text.\+String\+Builder stringbuilder, ref int rest, I\+Format\+Provider format\+Provider)
+\item 
+string \hyperlink{class_c5_1_1_guarded_collection_value_aa77b66d63ed61af80e8bffbfb86a6929}{To\+String} (string format, I\+Format\+Provider format\+Provider)
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+virtual \hyperlink{namespace_c5_a9143bfd561fffa025d21561674758008}{Event\+Type\+Enum} \hyperlink{class_c5_1_1_guarded_collection_value_ae25ccc848da34d751250986e82f56faa}{Listenable\+Events}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The Listenable\+Events value of the wrapped collection \end{DoxyCompactList}\item 
+virtual \hyperlink{namespace_c5_a9143bfd561fffa025d21561674758008}{Event\+Type\+Enum} \hyperlink{class_c5_1_1_guarded_collection_value_af2f6e3f9dac82651c997ea9b94fffe46}{Active\+Events}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The Active\+Events value of the wrapped collection \end{DoxyCompactList}\item 
+Collection\+Changed\+Handler$<$ T $>$ \hyperlink{class_c5_1_1_guarded_collection_value_a38a7720b5a831f9db428150c9a919705}{Collection\+Changed}
+\begin{DoxyCompactList}\small\item\em The change event. Will be raised for every change operation on the collection. \end{DoxyCompactList}\item 
+Collection\+Cleared\+Handler$<$ T $>$ \hyperlink{class_c5_1_1_guarded_collection_value_a380426d2c8a2a3b02ec8f9ef7deafdc3}{Collection\+Cleared}
+\begin{DoxyCompactList}\small\item\em The change event. Will be raised for every change operation on the collection. \end{DoxyCompactList}\item 
+Items\+Added\+Handler$<$ T $>$ \hyperlink{class_c5_1_1_guarded_collection_value_aeb91b9e7ca3dfac470295adc96ab1dab}{Items\+Added}
+\begin{DoxyCompactList}\small\item\em The item added event. Will be raised for every individual addition to the collection. \end{DoxyCompactList}\item 
+Item\+Inserted\+Handler$<$ T $>$ \hyperlink{class_c5_1_1_guarded_collection_value_a3f96014a551bc419ff392b0603c5ea9b}{Item\+Inserted}
+\begin{DoxyCompactList}\small\item\em The item added event. Will be raised for every individual addition to the collection. \end{DoxyCompactList}\item 
+Items\+Removed\+Handler$<$ T $>$ \hyperlink{class_c5_1_1_guarded_collection_value_a85c761ac148d451a9bfc35647c4828fe}{Items\+Removed}
+\begin{DoxyCompactList}\small\item\em The item removed event. Will be raised for every individual removal from the collection. \end{DoxyCompactList}\item 
+Item\+Removed\+At\+Handler$<$ T $>$ \hyperlink{class_c5_1_1_guarded_collection_value_ae775067415ed075eab5ff22ed0cde2a4}{Item\+Removed\+At}
+\begin{DoxyCompactList}\small\item\em The item removed event. Will be raised for every individual removal from the collection. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_guarded_collection_value_aa567bdb55eab9d39405e1c09091afdbd}{Is\+Empty}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Get the size of the wrapped collection \end{DoxyCompactList}\item 
+virtual int \hyperlink{class_c5_1_1_guarded_collection_value_a88d2c0a3a91c948b46417c1e60b45d44}{Count}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Get the size of the wrapped collection \end{DoxyCompactList}\item 
+virtual \hyperlink{namespace_c5_a615ba88dcdaa8d5a3c5f833a73d7fad6}{Speed} \hyperlink{class_c5_1_1_guarded_collection_value_a1faa5213b85114c0611a39744edf8887}{Count\+Speed}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The value is symbolic indicating the type of asymptotic complexity in terms of the size of this collection (worst-\/case or amortized as relevant). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A read-\/only wrapper for an \hyperlink{interface_c5_1_1_i_collection_value}{I\+Collection\+Value}$<$T$>$ 
+
+{\itshape This is mainly interesting as a base of other guard classes} 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_c5_1_1_guarded_collection_value_ae5023d32e21e4f2a340f6b3dc49ffc47}{}\index{C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}!Guarded\+Collection\+Value@{Guarded\+Collection\+Value}}
+\index{Guarded\+Collection\+Value@{Guarded\+Collection\+Value}!C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}}
+\subsubsection[{Guarded\+Collection\+Value(\+I\+Collection\+Value$<$ T $>$ collectionvalue)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Guarded\+Collection\+Value}$<$ T $>$.{\bf Guarded\+Collection\+Value} (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Collection\+Value}$<$ T $>$}]{collectionvalue}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_collection_value_ae5023d32e21e4f2a340f6b3dc49ffc47}
+
+
+Wrap a \hyperlink{interface_c5_1_1_i_collection_value}{I\+Collection\+Value}$<$T$>$ in a read-\/only wrapper 
+
+
+\begin{DoxyParams}{Parameters}
+{\em collectionvalue} & the collection to wrap\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_guarded_collection_value_a0fda465306c55a4dde41b5eecdb1180a}{}\index{C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}!All@{All}}
+\index{All@{All}!C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}}
+\subsubsection[{All(\+Func$<$ T, bool $>$ filter)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Guarded\+Collection\+Value}$<$ T $>$.All (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{filter}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_value_a0fda465306c55a4dde41b5eecdb1180a}
+
+
+Check if all items in the wrapped enumerable satisfies a specific predicate. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filter} & A filter delegate (T\+:\+C5.\+Filter`1) defining the predicate\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if all items satisfies the predicate
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_a099c3a257e5c0b7212e34e52a4a4bda2}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_value_a212d1ea950a6096f846987476c9e2aa6}{}\index{C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}!Apply@{Apply}}
+\index{Apply@{Apply}!C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}}
+\subsubsection[{Apply(\+Action$<$ T $>$ a)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Guarded\+Collection\+Value}$<$ T $>$.Apply (
+\begin{DoxyParamCaption}
+\item[{Action$<$ T $>$}]{a}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_value_a212d1ea950a6096f846987476c9e2aa6}
+
+
+Apply a delegate to all items of the wrapped enumerable. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & The delegate to apply\\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_aadcb9ce9d9362c0ade0c7d620e3cc182}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_value_ac1c427d873e650f819d6c662515dadd1}{}\index{C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}!Choose@{Choose}}
+\index{Choose@{Choose}!C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}}
+\subsubsection[{Choose()}]{\setlength{\rightskip}{0pt plus 5cm}virtual T {\bf C5.\+Guarded\+Collection\+Value}$<$ T $>$.Choose (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_value_ac1c427d873e650f819d6c662515dadd1}
+
+
+Choose some item of this collection. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if collection is empty.\\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_af72d52ddd8ea4130d508e1cf020cf7eb}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_value_ae8d04b8fd3c59fe20bdc4a99fb1134f2}{}\index{C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}!Copy\+To@{Copy\+To}}
+\index{Copy\+To@{Copy\+To}!C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}}
+\subsubsection[{Copy\+To(\+T[] a, int i)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Guarded\+Collection\+Value}$<$ T $>$.Copy\+To (
+\begin{DoxyParamCaption}
+\item[{T\mbox{[}$\,$\mbox{]}}]{a, }
+\item[{int}]{i}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_value_ae8d04b8fd3c59fe20bdc4a99fb1134f2}
+
+
+Copy the items of the wrapped collection to an array 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & The array\\
+\hline
+{\em i} & Starting offset\\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_aced299d8dce69c33ff75b598e39581d1}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_value_a0c3c6dfb00cd3206e56939a8a49ff622}{}\index{C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}!Exists@{Exists}}
+\index{Exists@{Exists}!C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}}
+\subsubsection[{Exists(\+Func$<$ T, bool $>$ filter)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Guarded\+Collection\+Value}$<$ T $>$.Exists (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{filter}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_value_a0c3c6dfb00cd3206e56939a8a49ff622}
+
+
+Check if there exists an item that satisfies a specific predicate in the wrapped enumerable. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filter} & A filter delegate (T\+:\+C5.\+Filter`1) defining the predicate\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True is such an item exists
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_a3c20f35782dbd046f9aba5ec13dad789}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_value_a69ab914af51ee2fefc9a0e874e544b3f}{}\index{C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}!Filter@{Filter}}
+\index{Filter@{Filter}!C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}}
+\subsubsection[{Filter(\+Func$<$ T, bool $>$ filter)}]{\setlength{\rightskip}{0pt plus 5cm}virtual S\+C\+G.\+I\+Enumerable$<$T$>$ {\bf C5.\+Guarded\+Collection\+Value}$<$ T $>$.Filter (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{filter}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_value_a69ab914af51ee2fefc9a0e874e544b3f}
+
+
+Create an enumerable, enumerating the items of this collection that satisfies a certain condition. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filter} & The T-\/$>$bool filter delegate defining the condition\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The filtered enumerable
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_a485e8b464ed5dfb5f2ff5dc10a8a62d6}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_value_a7bccfb81326892afd0ae30ac5e55cdaa}{}\index{C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}!Find@{Find}}
+\index{Find@{Find}!C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}}
+\subsubsection[{Find(\+Func$<$ T, bool $>$ filter, out T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Guarded\+Collection\+Value}$<$ T $>$.Find (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{filter, }
+\item[{out T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_value_a7bccfb81326892afd0ae30ac5e55cdaa}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em filter} & \\
+\hline
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_a3e175f833398fa6a6cde45e4948bc152}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_value_afa61d34466d122adfde482979c147e9c}{}\index{C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}!Show@{Show}}
+\index{Show@{Show}!C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}}
+\subsubsection[{Show(\+System.\+Text.\+String\+Builder stringbuilder, ref int rest, I\+Format\+Provider format\+Provider)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Guarded\+Collection\+Value}$<$ T $>$.Show (
+\begin{DoxyParamCaption}
+\item[{System.\+Text.\+String\+Builder}]{stringbuilder, }
+\item[{ref int}]{rest, }
+\item[{I\+Format\+Provider}]{format\+Provider}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_collection_value_afa61d34466d122adfde482979c147e9c}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em stringbuilder} & \\
+\hline
+{\em format\+Provider} & \\
+\hline
+{\em rest} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{class_c5_1_1_guarded_collection_value_ab492c6c9d057b13d2ccbb7ebc259a4f6}{}\index{C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}!To\+Array@{To\+Array}}
+\index{To\+Array@{To\+Array}!C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}}
+\subsubsection[{To\+Array()}]{\setlength{\rightskip}{0pt plus 5cm}virtual T \mbox{[}$\,$\mbox{]} {\bf C5.\+Guarded\+Collection\+Value}$<$ T $>$.To\+Array (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_value_ab492c6c9d057b13d2ccbb7ebc259a4f6}
+
+
+Create an array from the items of the wrapped collection 
+
+\begin{DoxyReturn}{Returns}
+The array
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_ad76547324e71a04e92076b2e55239bbb}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_value_aa77b66d63ed61af80e8bffbfb86a6929}{}\index{C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}!To\+String@{To\+String}}
+\index{To\+String@{To\+String}!C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}}
+\subsubsection[{To\+String(string format, I\+Format\+Provider format\+Provider)}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf C5.\+Guarded\+Collection\+Value}$<$ T $>$.To\+String (
+\begin{DoxyParamCaption}
+\item[{string}]{format, }
+\item[{I\+Format\+Provider}]{format\+Provider}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_collection_value_aa77b66d63ed61af80e8bffbfb86a6929}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em format} & \\
+\hline
+{\em format\+Provider} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+\subsection{Property Documentation}
+\hypertarget{class_c5_1_1_guarded_collection_value_af2f6e3f9dac82651c997ea9b94fffe46}{}\index{C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}!Active\+Events@{Active\+Events}}
+\index{Active\+Events@{Active\+Events}!C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}}
+\subsubsection[{Active\+Events}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Event\+Type\+Enum} {\bf C5.\+Guarded\+Collection\+Value}$<$ T $>$.Active\+Events\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_collection_value_af2f6e3f9dac82651c997ea9b94fffe46}
+
+
+The Active\+Events value of the wrapped collection 
+
+\hypertarget{class_c5_1_1_guarded_collection_value_a38a7720b5a831f9db428150c9a919705}{}\index{C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}!Collection\+Changed@{Collection\+Changed}}
+\index{Collection\+Changed@{Collection\+Changed}!C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}}
+\subsubsection[{Collection\+Changed}]{\setlength{\rightskip}{0pt plus 5cm}Collection\+Changed\+Handler$<$T$>$ {\bf C5.\+Guarded\+Collection\+Value}$<$ T $>$.Collection\+Changed\hspace{0.3cm}{\ttfamily [add]}, {\ttfamily [remove]}}\label{class_c5_1_1_guarded_collection_value_a38a7720b5a831f9db428150c9a919705}
+
+
+The change event. Will be raised for every change operation on the collection. 
+
+\hypertarget{class_c5_1_1_guarded_collection_value_a380426d2c8a2a3b02ec8f9ef7deafdc3}{}\index{C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}!Collection\+Cleared@{Collection\+Cleared}}
+\index{Collection\+Cleared@{Collection\+Cleared}!C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}}
+\subsubsection[{Collection\+Cleared}]{\setlength{\rightskip}{0pt plus 5cm}Collection\+Cleared\+Handler$<$T$>$ {\bf C5.\+Guarded\+Collection\+Value}$<$ T $>$.Collection\+Cleared\hspace{0.3cm}{\ttfamily [add]}, {\ttfamily [remove]}}\label{class_c5_1_1_guarded_collection_value_a380426d2c8a2a3b02ec8f9ef7deafdc3}
+
+
+The change event. Will be raised for every change operation on the collection. 
+
+\hypertarget{class_c5_1_1_guarded_collection_value_a88d2c0a3a91c948b46417c1e60b45d44}{}\index{C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}!Count@{Count}}
+\index{Count@{Count}!C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}}
+\subsubsection[{Count}]{\setlength{\rightskip}{0pt plus 5cm}virtual int {\bf C5.\+Guarded\+Collection\+Value}$<$ T $>$.Count\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_collection_value_a88d2c0a3a91c948b46417c1e60b45d44}
+
+
+Get the size of the wrapped collection 
+
+The size\hypertarget{class_c5_1_1_guarded_collection_value_a1faa5213b85114c0611a39744edf8887}{}\index{C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}!Count\+Speed@{Count\+Speed}}
+\index{Count\+Speed@{Count\+Speed}!C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}}
+\subsubsection[{Count\+Speed}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Speed} {\bf C5.\+Guarded\+Collection\+Value}$<$ T $>$.Count\+Speed\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_collection_value_a1faa5213b85114c0611a39744edf8887}
+
+
+The value is symbolic indicating the type of asymptotic complexity in terms of the size of this collection (worst-\/case or amortized as relevant). 
+
+A characterization of the speed of the {\ttfamily Count} property in this collection.\hypertarget{class_c5_1_1_guarded_collection_value_aa567bdb55eab9d39405e1c09091afdbd}{}\index{C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}!Is\+Empty@{Is\+Empty}}
+\index{Is\+Empty@{Is\+Empty}!C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}}
+\subsubsection[{Is\+Empty}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Guarded\+Collection\+Value}$<$ T $>$.Is\+Empty\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_collection_value_aa567bdb55eab9d39405e1c09091afdbd}
+
+
+Get the size of the wrapped collection 
+
+The size\hypertarget{class_c5_1_1_guarded_collection_value_a3f96014a551bc419ff392b0603c5ea9b}{}\index{C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}!Item\+Inserted@{Item\+Inserted}}
+\index{Item\+Inserted@{Item\+Inserted}!C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}}
+\subsubsection[{Item\+Inserted}]{\setlength{\rightskip}{0pt plus 5cm}Item\+Inserted\+Handler$<$T$>$ {\bf C5.\+Guarded\+Collection\+Value}$<$ T $>$.Item\+Inserted\hspace{0.3cm}{\ttfamily [add]}, {\ttfamily [remove]}}\label{class_c5_1_1_guarded_collection_value_a3f96014a551bc419ff392b0603c5ea9b}
+
+
+The item added event. Will be raised for every individual addition to the collection. 
+
+\hypertarget{class_c5_1_1_guarded_collection_value_ae775067415ed075eab5ff22ed0cde2a4}{}\index{C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}!Item\+Removed\+At@{Item\+Removed\+At}}
+\index{Item\+Removed\+At@{Item\+Removed\+At}!C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}}
+\subsubsection[{Item\+Removed\+At}]{\setlength{\rightskip}{0pt plus 5cm}Item\+Removed\+At\+Handler$<$T$>$ {\bf C5.\+Guarded\+Collection\+Value}$<$ T $>$.Item\+Removed\+At\hspace{0.3cm}{\ttfamily [add]}, {\ttfamily [remove]}}\label{class_c5_1_1_guarded_collection_value_ae775067415ed075eab5ff22ed0cde2a4}
+
+
+The item removed event. Will be raised for every individual removal from the collection. 
+
+\hypertarget{class_c5_1_1_guarded_collection_value_aeb91b9e7ca3dfac470295adc96ab1dab}{}\index{C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}!Items\+Added@{Items\+Added}}
+\index{Items\+Added@{Items\+Added}!C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}}
+\subsubsection[{Items\+Added}]{\setlength{\rightskip}{0pt plus 5cm}Items\+Added\+Handler$<$T$>$ {\bf C5.\+Guarded\+Collection\+Value}$<$ T $>$.Items\+Added\hspace{0.3cm}{\ttfamily [add]}, {\ttfamily [remove]}}\label{class_c5_1_1_guarded_collection_value_aeb91b9e7ca3dfac470295adc96ab1dab}
+
+
+The item added event. Will be raised for every individual addition to the collection. 
+
+\hypertarget{class_c5_1_1_guarded_collection_value_a85c761ac148d451a9bfc35647c4828fe}{}\index{C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}!Items\+Removed@{Items\+Removed}}
+\index{Items\+Removed@{Items\+Removed}!C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}}
+\subsubsection[{Items\+Removed}]{\setlength{\rightskip}{0pt plus 5cm}Items\+Removed\+Handler$<$T$>$ {\bf C5.\+Guarded\+Collection\+Value}$<$ T $>$.Items\+Removed\hspace{0.3cm}{\ttfamily [add]}, {\ttfamily [remove]}}\label{class_c5_1_1_guarded_collection_value_a85c761ac148d451a9bfc35647c4828fe}
+
+
+The item removed event. Will be raised for every individual removal from the collection. 
+
+\hypertarget{class_c5_1_1_guarded_collection_value_ae25ccc848da34d751250986e82f56faa}{}\index{C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}!Listenable\+Events@{Listenable\+Events}}
+\index{Listenable\+Events@{Listenable\+Events}!C5\+::\+Guarded\+Collection\+Value@{C5\+::\+Guarded\+Collection\+Value}}
+\subsubsection[{Listenable\+Events}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Event\+Type\+Enum} {\bf C5.\+Guarded\+Collection\+Value}$<$ T $>$.Listenable\+Events\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_collection_value_ae25ccc848da34d751250986e82f56faa}
+
+
+The Listenable\+Events value of the wrapped collection 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_wrappers_8cs}{Wrappers.\+cs}\end{DoxyCompactItemize}

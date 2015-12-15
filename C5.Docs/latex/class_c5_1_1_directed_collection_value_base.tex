@@ -1,0 +1,108 @@
+\hypertarget{class_c5_1_1_directed_collection_value_base}{}\section{C5.\+Directed\+Collection\+Value\+Base$<$ T $>$ Class Template Reference}
+\label{class_c5_1_1_directed_collection_value_base}\index{C5.\+Directed\+Collection\+Value\+Base$<$ T $>$@{C5.\+Directed\+Collection\+Value\+Base$<$ T $>$}}
+
+
+ 
+
+
+Inheritance diagram for C5.\+Directed\+Collection\+Value\+Base$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.033898cm]{class_c5_1_1_directed_collection_value_base}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+abstract \hyperlink{interface_c5_1_1_i_directed_collection_value}{I\+Directed\+Collection\+Value}$<$ T $>$ \hyperlink{class_c5_1_1_directed_collection_value_base_a66d4222e083371d053e609efeecac740}{Backwards} ()
+\item 
+virtual bool \hyperlink{class_c5_1_1_directed_collection_value_base_af3d97f14823310f6afd1980d181a4f82}{Find\+Last} (Func$<$ T, bool $>$ predicate, out T item)
+\begin{DoxyCompactList}\small\item\em Check if there exists an item that satisfies a specific predicate in this collection and return the first one in enumeration order. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+virtual \hyperlink{namespace_c5_aad282676794e49130eb8caed289395f8}{Enumeration\+Direction} \hyperlink{class_c5_1_1_directed_collection_value_base_acb1489d931bddb60b2d220b60e355021}{Direction}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & \\
+\hline
+\end{DoxyTemplParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_directed_collection_value_base_a66d4222e083371d053e609efeecac740}{}\index{C5\+::\+Directed\+Collection\+Value\+Base@{C5\+::\+Directed\+Collection\+Value\+Base}!Backwards@{Backwards}}
+\index{Backwards@{Backwards}!C5\+::\+Directed\+Collection\+Value\+Base@{C5\+::\+Directed\+Collection\+Value\+Base}}
+\subsubsection[{Backwards()}]{\setlength{\rightskip}{0pt plus 5cm}abstract {\bf I\+Directed\+Collection\+Value}$<$T$>$ {\bf C5.\+Directed\+Collection\+Value\+Base}$<$ T $>$.Backwards (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{class_c5_1_1_directed_collection_value_base_a66d4222e083371d053e609efeecac740}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_directed_collection_value_ae5665ed396ea2801266c4b2bfb3dae41}{C5.\+I\+Directed\+Collection\+Value$<$ T $>$}.
+
+
+
+Implemented in \hyperlink{class_c5_1_1_array_base_1_1_range_a296cf1453eb618368fdc14f7abc4f4c2}{C5.\+Array\+Base$<$ T $>$.\+Range}, and \hyperlink{class_c5_1_1_mapped_directed_collection_value_a8eaadbb8ae6d18393c504361daec1c8c}{C5.\+Mapped\+Directed\+Collection\+Value$<$ T, V $>$}.
+
+\hypertarget{class_c5_1_1_directed_collection_value_base_af3d97f14823310f6afd1980d181a4f82}{}\index{C5\+::\+Directed\+Collection\+Value\+Base@{C5\+::\+Directed\+Collection\+Value\+Base}!Find\+Last@{Find\+Last}}
+\index{Find\+Last@{Find\+Last}!C5\+::\+Directed\+Collection\+Value\+Base@{C5\+::\+Directed\+Collection\+Value\+Base}}
+\subsubsection[{Find\+Last(\+Func$<$ T, bool $>$ predicate, out T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Directed\+Collection\+Value\+Base}$<$ T $>$.Find\+Last (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{predicate, }
+\item[{out T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_directed_collection_value_base_af3d97f14823310f6afd1980d181a4f82}
+
+
+Check if there exists an item that satisfies a specific predicate in this collection and return the first one in enumeration order. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em predicate} & A delegate (T\+:\+Func`2 with 
+\begin{DoxyCode}
+R == \textcolor{keywordtype}{bool}
+\end{DoxyCode}
+) defining the predicate\\
+\hline
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True is such an item exists
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_directed_collection_value_a93725b1f694e0d1cf5827e481ea467b7}{C5.\+I\+Directed\+Collection\+Value$<$ T $>$}.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{class_c5_1_1_directed_collection_value_base_acb1489d931bddb60b2d220b60e355021}{}\index{C5\+::\+Directed\+Collection\+Value\+Base@{C5\+::\+Directed\+Collection\+Value\+Base}!Direction@{Direction}}
+\index{Direction@{Direction}!C5\+::\+Directed\+Collection\+Value\+Base@{C5\+::\+Directed\+Collection\+Value\+Base}}
+\subsubsection[{Direction}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Enumeration\+Direction} {\bf C5.\+Directed\+Collection\+Value\+Base}$<$ T $>$.Direction\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_directed_collection_value_base_acb1489d931bddb60b2d220b60e355021}
+
+
+
+
+{\ttfamily Forwards} if same, else {\ttfamily Backwards} 
+
+The enumeration direction relative to the original collection.
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_collections_8cs}{Collections.\+cs}\end{DoxyCompactItemize}

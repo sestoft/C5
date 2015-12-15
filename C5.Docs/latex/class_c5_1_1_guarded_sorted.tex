@@ -1,0 +1,634 @@
+\hypertarget{class_c5_1_1_guarded_sorted}{}\section{C5.\+Guarded\+Sorted$<$ T $>$ Class Template Reference}
+\label{class_c5_1_1_guarded_sorted}\index{C5.\+Guarded\+Sorted$<$ T $>$@{C5.\+Guarded\+Sorted$<$ T $>$}}
+
+
+A read-\/only wrapper for a sorted collection  
+
+
+Inheritance diagram for C5.\+Guarded\+Sorted$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.533646cm]{class_c5_1_1_guarded_sorted}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c5_1_1_guarded_sorted_a83a43467e2f40a5d7994c165df409c9d}{Guarded\+Sorted} (\hyperlink{interface_c5_1_1_i_sorted}{I\+Sorted}$<$ T $>$ sorted)
+\begin{DoxyCompactList}\small\item\em Wrap a sorted collection in a read-\/only wrapper \end{DoxyCompactList}\item 
+bool \hyperlink{class_c5_1_1_guarded_sorted_a5d51f1d79c4ad4c84684f6102562d44a}{Try\+Predecessor} (T item, out T res)
+\begin{DoxyCompactList}\small\item\em Find the strict predecessor of item in the guarded sorted collection, that is, the greatest item in the collection smaller than the item. \end{DoxyCompactList}\item 
+bool \hyperlink{class_c5_1_1_guarded_sorted_a7a8a2a146dc48c07818e434f14473dac}{Try\+Successor} (T item, out T res)
+\begin{DoxyCompactList}\small\item\em Find the strict successor of item in the guarded sorted collection, that is, the least item in the collection greater than the supplied value. \end{DoxyCompactList}\item 
+bool \hyperlink{class_c5_1_1_guarded_sorted_ac0895c0ec8adf94a479c0a22b337b122}{Try\+Weak\+Predecessor} (T item, out T res)
+\begin{DoxyCompactList}\small\item\em Find the weak predecessor of item in the guarded sorted collection, that is, the greatest item in the collection smaller than or equal to the item. \end{DoxyCompactList}\item 
+bool \hyperlink{class_c5_1_1_guarded_sorted_a0f00bb7238c3bc374aa085205448f533}{Try\+Weak\+Successor} (T item, out T res)
+\begin{DoxyCompactList}\small\item\em Find the weak successor of item in the sorted collection, that is, the least item in the collection greater than or equal to the supplied value. \end{DoxyCompactList}\item 
+T \hyperlink{class_c5_1_1_guarded_sorted_afd96c13a6d58d8db800b8ba78f843e29}{Predecessor} (T item)
+\begin{DoxyCompactList}\small\item\em Find the predecessor of the item in the wrapped sorted collection \end{DoxyCompactList}\item 
+T \hyperlink{class_c5_1_1_guarded_sorted_a042b2d69142f8957f0fec4958e67a99a}{Successor} (T item)
+\begin{DoxyCompactList}\small\item\em Find the Successor of the item in the wrapped sorted collection \end{DoxyCompactList}\item 
+T \hyperlink{class_c5_1_1_guarded_sorted_ae5fed4839e2e079fc0c07e141c7b51e3}{Weak\+Predecessor} (T item)
+\begin{DoxyCompactList}\small\item\em Find the weak predecessor of the item in the wrapped sorted collection \end{DoxyCompactList}\item 
+T \hyperlink{class_c5_1_1_guarded_sorted_a6a3aeb46c7bf83990651ce69a53f9fc6}{Weak\+Successor} (T item)
+\begin{DoxyCompactList}\small\item\em Find the weak Successor of the item in the wrapped sorted collection \end{DoxyCompactList}\item 
+bool \hyperlink{class_c5_1_1_guarded_sorted_a0372f6f2e220c389973eea8201390a27}{Cut} (I\+Comparable$<$ T $>$ c, out T low, out bool lval, out T high, out bool hval)
+\begin{DoxyCompactList}\small\item\em Run Cut on the wrapped sorted collection \end{DoxyCompactList}\item 
+\hyperlink{interface_c5_1_1_i_directed_enumerable}{I\+Directed\+Enumerable}$<$ T $>$ \hyperlink{class_c5_1_1_guarded_sorted_ac163fd0c999d9bd1581a2313c716b573}{Range\+From} (T bot)
+\begin{DoxyCompactList}\small\item\em Get the specified range from the wrapped collection. (The current implementation erroneously does not wrap the result.) \end{DoxyCompactList}\item 
+\hyperlink{interface_c5_1_1_i_directed_enumerable}{I\+Directed\+Enumerable}$<$ T $>$ \hyperlink{class_c5_1_1_guarded_sorted_a4654fa234e549063c0a820662e6b8e9e}{Range\+From\+To} (T bot, T top)
+\begin{DoxyCompactList}\small\item\em Get the specified range from the wrapped collection. (The current implementation erroneously does not wrap the result.) \end{DoxyCompactList}\item 
+\hyperlink{interface_c5_1_1_i_directed_enumerable}{I\+Directed\+Enumerable}$<$ T $>$ \hyperlink{class_c5_1_1_guarded_sorted_a21305628969a9beaa6e0f0d06fb171a6}{Range\+To} (T top)
+\begin{DoxyCompactList}\small\item\em Get the specified range from the wrapped collection. (The current implementation erroneously does not wrap the result.) \end{DoxyCompactList}\item 
+\hyperlink{interface_c5_1_1_i_directed_collection_value}{I\+Directed\+Collection\+Value}$<$ T $>$ \hyperlink{class_c5_1_1_guarded_sorted_a810e407c33bdf337c32ceb9c2d9773ad}{Range\+All} ()
+\begin{DoxyCompactList}\small\item\em Get the specified range from the wrapped collection. (The current implementation erroneously does not wrap the result.) \end{DoxyCompactList}\item 
+void \hyperlink{class_c5_1_1_guarded_sorted_a5dfe71d83337e50a8d38002c7836680d}{Add\+Sorted} (S\+C\+G.\+I\+Enumerable$<$ T $>$ items)
+\item 
+void \hyperlink{class_c5_1_1_guarded_sorted_a50fb581a7fdc2aa8565fb7aeeccd4cd1}{Remove\+Range\+From} (T low)
+\item 
+void \hyperlink{class_c5_1_1_guarded_sorted_aa778f695d7e887a7ca4672ccdd06a689}{Remove\+Range\+From\+To} (T low, T hi)
+\item 
+void \hyperlink{class_c5_1_1_guarded_sorted_a913a700b2bdd5fb9582c818360468c3a}{Remove\+Range\+To} (T hi)
+\item 
+T \hyperlink{class_c5_1_1_guarded_sorted_a74fbcdd950a8673bc61e09539470748a}{Find\+Min} ()
+\begin{DoxyCompactList}\small\item\em Find the minimum of the wrapped collection \end{DoxyCompactList}\item 
+T \hyperlink{class_c5_1_1_guarded_sorted_a7cc91f7815ef8e6e43006289e0ab7305}{Delete\+Min} ()
+\item 
+T \hyperlink{class_c5_1_1_guarded_sorted_ab6f7371f2bdec615b28c075493ef70d8}{Find\+Max} ()
+\begin{DoxyCompactList}\small\item\em Find the maximum of the wrapped collection \end{DoxyCompactList}\item 
+T \hyperlink{class_c5_1_1_guarded_sorted_a24f97b59e6d0e9efb7cc7be97f739cd5}{Delete\+Max} ()
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+S\+C\+G.\+I\+Comparer$<$ T $>$ \hyperlink{class_c5_1_1_guarded_sorted_a189be757a095db06b38471bfa2d67903}{Comparer}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The comparer object supplied at creation time for the underlying collection \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A read-\/only wrapper for a sorted collection 
+
+{\itshape This is mainly interesting as a base of other guard classes} 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_c5_1_1_guarded_sorted_a83a43467e2f40a5d7994c165df409c9d}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Guarded\+Sorted@{Guarded\+Sorted}}
+\index{Guarded\+Sorted@{Guarded\+Sorted}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Guarded\+Sorted(\+I\+Sorted$<$ T $>$ sorted)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Guarded\+Sorted}$<$ T $>$.{\bf Guarded\+Sorted} (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Sorted}$<$ T $>$}]{sorted}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sorted_a83a43467e2f40a5d7994c165df409c9d}
+
+
+Wrap a sorted collection in a read-\/only wrapper 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sorted} & \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_guarded_sorted_a5dfe71d83337e50a8d38002c7836680d}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Add\+Sorted@{Add\+Sorted}}
+\index{Add\+Sorted@{Add\+Sorted}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Add\+Sorted(\+S\+C\+G.\+I\+Enumerable$<$ T $>$ items)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Guarded\+Sorted}$<$ T $>$.Add\+Sorted (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Enumerable$<$ T $>$}]{items}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sorted_a5dfe71d83337e50a8d38002c7836680d}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em items} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sorted_a51dd21143c9438dc9f841a9d7b6f6b3f}{C5.\+I\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sorted_a0372f6f2e220c389973eea8201390a27}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Cut@{Cut}}
+\index{Cut@{Cut}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Cut(\+I\+Comparable$<$ T $>$ c, out T low, out bool lval, out T high, out bool hval)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Guarded\+Sorted}$<$ T $>$.Cut (
+\begin{DoxyParamCaption}
+\item[{I\+Comparable$<$ T $>$}]{c, }
+\item[{out T}]{low, }
+\item[{out bool}]{lval, }
+\item[{out T}]{high, }
+\item[{out bool}]{hval}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sorted_a0372f6f2e220c389973eea8201390a27}
+
+
+Run Cut on the wrapped sorted collection 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & \\
+\hline
+{\em low} & \\
+\hline
+{\em lval} & \\
+\hline
+{\em high} & \\
+\hline
+{\em hval} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sorted_a7acdf0ef5765c2554e5efa8df856c2b4}{C5.\+I\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sorted_a24f97b59e6d0e9efb7cc7be97f739cd5}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Delete\+Max@{Delete\+Max}}
+\index{Delete\+Max@{Delete\+Max}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Delete\+Max()}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Guarded\+Sorted}$<$ T $>$.Delete\+Max (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sorted_a24f97b59e6d0e9efb7cc7be97f739cd5}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sorted_a58b26b758745ad2146252b9e5ff2965b}{C5.\+I\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sorted_a7cc91f7815ef8e6e43006289e0ab7305}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Delete\+Min@{Delete\+Min}}
+\index{Delete\+Min@{Delete\+Min}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Delete\+Min()}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Guarded\+Sorted}$<$ T $>$.Delete\+Min (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sorted_a7cc91f7815ef8e6e43006289e0ab7305}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sorted_ad30bc55d0c81e695896d459422b76954}{C5.\+I\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sorted_ab6f7371f2bdec615b28c075493ef70d8}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Find\+Max@{Find\+Max}}
+\index{Find\+Max@{Find\+Max}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Find\+Max()}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Guarded\+Sorted}$<$ T $>$.Find\+Max (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sorted_ab6f7371f2bdec615b28c075493ef70d8}
+
+
+Find the maximum of the wrapped collection 
+
+\begin{DoxyReturn}{Returns}
+The maximum
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sorted_a9321a921a443cfd8411534fbef19ab00}{C5.\+I\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sorted_a74fbcdd950a8673bc61e09539470748a}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Find\+Min@{Find\+Min}}
+\index{Find\+Min@{Find\+Min}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Find\+Min()}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Guarded\+Sorted}$<$ T $>$.Find\+Min (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sorted_a74fbcdd950a8673bc61e09539470748a}
+
+
+Find the minimum of the wrapped collection 
+
+\begin{DoxyReturn}{Returns}
+The minimum
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sorted_ad7a7fc9df9ff4fd5e5ab399c5703f995}{C5.\+I\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sorted_afd96c13a6d58d8db800b8ba78f843e29}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Predecessor@{Predecessor}}
+\index{Predecessor@{Predecessor}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Predecessor(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Guarded\+Sorted}$<$ T $>$.Predecessor (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sorted_afd96c13a6d58d8db800b8ba78f843e29}
+
+
+Find the predecessor of the item in the wrapped sorted collection 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if no such element exists \\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The predecessor
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sorted_a973bf071df358a008bdfed289a38ff71}{C5.\+I\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sorted_a810e407c33bdf337c32ceb9c2d9773ad}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Range\+All@{Range\+All}}
+\index{Range\+All@{Range\+All}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Range\+All()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Directed\+Collection\+Value}$<$T$>$ {\bf C5.\+Guarded\+Sorted}$<$ T $>$.Range\+All (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sorted_a810e407c33bdf337c32ceb9c2d9773ad}
+
+
+Get the specified range from the wrapped collection. (The current implementation erroneously does not wrap the result.) 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sorted_ad90021b06a8976cc8c043104cf8e1ca4}{C5.\+I\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sorted_ac163fd0c999d9bd1581a2313c716b573}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Range\+From@{Range\+From}}
+\index{Range\+From@{Range\+From}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Range\+From(\+T bot)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Directed\+Enumerable}$<$T$>$ {\bf C5.\+Guarded\+Sorted}$<$ T $>$.Range\+From (
+\begin{DoxyParamCaption}
+\item[{T}]{bot}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sorted_ac163fd0c999d9bd1581a2313c716b573}
+
+
+Get the specified range from the wrapped collection. (The current implementation erroneously does not wrap the result.) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bot} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sorted_a0eabf2b7418467cf0ee1cfb15b6b9e34}{C5.\+I\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sorted_a4654fa234e549063c0a820662e6b8e9e}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Range\+From\+To@{Range\+From\+To}}
+\index{Range\+From\+To@{Range\+From\+To}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Range\+From\+To(\+T bot, T top)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Directed\+Enumerable}$<$T$>$ {\bf C5.\+Guarded\+Sorted}$<$ T $>$.Range\+From\+To (
+\begin{DoxyParamCaption}
+\item[{T}]{bot, }
+\item[{T}]{top}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sorted_a4654fa234e549063c0a820662e6b8e9e}
+
+
+Get the specified range from the wrapped collection. (The current implementation erroneously does not wrap the result.) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bot} & \\
+\hline
+{\em top} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sorted_a66a3e2a57ca820b3a67b2f8d99e3c7cb}{C5.\+I\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sorted_a21305628969a9beaa6e0f0d06fb171a6}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Range\+To@{Range\+To}}
+\index{Range\+To@{Range\+To}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Range\+To(\+T top)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Directed\+Enumerable}$<$T$>$ {\bf C5.\+Guarded\+Sorted}$<$ T $>$.Range\+To (
+\begin{DoxyParamCaption}
+\item[{T}]{top}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sorted_a21305628969a9beaa6e0f0d06fb171a6}
+
+
+Get the specified range from the wrapped collection. (The current implementation erroneously does not wrap the result.) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em top} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sorted_a438ee04db17957587e7651f4c010814a}{C5.\+I\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sorted_a50fb581a7fdc2aa8565fb7aeeccd4cd1}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Remove\+Range\+From@{Remove\+Range\+From}}
+\index{Remove\+Range\+From@{Remove\+Range\+From}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Remove\+Range\+From(\+T low)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Guarded\+Sorted}$<$ T $>$.Remove\+Range\+From (
+\begin{DoxyParamCaption}
+\item[{T}]{low}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sorted_a50fb581a7fdc2aa8565fb7aeeccd4cd1}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em low} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sorted_ab6f6647d63da58ce3b6d837fd73ff0a1}{C5.\+I\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sorted_aa778f695d7e887a7ca4672ccdd06a689}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Remove\+Range\+From\+To@{Remove\+Range\+From\+To}}
+\index{Remove\+Range\+From\+To@{Remove\+Range\+From\+To}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Remove\+Range\+From\+To(\+T low, T hi)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Guarded\+Sorted}$<$ T $>$.Remove\+Range\+From\+To (
+\begin{DoxyParamCaption}
+\item[{T}]{low, }
+\item[{T}]{hi}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sorted_aa778f695d7e887a7ca4672ccdd06a689}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em low} & \\
+\hline
+{\em hi} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sorted_a3d2125d5a4b4c5ce0fb34fcb8be0fa72}{C5.\+I\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sorted_a913a700b2bdd5fb9582c818360468c3a}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Remove\+Range\+To@{Remove\+Range\+To}}
+\index{Remove\+Range\+To@{Remove\+Range\+To}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Remove\+Range\+To(\+T hi)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Guarded\+Sorted}$<$ T $>$.Remove\+Range\+To (
+\begin{DoxyParamCaption}
+\item[{T}]{hi}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sorted_a913a700b2bdd5fb9582c818360468c3a}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em hi} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sorted_ad2e5ddc9c56ecf42340571bdfabf5d22}{C5.\+I\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sorted_a042b2d69142f8957f0fec4958e67a99a}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Successor@{Successor}}
+\index{Successor@{Successor}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Successor(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Guarded\+Sorted}$<$ T $>$.Successor (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sorted_a042b2d69142f8957f0fec4958e67a99a}
+
+
+Find the Successor of the item in the wrapped sorted collection 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if no such element exists \\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The Successor
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sorted_a6620b9769f5125157e254d8077744515}{C5.\+I\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sorted_a5d51f1d79c4ad4c84684f6102562d44a}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Try\+Predecessor@{Try\+Predecessor}}
+\index{Try\+Predecessor@{Try\+Predecessor}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Try\+Predecessor(\+T item, out T res)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Guarded\+Sorted}$<$ T $>$.Try\+Predecessor (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{out T}]{res}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sorted_a5d51f1d79c4ad4c84684f6102562d44a}
+
+
+Find the strict predecessor of item in the guarded sorted collection, that is, the greatest item in the collection smaller than the item. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to find the predecessor for.\\
+\hline
+{\em res} & The predecessor, if any; otherwise the default value for T.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if item has a predecessor; otherwise false.
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sorted_ad8189cb7e5d50d33a24a75641eaeab34}{C5.\+I\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sorted_a7a8a2a146dc48c07818e434f14473dac}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Try\+Successor@{Try\+Successor}}
+\index{Try\+Successor@{Try\+Successor}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Try\+Successor(\+T item, out T res)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Guarded\+Sorted}$<$ T $>$.Try\+Successor (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{out T}]{res}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sorted_a7a8a2a146dc48c07818e434f14473dac}
+
+
+Find the strict successor of item in the guarded sorted collection, that is, the least item in the collection greater than the supplied value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to find the successor for.\\
+\hline
+{\em res} & The successor, if any; otherwise the default value for T.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if item has a successor; otherwise false.
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sorted_a578a0b4db8e2b04543c72d1bf645ce65}{C5.\+I\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sorted_ac0895c0ec8adf94a479c0a22b337b122}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Try\+Weak\+Predecessor@{Try\+Weak\+Predecessor}}
+\index{Try\+Weak\+Predecessor@{Try\+Weak\+Predecessor}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Try\+Weak\+Predecessor(\+T item, out T res)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Guarded\+Sorted}$<$ T $>$.Try\+Weak\+Predecessor (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{out T}]{res}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sorted_ac0895c0ec8adf94a479c0a22b337b122}
+
+
+Find the weak predecessor of item in the guarded sorted collection, that is, the greatest item in the collection smaller than or equal to the item. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to find the weak predecessor for.\\
+\hline
+{\em res} & The weak predecessor, if any; otherwise the default value for T.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if item has a weak predecessor; otherwise false.
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sorted_aeabd71eb284ab4130d190b60a2f64584}{C5.\+I\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sorted_a0f00bb7238c3bc374aa085205448f533}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Try\+Weak\+Successor@{Try\+Weak\+Successor}}
+\index{Try\+Weak\+Successor@{Try\+Weak\+Successor}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Try\+Weak\+Successor(\+T item, out T res)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Guarded\+Sorted}$<$ T $>$.Try\+Weak\+Successor (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{out T}]{res}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sorted_a0f00bb7238c3bc374aa085205448f533}
+
+
+Find the weak successor of item in the sorted collection, that is, the least item in the collection greater than or equal to the supplied value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to find the weak successor for.\\
+\hline
+{\em res} & The weak successor, if any; otherwise the default value for T.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if item has a weak successor; otherwise false.
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sorted_ace630ae0bea6fd7772e6e9fa21ea2567}{C5.\+I\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sorted_ae5fed4839e2e079fc0c07e141c7b51e3}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Weak\+Predecessor@{Weak\+Predecessor}}
+\index{Weak\+Predecessor@{Weak\+Predecessor}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Weak\+Predecessor(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Guarded\+Sorted}$<$ T $>$.Weak\+Predecessor (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sorted_ae5fed4839e2e079fc0c07e141c7b51e3}
+
+
+Find the weak predecessor of the item in the wrapped sorted collection 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if no such element exists \\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The weak predecessor
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sorted_aac28eacc400148e84e0d24e14709a9f7}{C5.\+I\+Sorted$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sorted_a6a3aeb46c7bf83990651ce69a53f9fc6}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Weak\+Successor@{Weak\+Successor}}
+\index{Weak\+Successor@{Weak\+Successor}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Weak\+Successor(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Guarded\+Sorted}$<$ T $>$.Weak\+Successor (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sorted_a6a3aeb46c7bf83990651ce69a53f9fc6}
+
+
+Find the weak Successor of the item in the wrapped sorted collection 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if no such element exists \\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The weak Successor
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sorted_a52c5bf3983dfb2378ec431206d1ee8ce}{C5.\+I\+Sorted$<$ T $>$}.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{class_c5_1_1_guarded_sorted_a189be757a095db06b38471bfa2d67903}{}\index{C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}!Comparer@{Comparer}}
+\index{Comparer@{Comparer}!C5\+::\+Guarded\+Sorted@{C5\+::\+Guarded\+Sorted}}
+\subsubsection[{Comparer}]{\setlength{\rightskip}{0pt plus 5cm}S\+C\+G.\+I\+Comparer$<$T$>$ {\bf C5.\+Guarded\+Sorted}$<$ T $>$.Comparer\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_sorted_a189be757a095db06b38471bfa2d67903}
+
+
+The comparer object supplied at creation time for the underlying collection 
+
+The comparer
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_wrappers_8cs}{Wrappers.\+cs}\end{DoxyCompactItemize}

@@ -1,0 +1,62 @@
+\hypertarget{class_c5_1_1_duplicate_not_allowed_exception}{}\section{C5.\+Duplicate\+Not\+Allowed\+Exception Class Reference}
+\label{class_c5_1_1_duplicate_not_allowed_exception}\index{C5.\+Duplicate\+Not\+Allowed\+Exception@{C5.\+Duplicate\+Not\+Allowed\+Exception}}
+
+
+An exception thrown when an operation attempts to create a duplicate in a collection with set semantics (P\+:\+C5.\+I\+Extensible`1.\+Allows\+Duplicates is false) or attempts to create a duplicate key in a dictionary.  
+
+
+Inheritance diagram for C5.\+Duplicate\+Not\+Allowed\+Exception\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_c5_1_1_duplicate_not_allowed_exception}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c5_1_1_duplicate_not_allowed_exception_a57f60c225b3ef8850b3c56e1f3089e60}{Duplicate\+Not\+Allowed\+Exception} ()
+\begin{DoxyCompactList}\small\item\em Create a simple exception with no further explanation. \end{DoxyCompactList}\item 
+\hyperlink{class_c5_1_1_duplicate_not_allowed_exception_a674b91b55cfad4db40a204efecfa1449}{Duplicate\+Not\+Allowed\+Exception} (string message)
+\begin{DoxyCompactList}\small\item\em Create the exception with an explanation of the reason. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An exception thrown when an operation attempts to create a duplicate in a collection with set semantics (P\+:\+C5.\+I\+Extensible`1.\+Allows\+Duplicates is false) or attempts to create a duplicate key in a dictionary. 
+
+With collections this can only happen with Insert operations on lists, since the Add operations will not try to create duplictes and either ignore the failure or report it in a bool return value. 
+
+With dictionaries this can happen with the M\+:\+C5.\+I\+Dictionary`2.\+Add(`0,`1) metod.
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_c5_1_1_duplicate_not_allowed_exception_a57f60c225b3ef8850b3c56e1f3089e60}{}\index{C5\+::\+Duplicate\+Not\+Allowed\+Exception@{C5\+::\+Duplicate\+Not\+Allowed\+Exception}!Duplicate\+Not\+Allowed\+Exception@{Duplicate\+Not\+Allowed\+Exception}}
+\index{Duplicate\+Not\+Allowed\+Exception@{Duplicate\+Not\+Allowed\+Exception}!C5\+::\+Duplicate\+Not\+Allowed\+Exception@{C5\+::\+Duplicate\+Not\+Allowed\+Exception}}
+\subsubsection[{Duplicate\+Not\+Allowed\+Exception()}]{\setlength{\rightskip}{0pt plus 5cm}C5.\+Duplicate\+Not\+Allowed\+Exception.\+Duplicate\+Not\+Allowed\+Exception (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_duplicate_not_allowed_exception_a57f60c225b3ef8850b3c56e1f3089e60}
+
+
+Create a simple exception with no further explanation. 
+
+\hypertarget{class_c5_1_1_duplicate_not_allowed_exception_a674b91b55cfad4db40a204efecfa1449}{}\index{C5\+::\+Duplicate\+Not\+Allowed\+Exception@{C5\+::\+Duplicate\+Not\+Allowed\+Exception}!Duplicate\+Not\+Allowed\+Exception@{Duplicate\+Not\+Allowed\+Exception}}
+\index{Duplicate\+Not\+Allowed\+Exception@{Duplicate\+Not\+Allowed\+Exception}!C5\+::\+Duplicate\+Not\+Allowed\+Exception@{C5\+::\+Duplicate\+Not\+Allowed\+Exception}}
+\subsubsection[{Duplicate\+Not\+Allowed\+Exception(string message)}]{\setlength{\rightskip}{0pt plus 5cm}C5.\+Duplicate\+Not\+Allowed\+Exception.\+Duplicate\+Not\+Allowed\+Exception (
+\begin{DoxyParamCaption}
+\item[{string}]{message}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_duplicate_not_allowed_exception_a674b91b55cfad4db40a204efecfa1449}
+
+
+Create the exception with an explanation of the reason. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_exceptions_8cs}{Exceptions.\+cs}\end{DoxyCompactItemize}

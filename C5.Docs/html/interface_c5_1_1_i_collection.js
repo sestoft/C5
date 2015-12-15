@@ -1,0 +1,27 @@
+var interface_c5_1_1_i_collection =
+[
+    [ "Add", "interface_c5_1_1_i_collection.html#a525115f252ddca586fcbf1a0127be614", null ],
+    [ "Clear", "interface_c5_1_1_i_collection.html#abd83166ac00b3d36225d988fd4603e97", null ],
+    [ "Contains", "interface_c5_1_1_i_collection.html#a4de01b6d77ea5eaffccc8267b4454cdd", null ],
+    [ "ContainsAll", "interface_c5_1_1_i_collection.html#a93abf02183a46f56af8d90f1d69982a8", null ],
+    [ "ContainsCount", "interface_c5_1_1_i_collection.html#acfe7e2c9b14c384762269edbb57b7fbe", null ],
+    [ "CopyTo", "interface_c5_1_1_i_collection.html#aa2f928b7057eb84a1572307123e8239e", null ],
+    [ "Find", "interface_c5_1_1_i_collection.html#a96fd6cfd3df62e67922f9335b0fbbdcb", null ],
+    [ "FindOrAdd", "interface_c5_1_1_i_collection.html#a7f9e609ee1a7607596bb65aa5bdff303", null ],
+    [ "GetUnsequencedHashCode", "interface_c5_1_1_i_collection.html#ae3a4fa01c3b09b9b372bb6f8639194ed", null ],
+    [ "ItemMultiplicities", "interface_c5_1_1_i_collection.html#a623bd834b37b299c5f4948fdb6915fef", null ],
+    [ "Remove", "interface_c5_1_1_i_collection.html#ab4d6092ac09245ce46db91595fc1cdfe", null ],
+    [ "Remove", "interface_c5_1_1_i_collection.html#acbd124236c3f0958a8784d9c7c2dfd16", null ],
+    [ "RemoveAll", "interface_c5_1_1_i_collection.html#a9fb05163a1bd4b71bfd05101ff20c987", null ],
+    [ "RemoveAllCopies", "interface_c5_1_1_i_collection.html#ad785b91be4edeb3fbe678db751f6355d", null ],
+    [ "RetainAll", "interface_c5_1_1_i_collection.html#ac2672fb0557eeb24e328149c513c9a8b", null ],
+    [ "UniqueItems", "interface_c5_1_1_i_collection.html#a074c4e1a90fb7f98c95834204352c28c", null ],
+    [ "UnsequencedEquals", "interface_c5_1_1_i_collection.html#a46fee76e3afed2b0510e94814ef832b2", null ],
+    [ "Update", "interface_c5_1_1_i_collection.html#acf060ba6b83289dc74bea61502318d56", null ],
+    [ "Update", "interface_c5_1_1_i_collection.html#ad1faa1738e02acf001aac16a3b948c78", null ],
+    [ "UpdateOrAdd", "interface_c5_1_1_i_collection.html#a9739490d6271fb3a92221bca5da5e54b", null ],
+    [ "UpdateOrAdd", "interface_c5_1_1_i_collection.html#a73a5d984e95e200de80261361bb7e57d", null ],
+    [ "ContainsSpeed", "interface_c5_1_1_i_collection.html#a0a9bcd98894c191206e18c7c20c3bdfe", null ],
+    [ "Count", "interface_c5_1_1_i_collection.html#abddff5406ccd4e98d8d96f41bf9d6d5b", null ],
+    [ "IsReadOnly", "interface_c5_1_1_i_collection.html#a94b0751f2b2fbd0519233b2755c055b4", null ]
+];

@@ -1,0 +1,85 @@
+\hypertarget{class_c5_1_1_hash_dictionary}{}\section{C5.\+Hash\+Dictionary$<$ K, V $>$ Class Template Reference}
+\label{class_c5_1_1_hash_dictionary}\index{C5.\+Hash\+Dictionary$<$ K, V $>$@{C5.\+Hash\+Dictionary$<$ K, V $>$}}
+
+
+A generic dictionary class based on a hash set class T\+:\+C5.\+Hash\+Set`1.  
+
+
+Inheritance diagram for C5.\+Hash\+Dictionary$<$ K, V $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.629108cm]{class_c5_1_1_hash_dictionary}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c5_1_1_hash_dictionary_a8cc5d148c92b62f69679cfdb20c14114}{Hash\+Dictionary} ()
+\begin{DoxyCompactList}\small\item\em Create a hash dictionary using a default equality\+Comparer for the keys. Initial capacity of internal table will be 16 entries and threshold for expansion is 66\% fill. \end{DoxyCompactList}\item 
+\hyperlink{class_c5_1_1_hash_dictionary_af4e45ac9fc7226b79a9cbf3d1d7014c4}{Hash\+Dictionary} (S\+C\+G.\+I\+Equality\+Comparer$<$ K $>$ keyequality\+Comparer)
+\begin{DoxyCompactList}\small\item\em Create a hash dictionary using a custom equality\+Comparer for the keys. Initial capacity of internal table will be 16 entries and threshold for expansion is 66\% fill. \end{DoxyCompactList}\item 
+\hyperlink{class_c5_1_1_hash_dictionary_a51e34dd05155273fc424ec3afbafedbe}{Hash\+Dictionary} (int capacity, double fill, S\+C\+G.\+I\+Equality\+Comparer$<$ K $>$ keyequality\+Comparer)
+\begin{DoxyCompactList}\small\item\em Create a hash dictionary using a custom equality\+Comparer and prescribing the initial size of the dictionary and a non-\/default threshold for internal table expansion. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A generic dictionary class based on a hash set class T\+:\+C5.\+Hash\+Set`1. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_c5_1_1_hash_dictionary_a8cc5d148c92b62f69679cfdb20c14114}{}\index{C5\+::\+Hash\+Dictionary@{C5\+::\+Hash\+Dictionary}!Hash\+Dictionary@{Hash\+Dictionary}}
+\index{Hash\+Dictionary@{Hash\+Dictionary}!C5\+::\+Hash\+Dictionary@{C5\+::\+Hash\+Dictionary}}
+\subsubsection[{Hash\+Dictionary()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Hash\+Dictionary}$<$ K, V $>$.{\bf Hash\+Dictionary} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_hash_dictionary_a8cc5d148c92b62f69679cfdb20c14114}
+
+
+Create a hash dictionary using a default equality\+Comparer for the keys. Initial capacity of internal table will be 16 entries and threshold for expansion is 66\% fill. 
+
+\hypertarget{class_c5_1_1_hash_dictionary_af4e45ac9fc7226b79a9cbf3d1d7014c4}{}\index{C5\+::\+Hash\+Dictionary@{C5\+::\+Hash\+Dictionary}!Hash\+Dictionary@{Hash\+Dictionary}}
+\index{Hash\+Dictionary@{Hash\+Dictionary}!C5\+::\+Hash\+Dictionary@{C5\+::\+Hash\+Dictionary}}
+\subsubsection[{Hash\+Dictionary(\+S\+C\+G.\+I\+Equality\+Comparer$<$ K $>$ keyequality\+Comparer)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Hash\+Dictionary}$<$ K, V $>$.{\bf Hash\+Dictionary} (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Equality\+Comparer$<$ K $>$}]{keyequality\+Comparer}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_hash_dictionary_af4e45ac9fc7226b79a9cbf3d1d7014c4}
+
+
+Create a hash dictionary using a custom equality\+Comparer for the keys. Initial capacity of internal table will be 16 entries and threshold for expansion is 66\% fill. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em keyequality\+Comparer} & The external key equality\+S\+C\+G.\+Comparer\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_c5_1_1_hash_dictionary_a51e34dd05155273fc424ec3afbafedbe}{}\index{C5\+::\+Hash\+Dictionary@{C5\+::\+Hash\+Dictionary}!Hash\+Dictionary@{Hash\+Dictionary}}
+\index{Hash\+Dictionary@{Hash\+Dictionary}!C5\+::\+Hash\+Dictionary@{C5\+::\+Hash\+Dictionary}}
+\subsubsection[{Hash\+Dictionary(int capacity, double fill, S\+C\+G.\+I\+Equality\+Comparer$<$ K $>$ keyequality\+Comparer)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Hash\+Dictionary}$<$ K, V $>$.{\bf Hash\+Dictionary} (
+\begin{DoxyParamCaption}
+\item[{int}]{capacity, }
+\item[{double}]{fill, }
+\item[{S\+C\+G.\+I\+Equality\+Comparer$<$ K $>$}]{keyequality\+Comparer}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_hash_dictionary_a51e34dd05155273fc424ec3afbafedbe}
+
+
+Create a hash dictionary using a custom equality\+Comparer and prescribing the initial size of the dictionary and a non-\/default threshold for internal table expansion. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em capacity} & The initial capacity. Will be rounded upwards to nearest power of 2, at least 16.\\
+\hline
+{\em fill} & The expansion threshold. Must be between 10\% and 90\%.\\
+\hline
+{\em keyequality\+Comparer} & The external key equality\+S\+C\+G.\+Comparer\\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/hashing/\hyperlink{_hash_dictionary_8cs}{Hash\+Dictionary.\+cs}\end{DoxyCompactItemize}

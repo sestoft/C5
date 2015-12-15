@@ -1,0 +1,73 @@
+\hypertarget{class_c5_1_1_comparer_factory}{}\section{C5.\+Comparer\+Factory$<$ T $>$ Class Template Reference}
+\label{class_c5_1_1_comparer_factory}\index{C5.\+Comparer\+Factory$<$ T $>$@{C5.\+Comparer\+Factory$<$ T $>$}}
+
+
+Factory class to create comparers and equality comparers using Func delegates  
+
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static I\+Comparer$<$ T $>$ \hyperlink{class_c5_1_1_comparer_factory_a1eaf53bcc728bdc832caea1aa1449085}{Create\+Comparer} (Func$<$ T, T, int $>$ comparer)
+\begin{DoxyCompactList}\small\item\em Create a new comparer. \end{DoxyCompactList}\item 
+static I\+Equality\+Comparer$<$ T $>$ \hyperlink{class_c5_1_1_comparer_factory_ab4ee0fde20dd001ed045a6472963fccf}{Create\+Equality\+Comparer} (Func$<$ T, T, bool $>$ equals, Func$<$ T, int $>$ get\+Hash\+Code)
+\begin{DoxyCompactList}\small\item\em Creates a new equality comparer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Factory class to create comparers and equality comparers using Func delegates 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The type to compare\\
+\hline
+\end{DoxyTemplParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_comparer_factory_a1eaf53bcc728bdc832caea1aa1449085}{}\index{C5\+::\+Comparer\+Factory@{C5\+::\+Comparer\+Factory}!Create\+Comparer@{Create\+Comparer}}
+\index{Create\+Comparer@{Create\+Comparer}!C5\+::\+Comparer\+Factory@{C5\+::\+Comparer\+Factory}}
+\subsubsection[{Create\+Comparer(\+Func$<$ T, T, int $>$ comparer)}]{\setlength{\rightskip}{0pt plus 5cm}static I\+Comparer$<$T$>$ {\bf C5.\+Comparer\+Factory}$<$ T $>$.Create\+Comparer (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, T, int $>$}]{comparer}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{class_c5_1_1_comparer_factory_a1eaf53bcc728bdc832caea1aa1449085}
+
+
+Create a new comparer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em comparer} & The compare function.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The comparer
+\end{DoxyReturn}
+\hypertarget{class_c5_1_1_comparer_factory_ab4ee0fde20dd001ed045a6472963fccf}{}\index{C5\+::\+Comparer\+Factory@{C5\+::\+Comparer\+Factory}!Create\+Equality\+Comparer@{Create\+Equality\+Comparer}}
+\index{Create\+Equality\+Comparer@{Create\+Equality\+Comparer}!C5\+::\+Comparer\+Factory@{C5\+::\+Comparer\+Factory}}
+\subsubsection[{Create\+Equality\+Comparer(\+Func$<$ T, T, bool $>$ equals, Func$<$ T, int $>$ get\+Hash\+Code)}]{\setlength{\rightskip}{0pt plus 5cm}static I\+Equality\+Comparer$<$T$>$ {\bf C5.\+Comparer\+Factory}$<$ T $>$.Create\+Equality\+Comparer (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, T, bool $>$}]{equals, }
+\item[{Func$<$ T, int $>$}]{get\+Hash\+Code}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{class_c5_1_1_comparer_factory_ab4ee0fde20dd001ed045a6472963fccf}
+
+
+Creates a new equality comparer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em equals} & The equals function.\\
+\hline
+{\em get\+Hash\+Code} & The get\+Hash\+Code function.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The equality comparer.
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/comparers/\hyperlink{_comparer_factory_8cs}{Comparer\+Factory.\+cs}\end{DoxyCompactItemize}

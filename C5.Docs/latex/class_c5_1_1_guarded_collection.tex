@@ -1,0 +1,695 @@
+\hypertarget{class_c5_1_1_guarded_collection}{}\section{C5.\+Guarded\+Collection$<$ T $>$ Class Template Reference}
+\label{class_c5_1_1_guarded_collection}\index{C5.\+Guarded\+Collection$<$ T $>$@{C5.\+Guarded\+Collection$<$ T $>$}}
+
+
+A read-\/only wrapper for an T\+:\+C5.\+I\+Collection`1,  
+
+
+Inheritance diagram for C5.\+Guarded\+Collection$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.981043cm]{class_c5_1_1_guarded_collection}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c5_1_1_guarded_collection_af940d400b312c53974a6760b141a0678}{Guarded\+Collection} (\hyperlink{interface_c5_1_1_i_collection}{I\+Collection}$<$ T $>$ collection)
+\begin{DoxyCompactList}\small\item\em Wrap an \hyperlink{interface_c5_1_1_i_collection}{I\+Collection}$<$T$>$ in a read-\/only wrapper \end{DoxyCompactList}\item 
+virtual int \hyperlink{class_c5_1_1_guarded_collection_a993f9bfefdd11d4bf8f776215db02c31}{Get\+Unsequenced\+Hash\+Code} ()
+\item 
+virtual bool \hyperlink{class_c5_1_1_guarded_collection_ada1904ad7956b9e72606e2f9082642d7}{Unsequenced\+Equals} (\hyperlink{interface_c5_1_1_i_collection}{I\+Collection}$<$ T $>$ that)
+\item 
+virtual bool \hyperlink{class_c5_1_1_guarded_collection_a1ffdf15a3e9daa80137e53fcd642770e}{Contains} (T item)
+\begin{DoxyCompactList}\small\item\em Check if an item is in the wrapped collection \end{DoxyCompactList}\item 
+virtual int \hyperlink{class_c5_1_1_guarded_collection_ae5bfa7d92d0ebe7d185f04f8836685c7}{Contains\+Count} (T item)
+\begin{DoxyCompactList}\small\item\em Count the number of times an item appears in the wrapped collection \end{DoxyCompactList}\item 
+virtual \hyperlink{interface_c5_1_1_i_collection_value}{I\+Collection\+Value}$<$ T $>$ \hyperlink{class_c5_1_1_guarded_collection_a2a600a8efdfc23bcf87ae310cfbe8120}{Unique\+Items} ()
+\item 
+virtual \hyperlink{interface_c5_1_1_i_collection_value}{I\+Collection\+Value}$<$ \hyperlink{struct_c5_1_1_key_value_pair}{Key\+Value\+Pair}$<$ T, int $>$ $>$ \hyperlink{class_c5_1_1_guarded_collection_ad400f5862b15a3a0c59a4cb7d347f926}{Item\+Multiplicities} ()
+\item 
+virtual bool \hyperlink{class_c5_1_1_guarded_collection_a57f6d96d3787483e45837b2700d9459b}{Contains\+All} (S\+C\+G.\+I\+Enumerable$<$ T $>$ items)
+\begin{DoxyCompactList}\small\item\em Check if all items in the argument is in the wrapped collection \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_guarded_collection_ab447aa674e79536b0c92f7010101ce89}{Find} (ref T item)
+\begin{DoxyCompactList}\small\item\em Search for an item in the wrapped collection \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_guarded_collection_a06f9fdffc49fe7e5d618366b749fe8be}{Find\+Or\+Add} (ref T item)
+\item 
+virtual bool \hyperlink{class_c5_1_1_guarded_collection_a352f685be2677d2df5225e50aecb21cf}{Update} (T item)
+\item 
+virtual bool \hyperlink{class_c5_1_1_guarded_collection_a71d59b799800f0271a6a36a6fdea2f53}{Update} (T item, out T olditem)
+\item 
+virtual bool \hyperlink{class_c5_1_1_guarded_collection_a8cf85ddaca2e6fc07d6c4461feb9981f}{Update\+Or\+Add} (T item)
+\item 
+virtual bool \hyperlink{class_c5_1_1_guarded_collection_a0ff18d72c676480a225f9d3e3dacfcd0}{Update\+Or\+Add} (T item, out T olditem)
+\item 
+virtual bool \hyperlink{class_c5_1_1_guarded_collection_a5228eac1c6eb5341b2ab20a3095fa066}{Remove} (T item)
+\item 
+virtual bool \hyperlink{class_c5_1_1_guarded_collection_afa3304903fb8b724e52bb6cc4f12e6a9}{Remove} (T item, out T removeditem)
+\item 
+virtual void \hyperlink{class_c5_1_1_guarded_collection_a912c6184ee4b074c3981f9dde491a94b}{Remove\+All\+Copies} (T item)
+\item 
+virtual void \hyperlink{class_c5_1_1_guarded_collection_ab5e36593deb380b90bb35f7a283e48fc}{Remove\+All} (S\+C\+G.\+I\+Enumerable$<$ T $>$ items)
+\item 
+virtual void \hyperlink{class_c5_1_1_guarded_collection_ae26dd6085a063dd2b86d37b030b87750}{Clear} ()
+\item 
+virtual void \hyperlink{class_c5_1_1_guarded_collection_addd89e0bb9db15b64f24d64b7720761d}{Retain\+All} (S\+C\+G.\+I\+Enumerable$<$ T $>$ items)
+\item 
+virtual bool \hyperlink{class_c5_1_1_guarded_collection_adff17cbe1d82defc187161f1038225fe}{Check} ()
+\begin{DoxyCompactList}\small\item\em Check wrapped collection for internal consistency \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_guarded_collection_aa7fe8941b3b05d9e8622b830852cf12d}{Add} (T item)
+\item 
+virtual void \hyperlink{class_c5_1_1_guarded_collection_ac93971d6ad817a2797bf01dbb1d30d12}{Add\+All} (S\+C\+G.\+I\+Enumerable$<$ T $>$ items)
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{class_c5_1_1_guarded_collection_ae7060bcf53641981bda57c113cd2e017}{Is\+Read\+Only}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em (This is a read-\/only wrapper) \end{DoxyCompactList}\item 
+virtual \hyperlink{namespace_c5_a615ba88dcdaa8d5a3c5f833a73d7fad6}{Speed} \hyperlink{class_c5_1_1_guarded_collection_a4c6ae95c3e5066e8f657546606deefaf}{Contains\+Speed}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+virtual bool \hyperlink{class_c5_1_1_guarded_collection_ac879f9062572ce67048d438409b1f8a9}{Allows\+Duplicates}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+virtual S\+C\+G.\+I\+Equality\+Comparer$<$ T $>$ \hyperlink{class_c5_1_1_guarded_collection_a71c7b8ae4fa03c0100428c7bd76db71e}{Equality\+Comparer}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+virtual bool \hyperlink{class_c5_1_1_guarded_collection_a02b79c68161065d8e2c6ddc89f004aea}{Duplicates\+By\+Counting}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em By convention this is true for any collection with set semantics. \end{DoxyCompactList}\item 
+override bool \hyperlink{class_c5_1_1_guarded_collection_a9a2e5fbcc49ab5a00eb4d2b929a03761}{Is\+Empty}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A read-\/only wrapper for an T\+:\+C5.\+I\+Collection`1, 
+
+{\itshape Suitable for wrapping hash tables, T\+:\+C5.\+Hash\+Set`1 and T\+:\+C5.\+Hash\+Bag`1 }
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_c5_1_1_guarded_collection_af940d400b312c53974a6760b141a0678}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Guarded\+Collection@{Guarded\+Collection}}
+\index{Guarded\+Collection@{Guarded\+Collection}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Guarded\+Collection(\+I\+Collection$<$ T $>$ collection)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Guarded\+Collection}$<$ T $>$.{\bf Guarded\+Collection} (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Collection}$<$ T $>$}]{collection}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_collection_af940d400b312c53974a6760b141a0678}
+
+
+Wrap an \hyperlink{interface_c5_1_1_i_collection}{I\+Collection}$<$T$>$ in a read-\/only wrapper 
+
+
+\begin{DoxyParams}{Parameters}
+{\em collection} & the collection to wrap\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_guarded_collection_aa7fe8941b3b05d9e8622b830852cf12d}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Add@{Add}}
+\index{Add@{Add}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Add(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Guarded\+Collection}$<$ T $>$.Add (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_aa7fe8941b3b05d9e8622b830852cf12d}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a525115f252ddca586fcbf1a0127be614}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_ac93971d6ad817a2797bf01dbb1d30d12}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Add\+All@{Add\+All}}
+\index{Add\+All@{Add\+All}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Add\+All(\+S\+C\+G.\+I\+Enumerable$<$ T $>$ items)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Guarded\+Collection}$<$ T $>$.Add\+All (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Enumerable$<$ T $>$}]{items}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_ac93971d6ad817a2797bf01dbb1d30d12}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em items} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_extensible_a1fb4d50c5b340e60303da72e9d0ede6e}{C5.\+I\+Extensible$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_adff17cbe1d82defc187161f1038225fe}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Check@{Check}}
+\index{Check@{Check}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Check()}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Guarded\+Collection}$<$ T $>$.Check (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_adff17cbe1d82defc187161f1038225fe}
+
+
+Check wrapped collection for internal consistency 
+
+\begin{DoxyReturn}{Returns}
+True if check passed
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_extensible_aeeb6b87af61e455df42d68834d711bcb}{C5.\+I\+Extensible$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_ae26dd6085a063dd2b86d37b030b87750}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Clear@{Clear}}
+\index{Clear@{Clear}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Clear()}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Guarded\+Collection}$<$ T $>$.Clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_ae26dd6085a063dd2b86d37b030b87750}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_abd83166ac00b3d36225d988fd4603e97}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_a1ffdf15a3e9daa80137e53fcd642770e}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Contains@{Contains}}
+\index{Contains@{Contains}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Contains(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Guarded\+Collection}$<$ T $>$.Contains (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_a1ffdf15a3e9daa80137e53fcd642770e}
+
+
+Check if an item is in the wrapped collection 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if found
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a4de01b6d77ea5eaffccc8267b4454cdd}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_a57f6d96d3787483e45837b2700d9459b}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Contains\+All@{Contains\+All}}
+\index{Contains\+All@{Contains\+All}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Contains\+All(\+S\+C\+G.\+I\+Enumerable$<$ T $>$ items)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Guarded\+Collection}$<$ T $>$.Contains\+All (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Enumerable$<$ T $>$}]{items}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_a57f6d96d3787483e45837b2700d9459b}
+
+
+Check if all items in the argument is in the wrapped collection 
+
+
+\begin{DoxyParams}{Parameters}
+{\em items} & The items\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if so
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a93abf02183a46f56af8d90f1d69982a8}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_ae5bfa7d92d0ebe7d185f04f8836685c7}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Contains\+Count@{Contains\+Count}}
+\index{Contains\+Count@{Contains\+Count}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Contains\+Count(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual int {\bf C5.\+Guarded\+Collection}$<$ T $>$.Contains\+Count (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_ae5bfa7d92d0ebe7d185f04f8836685c7}
+
+
+Count the number of times an item appears in the wrapped collection 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of copies
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_acfe7e2c9b14c384762269edbb57b7fbe}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_ab447aa674e79536b0c92f7010101ce89}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Find@{Find}}
+\index{Find@{Find}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Find(ref T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Guarded\+Collection}$<$ T $>$.Find (
+\begin{DoxyParamCaption}
+\item[{ref T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_ab447aa674e79536b0c92f7010101ce89}
+
+
+Search for an item in the wrapped collection 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & On entry the item to look for, on exit the equivalent item found (if any)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a96fd6cfd3df62e67922f9335b0fbbdcb}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_a06f9fdffc49fe7e5d618366b749fe8be}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Find\+Or\+Add@{Find\+Or\+Add}}
+\index{Find\+Or\+Add@{Find\+Or\+Add}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Find\+Or\+Add(ref T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Guarded\+Collection}$<$ T $>$.Find\+Or\+Add (
+\begin{DoxyParamCaption}
+\item[{ref T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_a06f9fdffc49fe7e5d618366b749fe8be}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a7f9e609ee1a7607596bb65aa5bdff303}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_a993f9bfefdd11d4bf8f776215db02c31}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Get\+Unsequenced\+Hash\+Code@{Get\+Unsequenced\+Hash\+Code}}
+\index{Get\+Unsequenced\+Hash\+Code@{Get\+Unsequenced\+Hash\+Code}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Get\+Unsequenced\+Hash\+Code()}]{\setlength{\rightskip}{0pt plus 5cm}virtual int {\bf C5.\+Guarded\+Collection}$<$ T $>$.Get\+Unsequenced\+Hash\+Code (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_a993f9bfefdd11d4bf8f776215db02c31}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_ae3a4fa01c3b09b9b372bb6f8639194ed}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_ad400f5862b15a3a0c59a4cb7d347f926}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Item\+Multiplicities@{Item\+Multiplicities}}
+\index{Item\+Multiplicities@{Item\+Multiplicities}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Item\+Multiplicities()}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf I\+Collection\+Value}$<${\bf Key\+Value\+Pair}$<$T, int$>$ $>$ {\bf C5.\+Guarded\+Collection}$<$ T $>$.Item\+Multiplicities (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_ad400f5862b15a3a0c59a4cb7d347f926}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a623bd834b37b299c5f4948fdb6915fef}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_a5228eac1c6eb5341b2ab20a3095fa066}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Remove@{Remove}}
+\index{Remove@{Remove}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Remove(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Guarded\+Collection}$<$ T $>$.Remove (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_a5228eac1c6eb5341b2ab20a3095fa066}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_ab4d6092ac09245ce46db91595fc1cdfe}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_afa3304903fb8b724e52bb6cc4f12e6a9}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Remove@{Remove}}
+\index{Remove@{Remove}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Remove(\+T item, out T removeditem)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Guarded\+Collection}$<$ T $>$.Remove (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{out T}]{removeditem}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_afa3304903fb8b724e52bb6cc4f12e6a9}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The value to remove.\\
+\hline
+{\em removeditem} & The removed value.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_acbd124236c3f0958a8784d9c7c2dfd16}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_ab5e36593deb380b90bb35f7a283e48fc}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Remove\+All@{Remove\+All}}
+\index{Remove\+All@{Remove\+All}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Remove\+All(\+S\+C\+G.\+I\+Enumerable$<$ T $>$ items)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Guarded\+Collection}$<$ T $>$.Remove\+All (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Enumerable$<$ T $>$}]{items}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_ab5e36593deb380b90bb35f7a283e48fc}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em items} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a9fb05163a1bd4b71bfd05101ff20c987}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_a912c6184ee4b074c3981f9dde491a94b}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Remove\+All\+Copies@{Remove\+All\+Copies}}
+\index{Remove\+All\+Copies@{Remove\+All\+Copies}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Remove\+All\+Copies(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Guarded\+Collection}$<$ T $>$.Remove\+All\+Copies (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_a912c6184ee4b074c3981f9dde491a94b}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_ad785b91be4edeb3fbe678db751f6355d}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_addd89e0bb9db15b64f24d64b7720761d}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Retain\+All@{Retain\+All}}
+\index{Retain\+All@{Retain\+All}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Retain\+All(\+S\+C\+G.\+I\+Enumerable$<$ T $>$ items)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Guarded\+Collection}$<$ T $>$.Retain\+All (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Enumerable$<$ T $>$}]{items}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_addd89e0bb9db15b64f24d64b7720761d}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em items} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_ac2672fb0557eeb24e328149c513c9a8b}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_a2a600a8efdfc23bcf87ae310cfbe8120}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Unique\+Items@{Unique\+Items}}
+\index{Unique\+Items@{Unique\+Items}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Unique\+Items()}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf I\+Collection\+Value}$<$T$>$ {\bf C5.\+Guarded\+Collection}$<$ T $>$.Unique\+Items (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_a2a600a8efdfc23bcf87ae310cfbe8120}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a074c4e1a90fb7f98c95834204352c28c}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_ada1904ad7956b9e72606e2f9082642d7}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Unsequenced\+Equals@{Unsequenced\+Equals}}
+\index{Unsequenced\+Equals@{Unsequenced\+Equals}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Unsequenced\+Equals(\+I\+Collection$<$ T $>$ that)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Guarded\+Collection}$<$ T $>$.Unsequenced\+Equals (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Collection}$<$ T $>$}]{that}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_ada1904ad7956b9e72606e2f9082642d7}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em that} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a46fee76e3afed2b0510e94814ef832b2}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_a352f685be2677d2df5225e50aecb21cf}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Update@{Update}}
+\index{Update@{Update}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Update(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Guarded\+Collection}$<$ T $>$.Update (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_a352f685be2677d2df5225e50aecb21cf}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_acf060ba6b83289dc74bea61502318d56}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_a71d59b799800f0271a6a36a6fdea2f53}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Update@{Update}}
+\index{Update@{Update}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Update(\+T item, out T olditem)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Guarded\+Collection}$<$ T $>$.Update (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{out T}]{olditem}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_a71d59b799800f0271a6a36a6fdea2f53}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+{\em olditem} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_ad1faa1738e02acf001aac16a3b948c78}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_a8cf85ddaca2e6fc07d6c4461feb9981f}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Update\+Or\+Add@{Update\+Or\+Add}}
+\index{Update\+Or\+Add@{Update\+Or\+Add}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Update\+Or\+Add(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Guarded\+Collection}$<$ T $>$.Update\+Or\+Add (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_a8cf85ddaca2e6fc07d6c4461feb9981f}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a9739490d6271fb3a92221bca5da5e54b}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_collection_a0ff18d72c676480a225f9d3e3dacfcd0}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Update\+Or\+Add@{Update\+Or\+Add}}
+\index{Update\+Or\+Add@{Update\+Or\+Add}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Update\+Or\+Add(\+T item, out T olditem)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Guarded\+Collection}$<$ T $>$.Update\+Or\+Add (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{out T}]{olditem}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_collection_a0ff18d72c676480a225f9d3e3dacfcd0}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+{\em olditem} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a73a5d984e95e200de80261361bb7e57d}{C5.\+I\+Collection$<$ T $>$}.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{class_c5_1_1_guarded_collection_ac879f9062572ce67048d438409b1f8a9}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Allows\+Duplicates@{Allows\+Duplicates}}
+\index{Allows\+Duplicates@{Allows\+Duplicates}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Allows\+Duplicates}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Guarded\+Collection}$<$ T $>$.Allows\+Duplicates\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_collection_ac879f9062572ce67048d438409b1f8a9}
+
+
+
+
+False if wrapped collection has set semantics\hypertarget{class_c5_1_1_guarded_collection_a4c6ae95c3e5066e8f657546606deefaf}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Contains\+Speed@{Contains\+Speed}}
+\index{Contains\+Speed@{Contains\+Speed}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Contains\+Speed}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Speed} {\bf C5.\+Guarded\+Collection}$<$ T $>$.Contains\+Speed\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_collection_a4c6ae95c3e5066e8f657546606deefaf}
+
+
+
+
+Speed of wrapped collection\hypertarget{class_c5_1_1_guarded_collection_a02b79c68161065d8e2c6ddc89f004aea}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Duplicates\+By\+Counting@{Duplicates\+By\+Counting}}
+\index{Duplicates\+By\+Counting@{Duplicates\+By\+Counting}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Duplicates\+By\+Counting}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Guarded\+Collection}$<$ T $>$.Duplicates\+By\+Counting\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_collection_a02b79c68161065d8e2c6ddc89f004aea}
+
+
+By convention this is true for any collection with set semantics. 
+
+True if only one representative of a group of equal items is kept in the collection together with the total count.\hypertarget{class_c5_1_1_guarded_collection_a71c7b8ae4fa03c0100428c7bd76db71e}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Equality\+Comparer@{Equality\+Comparer}}
+\index{Equality\+Comparer@{Equality\+Comparer}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Equality\+Comparer}]{\setlength{\rightskip}{0pt plus 5cm}virtual S\+C\+G.\+I\+Equality\+Comparer$<$T$>$ {\bf C5.\+Guarded\+Collection}$<$ T $>$.Equality\+Comparer\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_collection_a71c7b8ae4fa03c0100428c7bd76db71e}
+
+
+
+
+\hypertarget{class_c5_1_1_guarded_collection_a9a2e5fbcc49ab5a00eb4d2b929a03761}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Is\+Empty@{Is\+Empty}}
+\index{Is\+Empty@{Is\+Empty}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Is\+Empty}]{\setlength{\rightskip}{0pt plus 5cm}override bool {\bf C5.\+Guarded\+Collection}$<$ T $>$.Is\+Empty\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_collection_a9a2e5fbcc49ab5a00eb4d2b929a03761}
+
+
+
+
+True if wrapped collection is empty\hypertarget{class_c5_1_1_guarded_collection_ae7060bcf53641981bda57c113cd2e017}{}\index{C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}!Is\+Read\+Only@{Is\+Read\+Only}}
+\index{Is\+Read\+Only@{Is\+Read\+Only}!C5\+::\+Guarded\+Collection@{C5\+::\+Guarded\+Collection}}
+\subsubsection[{Is\+Read\+Only}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Guarded\+Collection}$<$ T $>$.Is\+Read\+Only\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_collection_ae7060bcf53641981bda57c113cd2e017}
+
+
+(This is a read-\/only wrapper) 
+
+True
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_wrappers_8cs}{Wrappers.\+cs}\end{DoxyCompactItemize}

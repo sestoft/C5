@@ -1,0 +1,74 @@
+\hypertarget{class_c5_1_1_key_value_pair_comparer}{}\section{C5.\+Key\+Value\+Pair\+Comparer$<$ K, V $>$ Class Template Reference}
+\label{class_c5_1_1_key_value_pair_comparer}\index{C5.\+Key\+Value\+Pair\+Comparer$<$ K, V $>$@{C5.\+Key\+Value\+Pair\+Comparer$<$ K, V $>$}}
+
+
+Default comparer for dictionary entries in a sorted dictionary. Entry comparisons only look at keys and uses an externally defined comparer for that.  
+
+
+Inheritance diagram for C5.\+Key\+Value\+Pair\+Comparer$<$ K, V $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_c5_1_1_key_value_pair_comparer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c5_1_1_key_value_pair_comparer_a995d4966385b04e603364b50cc1b1a82}{Key\+Value\+Pair\+Comparer} (S\+C\+G.\+I\+Comparer$<$ K $>$ comparer)
+\begin{DoxyCompactList}\small\item\em Create an entry comparer for a item comparer of the keys \end{DoxyCompactList}\item 
+int \hyperlink{class_c5_1_1_key_value_pair_comparer_aad76f35d5b5eb2df2375890a20a62747}{Compare} (\hyperlink{struct_c5_1_1_key_value_pair}{Key\+Value\+Pair}$<$ K, V $>$ entry1, \hyperlink{struct_c5_1_1_key_value_pair}{Key\+Value\+Pair}$<$ K, V $>$ entry2)
+\begin{DoxyCompactList}\small\item\em Compare two entries \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Default comparer for dictionary entries in a sorted dictionary. Entry comparisons only look at keys and uses an externally defined comparer for that. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_c5_1_1_key_value_pair_comparer_a995d4966385b04e603364b50cc1b1a82}{}\index{C5\+::\+Key\+Value\+Pair\+Comparer@{C5\+::\+Key\+Value\+Pair\+Comparer}!Key\+Value\+Pair\+Comparer@{Key\+Value\+Pair\+Comparer}}
+\index{Key\+Value\+Pair\+Comparer@{Key\+Value\+Pair\+Comparer}!C5\+::\+Key\+Value\+Pair\+Comparer@{C5\+::\+Key\+Value\+Pair\+Comparer}}
+\subsubsection[{Key\+Value\+Pair\+Comparer(\+S\+C\+G.\+I\+Comparer$<$ K $>$ comparer)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Key\+Value\+Pair\+Comparer}$<$ K, V $>$.{\bf Key\+Value\+Pair\+Comparer} (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Comparer$<$ K $>$}]{comparer}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_key_value_pair_comparer_a995d4966385b04e603364b50cc1b1a82}
+
+
+Create an entry comparer for a item comparer of the keys 
+
+
+\begin{DoxyParams}{Parameters}
+{\em comparer} & Comparer of keys\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_key_value_pair_comparer_aad76f35d5b5eb2df2375890a20a62747}{}\index{C5\+::\+Key\+Value\+Pair\+Comparer@{C5\+::\+Key\+Value\+Pair\+Comparer}!Compare@{Compare}}
+\index{Compare@{Compare}!C5\+::\+Key\+Value\+Pair\+Comparer@{C5\+::\+Key\+Value\+Pair\+Comparer}}
+\subsubsection[{Compare(\+Key\+Value\+Pair$<$ K, V $>$ entry1, Key\+Value\+Pair$<$ K, V $>$ entry2)}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+Key\+Value\+Pair\+Comparer}$<$ K, V $>$.Compare (
+\begin{DoxyParamCaption}
+\item[{{\bf Key\+Value\+Pair}$<$ K, V $>$}]{entry1, }
+\item[{{\bf Key\+Value\+Pair}$<$ K, V $>$}]{entry2}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_key_value_pair_comparer_aad76f35d5b5eb2df2375890a20a62747}
+
+
+Compare two entries 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entry1} & First entry\\
+\hline
+{\em entry2} & Second entry\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The result of comparing the keys
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_dictionaries_8cs}{Dictionaries.\+cs}\end{DoxyCompactItemize}

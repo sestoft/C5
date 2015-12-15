@@ -1,0 +1,782 @@
+\hypertarget{class_c5_1_1_collection_value_base}{}\section{C5.\+Collection\+Value\+Base$<$ T $>$ Class Template Reference}
+\label{class_c5_1_1_collection_value_base}\index{C5.\+Collection\+Value\+Base$<$ T $>$@{C5.\+Collection\+Value\+Base$<$ T $>$}}
+
+
+Base class for classes implementing \hyperlink{interface_c5_1_1_i_collection_value}{I\+Collection\+Value}\mbox{[}T\mbox{]}  
+
+
+Inheritance diagram for C5.\+Collection\+Value\+Base$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.372881cm]{class_c5_1_1_collection_value_base}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_c5_1_1_collection_value_base_1_1_raise_for_remove_all_handler}{Raise\+For\+Remove\+All\+Handler}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_c5_1_1_collection_value_base_ab238770f168304e89664f814925522da}{Copy\+To} (T\mbox{[}$\,$\mbox{]} array, int index)
+\begin{DoxyCompactList}\small\item\em Copy the items of this collection to part of an array. \end{DoxyCompactList}\item 
+virtual T\mbox{[}$\,$\mbox{]} \hyperlink{class_c5_1_1_collection_value_base_a740757aebaa1365811e76729e59f338d}{To\+Array} ()
+\begin{DoxyCompactList}\small\item\em Create an array with the items of this collection (in the same order as an enumerator would output them). \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_c5_1_1_collection_value_base_a1de9661198b86224773dcdc9d1678020}{Apply} (Action$<$ T $>$ action)
+\begin{DoxyCompactList}\small\item\em Apply an single argument action, T\+:\+Action`1 to this enumerable \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_collection_value_base_af8e9e1630489ab12d89363cf4ab0e2ab}{Exists} (Func$<$ T, bool $>$ predicate)
+\begin{DoxyCompactList}\small\item\em Check if there exists an item that satisfies a specific predicate in this collection. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_collection_value_base_a90b979207d15086a9b64c9c689e17d4f}{Find} (Func$<$ T, bool $>$ predicate, out T item)
+\begin{DoxyCompactList}\small\item\em Check if there exists an item that satisfies a specific predicate in this collection and return the first one in enumeration order. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_collection_value_base_ad13a5bb7f735bf175add1e275b6d64ab}{All} (Func$<$ T, bool $>$ predicate)
+\begin{DoxyCompactList}\small\item\em Check if all items in this collection satisfies a specific predicate. \end{DoxyCompactList}\item 
+virtual S\+C\+G.\+I\+Enumerable$<$ T $>$ \hyperlink{class_c5_1_1_collection_value_base_a1e67c05020e8bebf39e0ddc9f55e5f32}{Filter} (Func$<$ T, bool $>$ predicate)
+\begin{DoxyCompactList}\small\item\em Create an enumerable, enumerating the items of this collection that satisfies a certain condition. \end{DoxyCompactList}\item 
+abstract T \hyperlink{class_c5_1_1_collection_value_base_ad7b8bd01dfd7ea8480a972f02a81608b}{Choose} ()
+\begin{DoxyCompactList}\small\item\em Choose some item of this collection. \end{DoxyCompactList}\item 
+abstract override S\+C\+G.\+I\+Enumerator$<$ T $>$ \hyperlink{class_c5_1_1_collection_value_base_a0e8b891322ed9987a18f1a1ac87d2d4f}{Get\+Enumerator} ()
+\begin{DoxyCompactList}\small\item\em Create an enumerator for this collection. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_collection_value_base_a96bd5814c13153aefae15ba969311c24}{Show} (System.\+Text.\+String\+Builder stringbuilder, ref int rest, I\+Format\+Provider format\+Provider)
+\item 
+virtual string \hyperlink{class_c5_1_1_collection_value_base_ad27cc9a47ff634613af0b5f0929de046}{To\+String} (string format, I\+Format\+Provider format\+Provider)
+\item 
+override string \hyperlink{class_c5_1_1_collection_value_base_a1fd928b586eb8af9378542d77e4de365}{To\+String} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_c5_1_1_collection_value_base_a2479d8737c18958f6c725a0e38397825}{raise\+Collection\+Changed} ()
+\begin{DoxyCompactList}\small\item\em Fire the Collection\+Changed event \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_c5_1_1_collection_value_base_a923cee6b9d57bf1694a070b21613f030}{raise\+Collection\+Cleared} (bool full, int count)
+\begin{DoxyCompactList}\small\item\em Fire the Collection\+Cleared event \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_c5_1_1_collection_value_base_abcddaf7f4d7f64d41854e01dffd828ce}{raise\+Collection\+Cleared} (bool full, int count, int?offset)
+\begin{DoxyCompactList}\small\item\em Fire the Collection\+Cleared event \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_c5_1_1_collection_value_base_a5c092cb991bc12200e7b893391fd8c38}{raise\+Items\+Added} (T item, int count)
+\begin{DoxyCompactList}\small\item\em Fire the Items\+Added event \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_c5_1_1_collection_value_base_ade345c3e3c0d38d9694b569831a09752}{raise\+Items\+Removed} (T item, int count)
+\begin{DoxyCompactList}\small\item\em Fire the Items\+Removed event \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_c5_1_1_collection_value_base_a053613a6d6d27e8cd2ad176b50b21b83}{raise\+Item\+Inserted} (T item, int index)
+\begin{DoxyCompactList}\small\item\em Fire the Item\+Inserted event \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_c5_1_1_collection_value_base_a510a21c57e543cadb4ce4748b9099679}{raise\+Item\+Removed\+At} (T item, int index)
+\begin{DoxyCompactList}\small\item\em Fire the Item\+Removed\+At event \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_c5_1_1_collection_value_base_a14876a0f26a0741ff82f3d851caa4602}{raise\+For\+Set\+This} (int index, T value, T item)
+\item 
+virtual void \hyperlink{class_c5_1_1_collection_value_base_a1f7ef395f3ad8027a2b32916a181b418}{raise\+For\+Insert} (int i, T item)
+\item 
+void \hyperlink{class_c5_1_1_collection_value_base_a2e014b2904d9ef88d3e15f6b0997f71b}{raise\+For\+Remove} (T item)
+\item 
+void \hyperlink{class_c5_1_1_collection_value_base_a95fcc3b52892d362b6118f57a8906cb8}{raise\+For\+Remove} (T item, int count)
+\item 
+void \hyperlink{class_c5_1_1_collection_value_base_ae15fee0551df68fa0e163604f920d601}{raise\+For\+Remove\+At} (int index, T item)
+\item 
+virtual void \hyperlink{class_c5_1_1_collection_value_base_ad76dc5138c43e80dd057007d78bb374d}{raise\+For\+Update} (T newitem, T olditem)
+\item 
+virtual void \hyperlink{class_c5_1_1_collection_value_base_ad05d49b820265d7e4e73c4f5992596b9}{raise\+For\+Update} (T newitem, T olditem, int count)
+\item 
+virtual void \hyperlink{class_c5_1_1_collection_value_base_a1048affd98d865d07454bcea754ec049}{raise\+For\+Add} (T item)
+\item 
+virtual void \hyperlink{class_c5_1_1_collection_value_base_a527018f12c5e83a0c99ea8c3ec4ac6ca}{raise\+For\+Remove\+All} (\hyperlink{interface_c5_1_1_i_collection_value}{I\+Collection\+Value}$<$ T $>$ was\+Removed)
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+virtual \hyperlink{namespace_c5_a9143bfd561fffa025d21561674758008}{Event\+Type\+Enum} \hyperlink{class_c5_1_1_collection_value_base_a5e6697e40d1421280e34fe47ebbdcefc}{Listenable\+Events}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+virtual \hyperlink{namespace_c5_a9143bfd561fffa025d21561674758008}{Event\+Type\+Enum} \hyperlink{class_c5_1_1_collection_value_base_a31ad6e1192e929ecd73a5f4e7e9332ba}{Active\+Events}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em A flag bitmap of the events currently subscribed to by this collection. \end{DoxyCompactList}\item 
+virtual Collection\+Changed\+Handler$<$ T $>$ \hyperlink{class_c5_1_1_collection_value_base_aba529af0877c1621812c2cc20e6dc7d9}{Collection\+Changed}
+\begin{DoxyCompactList}\small\item\em The change event. Will be raised for every change operation on the collection. \end{DoxyCompactList}\item 
+virtual Collection\+Cleared\+Handler$<$ T $>$ \hyperlink{class_c5_1_1_collection_value_base_ac3a3ee8103dbad9a0e647ef1a94bcf1f}{Collection\+Cleared}
+\begin{DoxyCompactList}\small\item\em The clear event. Will be raised for every Clear operation on the collection. \end{DoxyCompactList}\item 
+virtual Items\+Added\+Handler$<$ T $>$ \hyperlink{class_c5_1_1_collection_value_base_a3d7c78ee19bebf048061156c67aca5ef}{Items\+Added}
+\begin{DoxyCompactList}\small\item\em The item added event. Will be raised for every individual addition to the collection. \end{DoxyCompactList}\item 
+virtual Items\+Removed\+Handler$<$ T $>$ \hyperlink{class_c5_1_1_collection_value_base_a85608b4643299c9d576f68cf7cea70eb}{Items\+Removed}
+\begin{DoxyCompactList}\small\item\em The item removed event. Will be raised for every individual removal from the collection. \end{DoxyCompactList}\item 
+virtual Item\+Inserted\+Handler$<$ T $>$ \hyperlink{class_c5_1_1_collection_value_base_acfa66e3ccad2023f13ce71b2114e7809}{Item\+Inserted}
+\begin{DoxyCompactList}\small\item\em The item added event. Will be raised for every individual addition to the collection. \end{DoxyCompactList}\item 
+virtual Item\+Removed\+At\+Handler$<$ T $>$ \hyperlink{class_c5_1_1_collection_value_base_a9cd4d9d9e588e1a8fe51390906b3c66a}{Item\+Removed\+At}
+\begin{DoxyCompactList}\small\item\em The item removed event. Will be raised for every individual removal from the collection. \end{DoxyCompactList}\item 
+abstract bool \hyperlink{class_c5_1_1_collection_value_base_a9b906017c85e357268f116b3ac05e665}{Is\+Empty}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Check if collection is empty. \end{DoxyCompactList}\item 
+abstract int \hyperlink{class_c5_1_1_collection_value_base_ac27de36f8fcd6bd3c66ce04768adfe1e}{Count}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The number of items in this collection. \end{DoxyCompactList}\item 
+abstract \hyperlink{namespace_c5_a615ba88dcdaa8d5a3c5f833a73d7fad6}{Speed} \hyperlink{class_c5_1_1_collection_value_base_a29cca9929ed4b155a56f6c7297208ef3}{Count\+Speed}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The value is symbolic indicating the type of asymptotic complexity in terms of the size of this collection (worst-\/case or amortized as relevant). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Base class for classes implementing \hyperlink{interface_c5_1_1_i_collection_value}{I\+Collection\+Value}\mbox{[}T\mbox{]} 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_collection_value_base_ad13a5bb7f735bf175add1e275b6d64ab}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!All@{All}}
+\index{All@{All}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{All(\+Func$<$ T, bool $>$ predicate)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.All (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{predicate}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_collection_value_base_ad13a5bb7f735bf175add1e275b6d64ab}
+
+
+Check if all items in this collection satisfies a specific predicate. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em predicate} & A delegate (T\+:\+Func`2 with 
+\begin{DoxyCode}
+R = \textcolor{keywordtype}{bool}
+\end{DoxyCode}
+) defining the predicate\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if all items satisfies the predicate
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_a099c3a257e5c0b7212e34e52a4a4bda2}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_collection_value_base_a1de9661198b86224773dcdc9d1678020}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!Apply@{Apply}}
+\index{Apply@{Apply}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{Apply(\+Action$<$ T $>$ action)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.Apply (
+\begin{DoxyParamCaption}
+\item[{Action$<$ T $>$}]{action}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_collection_value_base_a1de9661198b86224773dcdc9d1678020}
+
+
+Apply an single argument action, T\+:\+Action`1 to this enumerable 
+
+
+\begin{DoxyParams}{Parameters}
+{\em action} & The action delegate\\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_aadcb9ce9d9362c0ade0c7d620e3cc182}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_collection_value_base_ad7b8bd01dfd7ea8480a972f02a81608b}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!Choose@{Choose}}
+\index{Choose@{Choose}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{Choose()}]{\setlength{\rightskip}{0pt plus 5cm}abstract T {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.Choose (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{class_c5_1_1_collection_value_base_ad7b8bd01dfd7ea8480a972f02a81608b}
+
+
+Choose some item of this collection. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if collection is empty.\\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_af72d52ddd8ea4130d508e1cf020cf7eb}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_a8f4365d623d3424943b1891e998fc90d}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_a50a8bc512629f661b2e98a1dc860cc9f}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_base_1_1_range_a914b2f3399f5286d462af7f1837373db}{C5.\+Array\+Base$<$ T $>$.\+Range}, \hyperlink{class_c5_1_1_array_base_a1d5f2551ce0fb795a5f2105fcb958de8}{C5.\+Array\+Base$<$ T $>$}, \hyperlink{class_c5_1_1_hash_set_a6bac17b51f5b2a569a0df8e0c46fe78f}{C5.\+Hash\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_hash_bag_ac17786a0542bbe968fc662d5e2749265}{C5.\+Hash\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_bag_a7b05001428a9e4605f556683a9bea20a}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_aa4dd484b7c4363226e1053c8b2edd851}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_interval_heap_a0d5fe1b0687d6ef002a17c6e46900772}{C5.\+Interval\+Heap$<$ T $>$}, \hyperlink{class_c5_1_1_circular_queue_aeabd2341783df834015d58b04c0c0a11}{C5.\+Circular\+Queue$<$ T $>$}, and \hyperlink{class_c5_1_1_mapped_collection_value_a355a9906ff7acccd3c2bd40ca11e5d1f}{C5.\+Mapped\+Collection\+Value$<$ T, V $>$}.
+
+\hypertarget{class_c5_1_1_collection_value_base_ab238770f168304e89664f814925522da}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!Copy\+To@{Copy\+To}}
+\index{Copy\+To@{Copy\+To}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{Copy\+To(\+T[] array, int index)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.Copy\+To (
+\begin{DoxyParamCaption}
+\item[{T\mbox{[}$\,$\mbox{]}}]{array, }
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_collection_value_base_ab238770f168304e89664f814925522da}
+
+
+Copy the items of this collection to part of an array. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Argument\+Out\+Of\+Range\+Exception} & if 
+\begin{DoxyCode}
+index
+\end{DoxyCode}
+ is not a valid index into the array (i.\+e. negative or greater than the size of the array) or the array does not have room for the items.\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em array} & The array to copy to.\\
+\hline
+{\em index} & The starting index.\\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_aced299d8dce69c33ff75b598e39581d1}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+
+
+Reimplemented in \hyperlink{class_c5_1_1_hash_bag_ad7ffdb5c882c290aa8b398d499a9d2ac}{C5.\+Hash\+Bag$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_collection_value_base_af8e9e1630489ab12d89363cf4ab0e2ab}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!Exists@{Exists}}
+\index{Exists@{Exists}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{Exists(\+Func$<$ T, bool $>$ predicate)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.Exists (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{predicate}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_collection_value_base_af8e9e1630489ab12d89363cf4ab0e2ab}
+
+
+Check if there exists an item that satisfies a specific predicate in this collection. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em predicate} & A delegate (T\+:\+Func`2 with 
+\begin{DoxyCode}
+R = \textcolor{keywordtype}{bool}
+\end{DoxyCode}
+) defining the predicate\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if such an item exists
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_a3c20f35782dbd046f9aba5ec13dad789}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_collection_value_base_a1e67c05020e8bebf39e0ddc9f55e5f32}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!Filter@{Filter}}
+\index{Filter@{Filter}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{Filter(\+Func$<$ T, bool $>$ predicate)}]{\setlength{\rightskip}{0pt plus 5cm}virtual S\+C\+G.\+I\+Enumerable$<$T$>$ {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.Filter (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{predicate}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_collection_value_base_a1e67c05020e8bebf39e0ddc9f55e5f32}
+
+
+Create an enumerable, enumerating the items of this collection that satisfies a certain condition. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em predicate} & A delegate (T\+:\+Func`2 with 
+\begin{DoxyCode}
+R = \textcolor{keywordtype}{bool}
+\end{DoxyCode}
+) defining the predicate\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The filtered enumerable
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_a485e8b464ed5dfb5f2ff5dc10a8a62d6}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+
+
+Reimplemented in \hyperlink{class_c5_1_1_hashed_linked_list_ad092b0255821d358df6cfe045870e256}{C5.\+Hashed\+Linked\+List$<$ T $>$}, and \hyperlink{class_c5_1_1_linked_list_a5027335e5234dc6a6e3a164d79ccae62}{C5.\+Linked\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_collection_value_base_a90b979207d15086a9b64c9c689e17d4f}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!Find@{Find}}
+\index{Find@{Find}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{Find(\+Func$<$ T, bool $>$ predicate, out T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.Find (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{predicate, }
+\item[{out T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_collection_value_base_a90b979207d15086a9b64c9c689e17d4f}
+
+
+Check if there exists an item that satisfies a specific predicate in this collection and return the first one in enumeration order. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em predicate} & A delegate (T\+:\+Func`2 with 
+\begin{DoxyCode}
+R == \textcolor{keywordtype}{bool}
+\end{DoxyCode}
+) defining the predicate\\
+\hline
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True is such an item exists
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_a3e175f833398fa6a6cde45e4948bc152}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_collection_value_base_a0e8b891322ed9987a18f1a1ac87d2d4f}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!Get\+Enumerator@{Get\+Enumerator}}
+\index{Get\+Enumerator@{Get\+Enumerator}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{Get\+Enumerator()}]{\setlength{\rightskip}{0pt plus 5cm}abstract override S\+C\+G.\+I\+Enumerator$<$T$>$ {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.Get\+Enumerator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{class_c5_1_1_collection_value_base_a0e8b891322ed9987a18f1a1ac87d2d4f}
+
+
+Create an enumerator for this collection. 
+
+\begin{DoxyReturn}{Returns}
+The enumerator
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_c5_1_1_enumerable_base_ad8893620ea9cc4e7d41c17d26769d237}{C5.\+Enumerable\+Base$<$ T $>$}.
+
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_ae8f40668f13afb6cb05501446a3bcc4e}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_ab23965434fba5e39a15eb4c0eb3c4901}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_a0ce81bee1c45ccbc3105698a4f4692a8}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_ae6c2dc2f2aa8c9952d3267a37e9de01a}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_base_1_1_range_af6396c46d77d98185e8587c024dd9316}{C5.\+Array\+Base$<$ T $>$.\+Range}, \hyperlink{class_c5_1_1_array_base_a84a54c5fa039db32e27ca45c6b0cea85}{C5.\+Array\+Base$<$ T $>$}, \hyperlink{class_c5_1_1_sequenced_base_a07d117175b630fd7f87f6e61b05259dc}{C5.\+Sequenced\+Base$<$ T $>$}, \hyperlink{class_c5_1_1_collection_base_a3b4b98e2606afecb948019412c4c2533}{C5.\+Collection\+Base$<$ T $>$}, \hyperlink{class_c5_1_1_hash_set_a4c404a22695abc0f6b47bf74d3d34034}{C5.\+Hash\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_hash_bag_a621d77b2f8a7c3a826aace4be1d809b2}{C5.\+Hash\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_bag_a2c00797c0e29dd52efa05f219b4c9c7e}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_af9dd4aece1415276e1ede1ded6904179}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_interval_heap_a09556ba66252a46d94456587bc877561}{C5.\+Interval\+Heap$<$ T $>$}, \hyperlink{class_c5_1_1_circular_queue_ae1ab5e745ced280db9b9a175a66dc5b4}{C5.\+Circular\+Queue$<$ T $>$}, and \hyperlink{class_c5_1_1_mapped_collection_value_ab4c51f484c9d5569b7f8c9f1bf4ab231}{C5.\+Mapped\+Collection\+Value$<$ T, V $>$}.
+
+\hypertarget{class_c5_1_1_collection_value_base_a2479d8737c18958f6c725a0e38397825}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!raise\+Collection\+Changed@{raise\+Collection\+Changed}}
+\index{raise\+Collection\+Changed@{raise\+Collection\+Changed}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{raise\+Collection\+Changed()}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.raise\+Collection\+Changed (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_c5_1_1_collection_value_base_a2479d8737c18958f6c725a0e38397825}
+
+
+Fire the Collection\+Changed event 
+
+\hypertarget{class_c5_1_1_collection_value_base_a923cee6b9d57bf1694a070b21613f030}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!raise\+Collection\+Cleared@{raise\+Collection\+Cleared}}
+\index{raise\+Collection\+Cleared@{raise\+Collection\+Cleared}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{raise\+Collection\+Cleared(bool full, int count)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.raise\+Collection\+Cleared (
+\begin{DoxyParamCaption}
+\item[{bool}]{full, }
+\item[{int}]{count}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_c5_1_1_collection_value_base_a923cee6b9d57bf1694a070b21613f030}
+
+
+Fire the Collection\+Cleared event 
+
+\hypertarget{class_c5_1_1_collection_value_base_abcddaf7f4d7f64d41854e01dffd828ce}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!raise\+Collection\+Cleared@{raise\+Collection\+Cleared}}
+\index{raise\+Collection\+Cleared@{raise\+Collection\+Cleared}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{raise\+Collection\+Cleared(bool full, int count, int?offset)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.raise\+Collection\+Cleared (
+\begin{DoxyParamCaption}
+\item[{bool}]{full, }
+\item[{int}]{count, }
+\item[{int?}]{offset}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_c5_1_1_collection_value_base_abcddaf7f4d7f64d41854e01dffd828ce}
+
+
+Fire the Collection\+Cleared event 
+
+\hypertarget{class_c5_1_1_collection_value_base_a1048affd98d865d07454bcea754ec049}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!raise\+For\+Add@{raise\+For\+Add}}
+\index{raise\+For\+Add@{raise\+For\+Add}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{raise\+For\+Add(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.raise\+For\+Add (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_c5_1_1_collection_value_base_a1048affd98d865d07454bcea754ec049}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_c5_1_1_collection_value_base_a1f7ef395f3ad8027a2b32916a181b418}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!raise\+For\+Insert@{raise\+For\+Insert}}
+\index{raise\+For\+Insert@{raise\+For\+Insert}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{raise\+For\+Insert(int i, T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.raise\+For\+Insert (
+\begin{DoxyParamCaption}
+\item[{int}]{i, }
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_c5_1_1_collection_value_base_a1f7ef395f3ad8027a2b32916a181b418}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & \\
+\hline
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_c5_1_1_collection_value_base_a2e014b2904d9ef88d3e15f6b0997f71b}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!raise\+For\+Remove@{raise\+For\+Remove}}
+\index{raise\+For\+Remove@{raise\+For\+Remove}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{raise\+For\+Remove(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.raise\+For\+Remove (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_c5_1_1_collection_value_base_a2e014b2904d9ef88d3e15f6b0997f71b}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_c5_1_1_collection_value_base_a95fcc3b52892d362b6118f57a8906cb8}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!raise\+For\+Remove@{raise\+For\+Remove}}
+\index{raise\+For\+Remove@{raise\+For\+Remove}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{raise\+For\+Remove(\+T item, int count)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.raise\+For\+Remove (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{int}]{count}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_c5_1_1_collection_value_base_a95fcc3b52892d362b6118f57a8906cb8}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+{\em count} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_c5_1_1_collection_value_base_a527018f12c5e83a0c99ea8c3ec4ac6ca}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!raise\+For\+Remove\+All@{raise\+For\+Remove\+All}}
+\index{raise\+For\+Remove\+All@{raise\+For\+Remove\+All}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{raise\+For\+Remove\+All(\+I\+Collection\+Value$<$ T $>$ was\+Removed)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.raise\+For\+Remove\+All (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Collection\+Value}$<$ T $>$}]{was\+Removed}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_c5_1_1_collection_value_base_a527018f12c5e83a0c99ea8c3ec4ac6ca}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em was\+Removed} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_c5_1_1_collection_value_base_ae15fee0551df68fa0e163604f920d601}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!raise\+For\+Remove\+At@{raise\+For\+Remove\+At}}
+\index{raise\+For\+Remove\+At@{raise\+For\+Remove\+At}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{raise\+For\+Remove\+At(int index, T item)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.raise\+For\+Remove\+At (
+\begin{DoxyParamCaption}
+\item[{int}]{index, }
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_c5_1_1_collection_value_base_ae15fee0551df68fa0e163604f920d601}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & \\
+\hline
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_c5_1_1_collection_value_base_a14876a0f26a0741ff82f3d851caa4602}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!raise\+For\+Set\+This@{raise\+For\+Set\+This}}
+\index{raise\+For\+Set\+This@{raise\+For\+Set\+This}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{raise\+For\+Set\+This(int index, T value, T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.raise\+For\+Set\+This (
+\begin{DoxyParamCaption}
+\item[{int}]{index, }
+\item[{T}]{value, }
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_c5_1_1_collection_value_base_a14876a0f26a0741ff82f3d851caa4602}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & \\
+\hline
+{\em value} & \\
+\hline
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_c5_1_1_collection_value_base_ad76dc5138c43e80dd057007d78bb374d}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!raise\+For\+Update@{raise\+For\+Update}}
+\index{raise\+For\+Update@{raise\+For\+Update}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{raise\+For\+Update(\+T newitem, T olditem)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.raise\+For\+Update (
+\begin{DoxyParamCaption}
+\item[{T}]{newitem, }
+\item[{T}]{olditem}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_c5_1_1_collection_value_base_ad76dc5138c43e80dd057007d78bb374d}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em newitem} & \\
+\hline
+{\em olditem} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_c5_1_1_collection_value_base_ad05d49b820265d7e4e73c4f5992596b9}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!raise\+For\+Update@{raise\+For\+Update}}
+\index{raise\+For\+Update@{raise\+For\+Update}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{raise\+For\+Update(\+T newitem, T olditem, int count)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.raise\+For\+Update (
+\begin{DoxyParamCaption}
+\item[{T}]{newitem, }
+\item[{T}]{olditem, }
+\item[{int}]{count}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_c5_1_1_collection_value_base_ad05d49b820265d7e4e73c4f5992596b9}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em newitem} & \\
+\hline
+{\em olditem} & \\
+\hline
+{\em count} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_c5_1_1_collection_value_base_a053613a6d6d27e8cd2ad176b50b21b83}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!raise\+Item\+Inserted@{raise\+Item\+Inserted}}
+\index{raise\+Item\+Inserted@{raise\+Item\+Inserted}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{raise\+Item\+Inserted(\+T item, int index)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.raise\+Item\+Inserted (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_c5_1_1_collection_value_base_a053613a6d6d27e8cd2ad176b50b21b83}
+
+
+Fire the Item\+Inserted event 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item that was added\\
+\hline
+{\em index} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_c5_1_1_collection_value_base_a510a21c57e543cadb4ce4748b9099679}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!raise\+Item\+Removed\+At@{raise\+Item\+Removed\+At}}
+\index{raise\+Item\+Removed\+At@{raise\+Item\+Removed\+At}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{raise\+Item\+Removed\+At(\+T item, int index)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.raise\+Item\+Removed\+At (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_c5_1_1_collection_value_base_a510a21c57e543cadb4ce4748b9099679}
+
+
+Fire the Item\+Removed\+At event 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item that was removed\\
+\hline
+{\em index} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_c5_1_1_collection_value_base_a5c092cb991bc12200e7b893391fd8c38}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!raise\+Items\+Added@{raise\+Items\+Added}}
+\index{raise\+Items\+Added@{raise\+Items\+Added}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{raise\+Items\+Added(\+T item, int count)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.raise\+Items\+Added (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{int}]{count}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_c5_1_1_collection_value_base_a5c092cb991bc12200e7b893391fd8c38}
+
+
+Fire the Items\+Added event 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item that was added\\
+\hline
+{\em count} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_c5_1_1_collection_value_base_ade345c3e3c0d38d9694b569831a09752}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!raise\+Items\+Removed@{raise\+Items\+Removed}}
+\index{raise\+Items\+Removed@{raise\+Items\+Removed}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{raise\+Items\+Removed(\+T item, int count)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.raise\+Items\+Removed (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{int}]{count}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_c5_1_1_collection_value_base_ade345c3e3c0d38d9694b569831a09752}
+
+
+Fire the Items\+Removed event 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item that was removed\\
+\hline
+{\em count} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_c5_1_1_collection_value_base_a96bd5814c13153aefae15ba969311c24}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!Show@{Show}}
+\index{Show@{Show}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{Show(\+System.\+Text.\+String\+Builder stringbuilder, ref int rest, I\+Format\+Provider format\+Provider)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.Show (
+\begin{DoxyParamCaption}
+\item[{System.\+Text.\+String\+Builder}]{stringbuilder, }
+\item[{ref int}]{rest, }
+\item[{I\+Format\+Provider}]{format\+Provider}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_collection_value_base_a96bd5814c13153aefae15ba969311c24}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em stringbuilder} & \\
+\hline
+{\em rest} & \\
+\hline
+{\em format\+Provider} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{class_c5_1_1_collection_value_base_a740757aebaa1365811e76729e59f338d}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!To\+Array@{To\+Array}}
+\index{To\+Array@{To\+Array}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{To\+Array()}]{\setlength{\rightskip}{0pt plus 5cm}virtual T \mbox{[}$\,$\mbox{]} {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.To\+Array (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_collection_value_base_a740757aebaa1365811e76729e59f338d}
+
+
+Create an array with the items of this collection (in the same order as an enumerator would output them). 
+
+\begin{DoxyReturn}{Returns}
+The array
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_ad76547324e71a04e92076b2e55239bbb}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+
+
+Reimplemented in \hyperlink{class_c5_1_1_array_base_a16ffcc583a32065194b3ea27d4a43cd4}{C5.\+Array\+Base$<$ T $>$}, \hyperlink{class_c5_1_1_hash_set_ad6e22ebc64d9f8c96b805547d5873023}{C5.\+Hash\+Set$<$ T $>$}, and \hyperlink{class_c5_1_1_hash_bag_a7be4bcb7a5ef7f9414a33cfb9439e15e}{C5.\+Hash\+Bag$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_collection_value_base_ad27cc9a47ff634613af0b5f0929de046}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!To\+String@{To\+String}}
+\index{To\+String@{To\+String}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{To\+String(string format, I\+Format\+Provider format\+Provider)}]{\setlength{\rightskip}{0pt plus 5cm}virtual string {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.To\+String (
+\begin{DoxyParamCaption}
+\item[{string}]{format, }
+\item[{I\+Format\+Provider}]{format\+Provider}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_collection_value_base_ad27cc9a47ff634613af0b5f0929de046}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em format} & \\
+\hline
+{\em format\+Provider} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{class_c5_1_1_collection_value_base_a1fd928b586eb8af9378542d77e4de365}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!To\+String@{To\+String}}
+\index{To\+String@{To\+String}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{To\+String()}]{\setlength{\rightskip}{0pt plus 5cm}override string {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.To\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_collection_value_base_a1fd928b586eb8af9378542d77e4de365}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+\subsection{Property Documentation}
+\hypertarget{class_c5_1_1_collection_value_base_a31ad6e1192e929ecd73a5f4e7e9332ba}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!Active\+Events@{Active\+Events}}
+\index{Active\+Events@{Active\+Events}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{Active\+Events}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Event\+Type\+Enum} {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.Active\+Events\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_collection_value_base_a31ad6e1192e929ecd73a5f4e7e9332ba}
+
+
+A flag bitmap of the events currently subscribed to by this collection. 
+
+\hypertarget{class_c5_1_1_collection_value_base_aba529af0877c1621812c2cc20e6dc7d9}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!Collection\+Changed@{Collection\+Changed}}
+\index{Collection\+Changed@{Collection\+Changed}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{Collection\+Changed}]{\setlength{\rightskip}{0pt plus 5cm}virtual Collection\+Changed\+Handler$<$T$>$ {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.Collection\+Changed\hspace{0.3cm}{\ttfamily [add]}, {\ttfamily [remove]}}\label{class_c5_1_1_collection_value_base_aba529af0877c1621812c2cc20e6dc7d9}
+
+
+The change event. Will be raised for every change operation on the collection. 
+
+\hypertarget{class_c5_1_1_collection_value_base_ac3a3ee8103dbad9a0e647ef1a94bcf1f}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!Collection\+Cleared@{Collection\+Cleared}}
+\index{Collection\+Cleared@{Collection\+Cleared}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{Collection\+Cleared}]{\setlength{\rightskip}{0pt plus 5cm}virtual Collection\+Cleared\+Handler$<$T$>$ {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.Collection\+Cleared\hspace{0.3cm}{\ttfamily [add]}, {\ttfamily [remove]}}\label{class_c5_1_1_collection_value_base_ac3a3ee8103dbad9a0e647ef1a94bcf1f}
+
+
+The clear event. Will be raised for every Clear operation on the collection. 
+
+\hypertarget{class_c5_1_1_collection_value_base_ac27de36f8fcd6bd3c66ce04768adfe1e}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!Count@{Count}}
+\index{Count@{Count}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{Count}]{\setlength{\rightskip}{0pt plus 5cm}abstract int {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.Count\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_collection_value_base_ac27de36f8fcd6bd3c66ce04768adfe1e}
+
+
+The number of items in this collection. 
+
+\hypertarget{class_c5_1_1_collection_value_base_a29cca9929ed4b155a56f6c7297208ef3}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!Count\+Speed@{Count\+Speed}}
+\index{Count\+Speed@{Count\+Speed}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{Count\+Speed}]{\setlength{\rightskip}{0pt plus 5cm}abstract {\bf Speed} {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.Count\+Speed\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_collection_value_base_a29cca9929ed4b155a56f6c7297208ef3}
+
+
+The value is symbolic indicating the type of asymptotic complexity in terms of the size of this collection (worst-\/case or amortized as relevant). 
+
+A characterization of the speed of the {\ttfamily Count} property in this collection.\hypertarget{class_c5_1_1_collection_value_base_a9b906017c85e357268f116b3ac05e665}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!Is\+Empty@{Is\+Empty}}
+\index{Is\+Empty@{Is\+Empty}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{Is\+Empty}]{\setlength{\rightskip}{0pt plus 5cm}abstract bool {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.Is\+Empty\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_collection_value_base_a9b906017c85e357268f116b3ac05e665}
+
+
+Check if collection is empty. 
+
+True if empty\hypertarget{class_c5_1_1_collection_value_base_acfa66e3ccad2023f13ce71b2114e7809}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!Item\+Inserted@{Item\+Inserted}}
+\index{Item\+Inserted@{Item\+Inserted}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{Item\+Inserted}]{\setlength{\rightskip}{0pt plus 5cm}virtual Item\+Inserted\+Handler$<$T$>$ {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.Item\+Inserted\hspace{0.3cm}{\ttfamily [add]}, {\ttfamily [remove]}}\label{class_c5_1_1_collection_value_base_acfa66e3ccad2023f13ce71b2114e7809}
+
+
+The item added event. Will be raised for every individual addition to the collection. 
+
+\hypertarget{class_c5_1_1_collection_value_base_a9cd4d9d9e588e1a8fe51390906b3c66a}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!Item\+Removed\+At@{Item\+Removed\+At}}
+\index{Item\+Removed\+At@{Item\+Removed\+At}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{Item\+Removed\+At}]{\setlength{\rightskip}{0pt plus 5cm}virtual Item\+Removed\+At\+Handler$<$T$>$ {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.Item\+Removed\+At\hspace{0.3cm}{\ttfamily [add]}, {\ttfamily [remove]}}\label{class_c5_1_1_collection_value_base_a9cd4d9d9e588e1a8fe51390906b3c66a}
+
+
+The item removed event. Will be raised for every individual removal from the collection. 
+
+\hypertarget{class_c5_1_1_collection_value_base_a3d7c78ee19bebf048061156c67aca5ef}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!Items\+Added@{Items\+Added}}
+\index{Items\+Added@{Items\+Added}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{Items\+Added}]{\setlength{\rightskip}{0pt plus 5cm}virtual Items\+Added\+Handler$<$T$>$ {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.Items\+Added\hspace{0.3cm}{\ttfamily [add]}, {\ttfamily [remove]}}\label{class_c5_1_1_collection_value_base_a3d7c78ee19bebf048061156c67aca5ef}
+
+
+The item added event. Will be raised for every individual addition to the collection. 
+
+\hypertarget{class_c5_1_1_collection_value_base_a85608b4643299c9d576f68cf7cea70eb}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!Items\+Removed@{Items\+Removed}}
+\index{Items\+Removed@{Items\+Removed}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{Items\+Removed}]{\setlength{\rightskip}{0pt plus 5cm}virtual Items\+Removed\+Handler$<$T$>$ {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.Items\+Removed\hspace{0.3cm}{\ttfamily [add]}, {\ttfamily [remove]}}\label{class_c5_1_1_collection_value_base_a85608b4643299c9d576f68cf7cea70eb}
+
+
+The item removed event. Will be raised for every individual removal from the collection. 
+
+\hypertarget{class_c5_1_1_collection_value_base_a5e6697e40d1421280e34fe47ebbdcefc}{}\index{C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}!Listenable\+Events@{Listenable\+Events}}
+\index{Listenable\+Events@{Listenable\+Events}!C5\+::\+Collection\+Value\+Base@{C5\+::\+Collection\+Value\+Base}}
+\subsubsection[{Listenable\+Events}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Event\+Type\+Enum} {\bf C5.\+Collection\+Value\+Base}$<$ T $>$.Listenable\+Events\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_collection_value_base_a5e6697e40d1421280e34fe47ebbdcefc}
+
+
+
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_collections_8cs}{Collections.\+cs}\end{DoxyCompactItemize}

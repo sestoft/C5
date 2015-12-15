@@ -1,0 +1,140 @@
+\hypertarget{class_c5_1_1_guarded_queue}{}\section{C5.\+Guarded\+Queue$<$ T $>$ Class Template Reference}
+\label{class_c5_1_1_guarded_queue}\index{C5.\+Guarded\+Queue$<$ T $>$@{C5.\+Guarded\+Queue$<$ T $>$}}
+
+
+A read-\/only wrapper for a generic indexable queue (allows indexing).  
+
+
+Inheritance diagram for C5.\+Guarded\+Queue$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.441441cm]{class_c5_1_1_guarded_queue}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c5_1_1_guarded_queue_ad8348b6d959ee703bf5b91b4885ae28f}{Guarded\+Queue} (\hyperlink{interface_c5_1_1_i_queue}{I\+Queue}$<$ T $>$ queue)
+\begin{DoxyCompactList}\small\item\em Wrap a queue in a read-\/only wrapper \end{DoxyCompactList}\item 
+void \hyperlink{class_c5_1_1_guarded_queue_af8b4a6e503df67d019015f2ccce7c06b}{Enqueue} (T item)
+\item 
+T \hyperlink{class_c5_1_1_guarded_queue_aeac8a6ef430740f2ec1df8346cd122a4}{Dequeue} ()
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{class_c5_1_1_guarded_queue_a859d295a8e0e99348ddb273b88d33b15}{Allows\+Duplicates}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+T \hyperlink{class_c5_1_1_guarded_queue_a5c18da3f129993454969b145f1fce822}{this\mbox{[}int i\mbox{]}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Index into the wrapped queue \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A read-\/only wrapper for a generic indexable queue (allows indexing). 
+
+Suitable for wrapping a T\+:\+C5.\+Circular\+Queue`1
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The item type.\\
+\hline
+\end{DoxyTemplParams}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_c5_1_1_guarded_queue_ad8348b6d959ee703bf5b91b4885ae28f}{}\index{C5\+::\+Guarded\+Queue@{C5\+::\+Guarded\+Queue}!Guarded\+Queue@{Guarded\+Queue}}
+\index{Guarded\+Queue@{Guarded\+Queue}!C5\+::\+Guarded\+Queue@{C5\+::\+Guarded\+Queue}}
+\subsubsection[{Guarded\+Queue(\+I\+Queue$<$ T $>$ queue)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Guarded\+Queue}$<$ T $>$.{\bf Guarded\+Queue} (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Queue}$<$ T $>$}]{queue}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_queue_ad8348b6d959ee703bf5b91b4885ae28f}
+
+
+Wrap a queue in a read-\/only wrapper 
+
+
+\begin{DoxyParams}{Parameters}
+{\em queue} & The queue\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_guarded_queue_aeac8a6ef430740f2ec1df8346cd122a4}{}\index{C5\+::\+Guarded\+Queue@{C5\+::\+Guarded\+Queue}!Dequeue@{Dequeue}}
+\index{Dequeue@{Dequeue}!C5\+::\+Guarded\+Queue@{C5\+::\+Guarded\+Queue}}
+\subsubsection[{Dequeue()}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Guarded\+Queue}$<$ T $>$.Dequeue (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_queue_aeac8a6ef430740f2ec1df8346cd122a4}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+-\/
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_queue_ae64bb24d3237ad9cef4f55593ca20bc7}{C5.\+I\+Queue$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_queue_af8b4a6e503df67d019015f2ccce7c06b}{}\index{C5\+::\+Guarded\+Queue@{C5\+::\+Guarded\+Queue}!Enqueue@{Enqueue}}
+\index{Enqueue@{Enqueue}!C5\+::\+Guarded\+Queue@{C5\+::\+Guarded\+Queue}}
+\subsubsection[{Enqueue(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Guarded\+Queue}$<$ T $>$.Enqueue (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_queue_af8b4a6e503df67d019015f2ccce7c06b}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+-\/
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_queue_afceb820ca32b996f6fd5c34a85ccbacd}{C5.\+I\+Queue$<$ T $>$}.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{class_c5_1_1_guarded_queue_a859d295a8e0e99348ddb273b88d33b15}{}\index{C5\+::\+Guarded\+Queue@{C5\+::\+Guarded\+Queue}!Allows\+Duplicates@{Allows\+Duplicates}}
+\index{Allows\+Duplicates@{Allows\+Duplicates}!C5\+::\+Guarded\+Queue@{C5\+::\+Guarded\+Queue}}
+\subsubsection[{Allows\+Duplicates}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Guarded\+Queue}$<$ T $>$.Allows\+Duplicates\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_queue_a859d295a8e0e99348ddb273b88d33b15}
+
+
+
+
+\hypertarget{class_c5_1_1_guarded_queue_a5c18da3f129993454969b145f1fce822}{}\index{C5\+::\+Guarded\+Queue@{C5\+::\+Guarded\+Queue}!this\mbox{[}int i\mbox{]}@{this[int i]}}
+\index{this\mbox{[}int i\mbox{]}@{this[int i]}!C5\+::\+Guarded\+Queue@{C5\+::\+Guarded\+Queue}}
+\subsubsection[{this[int i]}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Guarded\+Queue}$<$ T $>$.this\mbox{[}int i\mbox{]}\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_queue_a5c18da3f129993454969b145f1fce822}
+
+
+Index into the wrapped queue 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_wrappers_8cs}{Wrappers.\+cs}\end{DoxyCompactItemize}

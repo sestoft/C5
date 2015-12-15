@@ -1,0 +1,587 @@
+\hypertarget{interface_c5_1_1_i_collection}{}\section{C5.\+I\+Collection$<$ T $>$ Interface Template Reference}
+\label{interface_c5_1_1_i_collection}\index{C5.\+I\+Collection$<$ T $>$@{C5.\+I\+Collection$<$ T $>$}}
+
+
+The simplest interface of a main stream generic collection with lookup, insertion and removal operations.  
+
+
+Inheritance diagram for C5.\+I\+Collection$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.825137cm]{interface_c5_1_1_i_collection}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+new bool \hyperlink{interface_c5_1_1_i_collection_a525115f252ddca586fcbf1a0127be614}{Add} (T item)
+\begin{DoxyCompactList}\small\item\em Add an item to this collection if possible. If this collection has set semantics, the item will be added if not already in the collection. If bag semantics, the item will always be added. \end{DoxyCompactList}\item 
+new void \hyperlink{interface_c5_1_1_i_collection_aa2f928b7057eb84a1572307123e8239e}{Copy\+To} (T\mbox{[}$\,$\mbox{]} array, int index)
+\begin{DoxyCompactList}\small\item\em Copy the items of this collection to a contiguous part of an array. \end{DoxyCompactList}\item 
+int \hyperlink{interface_c5_1_1_i_collection_ae3a4fa01c3b09b9b372bb6f8639194ed}{Get\+Unsequenced\+Hash\+Code} ()
+\begin{DoxyCompactList}\small\item\em The unordered collection hashcode is defined as the sum of \end{DoxyCompactList}\item 
+bool \hyperlink{interface_c5_1_1_i_collection_a46fee76e3afed2b0510e94814ef832b2}{Unsequenced\+Equals} (\hyperlink{interface_c5_1_1_i_collection}{I\+Collection}$<$ T $>$ other\+Collection)
+\begin{DoxyCompactList}\small\item\em Compare the contents of this collection to another one without regards to the sequence order. The comparison will use this collection\textquotesingle{}s itemequality\+Comparer to compare individual items. \end{DoxyCompactList}\item 
+new bool \hyperlink{interface_c5_1_1_i_collection_a4de01b6d77ea5eaffccc8267b4454cdd}{Contains} (T item)
+\begin{DoxyCompactList}\small\item\em Check if this collection contains (an item equivalent to according to the itemequality\+Comparer) a particular value. \end{DoxyCompactList}\item 
+int \hyperlink{interface_c5_1_1_i_collection_acfe7e2c9b14c384762269edbb57b7fbe}{Contains\+Count} (T item)
+\begin{DoxyCompactList}\small\item\em Count the number of items of the collection equal to a particular value. Returns 0 if and only if the value is not in the collection. \end{DoxyCompactList}\item 
+\hyperlink{interface_c5_1_1_i_collection_value}{I\+Collection\+Value}$<$ T $>$ \hyperlink{interface_c5_1_1_i_collection_a074c4e1a90fb7f98c95834204352c28c}{Unique\+Items} ()
+\item 
+\hyperlink{interface_c5_1_1_i_collection_value}{I\+Collection\+Value}$<$ \hyperlink{struct_c5_1_1_key_value_pair}{Key\+Value\+Pair}$<$ T, int $>$ $>$ \hyperlink{interface_c5_1_1_i_collection_a623bd834b37b299c5f4948fdb6915fef}{Item\+Multiplicities} ()
+\item 
+bool \hyperlink{interface_c5_1_1_i_collection_a93abf02183a46f56af8d90f1d69982a8}{Contains\+All} (S\+C\+G.\+I\+Enumerable$<$ T $>$ items)
+\begin{DoxyCompactList}\small\item\em Check whether this collection contains all the values in another collection. If this collection has bag semantics ( \end{DoxyCompactList}\item 
+bool \hyperlink{interface_c5_1_1_i_collection_a96fd6cfd3df62e67922f9335b0fbbdcb}{Find} (ref T item)
+\begin{DoxyCompactList}\small\item\em Check if this collection contains an item equivalent according to the itemequality\+Comparer to a particular value. If so, return in the ref argument (a binary copy of) the actual value found. \end{DoxyCompactList}\item 
+bool \hyperlink{interface_c5_1_1_i_collection_a7f9e609ee1a7607596bb65aa5bdff303}{Find\+Or\+Add} (ref T item)
+\begin{DoxyCompactList}\small\item\em Check if this collection contains an item equivalent according to the itemequality\+Comparer to a particular value. If so, return in the ref argument (a binary copy of) the actual value found. Else, add the item to the collection. \end{DoxyCompactList}\item 
+bool \hyperlink{interface_c5_1_1_i_collection_acf060ba6b83289dc74bea61502318d56}{Update} (T item)
+\begin{DoxyCompactList}\small\item\em Check if this collection contains an item equivalent according to the itemequality\+Comparer to a particular value. If so, update the item in the collection with a (binary copy of) the supplied value. If the collection has bag semantics, it depends on the value of Duplicates\+By\+Counting if this updates all equivalent copies in the collection or just one. \end{DoxyCompactList}\item 
+bool \hyperlink{interface_c5_1_1_i_collection_ad1faa1738e02acf001aac16a3b948c78}{Update} (T item, out T olditem)
+\begin{DoxyCompactList}\small\item\em Check if this collection contains an item equivalent according to the itemequality\+Comparer to a particular value. If so, update the item in the collection with a (binary copy of) the supplied value. If the collection has bag semantics, it depends on the value of Duplicates\+By\+Counting if this updates all equivalent copies in the collection or just one. \end{DoxyCompactList}\item 
+bool \hyperlink{interface_c5_1_1_i_collection_a9739490d6271fb3a92221bca5da5e54b}{Update\+Or\+Add} (T item)
+\begin{DoxyCompactList}\small\item\em Check if this collection contains an item equivalent according to the itemequality\+Comparer to a particular value. If so, update the item in the collection to with a binary copy of the supplied value; else add the value to the collection. \end{DoxyCompactList}\item 
+bool \hyperlink{interface_c5_1_1_i_collection_a73a5d984e95e200de80261361bb7e57d}{Update\+Or\+Add} (T item, out T olditem)
+\begin{DoxyCompactList}\small\item\em Check if this collection contains an item equivalent according to the itemequality\+Comparer to a particular value. If so, update the item in the collection to with a binary copy of the supplied value; else add the value to the collection. \end{DoxyCompactList}\item 
+new bool \hyperlink{interface_c5_1_1_i_collection_ab4d6092ac09245ce46db91595fc1cdfe}{Remove} (T item)
+\begin{DoxyCompactList}\small\item\em Remove a particular item from this collection. If the collection has bag semantics only one copy equivalent to the supplied item is removed. \end{DoxyCompactList}\item 
+bool \hyperlink{interface_c5_1_1_i_collection_acbd124236c3f0958a8784d9c7c2dfd16}{Remove} (T item, out T removeditem)
+\begin{DoxyCompactList}\small\item\em Remove a particular item from this collection if found. If the collection has bag semantics only one copy equivalent to the supplied item is removed, which one is implementation dependent. If an item was removed, report a binary copy of the actual item removed in the argument. \end{DoxyCompactList}\item 
+void \hyperlink{interface_c5_1_1_i_collection_ad785b91be4edeb3fbe678db751f6355d}{Remove\+All\+Copies} (T item)
+\begin{DoxyCompactList}\small\item\em Remove all items equivalent to a given value. \end{DoxyCompactList}\item 
+void \hyperlink{interface_c5_1_1_i_collection_a9fb05163a1bd4b71bfd05101ff20c987}{Remove\+All} (S\+C\+G.\+I\+Enumerable$<$ T $>$ items)
+\begin{DoxyCompactList}\small\item\em Remove all items in another collection from this one. If this collection has bag semantics, take multiplicities into account. \end{DoxyCompactList}\item 
+new void \hyperlink{interface_c5_1_1_i_collection_abd83166ac00b3d36225d988fd4603e97}{Clear} ()
+\begin{DoxyCompactList}\small\item\em Remove all items from this collection. \end{DoxyCompactList}\item 
+void \hyperlink{interface_c5_1_1_i_collection_ac2672fb0557eeb24e328149c513c9a8b}{Retain\+All} (S\+C\+G.\+I\+Enumerable$<$ T $>$ items)
+\begin{DoxyCompactList}\small\item\em Remove all items not in some other collection from this one. If this collection has bag semantics, take multiplicities into account. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespace_c5_a615ba88dcdaa8d5a3c5f833a73d7fad6}{Speed} \hyperlink{interface_c5_1_1_i_collection_a0a9bcd98894c191206e18c7c20c3bdfe}{Contains\+Speed}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The value is symbolic indicating the type of asymptotic complexity in terms of the size of this collection (worst-\/case or amortized as relevant). \end{DoxyCompactList}\item 
+new int \hyperlink{interface_c5_1_1_i_collection_abddff5406ccd4e98d8d96f41bf9d6d5b}{Count}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+new bool \hyperlink{interface_c5_1_1_i_collection_a94b0751f2b2fbd0519233b2755c055b4}{Is\+Read\+Only}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em If true any call of an updating operation will throw an \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+The simplest interface of a main stream generic collection with lookup, insertion and removal operations. 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interface_c5_1_1_i_collection_a525115f252ddca586fcbf1a0127be614}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Add@{Add}}
+\index{Add@{Add}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Add(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}new bool {\bf C5.\+I\+Collection}$<$ T $>$.Add (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_collection_a525115f252ddca586fcbf1a0127be614}
+
+
+Add an item to this collection if possible. If this collection has set semantics, the item will be added if not already in the collection. If bag semantics, the item will always be added. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to add.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if item was added.
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_extensible_acfe8d39605927db1aff0572e2b5c1089}{C5.\+I\+Extensible$<$ T $>$}.
+
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_afcfc7b8da2f00ad7d8e3decadadd74bc}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_ac205fdb2cfc336ee2c2843c04fcbad41}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_a4606087ab02e09f75ce6810b7a9d11a4}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_a31f07a779aa64ee15f6875ab74682cb5}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_a6d4091d5dd1ab9b4637ae16f2bca53e3}{C5.\+Sorted\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_tree_bag_ac407a0824ba7e237c86525234b5b85bd}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_ae2a3723eb4c1fabdb5b75d52d709f880}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{interface_c5_1_1_i_list_a800000d7344d000c1b8c67acda464a3d}{C5.\+I\+List$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_collection_aa7fe8941b3b05d9e8622b830852cf12d}{C5.\+Guarded\+Collection$<$ T $>$}, \hyperlink{class_c5_1_1_hash_set_a0700ad4332214ac5d74f3a197bfd8774}{C5.\+Hash\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_wrapped_array_a5be2e0d6422cbc8597e1bc7571b41048}{C5.\+Wrapped\+Array$<$ T $>$}, and \hyperlink{class_c5_1_1_hash_bag_a4cc47989ae0d25e5574558f973b85a8d}{C5.\+Hash\+Bag$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_collection_abd83166ac00b3d36225d988fd4603e97}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Clear@{Clear}}
+\index{Clear@{Clear}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Clear()}]{\setlength{\rightskip}{0pt plus 5cm}new void {\bf C5.\+I\+Collection}$<$ T $>$.Clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_collection_abd83166ac00b3d36225d988fd4603e97}
+
+
+Remove all items from this collection. 
+
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_a3d890e2da8746df9cf82d3ccaf561d44}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_a936ee524a650660d23b62ff74ae306d9}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_tree_bag_a7e7ae58e999b8f2968b784df96d33695}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_aeca323e5f962607ee4384549aaba5d28}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_ae09b116f49bc00c9775c5799fd3a8ccf}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_a1ed4a8838cc6a215101b6af156e7da08}{C5.\+Array\+List$<$ T $>$}, \hyperlink{interface_c5_1_1_i_list_aff6179e37b313d34596749484ae58ea4}{C5.\+I\+List$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_ae316e2061d7224288fefe5cc3a848935}{C5.\+Sorted\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_collection_ae26dd6085a063dd2b86d37b030b87750}{C5.\+Guarded\+Collection$<$ T $>$}, \hyperlink{class_c5_1_1_wrapped_array_aa57bfc8881b390314629e9830759eee5}{C5.\+Wrapped\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_hash_set_a7bc97cd3a07e8e829c16e169ac71a075}{C5.\+Hash\+Set$<$ T $>$}, and \hyperlink{class_c5_1_1_hash_bag_a56b6eaa83ad0f3851cb48322f536f3d8}{C5.\+Hash\+Bag$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_collection_a4de01b6d77ea5eaffccc8267b4454cdd}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Contains@{Contains}}
+\index{Contains@{Contains}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Contains(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}new bool {\bf C5.\+I\+Collection}$<$ T $>$.Contains (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_collection_a4de01b6d77ea5eaffccc8267b4454cdd}
+
+
+Check if this collection contains (an item equivalent to according to the itemequality\+Comparer) a particular value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The value to check for.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the items is in this collection.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_a210cb416cd7418c59c89b99e2fce7bf8}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_a9d3273641ee62248a93ed0eb58bed66a}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_a4b108299a930ceaecd8484023a656cf4}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_a481c1d9104e4c5fbd4dd79be7a1e5c38}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_tree_bag_ab3325de752c15c458b6c1359a2518e0a}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_ac64161083bb695c31f6b459d4bd8c13e}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_a3b50cf0032570c401d576f32104f68aa}{C5.\+Sorted\+Array$<$ T $>$}, \hyperlink{interface_c5_1_1_i_list_a108b607b042959d063e1ca77e242406c}{C5.\+I\+List$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_collection_a1ffdf15a3e9daa80137e53fcd642770e}{C5.\+Guarded\+Collection$<$ T $>$}, \hyperlink{class_c5_1_1_wrapped_array_aeff3477a858a6f79b120be3ca1fd7c40}{C5.\+Wrapped\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_hash_set_af664a08eff9d9941c43e043bf5b367c3}{C5.\+Hash\+Set$<$ T $>$}, and \hyperlink{class_c5_1_1_hash_bag_a4ab198cd099f684fc161c4055106c2a8}{C5.\+Hash\+Bag$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_collection_a93abf02183a46f56af8d90f1d69982a8}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Contains\+All@{Contains\+All}}
+\index{Contains\+All@{Contains\+All}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Contains\+All(\+S\+C\+G.\+I\+Enumerable$<$ T $>$ items)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+I\+Collection}$<$ T $>$.Contains\+All (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Enumerable$<$ T $>$}]{items}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_collection_a93abf02183a46f56af8d90f1d69982a8}
+
+
+Check whether this collection contains all the values in another collection. If this collection has bag semantics ( 
+
+{\ttfamily Allows\+Duplicates==true}) the check is made with respect to multiplicities, else multiplicities are not taken into account. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em items} & The \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if all values in 
+\begin{DoxyCode}
+items
+\end{DoxyCode}
+is in this collection.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_a8592fd2f2b3cea5329acaf4331dff7bc}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_a10a876c3bb88997efbca9d7ab6cc9ed4}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_tree_bag_ada5a4e4666a76bb810a722cea086e336}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_ae3145f69b175e6b3d9af471b3ef89c80}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_a89f60df47bcd103257f38983d1ae11e3}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_a59f882585e714af67e2ba7211e3d3595}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_a5112ec4af3590219c5b24957f9a0dad9}{C5.\+Sorted\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_collection_a57f6d96d3787483e45837b2700d9459b}{C5.\+Guarded\+Collection$<$ T $>$}, \hyperlink{class_c5_1_1_hash_set_ad7c29ad00f9697d4a07e03986c84770e}{C5.\+Hash\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_wrapped_array_a2e1371765df8e9ecc8f928129ddd523f}{C5.\+Wrapped\+Array$<$ T $>$}, and \hyperlink{class_c5_1_1_hash_bag_aff78f22f0c5e6b5dc2c550cd0d5a24e3}{C5.\+Hash\+Bag$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_collection_acfe7e2c9b14c384762269edbb57b7fbe}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Contains\+Count@{Contains\+Count}}
+\index{Contains\+Count@{Contains\+Count}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Contains\+Count(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+I\+Collection}$<$ T $>$.Contains\+Count (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_collection_acfe7e2c9b14c384762269edbb57b7fbe}
+
+
+Count the number of items of the collection equal to a particular value. Returns 0 if and only if the value is not in the collection. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The value to count.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of copies found.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_a0bf0f2c26ac2975f17d240880ca79de5}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_a7ea7467fd1107ed2d38e29966f188266}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_tree_bag_a3a7a0f7538cd89da7e9b10e3311bd521}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_ab2df8bca715b6d3d24263e42dd4df84d}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_a4fb06172f38039104765ee9d6ed78842}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_a64988ea7ea5325a0ee85d96ed32401dd}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_aa8ebd1f6cb041cf1d57299f217f65243}{C5.\+Sorted\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_hash_set_a6ae7c12192030c64a6268546bdb21fbe}{C5.\+Hash\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_collection_ae5bfa7d92d0ebe7d185f04f8836685c7}{C5.\+Guarded\+Collection$<$ T $>$}, \hyperlink{class_c5_1_1_hash_bag_ae9d24cf11e28837e35dfcf9a89858a90}{C5.\+Hash\+Bag$<$ T $>$}, and \hyperlink{class_c5_1_1_wrapped_array_a9d839f2be462e1dbda9ed69fe15a532f}{C5.\+Wrapped\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_collection_aa2f928b7057eb84a1572307123e8239e}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Copy\+To@{Copy\+To}}
+\index{Copy\+To@{Copy\+To}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Copy\+To(\+T[] array, int index)}]{\setlength{\rightskip}{0pt plus 5cm}new void {\bf C5.\+I\+Collection}$<$ T $>$.Copy\+To (
+\begin{DoxyParamCaption}
+\item[{T\mbox{[}$\,$\mbox{]}}]{array, }
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_collection_aa2f928b7057eb84a1572307123e8239e}
+
+
+Copy the items of this collection to a contiguous part of an array. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em array} & The array to copy to\\
+\hline
+{\em index} & The index at which to copy the first item\\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_aced299d8dce69c33ff75b598e39581d1}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+
+
+Implemented in \hyperlink{interface_c5_1_1_i_list_a6fef986271bdc88a6f38cb15bd15690f}{C5.\+I\+List$<$ T $>$}, \hyperlink{class_c5_1_1_wrapped_array_a3dfd50eb13f5b3f90445e217214fae96}{C5.\+Wrapped\+Array$<$ T $>$}, and \hyperlink{class_c5_1_1_hash_bag_ad7ffdb5c882c290aa8b398d499a9d2ac}{C5.\+Hash\+Bag$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_collection_a96fd6cfd3df62e67922f9335b0fbbdcb}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Find@{Find}}
+\index{Find@{Find}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Find(ref T item)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+I\+Collection}$<$ T $>$.Find (
+\begin{DoxyParamCaption}
+\item[{ref T}]{item}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_collection_a96fd6cfd3df62e67922f9335b0fbbdcb}
+
+
+Check if this collection contains an item equivalent according to the itemequality\+Comparer to a particular value. If so, return in the ref argument (a binary copy of) the actual value found. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The value to look for.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the items is in this collection.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_a71b0404288670bcd57700dafe8f9933c}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_a04291749c18af8f2f9e9f943f7ccc91d}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_ac29e24d17686e2c3998a590a60b27d71}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_a835191c794936ab62f751aaef835254d}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_tree_bag_a9d195da9dc0c1ccc78c72f1d99b969e6}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_a6c2fb30b79c7a0a7212804503c0db97e}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_afa6a8770273981e3641d7d13edd0f39b}{C5.\+Sorted\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_collection_ab447aa674e79536b0c92f7010101ce89}{C5.\+Guarded\+Collection$<$ T $>$}, \hyperlink{class_c5_1_1_wrapped_array_ad8903faa6514226fa26155c9e2f757b2}{C5.\+Wrapped\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_hash_set_a68b40c2f8c5483825915945d0f21278a}{C5.\+Hash\+Set$<$ T $>$}, and \hyperlink{class_c5_1_1_hash_bag_a596f1c7fdcc7867d3b93ffb18f106655}{C5.\+Hash\+Bag$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_collection_a7f9e609ee1a7607596bb65aa5bdff303}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Find\+Or\+Add@{Find\+Or\+Add}}
+\index{Find\+Or\+Add@{Find\+Or\+Add}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Find\+Or\+Add(ref T item)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+I\+Collection}$<$ T $>$.Find\+Or\+Add (
+\begin{DoxyParamCaption}
+\item[{ref T}]{item}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_collection_a7f9e609ee1a7607596bb65aa5bdff303}
+
+
+Check if this collection contains an item equivalent according to the itemequality\+Comparer to a particular value. If so, return in the ref argument (a binary copy of) the actual value found. Else, add the item to the collection. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The value to look for.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the item was found (hence not added).
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_a71a1257a1ba4328713fb87daa3b45675}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_ae6d34353ca7075c45dbac47a8d79dceb}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_a7adaad90a9e57a90c3bc197dc4d1289c}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_a35b8836d9228034409fc10e4dc5d7779}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_tree_bag_a8c43b82821162894db0fc7aa18e7ee6a}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_ae73144d09bef526e903714cd013fedb6}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_ac7f5931e6681c9bfe5a1dabb9a326c8e}{C5.\+Sorted\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_collection_a06f9fdffc49fe7e5d618366b749fe8be}{C5.\+Guarded\+Collection$<$ T $>$}, \hyperlink{class_c5_1_1_wrapped_array_afe18ba420f983ab2a011cde8bda43cd5}{C5.\+Wrapped\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_hash_set_a0b1d42cbbc91e630ab0917a2b17e8ca1}{C5.\+Hash\+Set$<$ T $>$}, and \hyperlink{class_c5_1_1_hash_bag_afc84f71f4abef8b7a96f8b5d9153a270}{C5.\+Hash\+Bag$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_collection_ae3a4fa01c3b09b9b372bb6f8639194ed}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Get\+Unsequenced\+Hash\+Code@{Get\+Unsequenced\+Hash\+Code}}
+\index{Get\+Unsequenced\+Hash\+Code@{Get\+Unsequenced\+Hash\+Code}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Get\+Unsequenced\+Hash\+Code()}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+I\+Collection}$<$ T $>$.Get\+Unsequenced\+Hash\+Code (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_collection_ae3a4fa01c3b09b9b372bb6f8639194ed}
+
+
+The unordered collection hashcode is defined as the sum of 
+
+{\ttfamily h(hashcode(item))} over the items of the collection, where the function {\ttfamily h} is a function from int to int of the form {\ttfamily  t -\/$>$ (a0$\ast$t+b0)$^\wedge$(a1$\ast$t+b1)$^\wedge$(a2$\ast$t+b2)}, where the ax and bx are the same for all collection classes. 
+
+The current implementation uses fixed values for the ax and bx, specified as constants in the code.
+
+\begin{DoxyReturn}{Returns}
+The unordered hashcode of this collection.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_afa9c20b419017663841ffd613d31e75b}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_a66dd343eb1edfd17074b200fccd59621}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_a8f23bbdc50d2c951e19fad0008f2f25a}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_a4f75d053012574e34e670597aa392e6f}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_collection_a993f9bfefdd11d4bf8f776215db02c31}{C5.\+Guarded\+Collection$<$ T $>$}, and \hyperlink{class_c5_1_1_wrapped_array_a9e66ede7a619e13da4307ec6c8df6c0d}{C5.\+Wrapped\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_collection_a623bd834b37b299c5f4948fdb6915fef}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Item\+Multiplicities@{Item\+Multiplicities}}
+\index{Item\+Multiplicities@{Item\+Multiplicities}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Item\+Multiplicities()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Collection\+Value}$<${\bf Key\+Value\+Pair}$<$T, int$>$ $>$ {\bf C5.\+I\+Collection}$<$ T $>$.Item\+Multiplicities (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_collection_a623bd834b37b299c5f4948fdb6915fef}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_a0cee8e4c1768986a4d167f34c8a3c227}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_a385ed37a08dddfbef49633940710adf0}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_tree_bag_a9a6a1f53ff0b1874f1936c960319f3ab}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_a34003354cd733efb85aa9bf871b2cd71}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_a8a36b62fa880e713de8e5d8ccfd19595}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_a335c5003a3607d44e571f7fa444e75cb}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_af410b4ad3cee1526a8d3b4fc6ec7a3c5}{C5.\+Sorted\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_hash_set_ae8e2ee2134a81967efe6fef79d67a0fc}{C5.\+Hash\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_collection_ad400f5862b15a3a0c59a4cb7d347f926}{C5.\+Guarded\+Collection$<$ T $>$}, \hyperlink{class_c5_1_1_hash_bag_a25efbcb614ab06216f52a7f34f74f8fc}{C5.\+Hash\+Bag$<$ T $>$}, and \hyperlink{class_c5_1_1_wrapped_array_a71341ae57222c7e5d5f16b96b91ccf81}{C5.\+Wrapped\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_collection_ab4d6092ac09245ce46db91595fc1cdfe}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Remove@{Remove}}
+\index{Remove@{Remove}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Remove(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}new bool {\bf C5.\+I\+Collection}$<$ T $>$.Remove (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_collection_ab4d6092ac09245ce46db91595fc1cdfe}
+
+
+Remove a particular item from this collection. If the collection has bag semantics only one copy equivalent to the supplied item is removed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The value to remove.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the item was found (and removed).
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_ad97f128fe00bf12c8e77678f08bd27e1}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_a16561b02cc72e8d8191c32a84af13d81}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_a4453b3955bce1670914b4aa2f469b4c0}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_a8e3d348ba6d557785028bee0b9a25bf8}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_tree_bag_ac12beb566f28e1e8091a2db06721d43d}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_acc2195583c6e6b20ebe2fba3837ac103}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_a4bd50348d1eaf888c4c66b46dcf52d04}{C5.\+Sorted\+Array$<$ T $>$}, \hyperlink{interface_c5_1_1_i_list_a14dd6b1e7f06807dc6a45edf0f83dfbd}{C5.\+I\+List$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_collection_a5228eac1c6eb5341b2ab20a3095fa066}{C5.\+Guarded\+Collection$<$ T $>$}, \hyperlink{class_c5_1_1_wrapped_array_a3f312170b262e9f56b4d23442eb98029}{C5.\+Wrapped\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_hash_set_ac9b5cd955239472a848788ce53345853}{C5.\+Hash\+Set$<$ T $>$}, and \hyperlink{class_c5_1_1_hash_bag_aecff446396494ee3d10ee53f5bc78ce5}{C5.\+Hash\+Bag$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_collection_acbd124236c3f0958a8784d9c7c2dfd16}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Remove@{Remove}}
+\index{Remove@{Remove}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Remove(\+T item, out T removeditem)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+I\+Collection}$<$ T $>$.Remove (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{out T}]{removeditem}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_collection_acbd124236c3f0958a8784d9c7c2dfd16}
+
+
+Remove a particular item from this collection if found. If the collection has bag semantics only one copy equivalent to the supplied item is removed, which one is implementation dependent. If an item was removed, report a binary copy of the actual item removed in the argument. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The value to remove.\\
+\hline
+{\em removeditem} & The value removed if any.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the item was found (and removed).
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_ab1348cf4b0e02e147f6dd08a539e2c61}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_a37bbd34f4ba9f1771ebd0854f1b5037a}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_aaf108802a6f4024858b9d178109126ee}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_adc146d07d67bf7e96f07fb604c83b2c9}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_tree_bag_a0e0865e018b7ddae7c0fefb85df150e6}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_aa4e7e4d3479ebd289308ba8f9c239bad}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_a02f963bfc980a73d45ff434fa4d8eae7}{C5.\+Sorted\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_collection_afa3304903fb8b724e52bb6cc4f12e6a9}{C5.\+Guarded\+Collection$<$ T $>$}, \hyperlink{class_c5_1_1_wrapped_array_aeb6273eab4c6798ab5ae3f7d1b64dff1}{C5.\+Wrapped\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_hash_set_a7e97b49057ee44abddb8fbd83b56b78a}{C5.\+Hash\+Set$<$ T $>$}, and \hyperlink{class_c5_1_1_hash_bag_a15514e59b510fc1e5d1d4b5bc3ca16c8}{C5.\+Hash\+Bag$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_collection_a9fb05163a1bd4b71bfd05101ff20c987}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Remove\+All@{Remove\+All}}
+\index{Remove\+All@{Remove\+All}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Remove\+All(\+S\+C\+G.\+I\+Enumerable$<$ T $>$ items)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+I\+Collection}$<$ T $>$.Remove\+All (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Enumerable$<$ T $>$}]{items}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_collection_a9fb05163a1bd4b71bfd05101ff20c987}
+
+
+Remove all items in another collection from this one. If this collection has bag semantics, take multiplicities into account. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em items} & The items to remove.\\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_a13f0ec0b64eaba0412a48e8df37ba210}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_a9f346a6bf713cae5170ee71e662918cc}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_tree_bag_a2e37aa0e335a6b94842841e692b3f59a}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_aab27d3466268b7943b82c28d33dd1579}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_a9598f605bb5e2de9f4a1bfce80a0dd0b}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_aaa0409bfe3256b9e5749ff8710f89b45}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_aedd7008a07388c8ad0463f52e3f2562c}{C5.\+Sorted\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_collection_ab5e36593deb380b90bb35f7a283e48fc}{C5.\+Guarded\+Collection$<$ T $>$}, \hyperlink{class_c5_1_1_wrapped_array_a87989abbf2d41125036606805dcdd926}{C5.\+Wrapped\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_hash_set_afc71edbb94b37e74b25d0d489c36dc3b}{C5.\+Hash\+Set$<$ T $>$}, and \hyperlink{class_c5_1_1_hash_bag_ab207da94ab560f22eabefaa17fdbd6d7}{C5.\+Hash\+Bag$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_collection_ad785b91be4edeb3fbe678db751f6355d}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Remove\+All\+Copies@{Remove\+All\+Copies}}
+\index{Remove\+All\+Copies@{Remove\+All\+Copies}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Remove\+All\+Copies(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+I\+Collection}$<$ T $>$.Remove\+All\+Copies (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_collection_ad785b91be4edeb3fbe678db751f6355d}
+
+
+Remove all items equivalent to a given value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The value to remove.\\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_ad3b535da6c6624412c450c96560d2f51}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_a307f85230fbf4f94a444743220080030}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_tree_bag_a9fd092cffe3ba3dba034ca1453a75819}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_a6ffcb62b0139bd09d755103b26ea4c9b}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_a5b7779ece9c62551eb1c1a24c53906a5}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_a375c1c5bb0d8b80208b32f90128f7347}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_a7f3181ddc47e86407b2c87d593dc8386}{C5.\+Sorted\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_collection_a912c6184ee4b074c3981f9dde491a94b}{C5.\+Guarded\+Collection$<$ T $>$}, \hyperlink{class_c5_1_1_hash_set_a07eacbcc5850774881dd596676e6b134}{C5.\+Hash\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_wrapped_array_af733180804bf7ee5a4a0ece7f6cb12c3}{C5.\+Wrapped\+Array$<$ T $>$}, and \hyperlink{class_c5_1_1_hash_bag_ac7e182e2105701436c1288feaeeef627}{C5.\+Hash\+Bag$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_collection_ac2672fb0557eeb24e328149c513c9a8b}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Retain\+All@{Retain\+All}}
+\index{Retain\+All@{Retain\+All}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Retain\+All(\+S\+C\+G.\+I\+Enumerable$<$ T $>$ items)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+I\+Collection}$<$ T $>$.Retain\+All (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Enumerable$<$ T $>$}]{items}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_collection_ac2672fb0557eeb24e328149c513c9a8b}
+
+
+Remove all items not in some other collection from this one. If this collection has bag semantics, take multiplicities into account. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em items} & The items to retain.\\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_a56ae0d7eee62da4832bfc2363adf056e}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_af59cb7a4dbffd061ffc577a34021db1c}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_tree_bag_a5e94ab2d0e81d3834d60824482a5568c}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_aecd559b74434fcf369cd55fa0235f6e8}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_a2c474cfc8e742163eec9bfba91169a79}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_a7f3f5674779507d03f9139dea24977a2}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_abb280e148baa50e5793aa4368ce33876}{C5.\+Sorted\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_collection_addd89e0bb9db15b64f24d64b7720761d}{C5.\+Guarded\+Collection$<$ T $>$}, \hyperlink{class_c5_1_1_wrapped_array_aca9b3686c472517405451a8342da0de1}{C5.\+Wrapped\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_hash_set_a5ab8110d40df588e0214b2d55eb085ce}{C5.\+Hash\+Set$<$ T $>$}, and \hyperlink{class_c5_1_1_hash_bag_aa83a436a144bb83ea23059d2b9d54a45}{C5.\+Hash\+Bag$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_collection_a074c4e1a90fb7f98c95834204352c28c}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Unique\+Items@{Unique\+Items}}
+\index{Unique\+Items@{Unique\+Items}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Unique\+Items()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Collection\+Value}$<$T$>$ {\bf C5.\+I\+Collection}$<$ T $>$.Unique\+Items (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_collection_a074c4e1a90fb7f98c95834204352c28c}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_a11f80f9fc36538f944da608ce8ae8e6e}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_ae1fa3b103e84b621d2746bdf73e5dec5}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_tree_bag_abae751027448f33475f6fc68f53fa118}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_a02a32bc9594d519364d9c611c9d48b1d}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_ab51e4a315e9d2a09ff389f64bc7a13a1}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_a3d9b907977cfdf33ae2dbb7176c22ec8}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_abdf7dbe61c27ce24d2443c941a0f4a53}{C5.\+Sorted\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_hash_set_a8f1963ae2661d4b9b064f88124789c76}{C5.\+Hash\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_collection_a2a600a8efdfc23bcf87ae310cfbe8120}{C5.\+Guarded\+Collection$<$ T $>$}, \hyperlink{class_c5_1_1_hash_bag_ab6b0278effda160df10814d87e885385}{C5.\+Hash\+Bag$<$ T $>$}, and \hyperlink{class_c5_1_1_wrapped_array_a10749be9ab87797f2f0db77c21db2e10}{C5.\+Wrapped\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_collection_a46fee76e3afed2b0510e94814ef832b2}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Unsequenced\+Equals@{Unsequenced\+Equals}}
+\index{Unsequenced\+Equals@{Unsequenced\+Equals}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Unsequenced\+Equals(\+I\+Collection$<$ T $>$ other\+Collection)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+I\+Collection}$<$ T $>$.Unsequenced\+Equals (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Collection}$<$ T $>$}]{other\+Collection}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_collection_a46fee76e3afed2b0510e94814ef832b2}
+
+
+Compare the contents of this collection to another one without regards to the sequence order. The comparison will use this collection\textquotesingle{}s itemequality\+Comparer to compare individual items. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other\+Collection} & The collection to compare to.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if this collection and that contains the same items.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_a658a0145c6f1d28e00e558a705d3c8e2}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_a5395d073fc0753d8842d805e28bda799}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_a6ed6c87e49b97c50d2cafba6fe050b26}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_a46753a14629243761d6056839747f23f}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_collection_ada1904ad7956b9e72606e2f9082642d7}{C5.\+Guarded\+Collection$<$ T $>$}, and \hyperlink{class_c5_1_1_wrapped_array_af41294d9e8203f58df120b0f551392d0}{C5.\+Wrapped\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_collection_acf060ba6b83289dc74bea61502318d56}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Update@{Update}}
+\index{Update@{Update}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Update(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+I\+Collection}$<$ T $>$.Update (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_collection_acf060ba6b83289dc74bea61502318d56}
+
+
+Check if this collection contains an item equivalent according to the itemequality\+Comparer to a particular value. If so, update the item in the collection with a (binary copy of) the supplied value. If the collection has bag semantics, it depends on the value of Duplicates\+By\+Counting if this updates all equivalent copies in the collection or just one. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & Value to update.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the item was found and hence updated.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_a1c0b09fb0b46cc0bcc00e67e5d027438}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_aeb542c2f2a82a130102b28cfb3dbfb87}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_a265287f01f52f2975ffdc926af3e8998}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_af3b4372db9e6040a7b26ec773a17dd76}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_tree_bag_a25b6de50c879cdbb2b82a8510d5b9094}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_a8f1700589d1f048da1f66c260bb83c2f}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_a4283f8b55f0afa4e594395195e477a98}{C5.\+Sorted\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_collection_a352f685be2677d2df5225e50aecb21cf}{C5.\+Guarded\+Collection$<$ T $>$}, \hyperlink{class_c5_1_1_wrapped_array_a7a72a3ce30888c5cd0b75cced3c1e241}{C5.\+Wrapped\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_hash_set_a0cfae793ab357695699f58064b892c8d}{C5.\+Hash\+Set$<$ T $>$}, and \hyperlink{class_c5_1_1_hash_bag_a261d215277e57859f6a3b0dba0f31db5}{C5.\+Hash\+Bag$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_collection_ad1faa1738e02acf001aac16a3b948c78}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Update@{Update}}
+\index{Update@{Update}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Update(\+T item, out T olditem)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+I\+Collection}$<$ T $>$.Update (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{out T}]{olditem}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_collection_ad1faa1738e02acf001aac16a3b948c78}
+
+
+Check if this collection contains an item equivalent according to the itemequality\+Comparer to a particular value. If so, update the item in the collection with a (binary copy of) the supplied value. If the collection has bag semantics, it depends on the value of Duplicates\+By\+Counting if this updates all equivalent copies in the collection or just one. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & Value to update.\\
+\hline
+{\em olditem} & On output the olditem, if found.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the item was found and hence updated.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_a67ca2384da1dde0b651fe1ec01c8f0ba}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_a51e79bb8c192cabe9534d8c8665cb8e3}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_a68f51b76c891c44cd424c7604cef85ab}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_a9ab8634f890942de1711e5a8de88f6cc}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_tree_bag_aa433d20fdf8caf16236d85b47236c59b}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_a197ce45efaebf3011910aafba91c5204}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_a164df9a0ba5cc59a5ff1bc923dc096fa}{C5.\+Sorted\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_collection_a71d59b799800f0271a6a36a6fdea2f53}{C5.\+Guarded\+Collection$<$ T $>$}, \hyperlink{class_c5_1_1_wrapped_array_a702abce4ea5ab27787f8b5f61598fc48}{C5.\+Wrapped\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_hash_set_aa0037ac87af2603ab0641e3037e5ee55}{C5.\+Hash\+Set$<$ T $>$}, and \hyperlink{class_c5_1_1_hash_bag_aa464499f571def3278fb29ffd49dc9d9}{C5.\+Hash\+Bag$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_collection_a9739490d6271fb3a92221bca5da5e54b}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Update\+Or\+Add@{Update\+Or\+Add}}
+\index{Update\+Or\+Add@{Update\+Or\+Add}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Update\+Or\+Add(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+I\+Collection}$<$ T $>$.Update\+Or\+Add (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_collection_a9739490d6271fb3a92221bca5da5e54b}
+
+
+Check if this collection contains an item equivalent according to the itemequality\+Comparer to a particular value. If so, update the item in the collection to with a binary copy of the supplied value; else add the value to the collection. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & Value to add or update.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the item was found and updated (hence not added).
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_a5efb946b793ca1134c8f9d8b47d2cac7}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_a1e0548801ebf49f8d9d9d26394a7676c}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_a97e9d72944cb3ff6b5d5162e381e36e7}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_a2f38168aaa805fc305be7800e2298b9f}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_tree_bag_ab80a33bcaea469478a77af16b8387a63}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_a3ec0ca0c5389b8c911af08a69de8b923}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_a2be0a362b17608ea4443a667a5e58c25}{C5.\+Sorted\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_collection_a8cf85ddaca2e6fc07d6c4461feb9981f}{C5.\+Guarded\+Collection$<$ T $>$}, \hyperlink{class_c5_1_1_wrapped_array_ade54ce5ee162ea128e492e98ba82b667}{C5.\+Wrapped\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_hash_set_a65709285f46c3bfd43d5dda1c4ab54fd}{C5.\+Hash\+Set$<$ T $>$}, and \hyperlink{class_c5_1_1_hash_bag_a7d04b71113870f6bbdd936fa778d1775}{C5.\+Hash\+Bag$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_collection_a73a5d984e95e200de80261361bb7e57d}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Update\+Or\+Add@{Update\+Or\+Add}}
+\index{Update\+Or\+Add@{Update\+Or\+Add}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Update\+Or\+Add(\+T item, out T olditem)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+I\+Collection}$<$ T $>$.Update\+Or\+Add (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{out T}]{olditem}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_collection_a73a5d984e95e200de80261361bb7e57d}
+
+
+Check if this collection contains an item equivalent according to the itemequality\+Comparer to a particular value. If so, update the item in the collection to with a binary copy of the supplied value; else add the value to the collection. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & Value to add or update.\\
+\hline
+{\em olditem} & On output the olditem, if found.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the item was found and updated (hence not added).
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_hashed_linked_list_a53e4be293af672a2354b7eb480ce48e6}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_a248122a0d20dfd89e8e7e9a84062405d}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_ac0be87fa58015a3191d91ab0e8c75766}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_a5bb957a4a9d9d8fa6040c0fe1c9d1237}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_tree_bag_ae83ee2558781cc754bc6b601d23eb334}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_a2769676af15081ee410f3a30aedb1c06}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_afdd7b8a6e4fe02a1d91e5085d48ce7f8}{C5.\+Sorted\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_collection_a0ff18d72c676480a225f9d3e3dacfcd0}{C5.\+Guarded\+Collection$<$ T $>$}, \hyperlink{class_c5_1_1_wrapped_array_aadf783ba87fbad13d1730cd2c922ab7a}{C5.\+Wrapped\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_hash_set_a2a07fae0af3a3f329d47719019fb2c5b}{C5.\+Hash\+Set$<$ T $>$}, and \hyperlink{class_c5_1_1_hash_bag_a22061ab9c804125e28d56a4d32aa6ee7}{C5.\+Hash\+Bag$<$ T $>$}.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{interface_c5_1_1_i_collection_a0a9bcd98894c191206e18c7c20c3bdfe}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Contains\+Speed@{Contains\+Speed}}
+\index{Contains\+Speed@{Contains\+Speed}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Contains\+Speed}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Speed} {\bf C5.\+I\+Collection}$<$ T $>$.Contains\+Speed\hspace{0.3cm}{\ttfamily [get]}}\label{interface_c5_1_1_i_collection_a0a9bcd98894c191206e18c7c20c3bdfe}
+
+
+The value is symbolic indicating the type of asymptotic complexity in terms of the size of this collection (worst-\/case or amortized as relevant). 
+
+See T\+:\+C5.\+Speed for the set of symbols.
+
+A characterization of the speed of lookup operations ({\ttfamily \hyperlink{interface_c5_1_1_i_collection_a4de01b6d77ea5eaffccc8267b4454cdd}{Contains()}} etc.) of the implementation of this collection.\hypertarget{interface_c5_1_1_i_collection_abddff5406ccd4e98d8d96f41bf9d6d5b}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Count@{Count}}
+\index{Count@{Count}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Count}]{\setlength{\rightskip}{0pt plus 5cm}new int {\bf C5.\+I\+Collection}$<$ T $>$.Count\hspace{0.3cm}{\ttfamily [get]}}\label{interface_c5_1_1_i_collection_abddff5406ccd4e98d8d96f41bf9d6d5b}
+
+
+
+
+The number of items in this collection\hypertarget{interface_c5_1_1_i_collection_a94b0751f2b2fbd0519233b2755c055b4}{}\index{C5\+::\+I\+Collection@{C5\+::\+I\+Collection}!Is\+Read\+Only@{Is\+Read\+Only}}
+\index{Is\+Read\+Only@{Is\+Read\+Only}!C5\+::\+I\+Collection@{C5\+::\+I\+Collection}}
+\subsubsection[{Is\+Read\+Only}]{\setlength{\rightskip}{0pt plus 5cm}new bool {\bf C5.\+I\+Collection}$<$ T $>$.Is\+Read\+Only\hspace{0.3cm}{\ttfamily [get]}}\label{interface_c5_1_1_i_collection_a94b0751f2b2fbd0519233b2755c055b4}
+
+
+If true any call of an updating operation will throw an 
+
+{\ttfamily \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} 
+
+True if this collection is read-\/only.
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_interfaces_8cs}{Interfaces.\+cs}\end{DoxyCompactItemize}

@@ -1,0 +1,667 @@
+\hypertarget{class_c5_1_1_interval_heap}{}\section{C5.\+Interval\+Heap$<$ T $>$ Class Template Reference}
+\label{class_c5_1_1_interval_heap}\index{C5.\+Interval\+Heap$<$ T $>$@{C5.\+Interval\+Heap$<$ T $>$}}
+
+
+A priority queue class based on an interval heap data structure.  
+
+
+Inheritance diagram for C5.\+Interval\+Heap$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.947368cm]{class_c5_1_1_interval_heap}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c5_1_1_interval_heap_a5a6140a981bbc3f40b101a26dee6c37f}{Interval\+Heap} ()
+\begin{DoxyCompactList}\small\item\em Create an interval heap with natural item comparer and default initial capacity (16) \end{DoxyCompactList}\item 
+\hyperlink{class_c5_1_1_interval_heap_a94962594feb3b88e0cd87ad2397df4ed}{Interval\+Heap} (S\+C\+G.\+I\+Comparer$<$ T $>$ comparer)
+\begin{DoxyCompactList}\small\item\em Create an interval heap with external item comparer and default initial capacity (16) \end{DoxyCompactList}\item 
+\hyperlink{class_c5_1_1_interval_heap_ae7bdfcb5955687d26fc5a380c89256eb}{Interval\+Heap} (int capacity)
+\begin{DoxyCompactList}\small\item\em Create an interval heap with natural item comparer and prescribed initial capacity \end{DoxyCompactList}\item 
+\hyperlink{class_c5_1_1_interval_heap_a4259a4d0b543370844e066dd9a165c49}{Interval\+Heap} (int capacity, S\+C\+G.\+I\+Comparer$<$ T $>$ comparer)
+\begin{DoxyCompactList}\small\item\em Create an interval heap with external item comparer and prescribed initial capacity \end{DoxyCompactList}\item 
+T \hyperlink{class_c5_1_1_interval_heap_ad4671adf7daad4e8b6711c0a9a5663fe}{Find\+Min} ()
+\begin{DoxyCompactList}\small\item\em Find the current least item of this priority queue. 
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if queue is empty \\
+\hline
+\end{DoxyExceptions}
+\end{DoxyCompactList}\item 
+T \hyperlink{class_c5_1_1_interval_heap_a63772295b880e38f9ef5c2469a687770}{Delete\+Min} ()
+\begin{DoxyCompactList}\small\item\em Remove the least item from this priority queue. 
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if queue is empty \\
+\hline
+\end{DoxyExceptions}
+\end{DoxyCompactList}\item 
+T \hyperlink{class_c5_1_1_interval_heap_abda450e3da23bc35d0db7f4f0dd91d00}{Find\+Max} ()
+\begin{DoxyCompactList}\small\item\em Find the current largest item of this priority queue. 
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if queue is empty \\
+\hline
+\end{DoxyExceptions}
+\end{DoxyCompactList}\item 
+T \hyperlink{class_c5_1_1_interval_heap_a487241b83be6837692408542c7cfb6b5}{Delete\+Max} ()
+\begin{DoxyCompactList}\small\item\em Remove the largest item from this priority queue. 
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if queue is empty \\
+\hline
+\end{DoxyExceptions}
+\end{DoxyCompactList}\item 
+bool \hyperlink{class_c5_1_1_interval_heap_ab7c3c348aa1f0f2723dd0a533e1c458f}{Add} (T item)
+\begin{DoxyCompactList}\small\item\em Add an item to this priority queue. \end{DoxyCompactList}\item 
+void \hyperlink{class_c5_1_1_interval_heap_abe5fb2f06b082e4fec00dc454cd31ed8}{Add\+All} (S\+C\+G.\+I\+Enumerable$<$ T $>$ items)
+\begin{DoxyCompactList}\small\item\em Add the elements from another collection with a more specialized item type to this collection. \end{DoxyCompactList}\item 
+override T \hyperlink{class_c5_1_1_interval_heap_a0d5fe1b0687d6ef002a17c6e46900772}{Choose} ()
+\begin{DoxyCompactList}\small\item\em Choose some item of this collection. \end{DoxyCompactList}\item 
+override S\+C\+G.\+I\+Enumerator$<$ T $>$ \hyperlink{class_c5_1_1_interval_heap_a09556ba66252a46d94456587bc877561}{Get\+Enumerator} ()
+\begin{DoxyCompactList}\small\item\em Create an enumerator for the collection \end{DoxyCompactList}\item 
+bool \hyperlink{class_c5_1_1_interval_heap_a9682f00247167989ae132c26ded9f600}{Check} ()
+\begin{DoxyCompactList}\small\item\em Check the integrity of the internal data structures of this collection. Only avaliable in D\+E\+B\+U\+G builds??? \end{DoxyCompactList}\item 
+bool \hyperlink{class_c5_1_1_interval_heap_abaae4e91221233de39a8062ae7c89402}{Find} (\hyperlink{interface_c5_1_1_i_priority_queue_handle}{I\+Priority\+Queue\+Handle}$<$ T $>$ handle, out T item)
+\begin{DoxyCompactList}\small\item\em Check safely if a handle is valid for this queue and if so, report the corresponding queue item. \end{DoxyCompactList}\item 
+bool \hyperlink{class_c5_1_1_interval_heap_a4ea1fbf9bb6c727fc83a033e311074ec}{Add} (ref \hyperlink{interface_c5_1_1_i_priority_queue_handle}{I\+Priority\+Queue\+Handle}$<$ T $>$ handle, T item)
+\begin{DoxyCompactList}\small\item\em Add an item to the priority queue, receiving a handle for the item in the queue, or reusing an already existing handle. \end{DoxyCompactList}\item 
+T \hyperlink{class_c5_1_1_interval_heap_a3f9868407c50d789c85e998448e50114}{Delete} (\hyperlink{interface_c5_1_1_i_priority_queue_handle}{I\+Priority\+Queue\+Handle}$<$ T $>$ handle)
+\begin{DoxyCompactList}\small\item\em Delete an item with a handle from a priority queue. \end{DoxyCompactList}\item 
+T \hyperlink{class_c5_1_1_interval_heap_abfc2e592410f83b10f7feb82bcbd53db}{Replace} (\hyperlink{interface_c5_1_1_i_priority_queue_handle}{I\+Priority\+Queue\+Handle}$<$ T $>$ handle, T item)
+\begin{DoxyCompactList}\small\item\em Replace an item with a handle in a priority queue with a new item. Typically used for changing the priority of some queued object. \end{DoxyCompactList}\item 
+T \hyperlink{class_c5_1_1_interval_heap_a3b14d4af51572b295c9eebdf880ed493}{Find\+Min} (out \hyperlink{interface_c5_1_1_i_priority_queue_handle}{I\+Priority\+Queue\+Handle}$<$ T $>$ handle)
+\begin{DoxyCompactList}\small\item\em Find the current least item of this priority queue. \end{DoxyCompactList}\item 
+T \hyperlink{class_c5_1_1_interval_heap_aeb97ce7d763c7e3707251de9f76071aa}{Find\+Max} (out \hyperlink{interface_c5_1_1_i_priority_queue_handle}{I\+Priority\+Queue\+Handle}$<$ T $>$ handle)
+\begin{DoxyCompactList}\small\item\em Find the current largest item of this priority queue. \end{DoxyCompactList}\item 
+T \hyperlink{class_c5_1_1_interval_heap_a3b605362b2ab7bf2268383be00015f6d}{Delete\+Min} (out \hyperlink{interface_c5_1_1_i_priority_queue_handle}{I\+Priority\+Queue\+Handle}$<$ T $>$ handle)
+\begin{DoxyCompactList}\small\item\em Remove the least item from this priority queue. \end{DoxyCompactList}\item 
+T \hyperlink{class_c5_1_1_interval_heap_ac5446ec37bcee1e0f117fbbe566f6386}{Delete\+Max} (out \hyperlink{interface_c5_1_1_i_priority_queue_handle}{I\+Priority\+Queue\+Handle}$<$ T $>$ handle)
+\begin{DoxyCompactList}\small\item\em Remove the largest item from this priority queue. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+override \hyperlink{namespace_c5_a9143bfd561fffa025d21561674758008}{Event\+Type\+Enum} \hyperlink{class_c5_1_1_interval_heap_aea675c936b84378eaa72d208a80605dd}{Listenable\+Events}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+S\+C\+G.\+I\+Comparer$<$ T $>$ \hyperlink{class_c5_1_1_interval_heap_a0da8aaabae59ac97119bff56d16e6a87}{Comparer}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The comparer object supplied at creation time for this collection \end{DoxyCompactList}\item 
+bool \hyperlink{class_c5_1_1_interval_heap_a0c7d60732701b904a277b1c776224fbf}{Is\+Read\+Only}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em If true any call of an updating operation will throw an \end{DoxyCompactList}\item 
+bool \hyperlink{class_c5_1_1_interval_heap_a3f04b4e3b21b55967adcb6cf7f3252dc}{Allows\+Duplicates}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+virtual S\+C\+G.\+I\+Equality\+Comparer$<$ T $>$ \hyperlink{class_c5_1_1_interval_heap_a0c8af0d3e8f557d3e083513a2774676a}{Equality\+Comparer}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Value is null since this collection has no equality concept for its items. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_interval_heap_a7e944979e8700149ef1605b5ff7019e9}{Duplicates\+By\+Counting}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em By convention this is true for any collection with set semantics. \end{DoxyCompactList}\item 
+override bool \hyperlink{class_c5_1_1_interval_heap_aa6146324a58bb879c502a9f1cfb483a8}{Is\+Empty}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+override int \hyperlink{class_c5_1_1_interval_heap_a4db5c619c65ba918015da4cd45f7ba8d}{Count}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+override \hyperlink{namespace_c5_a615ba88dcdaa8d5a3c5f833a73d7fad6}{Speed} \hyperlink{class_c5_1_1_interval_heap_a33d630a81c86d10cf5cff931662f3808}{Count\+Speed}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The value is symbolic indicating the type of asymptotic complexity in terms of the size of this collection (worst-\/case or amortized as relevant). \end{DoxyCompactList}\item 
+T \hyperlink{class_c5_1_1_interval_heap_a91e32b822986bd74b9e3862a767d0c13}{this\mbox{[}\+I\+Priority\+Queue\+Handle$<$ T $>$ handle\mbox{]}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Get or set the item corresponding to a handle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A priority queue class based on an interval heap data structure. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The item type\\
+\hline
+\end{DoxyTemplParams}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_c5_1_1_interval_heap_a5a6140a981bbc3f40b101a26dee6c37f}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Interval\+Heap@{Interval\+Heap}}
+\index{Interval\+Heap@{Interval\+Heap}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Interval\+Heap()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Interval\+Heap}$<$ T $>$.{\bf Interval\+Heap} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_interval_heap_a5a6140a981bbc3f40b101a26dee6c37f}
+
+
+Create an interval heap with natural item comparer and default initial capacity (16) 
+
+\hypertarget{class_c5_1_1_interval_heap_a94962594feb3b88e0cd87ad2397df4ed}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Interval\+Heap@{Interval\+Heap}}
+\index{Interval\+Heap@{Interval\+Heap}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Interval\+Heap(\+S\+C\+G.\+I\+Comparer$<$ T $>$ comparer)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Interval\+Heap}$<$ T $>$.{\bf Interval\+Heap} (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Comparer$<$ T $>$}]{comparer}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_interval_heap_a94962594feb3b88e0cd87ad2397df4ed}
+
+
+Create an interval heap with external item comparer and default initial capacity (16) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em comparer} & The external comparer\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_c5_1_1_interval_heap_ae7bdfcb5955687d26fc5a380c89256eb}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Interval\+Heap@{Interval\+Heap}}
+\index{Interval\+Heap@{Interval\+Heap}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Interval\+Heap(int capacity)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Interval\+Heap}$<$ T $>$.{\bf Interval\+Heap} (
+\begin{DoxyParamCaption}
+\item[{int}]{capacity}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_interval_heap_ae7bdfcb5955687d26fc5a380c89256eb}
+
+
+Create an interval heap with natural item comparer and prescribed initial capacity 
+
+
+\begin{DoxyParams}{Parameters}
+{\em capacity} & The initial capacity\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_c5_1_1_interval_heap_a4259a4d0b543370844e066dd9a165c49}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Interval\+Heap@{Interval\+Heap}}
+\index{Interval\+Heap@{Interval\+Heap}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Interval\+Heap(int capacity, S\+C\+G.\+I\+Comparer$<$ T $>$ comparer)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Interval\+Heap}$<$ T $>$.{\bf Interval\+Heap} (
+\begin{DoxyParamCaption}
+\item[{int}]{capacity, }
+\item[{S\+C\+G.\+I\+Comparer$<$ T $>$}]{comparer}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_interval_heap_a4259a4d0b543370844e066dd9a165c49}
+
+
+Create an interval heap with external item comparer and prescribed initial capacity 
+
+
+\begin{DoxyParams}{Parameters}
+{\em comparer} & The external comparer\\
+\hline
+{\em capacity} & The initial capacity\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_interval_heap_ab7c3c348aa1f0f2723dd0a533e1c458f}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Add@{Add}}
+\index{Add@{Add}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Add(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Interval\+Heap}$<$ T $>$.Add (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_interval_heap_ab7c3c348aa1f0f2723dd0a533e1c458f}
+
+
+Add an item to this priority queue. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to add.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_extensible_acfe8d39605927db1aff0572e2b5c1089}{C5.\+I\+Extensible$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_interval_heap_a4ea1fbf9bb6c727fc83a033e311074ec}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Add@{Add}}
+\index{Add@{Add}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Add(ref I\+Priority\+Queue\+Handle$<$ T $>$ handle, T item)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Interval\+Heap}$<$ T $>$.Add (
+\begin{DoxyParamCaption}
+\item[{ref {\bf I\+Priority\+Queue\+Handle}$<$ T $>$}]{handle, }
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_interval_heap_a4ea1fbf9bb6c727fc83a033e311074ec}
+
+
+Add an item to the priority queue, receiving a handle for the item in the queue, or reusing an already existing handle. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & On output\+: a handle for the added item. On input\+: null for allocating a new handle, an invalid handle for reuse. A handle for reuse must be compatible with this priority queue, by being created by a priority queue of the same runtime type, but not necessarily the same priority queue object.\\
+\hline
+{\em item} & The item to add.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True since item will always be added unless the call throws an exception.
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_priority_queue_ac90f40246d54cb28935bf89d9e0c9c72}{C5.\+I\+Priority\+Queue$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_interval_heap_abe5fb2f06b082e4fec00dc454cd31ed8}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Add\+All@{Add\+All}}
+\index{Add\+All@{Add\+All}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Add\+All(\+S\+C\+G.\+I\+Enumerable$<$ T $>$ items)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Interval\+Heap}$<$ T $>$.Add\+All (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Enumerable$<$ T $>$}]{items}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_interval_heap_abe5fb2f06b082e4fec00dc454cd31ed8}
+
+
+Add the elements from another collection with a more specialized item type to this collection. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em items} & The items to add\\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_extensible_a1fb4d50c5b340e60303da72e9d0ede6e}{C5.\+I\+Extensible$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_interval_heap_a9682f00247167989ae132c26ded9f600}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Check@{Check}}
+\index{Check@{Check}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Check()}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Interval\+Heap}$<$ T $>$.Check (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_interval_heap_a9682f00247167989ae132c26ded9f600}
+
+
+Check the integrity of the internal data structures of this collection. Only avaliable in D\+E\+B\+U\+G builds??? 
+
+\begin{DoxyReturn}{Returns}
+True if check does not fail.
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_extensible_aeeb6b87af61e455df42d68834d711bcb}{C5.\+I\+Extensible$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_interval_heap_a0d5fe1b0687d6ef002a17c6e46900772}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Choose@{Choose}}
+\index{Choose@{Choose}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Choose()}]{\setlength{\rightskip}{0pt plus 5cm}override T {\bf C5.\+Interval\+Heap}$<$ T $>$.Choose (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_interval_heap_a0d5fe1b0687d6ef002a17c6e46900772}
+
+
+Choose some item of this collection. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if collection is empty.\\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_c5_1_1_collection_value_base_ad7b8bd01dfd7ea8480a972f02a81608b}{C5.\+Collection\+Value\+Base$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_interval_heap_a3f9868407c50d789c85e998448e50114}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Delete@{Delete}}
+\index{Delete@{Delete}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Delete(\+I\+Priority\+Queue\+Handle$<$ T $>$ handle)}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Interval\+Heap}$<$ T $>$.Delete (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Priority\+Queue\+Handle}$<$ T $>$}]{handle}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_interval_heap_a3f9868407c50d789c85e998448e50114}
+
+
+Delete an item with a handle from a priority queue. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_invalid_priority_queue_handle_exception}{Invalid\+Priority\+Queue\+Handle\+Exception}} & if the handle is invalid\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & The handle for the item. The handle will be invalidated, but reusable.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The deleted item
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_priority_queue_a8b1272ae3287f72eeece44d17a9c2eff}{C5.\+I\+Priority\+Queue$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_interval_heap_a487241b83be6837692408542c7cfb6b5}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Delete\+Max@{Delete\+Max}}
+\index{Delete\+Max@{Delete\+Max}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Delete\+Max()}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Interval\+Heap}$<$ T $>$.Delete\+Max (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_interval_heap_a487241b83be6837692408542c7cfb6b5}
+
+
+Remove the largest item from this priority queue. 
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if queue is empty \\
+\hline
+\end{DoxyExceptions}
+
+
+\begin{DoxyReturn}{Returns}
+The removed item.
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_priority_queue_a8f728da5fbc6ae1bb4b2941d51885d69}{C5.\+I\+Priority\+Queue$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_interval_heap_ac5446ec37bcee1e0f117fbbe566f6386}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Delete\+Max@{Delete\+Max}}
+\index{Delete\+Max@{Delete\+Max}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Delete\+Max(out I\+Priority\+Queue\+Handle$<$ T $>$ handle)}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Interval\+Heap}$<$ T $>$.Delete\+Max (
+\begin{DoxyParamCaption}
+\item[{out {\bf I\+Priority\+Queue\+Handle}$<$ T $>$}]{handle}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_interval_heap_ac5446ec37bcee1e0f117fbbe566f6386}
+
+
+Remove the largest item from this priority queue. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & On return\+: the handle of the removed item.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The removed item.
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_priority_queue_ae6b746354d02c65d0435040682baf0c9}{C5.\+I\+Priority\+Queue$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_interval_heap_a63772295b880e38f9ef5c2469a687770}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Delete\+Min@{Delete\+Min}}
+\index{Delete\+Min@{Delete\+Min}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Delete\+Min()}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Interval\+Heap}$<$ T $>$.Delete\+Min (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_interval_heap_a63772295b880e38f9ef5c2469a687770}
+
+
+Remove the least item from this priority queue. 
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if queue is empty \\
+\hline
+\end{DoxyExceptions}
+
+
+\begin{DoxyReturn}{Returns}
+The removed item.
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_priority_queue_a278dfa42e80291ba82122f174895dd77}{C5.\+I\+Priority\+Queue$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_interval_heap_a3b605362b2ab7bf2268383be00015f6d}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Delete\+Min@{Delete\+Min}}
+\index{Delete\+Min@{Delete\+Min}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Delete\+Min(out I\+Priority\+Queue\+Handle$<$ T $>$ handle)}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Interval\+Heap}$<$ T $>$.Delete\+Min (
+\begin{DoxyParamCaption}
+\item[{out {\bf I\+Priority\+Queue\+Handle}$<$ T $>$}]{handle}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_interval_heap_a3b605362b2ab7bf2268383be00015f6d}
+
+
+Remove the least item from this priority queue. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & On return\+: the handle of the removed item.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The removed item.
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_priority_queue_a3aca77813a8c6d30de8bc8d8ff734de0}{C5.\+I\+Priority\+Queue$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_interval_heap_abaae4e91221233de39a8062ae7c89402}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Find@{Find}}
+\index{Find@{Find}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Find(\+I\+Priority\+Queue\+Handle$<$ T $>$ handle, out T item)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Interval\+Heap}$<$ T $>$.Find (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Priority\+Queue\+Handle}$<$ T $>$}]{handle, }
+\item[{out T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_interval_heap_abaae4e91221233de39a8062ae7c89402}
+
+
+Check safely if a handle is valid for this queue and if so, report the corresponding queue item. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & The handle to check\\
+\hline
+{\em item} & If the handle is valid this will contain the corresponding item on output.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the handle is valid.
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_priority_queue_a4f8bac3647b3b668939a0e9c34c158e5}{C5.\+I\+Priority\+Queue$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_interval_heap_abda450e3da23bc35d0db7f4f0dd91d00}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Find\+Max@{Find\+Max}}
+\index{Find\+Max@{Find\+Max}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Find\+Max()}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Interval\+Heap}$<$ T $>$.Find\+Max (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_interval_heap_abda450e3da23bc35d0db7f4f0dd91d00}
+
+
+Find the current largest item of this priority queue. 
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if queue is empty \\
+\hline
+\end{DoxyExceptions}
+
+
+\begin{DoxyReturn}{Returns}
+The largest item.
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_priority_queue_ab510a95957edce0bb68aedd85abb73f8}{C5.\+I\+Priority\+Queue$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_interval_heap_aeb97ce7d763c7e3707251de9f76071aa}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Find\+Max@{Find\+Max}}
+\index{Find\+Max@{Find\+Max}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Find\+Max(out I\+Priority\+Queue\+Handle$<$ T $>$ handle)}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Interval\+Heap}$<$ T $>$.Find\+Max (
+\begin{DoxyParamCaption}
+\item[{out {\bf I\+Priority\+Queue\+Handle}$<$ T $>$}]{handle}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_interval_heap_aeb97ce7d763c7e3707251de9f76071aa}
+
+
+Find the current largest item of this priority queue. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & On return\+: the handle of the item.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The largest item.
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_priority_queue_afb1b1299785da3d22ac24332fafe907b}{C5.\+I\+Priority\+Queue$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_interval_heap_ad4671adf7daad4e8b6711c0a9a5663fe}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Find\+Min@{Find\+Min}}
+\index{Find\+Min@{Find\+Min}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Find\+Min()}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Interval\+Heap}$<$ T $>$.Find\+Min (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_interval_heap_ad4671adf7daad4e8b6711c0a9a5663fe}
+
+
+Find the current least item of this priority queue. 
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if queue is empty \\
+\hline
+\end{DoxyExceptions}
+
+
+\begin{DoxyReturn}{Returns}
+The least item.
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_priority_queue_ac1dda27afec7f41e9b414b6e33273714}{C5.\+I\+Priority\+Queue$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_interval_heap_a3b14d4af51572b295c9eebdf880ed493}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Find\+Min@{Find\+Min}}
+\index{Find\+Min@{Find\+Min}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Find\+Min(out I\+Priority\+Queue\+Handle$<$ T $>$ handle)}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Interval\+Heap}$<$ T $>$.Find\+Min (
+\begin{DoxyParamCaption}
+\item[{out {\bf I\+Priority\+Queue\+Handle}$<$ T $>$}]{handle}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_interval_heap_a3b14d4af51572b295c9eebdf880ed493}
+
+
+Find the current least item of this priority queue. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & On return\+: the handle of the item.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The least item.
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_priority_queue_af200c7e915e72ee4bf283b1bbf2eed4d}{C5.\+I\+Priority\+Queue$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_interval_heap_a09556ba66252a46d94456587bc877561}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Get\+Enumerator@{Get\+Enumerator}}
+\index{Get\+Enumerator@{Get\+Enumerator}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Get\+Enumerator()}]{\setlength{\rightskip}{0pt plus 5cm}override S\+C\+G.\+I\+Enumerator$<$T$>$ {\bf C5.\+Interval\+Heap}$<$ T $>$.Get\+Enumerator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_interval_heap_a09556ba66252a46d94456587bc877561}
+
+
+Create an enumerator for the collection 
+
+Note\+: the enumerator does {\itshape not} enumerate the items in sorted order, but in the internal table order.
+
+\begin{DoxyReturn}{Returns}
+The enumerator(\+S\+I\+C)
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_c5_1_1_collection_value_base_a0e8b891322ed9987a18f1a1ac87d2d4f}{C5.\+Collection\+Value\+Base$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_interval_heap_abfc2e592410f83b10f7feb82bcbd53db}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Replace@{Replace}}
+\index{Replace@{Replace}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Replace(\+I\+Priority\+Queue\+Handle$<$ T $>$ handle, T item)}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Interval\+Heap}$<$ T $>$.Replace (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Priority\+Queue\+Handle}$<$ T $>$}]{handle, }
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_interval_heap_abfc2e592410f83b10f7feb82bcbd53db}
+
+
+Replace an item with a handle in a priority queue with a new item. Typically used for changing the priority of some queued object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & The handle for the old item\\
+\hline
+{\em item} & The new item\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The old item
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_priority_queue_ae5784abdd5e7b6079c4cb88dd40c34ad}{C5.\+I\+Priority\+Queue$<$ T $>$}.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{class_c5_1_1_interval_heap_a3f04b4e3b21b55967adcb6cf7f3252dc}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Allows\+Duplicates@{Allows\+Duplicates}}
+\index{Allows\+Duplicates@{Allows\+Duplicates}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Allows\+Duplicates}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Interval\+Heap}$<$ T $>$.Allows\+Duplicates\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_interval_heap_a3f04b4e3b21b55967adcb6cf7f3252dc}
+
+
+
+
+True since this collection has bag semantics\hypertarget{class_c5_1_1_interval_heap_a0da8aaabae59ac97119bff56d16e6a87}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Comparer@{Comparer}}
+\index{Comparer@{Comparer}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Comparer}]{\setlength{\rightskip}{0pt plus 5cm}S\+C\+G.\+I\+Comparer$<$T$>$ {\bf C5.\+Interval\+Heap}$<$ T $>$.Comparer\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_interval_heap_a0da8aaabae59ac97119bff56d16e6a87}
+
+
+The comparer object supplied at creation time for this collection 
+
+The comparer\hypertarget{class_c5_1_1_interval_heap_a4db5c619c65ba918015da4cd45f7ba8d}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Count@{Count}}
+\index{Count@{Count}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Count}]{\setlength{\rightskip}{0pt plus 5cm}override int {\bf C5.\+Interval\+Heap}$<$ T $>$.Count\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_interval_heap_a4db5c619c65ba918015da4cd45f7ba8d}
+
+
+
+
+The size of this collection\hypertarget{class_c5_1_1_interval_heap_a33d630a81c86d10cf5cff931662f3808}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Count\+Speed@{Count\+Speed}}
+\index{Count\+Speed@{Count\+Speed}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Count\+Speed}]{\setlength{\rightskip}{0pt plus 5cm}override {\bf Speed} {\bf C5.\+Interval\+Heap}$<$ T $>$.Count\+Speed\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_interval_heap_a33d630a81c86d10cf5cff931662f3808}
+
+
+The value is symbolic indicating the type of asymptotic complexity in terms of the size of this collection (worst-\/case or amortized as relevant). 
+
+A characterization of the speed of the {\ttfamily Count} property in this collection.\hypertarget{class_c5_1_1_interval_heap_a7e944979e8700149ef1605b5ff7019e9}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Duplicates\+By\+Counting@{Duplicates\+By\+Counting}}
+\index{Duplicates\+By\+Counting@{Duplicates\+By\+Counting}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Duplicates\+By\+Counting}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Interval\+Heap}$<$ T $>$.Duplicates\+By\+Counting\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_interval_heap_a7e944979e8700149ef1605b5ff7019e9}
+
+
+By convention this is true for any collection with set semantics. 
+
+True if only one representative of a group of equal items is kept in the collection together with the total count.\hypertarget{class_c5_1_1_interval_heap_a0c8af0d3e8f557d3e083513a2774676a}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Equality\+Comparer@{Equality\+Comparer}}
+\index{Equality\+Comparer@{Equality\+Comparer}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Equality\+Comparer}]{\setlength{\rightskip}{0pt plus 5cm}virtual S\+C\+G.\+I\+Equality\+Comparer$<$T$>$ {\bf C5.\+Interval\+Heap}$<$ T $>$.Equality\+Comparer\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_interval_heap_a0c8af0d3e8f557d3e083513a2774676a}
+
+
+Value is null since this collection has no equality concept for its items. 
+
+\hypertarget{class_c5_1_1_interval_heap_aa6146324a58bb879c502a9f1cfb483a8}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Is\+Empty@{Is\+Empty}}
+\index{Is\+Empty@{Is\+Empty}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Is\+Empty}]{\setlength{\rightskip}{0pt plus 5cm}override bool {\bf C5.\+Interval\+Heap}$<$ T $>$.Is\+Empty\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_interval_heap_aa6146324a58bb879c502a9f1cfb483a8}
+
+
+
+
+True if this collection is empty.\hypertarget{class_c5_1_1_interval_heap_a0c7d60732701b904a277b1c776224fbf}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Is\+Read\+Only@{Is\+Read\+Only}}
+\index{Is\+Read\+Only@{Is\+Read\+Only}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Is\+Read\+Only}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Interval\+Heap}$<$ T $>$.Is\+Read\+Only\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_interval_heap_a0c7d60732701b904a277b1c776224fbf}
+
+
+If true any call of an updating operation will throw an 
+
+{\ttfamily \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} 
+
+True if this collection is read-\/only.\hypertarget{class_c5_1_1_interval_heap_aea675c936b84378eaa72d208a80605dd}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!Listenable\+Events@{Listenable\+Events}}
+\index{Listenable\+Events@{Listenable\+Events}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{Listenable\+Events}]{\setlength{\rightskip}{0pt plus 5cm}override {\bf Event\+Type\+Enum} {\bf C5.\+Interval\+Heap}$<$ T $>$.Listenable\+Events\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_interval_heap_aea675c936b84378eaa72d208a80605dd}
+
+
+
+
+\hypertarget{class_c5_1_1_interval_heap_a91e32b822986bd74b9e3862a767d0c13}{}\index{C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}!this\mbox{[}\+I\+Priority\+Queue\+Handle$<$ T $>$ handle\mbox{]}@{this[I\+Priority\+Queue\+Handle$<$ T $>$ handle]}}
+\index{this\mbox{[}\+I\+Priority\+Queue\+Handle$<$ T $>$ handle\mbox{]}@{this[I\+Priority\+Queue\+Handle$<$ T $>$ handle]}!C5\+::\+Interval\+Heap@{C5\+::\+Interval\+Heap}}
+\subsubsection[{this[I\+Priority\+Queue\+Handle$<$ T $>$ handle]}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Interval\+Heap}$<$ T $>$.this\mbox{[}{\bf I\+Priority\+Queue\+Handle}$<$ T $>$ handle\mbox{]}\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{class_c5_1_1_interval_heap_a91e32b822986bd74b9e3862a767d0c13}
+
+
+Get or set the item corresponding to a handle. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_invalid_priority_queue_handle_exception}{Invalid\+Priority\+Queue\+Handle\+Exception}} & if the handle is invalid for this queue\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em handle} & The reference into the heap\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/heaps/\hyperlink{_interval_heap_8cs}{Interval\+Heap.\+cs}\end{DoxyCompactItemize}

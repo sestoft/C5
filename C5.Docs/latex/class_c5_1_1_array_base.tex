@@ -1,0 +1,306 @@
+\hypertarget{class_c5_1_1_array_base}{}\section{C5.\+Array\+Base$<$ T $>$ Class Template Reference}
+\label{class_c5_1_1_array_base}\index{C5.\+Array\+Base$<$ T $>$@{C5.\+Array\+Base$<$ T $>$}}
+
+
+Base class for collection classes of dynamic array type implementations.  
+
+
+Inheritance diagram for C5.\+Array\+Base$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.366197cm]{class_c5_1_1_array_base}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_c5_1_1_array_base_1_1_range}{Range}
+\begin{DoxyCompactList}\small\item\em A helper class for defining results of interval queries on array based collections. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_c5_1_1_array_base_abfee2ce913abdf40245562982f40a496}{Clear} ()
+\begin{DoxyCompactList}\small\item\em Remove all items and reset size of internal array container. \end{DoxyCompactList}\item 
+override T\mbox{[}$\,$\mbox{]} \hyperlink{class_c5_1_1_array_base_a16ffcc583a32065194b3ea27d4a43cd4}{To\+Array} ()
+\begin{DoxyCompactList}\small\item\em Create an array containing (copies) of the items of this collection in enumeration order. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_array_base_a45363fe7b6709bba1e37094d2cd5bfdf}{Check} ()
+\begin{DoxyCompactList}\small\item\em Perform an internal consistency (invariant) test on the array base. \end{DoxyCompactList}\item 
+override \hyperlink{interface_c5_1_1_i_directed_collection_value}{I\+Directed\+Collection\+Value}$<$ T $>$ \hyperlink{class_c5_1_1_array_base_a11fbdc5f71bb41de404f3bd91e3a92b3}{Backwards} ()
+\begin{DoxyCompactList}\small\item\em Create a directed collection with the same contents as this one, but opposite enumeration sequence. \end{DoxyCompactList}\item 
+override T \hyperlink{class_c5_1_1_array_base_a1d5f2551ce0fb795a5f2105fcb958de8}{Choose} ()
+\begin{DoxyCompactList}\small\item\em Choose some item of this collection. The result is the last item in the internal array, making it efficient to remove. \end{DoxyCompactList}\item 
+override S\+C\+G.\+I\+Enumerator$<$ T $>$ \hyperlink{class_c5_1_1_array_base_a84a54c5fa039db32e27ca45c6b0cea85}{Get\+Enumerator} ()
+\begin{DoxyCompactList}\small\item\em Create an enumerator for this array based collection. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_c5_1_1_array_base_a6e32bc0bafd9263e2ccb18a5fedb032d}{expand} ()
+\begin{DoxyCompactList}\small\item\em Double the size of the internal array. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_c5_1_1_array_base_a5f2dcfe8c4c68077aa1b6c80a2d179c6}{expand} (int newcapacity, int newsize)
+\begin{DoxyCompactList}\small\item\em Expand the internal array container. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_c5_1_1_array_base_a5e47a614cf3a44d6657b5fa89e2ac26c}{insert} (int i, T item)
+\begin{DoxyCompactList}\small\item\em Insert an item at a specific index, moving items to the right upwards and expanding the array if necessary. \end{DoxyCompactList}\item 
+\hyperlink{class_c5_1_1_array_base_ae5aadcdb3a4f02dc7c00beff944970ba}{Array\+Base} (int capacity, S\+C\+G.\+I\+Equality\+Comparer$<$ T $>$ \hyperlink{class_c5_1_1_collection_base_a95e343400be0e8f3f8d6310f1aaf2cc6}{itemequality\+Comparer})
+\begin{DoxyCompactList}\small\item\em Create an empty \hyperlink{class_c5_1_1_array_base}{Array\+Base} object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+T\mbox{[}$\,$\mbox{]} \hyperlink{class_c5_1_1_array_base_a93d269a72f2299ba18b61ceb65590bdf}{array}
+\begin{DoxyCompactList}\small\item\em The actual internal array container. Will be extended on demand. \end{DoxyCompactList}\item 
+int \hyperlink{class_c5_1_1_array_base_a2fff33ea372907c015262a3041b2f2af}{offset}
+\begin{DoxyCompactList}\small\item\em The offset into the internal array container of the first item. The offset is 0 for a base dynamic array and may be positive for an updatable view into a base dynamic array. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+virtual \hyperlink{interface_c5_1_1_i_directed_collection_value}{I\+Directed\+Collection\+Value}$<$ T $>$ \hyperlink{class_c5_1_1_array_base_a20e7840830115ed99dbd9054d714f7c7}{this\mbox{[}int start, int count\mbox{]}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Base class for collection classes of dynamic array type implementations. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_c5_1_1_array_base_ae5aadcdb3a4f02dc7c00beff944970ba}{}\index{C5\+::\+Array\+Base@{C5\+::\+Array\+Base}!Array\+Base@{Array\+Base}}
+\index{Array\+Base@{Array\+Base}!C5\+::\+Array\+Base@{C5\+::\+Array\+Base}}
+\subsubsection[{Array\+Base(int capacity, S\+C\+G.\+I\+Equality\+Comparer$<$ T $>$ itemequality\+Comparer)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Array\+Base}$<$ T $>$.{\bf Array\+Base} (
+\begin{DoxyParamCaption}
+\item[{int}]{capacity, }
+\item[{S\+C\+G.\+I\+Equality\+Comparer$<$ T $>$}]{itemequality\+Comparer}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_c5_1_1_array_base_ae5aadcdb3a4f02dc7c00beff944970ba}
+
+
+Create an empty \hyperlink{class_c5_1_1_array_base}{Array\+Base} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em capacity} & The initial capacity of the internal array container. Will be rounded upwards to the nearest power of 2 greater than or equal to 8.\\
+\hline
+{\em itemequality\+Comparer} & The item equality\+Comparer to use, primarily for item equality\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_array_base_a11fbdc5f71bb41de404f3bd91e3a92b3}{}\index{C5\+::\+Array\+Base@{C5\+::\+Array\+Base}!Backwards@{Backwards}}
+\index{Backwards@{Backwards}!C5\+::\+Array\+Base@{C5\+::\+Array\+Base}}
+\subsubsection[{Backwards()}]{\setlength{\rightskip}{0pt plus 5cm}override {\bf I\+Directed\+Collection\+Value}$<$T$>$ {\bf C5.\+Array\+Base}$<$ T $>$.Backwards (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_array_base_a11fbdc5f71bb41de404f3bd91e3a92b3}
+
+
+Create a directed collection with the same contents as this one, but opposite enumeration sequence. 
+
+\begin{DoxyReturn}{Returns}
+The mirrored collection.
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_c5_1_1_directed_collection_base_a9a4c7d6571ff7d78ea5adcb0d8264ff1}{C5.\+Directed\+Collection\+Base$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_array_base_a45363fe7b6709bba1e37094d2cd5bfdf}{}\index{C5\+::\+Array\+Base@{C5\+::\+Array\+Base}!Check@{Check}}
+\index{Check@{Check}!C5\+::\+Array\+Base@{C5\+::\+Array\+Base}}
+\subsubsection[{Check()}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Array\+Base}$<$ T $>$.Check (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_array_base_a45363fe7b6709bba1e37094d2cd5bfdf}
+
+
+Perform an internal consistency (invariant) test on the array base. 
+
+\begin{DoxyReturn}{Returns}
+True if test succeeds.
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{class_c5_1_1_hashed_array_list_aed94ab3e8f52b3cd4b7825b12d6876b2}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_adf389b80c82b6f6164c275e735148eed}{C5.\+Array\+List$<$ T $>$}, and \hyperlink{class_c5_1_1_sorted_array_a1b4c759074c4171089f65156607501d4}{C5.\+Sorted\+Array$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_array_base_a1d5f2551ce0fb795a5f2105fcb958de8}{}\index{C5\+::\+Array\+Base@{C5\+::\+Array\+Base}!Choose@{Choose}}
+\index{Choose@{Choose}!C5\+::\+Array\+Base@{C5\+::\+Array\+Base}}
+\subsubsection[{Choose()}]{\setlength{\rightskip}{0pt plus 5cm}override T {\bf C5.\+Array\+Base}$<$ T $>$.Choose (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_array_base_a1d5f2551ce0fb795a5f2105fcb958de8}
+
+
+Choose some item of this collection. The result is the last item in the internal array, making it efficient to remove. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if collection is empty.\\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_af72d52ddd8ea4130d508e1cf020cf7eb}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_array_base_abfee2ce913abdf40245562982f40a496}{}\index{C5\+::\+Array\+Base@{C5\+::\+Array\+Base}!Clear@{Clear}}
+\index{Clear@{Clear}!C5\+::\+Array\+Base@{C5\+::\+Array\+Base}}
+\subsubsection[{Clear()}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Array\+Base}$<$ T $>$.Clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_array_base_abfee2ce913abdf40245562982f40a496}
+
+
+Remove all items and reset size of internal array container. 
+
+
+
+Reimplemented in \hyperlink{class_c5_1_1_hashed_array_list_aeca323e5f962607ee4384549aaba5d28}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_a1ed4a8838cc6a215101b6af156e7da08}{C5.\+Array\+List$<$ T $>$}, and \hyperlink{class_c5_1_1_sorted_array_ae316e2061d7224288fefe5cc3a848935}{C5.\+Sorted\+Array$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_array_base_a6e32bc0bafd9263e2ccb18a5fedb032d}{}\index{C5\+::\+Array\+Base@{C5\+::\+Array\+Base}!expand@{expand}}
+\index{expand@{expand}!C5\+::\+Array\+Base@{C5\+::\+Array\+Base}}
+\subsubsection[{expand()}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Array\+Base}$<$ T $>$.expand (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_c5_1_1_array_base_a6e32bc0bafd9263e2ccb18a5fedb032d}
+
+
+Double the size of the internal array. 
+
+
+
+Reimplemented in \hyperlink{class_c5_1_1_hashed_array_list_a4dce92728aada5e2d56902d0565247ff}{C5.\+Hashed\+Array\+List$<$ T $>$}, and \hyperlink{class_c5_1_1_array_list_a048d68f4ca0b66dbc9976c957b75d545}{C5.\+Array\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_array_base_a5f2dcfe8c4c68077aa1b6c80a2d179c6}{}\index{C5\+::\+Array\+Base@{C5\+::\+Array\+Base}!expand@{expand}}
+\index{expand@{expand}!C5\+::\+Array\+Base@{C5\+::\+Array\+Base}}
+\subsubsection[{expand(int newcapacity, int newsize)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Array\+Base}$<$ T $>$.expand (
+\begin{DoxyParamCaption}
+\item[{int}]{newcapacity, }
+\item[{int}]{newsize}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_c5_1_1_array_base_a5f2dcfe8c4c68077aa1b6c80a2d179c6}
+
+
+Expand the internal array container. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em newcapacity} & The new size of the internal array -\/ will be rounded upwards to a power of 2.\\
+\hline
+{\em newsize} & The (new) size of the (base) collection.\\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \hyperlink{class_c5_1_1_hashed_array_list_ae227e09958e8ce6eea7e0132ecd1a6aa}{C5.\+Hashed\+Array\+List$<$ T $>$}, and \hyperlink{class_c5_1_1_array_list_a08932223ebb743866c92756cbdee059b}{C5.\+Array\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_array_base_a84a54c5fa039db32e27ca45c6b0cea85}{}\index{C5\+::\+Array\+Base@{C5\+::\+Array\+Base}!Get\+Enumerator@{Get\+Enumerator}}
+\index{Get\+Enumerator@{Get\+Enumerator}!C5\+::\+Array\+Base@{C5\+::\+Array\+Base}}
+\subsubsection[{Get\+Enumerator()}]{\setlength{\rightskip}{0pt plus 5cm}override S\+C\+G.\+I\+Enumerator$<$T$>$ {\bf C5.\+Array\+Base}$<$ T $>$.Get\+Enumerator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_array_base_a84a54c5fa039db32e27ca45c6b0cea85}
+
+
+Create an enumerator for this array based collection. 
+
+\begin{DoxyReturn}{Returns}
+The enumerator
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_c5_1_1_sequenced_base_a07d117175b630fd7f87f6e61b05259dc}{C5.\+Sequenced\+Base$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_array_base_a5e47a614cf3a44d6657b5fa89e2ac26c}{}\index{C5\+::\+Array\+Base@{C5\+::\+Array\+Base}!insert@{insert}}
+\index{insert@{insert}!C5\+::\+Array\+Base@{C5\+::\+Array\+Base}}
+\subsubsection[{insert(int i, T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Array\+Base}$<$ T $>$.insert (
+\begin{DoxyParamCaption}
+\item[{int}]{i, }
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\label{class_c5_1_1_array_base_a5e47a614cf3a44d6657b5fa89e2ac26c}
+
+
+Insert an item at a specific index, moving items to the right upwards and expanding the array if necessary. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & The index at which to insert.\\
+\hline
+{\em item} & The item to insert.\\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \hyperlink{class_c5_1_1_hashed_array_list_a70d3534f5dcf4e6b4c041ffc58dbc830}{C5.\+Hashed\+Array\+List$<$ T $>$}, and \hyperlink{class_c5_1_1_array_list_aadbaf3c60c27cd68711d9f0098e02ca0}{C5.\+Array\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_array_base_a16ffcc583a32065194b3ea27d4a43cd4}{}\index{C5\+::\+Array\+Base@{C5\+::\+Array\+Base}!To\+Array@{To\+Array}}
+\index{To\+Array@{To\+Array}!C5\+::\+Array\+Base@{C5\+::\+Array\+Base}}
+\subsubsection[{To\+Array()}]{\setlength{\rightskip}{0pt plus 5cm}override T \mbox{[}$\,$\mbox{]} {\bf C5.\+Array\+Base}$<$ T $>$.To\+Array (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_array_base_a16ffcc583a32065194b3ea27d4a43cd4}
+
+
+Create an array containing (copies) of the items of this collection in enumeration order. 
+
+\begin{DoxyReturn}{Returns}
+The new array
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_ad76547324e71a04e92076b2e55239bbb}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{class_c5_1_1_array_base_a93d269a72f2299ba18b61ceb65590bdf}{}\index{C5\+::\+Array\+Base@{C5\+::\+Array\+Base}!array@{array}}
+\index{array@{array}!C5\+::\+Array\+Base@{C5\+::\+Array\+Base}}
+\subsubsection[{array}]{\setlength{\rightskip}{0pt plus 5cm}T \mbox{[}$\,$\mbox{]} {\bf C5.\+Array\+Base}$<$ T $>$.array\hspace{0.3cm}{\ttfamily [protected]}}\label{class_c5_1_1_array_base_a93d269a72f2299ba18b61ceb65590bdf}
+
+
+The actual internal array container. Will be extended on demand. 
+
+\hypertarget{class_c5_1_1_array_base_a2fff33ea372907c015262a3041b2f2af}{}\index{C5\+::\+Array\+Base@{C5\+::\+Array\+Base}!offset@{offset}}
+\index{offset@{offset}!C5\+::\+Array\+Base@{C5\+::\+Array\+Base}}
+\subsubsection[{offset}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+Array\+Base}$<$ T $>$.offset\hspace{0.3cm}{\ttfamily [protected]}}\label{class_c5_1_1_array_base_a2fff33ea372907c015262a3041b2f2af}
+
+
+The offset into the internal array container of the first item. The offset is 0 for a base dynamic array and may be positive for an updatable view into a base dynamic array. 
+
+
+
+\subsection{Property Documentation}
+\hypertarget{class_c5_1_1_array_base_a20e7840830115ed99dbd9054d714f7c7}{}\index{C5\+::\+Array\+Base@{C5\+::\+Array\+Base}!this\mbox{[}int start, int count\mbox{]}@{this[int start, int count]}}
+\index{this\mbox{[}int start, int count\mbox{]}@{this[int start, int count]}!C5\+::\+Array\+Base@{C5\+::\+Array\+Base}}
+\subsubsection[{this[int start, int count]}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf I\+Directed\+Collection\+Value}$<$T$>$ {\bf C5.\+Array\+Base}$<$ T $>$.this\mbox{[}int start, int count\mbox{]}\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_array_base_a20e7840830115ed99dbd9054d714f7c7}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Argument\+Out\+Of\+Range\+Exception} & If the arguments does not describe a valid range in the indexed collection, cf. M\+:\+C5.\+Collection\+Base`1.\+check\+Range(\+System.\+Int32,\+System.\+Int32).\\
+\hline
+\end{DoxyExceptions}
+
+
+The directed collection of items in a specific index interval.
+
+
+\begin{DoxyParams}{Parameters}
+{\em start} & The low index of the interval (inclusive).\\
+\hline
+{\em count} & The size of the range.\\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_collections_8cs}{Collections.\+cs}\end{DoxyCompactItemize}

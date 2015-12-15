@@ -1,0 +1,26 @@
+var interface_c5_1_1_i_sorted_dictionary =
+[
+    [ "AddSorted", "interface_c5_1_1_i_sorted_dictionary.html#a21c08676216f78ef7f05b2139e5de3c3", null ],
+    [ "Cut", "interface_c5_1_1_i_sorted_dictionary.html#a28731370f84789bb4535ed92b2e38460", null ],
+    [ "DeleteMax", "interface_c5_1_1_i_sorted_dictionary.html#ab06a9effc3f2da79a4e446f5aa078d3b", null ],
+    [ "DeleteMin", "interface_c5_1_1_i_sorted_dictionary.html#a4b4c8891f922d9f2d66f4070dab9bd0a", null ],
+    [ "FindMax", "interface_c5_1_1_i_sorted_dictionary.html#ae532ee9a31de850bac9f115509486225", null ],
+    [ "FindMin", "interface_c5_1_1_i_sorted_dictionary.html#afa487d42d47f5b3730914f182880403f", null ],
+    [ "Predecessor", "interface_c5_1_1_i_sorted_dictionary.html#ab64ecd53de02894b0d64939911fce071", null ],
+    [ "RangeAll", "interface_c5_1_1_i_sorted_dictionary.html#a96e38a0085b3e530c6fdb8b3ffc40848", null ],
+    [ "RangeFrom", "interface_c5_1_1_i_sorted_dictionary.html#afafbf6064911808de36b781dd8085419", null ],
+    [ "RangeFromTo", "interface_c5_1_1_i_sorted_dictionary.html#a081b4c43958d18e8ee92dc234d5e8adc", null ],
+    [ "RangeTo", "interface_c5_1_1_i_sorted_dictionary.html#aa595a13cff654c2a9b4a257402ffa5a1", null ],
+    [ "RemoveRangeFrom", "interface_c5_1_1_i_sorted_dictionary.html#ae25a29f876b3f9c64e86325287e8cb9c", null ],
+    [ "RemoveRangeFromTo", "interface_c5_1_1_i_sorted_dictionary.html#acc807a1a47949798348593339560c5ed", null ],
+    [ "RemoveRangeTo", "interface_c5_1_1_i_sorted_dictionary.html#a43cc5a30d8f6f9096311a658be0a833e", null ],
+    [ "Successor", "interface_c5_1_1_i_sorted_dictionary.html#af8c2971bff5e52c471f19764d9d90312", null ],
+    [ "TryPredecessor", "interface_c5_1_1_i_sorted_dictionary.html#a6af39c1f97f7fa86559edb9fd87975b8", null ],
+    [ "TrySuccessor", "interface_c5_1_1_i_sorted_dictionary.html#ac1448e6b319536dfb28e8b1672a5040f", null ],
+    [ "TryWeakPredecessor", "interface_c5_1_1_i_sorted_dictionary.html#a2a0e18f33ee744e70c5efd2e737a0083", null ],
+    [ "TryWeakSuccessor", "interface_c5_1_1_i_sorted_dictionary.html#aae858ab66e83568973c0effdfda6841b", null ],
+    [ "WeakPredecessor", "interface_c5_1_1_i_sorted_dictionary.html#ad090cecc22bc2e5a09fe3b0ef7afd5de", null ],
+    [ "WeakSuccessor", "interface_c5_1_1_i_sorted_dictionary.html#a3829a2cfb58bc90c600eb2fcc12e1d25", null ],
+    [ "Comparer", "interface_c5_1_1_i_sorted_dictionary.html#ad563257346c1cdcae8d37e94e335b16c", null ],
+    [ "Keys", "interface_c5_1_1_i_sorted_dictionary.html#ab85b9ffde0b897778957f3108539ee76", null ]
+];

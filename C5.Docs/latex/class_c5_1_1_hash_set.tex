@@ -1,0 +1,715 @@
+\hypertarget{class_c5_1_1_hash_set}{}\section{C5.\+Hash\+Set$<$ T $>$ Class Template Reference}
+\label{class_c5_1_1_hash_set}\index{C5.\+Hash\+Set$<$ T $>$@{C5.\+Hash\+Set$<$ T $>$}}
+
+
+A set collection class based on linear hashing  
+
+
+Inheritance diagram for C5.\+Hash\+Set$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.526316cm]{class_c5_1_1_hash_set}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c5_1_1_hash_set_a8c3fb4f50d669c1fe32977c8d3ef4963}{Hash\+Set} ()
+\begin{DoxyCompactList}\small\item\em Create a hash set with natural item equality\+Comparer and default fill threshold (66\%) and initial table size (16). \end{DoxyCompactList}\item 
+\hyperlink{class_c5_1_1_hash_set_a48ce3a77574ed39466a0a93c0543e033}{Hash\+Set} (S\+C\+G.\+I\+Equality\+Comparer$<$ T $>$ \hyperlink{class_c5_1_1_collection_base_a95e343400be0e8f3f8d6310f1aaf2cc6}{itemequality\+Comparer})
+\begin{DoxyCompactList}\small\item\em Create a hash set with external item equality\+Comparer and default fill threshold (66\%) and initial table size (16). \end{DoxyCompactList}\item 
+\hyperlink{class_c5_1_1_hash_set_a68917f421f09006c60050f7be04c8550}{Hash\+Set} (int capacity, S\+C\+G.\+I\+Equality\+Comparer$<$ T $>$ \hyperlink{class_c5_1_1_collection_base_a95e343400be0e8f3f8d6310f1aaf2cc6}{itemequality\+Comparer})
+\begin{DoxyCompactList}\small\item\em Create a hash set with external item equality\+Comparer and default fill threshold (66\%) \end{DoxyCompactList}\item 
+\hyperlink{class_c5_1_1_hash_set_acd7cc0d3e33d99fc320b9f8207650e5b}{Hash\+Set} (int capacity, double fill, S\+C\+G.\+I\+Equality\+Comparer$<$ T $>$ \hyperlink{class_c5_1_1_collection_base_a95e343400be0e8f3f8d6310f1aaf2cc6}{itemequality\+Comparer})
+\begin{DoxyCompactList}\small\item\em Create a hash set with external item equality\+Comparer. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_hash_set_af664a08eff9d9941c43e043bf5b367c3}{Contains} (T item)
+\begin{DoxyCompactList}\small\item\em Check if an item is in the set \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_hash_set_a68b40c2f8c5483825915945d0f21278a}{Find} (ref T item)
+\begin{DoxyCompactList}\small\item\em Check if an item (collection equal to a given one) is in the set and if so report the actual item object found. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_hash_set_a0cfae793ab357695699f58064b892c8d}{Update} (T item)
+\begin{DoxyCompactList}\small\item\em Check if an item (collection equal to a given one) is in the set and if so replace the item object in the set with the supplied one. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_hash_set_aa0037ac87af2603ab0641e3037e5ee55}{Update} (T item, out T olditem)
+\begin{DoxyCompactList}\small\item\em Check if an item (collection equal to a given one) is in the set and if so replace the item object in the set with the supplied one. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_hash_set_a0b1d42cbbc91e630ab0917a2b17e8ca1}{Find\+Or\+Add} (ref T item)
+\begin{DoxyCompactList}\small\item\em Check if an item (collection equal to a given one) is in the set. If found, report the actual item object in the set, else add the supplied one. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_hash_set_a65709285f46c3bfd43d5dda1c4ab54fd}{Update\+Or\+Add} (T item)
+\begin{DoxyCompactList}\small\item\em Check if an item (collection equal to a supplied one) is in the set and if so replace the item object in the set with the supplied one; else add the supplied one. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_hash_set_a2a07fae0af3a3f329d47719019fb2c5b}{Update\+Or\+Add} (T item, out T olditem)
+\begin{DoxyCompactList}\small\item\em Check if an item (collection equal to a supplied one) is in the set and if so replace the item object in the set with the supplied one; else add the supplied one. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_hash_set_ac9b5cd955239472a848788ce53345853}{Remove} (T item)
+\begin{DoxyCompactList}\small\item\em Remove an item from the set \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_hash_set_a7e97b49057ee44abddb8fbd83b56b78a}{Remove} (T item, out T removeditem)
+\begin{DoxyCompactList}\small\item\em Remove an item from the set, reporting the actual matching item object. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_c5_1_1_hash_set_afc71edbb94b37e74b25d0d489c36dc3b}{Remove\+All} (S\+C\+G.\+I\+Enumerable$<$ T $>$ items)
+\begin{DoxyCompactList}\small\item\em Remove all items in a supplied collection from this set. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_c5_1_1_hash_set_a7bc97cd3a07e8e829c16e169ac71a075}{Clear} ()
+\begin{DoxyCompactList}\small\item\em Remove all items from the set, resetting internal table to initial size. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_c5_1_1_hash_set_a5ab8110d40df588e0214b2d55eb085ce}{Retain\+All} (S\+C\+G.\+I\+Enumerable$<$ T $>$ items)
+\begin{DoxyCompactList}\small\item\em Remove all items {\itshape not} in a supplied collection from this set. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_hash_set_ad7c29ad00f9697d4a07e03986c84770e}{Contains\+All} (S\+C\+G.\+I\+Enumerable$<$ T $>$ items)
+\begin{DoxyCompactList}\small\item\em Check if all items in a supplied collection is in this set (ignoring multiplicities). \end{DoxyCompactList}\item 
+override T\mbox{[}$\,$\mbox{]} \hyperlink{class_c5_1_1_hash_set_ad6e22ebc64d9f8c96b805547d5873023}{To\+Array} ()
+\begin{DoxyCompactList}\small\item\em Create an array containing all items in this set (in enumeration order). \end{DoxyCompactList}\item 
+virtual int \hyperlink{class_c5_1_1_hash_set_a6ae7c12192030c64a6268546bdb21fbe}{Contains\+Count} (T item)
+\begin{DoxyCompactList}\small\item\em Count the number of times an item is in this set (either 0 or 1). \end{DoxyCompactList}\item 
+virtual \hyperlink{interface_c5_1_1_i_collection_value}{I\+Collection\+Value}$<$ T $>$ \hyperlink{class_c5_1_1_hash_set_a8f1963ae2661d4b9b064f88124789c76}{Unique\+Items} ()
+\item 
+virtual \hyperlink{interface_c5_1_1_i_collection_value}{I\+Collection\+Value}$<$ \hyperlink{struct_c5_1_1_key_value_pair}{Key\+Value\+Pair}$<$ T, int $>$ $>$ \hyperlink{class_c5_1_1_hash_set_ae8e2ee2134a81967efe6fef79d67a0fc}{Item\+Multiplicities} ()
+\item 
+virtual void \hyperlink{class_c5_1_1_hash_set_a07eacbcc5850774881dd596676e6b134}{Remove\+All\+Copies} (T item)
+\begin{DoxyCompactList}\small\item\em Remove all (at most 1) copies of item from this set. \end{DoxyCompactList}\item 
+override T \hyperlink{class_c5_1_1_hash_set_a6bac17b51f5b2a569a0df8e0c46fe78f}{Choose} ()
+\begin{DoxyCompactList}\small\item\em Choose some item of this collection. \end{DoxyCompactList}\item 
+override S\+C\+G.\+I\+Enumerator$<$ T $>$ \hyperlink{class_c5_1_1_hash_set_a4c404a22695abc0f6b47bf74d3d34034}{Get\+Enumerator} ()
+\begin{DoxyCompactList}\small\item\em Create an enumerator for this set. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_hash_set_a0700ad4332214ac5d74f3a197bfd8774}{Add} (T item)
+\begin{DoxyCompactList}\small\item\em Add an item to this set. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_c5_1_1_hash_set_aabee06dcd4be050a024c507e781d338e}{Add\+All} (S\+C\+G.\+I\+Enumerable$<$ T $>$ items)
+\begin{DoxyCompactList}\small\item\em Add the elements from another collection with a more specialized item type to this collection. Since this collection has set semantics, only items not already in the collection will be added. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_hash_set_a7000a1b6fea242f1f5ca40571724b309}{Check} ()
+\begin{DoxyCompactList}\small\item\em Test internal structure of data (invariants) \end{DoxyCompactList}\item 
+\hyperlink{interface_c5_1_1_i_sorted_dictionary}{I\+Sorted\+Dictionary}$<$ int, int $>$ \hyperlink{class_c5_1_1_hash_set_aa85358a09cbd7316bfad33a79dbc69e4}{Bucket\+Cost\+Distribution} ()
+\begin{DoxyCompactList}\small\item\em Produce statistics on distribution of bucket sizes. Current implementation is incomplete. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{_hash_table_8cs_a3ba53141e4e2a9f89bcfc8cf229955f7}{Feature} \hyperlink{class_c5_1_1_hash_set_af105c294816c484c8e48544daa7c0b32}{Features}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Show which implementation features was chosen at compilation time \end{DoxyCompactList}\item 
+override \hyperlink{namespace_c5_a9143bfd561fffa025d21561674758008}{Event\+Type\+Enum} \hyperlink{class_c5_1_1_hash_set_a55a5a5a8a33bd7058881493bc3d3ae6a}{Listenable\+Events}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+virtual \hyperlink{namespace_c5_a615ba88dcdaa8d5a3c5f833a73d7fad6}{Speed} \hyperlink{class_c5_1_1_hash_set_a206298276b5ddfbb9a528df96a5620ae}{Contains\+Speed}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The complexity of the Contains operation \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_hash_set_a95849b8404288074ea8622d77ccb1142}{Allows\+Duplicates}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Report if this is a set collection. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_hash_set_ae9ad56098db41bbbd2a0baabef06bc14}{Duplicates\+By\+Counting}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em By convention this is true for any collection with set semantics. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A set collection class based on linear hashing 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_c5_1_1_hash_set_a8c3fb4f50d669c1fe32977c8d3ef4963}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Hash\+Set@{Hash\+Set}}
+\index{Hash\+Set@{Hash\+Set}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Hash\+Set()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Hash\+Set}$<$ T $>$.{\bf Hash\+Set} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_hash_set_a8c3fb4f50d669c1fe32977c8d3ef4963}
+
+
+Create a hash set with natural item equality\+Comparer and default fill threshold (66\%) and initial table size (16). 
+
+\hypertarget{class_c5_1_1_hash_set_a48ce3a77574ed39466a0a93c0543e033}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Hash\+Set@{Hash\+Set}}
+\index{Hash\+Set@{Hash\+Set}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Hash\+Set(\+S\+C\+G.\+I\+Equality\+Comparer$<$ T $>$ itemequality\+Comparer)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Hash\+Set}$<$ T $>$.{\bf Hash\+Set} (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Equality\+Comparer$<$ T $>$}]{itemequality\+Comparer}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_hash_set_a48ce3a77574ed39466a0a93c0543e033}
+
+
+Create a hash set with external item equality\+Comparer and default fill threshold (66\%) and initial table size (16). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em itemequality\+Comparer} & The external item equality\+S\+C\+G.\+Comparer\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_c5_1_1_hash_set_a68917f421f09006c60050f7be04c8550}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Hash\+Set@{Hash\+Set}}
+\index{Hash\+Set@{Hash\+Set}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Hash\+Set(int capacity, S\+C\+G.\+I\+Equality\+Comparer$<$ T $>$ itemequality\+Comparer)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Hash\+Set}$<$ T $>$.{\bf Hash\+Set} (
+\begin{DoxyParamCaption}
+\item[{int}]{capacity, }
+\item[{S\+C\+G.\+I\+Equality\+Comparer$<$ T $>$}]{itemequality\+Comparer}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_hash_set_a68917f421f09006c60050f7be04c8550}
+
+
+Create a hash set with external item equality\+Comparer and default fill threshold (66\%) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em capacity} & Initial table size (rounded to power of 2, at least 16)\\
+\hline
+{\em itemequality\+Comparer} & The external item equality\+S\+C\+G.\+Comparer\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_c5_1_1_hash_set_acd7cc0d3e33d99fc320b9f8207650e5b}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Hash\+Set@{Hash\+Set}}
+\index{Hash\+Set@{Hash\+Set}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Hash\+Set(int capacity, double fill, S\+C\+G.\+I\+Equality\+Comparer$<$ T $>$ itemequality\+Comparer)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Hash\+Set}$<$ T $>$.{\bf Hash\+Set} (
+\begin{DoxyParamCaption}
+\item[{int}]{capacity, }
+\item[{double}]{fill, }
+\item[{S\+C\+G.\+I\+Equality\+Comparer$<$ T $>$}]{itemequality\+Comparer}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_hash_set_acd7cc0d3e33d99fc320b9f8207650e5b}
+
+
+Create a hash set with external item equality\+Comparer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em capacity} & Initial table size (rounded to power of 2, at least 16)\\
+\hline
+{\em fill} & Fill threshold (in range 10\% to 90\%)\\
+\hline
+{\em itemequality\+Comparer} & The external item equality\+S\+C\+G.\+Comparer\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_hash_set_a0700ad4332214ac5d74f3a197bfd8774}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Add@{Add}}
+\index{Add@{Add}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Add(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Hash\+Set}$<$ T $>$.Add (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_a0700ad4332214ac5d74f3a197bfd8774}
+
+
+Add an item to this set. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to add.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if item was added (i.\+e. not found)
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a525115f252ddca586fcbf1a0127be614}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_hash_set_aabee06dcd4be050a024c507e781d338e}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Add\+All@{Add\+All}}
+\index{Add\+All@{Add\+All}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Add\+All(\+S\+C\+G.\+I\+Enumerable$<$ T $>$ items)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Hash\+Set}$<$ T $>$.Add\+All (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Enumerable$<$ T $>$}]{items}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_aabee06dcd4be050a024c507e781d338e}
+
+
+Add the elements from another collection with a more specialized item type to this collection. Since this collection has set semantics, only items not already in the collection will be added. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em items} & The items to add\\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_extensible_a1fb4d50c5b340e60303da72e9d0ede6e}{C5.\+I\+Extensible$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_hash_set_aa85358a09cbd7316bfad33a79dbc69e4}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Bucket\+Cost\+Distribution@{Bucket\+Cost\+Distribution}}
+\index{Bucket\+Cost\+Distribution@{Bucket\+Cost\+Distribution}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Bucket\+Cost\+Distribution()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Sorted\+Dictionary}$<$int, int$>$ {\bf C5.\+Hash\+Set}$<$ T $>$.Bucket\+Cost\+Distribution (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_hash_set_aa85358a09cbd7316bfad33a79dbc69e4}
+
+
+Produce statistics on distribution of bucket sizes. Current implementation is incomplete. 
+
+\begin{DoxyReturn}{Returns}
+Histogram data.
+\end{DoxyReturn}
+\hypertarget{class_c5_1_1_hash_set_a7000a1b6fea242f1f5ca40571724b309}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Check@{Check}}
+\index{Check@{Check}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Check()}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Hash\+Set}$<$ T $>$.Check (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_a7000a1b6fea242f1f5ca40571724b309}
+
+
+Test internal structure of data (invariants) 
+
+\begin{DoxyReturn}{Returns}
+True if pass
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_extensible_aeeb6b87af61e455df42d68834d711bcb}{C5.\+I\+Extensible$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_hash_set_a6bac17b51f5b2a569a0df8e0c46fe78f}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Choose@{Choose}}
+\index{Choose@{Choose}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Choose()}]{\setlength{\rightskip}{0pt plus 5cm}override T {\bf C5.\+Hash\+Set}$<$ T $>$.Choose (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_a6bac17b51f5b2a569a0df8e0c46fe78f}
+
+
+Choose some item of this collection. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if collection is empty.\\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_c5_1_1_collection_value_base_ad7b8bd01dfd7ea8480a972f02a81608b}{C5.\+Collection\+Value\+Base$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_hash_set_a7bc97cd3a07e8e829c16e169ac71a075}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Clear@{Clear}}
+\index{Clear@{Clear}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Clear()}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Hash\+Set}$<$ T $>$.Clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_a7bc97cd3a07e8e829c16e169ac71a075}
+
+
+Remove all items from the set, resetting internal table to initial size. 
+
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_abd83166ac00b3d36225d988fd4603e97}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_hash_set_af664a08eff9d9941c43e043bf5b367c3}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Contains@{Contains}}
+\index{Contains@{Contains}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Contains(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Hash\+Set}$<$ T $>$.Contains (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_af664a08eff9d9941c43e043bf5b367c3}
+
+
+Check if an item is in the set 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to look for\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if set contains item
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a4de01b6d77ea5eaffccc8267b4454cdd}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_hash_set_ad7c29ad00f9697d4a07e03986c84770e}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Contains\+All@{Contains\+All}}
+\index{Contains\+All@{Contains\+All}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Contains\+All(\+S\+C\+G.\+I\+Enumerable$<$ T $>$ items)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Hash\+Set}$<$ T $>$.Contains\+All (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Enumerable$<$ T $>$}]{items}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_ad7c29ad00f9697d4a07e03986c84770e}
+
+
+Check if all items in a supplied collection is in this set (ignoring multiplicities). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em items} & The items to look for.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if all items are found.
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a93abf02183a46f56af8d90f1d69982a8}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_hash_set_a6ae7c12192030c64a6268546bdb21fbe}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Contains\+Count@{Contains\+Count}}
+\index{Contains\+Count@{Contains\+Count}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Contains\+Count(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual int {\bf C5.\+Hash\+Set}$<$ T $>$.Contains\+Count (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_a6ae7c12192030c64a6268546bdb21fbe}
+
+
+Count the number of times an item is in this set (either 0 or 1). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to look for.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if item is in set, 0 else
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_acfe7e2c9b14c384762269edbb57b7fbe}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_hash_set_a68b40c2f8c5483825915945d0f21278a}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Find@{Find}}
+\index{Find@{Find}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Find(ref T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Hash\+Set}$<$ T $>$.Find (
+\begin{DoxyParamCaption}
+\item[{ref T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_a68b40c2f8c5483825915945d0f21278a}
+
+
+Check if an item (collection equal to a given one) is in the set and if so report the actual item object found. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & On entry, the item to look for. On exit the item found, if any\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if set contains item
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a96fd6cfd3df62e67922f9335b0fbbdcb}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_hash_set_a0b1d42cbbc91e630ab0917a2b17e8ca1}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Find\+Or\+Add@{Find\+Or\+Add}}
+\index{Find\+Or\+Add@{Find\+Or\+Add}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Find\+Or\+Add(ref T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Hash\+Set}$<$ T $>$.Find\+Or\+Add (
+\begin{DoxyParamCaption}
+\item[{ref T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_a0b1d42cbbc91e630ab0917a2b17e8ca1}
+
+
+Check if an item (collection equal to a given one) is in the set. If found, report the actual item object in the set, else add the supplied one. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & On entry, the item to look for or add. On exit the actual object found, if any.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if item was found
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a7f9e609ee1a7607596bb65aa5bdff303}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_hash_set_a4c404a22695abc0f6b47bf74d3d34034}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Get\+Enumerator@{Get\+Enumerator}}
+\index{Get\+Enumerator@{Get\+Enumerator}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Get\+Enumerator()}]{\setlength{\rightskip}{0pt plus 5cm}override S\+C\+G.\+I\+Enumerator$<$T$>$ {\bf C5.\+Hash\+Set}$<$ T $>$.Get\+Enumerator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_a4c404a22695abc0f6b47bf74d3d34034}
+
+
+Create an enumerator for this set. 
+
+\begin{DoxyReturn}{Returns}
+The enumerator
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_c5_1_1_collection_base_a3b4b98e2606afecb948019412c4c2533}{C5.\+Collection\+Base$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_hash_set_ae8e2ee2134a81967efe6fef79d67a0fc}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Item\+Multiplicities@{Item\+Multiplicities}}
+\index{Item\+Multiplicities@{Item\+Multiplicities}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Item\+Multiplicities()}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf I\+Collection\+Value}$<${\bf Key\+Value\+Pair}$<$T, int$>$ $>$ {\bf C5.\+Hash\+Set}$<$ T $>$.Item\+Multiplicities (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_ae8e2ee2134a81967efe6fef79d67a0fc}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a623bd834b37b299c5f4948fdb6915fef}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_hash_set_ac9b5cd955239472a848788ce53345853}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Remove@{Remove}}
+\index{Remove@{Remove}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Remove(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Hash\+Set}$<$ T $>$.Remove (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_ac9b5cd955239472a848788ce53345853}
+
+
+Remove an item from the set 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to remove\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if item was (found and) removed 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_ab4d6092ac09245ce46db91595fc1cdfe}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_hash_set_a7e97b49057ee44abddb8fbd83b56b78a}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Remove@{Remove}}
+\index{Remove@{Remove}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Remove(\+T item, out T removeditem)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Hash\+Set}$<$ T $>$.Remove (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{out T}]{removeditem}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_a7e97b49057ee44abddb8fbd83b56b78a}
+
+
+Remove an item from the set, reporting the actual matching item object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The value to remove.\\
+\hline
+{\em removeditem} & The removed value.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if item was found.
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_acbd124236c3f0958a8784d9c7c2dfd16}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_hash_set_afc71edbb94b37e74b25d0d489c36dc3b}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Remove\+All@{Remove\+All}}
+\index{Remove\+All@{Remove\+All}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Remove\+All(\+S\+C\+G.\+I\+Enumerable$<$ T $>$ items)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Hash\+Set}$<$ T $>$.Remove\+All (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Enumerable$<$ T $>$}]{items}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_afc71edbb94b37e74b25d0d489c36dc3b}
+
+
+Remove all items in a supplied collection from this set. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em items} & The items to remove.\\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a9fb05163a1bd4b71bfd05101ff20c987}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_hash_set_a07eacbcc5850774881dd596676e6b134}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Remove\+All\+Copies@{Remove\+All\+Copies}}
+\index{Remove\+All\+Copies@{Remove\+All\+Copies}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Remove\+All\+Copies(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Hash\+Set}$<$ T $>$.Remove\+All\+Copies (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_a07eacbcc5850774881dd596676e6b134}
+
+
+Remove all (at most 1) copies of item from this set. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to remove\\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_ad785b91be4edeb3fbe678db751f6355d}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_hash_set_a5ab8110d40df588e0214b2d55eb085ce}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Retain\+All@{Retain\+All}}
+\index{Retain\+All@{Retain\+All}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Retain\+All(\+S\+C\+G.\+I\+Enumerable$<$ T $>$ items)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Hash\+Set}$<$ T $>$.Retain\+All (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Enumerable$<$ T $>$}]{items}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_a5ab8110d40df588e0214b2d55eb085ce}
+
+
+Remove all items {\itshape not} in a supplied collection from this set. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em items} & The items to retain\\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_ac2672fb0557eeb24e328149c513c9a8b}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_hash_set_ad6e22ebc64d9f8c96b805547d5873023}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!To\+Array@{To\+Array}}
+\index{To\+Array@{To\+Array}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{To\+Array()}]{\setlength{\rightskip}{0pt plus 5cm}override T \mbox{[}$\,$\mbox{]} {\bf C5.\+Hash\+Set}$<$ T $>$.To\+Array (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_ad6e22ebc64d9f8c96b805547d5873023}
+
+
+Create an array containing all items in this set (in enumeration order). 
+
+\begin{DoxyReturn}{Returns}
+The array
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{class_c5_1_1_collection_value_base_a740757aebaa1365811e76729e59f338d}{C5.\+Collection\+Value\+Base$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_hash_set_a8f1963ae2661d4b9b064f88124789c76}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Unique\+Items@{Unique\+Items}}
+\index{Unique\+Items@{Unique\+Items}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Unique\+Items()}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf I\+Collection\+Value}$<$T$>$ {\bf C5.\+Hash\+Set}$<$ T $>$.Unique\+Items (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_a8f1963ae2661d4b9b064f88124789c76}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a074c4e1a90fb7f98c95834204352c28c}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_hash_set_a0cfae793ab357695699f58064b892c8d}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Update@{Update}}
+\index{Update@{Update}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Update(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Hash\+Set}$<$ T $>$.Update (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_a0cfae793ab357695699f58064b892c8d}
+
+
+Check if an item (collection equal to a given one) is in the set and if so replace the item object in the set with the supplied one. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item object to update with\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if item was found (and updated)
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_acf060ba6b83289dc74bea61502318d56}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_hash_set_aa0037ac87af2603ab0641e3037e5ee55}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Update@{Update}}
+\index{Update@{Update}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Update(\+T item, out T olditem)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Hash\+Set}$<$ T $>$.Update (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{out T}]{olditem}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_aa0037ac87af2603ab0641e3037e5ee55}
+
+
+Check if an item (collection equal to a given one) is in the set and if so replace the item object in the set with the supplied one. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item object to update with\\
+\hline
+{\em olditem} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if item was found (and updated)
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_ad1faa1738e02acf001aac16a3b948c78}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_hash_set_a65709285f46c3bfd43d5dda1c4ab54fd}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Update\+Or\+Add@{Update\+Or\+Add}}
+\index{Update\+Or\+Add@{Update\+Or\+Add}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Update\+Or\+Add(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Hash\+Set}$<$ T $>$.Update\+Or\+Add (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_a65709285f46c3bfd43d5dda1c4ab54fd}
+
+
+Check if an item (collection equal to a supplied one) is in the set and if so replace the item object in the set with the supplied one; else add the supplied one. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to look for and update or add\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if item was updated
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a9739490d6271fb3a92221bca5da5e54b}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_hash_set_a2a07fae0af3a3f329d47719019fb2c5b}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Update\+Or\+Add@{Update\+Or\+Add}}
+\index{Update\+Or\+Add@{Update\+Or\+Add}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Update\+Or\+Add(\+T item, out T olditem)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Hash\+Set}$<$ T $>$.Update\+Or\+Add (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{out T}]{olditem}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_hash_set_a2a07fae0af3a3f329d47719019fb2c5b}
+
+
+Check if an item (collection equal to a supplied one) is in the set and if so replace the item object in the set with the supplied one; else add the supplied one. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to look for and update or add\\
+\hline
+{\em olditem} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if item was updated
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a73a5d984e95e200de80261361bb7e57d}{C5.\+I\+Collection$<$ T $>$}.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{class_c5_1_1_hash_set_a95849b8404288074ea8622d77ccb1142}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Allows\+Duplicates@{Allows\+Duplicates}}
+\index{Allows\+Duplicates@{Allows\+Duplicates}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Allows\+Duplicates}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Hash\+Set}$<$ T $>$.Allows\+Duplicates\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_hash_set_a95849b8404288074ea8622d77ccb1142}
+
+
+Report if this is a set collection. 
+
+Always false\hypertarget{class_c5_1_1_hash_set_a206298276b5ddfbb9a528df96a5620ae}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Contains\+Speed@{Contains\+Speed}}
+\index{Contains\+Speed@{Contains\+Speed}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Contains\+Speed}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Speed} {\bf C5.\+Hash\+Set}$<$ T $>$.Contains\+Speed\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_hash_set_a206298276b5ddfbb9a528df96a5620ae}
+
+
+The complexity of the Contains operation 
+
+Always returns \hyperlink{namespace_c5_a615ba88dcdaa8d5a3c5f833a73d7fad6acb17869fe51048b5a5c4c6106551a255}{Speed.\+Constant}\hypertarget{class_c5_1_1_hash_set_ae9ad56098db41bbbd2a0baabef06bc14}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Duplicates\+By\+Counting@{Duplicates\+By\+Counting}}
+\index{Duplicates\+By\+Counting@{Duplicates\+By\+Counting}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Duplicates\+By\+Counting}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Hash\+Set}$<$ T $>$.Duplicates\+By\+Counting\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_hash_set_ae9ad56098db41bbbd2a0baabef06bc14}
+
+
+By convention this is true for any collection with set semantics. 
+
+True if only one representative of a group of equal items is kept in the collection together with the total count.\hypertarget{class_c5_1_1_hash_set_af105c294816c484c8e48544daa7c0b32}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Features@{Features}}
+\index{Features@{Features}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Features}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature} {\bf C5.\+Hash\+Set}$<$ T $>$.Features\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [get]}}\label{class_c5_1_1_hash_set_af105c294816c484c8e48544daa7c0b32}
+
+
+Show which implementation features was chosen at compilation time 
+
+\hypertarget{class_c5_1_1_hash_set_a55a5a5a8a33bd7058881493bc3d3ae6a}{}\index{C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}!Listenable\+Events@{Listenable\+Events}}
+\index{Listenable\+Events@{Listenable\+Events}!C5\+::\+Hash\+Set@{C5\+::\+Hash\+Set}}
+\subsubsection[{Listenable\+Events}]{\setlength{\rightskip}{0pt plus 5cm}override {\bf Event\+Type\+Enum} {\bf C5.\+Hash\+Set}$<$ T $>$.Listenable\+Events\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_hash_set_a55a5a5a8a33bd7058881493bc3d3ae6a}
+
+
+
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/hashing/\hyperlink{_hash_table_8cs}{Hash\+Table.\+cs}\end{DoxyCompactItemize}

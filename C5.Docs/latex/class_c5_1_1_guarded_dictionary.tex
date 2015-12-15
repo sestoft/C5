@@ -1,0 +1,541 @@
+\hypertarget{class_c5_1_1_guarded_dictionary}{}\section{C5.\+Guarded\+Dictionary$<$ K, V $>$ Class Template Reference}
+\label{class_c5_1_1_guarded_dictionary}\index{C5.\+Guarded\+Dictionary$<$ K, V $>$@{C5.\+Guarded\+Dictionary$<$ K, V $>$}}
+
+
+A read-\/only wrapper for a dictionary.  
+
+
+Inheritance diagram for C5.\+Guarded\+Dictionary$<$ K, V $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.672131cm]{class_c5_1_1_guarded_dictionary}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c5_1_1_guarded_dictionary_aede5f0b863aa1b9e73aaefc75b07406b}{Guarded\+Dictionary} (\hyperlink{interface_c5_1_1_i_dictionary}{I\+Dictionary}$<$ K, V $>$ dict)
+\begin{DoxyCompactList}\small\item\em Wrap a dictionary in a read-\/only wrapper \end{DoxyCompactList}\item 
+void \hyperlink{class_c5_1_1_guarded_dictionary_a353f8b07283f31fb34456317bdb9cf43}{Add} (K key, V val)
+\item 
+void \hyperlink{class_c5_1_1_guarded_dictionary_a992dd8a21a6a6146fc937d0975ee1c8a}{Add\+All$<$ L, W $>$} (S\+C\+G.\+I\+Enumerable$<$ \hyperlink{struct_c5_1_1_key_value_pair}{Key\+Value\+Pair}$<$ L, W $>$$>$ items)
+\item 
+bool \hyperlink{class_c5_1_1_guarded_dictionary_a80c9ecc7aa9664fbcd7e292bda4342bc}{Remove} (K key)
+\item 
+bool \hyperlink{class_c5_1_1_guarded_dictionary_a854f4f5d586a5712b4b96268ac63950b}{Remove} (K key, out V val)
+\item 
+void \hyperlink{class_c5_1_1_guarded_dictionary_ac5f23f523e9eae132f4e465eb004be0a}{Clear} ()
+\item 
+bool \hyperlink{class_c5_1_1_guarded_dictionary_a16126875960f6459a2d697131755128c}{Contains} (K key)
+\begin{DoxyCompactList}\small\item\em Check if the wrapped dictionary contains a specific key \end{DoxyCompactList}\item 
+bool \hyperlink{class_c5_1_1_guarded_dictionary_aba0b4712e17daaba4b81245cc6958862}{Contains\+All$<$ H $>$} (S\+C\+G.\+I\+Enumerable$<$ H $>$ keys)
+\item 
+bool \hyperlink{class_c5_1_1_guarded_dictionary_af7eef747a8e733e4167c1a9ea4954274}{Find} (ref K key, out V val)
+\begin{DoxyCompactList}\small\item\em Search for a key in the wrapped dictionary, reporting the value if found \end{DoxyCompactList}\item 
+bool \hyperlink{class_c5_1_1_guarded_dictionary_a128b6b9f09658c7cd687248592197669}{Update} (K key, V val)
+\item 
+bool \hyperlink{class_c5_1_1_guarded_dictionary_a74de4c990cdc8e7b5245d2931c71274e}{Update} (K key, V val, out V oldval)
+\item 
+bool \hyperlink{class_c5_1_1_guarded_dictionary_ab276e6b0828e40022f2b3ef39e22305c}{Find\+Or\+Add} (K key, ref V val)
+\item 
+bool \hyperlink{class_c5_1_1_guarded_dictionary_a4d75103d8bfec4c044a22ed8ec7fdf46}{Update\+Or\+Add} (K key, V val)
+\item 
+bool \hyperlink{class_c5_1_1_guarded_dictionary_a8b6c55913a3f297ea9579800a9be6580}{Update\+Or\+Add} (K key, V val, out V oldval)
+\item 
+bool \hyperlink{class_c5_1_1_guarded_dictionary_a366d84d2fd3b966b091e030cd8ff131b}{Check} ()
+\begin{DoxyCompactList}\small\item\em Check the internal consistency of the wrapped dictionary \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+S\+C\+G.\+I\+Equality\+Comparer$<$ K $>$ \hyperlink{class_c5_1_1_guarded_dictionary_aa92bdc349fb14d43d5ead652ec07e3fa}{Equality\+Comparer}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+V \hyperlink{class_c5_1_1_guarded_dictionary_a721d36a134e3aa6ff2c92cf6bffb9fb3}{this\mbox{[}\+K key\mbox{]}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+bool \hyperlink{class_c5_1_1_guarded_dictionary_a18ce63220c7b6b3e6a569cd321c4da16}{Is\+Read\+Only}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em (This is a read-\/only wrapper) \end{DoxyCompactList}\item 
+\hyperlink{interface_c5_1_1_i_collection_value}{I\+Collection\+Value}$<$ K $>$ \hyperlink{class_c5_1_1_guarded_dictionary_a9ebe83dbe1e0e8c93c7d268c3643fba4}{Keys}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\hyperlink{interface_c5_1_1_i_collection_value}{I\+Collection\+Value}$<$ V $>$ \hyperlink{class_c5_1_1_guarded_dictionary_ab5aef218f548d9a8abb97ff033be4173}{Values}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+virtual Func$<$ K, V $>$ \hyperlink{class_c5_1_1_guarded_dictionary_a0dc7a885f47a6a2506e46fb813190231}{Func}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\hyperlink{namespace_c5_a615ba88dcdaa8d5a3c5f833a73d7fad6}{Speed} \hyperlink{class_c5_1_1_guarded_dictionary_a4926964829c05063b557c42f6ed6f9e1}{Contains\+Speed}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A read-\/only wrapper for a dictionary. 
+
+{\itshape Suitable for wrapping a \hyperlink{class_c5_1_1_hash_dictionary}{Hash\+Dictionary}. T\+:\+C5.\+Hash\+Dictionary`2} 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_c5_1_1_guarded_dictionary_aede5f0b863aa1b9e73aaefc75b07406b}{}\index{C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}!Guarded\+Dictionary@{Guarded\+Dictionary}}
+\index{Guarded\+Dictionary@{Guarded\+Dictionary}!C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}}
+\subsubsection[{Guarded\+Dictionary(\+I\+Dictionary$<$ K, V $>$ dict)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Guarded\+Dictionary}$<$ K, V $>$.{\bf Guarded\+Dictionary} (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Dictionary}$<$ K, V $>$}]{dict}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_dictionary_aede5f0b863aa1b9e73aaefc75b07406b}
+
+
+Wrap a dictionary in a read-\/only wrapper 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dict} & the dictionary\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_guarded_dictionary_a353f8b07283f31fb34456317bdb9cf43}{}\index{C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}!Add@{Add}}
+\index{Add@{Add}!C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}}
+\subsubsection[{Add(\+K key, V val)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Guarded\+Dictionary}$<$ K, V $>$.Add (
+\begin{DoxyParamCaption}
+\item[{K}]{key, }
+\item[{V}]{val}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_dictionary_a353f8b07283f31fb34456317bdb9cf43}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em key} & \\
+\hline
+{\em val} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_dictionary_a7e3eefcf603863fe54ce86080bbc07d7}{C5.\+I\+Dictionary$<$ K, V $>$}.
+
+\hypertarget{class_c5_1_1_guarded_dictionary_a992dd8a21a6a6146fc937d0975ee1c8a}{}\index{C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}!Add\+All$<$ L, W $>$@{Add\+All$<$ L, W $>$}}
+\index{Add\+All$<$ L, W $>$@{Add\+All$<$ L, W $>$}!C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}}
+\subsubsection[{Add\+All$<$ L, W $>$(\+S\+C\+G.\+I\+Enumerable$<$ Key\+Value\+Pair$<$ L, W $>$$>$ items)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Guarded\+Dictionary}$<$ K, V $>$.Add\+All$<$ L, W $>$ (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Enumerable$<$ {\bf Key\+Value\+Pair}$<$ L, W $>$$>$}]{items}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_dictionary_a992dd8a21a6a6146fc937d0975ee1c8a}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em items} & \\
+\hline
+\end{DoxyParams}
+\begin{Desc}
+\item[Type Constraints]\begin{description}
+\item[{\em L} : {\em K}]\item[{\em W} : {\em V}]\end{description}
+\end{Desc}
+\hypertarget{class_c5_1_1_guarded_dictionary_a366d84d2fd3b966b091e030cd8ff131b}{}\index{C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}!Check@{Check}}
+\index{Check@{Check}!C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}}
+\subsubsection[{Check()}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Guarded\+Dictionary}$<$ K, V $>$.Check (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_dictionary_a366d84d2fd3b966b091e030cd8ff131b}
+
+
+Check the internal consistency of the wrapped dictionary 
+
+\begin{DoxyReturn}{Returns}
+True if check passed
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_dictionary_a659969044740981cdcfe5ee86585104c}{C5.\+I\+Dictionary$<$ K, V $>$}.
+
+\hypertarget{class_c5_1_1_guarded_dictionary_ac5f23f523e9eae132f4e465eb004be0a}{}\index{C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}!Clear@{Clear}}
+\index{Clear@{Clear}!C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}}
+\subsubsection[{Clear()}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Guarded\+Dictionary}$<$ K, V $>$.Clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_dictionary_ac5f23f523e9eae132f4e465eb004be0a}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+
+Implements \hyperlink{interface_c5_1_1_i_dictionary_a9eb0026921a6b39c781495efd65dc82b}{C5.\+I\+Dictionary$<$ K, V $>$}.
+
+\hypertarget{class_c5_1_1_guarded_dictionary_a16126875960f6459a2d697131755128c}{}\index{C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}!Contains@{Contains}}
+\index{Contains@{Contains}!C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}}
+\subsubsection[{Contains(\+K key)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Guarded\+Dictionary}$<$ K, V $>$.Contains (
+\begin{DoxyParamCaption}
+\item[{K}]{key}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_dictionary_a16126875960f6459a2d697131755128c}
+
+
+Check if the wrapped dictionary contains a specific key 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & The key\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if it does
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_dictionary_a08f4af4a7f427e8e9022a13f2e79c031}{C5.\+I\+Dictionary$<$ K, V $>$}.
+
+\hypertarget{class_c5_1_1_guarded_dictionary_aba0b4712e17daaba4b81245cc6958862}{}\index{C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}!Contains\+All$<$ H $>$@{Contains\+All$<$ H $>$}}
+\index{Contains\+All$<$ H $>$@{Contains\+All$<$ H $>$}!C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}}
+\subsubsection[{Contains\+All$<$ H $>$(\+S\+C\+G.\+I\+Enumerable$<$ H $>$ keys)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Guarded\+Dictionary}$<$ K, V $>$.Contains\+All$<$ H $>$ (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Enumerable$<$ H $>$}]{keys}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_dictionary_aba0b4712e17daaba4b81245cc6958862}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em keys} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_dictionary_a18a33ccf0bac3ac7ef8046850104c5d5}{C5.\+I\+Dictionary$<$ K, V $>$}.
+
+\begin{Desc}
+\item[Type Constraints]\begin{description}
+\item[{\em H} : {\em K}]\end{description}
+\end{Desc}
+\hypertarget{class_c5_1_1_guarded_dictionary_af7eef747a8e733e4167c1a9ea4954274}{}\index{C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}!Find@{Find}}
+\index{Find@{Find}!C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}}
+\subsubsection[{Find(ref K key, out V val)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Guarded\+Dictionary}$<$ K, V $>$.Find (
+\begin{DoxyParamCaption}
+\item[{ref K}]{key, }
+\item[{out V}]{val}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_dictionary_af7eef747a8e733e4167c1a9ea4954274}
+
+
+Search for a key in the wrapped dictionary, reporting the value if found 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & The key\\
+\hline
+{\em val} & On exit\+: the value if found\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if found
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_dictionary_a40f6257961c1578fea31f0507cd5c28e}{C5.\+I\+Dictionary$<$ K, V $>$}.
+
+\hypertarget{class_c5_1_1_guarded_dictionary_ab276e6b0828e40022f2b3ef39e22305c}{}\index{C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}!Find\+Or\+Add@{Find\+Or\+Add}}
+\index{Find\+Or\+Add@{Find\+Or\+Add}!C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}}
+\subsubsection[{Find\+Or\+Add(\+K key, ref V val)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Guarded\+Dictionary}$<$ K, V $>$.Find\+Or\+Add (
+\begin{DoxyParamCaption}
+\item[{K}]{key, }
+\item[{ref V}]{val}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_dictionary_ab276e6b0828e40022f2b3ef39e22305c}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em key} & \\
+\hline
+{\em val} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_dictionary_a1f9f0bd335980be8c24d74470bd19ffc}{C5.\+I\+Dictionary$<$ K, V $>$}.
+
+\hypertarget{class_c5_1_1_guarded_dictionary_a80c9ecc7aa9664fbcd7e292bda4342bc}{}\index{C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}!Remove@{Remove}}
+\index{Remove@{Remove}!C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}}
+\subsubsection[{Remove(\+K key)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Guarded\+Dictionary}$<$ K, V $>$.Remove (
+\begin{DoxyParamCaption}
+\item[{K}]{key}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_dictionary_a80c9ecc7aa9664fbcd7e292bda4342bc}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em key} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_dictionary_a35b1f0b9f0e0c555246b9154b6e45ab5}{C5.\+I\+Dictionary$<$ K, V $>$}.
+
+\hypertarget{class_c5_1_1_guarded_dictionary_a854f4f5d586a5712b4b96268ac63950b}{}\index{C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}!Remove@{Remove}}
+\index{Remove@{Remove}!C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}}
+\subsubsection[{Remove(\+K key, out V val)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Guarded\+Dictionary}$<$ K, V $>$.Remove (
+\begin{DoxyParamCaption}
+\item[{K}]{key, }
+\item[{out V}]{val}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_dictionary_a854f4f5d586a5712b4b96268ac63950b}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em key} & \\
+\hline
+{\em val} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_dictionary_a24f34aa709dc1157536afb1d251135d5}{C5.\+I\+Dictionary$<$ K, V $>$}.
+
+\hypertarget{class_c5_1_1_guarded_dictionary_a128b6b9f09658c7cd687248592197669}{}\index{C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}!Update@{Update}}
+\index{Update@{Update}!C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}}
+\subsubsection[{Update(\+K key, V val)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Guarded\+Dictionary}$<$ K, V $>$.Update (
+\begin{DoxyParamCaption}
+\item[{K}]{key, }
+\item[{V}]{val}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_dictionary_a128b6b9f09658c7cd687248592197669}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em key} & \\
+\hline
+{\em val} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_dictionary_aa1af112490cca3ed7816d47b9127dace}{C5.\+I\+Dictionary$<$ K, V $>$}.
+
+\hypertarget{class_c5_1_1_guarded_dictionary_a74de4c990cdc8e7b5245d2931c71274e}{}\index{C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}!Update@{Update}}
+\index{Update@{Update}!C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}}
+\subsubsection[{Update(\+K key, V val, out V oldval)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Guarded\+Dictionary}$<$ K, V $>$.Update (
+\begin{DoxyParamCaption}
+\item[{K}]{key, }
+\item[{V}]{val, }
+\item[{out V}]{oldval}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_dictionary_a74de4c990cdc8e7b5245d2931c71274e}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em key} & \\
+\hline
+{\em val} & \\
+\hline
+{\em oldval} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_dictionary_a0338a7b5bfa797aeb75d153faf00dc31}{C5.\+I\+Dictionary$<$ K, V $>$}.
+
+\hypertarget{class_c5_1_1_guarded_dictionary_a4d75103d8bfec4c044a22ed8ec7fdf46}{}\index{C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}!Update\+Or\+Add@{Update\+Or\+Add}}
+\index{Update\+Or\+Add@{Update\+Or\+Add}!C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}}
+\subsubsection[{Update\+Or\+Add(\+K key, V val)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Guarded\+Dictionary}$<$ K, V $>$.Update\+Or\+Add (
+\begin{DoxyParamCaption}
+\item[{K}]{key, }
+\item[{V}]{val}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_dictionary_a4d75103d8bfec4c044a22ed8ec7fdf46}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em key} & \\
+\hline
+{\em val} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_dictionary_a9cb26d974f4da6030fe50b4bcc3dc4f1}{C5.\+I\+Dictionary$<$ K, V $>$}.
+
+\hypertarget{class_c5_1_1_guarded_dictionary_a8b6c55913a3f297ea9579800a9be6580}{}\index{C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}!Update\+Or\+Add@{Update\+Or\+Add}}
+\index{Update\+Or\+Add@{Update\+Or\+Add}!C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}}
+\subsubsection[{Update\+Or\+Add(\+K key, V val, out V oldval)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Guarded\+Dictionary}$<$ K, V $>$.Update\+Or\+Add (
+\begin{DoxyParamCaption}
+\item[{K}]{key, }
+\item[{V}]{val, }
+\item[{out V}]{oldval}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_dictionary_a8b6c55913a3f297ea9579800a9be6580}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em key} & \\
+\hline
+{\em val} & \\
+\hline
+{\em oldval} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_dictionary_abc8d5a032bbf487db18fc26e31ad512d}{C5.\+I\+Dictionary$<$ K, V $>$}.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{class_c5_1_1_guarded_dictionary_a4926964829c05063b557c42f6ed6f9e1}{}\index{C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}!Contains\+Speed@{Contains\+Speed}}
+\index{Contains\+Speed@{Contains\+Speed}!C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}}
+\subsubsection[{Contains\+Speed}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Speed} {\bf C5.\+Guarded\+Dictionary}$<$ K, V $>$.Contains\+Speed\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_dictionary_a4926964829c05063b557c42f6ed6f9e1}
+
+
+
+
+\hypertarget{class_c5_1_1_guarded_dictionary_aa92bdc349fb14d43d5ead652ec07e3fa}{}\index{C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}!Equality\+Comparer@{Equality\+Comparer}}
+\index{Equality\+Comparer@{Equality\+Comparer}!C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}}
+\subsubsection[{Equality\+Comparer}]{\setlength{\rightskip}{0pt plus 5cm}S\+C\+G.\+I\+Equality\+Comparer$<$K$>$ {\bf C5.\+Guarded\+Dictionary}$<$ K, V $>$.Equality\+Comparer\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_dictionary_aa92bdc349fb14d43d5ead652ec07e3fa}
+
+
+
+
+\hypertarget{class_c5_1_1_guarded_dictionary_a0dc7a885f47a6a2506e46fb813190231}{}\index{C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}!Func@{Func}}
+\index{Func@{Func}!C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}}
+\subsubsection[{Func}]{\setlength{\rightskip}{0pt plus 5cm}virtual Func$<$K, V$>$ {\bf C5.\+Guarded\+Dictionary}$<$ K, V $>$.Func\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_dictionary_a0dc7a885f47a6a2506e46fb813190231}
+
+
+
+
+\hypertarget{class_c5_1_1_guarded_dictionary_a18ce63220c7b6b3e6a569cd321c4da16}{}\index{C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}!Is\+Read\+Only@{Is\+Read\+Only}}
+\index{Is\+Read\+Only@{Is\+Read\+Only}!C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}}
+\subsubsection[{Is\+Read\+Only}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Guarded\+Dictionary}$<$ K, V $>$.Is\+Read\+Only\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_dictionary_a18ce63220c7b6b3e6a569cd321c4da16}
+
+
+(This is a read-\/only wrapper) 
+
+True\hypertarget{class_c5_1_1_guarded_dictionary_a9ebe83dbe1e0e8c93c7d268c3643fba4}{}\index{C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}!Keys@{Keys}}
+\index{Keys@{Keys}!C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}}
+\subsubsection[{Keys}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Collection\+Value}$<$K$>$ {\bf C5.\+Guarded\+Dictionary}$<$ K, V $>$.Keys\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_dictionary_a9ebe83dbe1e0e8c93c7d268c3643fba4}
+
+
+
+
+The collection of keys of the wrapped dictionary\hypertarget{class_c5_1_1_guarded_dictionary_a721d36a134e3aa6ff2c92cf6bffb9fb3}{}\index{C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}!this\mbox{[}\+K key\mbox{]}@{this[K key]}}
+\index{this\mbox{[}\+K key\mbox{]}@{this[K key]}!C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}}
+\subsubsection[{this[K key]}]{\setlength{\rightskip}{0pt plus 5cm}V {\bf C5.\+Guarded\+Dictionary}$<$ K, V $>$.this\mbox{[}K key\mbox{]}\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{class_c5_1_1_guarded_dictionary_a721d36a134e3aa6ff2c92cf6bffb9fb3}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_read_only_collection_exception}{Read\+Only\+Collection\+Exception}} & since this is a read-\/only wrappper if used as a setter\\
+\hline
+\end{DoxyExceptions}
+
+
+Get the value corresponding to a key in the wrapped dictionary\hypertarget{class_c5_1_1_guarded_dictionary_ab5aef218f548d9a8abb97ff033be4173}{}\index{C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}!Values@{Values}}
+\index{Values@{Values}!C5\+::\+Guarded\+Dictionary@{C5\+::\+Guarded\+Dictionary}}
+\subsubsection[{Values}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Collection\+Value}$<$V$>$ {\bf C5.\+Guarded\+Dictionary}$<$ K, V $>$.Values\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_dictionary_ab5aef218f548d9a8abb97ff033be4173}
+
+
+
+
+The collection of values of the wrapped dictionary
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_wrappers_8cs}{Wrappers.\+cs}\end{DoxyCompactItemize}

@@ -1,0 +1,211 @@
+\hypertarget{class_c5_1_1_guarded_sequenced}{}\section{C5.\+Guarded\+Sequenced$<$ T $>$ Class Template Reference}
+\label{class_c5_1_1_guarded_sequenced}\index{C5.\+Guarded\+Sequenced$<$ T $>$@{C5.\+Guarded\+Sequenced$<$ T $>$}}
+
+
+A read-\/only wrapper for a sequenced collection  
+
+
+Inheritance diagram for C5.\+Guarded\+Sequenced$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.300470cm]{class_c5_1_1_guarded_sequenced}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c5_1_1_guarded_sequenced_ac95669006745b3cbd6499f705e943df9}{Guarded\+Sequenced} (\hyperlink{interface_c5_1_1_i_sequenced}{I\+Sequenced}$<$ T $>$ sorted)
+\begin{DoxyCompactList}\small\item\em Wrap a sequenced collection in a read-\/only wrapper \end{DoxyCompactList}\item 
+int \hyperlink{class_c5_1_1_guarded_sequenced_a610348d7c60a714f948a763ab5afc60d}{Find\+Index} (Func$<$ T, bool $>$ predicate)
+\begin{DoxyCompactList}\small\item\em Check if there exists an item that satisfies a specific predicate in this collection and return the index of the first one. \end{DoxyCompactList}\item 
+int \hyperlink{class_c5_1_1_guarded_sequenced_ad06df0c721132964b3f91c761232f74f}{Find\+Last\+Index} (Func$<$ T, bool $>$ predicate)
+\begin{DoxyCompactList}\small\item\em Check if there exists an item that satisfies a specific predicate in this collection and return the index of the last one. \end{DoxyCompactList}\item 
+int \hyperlink{class_c5_1_1_guarded_sequenced_a04214406cd7fe4814643b79c5005c799}{Get\+Sequenced\+Hash\+Code} ()
+\item 
+bool \hyperlink{class_c5_1_1_guarded_sequenced_ac4377e7ad77d3954865ad6500fb47245}{Sequenced\+Equals} (\hyperlink{interface_c5_1_1_i_sequenced}{I\+Sequenced}$<$ T $>$ that)
+\item 
+virtual \hyperlink{interface_c5_1_1_i_directed_collection_value}{I\+Directed\+Collection\+Value}$<$ T $>$ \hyperlink{class_c5_1_1_guarded_sequenced_a5bbddf444037001d526931116e6b16e7}{Backwards} ()
+\begin{DoxyCompactList}\small\item\em Get a collection that enumerates the wrapped collection in the opposite direction \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_guarded_sequenced_a4741f8cd5c5fa8fb3d6b7a71268cdefb}{Find\+Last} (Func$<$ T, bool $>$ predicate, out T item)
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespace_c5_aad282676794e49130eb8caed289395f8}{Enumeration\+Direction} \hyperlink{class_c5_1_1_guarded_sequenced_a252feee8e5260e42f03494c08dda6dc0}{Direction}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A read-\/only wrapper for a sequenced collection 
+
+{\itshape This is mainly interesting as a base of other guard classes} 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_c5_1_1_guarded_sequenced_ac95669006745b3cbd6499f705e943df9}{}\index{C5\+::\+Guarded\+Sequenced@{C5\+::\+Guarded\+Sequenced}!Guarded\+Sequenced@{Guarded\+Sequenced}}
+\index{Guarded\+Sequenced@{Guarded\+Sequenced}!C5\+::\+Guarded\+Sequenced@{C5\+::\+Guarded\+Sequenced}}
+\subsubsection[{Guarded\+Sequenced(\+I\+Sequenced$<$ T $>$ sorted)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Guarded\+Sequenced}$<$ T $>$.{\bf Guarded\+Sequenced} (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Sequenced}$<$ T $>$}]{sorted}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sequenced_ac95669006745b3cbd6499f705e943df9}
+
+
+Wrap a sequenced collection in a read-\/only wrapper 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sorted} & \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_guarded_sequenced_a5bbddf444037001d526931116e6b16e7}{}\index{C5\+::\+Guarded\+Sequenced@{C5\+::\+Guarded\+Sequenced}!Backwards@{Backwards}}
+\index{Backwards@{Backwards}!C5\+::\+Guarded\+Sequenced@{C5\+::\+Guarded\+Sequenced}}
+\subsubsection[{Backwards()}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf I\+Directed\+Collection\+Value}$<$T$>$ {\bf C5.\+Guarded\+Sequenced}$<$ T $>$.Backwards (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_sequenced_a5bbddf444037001d526931116e6b16e7}
+
+
+Get a collection that enumerates the wrapped collection in the opposite direction 
+
+\begin{DoxyReturn}{Returns}
+The mirrored collection
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_directed_collection_value_ae5665ed396ea2801266c4b2bfb3dae41}{C5.\+I\+Directed\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sequenced_a610348d7c60a714f948a763ab5afc60d}{}\index{C5\+::\+Guarded\+Sequenced@{C5\+::\+Guarded\+Sequenced}!Find\+Index@{Find\+Index}}
+\index{Find\+Index@{Find\+Index}!C5\+::\+Guarded\+Sequenced@{C5\+::\+Guarded\+Sequenced}}
+\subsubsection[{Find\+Index(\+Func$<$ T, bool $>$ predicate)}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+Guarded\+Sequenced}$<$ T $>$.Find\+Index (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{predicate}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sequenced_a610348d7c60a714f948a763ab5afc60d}
+
+
+Check if there exists an item that satisfies a specific predicate in this collection and return the index of the first one. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em predicate} & A delegate (T\+:\+Func`2 with 
+\begin{DoxyCode}
+R == \textcolor{keywordtype}{bool}
+\end{DoxyCode}
+) defining the predicate\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the index, if found, a negative value else
+\end{DoxyReturn}
+\hypertarget{class_c5_1_1_guarded_sequenced_a4741f8cd5c5fa8fb3d6b7a71268cdefb}{}\index{C5\+::\+Guarded\+Sequenced@{C5\+::\+Guarded\+Sequenced}!Find\+Last@{Find\+Last}}
+\index{Find\+Last@{Find\+Last}!C5\+::\+Guarded\+Sequenced@{C5\+::\+Guarded\+Sequenced}}
+\subsubsection[{Find\+Last(\+Func$<$ T, bool $>$ predicate, out T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Guarded\+Sequenced}$<$ T $>$.Find\+Last (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{predicate, }
+\item[{out T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_guarded_sequenced_a4741f8cd5c5fa8fb3d6b7a71268cdefb}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em predicate} & \\
+\hline
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_directed_collection_value_a93725b1f694e0d1cf5827e481ea467b7}{C5.\+I\+Directed\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sequenced_ad06df0c721132964b3f91c761232f74f}{}\index{C5\+::\+Guarded\+Sequenced@{C5\+::\+Guarded\+Sequenced}!Find\+Last\+Index@{Find\+Last\+Index}}
+\index{Find\+Last\+Index@{Find\+Last\+Index}!C5\+::\+Guarded\+Sequenced@{C5\+::\+Guarded\+Sequenced}}
+\subsubsection[{Find\+Last\+Index(\+Func$<$ T, bool $>$ predicate)}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+Guarded\+Sequenced}$<$ T $>$.Find\+Last\+Index (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{predicate}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sequenced_ad06df0c721132964b3f91c761232f74f}
+
+
+Check if there exists an item that satisfies a specific predicate in this collection and return the index of the last one. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em predicate} & A delegate (T\+:\+Func`2 with 
+\begin{DoxyCode}
+R == \textcolor{keywordtype}{bool}
+\end{DoxyCode}
+) defining the predicate\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the index, if found, a negative value else
+\end{DoxyReturn}
+\hypertarget{class_c5_1_1_guarded_sequenced_a04214406cd7fe4814643b79c5005c799}{}\index{C5\+::\+Guarded\+Sequenced@{C5\+::\+Guarded\+Sequenced}!Get\+Sequenced\+Hash\+Code@{Get\+Sequenced\+Hash\+Code}}
+\index{Get\+Sequenced\+Hash\+Code@{Get\+Sequenced\+Hash\+Code}!C5\+::\+Guarded\+Sequenced@{C5\+::\+Guarded\+Sequenced}}
+\subsubsection[{Get\+Sequenced\+Hash\+Code()}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+Guarded\+Sequenced}$<$ T $>$.Get\+Sequenced\+Hash\+Code (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sequenced_a04214406cd7fe4814643b79c5005c799}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sequenced_afb06eeccff646bb763c76c1826b177fe}{C5.\+I\+Sequenced$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_guarded_sequenced_ac4377e7ad77d3954865ad6500fb47245}{}\index{C5\+::\+Guarded\+Sequenced@{C5\+::\+Guarded\+Sequenced}!Sequenced\+Equals@{Sequenced\+Equals}}
+\index{Sequenced\+Equals@{Sequenced\+Equals}!C5\+::\+Guarded\+Sequenced@{C5\+::\+Guarded\+Sequenced}}
+\subsubsection[{Sequenced\+Equals(\+I\+Sequenced$<$ T $>$ that)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Guarded\+Sequenced}$<$ T $>$.Sequenced\+Equals (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Sequenced}$<$ T $>$}]{that}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_sequenced_ac4377e7ad77d3954865ad6500fb47245}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em that} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sequenced_aeb2be77c5c30ab10f468222f6cbb795f}{C5.\+I\+Sequenced$<$ T $>$}.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{class_c5_1_1_guarded_sequenced_a252feee8e5260e42f03494c08dda6dc0}{}\index{C5\+::\+Guarded\+Sequenced@{C5\+::\+Guarded\+Sequenced}!Direction@{Direction}}
+\index{Direction@{Direction}!C5\+::\+Guarded\+Sequenced@{C5\+::\+Guarded\+Sequenced}}
+\subsubsection[{Direction}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Enumeration\+Direction} {\bf C5.\+Guarded\+Sequenced}$<$ T $>$.Direction\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_sequenced_a252feee8e5260e42f03494c08dda6dc0}
+
+
+
+
+{\ttfamily Forwards} if same, else {\ttfamily Backwards} 
+
+The enumeration direction relative to the original collection.
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_wrappers_8cs}{Wrappers.\+cs}\end{DoxyCompactItemize}

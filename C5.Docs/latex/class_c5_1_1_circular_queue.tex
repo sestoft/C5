@@ -1,0 +1,270 @@
+\hypertarget{class_c5_1_1_circular_queue}{}\section{C5.\+Circular\+Queue$<$ T $>$ Class Template Reference}
+\label{class_c5_1_1_circular_queue}\index{C5.\+Circular\+Queue$<$ T $>$@{C5.\+Circular\+Queue$<$ T $>$}}
+
+
+ 
+
+
+Inheritance diagram for C5.\+Circular\+Queue$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.643193cm]{class_c5_1_1_circular_queue}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c5_1_1_circular_queue_a8b23dc95a35d343c2d6a745ebb812090}{Circular\+Queue} ()
+\item 
+\hyperlink{class_c5_1_1_circular_queue_a7b0161842b7ffcd9309257cf6e11a205}{Circular\+Queue} (int capacity)
+\item 
+virtual void \hyperlink{class_c5_1_1_circular_queue_a38228eb467c6366bbdfe930af2a6a3f7}{Enqueue} (T item)
+\item 
+virtual T \hyperlink{class_c5_1_1_circular_queue_ad52b370d4ab23656feeeeddf840da857}{Dequeue} ()
+\item 
+void \hyperlink{class_c5_1_1_circular_queue_a03b6cfbe23af1164ef4b68db24698ce7}{Push} (T item)
+\item 
+T \hyperlink{class_c5_1_1_circular_queue_a0a8d62216e8a17d072829f1c6214a262}{Pop} ()
+\item 
+override T \hyperlink{class_c5_1_1_circular_queue_aeabd2341783df834015d58b04c0c0a11}{Choose} ()
+\item 
+override S\+C\+G.\+I\+Enumerator$<$ T $>$ \hyperlink{class_c5_1_1_circular_queue_ae1ab5e745ced280db9b9a175a66dc5b4}{Get\+Enumerator} ()
+\item 
+override \hyperlink{interface_c5_1_1_i_directed_collection_value}{I\+Directed\+Collection\+Value}$<$ T $>$ \hyperlink{class_c5_1_1_circular_queue_a9df19a0a07cd854a59df4d3f976cf169}{Backwards} ()
+\item 
+virtual bool \hyperlink{class_c5_1_1_circular_queue_a57f406e63f6a7f41e9617933220e42a3}{Check} ()
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+override \hyperlink{namespace_c5_a9143bfd561fffa025d21561674758008}{Event\+Type\+Enum} \hyperlink{class_c5_1_1_circular_queue_a2dc39118f0d30f1bae7d3a73d4d2e4c6}{Listenable\+Events}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+virtual bool \hyperlink{class_c5_1_1_circular_queue_a0146f541106c3d6cf4259a1a6fe61d9c}{Allows\+Duplicates}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+virtual T \hyperlink{class_c5_1_1_circular_queue_a26b24b8ca3560860d09710dc8e8409bb}{this\mbox{[}int i\mbox{]}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Get the i\textquotesingle{}th item in the queue. The front of the queue is at index 0. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & \\
+\hline
+\end{DoxyTemplParams}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_c5_1_1_circular_queue_a8b23dc95a35d343c2d6a745ebb812090}{}\index{C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}!Circular\+Queue@{Circular\+Queue}}
+\index{Circular\+Queue@{Circular\+Queue}!C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}}
+\subsubsection[{Circular\+Queue()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Circular\+Queue}$<$ T $>$.{\bf Circular\+Queue} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_circular_queue_a8b23dc95a35d343c2d6a745ebb812090}
+
+
+
+
+\hypertarget{class_c5_1_1_circular_queue_a7b0161842b7ffcd9309257cf6e11a205}{}\index{C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}!Circular\+Queue@{Circular\+Queue}}
+\index{Circular\+Queue@{Circular\+Queue}!C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}}
+\subsubsection[{Circular\+Queue(int capacity)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Circular\+Queue}$<$ T $>$.{\bf Circular\+Queue} (
+\begin{DoxyParamCaption}
+\item[{int}]{capacity}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_circular_queue_a7b0161842b7ffcd9309257cf6e11a205}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em capacity} & \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_circular_queue_a9df19a0a07cd854a59df4d3f976cf169}{}\index{C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}!Backwards@{Backwards}}
+\index{Backwards@{Backwards}!C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}}
+\subsubsection[{Backwards()}]{\setlength{\rightskip}{0pt plus 5cm}override {\bf I\+Directed\+Collection\+Value}$<$T$>$ {\bf C5.\+Circular\+Queue}$<$ T $>$.Backwards (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_circular_queue_a9df19a0a07cd854a59df4d3f976cf169}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_c5_1_1_directed_collection_base_a9a4c7d6571ff7d78ea5adcb0d8264ff1}{C5.\+Directed\+Collection\+Base$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_circular_queue_a57f406e63f6a7f41e9617933220e42a3}{}\index{C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}!Check@{Check}}
+\index{Check@{Check}!C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}}
+\subsubsection[{Check()}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Circular\+Queue}$<$ T $>$.Check (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_circular_queue_a57f406e63f6a7f41e9617933220e42a3}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{class_c5_1_1_circular_queue_aeabd2341783df834015d58b04c0c0a11}{}\index{C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}!Choose@{Choose}}
+\index{Choose@{Choose}!C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}}
+\subsubsection[{Choose()}]{\setlength{\rightskip}{0pt plus 5cm}override T {\bf C5.\+Circular\+Queue}$<$ T $>$.Choose (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_circular_queue_aeabd2341783df834015d58b04c0c0a11}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_af72d52ddd8ea4130d508e1cf020cf7eb}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_circular_queue_ad52b370d4ab23656feeeeddf840da857}{}\index{C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}!Dequeue@{Dequeue}}
+\index{Dequeue@{Dequeue}!C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}}
+\subsubsection[{Dequeue()}]{\setlength{\rightskip}{0pt plus 5cm}virtual T {\bf C5.\+Circular\+Queue}$<$ T $>$.Dequeue (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_circular_queue_ad52b370d4ab23656feeeeddf840da857}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_queue_ae64bb24d3237ad9cef4f55593ca20bc7}{C5.\+I\+Queue$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_circular_queue_a38228eb467c6366bbdfe930af2a6a3f7}{}\index{C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}!Enqueue@{Enqueue}}
+\index{Enqueue@{Enqueue}!C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}}
+\subsubsection[{Enqueue(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}virtual void {\bf C5.\+Circular\+Queue}$<$ T $>$.Enqueue (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_circular_queue_a38228eb467c6366bbdfe930af2a6a3f7}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_queue_afceb820ca32b996f6fd5c34a85ccbacd}{C5.\+I\+Queue$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_circular_queue_ae1ab5e745ced280db9b9a175a66dc5b4}{}\index{C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}!Get\+Enumerator@{Get\+Enumerator}}
+\index{Get\+Enumerator@{Get\+Enumerator}!C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}}
+\subsubsection[{Get\+Enumerator()}]{\setlength{\rightskip}{0pt plus 5cm}override S\+C\+G.\+I\+Enumerator$<$T$>$ {\bf C5.\+Circular\+Queue}$<$ T $>$.Get\+Enumerator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_circular_queue_ae1ab5e745ced280db9b9a175a66dc5b4}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_c5_1_1_sequenced_base_a07d117175b630fd7f87f6e61b05259dc}{C5.\+Sequenced\+Base$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_circular_queue_a0a8d62216e8a17d072829f1c6214a262}{}\index{C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}!Pop@{Pop}}
+\index{Pop@{Pop}!C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}}
+\subsubsection[{Pop()}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Circular\+Queue}$<$ T $>$.Pop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_circular_queue_a0a8d62216e8a17d072829f1c6214a262}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_stack_ad85678b4d9f9a1277b02d5913d0e1d55}{C5.\+I\+Stack$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_circular_queue_a03b6cfbe23af1164ef4b68db24698ce7}{}\index{C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}!Push@{Push}}
+\index{Push@{Push}!C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}}
+\subsubsection[{Push(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Circular\+Queue}$<$ T $>$.Push (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_circular_queue_a03b6cfbe23af1164ef4b68db24698ce7}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_stack_a98462dd9cda5d818fc1bce6a5055f000}{C5.\+I\+Stack$<$ T $>$}.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{class_c5_1_1_circular_queue_a0146f541106c3d6cf4259a1a6fe61d9c}{}\index{C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}!Allows\+Duplicates@{Allows\+Duplicates}}
+\index{Allows\+Duplicates@{Allows\+Duplicates}!C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}}
+\subsubsection[{Allows\+Duplicates}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Circular\+Queue}$<$ T $>$.Allows\+Duplicates\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_circular_queue_a0146f541106c3d6cf4259a1a6fe61d9c}
+
+
+
+
+\hypertarget{class_c5_1_1_circular_queue_a2dc39118f0d30f1bae7d3a73d4d2e4c6}{}\index{C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}!Listenable\+Events@{Listenable\+Events}}
+\index{Listenable\+Events@{Listenable\+Events}!C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}}
+\subsubsection[{Listenable\+Events}]{\setlength{\rightskip}{0pt plus 5cm}override {\bf Event\+Type\+Enum} {\bf C5.\+Circular\+Queue}$<$ T $>$.Listenable\+Events\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_circular_queue_a2dc39118f0d30f1bae7d3a73d4d2e4c6}
+
+
+
+
+\hypertarget{class_c5_1_1_circular_queue_a26b24b8ca3560860d09710dc8e8409bb}{}\index{C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}!this\mbox{[}int i\mbox{]}@{this[int i]}}
+\index{this\mbox{[}int i\mbox{]}@{this[int i]}!C5\+::\+Circular\+Queue@{C5\+::\+Circular\+Queue}}
+\subsubsection[{this[int i]}]{\setlength{\rightskip}{0pt plus 5cm}virtual T {\bf C5.\+Circular\+Queue}$<$ T $>$.this\mbox{[}int i\mbox{]}\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_circular_queue_a26b24b8ca3560860d09710dc8e8409bb}
+
+
+Get the i\textquotesingle{}th item in the queue. The front of the queue is at index 0. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/arrays/\hyperlink{_circular_queue_8cs}{Circular\+Queue.\+cs}\end{DoxyCompactItemize}

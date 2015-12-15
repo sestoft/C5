@@ -1,0 +1,70 @@
+\hypertarget{_events_8cs}{}\section{C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\+Events.cs File Reference}
+\label{_events_8cs}\index{C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\+Events.\+cs@{C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\+Events.\+cs}}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class {\bfseries C5.\+Event\+Block$<$ T $>$}
+\begin{DoxyCompactList}\small\item\em Holds the real events for a collection \end{DoxyCompactList}\item 
+class {\bfseries C5.\+Proxy\+Event\+Block$<$ T $>$}
+\begin{DoxyCompactList}\small\item\em Tentative, to conserve memory in Guarded\+Collection\+Value\+Base This should really be nested in Guarded collection value, only have a guardereal field \end{DoxyCompactList}\item 
+class \hyperlink{class_c5_1_1_item_at_event_args}{C5.\+Item\+At\+Event\+Args$<$ T $>$}
+\item 
+class \hyperlink{class_c5_1_1_item_count_event_args}{C5.\+Item\+Count\+Event\+Args$<$ T $>$}
+\item 
+class \hyperlink{class_c5_1_1_cleared_event_args}{C5.\+Cleared\+Event\+Args}
+\item 
+class \hyperlink{class_c5_1_1_cleared_range_event_args}{C5.\+Cleared\+Range\+Event\+Args}
+\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_c5}{C5}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{namespace_c5_a9143bfd561fffa025d21561674758008}{C5.\+Event\+Type\+Enum} \{ \\*
+\hyperlink{namespace_c5_a9143bfd561fffa025d21561674758008a6adf97f83acf6453d4a6a4b1070f3754}{C5.\+Event\+Type\+Enum.\+None} = 0x00000000, 
+\hyperlink{namespace_c5_a9143bfd561fffa025d21561674758008a820dbd2b8f606aff866c0bbfb6b737c1}{C5.\+Event\+Type\+Enum.\+Changed} = 0x00000001, 
+\hyperlink{namespace_c5_a9143bfd561fffa025d21561674758008aa3b087a75730395ff9ff9d3dd307295e}{C5.\+Event\+Type\+Enum.\+Cleared} = 0x00000002, 
+\hyperlink{namespace_c5_a9143bfd561fffa025d21561674758008af29ddbfb905eb2593fdcdfb243f9af85}{C5.\+Event\+Type\+Enum.\+Added} = 0x00000004, 
+\\*
+\hyperlink{namespace_c5_a9143bfd561fffa025d21561674758008a93f07b720ebf7d1246512569761a5804}{C5.\+Event\+Type\+Enum.\+Removed} = 0x00000008, 
+\hyperlink{namespace_c5_a9143bfd561fffa025d21561674758008a972e73b7a882d0802a4e3a16946a2f94}{C5.\+Event\+Type\+Enum.\+Basic} = 0x0000000f, 
+\hyperlink{namespace_c5_a9143bfd561fffa025d21561674758008a157d034f9c98a305eb73776582550027}{C5.\+Event\+Type\+Enum.\+Inserted} = 0x00000010, 
+\hyperlink{namespace_c5_a9143bfd561fffa025d21561674758008a453b7f3363ab469a21a00dfce8d09735}{C5.\+Event\+Type\+Enum.\+Removed\+At} = 0x00000020, 
+\\*
+\hyperlink{namespace_c5_a9143bfd561fffa025d21561674758008ab1c94ca2fbc3e78fc30069c8d0f01680}{C5.\+Event\+Type\+Enum.\+All} = 0x0000003f
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+delegate void \hyperlink{namespace_c5_a1e765c361aac015d7c57a8d3c6cb57c8}{C5.\+Collection\+Changed\+Handler$<$ T $>$} (object sender)
+\begin{DoxyCompactList}\small\item\em The type of event raised after an operation on a collection has changed its contents. Normally, a multioperation like Add\+All, M\+:\+C5.\+I\+Extensible`1.\+Add\+All(\+System.\+Collections.\+Generic.\+I\+Enumerable$<$`0$>$) will only fire one Collection\+Changed event. Any operation that changes the collection must fire Collection\+Changed as its last event. \end{DoxyCompactList}\item 
+delegate void \hyperlink{namespace_c5_a8b919520e05c2cecbf5306cbcdce3590}{C5.\+Collection\+Cleared\+Handler$<$ T $>$} (object sender, Cleared\+Event\+Args event\+Args)
+\begin{DoxyCompactList}\small\item\em The type of event raised after the Clear() operation on a collection. 
+
+Note\+: The Clear() operation will not fire Items\+Removed events. \end{DoxyCompactList}\item 
+delegate void \hyperlink{namespace_c5_a425bfbd2929db06c66d15c3cbd186b85}{C5.\+Items\+Added\+Handler$<$ T $>$} (object sender, Item\+Count\+Event\+Args$<$ T $>$ event\+Args)
+\begin{DoxyCompactList}\small\item\em The type of event raised after an item has been added to a collection. The event will be raised at a point of time, where the collection object is in an internally consistent state and before the corresponding Collection\+Changed event is raised. 
+
+Note\+: an Update operation will fire an Items\+Removed and an Items\+Added event. 
+
+Note\+: When an item is inserted into a list (T\+:\+C5.\+I\+List`1), both Item\+Inserted and Items\+Added events will be fired. \end{DoxyCompactList}\item 
+delegate void \hyperlink{namespace_c5_a4bca5e39597898aa21a60ecf3de8f97f}{C5.\+Items\+Removed\+Handler$<$ T $>$} (object sender, Item\+Count\+Event\+Args$<$ T $>$ event\+Args)
+\begin{DoxyCompactList}\small\item\em The type of event raised after an item has been removed from a collection. The event will be raised at a point of time, where the collection object is in an internally consistent state and before the corresponding Collection\+Changed event is raised. 
+
+Note\+: The Clear() operation will not fire Items\+Removed events. 
+
+Note\+: an Update operation will fire an Items\+Removed and an Items\+Added event. 
+
+Note\+: When an item is removed from a list by the Remove\+At operation, both an Items\+Removed and an Item\+Removed\+At event will be fired. \end{DoxyCompactList}\item 
+delegate void \hyperlink{namespace_c5_a969e97103fb42e478a9c9cedba5a31fa}{C5.\+Item\+Inserted\+Handler$<$ T $>$} (object sender, Item\+At\+Event\+Args$<$ T $>$ event\+Args)
+\begin{DoxyCompactList}\small\item\em The type of event raised after an item has been inserted into a list by an Insert, Insert\+First or Insert\+Last operation. The event will be raised at a point of time, where the collection object is in an internally consistent state and before the corresponding Collection\+Changed event is raised. 
+
+Note\+: an Items\+Added event will also be fired. \end{DoxyCompactList}\item 
+delegate void \hyperlink{namespace_c5_adf46e8dc9cb56a1eac2fad63016c18d0}{C5.\+Item\+Removed\+At\+Handler$<$ T $>$} (object sender, Item\+At\+Event\+Args$<$ T $>$ event\+Args)
+\begin{DoxyCompactList}\small\item\em The type of event raised after an item has been removed from a list by a Remove\+At(int i) operation (or Remove\+First(), Remove\+Last(), Remove() operation). The event will be raised at a point of time, where the collection object is in an internally consistent state and before the corresponding Collection\+Changed event is raised. 
+
+Note\+: an Item\+Removed event will also be fired. \end{DoxyCompactList}\end{DoxyCompactItemize}

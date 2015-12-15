@@ -1,0 +1,94 @@
+\hypertarget{class_c5_1_1_guarded_enumerator}{}\section{C5.\+Guarded\+Enumerator$<$ T $>$ Class Template Reference}
+\label{class_c5_1_1_guarded_enumerator}\index{C5.\+Guarded\+Enumerator$<$ T $>$@{C5.\+Guarded\+Enumerator$<$ T $>$}}
+
+
+A read-\/only wrapper class for a generic enumerator  
+
+
+Inheritance diagram for C5.\+Guarded\+Enumerator$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_c5_1_1_guarded_enumerator}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c5_1_1_guarded_enumerator_a26e05b27464a89352253e1a683c0750a}{Guarded\+Enumerator} (S\+C\+G.\+I\+Enumerator$<$ T $>$ enumerator)
+\begin{DoxyCompactList}\small\item\em Create a wrapper around a generic enumerator \end{DoxyCompactList}\item 
+bool \hyperlink{class_c5_1_1_guarded_enumerator_a2fad3f14e61f9fa762730de1ab42d68d}{Move\+Next} ()
+\begin{DoxyCompactList}\small\item\em Move wrapped enumerator to next item, or the first item if this is the first call to Move\+Next. \end{DoxyCompactList}\item 
+void \hyperlink{class_c5_1_1_guarded_enumerator_a2733fc78a530e8212dc160b9a6aa395f}{Dispose} ()
+\begin{DoxyCompactList}\small\item\em Dispose wrapped enumerator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+T \hyperlink{class_c5_1_1_guarded_enumerator_af13904801a980feda3b2d6a4ec03db2c}{Current}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Undefined if enumerator is not valid (Move\+Next hash been called returning true) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A read-\/only wrapper class for a generic enumerator 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_c5_1_1_guarded_enumerator_a26e05b27464a89352253e1a683c0750a}{}\index{C5\+::\+Guarded\+Enumerator@{C5\+::\+Guarded\+Enumerator}!Guarded\+Enumerator@{Guarded\+Enumerator}}
+\index{Guarded\+Enumerator@{Guarded\+Enumerator}!C5\+::\+Guarded\+Enumerator@{C5\+::\+Guarded\+Enumerator}}
+\subsubsection[{Guarded\+Enumerator(\+S\+C\+G.\+I\+Enumerator$<$ T $>$ enumerator)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Guarded\+Enumerator}$<$ T $>$.{\bf Guarded\+Enumerator} (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Enumerator$<$ T $>$}]{enumerator}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_enumerator_a26e05b27464a89352253e1a683c0750a}
+
+
+Create a wrapper around a generic enumerator 
+
+
+\begin{DoxyParams}{Parameters}
+{\em enumerator} & The enumerator to wrap\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_guarded_enumerator_a2733fc78a530e8212dc160b9a6aa395f}{}\index{C5\+::\+Guarded\+Enumerator@{C5\+::\+Guarded\+Enumerator}!Dispose@{Dispose}}
+\index{Dispose@{Dispose}!C5\+::\+Guarded\+Enumerator@{C5\+::\+Guarded\+Enumerator}}
+\subsubsection[{Dispose()}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Guarded\+Enumerator}$<$ T $>$.Dispose (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_enumerator_a2733fc78a530e8212dc160b9a6aa395f}
+
+
+Dispose wrapped enumerator. 
+
+\hypertarget{class_c5_1_1_guarded_enumerator_a2fad3f14e61f9fa762730de1ab42d68d}{}\index{C5\+::\+Guarded\+Enumerator@{C5\+::\+Guarded\+Enumerator}!Move\+Next@{Move\+Next}}
+\index{Move\+Next@{Move\+Next}!C5\+::\+Guarded\+Enumerator@{C5\+::\+Guarded\+Enumerator}}
+\subsubsection[{Move\+Next()}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Guarded\+Enumerator}$<$ T $>$.Move\+Next (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_enumerator_a2fad3f14e61f9fa762730de1ab42d68d}
+
+
+Move wrapped enumerator to next item, or the first item if this is the first call to Move\+Next. 
+
+\begin{DoxyReturn}{Returns}
+True if enumerator is valid now
+\end{DoxyReturn}
+
+
+\subsection{Property Documentation}
+\hypertarget{class_c5_1_1_guarded_enumerator_af13904801a980feda3b2d6a4ec03db2c}{}\index{C5\+::\+Guarded\+Enumerator@{C5\+::\+Guarded\+Enumerator}!Current@{Current}}
+\index{Current@{Current}!C5\+::\+Guarded\+Enumerator@{C5\+::\+Guarded\+Enumerator}}
+\subsubsection[{Current}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Guarded\+Enumerator}$<$ T $>$.Current\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_enumerator_af13904801a980feda3b2d6a4ec03db2c}
+
+
+Undefined if enumerator is not valid (Move\+Next hash been called returning true) 
+
+The current item of the wrapped enumerator.
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_wrappers_8cs}{Wrappers.\+cs}\end{DoxyCompactItemize}

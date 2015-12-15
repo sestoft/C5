@@ -1,0 +1,166 @@
+\hypertarget{class_c5_1_1_sorting}{}\section{C5.\+Sorting Class Reference}
+\label{class_c5_1_1_sorting}\index{C5.\+Sorting@{C5.\+Sorting}}
+
+
+A utility class with functions for sorting arrays with respect to an I\+Comparer$<$T$>$  
+
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{class_c5_1_1_sorting_a4f62536eb43d19c31d6d213294d970af}{Intro\+Sort$<$ T $>$} (T\mbox{[}$\,$\mbox{]} array, int start, int count, S\+C\+G.\+I\+Comparer$<$ T $>$ comparer)
+\begin{DoxyCompactList}\small\item\em Sort part of array in place using Intro\+Sort \end{DoxyCompactList}\item 
+static void \hyperlink{class_c5_1_1_sorting_ac6e93a2563bca70f6cb55fa310253f61}{Intro\+Sort$<$ T $>$} (T\mbox{[}$\,$\mbox{]} array)
+\begin{DoxyCompactList}\small\item\em Sort an array in place using Intro\+Sort and default comparer \end{DoxyCompactList}\item 
+static void \hyperlink{class_c5_1_1_sorting_a6061f6c468e0fa8574aca652771f2f4a}{Insertion\+Sort$<$ T $>$} (T\mbox{[}$\,$\mbox{]} array, int start, int count, S\+C\+G.\+I\+Comparer$<$ T $>$ comparer)
+\begin{DoxyCompactList}\small\item\em Sort part of array in place using Insertion Sort \end{DoxyCompactList}\item 
+static void \hyperlink{class_c5_1_1_sorting_a7f241abf0b6d6feae8f058684d3e59e4}{Heap\+Sort$<$ T $>$} (T\mbox{[}$\,$\mbox{]} array, int start, int count, S\+C\+G.\+I\+Comparer$<$ T $>$ comparer)
+\begin{DoxyCompactList}\small\item\em Sort part of array in place using Heap Sort \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A utility class with functions for sorting arrays with respect to an I\+Comparer$<$T$>$ 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_sorting_a7f241abf0b6d6feae8f058684d3e59e4}{}\index{C5\+::\+Sorting@{C5\+::\+Sorting}!Heap\+Sort$<$ T $>$@{Heap\+Sort$<$ T $>$}}
+\index{Heap\+Sort$<$ T $>$@{Heap\+Sort$<$ T $>$}!C5\+::\+Sorting@{C5\+::\+Sorting}}
+\subsubsection[{Heap\+Sort$<$ T $>$(\+T[] array, int start, int count, S\+C\+G.\+I\+Comparer$<$ T $>$ comparer)}]{\setlength{\rightskip}{0pt plus 5cm}static void C5.\+Sorting.\+Heap\+Sort$<$ T $>$ (
+\begin{DoxyParamCaption}
+\item[{T\mbox{[}$\,$\mbox{]}}]{array, }
+\item[{int}]{start, }
+\item[{int}]{count, }
+\item[{S\+C\+G.\+I\+Comparer$<$ T $>$}]{comparer}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{class_c5_1_1_sorting_a7f241abf0b6d6feae8f058684d3e59e4}
+
+
+Sort part of array in place using Heap Sort 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Argument\+Out\+Of\+Range\+Exception} & If the 
+\begin{DoxyCode}
+start
+\end{DoxyCode}
+ and 
+\begin{DoxyCode}
+count
+\end{DoxyCode}
+ arguments does not describe a valid range.\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em array} & Array to sort\\
+\hline
+{\em start} & Index of first position to sort\\
+\hline
+{\em count} & Number of elements to sort\\
+\hline
+{\em comparer} & I\+Comparer$<$T$>$ to sort by\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_c5_1_1_sorting_a6061f6c468e0fa8574aca652771f2f4a}{}\index{C5\+::\+Sorting@{C5\+::\+Sorting}!Insertion\+Sort$<$ T $>$@{Insertion\+Sort$<$ T $>$}}
+\index{Insertion\+Sort$<$ T $>$@{Insertion\+Sort$<$ T $>$}!C5\+::\+Sorting@{C5\+::\+Sorting}}
+\subsubsection[{Insertion\+Sort$<$ T $>$(\+T[] array, int start, int count, S\+C\+G.\+I\+Comparer$<$ T $>$ comparer)}]{\setlength{\rightskip}{0pt plus 5cm}static void C5.\+Sorting.\+Insertion\+Sort$<$ T $>$ (
+\begin{DoxyParamCaption}
+\item[{T\mbox{[}$\,$\mbox{]}}]{array, }
+\item[{int}]{start, }
+\item[{int}]{count, }
+\item[{S\+C\+G.\+I\+Comparer$<$ T $>$}]{comparer}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{class_c5_1_1_sorting_a6061f6c468e0fa8574aca652771f2f4a}
+
+
+Sort part of array in place using Insertion Sort 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Argument\+Out\+Of\+Range\+Exception} & If the 
+\begin{DoxyCode}
+start
+\end{DoxyCode}
+ and 
+\begin{DoxyCode}
+count
+\end{DoxyCode}
+ arguments does not describe a valid range.\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em array} & Array to sort\\
+\hline
+{\em start} & Index of first position to sort\\
+\hline
+{\em count} & Number of elements to sort\\
+\hline
+{\em comparer} & I\+Comparer$<$T$>$ to sort by\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_c5_1_1_sorting_a4f62536eb43d19c31d6d213294d970af}{}\index{C5\+::\+Sorting@{C5\+::\+Sorting}!Intro\+Sort$<$ T $>$@{Intro\+Sort$<$ T $>$}}
+\index{Intro\+Sort$<$ T $>$@{Intro\+Sort$<$ T $>$}!C5\+::\+Sorting@{C5\+::\+Sorting}}
+\subsubsection[{Intro\+Sort$<$ T $>$(\+T[] array, int start, int count, S\+C\+G.\+I\+Comparer$<$ T $>$ comparer)}]{\setlength{\rightskip}{0pt plus 5cm}static void C5.\+Sorting.\+Intro\+Sort$<$ T $>$ (
+\begin{DoxyParamCaption}
+\item[{T\mbox{[}$\,$\mbox{]}}]{array, }
+\item[{int}]{start, }
+\item[{int}]{count, }
+\item[{S\+C\+G.\+I\+Comparer$<$ T $>$}]{comparer}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{class_c5_1_1_sorting_a4f62536eb43d19c31d6d213294d970af}
+
+
+Sort part of array in place using Intro\+Sort 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Argument\+Out\+Of\+Range\+Exception} & If the 
+\begin{DoxyCode}
+start
+\end{DoxyCode}
+ and 
+\begin{DoxyCode}
+count
+\end{DoxyCode}
+ arguments does not describe a valid range.\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em array} & Array to sort\\
+\hline
+{\em start} & Index of first position to sort\\
+\hline
+{\em count} & Number of elements to sort\\
+\hline
+{\em comparer} & I\+Comparer$<$T$>$ to sort by\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_c5_1_1_sorting_ac6e93a2563bca70f6cb55fa310253f61}{}\index{C5\+::\+Sorting@{C5\+::\+Sorting}!Intro\+Sort$<$ T $>$@{Intro\+Sort$<$ T $>$}}
+\index{Intro\+Sort$<$ T $>$@{Intro\+Sort$<$ T $>$}!C5\+::\+Sorting@{C5\+::\+Sorting}}
+\subsubsection[{Intro\+Sort$<$ T $>$(\+T[] array)}]{\setlength{\rightskip}{0pt plus 5cm}static void C5.\+Sorting.\+Intro\+Sort$<$ T $>$ (
+\begin{DoxyParamCaption}
+\item[{T\mbox{[}$\,$\mbox{]}}]{array}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{class_c5_1_1_sorting_ac6e93a2563bca70f6cb55fa310253f61}
+
+
+Sort an array in place using Intro\+Sort and default comparer 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_not_comparable_exception}{Not\+Comparable\+Exception}} & If T is not comparable\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em array} & Array to sort\\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_sorting_8cs}{Sorting.\+cs}\end{DoxyCompactItemize}

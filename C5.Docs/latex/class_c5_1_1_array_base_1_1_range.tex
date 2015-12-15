@@ -1,0 +1,181 @@
+\hypertarget{class_c5_1_1_array_base_1_1_range}{}\section{C5.\+Array\+Base$<$ T $>$.Range Class Reference}
+\label{class_c5_1_1_array_base_1_1_range}\index{C5.\+Array\+Base$<$ T $>$.\+Range@{C5.\+Array\+Base$<$ T $>$.\+Range}}
+
+
+A helper class for defining results of interval queries on array based collections.  
+
+
+Inheritance diagram for C5.\+Array\+Base$<$ T $>$.Range\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.016807cm]{class_c5_1_1_array_base_1_1_range}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+override T \hyperlink{class_c5_1_1_array_base_1_1_range_a914b2f3399f5286d462af7f1837373db}{Choose} ()
+\begin{DoxyCompactList}\small\item\em Choose some item of this collection. \end{DoxyCompactList}\item 
+override S\+C\+G.\+I\+Enumerator$<$ T $>$ \hyperlink{class_c5_1_1_array_base_1_1_range_af6396c46d77d98185e8587c024dd9316}{Get\+Enumerator} ()
+\begin{DoxyCompactList}\small\item\em Create an enumerator for this range of an array based collection. \end{DoxyCompactList}\item 
+override \hyperlink{interface_c5_1_1_i_directed_collection_value}{I\+Directed\+Collection\+Value}$<$ T $>$ \hyperlink{class_c5_1_1_array_base_1_1_range_a296cf1453eb618368fdc14f7abc4f4c2}{Backwards} ()
+\begin{DoxyCompactList}\small\item\em Create a araay collection range with the same contents as this one, but opposite enumeration sequence. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+override bool \hyperlink{class_c5_1_1_array_base_1_1_range_afe1224ec6cd4b4a610c1a156d2a82539}{Is\+Empty}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+override int \hyperlink{class_c5_1_1_array_base_1_1_range_acf73ad1c77ff0b7eee1894fd467baf88}{Count}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+override \hyperlink{namespace_c5_a615ba88dcdaa8d5a3c5f833a73d7fad6}{Speed} \hyperlink{class_c5_1_1_array_base_1_1_range_abc096a489b1c0c705679b18c08cdfa02}{Count\+Speed}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em The value is symbolic indicating the type of asymptotic complexity in terms of the size of this collection (worst-\/case or amortized as relevant). \end{DoxyCompactList}\item 
+override \hyperlink{namespace_c5_aad282676794e49130eb8caed289395f8}{Enumeration\+Direction} \hyperlink{class_c5_1_1_array_base_1_1_range_ad2a7c1b607ef9082829d9f71f3e459fe}{Direction}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A helper class for defining results of interval queries on array based collections. 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_array_base_1_1_range_a296cf1453eb618368fdc14f7abc4f4c2}{}\index{C5\+::\+Array\+Base\+::\+Range@{C5\+::\+Array\+Base\+::\+Range}!Backwards@{Backwards}}
+\index{Backwards@{Backwards}!C5\+::\+Array\+Base\+::\+Range@{C5\+::\+Array\+Base\+::\+Range}}
+\subsubsection[{Backwards()}]{\setlength{\rightskip}{0pt plus 5cm}override {\bf I\+Directed\+Collection\+Value}$<$T$>$ {\bf C5.\+Array\+Base}$<$ T $>$.Range.\+Backwards (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_array_base_1_1_range_a296cf1453eb618368fdc14f7abc4f4c2}
+
+
+Create a araay collection range with the same contents as this one, but opposite enumeration sequence. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_collection_modified_exception}{Collection\+Modified\+Exception}} & if underlying collection has been modified.\\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+The mirrored collection.
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_c5_1_1_directed_collection_value_base_a66d4222e083371d053e609efeecac740}{C5.\+Directed\+Collection\+Value\+Base$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_array_base_1_1_range_a914b2f3399f5286d462af7f1837373db}{}\index{C5\+::\+Array\+Base\+::\+Range@{C5\+::\+Array\+Base\+::\+Range}!Choose@{Choose}}
+\index{Choose@{Choose}!C5\+::\+Array\+Base\+::\+Range@{C5\+::\+Array\+Base\+::\+Range}}
+\subsubsection[{Choose()}]{\setlength{\rightskip}{0pt plus 5cm}override T {\bf C5.\+Array\+Base}$<$ T $>$.Range.\+Choose (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_array_base_1_1_range_a914b2f3399f5286d462af7f1837373db}
+
+
+Choose some item of this collection. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_collection_modified_exception}{Collection\+Modified\+Exception}} & if underlying collection has been modified.\\
+\hline
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if range is empty.\\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_c5_1_1_collection_value_base_ad7b8bd01dfd7ea8480a972f02a81608b}{C5.\+Collection\+Value\+Base$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_array_base_1_1_range_af6396c46d77d98185e8587c024dd9316}{}\index{C5\+::\+Array\+Base\+::\+Range@{C5\+::\+Array\+Base\+::\+Range}!Get\+Enumerator@{Get\+Enumerator}}
+\index{Get\+Enumerator@{Get\+Enumerator}!C5\+::\+Array\+Base\+::\+Range@{C5\+::\+Array\+Base\+::\+Range}}
+\subsubsection[{Get\+Enumerator()}]{\setlength{\rightskip}{0pt plus 5cm}override S\+C\+G.\+I\+Enumerator$<$T$>$ {\bf C5.\+Array\+Base}$<$ T $>$.Range.\+Get\+Enumerator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_array_base_1_1_range_af6396c46d77d98185e8587c024dd9316}
+
+
+Create an enumerator for this range of an array based collection. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_collection_modified_exception}{Collection\+Modified\+Exception}} & if underlying collection has been modified.\\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+The enumerator
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_c5_1_1_collection_value_base_a0e8b891322ed9987a18f1a1ac87d2d4f}{C5.\+Collection\+Value\+Base$<$ T $>$}.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{class_c5_1_1_array_base_1_1_range_acf73ad1c77ff0b7eee1894fd467baf88}{}\index{C5\+::\+Array\+Base\+::\+Range@{C5\+::\+Array\+Base\+::\+Range}!Count@{Count}}
+\index{Count@{Count}!C5\+::\+Array\+Base\+::\+Range@{C5\+::\+Array\+Base\+::\+Range}}
+\subsubsection[{Count}]{\setlength{\rightskip}{0pt plus 5cm}override int {\bf C5.\+Array\+Base}$<$ T $>$.Range.\+Count\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_array_base_1_1_range_acf73ad1c77ff0b7eee1894fd467baf88}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_collection_modified_exception}{Collection\+Modified\+Exception}} & if underlying collection has been modified.\\
+\hline
+\end{DoxyExceptions}
+
+
+The number of items in the range\hypertarget{class_c5_1_1_array_base_1_1_range_abc096a489b1c0c705679b18c08cdfa02}{}\index{C5\+::\+Array\+Base\+::\+Range@{C5\+::\+Array\+Base\+::\+Range}!Count\+Speed@{Count\+Speed}}
+\index{Count\+Speed@{Count\+Speed}!C5\+::\+Array\+Base\+::\+Range@{C5\+::\+Array\+Base\+::\+Range}}
+\subsubsection[{Count\+Speed}]{\setlength{\rightskip}{0pt plus 5cm}override {\bf Speed} {\bf C5.\+Array\+Base}$<$ T $>$.Range.\+Count\+Speed\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_array_base_1_1_range_abc096a489b1c0c705679b18c08cdfa02}
+
+
+The value is symbolic indicating the type of asymptotic complexity in terms of the size of this collection (worst-\/case or amortized as relevant). 
+
+A characterization of the speed of the 
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_collection_modified_exception}{Collection\+Modified\+Exception}} & if underlying collection has been modified.\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyCode}
+\hyperlink{class_c5_1_1_array_base_1_1_range_acf73ad1c77ff0b7eee1894fd467baf88}{Count}
+\end{DoxyCode}
+ property in this collection.\hypertarget{class_c5_1_1_array_base_1_1_range_ad2a7c1b607ef9082829d9f71f3e459fe}{}\index{C5\+::\+Array\+Base\+::\+Range@{C5\+::\+Array\+Base\+::\+Range}!Direction@{Direction}}
+\index{Direction@{Direction}!C5\+::\+Array\+Base\+::\+Range@{C5\+::\+Array\+Base\+::\+Range}}
+\subsubsection[{Direction}]{\setlength{\rightskip}{0pt plus 5cm}override {\bf Enumeration\+Direction} {\bf C5.\+Array\+Base}$<$ T $>$.Range.\+Direction\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_array_base_1_1_range_ad2a7c1b607ef9082829d9f71f3e459fe}
+
+
+
+
+{\ttfamily Forwards} if same, else {\ttfamily Backwards} 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_collection_modified_exception}{Collection\+Modified\+Exception}} & if underlying collection has been modified.\\
+\hline
+\end{DoxyExceptions}
+
+
+The enumeration direction relative to the original collection.\hypertarget{class_c5_1_1_array_base_1_1_range_afe1224ec6cd4b4a610c1a156d2a82539}{}\index{C5\+::\+Array\+Base\+::\+Range@{C5\+::\+Array\+Base\+::\+Range}!Is\+Empty@{Is\+Empty}}
+\index{Is\+Empty@{Is\+Empty}!C5\+::\+Array\+Base\+::\+Range@{C5\+::\+Array\+Base\+::\+Range}}
+\subsubsection[{Is\+Empty}]{\setlength{\rightskip}{0pt plus 5cm}override bool {\bf C5.\+Array\+Base}$<$ T $>$.Range.\+Is\+Empty\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_array_base_1_1_range_afe1224ec6cd4b4a610c1a156d2a82539}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_collection_modified_exception}{Collection\+Modified\+Exception}} & if underlying collection has been modified.\\
+\hline
+\end{DoxyExceptions}
+
+
+True if this collection is empty.
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_collections_8cs}{Collections.\+cs}\end{DoxyCompactItemize}

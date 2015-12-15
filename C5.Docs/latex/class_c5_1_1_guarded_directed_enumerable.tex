@@ -1,0 +1,87 @@
+\hypertarget{class_c5_1_1_guarded_directed_enumerable}{}\section{C5.\+Guarded\+Directed\+Enumerable$<$ T $>$ Class Template Reference}
+\label{class_c5_1_1_guarded_directed_enumerable}\index{C5.\+Guarded\+Directed\+Enumerable$<$ T $>$@{C5.\+Guarded\+Directed\+Enumerable$<$ T $>$}}
+
+
+A read-\/only wrapper for a generic directed enumerable  
+
+
+Inheritance diagram for C5.\+Guarded\+Directed\+Enumerable$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_c5_1_1_guarded_directed_enumerable}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c5_1_1_guarded_directed_enumerable_a2df0b6305f4f08aefe05e0e55887144c}{Guarded\+Directed\+Enumerable} (\hyperlink{interface_c5_1_1_i_directed_enumerable}{I\+Directed\+Enumerable}$<$ T $>$ directedenumerable)
+\begin{DoxyCompactList}\small\item\em Wrap a directed enumerable in a read-\/only wrapper \end{DoxyCompactList}\item 
+\hyperlink{interface_c5_1_1_i_directed_enumerable}{I\+Directed\+Enumerable}$<$ T $>$ \hyperlink{class_c5_1_1_guarded_directed_enumerable_a858ca7e55fc0cf083c967e31d9beb8eb}{Backwards} ()
+\begin{DoxyCompactList}\small\item\em Get a enumerable that enumerates the wrapped collection in the opposite direction \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespace_c5_aad282676794e49130eb8caed289395f8}{Enumeration\+Direction} \hyperlink{class_c5_1_1_guarded_directed_enumerable_ad485f49a2e4938d130d0028d38d1319f}{Direction}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A read-\/only wrapper for a generic directed enumerable 
+
+{\itshape This is mainly interesting as a base of other guard classes} 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_c5_1_1_guarded_directed_enumerable_a2df0b6305f4f08aefe05e0e55887144c}{}\index{C5\+::\+Guarded\+Directed\+Enumerable@{C5\+::\+Guarded\+Directed\+Enumerable}!Guarded\+Directed\+Enumerable@{Guarded\+Directed\+Enumerable}}
+\index{Guarded\+Directed\+Enumerable@{Guarded\+Directed\+Enumerable}!C5\+::\+Guarded\+Directed\+Enumerable@{C5\+::\+Guarded\+Directed\+Enumerable}}
+\subsubsection[{Guarded\+Directed\+Enumerable(\+I\+Directed\+Enumerable$<$ T $>$ directedenumerable)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Guarded\+Directed\+Enumerable}$<$ T $>$.{\bf Guarded\+Directed\+Enumerable} (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Directed\+Enumerable}$<$ T $>$}]{directedenumerable}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_directed_enumerable_a2df0b6305f4f08aefe05e0e55887144c}
+
+
+Wrap a directed enumerable in a read-\/only wrapper 
+
+
+\begin{DoxyParams}{Parameters}
+{\em directedenumerable} & the collection to wrap\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_guarded_directed_enumerable_a858ca7e55fc0cf083c967e31d9beb8eb}{}\index{C5\+::\+Guarded\+Directed\+Enumerable@{C5\+::\+Guarded\+Directed\+Enumerable}!Backwards@{Backwards}}
+\index{Backwards@{Backwards}!C5\+::\+Guarded\+Directed\+Enumerable@{C5\+::\+Guarded\+Directed\+Enumerable}}
+\subsubsection[{Backwards()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Directed\+Enumerable}$<$T$>$ {\bf C5.\+Guarded\+Directed\+Enumerable}$<$ T $>$.Backwards (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_guarded_directed_enumerable_a858ca7e55fc0cf083c967e31d9beb8eb}
+
+
+Get a enumerable that enumerates the wrapped collection in the opposite direction 
+
+\begin{DoxyReturn}{Returns}
+The mirrored enumerable
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_directed_enumerable_a826d9e7f29272dea7ebd48a38757df9e}{C5.\+I\+Directed\+Enumerable$<$ T $>$}.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{class_c5_1_1_guarded_directed_enumerable_ad485f49a2e4938d130d0028d38d1319f}{}\index{C5\+::\+Guarded\+Directed\+Enumerable@{C5\+::\+Guarded\+Directed\+Enumerable}!Direction@{Direction}}
+\index{Direction@{Direction}!C5\+::\+Guarded\+Directed\+Enumerable@{C5\+::\+Guarded\+Directed\+Enumerable}}
+\subsubsection[{Direction}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Enumeration\+Direction} {\bf C5.\+Guarded\+Directed\+Enumerable}$<$ T $>$.Direction\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_guarded_directed_enumerable_ad485f49a2e4938d130d0028d38d1319f}
+
+
+
+
+{\ttfamily Forwards} if same, else {\ttfamily Backwards} 
+
+The enumeration direction relative to the original collection.
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_wrappers_8cs}{Wrappers.\+cs}\end{DoxyCompactItemize}

@@ -1,0 +1,107 @@
+\hypertarget{class_c5_1_1_mapped_collection_value}{}\section{C5.\+Mapped\+Collection\+Value$<$ T, V $>$ Class Template Reference}
+\label{class_c5_1_1_mapped_collection_value}\index{C5.\+Mapped\+Collection\+Value$<$ T, V $>$@{C5.\+Mapped\+Collection\+Value$<$ T, V $>$}}
+Inheritance diagram for C5.\+Mapped\+Collection\+Value$<$ T, V $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_c5_1_1_mapped_collection_value}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+abstract V \hyperlink{class_c5_1_1_mapped_collection_value_aca2531c62aa5b01b7c099c6b7827beb2}{Map} (T item)
+\item 
+\hyperlink{class_c5_1_1_mapped_collection_value_ad55208e536ef6898ae97892bec5ff01b}{Mapped\+Collection\+Value} (\hyperlink{interface_c5_1_1_i_collection_value}{I\+Collection\+Value}$<$ T $>$ collectionvalue)
+\item 
+override V \hyperlink{class_c5_1_1_mapped_collection_value_a355a9906ff7acccd3c2bd40ca11e5d1f}{Choose} ()
+\begin{DoxyCompactList}\small\item\em Choose some item of this collection. \end{DoxyCompactList}\item 
+override S\+C\+G.\+I\+Enumerator$<$ V $>$ \hyperlink{class_c5_1_1_mapped_collection_value_ab4c51f484c9d5569b7f8c9f1bf4ab231}{Get\+Enumerator} ()
+\begin{DoxyCompactList}\small\item\em Create an enumerator for this collection. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+override bool \hyperlink{class_c5_1_1_mapped_collection_value_a5e11b09b0a18ddbf579b2a31ef6d59d2}{Is\+Empty}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+override int \hyperlink{class_c5_1_1_mapped_collection_value_a982b5dc5767cec19896e7ec03d7a8f2d}{Count}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+override \hyperlink{namespace_c5_a615ba88dcdaa8d5a3c5f833a73d7fad6}{Speed} \hyperlink{class_c5_1_1_mapped_collection_value_a27fecfbbedb400bc511d58d67090b819}{Count\+Speed}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_c5_1_1_mapped_collection_value_ad55208e536ef6898ae97892bec5ff01b}{}\index{C5\+::\+Mapped\+Collection\+Value@{C5\+::\+Mapped\+Collection\+Value}!Mapped\+Collection\+Value@{Mapped\+Collection\+Value}}
+\index{Mapped\+Collection\+Value@{Mapped\+Collection\+Value}!C5\+::\+Mapped\+Collection\+Value@{C5\+::\+Mapped\+Collection\+Value}}
+\subsubsection[{Mapped\+Collection\+Value(\+I\+Collection\+Value$<$ T $>$ collectionvalue)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Mapped\+Collection\+Value}$<$ T, V $>$.{\bf Mapped\+Collection\+Value} (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Collection\+Value}$<$ T $>$}]{collectionvalue}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_mapped_collection_value_ad55208e536ef6898ae97892bec5ff01b}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_mapped_collection_value_a355a9906ff7acccd3c2bd40ca11e5d1f}{}\index{C5\+::\+Mapped\+Collection\+Value@{C5\+::\+Mapped\+Collection\+Value}!Choose@{Choose}}
+\index{Choose@{Choose}!C5\+::\+Mapped\+Collection\+Value@{C5\+::\+Mapped\+Collection\+Value}}
+\subsubsection[{Choose()}]{\setlength{\rightskip}{0pt plus 5cm}override V {\bf C5.\+Mapped\+Collection\+Value}$<$ T, V $>$.Choose (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_mapped_collection_value_a355a9906ff7acccd3c2bd40ca11e5d1f}
+
+
+Choose some item of this collection. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_no_such_item_exception}{No\+Such\+Item\+Exception}} & if collection is empty.\\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_c5_1_1_collection_value_base_ad7b8bd01dfd7ea8480a972f02a81608b}{C5.\+Collection\+Value\+Base$<$ V $>$}.
+
+\hypertarget{class_c5_1_1_mapped_collection_value_ab4c51f484c9d5569b7f8c9f1bf4ab231}{}\index{C5\+::\+Mapped\+Collection\+Value@{C5\+::\+Mapped\+Collection\+Value}!Get\+Enumerator@{Get\+Enumerator}}
+\index{Get\+Enumerator@{Get\+Enumerator}!C5\+::\+Mapped\+Collection\+Value@{C5\+::\+Mapped\+Collection\+Value}}
+\subsubsection[{Get\+Enumerator()}]{\setlength{\rightskip}{0pt plus 5cm}override S\+C\+G.\+I\+Enumerator$<$V$>$ {\bf C5.\+Mapped\+Collection\+Value}$<$ T, V $>$.Get\+Enumerator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_mapped_collection_value_ab4c51f484c9d5569b7f8c9f1bf4ab231}
+
+
+Create an enumerator for this collection. 
+
+\begin{DoxyReturn}{Returns}
+The enumerator
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_c5_1_1_collection_value_base_a0e8b891322ed9987a18f1a1ac87d2d4f}{C5.\+Collection\+Value\+Base$<$ V $>$}.
+
+\hypertarget{class_c5_1_1_mapped_collection_value_aca2531c62aa5b01b7c099c6b7827beb2}{}\index{C5\+::\+Mapped\+Collection\+Value@{C5\+::\+Mapped\+Collection\+Value}!Map@{Map}}
+\index{Map@{Map}!C5\+::\+Mapped\+Collection\+Value@{C5\+::\+Mapped\+Collection\+Value}}
+\subsubsection[{Map(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}abstract V {\bf C5.\+Mapped\+Collection\+Value}$<$ T, V $>$.Map (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{class_c5_1_1_mapped_collection_value_aca2531c62aa5b01b7c099c6b7827beb2}
+
+
+\subsection{Property Documentation}
+\hypertarget{class_c5_1_1_mapped_collection_value_a982b5dc5767cec19896e7ec03d7a8f2d}{}\index{C5\+::\+Mapped\+Collection\+Value@{C5\+::\+Mapped\+Collection\+Value}!Count@{Count}}
+\index{Count@{Count}!C5\+::\+Mapped\+Collection\+Value@{C5\+::\+Mapped\+Collection\+Value}}
+\subsubsection[{Count}]{\setlength{\rightskip}{0pt plus 5cm}override int {\bf C5.\+Mapped\+Collection\+Value}$<$ T, V $>$.Count\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_mapped_collection_value_a982b5dc5767cec19896e7ec03d7a8f2d}
+\hypertarget{class_c5_1_1_mapped_collection_value_a27fecfbbedb400bc511d58d67090b819}{}\index{C5\+::\+Mapped\+Collection\+Value@{C5\+::\+Mapped\+Collection\+Value}!Count\+Speed@{Count\+Speed}}
+\index{Count\+Speed@{Count\+Speed}!C5\+::\+Mapped\+Collection\+Value@{C5\+::\+Mapped\+Collection\+Value}}
+\subsubsection[{Count\+Speed}]{\setlength{\rightskip}{0pt plus 5cm}override {\bf Speed} {\bf C5.\+Mapped\+Collection\+Value}$<$ T, V $>$.Count\+Speed\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_mapped_collection_value_a27fecfbbedb400bc511d58d67090b819}
+\hypertarget{class_c5_1_1_mapped_collection_value_a5e11b09b0a18ddbf579b2a31ef6d59d2}{}\index{C5\+::\+Mapped\+Collection\+Value@{C5\+::\+Mapped\+Collection\+Value}!Is\+Empty@{Is\+Empty}}
+\index{Is\+Empty@{Is\+Empty}!C5\+::\+Mapped\+Collection\+Value@{C5\+::\+Mapped\+Collection\+Value}}
+\subsubsection[{Is\+Empty}]{\setlength{\rightskip}{0pt plus 5cm}override bool {\bf C5.\+Mapped\+Collection\+Value}$<$ T, V $>$.Is\+Empty\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_mapped_collection_value_a5e11b09b0a18ddbf579b2a31ef6d59d2}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_mapped_enumerators_8cs}{Mapped\+Enumerators.\+cs}\end{DoxyCompactItemize}

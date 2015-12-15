@@ -1,0 +1,1992 @@
+\hypertarget{class_c5_1_1_wrapped_array}{}\section{C5.\+Wrapped\+Array$<$ T $>$ Class Template Reference}
+\label{class_c5_1_1_wrapped_array}\index{C5.\+Wrapped\+Array$<$ T $>$@{C5.\+Wrapped\+Array$<$ T $>$}}
+
+
+An advanced interface to operations on an array. The array is viewed as an T\+:\+C5.\+I\+List`1 of fixed size, and so all operations that would change the size of the array will be invalid (and throw T\+:\+C5.\+Fixed\+Size\+Collection\+Exception  
+
+
+Inheritance diagram for C5.\+Wrapped\+Array$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.380281cm]{class_c5_1_1_wrapped_array}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c5_1_1_wrapped_array_a7d88d155c44a39f221d1cc2739abe290}{Wrapped\+Array} (T\mbox{[}$\,$\mbox{]} wrappedarray)
+\item 
+\hyperlink{interface_c5_1_1_i_list}{I\+List}$<$ T $>$ \hyperlink{class_c5_1_1_wrapped_array_a6580cb9eae8a2c617ed0d5ccbb669464}{Find\+All} (Func$<$ T, bool $>$ filter)
+\item 
+\hyperlink{interface_c5_1_1_i_list}{I\+List}$<$ V $>$ \hyperlink{class_c5_1_1_wrapped_array_a319143ffc0237155b5633e4e5c61b474}{Map$<$ V $>$} (Func$<$ T, V $>$ mapper)
+\item 
+\hyperlink{interface_c5_1_1_i_list}{I\+List}$<$ V $>$ \hyperlink{class_c5_1_1_wrapped_array_a9297d4f2de04f4d3f72892992b702810}{Map$<$ V $>$} (Func$<$ T, V $>$ mapper, S\+C\+G.\+I\+Equality\+Comparer$<$ V $>$ equality\+Comparer)
+\item 
+void \hyperlink{class_c5_1_1_wrapped_array_a162b36f103f13696b002174169d73aed}{Insert} (int index, T item)
+\item 
+void \hyperlink{class_c5_1_1_wrapped_array_a25630c81bea9df1f81d947bc4315b1e4}{Insert} (\hyperlink{interface_c5_1_1_i_list}{I\+List}$<$ T $>$ pointer, T item)
+\item 
+void \hyperlink{class_c5_1_1_wrapped_array_a788dd6164116d45b8043fd515a707e6d}{Insert\+First} (T item)
+\item 
+void \hyperlink{class_c5_1_1_wrapped_array_abe9ea4b00b84b312e033eabfb35d5d77}{Insert\+Last} (T item)
+\item 
+void \hyperlink{class_c5_1_1_wrapped_array_a8dfe7a28dc0f1b1a3b3548d3cfdd3959}{Insert\+All} (int i, System.\+Collections.\+Generic.\+I\+Enumerable$<$ T $>$ items)
+\item 
+T \hyperlink{class_c5_1_1_wrapped_array_a067a9891e0d7519b30a726a204d64237}{Remove} ()
+\item 
+T \hyperlink{class_c5_1_1_wrapped_array_a3b3917acf620f16ef736b75f25d4a8e3}{Remove\+First} ()
+\item 
+T \hyperlink{class_c5_1_1_wrapped_array_a04f236941c2f7aef12997e6d305a1dcf}{Remove\+Last} ()
+\item 
+\hyperlink{interface_c5_1_1_i_list}{I\+List}$<$ T $>$ \hyperlink{class_c5_1_1_wrapped_array_ab16f34d78c06b05f4d962192a4daf4c4}{View} (int start, int count)
+\item 
+\hyperlink{interface_c5_1_1_i_list}{I\+List}$<$ T $>$ \hyperlink{class_c5_1_1_wrapped_array_a819a47c4c0f0ee0397c337e340f86ea1}{View\+Of} (T item)
+\item 
+\hyperlink{interface_c5_1_1_i_list}{I\+List}$<$ T $>$ \hyperlink{class_c5_1_1_wrapped_array_a40efb134cd66039cafc0ebc09e3db6e5}{Last\+View\+Of} (T item)
+\item 
+\hyperlink{interface_c5_1_1_i_list}{I\+List}$<$ T $>$ \hyperlink{class_c5_1_1_wrapped_array_ac15daa69646bd07b1c33d7f3e54fc664}{Slide} (int offset)
+\item 
+\hyperlink{interface_c5_1_1_i_list}{I\+List}$<$ T $>$ \hyperlink{class_c5_1_1_wrapped_array_a72fe70449ee7b4120ce1f64bd1943de3}{Slide} (int offset, int size)
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_a2f4793463aba25b83c876312f0f38f88}{Try\+Slide} (int offset)
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_ade9062f9faaa9a455d78e34a39dec3bb}{Try\+Slide} (int offset, int size)
+\item 
+\hyperlink{interface_c5_1_1_i_list}{I\+List}$<$ T $>$ \hyperlink{class_c5_1_1_wrapped_array_a78ce164344790af3bad84352c2acf58d}{Span} (\hyperlink{interface_c5_1_1_i_list}{I\+List}$<$ T $>$ other\+View)
+\item 
+void \hyperlink{class_c5_1_1_wrapped_array_a4c136a663e90a6451a0685d281ebdf0b}{Reverse} ()
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_af134399df22e512094a27e95cd147b13}{Is\+Sorted} ()
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_a63b841f528e5b8b1768687b73e755644}{Is\+Sorted} (S\+C\+G.\+I\+Comparer$<$ T $>$ comparer)
+\item 
+void \hyperlink{class_c5_1_1_wrapped_array_a3713559b09931e18ca05b7a755a23f21}{Sort} ()
+\item 
+void \hyperlink{class_c5_1_1_wrapped_array_a419a2d9c1377150e6dd473e32ddde903}{Sort} (S\+C\+G.\+I\+Comparer$<$ T $>$ comparer)
+\item 
+void \hyperlink{class_c5_1_1_wrapped_array_a77f7b39c84abba94c4a144da3ce2baff}{Shuffle} ()
+\item 
+void \hyperlink{class_c5_1_1_wrapped_array_a8307d48388d587aa244d01e6d2079722}{Shuffle} (Random rnd)
+\item 
+int \hyperlink{class_c5_1_1_wrapped_array_a459af83c432f3dbc167d406c4632fb0e}{Index\+Of} (T item)
+\item 
+int \hyperlink{class_c5_1_1_wrapped_array_aebda540a1e886890698d527f53d99343}{Last\+Index\+Of} (T item)
+\item 
+int \hyperlink{class_c5_1_1_wrapped_array_a189ddcea1c7463ce3e8899e2709614d5}{Find\+Index} (Func$<$ T, bool $>$ predicate)
+\item 
+int \hyperlink{class_c5_1_1_wrapped_array_a7606c974ca7844dbbab61e0671f72a53}{Find\+Last\+Index} (Func$<$ T, bool $>$ predicate)
+\item 
+T \hyperlink{class_c5_1_1_wrapped_array_a01b30a7260874fcd043d01cabad29f55}{Remove\+At} (int i)
+\item 
+void \hyperlink{class_c5_1_1_wrapped_array_ae488079bb94b8ed0bdb0ce834ec2dd25}{Remove\+Interval} (int start, int count)
+\item 
+int \hyperlink{class_c5_1_1_wrapped_array_a00b82e37ca65bf9ea9088f5528b07fc4}{Get\+Sequenced\+Hash\+Code} ()
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_a3a74f3b059b10576670618716cc3377f}{Sequenced\+Equals} (\hyperlink{interface_c5_1_1_i_sequenced}{I\+Sequenced}$<$ T $>$ that)
+\item 
+int \hyperlink{class_c5_1_1_wrapped_array_a9e66ede7a619e13da4307ec6c8df6c0d}{Get\+Unsequenced\+Hash\+Code} ()
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_af41294d9e8203f58df120b0f551392d0}{Unsequenced\+Equals} (\hyperlink{interface_c5_1_1_i_collection}{I\+Collection}$<$ T $>$ that)
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_aeff3477a858a6f79b120be3ca1fd7c40}{Contains} (T item)
+\item 
+int \hyperlink{class_c5_1_1_wrapped_array_a9d839f2be462e1dbda9ed69fe15a532f}{Contains\+Count} (T item)
+\item 
+\hyperlink{interface_c5_1_1_i_collection_value}{I\+Collection\+Value}$<$ T $>$ \hyperlink{class_c5_1_1_wrapped_array_a10749be9ab87797f2f0db77c21db2e10}{Unique\+Items} ()
+\item 
+\hyperlink{interface_c5_1_1_i_collection_value}{I\+Collection\+Value}$<$ \hyperlink{struct_c5_1_1_key_value_pair}{Key\+Value\+Pair}$<$ T, int $>$ $>$ \hyperlink{class_c5_1_1_wrapped_array_a71341ae57222c7e5d5f16b96b91ccf81}{Item\+Multiplicities} ()
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_a2e1371765df8e9ecc8f928129ddd523f}{Contains\+All} (System.\+Collections.\+Generic.\+I\+Enumerable$<$ T $>$ items)
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_ad8903faa6514226fa26155c9e2f757b2}{Find} (ref T item)
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_afe18ba420f983ab2a011cde8bda43cd5}{Find\+Or\+Add} (ref T item)
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_a7a72a3ce30888c5cd0b75cced3c1e241}{Update} (T item)
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_a702abce4ea5ab27787f8b5f61598fc48}{Update} (T item, out T olditem)
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_ade54ce5ee162ea128e492e98ba82b667}{Update\+Or\+Add} (T item)
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_aadf783ba87fbad13d1730cd2c922ab7a}{Update\+Or\+Add} (T item, out T olditem)
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_a3f312170b262e9f56b4d23442eb98029}{Remove} (T item)
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_aeb6273eab4c6798ab5ae3f7d1b64dff1}{Remove} (T item, out T removeditem)
+\item 
+void \hyperlink{class_c5_1_1_wrapped_array_af733180804bf7ee5a4a0ece7f6cb12c3}{Remove\+All\+Copies} (T item)
+\item 
+void \hyperlink{class_c5_1_1_wrapped_array_a87989abbf2d41125036606805dcdd926}{Remove\+All} (System.\+Collections.\+Generic.\+I\+Enumerable$<$ T $>$ items)
+\item 
+void \hyperlink{class_c5_1_1_wrapped_array_aa57bfc8881b390314629e9830759eee5}{Clear} ()
+\item 
+void \hyperlink{class_c5_1_1_wrapped_array_aca9b3686c472517405451a8342da0de1}{Retain\+All} (System.\+Collections.\+Generic.\+I\+Enumerable$<$ T $>$ items)
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_a5be2e0d6422cbc8597e1bc7571b41048}{Add} (T item)
+\item 
+void \hyperlink{class_c5_1_1_wrapped_array_aaebf1b158171f1848a486e71534e2ef8}{Add\+All} (System.\+Collections.\+Generic.\+I\+Enumerable$<$ T $>$ items)
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_a9957618a31012883fca40898db85a504}{Check} ()
+\item 
+void \hyperlink{class_c5_1_1_wrapped_array_a3dfd50eb13f5b3f90445e217214fae96}{Copy\+To} (T\mbox{[}$\,$\mbox{]} array, int index)
+\item 
+T\mbox{[}$\,$\mbox{]} \hyperlink{class_c5_1_1_wrapped_array_a58fc7250416e58474a98d17a538fb9e2}{To\+Array} ()
+\item 
+void \hyperlink{class_c5_1_1_wrapped_array_a05225daca0b5a607afd5c049ca41da0b}{Apply} (Action$<$ T $>$ action)
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_a46a3457811b2f237cbf7ed19d11baa0e}{Exists} (Func$<$ T, bool $>$ predicate)
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_acc9f79f847e3906ccf84a2543090bcb0}{Find} (Func$<$ T, bool $>$ predicate, out T item)
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_a2b0d022ae85980d92ad40df11f59cf7e}{All} (Func$<$ T, bool $>$ predicate)
+\item 
+T \hyperlink{class_c5_1_1_wrapped_array_ad42ddaec045d78e9d559b12279f7598a}{Choose} ()
+\item 
+S\+C\+G.\+I\+Enumerable$<$ T $>$ \hyperlink{class_c5_1_1_wrapped_array_a3eee2c5f8d76cd8c3f0d26fa0488fcb7}{Filter} (Func$<$ T, bool $>$ filter)
+\item 
+S\+C\+G.\+I\+Enumerator$<$ T $>$ \hyperlink{class_c5_1_1_wrapped_array_aa9beb91837122a0eb1efb9efeb5657fd}{Get\+Enumerator} ()
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_a434aab84ad13ca5702baada927f6fcdf}{Show} (String\+Builder stringbuilder, ref int rest, I\+Format\+Provider format\+Provider)
+\item 
+override string \hyperlink{class_c5_1_1_wrapped_array_a9069735f9eee020d4dece64dc0524bdb}{To\+String} ()
+\item 
+virtual string \hyperlink{class_c5_1_1_wrapped_array_aa6614dbe6794cf7a814b2d35b3887e32}{To\+String} (string format, I\+Format\+Provider format\+Provider)
+\item 
+\hyperlink{interface_c5_1_1_i_directed_collection_value}{I\+Directed\+Collection\+Value}$<$ T $>$ \hyperlink{class_c5_1_1_wrapped_array_a2039f22afabd1b152a48ed687dd4e13a}{Backwards} ()
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_a4917a0c9bba4103b8e63df21b3f9804d}{Find\+Last} (Func$<$ T, bool $>$ predicate, out T item)
+\item 
+void \hyperlink{class_c5_1_1_wrapped_array_a60a1208a6faaa1b0251fbf6b81b876e7}{Dispose} ()
+\begin{DoxyCompactList}\small\item\em Dispose this if a view else operation is illegal \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+T \hyperlink{class_c5_1_1_wrapped_array_a30b1c7c01b288c05e8d7594a1d85f1d5}{First}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+T \hyperlink{class_c5_1_1_wrapped_array_a821efefc3fa34125b7a5f2b0108e3ef4}{Last}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+T \hyperlink{class_c5_1_1_wrapped_array_a3a76c7661d9e1b1612cdbcf2686c02c4}{this\mbox{[}int index\mbox{]}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_a5b8e3d7b8f13a7cf59f6ae04c22b60b5}{F\+I\+F\+O}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em ???? should we throw Not\+Relevant\+Exception \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_c5_1_1_wrapped_array_a05fa96081a5ae212ae531df648d543c5}{Is\+Fixed\+Size}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\hyperlink{interface_c5_1_1_i_list}{I\+List}$<$ T $>$ \hyperlink{class_c5_1_1_wrapped_array_a696f786dd743babd7c4978785b2650d3}{Underlying}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+int \hyperlink{class_c5_1_1_wrapped_array_a0c4465bdc31669ec9b73a23118a10195}{Offset}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_a3ed2a1a22a1ade67fa7b8a55ab91ef47}{Is\+Valid}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\hyperlink{namespace_c5_a615ba88dcdaa8d5a3c5f833a73d7fad6}{Speed} \hyperlink{class_c5_1_1_wrapped_array_a9ddee14e5fc0e1c4d2cfe0e3809018f1}{Indexing\+Speed}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\hyperlink{interface_c5_1_1_i_directed_collection_value}{I\+Directed\+Collection\+Value}$<$ T $>$ \hyperlink{class_c5_1_1_wrapped_array_a791feb63e897935f737406895d0a4f98}{this\mbox{[}int start, int count\mbox{]}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\hyperlink{namespace_c5_a615ba88dcdaa8d5a3c5f833a73d7fad6}{Speed} \hyperlink{class_c5_1_1_wrapped_array_a631563907120394f515e2ef7d70e60e2}{Contains\+Speed}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_ac494d49951b3285021ae35adfaa0da22}{Is\+Read\+Only}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_a8a9ef8c7d764f62ce2cfb3362ceb593a}{Allows\+Duplicates}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+S\+C\+G.\+I\+Equality\+Comparer$<$ T $>$ \hyperlink{class_c5_1_1_wrapped_array_ad137487997743e41f5f6e56e4f0cdf53}{Equality\+Comparer}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_aac81b310cf57364283da912775316da8}{Duplicates\+By\+Counting}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+virtual \hyperlink{namespace_c5_a9143bfd561fffa025d21561674758008}{Event\+Type\+Enum} \hyperlink{class_c5_1_1_wrapped_array_a7d4694e3b14728396280bad7b17052f4}{Listenable\+Events}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em No listeners may be installed \end{DoxyCompactList}\item 
+virtual \hyperlink{namespace_c5_a9143bfd561fffa025d21561674758008}{Event\+Type\+Enum} \hyperlink{class_c5_1_1_wrapped_array_a6a2885adb750589e6cff16fca6f8f861}{Active\+Events}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em No listeners ever installed \end{DoxyCompactList}\item 
+Collection\+Changed\+Handler$<$ T $>$ \hyperlink{class_c5_1_1_wrapped_array_a6af225122edd40486f4ca2a18ebd1cfb}{Collection\+Changed}
+\item 
+Collection\+Cleared\+Handler$<$ T $>$ \hyperlink{class_c5_1_1_wrapped_array_a8d1f8c80e700327151c71f8c37266d5f}{Collection\+Cleared}
+\item 
+Items\+Added\+Handler$<$ T $>$ \hyperlink{class_c5_1_1_wrapped_array_ad4e9059009c3f36ac2a898424e8a07f0}{Items\+Added}
+\item 
+Item\+Inserted\+Handler$<$ T $>$ \hyperlink{class_c5_1_1_wrapped_array_a2a153b5a67a39f2d05e987e447bd9352}{Item\+Inserted}
+\item 
+Items\+Removed\+Handler$<$ T $>$ \hyperlink{class_c5_1_1_wrapped_array_a2589ac72276da70bbf0e341826d29f5a}{Items\+Removed}
+\item 
+Item\+Removed\+At\+Handler$<$ T $>$ \hyperlink{class_c5_1_1_wrapped_array_a76779191e9851ed03c5313157bb41a62}{Item\+Removed\+At}
+\item 
+bool \hyperlink{class_c5_1_1_wrapped_array_a63eafa18bd9e15b9f9c606d64500d851}{Is\+Empty}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+int \hyperlink{class_c5_1_1_wrapped_array_a91d0f21ce4b41fc4a5554d2d4cf92245}{Count}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\hyperlink{namespace_c5_a615ba88dcdaa8d5a3c5f833a73d7fad6}{Speed} \hyperlink{class_c5_1_1_wrapped_array_afd19afac8b14529a8cc700e075bb0169}{Count\+Speed}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\hyperlink{namespace_c5_aad282676794e49130eb8caed289395f8}{Enumeration\+Direction} \hyperlink{class_c5_1_1_wrapped_array_acf6e4074f7740cf342cc7dba804ef1da}{Direction}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+An advanced interface to operations on an array. The array is viewed as an T\+:\+C5.\+I\+List`1 of fixed size, and so all operations that would change the size of the array will be invalid (and throw T\+:\+C5.\+Fixed\+Size\+Collection\+Exception 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & \\
+\hline
+\end{DoxyTemplParams}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_c5_1_1_wrapped_array_a7d88d155c44a39f221d1cc2739abe290}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Wrapped\+Array@{Wrapped\+Array}}
+\index{Wrapped\+Array@{Wrapped\+Array}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Wrapped\+Array(\+T[] wrappedarray)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C5.\+Wrapped\+Array}$<$ T $>$.{\bf Wrapped\+Array} (
+\begin{DoxyParamCaption}
+\item[{T\mbox{[}$\,$\mbox{]}}]{wrappedarray}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a7d88d155c44a39f221d1cc2739abe290}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em wrappedarray} & \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c5_1_1_wrapped_array_a5be2e0d6422cbc8597e1bc7571b41048}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Add@{Add}}
+\index{Add@{Add}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Add(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Add (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a5be2e0d6422cbc8597e1bc7571b41048}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_a800000d7344d000c1b8c67acda464a3d}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_aaebf1b158171f1848a486e71534e2ef8}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Add\+All@{Add\+All}}
+\index{Add\+All@{Add\+All}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Add\+All(\+System.\+Collections.\+Generic.\+I\+Enumerable$<$ T $>$ items)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Wrapped\+Array}$<$ T $>$.Add\+All (
+\begin{DoxyParamCaption}
+\item[{System.\+Collections.\+Generic.\+I\+Enumerable$<$ T $>$}]{items}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_aaebf1b158171f1848a486e71534e2ef8}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em items} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_extensible_a1fb4d50c5b340e60303da72e9d0ede6e}{C5.\+I\+Extensible$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a2b0d022ae85980d92ad40df11f59cf7e}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!All@{All}}
+\index{All@{All}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{All(\+Func$<$ T, bool $>$ predicate)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.All (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{predicate}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a2b0d022ae85980d92ad40df11f59cf7e}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em predicate} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_a099c3a257e5c0b7212e34e52a4a4bda2}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a05225daca0b5a607afd5c049ca41da0b}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Apply@{Apply}}
+\index{Apply@{Apply}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Apply(\+Action$<$ T $>$ action)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Wrapped\+Array}$<$ T $>$.Apply (
+\begin{DoxyParamCaption}
+\item[{Action$<$ T $>$}]{action}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a05225daca0b5a607afd5c049ca41da0b}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em action} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_aadcb9ce9d9362c0ade0c7d620e3cc182}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a2039f22afabd1b152a48ed687dd4e13a}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Backwards@{Backwards}}
+\index{Backwards@{Backwards}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Backwards()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Directed\+Collection\+Value}$<$T$>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.Backwards (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a2039f22afabd1b152a48ed687dd4e13a}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_directed_collection_value_ae5665ed396ea2801266c4b2bfb3dae41}{C5.\+I\+Directed\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a9957618a31012883fca40898db85a504}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Check@{Check}}
+\index{Check@{Check}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Check()}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Check (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a9957618a31012883fca40898db85a504}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_extensible_aeeb6b87af61e455df42d68834d711bcb}{C5.\+I\+Extensible$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_ad42ddaec045d78e9d559b12279f7598a}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Choose@{Choose}}
+\index{Choose@{Choose}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Choose()}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Wrapped\+Array}$<$ T $>$.Choose (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_ad42ddaec045d78e9d559b12279f7598a}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_af72d52ddd8ea4130d508e1cf020cf7eb}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_aa57bfc8881b390314629e9830759eee5}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Clear@{Clear}}
+\index{Clear@{Clear}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Clear()}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Wrapped\+Array}$<$ T $>$.Clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_aa57bfc8881b390314629e9830759eee5}
+
+
+
+
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_aff6179e37b313d34596749484ae58ea4}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_aeff3477a858a6f79b120be3ca1fd7c40}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Contains@{Contains}}
+\index{Contains@{Contains}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Contains(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Contains (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_aeff3477a858a6f79b120be3ca1fd7c40}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_a108b607b042959d063e1ca77e242406c}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a2e1371765df8e9ecc8f928129ddd523f}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Contains\+All@{Contains\+All}}
+\index{Contains\+All@{Contains\+All}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Contains\+All(\+System.\+Collections.\+Generic.\+I\+Enumerable$<$ T $>$ items)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Contains\+All (
+\begin{DoxyParamCaption}
+\item[{System.\+Collections.\+Generic.\+I\+Enumerable$<$ T $>$}]{items}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a2e1371765df8e9ecc8f928129ddd523f}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em items} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a93abf02183a46f56af8d90f1d69982a8}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a9d839f2be462e1dbda9ed69fe15a532f}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Contains\+Count@{Contains\+Count}}
+\index{Contains\+Count@{Contains\+Count}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Contains\+Count(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+Wrapped\+Array}$<$ T $>$.Contains\+Count (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a9d839f2be462e1dbda9ed69fe15a532f}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_acfe7e2c9b14c384762269edbb57b7fbe}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a3dfd50eb13f5b3f90445e217214fae96}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Copy\+To@{Copy\+To}}
+\index{Copy\+To@{Copy\+To}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Copy\+To(\+T[] array, int index)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Wrapped\+Array}$<$ T $>$.Copy\+To (
+\begin{DoxyParamCaption}
+\item[{T\mbox{[}$\,$\mbox{]}}]{array, }
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a3dfd50eb13f5b3f90445e217214fae96}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em array} & \\
+\hline
+{\em index} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_a6fef986271bdc88a6f38cb15bd15690f}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a60a1208a6faaa1b0251fbf6b81b876e7}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Dispose@{Dispose}}
+\index{Dispose@{Dispose}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Dispose()}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Wrapped\+Array}$<$ T $>$.Dispose (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a60a1208a6faaa1b0251fbf6b81b876e7}
+
+
+Dispose this if a view else operation is illegal 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \hyperlink{class_c5_1_1_fixed_size_collection_exception}{Fixed\+Size\+Collection\+Exception}} & If not a view\\
+\hline
+\end{DoxyExceptions}
+\hypertarget{class_c5_1_1_wrapped_array_a46a3457811b2f237cbf7ed19d11baa0e}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Exists@{Exists}}
+\index{Exists@{Exists}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Exists(\+Func$<$ T, bool $>$ predicate)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Exists (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{predicate}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a46a3457811b2f237cbf7ed19d11baa0e}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em predicate} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_a3c20f35782dbd046f9aba5ec13dad789}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a3eee2c5f8d76cd8c3f0d26fa0488fcb7}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Filter@{Filter}}
+\index{Filter@{Filter}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Filter(\+Func$<$ T, bool $>$ filter)}]{\setlength{\rightskip}{0pt plus 5cm}S\+C\+G.\+I\+Enumerable$<$T$>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.Filter (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{filter}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a3eee2c5f8d76cd8c3f0d26fa0488fcb7}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em filter} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_a485e8b464ed5dfb5f2ff5dc10a8a62d6}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_ad8903faa6514226fa26155c9e2f757b2}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Find@{Find}}
+\index{Find@{Find}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Find(ref T item)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Find (
+\begin{DoxyParamCaption}
+\item[{ref T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_ad8903faa6514226fa26155c9e2f757b2}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a96fd6cfd3df62e67922f9335b0fbbdcb}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_acc9f79f847e3906ccf84a2543090bcb0}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Find@{Find}}
+\index{Find@{Find}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Find(\+Func$<$ T, bool $>$ predicate, out T item)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Find (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{predicate, }
+\item[{out T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_acc9f79f847e3906ccf84a2543090bcb0}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em predicate} & \\
+\hline
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_a3e175f833398fa6a6cde45e4948bc152}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a6580cb9eae8a2c617ed0d5ccbb669464}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Find\+All@{Find\+All}}
+\index{Find\+All@{Find\+All}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Find\+All(\+Func$<$ T, bool $>$ filter)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+List}$<$T$>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.Find\+All (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{filter}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a6580cb9eae8a2c617ed0d5ccbb669464}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em filter} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_a8bd6c307e2b3e5cbd50e92dde854a1d0}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a189ddcea1c7463ce3e8899e2709614d5}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Find\+Index@{Find\+Index}}
+\index{Find\+Index@{Find\+Index}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Find\+Index(\+Func$<$ T, bool $>$ predicate)}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+Wrapped\+Array}$<$ T $>$.Find\+Index (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{predicate}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a189ddcea1c7463ce3e8899e2709614d5}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em predicate} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_indexed_ac5431f5a857165b38d36b066d17e288c}{C5.\+I\+Indexed$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a4917a0c9bba4103b8e63df21b3f9804d}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Find\+Last@{Find\+Last}}
+\index{Find\+Last@{Find\+Last}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Find\+Last(\+Func$<$ T, bool $>$ predicate, out T item)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Find\+Last (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{predicate, }
+\item[{out T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a4917a0c9bba4103b8e63df21b3f9804d}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em predicate} & \\
+\hline
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_directed_collection_value_a93725b1f694e0d1cf5827e481ea467b7}{C5.\+I\+Directed\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a7606c974ca7844dbbab61e0671f72a53}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Find\+Last\+Index@{Find\+Last\+Index}}
+\index{Find\+Last\+Index@{Find\+Last\+Index}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Find\+Last\+Index(\+Func$<$ T, bool $>$ predicate)}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+Wrapped\+Array}$<$ T $>$.Find\+Last\+Index (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{predicate}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a7606c974ca7844dbbab61e0671f72a53}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em predicate} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_indexed_a4283e602a819d8ea03d1af10983b5105}{C5.\+I\+Indexed$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_afe18ba420f983ab2a011cde8bda43cd5}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Find\+Or\+Add@{Find\+Or\+Add}}
+\index{Find\+Or\+Add@{Find\+Or\+Add}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Find\+Or\+Add(ref T item)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Find\+Or\+Add (
+\begin{DoxyParamCaption}
+\item[{ref T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_afe18ba420f983ab2a011cde8bda43cd5}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a7f9e609ee1a7607596bb65aa5bdff303}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_aa9beb91837122a0eb1efb9efeb5657fd}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Get\+Enumerator@{Get\+Enumerator}}
+\index{Get\+Enumerator@{Get\+Enumerator}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Get\+Enumerator()}]{\setlength{\rightskip}{0pt plus 5cm}S\+C\+G.\+I\+Enumerator$<$T$>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.Get\+Enumerator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_aa9beb91837122a0eb1efb9efeb5657fd}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{class_c5_1_1_wrapped_array_a00b82e37ca65bf9ea9088f5528b07fc4}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Get\+Sequenced\+Hash\+Code@{Get\+Sequenced\+Hash\+Code}}
+\index{Get\+Sequenced\+Hash\+Code@{Get\+Sequenced\+Hash\+Code}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Get\+Sequenced\+Hash\+Code()}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+Wrapped\+Array}$<$ T $>$.Get\+Sequenced\+Hash\+Code (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a00b82e37ca65bf9ea9088f5528b07fc4}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sequenced_afb06eeccff646bb763c76c1826b177fe}{C5.\+I\+Sequenced$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a9e66ede7a619e13da4307ec6c8df6c0d}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Get\+Unsequenced\+Hash\+Code@{Get\+Unsequenced\+Hash\+Code}}
+\index{Get\+Unsequenced\+Hash\+Code@{Get\+Unsequenced\+Hash\+Code}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Get\+Unsequenced\+Hash\+Code()}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+Wrapped\+Array}$<$ T $>$.Get\+Unsequenced\+Hash\+Code (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a9e66ede7a619e13da4307ec6c8df6c0d}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_ae3a4fa01c3b09b9b372bb6f8639194ed}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a459af83c432f3dbc167d406c4632fb0e}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Index\+Of@{Index\+Of}}
+\index{Index\+Of@{Index\+Of}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Index\+Of(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+Wrapped\+Array}$<$ T $>$.Index\+Of (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a459af83c432f3dbc167d406c4632fb0e}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_a52658ee618f1557622d766d7a348910a}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a162b36f103f13696b002174169d73aed}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Insert@{Insert}}
+\index{Insert@{Insert}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Insert(int index, T item)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Wrapped\+Array}$<$ T $>$.Insert (
+\begin{DoxyParamCaption}
+\item[{int}]{index, }
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a162b36f103f13696b002174169d73aed}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & \\
+\hline
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_c5_1_1_wrapped_array_a25630c81bea9df1f81d947bc4315b1e4}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Insert@{Insert}}
+\index{Insert@{Insert}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Insert(\+I\+List$<$ T $>$ pointer, T item)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Wrapped\+Array}$<$ T $>$.Insert (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+List}$<$ T $>$}]{pointer, }
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a25630c81bea9df1f81d947bc4315b1e4}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em pointer} & \\
+\hline
+{\em item} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_a80df9055583216f4498d3711c9658d1f}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a8dfe7a28dc0f1b1a3b3548d3cfdd3959}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Insert\+All@{Insert\+All}}
+\index{Insert\+All@{Insert\+All}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Insert\+All(int i, System.\+Collections.\+Generic.\+I\+Enumerable$<$ T $>$ items)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Wrapped\+Array}$<$ T $>$.Insert\+All (
+\begin{DoxyParamCaption}
+\item[{int}]{i, }
+\item[{System.\+Collections.\+Generic.\+I\+Enumerable$<$ T $>$}]{items}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a8dfe7a28dc0f1b1a3b3548d3cfdd3959}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & \\
+\hline
+{\em items} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_a551f34466ccd64b90929d8a92b984dc5}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a788dd6164116d45b8043fd515a707e6d}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Insert\+First@{Insert\+First}}
+\index{Insert\+First@{Insert\+First}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Insert\+First(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Wrapped\+Array}$<$ T $>$.Insert\+First (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a788dd6164116d45b8043fd515a707e6d}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_a2dd0bf119dee26610ce56283da7d7d11}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_abe9ea4b00b84b312e033eabfb35d5d77}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Insert\+Last@{Insert\+Last}}
+\index{Insert\+Last@{Insert\+Last}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Insert\+Last(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Wrapped\+Array}$<$ T $>$.Insert\+Last (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_abe9ea4b00b84b312e033eabfb35d5d77}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_adbb76aa84c81cf3d93130ed3d3abd967}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_af134399df22e512094a27e95cd147b13}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Is\+Sorted@{Is\+Sorted}}
+\index{Is\+Sorted@{Is\+Sorted}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Is\+Sorted()}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Is\+Sorted (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_af134399df22e512094a27e95cd147b13}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_aadf94b51e2c383ebda5a9f48820ef9bb}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a63b841f528e5b8b1768687b73e755644}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Is\+Sorted@{Is\+Sorted}}
+\index{Is\+Sorted@{Is\+Sorted}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Is\+Sorted(\+S\+C\+G.\+I\+Comparer$<$ T $>$ comparer)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Is\+Sorted (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Comparer$<$ T $>$}]{comparer}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a63b841f528e5b8b1768687b73e755644}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em comparer} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_ad7a87f535eab2f950eb4ad3311f3385f}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a71341ae57222c7e5d5f16b96b91ccf81}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Item\+Multiplicities@{Item\+Multiplicities}}
+\index{Item\+Multiplicities@{Item\+Multiplicities}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Item\+Multiplicities()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Collection\+Value}$<${\bf Key\+Value\+Pair}$<$T, int$>$ $>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.Item\+Multiplicities (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a71341ae57222c7e5d5f16b96b91ccf81}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a623bd834b37b299c5f4948fdb6915fef}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_aebda540a1e886890698d527f53d99343}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Last\+Index\+Of@{Last\+Index\+Of}}
+\index{Last\+Index\+Of@{Last\+Index\+Of}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Last\+Index\+Of(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+Wrapped\+Array}$<$ T $>$.Last\+Index\+Of (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_aebda540a1e886890698d527f53d99343}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_indexed_a50f274e0f7b4cd2e54db4cb61a003b95}{C5.\+I\+Indexed$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a40efb134cd66039cafc0ebc09e3db6e5}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Last\+View\+Of@{Last\+View\+Of}}
+\index{Last\+View\+Of@{Last\+View\+Of}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Last\+View\+Of(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+List}$<$T$>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.Last\+View\+Of (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a40efb134cd66039cafc0ebc09e3db6e5}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_a251c36fe72c9bc661d449bfd0ea90528}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a319143ffc0237155b5633e4e5c61b474}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Map$<$ V $>$@{Map$<$ V $>$}}
+\index{Map$<$ V $>$@{Map$<$ V $>$}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Map$<$ V $>$(\+Func$<$ T, V $>$ mapper)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+List}$<$V$>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.Map$<$ V $>$ (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, V $>$}]{mapper}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a319143ffc0237155b5633e4e5c61b474}
+
+
+
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em V} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em mapper} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_a8cf8a4682fe990ce32d7cf4a2bec84b6}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a9297d4f2de04f4d3f72892992b702810}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Map$<$ V $>$@{Map$<$ V $>$}}
+\index{Map$<$ V $>$@{Map$<$ V $>$}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Map$<$ V $>$(\+Func$<$ T, V $>$ mapper, S\+C\+G.\+I\+Equality\+Comparer$<$ V $>$ equality\+Comparer)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+List}$<$V$>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.Map$<$ V $>$ (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, V $>$}]{mapper, }
+\item[{S\+C\+G.\+I\+Equality\+Comparer$<$ V $>$}]{equality\+Comparer}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a9297d4f2de04f4d3f72892992b702810}
+
+
+
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em V} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em mapper} & \\
+\hline
+{\em equality\+Comparer} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_ad84aa90d1111a8cb7ea1226d8cfadab9}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a067a9891e0d7519b30a726a204d64237}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Remove@{Remove}}
+\index{Remove@{Remove}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Remove()}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Wrapped\+Array}$<$ T $>$.Remove (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a067a9891e0d7519b30a726a204d64237}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_ae0d9be125f478fed048c4c08159ae399}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a3f312170b262e9f56b4d23442eb98029}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Remove@{Remove}}
+\index{Remove@{Remove}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Remove(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Remove (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a3f312170b262e9f56b4d23442eb98029}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_a14dd6b1e7f06807dc6a45edf0f83dfbd}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_aeb6273eab4c6798ab5ae3f7d1b64dff1}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Remove@{Remove}}
+\index{Remove@{Remove}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Remove(\+T item, out T removeditem)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Remove (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{out T}]{removeditem}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_aeb6273eab4c6798ab5ae3f7d1b64dff1}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+{\em removeditem} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_acbd124236c3f0958a8784d9c7c2dfd16}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a87989abbf2d41125036606805dcdd926}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Remove\+All@{Remove\+All}}
+\index{Remove\+All@{Remove\+All}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Remove\+All(\+System.\+Collections.\+Generic.\+I\+Enumerable$<$ T $>$ items)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Wrapped\+Array}$<$ T $>$.Remove\+All (
+\begin{DoxyParamCaption}
+\item[{System.\+Collections.\+Generic.\+I\+Enumerable$<$ T $>$}]{items}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a87989abbf2d41125036606805dcdd926}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em items} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a9fb05163a1bd4b71bfd05101ff20c987}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_af733180804bf7ee5a4a0ece7f6cb12c3}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Remove\+All\+Copies@{Remove\+All\+Copies}}
+\index{Remove\+All\+Copies@{Remove\+All\+Copies}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Remove\+All\+Copies(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Wrapped\+Array}$<$ T $>$.Remove\+All\+Copies (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_af733180804bf7ee5a4a0ece7f6cb12c3}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_ad785b91be4edeb3fbe678db751f6355d}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a01b30a7260874fcd043d01cabad29f55}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Remove\+At@{Remove\+At}}
+\index{Remove\+At@{Remove\+At}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Remove\+At(int i)}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Wrapped\+Array}$<$ T $>$.Remove\+At (
+\begin{DoxyParamCaption}
+\item[{int}]{i}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a01b30a7260874fcd043d01cabad29f55}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_a9fbcd9c55aae61134321939d0b104cc0}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a3b3917acf620f16ef736b75f25d4a8e3}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Remove\+First@{Remove\+First}}
+\index{Remove\+First@{Remove\+First}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Remove\+First()}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Wrapped\+Array}$<$ T $>$.Remove\+First (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a3b3917acf620f16ef736b75f25d4a8e3}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_a6f5c3f67673d43604aa28a7d2b6508ff}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_ae488079bb94b8ed0bdb0ce834ec2dd25}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Remove\+Interval@{Remove\+Interval}}
+\index{Remove\+Interval@{Remove\+Interval}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Remove\+Interval(int start, int count)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Wrapped\+Array}$<$ T $>$.Remove\+Interval (
+\begin{DoxyParamCaption}
+\item[{int}]{start, }
+\item[{int}]{count}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_ae488079bb94b8ed0bdb0ce834ec2dd25}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em start} & \\
+\hline
+{\em count} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_indexed_aa9d2a1706ba0361079d31c02bad3e810}{C5.\+I\+Indexed$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a04f236941c2f7aef12997e6d305a1dcf}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Remove\+Last@{Remove\+Last}}
+\index{Remove\+Last@{Remove\+Last}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Remove\+Last()}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Wrapped\+Array}$<$ T $>$.Remove\+Last (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a04f236941c2f7aef12997e6d305a1dcf}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_adfbae9e7ea5cb9ff3e0fd45f1201334a}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_aca9b3686c472517405451a8342da0de1}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Retain\+All@{Retain\+All}}
+\index{Retain\+All@{Retain\+All}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Retain\+All(\+System.\+Collections.\+Generic.\+I\+Enumerable$<$ T $>$ items)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Wrapped\+Array}$<$ T $>$.Retain\+All (
+\begin{DoxyParamCaption}
+\item[{System.\+Collections.\+Generic.\+I\+Enumerable$<$ T $>$}]{items}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_aca9b3686c472517405451a8342da0de1}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em items} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_ac2672fb0557eeb24e328149c513c9a8b}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a4c136a663e90a6451a0685d281ebdf0b}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Reverse@{Reverse}}
+\index{Reverse@{Reverse}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Reverse()}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Wrapped\+Array}$<$ T $>$.Reverse (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a4c136a663e90a6451a0685d281ebdf0b}
+
+
+
+
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_aea3fef718431d1ab504e15457e7fda1c}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a3a74f3b059b10576670618716cc3377f}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Sequenced\+Equals@{Sequenced\+Equals}}
+\index{Sequenced\+Equals@{Sequenced\+Equals}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Sequenced\+Equals(\+I\+Sequenced$<$ T $>$ that)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Sequenced\+Equals (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Sequenced}$<$ T $>$}]{that}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a3a74f3b059b10576670618716cc3377f}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em that} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_sequenced_aeb2be77c5c30ab10f468222f6cbb795f}{C5.\+I\+Sequenced$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a434aab84ad13ca5702baada927f6fcdf}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Show@{Show}}
+\index{Show@{Show}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Show(\+String\+Builder stringbuilder, ref int rest, I\+Format\+Provider format\+Provider)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Show (
+\begin{DoxyParamCaption}
+\item[{String\+Builder}]{stringbuilder, }
+\item[{ref int}]{rest, }
+\item[{I\+Format\+Provider}]{format\+Provider}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a434aab84ad13ca5702baada927f6fcdf}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em stringbuilder} & \\
+\hline
+{\em rest} & \\
+\hline
+{\em format\+Provider} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_showable_a0605b632e204023f0b32b2aec8e6ad27}{C5.\+I\+Showable}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a77f7b39c84abba94c4a144da3ce2baff}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Shuffle@{Shuffle}}
+\index{Shuffle@{Shuffle}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Shuffle()}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Wrapped\+Array}$<$ T $>$.Shuffle (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a77f7b39c84abba94c4a144da3ce2baff}
+
+
+
+
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_abec18a307f13a6f7e9ef9bd1f131c9e2}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a8307d48388d587aa244d01e6d2079722}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Shuffle@{Shuffle}}
+\index{Shuffle@{Shuffle}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Shuffle(\+Random rnd)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Wrapped\+Array}$<$ T $>$.Shuffle (
+\begin{DoxyParamCaption}
+\item[{Random}]{rnd}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a8307d48388d587aa244d01e6d2079722}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em rnd} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_afc33a89830008ad176dfd0c67ceb8b12}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_ac15daa69646bd07b1c33d7f3e54fc664}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Slide@{Slide}}
+\index{Slide@{Slide}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Slide(int offset)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+List}$<$T$>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.Slide (
+\begin{DoxyParamCaption}
+\item[{int}]{offset}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_ac15daa69646bd07b1c33d7f3e54fc664}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em offset} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_a5ef3eff3f13a9a69071dacefbf43f80b}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a72fe70449ee7b4120ce1f64bd1943de3}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Slide@{Slide}}
+\index{Slide@{Slide}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Slide(int offset, int size)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+List}$<$T$>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.Slide (
+\begin{DoxyParamCaption}
+\item[{int}]{offset, }
+\item[{int}]{size}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a72fe70449ee7b4120ce1f64bd1943de3}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em offset} & \\
+\hline
+{\em size} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_a20b4e11e6d69d4251af92b666aa16004}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a3713559b09931e18ca05b7a755a23f21}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Sort@{Sort}}
+\index{Sort@{Sort}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Sort()}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Wrapped\+Array}$<$ T $>$.Sort (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a3713559b09931e18ca05b7a755a23f21}
+
+
+
+
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_ad65ec59c8caf18dbf8cf795edf45bce5}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a419a2d9c1377150e6dd473e32ddde903}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Sort@{Sort}}
+\index{Sort@{Sort}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Sort(\+S\+C\+G.\+I\+Comparer$<$ T $>$ comparer)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+Wrapped\+Array}$<$ T $>$.Sort (
+\begin{DoxyParamCaption}
+\item[{S\+C\+G.\+I\+Comparer$<$ T $>$}]{comparer}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a419a2d9c1377150e6dd473e32ddde903}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em comparer} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_ad6708e13ea86ba9317c5f03505bba7fb}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a78ce164344790af3bad84352c2acf58d}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Span@{Span}}
+\index{Span@{Span}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Span(\+I\+List$<$ T $>$ other\+View)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+List}$<$T$>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.Span (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+List}$<$ T $>$}]{other\+View}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a78ce164344790af3bad84352c2acf58d}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em other\+View} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_a1fb50b61d1fb0117bf1ebcd4bf06dbfa}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a58fc7250416e58474a98d17a538fb9e2}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!To\+Array@{To\+Array}}
+\index{To\+Array@{To\+Array}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{To\+Array()}]{\setlength{\rightskip}{0pt plus 5cm}T \mbox{[}$\,$\mbox{]} {\bf C5.\+Wrapped\+Array}$<$ T $>$.To\+Array (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a58fc7250416e58474a98d17a538fb9e2}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_value_ad76547324e71a04e92076b2e55239bbb}{C5.\+I\+Collection\+Value$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a9069735f9eee020d4dece64dc0524bdb}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!To\+String@{To\+String}}
+\index{To\+String@{To\+String}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{To\+String()}]{\setlength{\rightskip}{0pt plus 5cm}override string {\bf C5.\+Wrapped\+Array}$<$ T $>$.To\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a9069735f9eee020d4dece64dc0524bdb}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{class_c5_1_1_wrapped_array_aa6614dbe6794cf7a814b2d35b3887e32}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!To\+String@{To\+String}}
+\index{To\+String@{To\+String}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{To\+String(string format, I\+Format\+Provider format\+Provider)}]{\setlength{\rightskip}{0pt plus 5cm}virtual string {\bf C5.\+Wrapped\+Array}$<$ T $>$.To\+String (
+\begin{DoxyParamCaption}
+\item[{string}]{format, }
+\item[{I\+Format\+Provider}]{format\+Provider}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_c5_1_1_wrapped_array_aa6614dbe6794cf7a814b2d35b3887e32}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em format} & \\
+\hline
+{\em format\+Provider} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{class_c5_1_1_wrapped_array_a2f4793463aba25b83c876312f0f38f88}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Try\+Slide@{Try\+Slide}}
+\index{Try\+Slide@{Try\+Slide}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Try\+Slide(int offset)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Try\+Slide (
+\begin{DoxyParamCaption}
+\item[{int}]{offset}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a2f4793463aba25b83c876312f0f38f88}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em offset} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_a727578a3060d08dba6a065c5d90b77bd}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_ade9062f9faaa9a455d78e34a39dec3bb}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Try\+Slide@{Try\+Slide}}
+\index{Try\+Slide@{Try\+Slide}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Try\+Slide(int offset, int size)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Try\+Slide (
+\begin{DoxyParamCaption}
+\item[{int}]{offset, }
+\item[{int}]{size}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_ade9062f9faaa9a455d78e34a39dec3bb}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em offset} & \\
+\hline
+{\em size} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_a04c6671051fdef61f2b199c66bbfaa21}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a10749be9ab87797f2f0db77c21db2e10}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Unique\+Items@{Unique\+Items}}
+\index{Unique\+Items@{Unique\+Items}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Unique\+Items()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Collection\+Value}$<$T$>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.Unique\+Items (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a10749be9ab87797f2f0db77c21db2e10}
+
+
+
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a074c4e1a90fb7f98c95834204352c28c}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_af41294d9e8203f58df120b0f551392d0}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Unsequenced\+Equals@{Unsequenced\+Equals}}
+\index{Unsequenced\+Equals@{Unsequenced\+Equals}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Unsequenced\+Equals(\+I\+Collection$<$ T $>$ that)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Unsequenced\+Equals (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Collection}$<$ T $>$}]{that}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_af41294d9e8203f58df120b0f551392d0}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em that} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a46fee76e3afed2b0510e94814ef832b2}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a7a72a3ce30888c5cd0b75cced3c1e241}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Update@{Update}}
+\index{Update@{Update}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Update(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Update (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a7a72a3ce30888c5cd0b75cced3c1e241}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_acf060ba6b83289dc74bea61502318d56}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a702abce4ea5ab27787f8b5f61598fc48}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Update@{Update}}
+\index{Update@{Update}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Update(\+T item, out T olditem)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Update (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{out T}]{olditem}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a702abce4ea5ab27787f8b5f61598fc48}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+{\em olditem} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_ad1faa1738e02acf001aac16a3b948c78}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_ade54ce5ee162ea128e492e98ba82b667}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Update\+Or\+Add@{Update\+Or\+Add}}
+\index{Update\+Or\+Add@{Update\+Or\+Add}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Update\+Or\+Add(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Update\+Or\+Add (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_ade54ce5ee162ea128e492e98ba82b667}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a9739490d6271fb3a92221bca5da5e54b}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_aadf783ba87fbad13d1730cd2c922ab7a}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Update\+Or\+Add@{Update\+Or\+Add}}
+\index{Update\+Or\+Add@{Update\+Or\+Add}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Update\+Or\+Add(\+T item, out T olditem)}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Update\+Or\+Add (
+\begin{DoxyParamCaption}
+\item[{T}]{item, }
+\item[{out T}]{olditem}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_aadf783ba87fbad13d1730cd2c922ab7a}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+{\em olditem} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_collection_a73a5d984e95e200de80261361bb7e57d}{C5.\+I\+Collection$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_ab16f34d78c06b05f4d962192a4daf4c4}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!View@{View}}
+\index{View@{View}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{View(int start, int count)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+List}$<$T$>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.View (
+\begin{DoxyParamCaption}
+\item[{int}]{start, }
+\item[{int}]{count}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_ab16f34d78c06b05f4d962192a4daf4c4}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em start} & \\
+\hline
+{\em count} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_a402c21a9b1f0e2295303d35b6db5d273}{C5.\+I\+List$<$ T $>$}.
+
+\hypertarget{class_c5_1_1_wrapped_array_a819a47c4c0f0ee0397c337e340f86ea1}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!View\+Of@{View\+Of}}
+\index{View\+Of@{View\+Of}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{View\+Of(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+List}$<$T$>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.View\+Of (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{class_c5_1_1_wrapped_array_a819a47c4c0f0ee0397c337e340f86ea1}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{interface_c5_1_1_i_list_aefcdef9983913d18ae05394e77a44c71}{C5.\+I\+List$<$ T $>$}.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{class_c5_1_1_wrapped_array_a6a2885adb750589e6cff16fca6f8f861}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Active\+Events@{Active\+Events}}
+\index{Active\+Events@{Active\+Events}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Active\+Events}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Event\+Type\+Enum} {\bf C5.\+Wrapped\+Array}$<$ T $>$.Active\+Events\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_wrapped_array_a6a2885adb750589e6cff16fca6f8f861}
+
+
+No listeners ever installed 
+
+0\hypertarget{class_c5_1_1_wrapped_array_a8a9ef8c7d764f62ce2cfb3362ceb593a}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Allows\+Duplicates@{Allows\+Duplicates}}
+\index{Allows\+Duplicates@{Allows\+Duplicates}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Allows\+Duplicates}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Allows\+Duplicates\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_wrapped_array_a8a9ef8c7d764f62ce2cfb3362ceb593a}
+
+
+
+
+\hypertarget{class_c5_1_1_wrapped_array_a6af225122edd40486f4ca2a18ebd1cfb}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Collection\+Changed@{Collection\+Changed}}
+\index{Collection\+Changed@{Collection\+Changed}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Collection\+Changed}]{\setlength{\rightskip}{0pt plus 5cm}Collection\+Changed\+Handler$<$T$>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.Collection\+Changed\hspace{0.3cm}{\ttfamily [add]}, {\ttfamily [remove]}}\label{class_c5_1_1_wrapped_array_a6af225122edd40486f4ca2a18ebd1cfb}
+
+
+
+
+\hypertarget{class_c5_1_1_wrapped_array_a8d1f8c80e700327151c71f8c37266d5f}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Collection\+Cleared@{Collection\+Cleared}}
+\index{Collection\+Cleared@{Collection\+Cleared}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Collection\+Cleared}]{\setlength{\rightskip}{0pt plus 5cm}Collection\+Cleared\+Handler$<$T$>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.Collection\+Cleared\hspace{0.3cm}{\ttfamily [add]}, {\ttfamily [remove]}}\label{class_c5_1_1_wrapped_array_a8d1f8c80e700327151c71f8c37266d5f}
+
+
+
+
+\hypertarget{class_c5_1_1_wrapped_array_a631563907120394f515e2ef7d70e60e2}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Contains\+Speed@{Contains\+Speed}}
+\index{Contains\+Speed@{Contains\+Speed}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Contains\+Speed}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Speed} {\bf C5.\+Wrapped\+Array}$<$ T $>$.Contains\+Speed\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_wrapped_array_a631563907120394f515e2ef7d70e60e2}
+
+
+
+
+\hypertarget{class_c5_1_1_wrapped_array_a91d0f21ce4b41fc4a5554d2d4cf92245}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Count@{Count}}
+\index{Count@{Count}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Count}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+Wrapped\+Array}$<$ T $>$.Count\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_wrapped_array_a91d0f21ce4b41fc4a5554d2d4cf92245}
+
+
+
+
+\hypertarget{class_c5_1_1_wrapped_array_afd19afac8b14529a8cc700e075bb0169}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Count\+Speed@{Count\+Speed}}
+\index{Count\+Speed@{Count\+Speed}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Count\+Speed}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Speed} {\bf C5.\+Wrapped\+Array}$<$ T $>$.Count\+Speed\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_wrapped_array_afd19afac8b14529a8cc700e075bb0169}
+
+
+
+
+\hypertarget{class_c5_1_1_wrapped_array_acf6e4074f7740cf342cc7dba804ef1da}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Direction@{Direction}}
+\index{Direction@{Direction}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Direction}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Enumeration\+Direction} {\bf C5.\+Wrapped\+Array}$<$ T $>$.Direction\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_wrapped_array_acf6e4074f7740cf342cc7dba804ef1da}
+
+
+
+
+\hypertarget{class_c5_1_1_wrapped_array_aac81b310cf57364283da912775316da8}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Duplicates\+By\+Counting@{Duplicates\+By\+Counting}}
+\index{Duplicates\+By\+Counting@{Duplicates\+By\+Counting}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Duplicates\+By\+Counting}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Duplicates\+By\+Counting\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_wrapped_array_aac81b310cf57364283da912775316da8}
+
+
+
+
+\hypertarget{class_c5_1_1_wrapped_array_ad137487997743e41f5f6e56e4f0cdf53}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Equality\+Comparer@{Equality\+Comparer}}
+\index{Equality\+Comparer@{Equality\+Comparer}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Equality\+Comparer}]{\setlength{\rightskip}{0pt plus 5cm}S\+C\+G.\+I\+Equality\+Comparer$<$T$>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.Equality\+Comparer\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_wrapped_array_ad137487997743e41f5f6e56e4f0cdf53}
+
+
+
+
+\hypertarget{class_c5_1_1_wrapped_array_a5b8e3d7b8f13a7cf59f6ae04c22b60b5}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!F\+I\+F\+O@{F\+I\+F\+O}}
+\index{F\+I\+F\+O@{F\+I\+F\+O}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{F\+I\+F\+O}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.F\+I\+F\+O\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{class_c5_1_1_wrapped_array_a5b8e3d7b8f13a7cf59f6ae04c22b60b5}
+
+
+???? should we throw Not\+Relevant\+Exception 
+
+\hypertarget{class_c5_1_1_wrapped_array_a30b1c7c01b288c05e8d7594a1d85f1d5}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!First@{First}}
+\index{First@{First}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{First}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Wrapped\+Array}$<$ T $>$.First\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_wrapped_array_a30b1c7c01b288c05e8d7594a1d85f1d5}
+
+
+
+
+\hypertarget{class_c5_1_1_wrapped_array_a9ddee14e5fc0e1c4d2cfe0e3809018f1}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Indexing\+Speed@{Indexing\+Speed}}
+\index{Indexing\+Speed@{Indexing\+Speed}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Indexing\+Speed}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Speed} {\bf C5.\+Wrapped\+Array}$<$ T $>$.Indexing\+Speed\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_wrapped_array_a9ddee14e5fc0e1c4d2cfe0e3809018f1}
+
+
+
+
+\hypertarget{class_c5_1_1_wrapped_array_a63eafa18bd9e15b9f9c606d64500d851}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Is\+Empty@{Is\+Empty}}
+\index{Is\+Empty@{Is\+Empty}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Is\+Empty}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Is\+Empty\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_wrapped_array_a63eafa18bd9e15b9f9c606d64500d851}
+
+
+
+
+\hypertarget{class_c5_1_1_wrapped_array_a05fa96081a5ae212ae531df648d543c5}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Is\+Fixed\+Size@{Is\+Fixed\+Size}}
+\index{Is\+Fixed\+Size@{Is\+Fixed\+Size}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Is\+Fixed\+Size}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Is\+Fixed\+Size\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_wrapped_array_a05fa96081a5ae212ae531df648d543c5}
+
+
+
+
+\hypertarget{class_c5_1_1_wrapped_array_ac494d49951b3285021ae35adfaa0da22}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Is\+Read\+Only@{Is\+Read\+Only}}
+\index{Is\+Read\+Only@{Is\+Read\+Only}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Is\+Read\+Only}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Is\+Read\+Only\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_wrapped_array_ac494d49951b3285021ae35adfaa0da22}
+
+
+
+
+\hypertarget{class_c5_1_1_wrapped_array_a3ed2a1a22a1ade67fa7b8a55ab91ef47}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Is\+Valid@{Is\+Valid}}
+\index{Is\+Valid@{Is\+Valid}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Is\+Valid}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf C5.\+Wrapped\+Array}$<$ T $>$.Is\+Valid\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_wrapped_array_a3ed2a1a22a1ade67fa7b8a55ab91ef47}
+
+
+
+
+\hypertarget{class_c5_1_1_wrapped_array_a2a153b5a67a39f2d05e987e447bd9352}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Item\+Inserted@{Item\+Inserted}}
+\index{Item\+Inserted@{Item\+Inserted}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Item\+Inserted}]{\setlength{\rightskip}{0pt plus 5cm}Item\+Inserted\+Handler$<$T$>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.Item\+Inserted\hspace{0.3cm}{\ttfamily [add]}, {\ttfamily [remove]}}\label{class_c5_1_1_wrapped_array_a2a153b5a67a39f2d05e987e447bd9352}
+
+
+
+
+\hypertarget{class_c5_1_1_wrapped_array_a76779191e9851ed03c5313157bb41a62}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Item\+Removed\+At@{Item\+Removed\+At}}
+\index{Item\+Removed\+At@{Item\+Removed\+At}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Item\+Removed\+At}]{\setlength{\rightskip}{0pt plus 5cm}Item\+Removed\+At\+Handler$<$T$>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.Item\+Removed\+At\hspace{0.3cm}{\ttfamily [add]}, {\ttfamily [remove]}}\label{class_c5_1_1_wrapped_array_a76779191e9851ed03c5313157bb41a62}
+
+
+
+
+\hypertarget{class_c5_1_1_wrapped_array_ad4e9059009c3f36ac2a898424e8a07f0}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Items\+Added@{Items\+Added}}
+\index{Items\+Added@{Items\+Added}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Items\+Added}]{\setlength{\rightskip}{0pt plus 5cm}Items\+Added\+Handler$<$T$>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.Items\+Added\hspace{0.3cm}{\ttfamily [add]}, {\ttfamily [remove]}}\label{class_c5_1_1_wrapped_array_ad4e9059009c3f36ac2a898424e8a07f0}
+
+
+
+
+\hypertarget{class_c5_1_1_wrapped_array_a2589ac72276da70bbf0e341826d29f5a}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Items\+Removed@{Items\+Removed}}
+\index{Items\+Removed@{Items\+Removed}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Items\+Removed}]{\setlength{\rightskip}{0pt plus 5cm}Items\+Removed\+Handler$<$T$>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.Items\+Removed\hspace{0.3cm}{\ttfamily [add]}, {\ttfamily [remove]}}\label{class_c5_1_1_wrapped_array_a2589ac72276da70bbf0e341826d29f5a}
+
+
+
+
+\hypertarget{class_c5_1_1_wrapped_array_a821efefc3fa34125b7a5f2b0108e3ef4}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Last@{Last}}
+\index{Last@{Last}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Last}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Wrapped\+Array}$<$ T $>$.Last\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_wrapped_array_a821efefc3fa34125b7a5f2b0108e3ef4}
+
+
+
+
+\hypertarget{class_c5_1_1_wrapped_array_a7d4694e3b14728396280bad7b17052f4}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Listenable\+Events@{Listenable\+Events}}
+\index{Listenable\+Events@{Listenable\+Events}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Listenable\+Events}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Event\+Type\+Enum} {\bf C5.\+Wrapped\+Array}$<$ T $>$.Listenable\+Events\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_wrapped_array_a7d4694e3b14728396280bad7b17052f4}
+
+
+No listeners may be installed 
+
+0\hypertarget{class_c5_1_1_wrapped_array_a0c4465bdc31669ec9b73a23118a10195}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Offset@{Offset}}
+\index{Offset@{Offset}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Offset}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+Wrapped\+Array}$<$ T $>$.Offset\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_wrapped_array_a0c4465bdc31669ec9b73a23118a10195}
+
+
+
+
+\hypertarget{class_c5_1_1_wrapped_array_a3a76c7661d9e1b1612cdbcf2686c02c4}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!this\mbox{[}int index\mbox{]}@{this[int index]}}
+\index{this\mbox{[}int index\mbox{]}@{this[int index]}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{this[int index]}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+Wrapped\+Array}$<$ T $>$.this\mbox{[}int index\mbox{]}\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{class_c5_1_1_wrapped_array_a3a76c7661d9e1b1612cdbcf2686c02c4}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{class_c5_1_1_wrapped_array_a791feb63e897935f737406895d0a4f98}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!this\mbox{[}int start, int count\mbox{]}@{this[int start, int count]}}
+\index{this\mbox{[}int start, int count\mbox{]}@{this[int start, int count]}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{this[int start, int count]}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Directed\+Collection\+Value}$<$T$>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.this\mbox{[}int start, int count\mbox{]}\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_wrapped_array_a791feb63e897935f737406895d0a4f98}
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em start} & \\
+\hline
+{\em count} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{class_c5_1_1_wrapped_array_a696f786dd743babd7c4978785b2650d3}{}\index{C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}!Underlying@{Underlying}}
+\index{Underlying@{Underlying}!C5\+::\+Wrapped\+Array@{C5\+::\+Wrapped\+Array}}
+\subsubsection[{Underlying}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+List}$<$T$>$ {\bf C5.\+Wrapped\+Array}$<$ T $>$.Underlying\hspace{0.3cm}{\ttfamily [get]}}\label{class_c5_1_1_wrapped_array_a696f786dd743babd7c4978785b2650d3}
+
+
+
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_wrapped_array_8cs}{Wrapped\+Array.\+cs}\end{DoxyCompactItemize}

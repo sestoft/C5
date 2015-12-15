@@ -1,0 +1,273 @@
+\hypertarget{interface_c5_1_1_i_indexed}{}\section{C5.\+I\+Indexed$<$ T $>$ Interface Template Reference}
+\label{interface_c5_1_1_i_indexed}\index{C5.\+I\+Indexed$<$ T $>$@{C5.\+I\+Indexed$<$ T $>$}}
+
+
+A sequenced collection, where indices of items in the order are maintained  
+
+
+Inheritance diagram for C5.\+I\+Indexed$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.134585cm]{interface_c5_1_1_i_indexed}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{interface_c5_1_1_i_indexed_abad58598415e0383ddbc9275db69d92a}{Index\+Of} (T item)
+\begin{DoxyCompactList}\small\item\em Searches for an item in the list going forwards from the start. \end{DoxyCompactList}\item 
+int \hyperlink{interface_c5_1_1_i_indexed_a50f274e0f7b4cd2e54db4cb61a003b95}{Last\+Index\+Of} (T item)
+\begin{DoxyCompactList}\small\item\em Searches for an item in the list going backwards from the end. \end{DoxyCompactList}\item 
+int \hyperlink{interface_c5_1_1_i_indexed_ac5431f5a857165b38d36b066d17e288c}{Find\+Index} (Func$<$ T, bool $>$ predicate)
+\begin{DoxyCompactList}\small\item\em Check if there exists an item that satisfies a specific predicate in this collection and return the index of the first one. \end{DoxyCompactList}\item 
+int \hyperlink{interface_c5_1_1_i_indexed_a4283e602a819d8ea03d1af10983b5105}{Find\+Last\+Index} (Func$<$ T, bool $>$ predicate)
+\begin{DoxyCompactList}\small\item\em Check if there exists an item that satisfies a specific predicate in this collection and return the index of the last one. \end{DoxyCompactList}\item 
+T \hyperlink{interface_c5_1_1_i_indexed_ac741e6d3d7c6a30bb8a013bb29591ca4}{Remove\+At} (int index)
+\begin{DoxyCompactList}\small\item\em Remove the item at a specific position of the list. \end{DoxyCompactList}\item 
+void \hyperlink{interface_c5_1_1_i_indexed_aa9d2a1706ba0361079d31c02bad3e810}{Remove\+Interval} (int start, int count)
+\begin{DoxyCompactList}\small\item\em Remove all items in an index interval. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+T \hyperlink{interface_c5_1_1_i_indexed_a1e716eed0c1bc5b1d30e456fab869dc6}{this\mbox{[}int index\mbox{]}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\hyperlink{namespace_c5_a615ba88dcdaa8d5a3c5f833a73d7fad6}{Speed} \hyperlink{interface_c5_1_1_i_indexed_a32f84a737f8725bc93ff50b44539a413}{Indexing\+Speed}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\hyperlink{interface_c5_1_1_i_directed_collection_value}{I\+Directed\+Collection\+Value}$<$ T $>$ \hyperlink{interface_c5_1_1_i_indexed_a7d2ebaba4aefbc5240fb95893596337a}{this\mbox{[}int start, int count\mbox{]}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A sequenced collection, where indices of items in the order are maintained 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{interface_c5_1_1_i_indexed_ac5431f5a857165b38d36b066d17e288c}{}\index{C5\+::\+I\+Indexed@{C5\+::\+I\+Indexed}!Find\+Index@{Find\+Index}}
+\index{Find\+Index@{Find\+Index}!C5\+::\+I\+Indexed@{C5\+::\+I\+Indexed}}
+\subsubsection[{Find\+Index(\+Func$<$ T, bool $>$ predicate)}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+I\+Indexed}$<$ T $>$.Find\+Index (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{predicate}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_indexed_ac5431f5a857165b38d36b066d17e288c}
+
+
+Check if there exists an item that satisfies a specific predicate in this collection and return the index of the first one. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em predicate} & A delegate (T\+:\+Func`2 with 
+\begin{DoxyCode}
+R == \textcolor{keywordtype}{bool}
+\end{DoxyCode}
+) defining the predicate\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the index, if found, a negative value else
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_wrapped_array_a189ddcea1c7463ce3e8899e2709614d5}{C5.\+Wrapped\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_indexed_a4283e602a819d8ea03d1af10983b5105}{}\index{C5\+::\+I\+Indexed@{C5\+::\+I\+Indexed}!Find\+Last\+Index@{Find\+Last\+Index}}
+\index{Find\+Last\+Index@{Find\+Last\+Index}!C5\+::\+I\+Indexed@{C5\+::\+I\+Indexed}}
+\subsubsection[{Find\+Last\+Index(\+Func$<$ T, bool $>$ predicate)}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+I\+Indexed}$<$ T $>$.Find\+Last\+Index (
+\begin{DoxyParamCaption}
+\item[{Func$<$ T, bool $>$}]{predicate}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_indexed_a4283e602a819d8ea03d1af10983b5105}
+
+
+Check if there exists an item that satisfies a specific predicate in this collection and return the index of the last one. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em predicate} & A delegate (T\+:\+Func`2 with 
+\begin{DoxyCode}
+R == \textcolor{keywordtype}{bool}
+\end{DoxyCode}
+) defining the predicate\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the index, if found, a negative value else
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_wrapped_array_a7606c974ca7844dbbab61e0671f72a53}{C5.\+Wrapped\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_indexed_abad58598415e0383ddbc9275db69d92a}{}\index{C5\+::\+I\+Indexed@{C5\+::\+I\+Indexed}!Index\+Of@{Index\+Of}}
+\index{Index\+Of@{Index\+Of}!C5\+::\+I\+Indexed@{C5\+::\+I\+Indexed}}
+\subsubsection[{Index\+Of(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+I\+Indexed}$<$ T $>$.Index\+Of (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_indexed_abad58598415e0383ddbc9275db69d92a}
+
+
+Searches for an item in the list going forwards from the start. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & Item to search for.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Index of item from start. A negative number if item not found, namely the one\textquotesingle{}s complement of the index at which the Add operation would put the item.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_ae70bb012099ffac0759c74b589fb811a}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_a9a7af62e8459c31c03f984e84851ffb9}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_linked_list_aca8634364d0bfec4b0d2bb8b7c6f5c98}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_list_aac2b7de89c7556b8a1c0b49dad25174f}{C5.\+Guarded\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_a4dc305430081a02d96b65c285a61be7b}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_a20a6a1e7bead68d88ab599abb8aff039}{C5.\+Sorted\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_a6d13105e7f303fc04310801abed22946}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_ae94dff251b125331c450b396418bb1be}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_indexed_sorted_aa13e57faa854dd70f28ac2dd8bb6f888}{C5.\+Guarded\+Indexed\+Sorted$<$ T $>$}, \hyperlink{interface_c5_1_1_i_list_a52658ee618f1557622d766d7a348910a}{C5.\+I\+List$<$ T $>$}, and \hyperlink{class_c5_1_1_wrapped_array_a459af83c432f3dbc167d406c4632fb0e}{C5.\+Wrapped\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_indexed_a50f274e0f7b4cd2e54db4cb61a003b95}{}\index{C5\+::\+I\+Indexed@{C5\+::\+I\+Indexed}!Last\+Index\+Of@{Last\+Index\+Of}}
+\index{Last\+Index\+Of@{Last\+Index\+Of}!C5\+::\+I\+Indexed@{C5\+::\+I\+Indexed}}
+\subsubsection[{Last\+Index\+Of(\+T item)}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf C5.\+I\+Indexed}$<$ T $>$.Last\+Index\+Of (
+\begin{DoxyParamCaption}
+\item[{T}]{item}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_indexed_a50f274e0f7b4cd2e54db4cb61a003b95}
+
+
+Searches for an item in the list going backwards from the end. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & Item to search for.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Index of of item from the end. A negative number if item not found, namely the two-\/complement of the index at which the Add operation would put the item.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_ad51c9faeac6e8262b8cfbb6baeba23d4}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_a099dbba4e62506b221780172c30e84ce}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_linked_list_a4e053c03fa87e356bab7ec25a529607a}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_list_a6813134b41bdb0f98b473f02800809c2}{C5.\+Guarded\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_a0a4631db1f533e2561511edf9f4858b9}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_a1989414a3df7eaabc5ec2ff36f3f613e}{C5.\+Sorted\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_a6fff76a2253ec4f3fb52abcddecbc52c}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_af04d77e11483bfcfa1cac7fd88b57bc5}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_indexed_sorted_a782d9e939a68f246af69adba83584164}{C5.\+Guarded\+Indexed\+Sorted$<$ T $>$}, and \hyperlink{class_c5_1_1_wrapped_array_aebda540a1e886890698d527f53d99343}{C5.\+Wrapped\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_indexed_ac741e6d3d7c6a30bb8a013bb29591ca4}{}\index{C5\+::\+I\+Indexed@{C5\+::\+I\+Indexed}!Remove\+At@{Remove\+At}}
+\index{Remove\+At@{Remove\+At}!C5\+::\+I\+Indexed@{C5\+::\+I\+Indexed}}
+\subsubsection[{Remove\+At(int index)}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+I\+Indexed}$<$ T $>$.Remove\+At (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_indexed_ac741e6d3d7c6a30bb8a013bb29591ca4}
+
+
+Remove the item at a specific position of the list. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Index\+Out\+Of\+Range\+Exception} & if 
+\begin{DoxyCode}
+index
+\end{DoxyCode}
+ is negative or $>$= the size of the collection.\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em index} & The index of the item to remove.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The removed item.
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_afe0ad1fba513ec3b14e73e457230d87d}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_aa12a3942109e24ea3ebbf22238af8f78}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_linked_list_ae29691247778dcae44ae4a4482c4c94f}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_list_a051deb35bed74f188be08a40c1e79afa}{C5.\+Guarded\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_ad5bcb57accd6b97265cf8c12efeda71c}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_a901cec8ac5a0a876476285ae7dd3e7e2}{C5.\+Sorted\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_a28dadd5b31e5daa8eb34728f0c31728a}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_a0f3b4828a1c3ba06d035ad6f2aa491fc}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_indexed_sorted_a0e84a6bb3bf610cdf68aa2583dc78155}{C5.\+Guarded\+Indexed\+Sorted$<$ T $>$}, \hyperlink{interface_c5_1_1_i_list_a9fbcd9c55aae61134321939d0b104cc0}{C5.\+I\+List$<$ T $>$}, and \hyperlink{class_c5_1_1_wrapped_array_a01b30a7260874fcd043d01cabad29f55}{C5.\+Wrapped\+Array$<$ T $>$}.
+
+\hypertarget{interface_c5_1_1_i_indexed_aa9d2a1706ba0361079d31c02bad3e810}{}\index{C5\+::\+I\+Indexed@{C5\+::\+I\+Indexed}!Remove\+Interval@{Remove\+Interval}}
+\index{Remove\+Interval@{Remove\+Interval}!C5\+::\+I\+Indexed@{C5\+::\+I\+Indexed}}
+\subsubsection[{Remove\+Interval(int start, int count)}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf C5.\+I\+Indexed}$<$ T $>$.Remove\+Interval (
+\begin{DoxyParamCaption}
+\item[{int}]{start, }
+\item[{int}]{count}
+\end{DoxyParamCaption}
+)}\label{interface_c5_1_1_i_indexed_aa9d2a1706ba0361079d31c02bad3e810}
+
+
+Remove all items in an index interval. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Argument\+Out\+Of\+Range\+Exception} & if start or count is negative or start+count $>$ the size of the collection.\\
+\hline
+\end{DoxyExceptions}
+
+\begin{DoxyParams}{Parameters}
+{\em start} & The index of the first item to remove.\\
+\hline
+{\em count} & The number of items to remove.\\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{class_c5_1_1_tree_bag_af77f6e665a61d88fa0ed881a66984601}{C5.\+Tree\+Bag$<$ T $>$}, \hyperlink{class_c5_1_1_tree_set_a23b614ca0fa47fa4971088c40998bf5e}{C5.\+Tree\+Set$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_linked_list_ab2b43feeeb2c5cece0d5e65949c178b3}{C5.\+Hashed\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_list_addc4ab1ca7eb4bf0daebf4453d1397e5}{C5.\+Guarded\+List$<$ T $>$}, \hyperlink{class_c5_1_1_linked_list_a6deeac14ff0d6c8d9a498d8f609501a5}{C5.\+Linked\+List$<$ T $>$}, \hyperlink{class_c5_1_1_sorted_array_a277e0cf59b483ba0378d6ec0f240ecef}{C5.\+Sorted\+Array$<$ T $>$}, \hyperlink{class_c5_1_1_hashed_array_list_ab443d1ea4dd141b18debf8d450deb2fb}{C5.\+Hashed\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_array_list_aa4c6f08712ec985076e402d713e5a616}{C5.\+Array\+List$<$ T $>$}, \hyperlink{class_c5_1_1_guarded_indexed_sorted_a2c43f17a32750da03b1aa64a6300a091}{C5.\+Guarded\+Indexed\+Sorted$<$ T $>$}, and \hyperlink{class_c5_1_1_wrapped_array_ae488079bb94b8ed0bdb0ce834ec2dd25}{C5.\+Wrapped\+Array$<$ T $>$}.
+
+
+
+\subsection{Property Documentation}
+\hypertarget{interface_c5_1_1_i_indexed_a32f84a737f8725bc93ff50b44539a413}{}\index{C5\+::\+I\+Indexed@{C5\+::\+I\+Indexed}!Indexing\+Speed@{Indexing\+Speed}}
+\index{Indexing\+Speed@{Indexing\+Speed}!C5\+::\+I\+Indexed@{C5\+::\+I\+Indexed}}
+\subsubsection[{Indexing\+Speed}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Speed} {\bf C5.\+I\+Indexed}$<$ T $>$.Indexing\+Speed\hspace{0.3cm}{\ttfamily [get]}}\label{interface_c5_1_1_i_indexed_a32f84a737f8725bc93ff50b44539a413}
+
+
+
+
+\hypertarget{interface_c5_1_1_i_indexed_a1e716eed0c1bc5b1d30e456fab869dc6}{}\index{C5\+::\+I\+Indexed@{C5\+::\+I\+Indexed}!this\mbox{[}int index\mbox{]}@{this[int index]}}
+\index{this\mbox{[}int index\mbox{]}@{this[int index]}!C5\+::\+I\+Indexed@{C5\+::\+I\+Indexed}}
+\subsubsection[{this[int index]}]{\setlength{\rightskip}{0pt plus 5cm}T {\bf C5.\+I\+Indexed}$<$ T $>$.this\mbox{[}int index\mbox{]}\hspace{0.3cm}{\ttfamily [get]}}\label{interface_c5_1_1_i_indexed_a1e716eed0c1bc5b1d30e456fab869dc6}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Index\+Out\+Of\+Range\+Exception} & if 
+\begin{DoxyCode}
+index
+\end{DoxyCode}
+ is negative or $>$= the size of the collection.\\
+\hline
+\end{DoxyExceptions}
+
+
+The 
+\begin{DoxyCode}
+index
+\end{DoxyCode}
+\textquotesingle{}th item of this list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & the index to lookup\\
+\hline
+\end{DoxyParams}
+\hypertarget{interface_c5_1_1_i_indexed_a7d2ebaba4aefbc5240fb95893596337a}{}\index{C5\+::\+I\+Indexed@{C5\+::\+I\+Indexed}!this\mbox{[}int start, int count\mbox{]}@{this[int start, int count]}}
+\index{this\mbox{[}int start, int count\mbox{]}@{this[int start, int count]}!C5\+::\+I\+Indexed@{C5\+::\+I\+Indexed}}
+\subsubsection[{this[int start, int count]}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Directed\+Collection\+Value}$<$T$>$ {\bf C5.\+I\+Indexed}$<$ T $>$.this\mbox{[}int start, int count\mbox{]}\hspace{0.3cm}{\ttfamily [get]}}\label{interface_c5_1_1_i_indexed_a7d2ebaba4aefbc5240fb95893596337a}
+
+
+
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Argument\+Out\+Of\+Range\+Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+The directed collection of items in a specific index interval.
+
+
+\begin{DoxyParams}{Parameters}
+{\em start} & The low index of the interval (inclusive).\\
+\hline
+{\em count} & The size of the range.\\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/rasmusl/\+Source/\+Repos/\+C5/\+C5/\hyperlink{_interfaces_8cs}{Interfaces.\+cs}\end{DoxyCompactItemize}
