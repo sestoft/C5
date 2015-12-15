@@ -82,7 +82,7 @@ C5 is a portable library supporting .NET 4.0, Silverlight, Windows Phone 8, and 
 
 1. Get C5 from NuGet[https://www.nuget.org/packages/C5]: <tt>PM> Install-Package C5</tt>
 
-2. Documentation is available online at http://c5docs.azurewebsites.net/.
+2. Documentation is available online at https://c5docs.azurewebsites.net/.
    Documentation was built using Doxygen (http://www.doxygen.org/) and the
    <tt>Doxyfile</tt> file.
  

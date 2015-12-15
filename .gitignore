@@ -43,7 +43,7 @@ docs/
 *.user
 *.sln.docstates
 *.DotSettings
-#*.nupkg
+*.nupkg
 packages/
 
 
