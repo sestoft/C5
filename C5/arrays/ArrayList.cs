@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
+ Copyright (c) 2003-2015 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -303,7 +303,7 @@ namespace C5
         int indexOf(T item)
         {
             for (int i = 0; i < size; i++)
-                if (equals(item, array[offset + i]))
+                if (equals(item, array[offsetField + i]))
                     return i;
             return ~size;
         }
@@ -316,7 +316,7 @@ namespace C5
         int lastIndexOf(T item)
         {
             for (int i = size - 1; i >= 0; i--)
-                if (equals(item, array[offset + i]))
+                if (equals(item, array[offsetField + i]))
                     return i;
             return ~size;
         }
@@ -329,7 +329,7 @@ namespace C5
         /// </summary>
         /// <param name="i">Index to insert at</param>
         /// <param name="item">Item to insert</param>
-        protected override void insert(int i, T item)
+        protected override void InsertProtected(int i, T item)
         {
             baseinsert(i, item);
         }
@@ -338,7 +338,7 @@ namespace C5
         {
             if (underlyingsize == array.Length)
                 expand();
-            i += offset;
+            i += offsetField;
             if (i < underlyingsize)
                 Array.Copy(array, i, array, i + 1, underlyingsize - i);
             array[i] = item;
@@ -356,7 +356,7 @@ namespace C5
         /// <returns>The removed item</returns>
         T removeAt(int i)
         {
-            i += offset;
+            i += offsetField;
             fixViewsBeforeSingleRemove(i);
             T retval = array[i];
             addtosize(-1);
@@ -386,10 +386,10 @@ namespace C5
                 {
                     if (view != this)
                     {
-                        if (view.offset < realInsertionIndex && view.offset + view.size > realInsertionIndex)
+                        if (view.offsetField < realInsertionIndex && view.offsetField + view.size > realInsertionIndex)
                             view.size += added;
-                        if (view.offset > realInsertionIndex || (view.offset == realInsertionIndex && view.size > 0))
-                            view.offset += added;
+                        if (view.offsetField > realInsertionIndex || (view.offsetField == realInsertionIndex && view.size > 0))
+                            view.offsetField += added;
                     }
                 }
         }
@@ -401,10 +401,10 @@ namespace C5
                 {
                     if (view != this)
                     {
-                        if (view.offset <= realRemovalIndex && view.offset + view.size > realRemovalIndex)
+                        if (view.offsetField <= realRemovalIndex && view.offsetField + view.size > realRemovalIndex)
                             view.size--;
-                        if (view.offset > realRemovalIndex)
-                            view.offset--;
+                        if (view.offsetField > realRemovalIndex)
+                            view.offsetField--;
                     }
                 }
         }
@@ -422,14 +422,14 @@ namespace C5
                 {
                     if (view == this)
                         continue;
-                    int viewoffset = view.offset, viewend = viewoffset + view.size - 1;
+                    int viewoffset = view.offsetField, viewend = viewoffset + view.size - 1;
                     if (start < viewoffset)
                     {
                         if (clearend < viewoffset)
-                            view.offset = viewoffset - count;
+                            view.offsetField = viewoffset - count;
                         else
                         {
-                            view.offset = start;
+                            view.offsetField = start;
                             view.size = clearend < viewend ? viewend - clearend : 0;
                         }
                     }
@@ -446,12 +446,12 @@ namespace C5
         /// <returns>The position of View(otherOffset, otherSize) wrt. this view</returns>
         MutualViewPosition viewPosition(int otherOffset, int otherSize)
         {
-            int end = offset + size, otherEnd = otherOffset + otherSize;
-            if (otherOffset >= end || otherEnd <= offset)
+            int end = offsetField + size, otherEnd = otherOffset + otherSize;
+            if (otherOffset >= end || otherEnd <= offsetField)
                 return MutualViewPosition.NonOverlapping;
-            if (size == 0 || (otherOffset <= offset && end <= otherEnd))
+            if (size == 0 || (otherOffset <= offsetField && end <= otherEnd))
                 return MutualViewPosition.Contains;
-            if (otherSize == 0 || (offset <= otherOffset && otherEnd <= end))
+            if (otherSize == 0 || (offsetField <= otherOffset && otherEnd <= end))
                 return MutualViewPosition.ContainedIn;
             return MutualViewPosition.Overlapping;
         }
@@ -464,11 +464,11 @@ namespace C5
                 {
                     if (view != this)
                     {
-                        switch (viewPosition(view.offset, view.size))
+                        switch (viewPosition(view.offsetField, view.size))
                         {
                             case MutualViewPosition.ContainedIn:
                                 if (reverse)
-                                    view.offset = 2 * offset + size - view.size - view.offset;
+                                    view.offsetField = 2 * offsetField + size - view.size - view.offsetField;
                                 else
                                     view.Dispose();
                                 break;
@@ -505,7 +505,7 @@ namespace C5
             public Position(ArrayList<T> view, bool left)
             {
                 this.view = view;
-                index = left ? view.offset : view.offset + view.size - 1;
+                index = left ? view.offsetField : view.offsetField + view.size - 1;
             }
             public Position(int index) { this.index = index; view = null; }
         }
@@ -554,7 +554,7 @@ namespace C5
                     while (leftEndIndex < viewCount && (endpoint = leftEnds[leftEndIndex]).index <= realindex)
                     {
                         ArrayList<T> view = endpoint.view;
-                        view.offset = view.offset - removed;
+                        view.offsetField = view.offsetField - removed;
                         view.size += removed;
                         leftEndIndex++;
                     }
@@ -573,7 +573,7 @@ namespace C5
                     while (leftEndIndex < viewCount && (endpoint = leftEnds[leftEndIndex]).index <= realindex)
                     {
                         ArrayList<T> view = endpoint.view;
-                        view.offset = view.Offset - removed;
+                        view.offsetField = view.Offset - removed;
                         view.size += removed;
                         leftEndIndex++;
                     }
@@ -635,7 +635,7 @@ namespace C5
                 if (size == 0)
                     throw new NoSuchItemException();
 
-                return array[offset];
+                return array[offsetField];
             }
         }
 
@@ -652,7 +652,7 @@ namespace C5
                 if (size == 0)
                     throw new NoSuchItemException();
 
-                return array[offset + size - 1];
+                return array[offsetField + size - 1];
             }
         }
 
@@ -692,14 +692,14 @@ namespace C5
                 if (index < 0 || index >= size)
                     throw new IndexOutOfRangeException();
 
-                return array[offset + index];
+                return array[offsetField + index];
             }
             set
             {
                 updatecheck();
                 if (index < 0 || index >= size)
                     throw new IndexOutOfRangeException();
-                index += offset;
+                index += offsetField;
                 T item = array[index];
 
                 array[index] = value;
@@ -727,8 +727,8 @@ namespace C5
             if (index < 0 || index > size)
                 throw new IndexOutOfRangeException();
 
-            insert(index, item);
-            (underlying ?? this).raiseForInsert(index + offset, item);
+            InsertProtected(index, item);
+            (underlying ?? this).raiseForInsert(index + offsetField, item);
         }
 
         /// <summary>
@@ -766,7 +766,7 @@ namespace C5
             updatecheck();
             if (index < 0 || index > size)
                 throw new IndexOutOfRangeException();
-            index += offset;
+            index += offsetField;
             int toadd = countItems(items);
             if (toadd == 0)
                 return;
@@ -821,8 +821,8 @@ namespace C5
         public virtual void InsertFirst(T item)
         {
             updatecheck();
-            insert(0, item);
-            (underlying ?? this).raiseForInsert(offset, item);
+            InsertProtected(0, item);
+            (underlying ?? this).raiseForInsert(offsetField, item);
         }
 
         /// <summary>
@@ -832,8 +832,8 @@ namespace C5
         public virtual void InsertLast(T item)
         {
             updatecheck();
-            insert(size, item);
-            (underlying ?? this).raiseForInsert(size - 1 + offset, item);
+            InsertProtected(size, item);
+            (underlying ?? this).raiseForInsert(size - 1 + offsetField, item);
         }
 
 
@@ -853,7 +853,7 @@ namespace C5
             int j = 0, rescap = res.array.Length;
             for (int i = 0; i < size; i++)
             {
-                T a = array[offset + i];
+                T a = array[offsetField + i];
                 bool found = filter(a);
                 modifycheck(stamp);
                 if (found)
@@ -908,7 +908,7 @@ namespace C5
             if (size > 0)
                 for (int i = 0; i < size; i++)
                 {
-                    V mappeditem = mapper(array[offset + i]);
+                    V mappeditem = mapper(array[offsetField + i]);
                     modifycheck(stamp);
 
                     res.array[i] = mappeditem;
@@ -946,7 +946,7 @@ namespace C5
                 throw new NoSuchItemException("List is empty");
 
             T item = removeAt(0);
-            (underlying ?? this).raiseForRemoveAt(offset, item);
+            (underlying ?? this).raiseForRemoveAt(offsetField, item);
             return item;
         }
 
@@ -963,7 +963,7 @@ namespace C5
                 throw new NoSuchItemException("List is empty");
 
             T item = removeAt(size - 1);
-            (underlying ?? this).raiseForRemoveAt(size + offset, item);
+            (underlying ?? this).raiseForRemoveAt(size + offsetField, item);
             return item;
         }
 
@@ -985,7 +985,7 @@ namespace C5
 
 
             retval.underlying = underlying != null ? underlying : this;
-            retval.offset = start + offset;
+            retval.offsetField = start + offsetField;
             retval.size = count;
             retval.myWeakReference = views.Add(retval);
             return retval;
@@ -1030,7 +1030,7 @@ namespace C5
         /// <summary>
         /// </summary>
         /// <value>Offset for this list view or 0 for an underlying list.</value>
-        public virtual int Offset { get { return offset; } }
+        public virtual int Offset { get { return offsetField; } }
 
         /// <summary>
         /// 
@@ -1094,13 +1094,13 @@ namespace C5
             if (underlying == null)
                 throw new NotAViewException("Not a view");
 
-            int newoffset = this.offset + offset;
+            int newoffset = this.offsetField + offset;
             int newsize = size;
 
             if (newoffset < 0 || newsize < 0 || newoffset + newsize > underlyingsize)
                 return false;
 
-            this.offset = newoffset;
+            this.offsetField = newoffset;
             this.size = newsize;
             return true;
         }
@@ -1129,11 +1129,11 @@ namespace C5
             updatecheck();
             if (size == 0)
                 return;
-            for (int i = 0, length = size / 2, end = offset + size - 1; i < length; i++)
+            for (int i = 0, length = size / 2, end = offsetField + size - 1; i < length; i++)
             {
-                T swap = array[offset + i];
+                T swap = array[offsetField + i];
 
-                array[offset + i] = array[end - i];
+                array[offsetField + i] = array[end - i];
                 array[end - i] = swap;
             }
 
@@ -1158,7 +1158,7 @@ namespace C5
         public virtual bool IsSorted(SCG.IComparer<T> c)
         {
             validitycheck();
-            for (int i = offset + 1, end = offset + size; i < end; i++)
+            for (int i = offsetField + 1, end = offsetField + size; i < end; i++)
                 if (c.Compare(array[i - 1], array[i]) > 0)
                     return false;
 
@@ -1186,7 +1186,7 @@ namespace C5
             updatecheck();
             if (size == 0)
                 return;
-            Sorting.IntroSort<T>(array, offset, size, comparer);
+            Sorting.IntroSort<T>(array, offsetField, size, comparer);
             disposeOverlappingViews(false);
 
             (underlying ?? this).raiseCollectionChanged();
@@ -1208,7 +1208,7 @@ namespace C5
             updatecheck();
             if (size == 0)
                 return;
-            for (int i = offset, top = offset + size, end = top - 1; i < end; i++)
+            for (int i = offsetField, top = offsetField + size, end = top - 1; i < end; i++)
             {
                 int j = rnd.Next(i, top);
                 if (j != i)
@@ -1256,7 +1256,7 @@ namespace C5
                 throw new IndexOutOfRangeException("Index out of range for sequenced collection");
 
             T item = removeAt(index);
-            (underlying ?? this).raiseForRemoveAt(offset + index, item);
+            (underlying ?? this).raiseForRemoveAt(offsetField + index, item);
             return item;
         }
 
@@ -1274,7 +1274,7 @@ namespace C5
             if (count == 0)
                 return;
             checkRange(start, count);
-            start += offset;
+            start += offsetField;
             fixViewsBeforeRemove(start, count);
 
             Array.Copy(array, start + count, array, start, underlyingsize - start - count);
@@ -1349,7 +1349,7 @@ namespace C5
 
             if ((i = indexOf(item)) >= 0)
             {
-                item = array[offset + i];
+                item = array[offsetField + i];
                 return true;
             }
 
@@ -1384,8 +1384,8 @@ namespace C5
 
             if ((i = indexOf(item)) >= 0)
             {
-                olditem = array[offset + i];
-                array[offset + i] = item;
+                olditem = array[offsetField + i];
+                array[offsetField + i] = item;
 
                 (underlying ?? this).raiseForUpdate(item, olditem);
                 return true;
@@ -1517,9 +1517,9 @@ namespace C5
             RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
             bool mustFire = raiseHandler.MustFire;
             ViewHandler viewHandler = new ViewHandler(this);
-            int j = offset;
+            int j = offsetField;
             int removed = 0;
-            int i = offset, end = offset + size;
+            int i = offsetField, end = offsetField + size;
 
             while (i < end)
             {
@@ -1545,7 +1545,7 @@ namespace C5
             if (removed == 0)
                 return;
             viewHandler.updateViewSizesAndCounts(removed, underlyingsize);
-            Array.Copy(array, offset + size, array, j, underlyingsize - offset - size);
+            Array.Copy(array, offsetField + size, array, j, underlyingsize - offsetField - size);
             addtosize(-removed);
             Array.Clear(array, underlyingsize, removed);
 
@@ -1565,9 +1565,9 @@ namespace C5
             RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
             bool mustFire = raiseHandler.MustFire;
             ViewHandler viewHandler = new ViewHandler(this);
-            int j = offset;
+            int j = offsetField;
             int removed = 0;
-            int i = offset, end = offset + size;
+            int i = offsetField, end = offsetField + size;
 
             while (i < end)
             {
@@ -1599,7 +1599,7 @@ namespace C5
             if (removed == 0)
                 return;
             viewHandler.updateViewSizesAndCounts(removed, underlyingsize);
-            Array.Copy(array, offset + size, array, j, underlyingsize - offset - size);
+            Array.Copy(array, offsetField + size, array, j, underlyingsize - offsetField - size);
             addtosize(-removed);
             Array.Clear(array, underlyingsize, removed);
 
@@ -1622,7 +1622,7 @@ namespace C5
 
                 array = new T[8];
                 size = 0;
-                (underlying ?? this).raiseForRemoveInterval(offset, oldsize);
+                (underlying ?? this).raiseForRemoveInterval(offsetField, oldsize);
             }
             else
                 RemoveInterval(0, size);
@@ -1648,9 +1648,9 @@ namespace C5
             RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
             bool mustFire = raiseHandler.MustFire;
             ViewHandler viewHandler = new ViewHandler(this);
-            int j = offset;
+            int j = offsetField;
             int removed = 0;
-            int i = offset, end = offset + size;
+            int i = offsetField, end = offsetField + size;
 
             while (i < end)
             {
@@ -1676,7 +1676,7 @@ namespace C5
             if (removed == 0)
                 return;
             viewHandler.updateViewSizesAndCounts(removed, underlyingsize);
-            Array.Copy(array, offset + size, array, j, underlyingsize - offset - size);
+            Array.Copy(array, offsetField + size, array, j, underlyingsize - offsetField - size);
             addtosize(-removed);
             Array.Clear(array, underlyingsize, removed);
 
@@ -1695,9 +1695,9 @@ namespace C5
             RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
             bool mustFire = raiseHandler.MustFire;
             ViewHandler viewHandler = new ViewHandler(this);
-            int j = offset;
+            int j = offsetField;
             int removed = 0;
-            int i = offset, end = offset + size;
+            int i = offsetField, end = offsetField + size;
 
             while (i < end)
             {
@@ -1729,7 +1729,7 @@ namespace C5
             if (removed == 0)
                 return;
             viewHandler.updateViewSizesAndCounts(removed, underlyingsize);
-            Array.Copy(array, offset + size, array, j, underlyingsize - offset - size);
+            Array.Copy(array, offsetField + size, array, j, underlyingsize - offsetField - size);
             addtosize(-removed);
             Array.Clear(array, underlyingsize, removed);
 
@@ -1753,7 +1753,7 @@ namespace C5
             tomatch.AddAll(items);
             if (tomatch.Count == 0)
                 return true;
-            for (int i = offset, end = offset + size; i < end; i++)
+            for (int i = offsetField, end = offsetField + size; i < end; i++)
             {
                 tomatch.Remove(array[i]);
                 if (tomatch.Count == 0)
@@ -1775,7 +1775,7 @@ namespace C5
 
             int count = 0;
             for (int i = 0; i < size; i++)
-                if (equals(item, array[offset + i]))
+                if (equals(item, array[offsetField + i]))
                     count++;
             return count;
         }
@@ -1818,9 +1818,9 @@ namespace C5
             RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
             bool mustFire = raiseHandler.MustFire;
             ViewHandler viewHandler = new ViewHandler(this);
-            int j = offset;
+            int j = offsetField;
             int removed = 0;
-            int i = offset, end = offset + size;
+            int i = offsetField, end = offsetField + size;
             while (i < end)
             {
                 //pass by a stretch of nodes
@@ -1840,7 +1840,7 @@ namespace C5
             if (removed == 0)
                 return;
             viewHandler.updateViewSizesAndCounts(removed, underlyingsize);
-            Array.Copy(array, offset + size, array, j, underlyingsize - offset - size);
+            Array.Copy(array, offsetField + size, array, j, underlyingsize - offsetField - size);
             addtosize(-removed);
             Array.Clear(array, underlyingsize, removed);
             raiseHandler.Raise();
@@ -1862,15 +1862,15 @@ namespace C5
                 return false;
             }
 
-            if (offset + size > underlyingsize)
+            if (offsetField + size > underlyingsize)
             {
-                Logger.Log(string.Format("offset({0})+size({1}) > underlyingsize ({2})", offset, size, underlyingsize));
+                Logger.Log(string.Format("offset({0})+size({1}) > underlyingsize ({2})", offsetField, size, underlyingsize));
                 return false;
             }
 
-            if (offset < 0)
+            if (offsetField < 0)
             {
-                Logger.Log(string.Format("offset({0}) < 0", offset));
+                Logger.Log(string.Format("offset({0}) < 0", offsetField));
                 return false;
             }
 
@@ -1899,7 +1899,7 @@ namespace C5
                     {
                         if (u.array != v.array)
                         {
-                            Logger.Log(string.Format("View from {0} of length has different base array than the underlying list", v.offset, v.size));
+                            Logger.Log(string.Format("View from {0} of length has different base array than the underlying list", v.offsetField, v.size));
                             retval = false;
                         }
                     }
@@ -1967,7 +1967,7 @@ namespace C5
             if (toadd + underlyingsize > array.Length)
                 expand(toadd + underlyingsize, underlyingsize);
 
-            int i = size + offset;
+            int i = size + offsetField;
             if (underlyingsize > i)
                 Array.Copy(array, i, array, i + toadd, underlyingsize - i);
             try
@@ -1979,10 +1979,10 @@ namespace C5
             }
             finally
             {
-                int added = i - size - offset;
+                int added = i - size - offsetField;
                 if (added < toadd)
                 {
-                    Array.Copy(array, size + offset + toadd, array, i, underlyingsize - size - offset);
+                    Array.Copy(array, size + offsetField + toadd, array, i, underlyingsize - size - offsetField);
                     Array.Clear(array, underlyingsize + added, toadd - added);
                 }
                 if (added > 0)

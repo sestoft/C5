@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
+ Copyright (c) 2003-2015 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -240,8 +240,7 @@ namespace PointLocation
         /// </summary>
         /// <param name="x">x coordinate of point</param>
         /// <param name="y">y coordinate of point</param>
-        /// <param name="below">Associate data of cell according to edge below</param>
-        /// <param name="above">Associate data of cell according to edge above</param>
+        /// <param name="cell"></param>
         /// <returns>True if point is inside some cell</returns>
         public bool Place(double x, double y, out T cell)
         {

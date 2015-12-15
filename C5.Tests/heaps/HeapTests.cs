@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
+ Copyright (c) 2003-2015 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -659,10 +659,9 @@ namespace C5UnitTests.heaps
 
 
         /// <summary>
-        /// Cases related to bug20130208 (Iulian Nitescu <iulian@live.co.uk>)
+        /// Cases related to bug20130208 (Iulian Nitescu &lt;iulian@live.co.uk&gt;)
         /// and bug20130505 (perpetual, via Github) 
         /// </summary>
-
         [Test]
         public void Bug20130208()
         {
