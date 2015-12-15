@@ -5,7 +5,7 @@
     <version>$version$</version>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <licenseUrl>https://github.com/sestoft/C5/raw/master/LICENSE.txt</licenseUrl>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <projectUrl>http://www.itu.dk/research/c5/</projectUrl>
     <iconUrl>https://github.com/sestoft/C5/raw/master/images/icon-nuget.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
