@@ -16,6 +16,7 @@ local.properties
 .classpath
 .settings/
 .loadpath
+C5.Docs
 
 # External tool builders
 .externalToolBuilders/
