@@ -102,4 +102,4 @@ C5 is a portable library supporting .NET 4.0, Silverlight, Windows Phone 8, and 
 
 C5 is released under the MIT License:
 
-See License.txt for details.
+See LICENSE.txt for details.
