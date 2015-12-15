@@ -63,6 +63,9 @@
     <Compile Include="..\C5\comparers\ComparerFactory.cs">
       <Link>ComparerFactory.cs</Link>
     </Compile>
+    <Compile Include="..\C5\comparers\EqualityComparer.cs">
+      <Link>EqualityComparer.cs</Link>
+    </Compile>
     <Compile Include="..\C5\comparers\InternalComparer.cs">
       <Link>InternalComparer.cs</Link>
     </Compile>

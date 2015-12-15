@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
+ Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -33,7 +33,7 @@ namespace C5UnitTests.hashtable.set
         [Test]
         public void TestEvents()
         {
-            Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
+            Func<CollectionOfInt> factory = delegate () { return new CollectionOfInt(TenEqualityComparer.Default); };
             new C5UnitTests.Templates.Events.CollectionTester<CollectionOfInt>().Test(factory);
         }
 
@@ -68,7 +68,7 @@ namespace C5UnitTests.hashtable.set
                 list = new HashSet<int>();
                 always = delegate { return true; };
                 never = delegate { return false; };
-                even = delegate(int i) { return i % 2 == 0; };
+                even = delegate (int i) { return i % 2 == 0; };
             }
 
 
@@ -110,7 +110,7 @@ namespace C5UnitTests.hashtable.set
             public void Apply()
             {
                 int sum = 0;
-                Action<int> a = delegate(int i) { sum = i + 10 * sum; };
+                Action<int> a = delegate (int i) { sum = i + 10 * sum; };
 
                 list.Apply(a);
                 Assert.AreEqual(0, sum);
@@ -182,7 +182,6 @@ namespace C5UnitTests.hashtable.set
 
 
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void MoveNextAfterUpdate()
             {
                 hashset.Add(5);
@@ -193,9 +192,9 @@ namespace C5UnitTests.hashtable.set
 
                 e.MoveNext();
                 hashset.Add(99);
-                e.MoveNext();
-            }
 
+                Assert.Throws<CollectionModifiedException>(() => e.MoveNext());
+            }
 
             [TearDown]
             public void Dispose() { hashset = null; }
@@ -209,12 +208,14 @@ namespace C5UnitTests.hashtable.set
         {
             ICollection<int> coll;
             IFormatProvider rad16;
+
             [SetUp]
             public void Init()
             {
                 Debug.UseDeterministicHashing = true;
                 coll = Factory.New<int>(); rad16 = new RadixFormatProvider(16);
             }
+
             [TearDown]
             public void Dispose()
             {
@@ -222,6 +223,7 @@ namespace C5UnitTests.hashtable.set
                 coll = null;
                 rad16 = null;
             }
+
             [Test]
             public void Format()
             {
@@ -251,10 +253,9 @@ namespace C5UnitTests.hashtable.set
             }
 
             [Test]
-            [ExpectedException(typeof(NoSuchItemException))]
             public void BadChoose()
             {
-                hashset.Choose();
+                Assert.Throws<NoSuchItemException>(() => hashset.Choose());
             }
 
             [Test]
@@ -307,7 +308,7 @@ namespace C5UnitTests.hashtable.set
             {
                 Debug.UseDeterministicHashing = true;
                 list = new HashSet<int>(TenEqualityComparer.Default);
-                pred = delegate(int i) { return i % 5 == 0; };
+                pred = delegate (int i) { return i % 5 == 0; };
             }
 
             [TearDown]
@@ -430,28 +431,26 @@ namespace C5UnitTests.hashtable.set
 
 
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void CopyToBad()
             {
-                hashset.CopyTo(a, 11);
+                Assert.Throws<ArgumentOutOfRangeException>(() => hashset.CopyTo(a, 11));
             }
 
 
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void CopyToBad2()
             {
-                hashset.CopyTo(a, -1);
+                Assert.Throws<ArgumentOutOfRangeException>(() => hashset.CopyTo(a, -1));
             }
 
 
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void CopyToTooFar()
             {
                 hashset.Add(3);
                 hashset.Add(8);
-                hashset.CopyTo(a, 9);
+
+                Assert.Throws<ArgumentOutOfRangeException>(() => hashset.CopyTo(a, 9));
             }
         }
     }
@@ -507,24 +506,21 @@ namespace C5UnitTests.hashtable.set
 
 
             [Test]
-            [ExpectedException(typeof(NullReferenceException))]
             public void NullEqualityComparerinConstructor1()
             {
-                new HashSet<int>(null);
+                Assert.Throws<NullReferenceException>(() => new HashSet<int>(null));
             }
 
             [Test]
-            [ExpectedException(typeof(NullReferenceException))]
             public void NullEqualityComparerinConstructor2()
             {
-                new HashSet<int>(5, null);
+                Assert.Throws<NullReferenceException>(() => new HashSet<int>(5, null));
             }
 
             [Test]
-            [ExpectedException(typeof(NullReferenceException))]
             public void NullEqualityComparerinConstructor3()
             {
-                new HashSet<int>(5, 0.5, null);
+                Assert.Throws<NullReferenceException>(() => new HashSet<int>(5, 0.5, null));
             }
 
             [Test]

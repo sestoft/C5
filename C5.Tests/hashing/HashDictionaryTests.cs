@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
+ Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -34,7 +34,7 @@ namespace C5UnitTests.hashtable.dictionary
         [Test]
         public void TestEvents()
         {
-            Func<DictionaryIntToInt> factory = delegate() { return new DictionaryIntToInt(TenEqualityComparer.Default); };
+            Func<DictionaryIntToInt> factory = delegate () { return new DictionaryIntToInt(TenEqualityComparer.Default); };
             new C5UnitTests.Templates.Events.DictionaryTester<DictionaryIntToInt>().Test(factory);
         }
 
@@ -95,17 +95,15 @@ namespace C5UnitTests.hashtable.dictionary
         }
 
         [Test]
-        [ExpectedException(typeof(NullReferenceException))]
         public void NullEqualityComparerinConstructor1()
         {
-            new HashDictionary<int, int>(null);
+            Assert.Throws<NullReferenceException>(() => new HashDictionary<int, int>(null));
         }
 
         [Test]
-        [ExpectedException(typeof(NullReferenceException))]
         public void NullEqualityComparerinConstructor2()
         {
-            new HashDictionary<int, int>(5, 0.5, null);
+            Assert.Throws<NullReferenceException>(() => new HashDictionary<int, int>(5, 0.5, null));
         }
 
         [Test]
@@ -116,10 +114,9 @@ namespace C5UnitTests.hashtable.dictionary
         }
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void BadChoose()
         {
-            dict.Choose();
+            Assert.Throws<NoSuchItemException>(() => dict.Choose());
         }
 
 
@@ -166,19 +163,19 @@ namespace C5UnitTests.hashtable.dictionary
 
 
         [Test]
-        [ExpectedException(typeof(DuplicateNotAllowedException), ExpectedMessage = "Key being added: 'A'")]
         public void IllegalAdd()
         {
             dict.Add("A", "B");
-            dict.Add("A", "B");
+
+            var exception = Assert.Throws<DuplicateNotAllowedException>(() => dict.Add("A", "B"));
+            Assert.AreEqual("Key being added: 'A'", exception.Message);
         }
 
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void GettingNonExisting()
         {
-            Console.WriteLine(dict["R"]);
+            Assert.Throws<NoSuchItemException>(() => Console.WriteLine(dict["R"]));
         }
 
 

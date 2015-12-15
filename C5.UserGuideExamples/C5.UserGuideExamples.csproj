@@ -97,5 +97,4 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
 </Project>

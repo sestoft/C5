@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
+ Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -35,7 +35,7 @@ namespace C5UnitTests.arrays.hashed
         [Test]
         public void TestEvents()
         {
-            Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
+            Func<CollectionOfInt> factory = delegate () { return new CollectionOfInt(TenEqualityComparer.Default); };
             new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory);
         }
 
@@ -279,7 +279,7 @@ namespace C5UnitTests.arrays.hashed
                 seen.Check(new CollectionEvent<int>[] { });
                 val = 67;
                 list.FindOrAdd(ref val);
-                seen.Check(new CollectionEvent<int>[] { 
+                seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(67, 1), list),
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), list)
         });
@@ -299,7 +299,7 @@ namespace C5UnitTests.arrays.hashed
         });
                 val = 67;
                 list.UpdateOrAdd(val);
-                seen.Check(new CollectionEvent<int>[] { 
+                seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(67, 1), list),
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), list)
         });
@@ -311,7 +311,7 @@ namespace C5UnitTests.arrays.hashed
         });
                 val = 67;
                 list.UpdateOrAdd(81, out val);
-                seen.Check(new CollectionEvent<int>[] { 
+                seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(81, 1), list),
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), list)
         });
@@ -660,7 +660,7 @@ namespace C5UnitTests.arrays.hashed
                 list = new HashedArrayList<int>();
                 always = delegate { return true; };
                 never = delegate { return false; };
-                even = delegate(int i) { return i % 2 == 0; };
+                even = delegate (int i) { return i % 2 == 0; };
             }
 
 
@@ -702,7 +702,7 @@ namespace C5UnitTests.arrays.hashed
             public void Apply()
             {
                 int sum = 0;
-                Action<int> a = delegate(int i) { sum = i + 10 * sum; };
+                Action<int> a = delegate (int i) { sum = i + 10 * sum; };
 
                 list.Apply(a);
                 Assert.AreEqual(0, sum);
@@ -778,7 +778,6 @@ namespace C5UnitTests.arrays.hashed
 
 
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void MoveNextAfterUpdate()
             {
                 list.Add(5);
@@ -789,10 +788,9 @@ namespace C5UnitTests.arrays.hashed
 
                 e.MoveNext();
                 list.Add(99);
-                e.MoveNext();
+
+                Assert.Throws<CollectionModifiedException>(() => e.MoveNext());
             }
-
-
 
             [TearDown]
             public void Dispose() { list = null; }
@@ -839,12 +837,10 @@ namespace C5UnitTests.arrays.hashed
             }
 
             [Test]
-            [ExpectedException(typeof(NoSuchItemException))]
             public void BadChoose()
             {
-                list.Choose();
+                Assert.Throws<NoSuchItemException>(() => list.Choose());
             }
-
 
             [Test]
             public void CountEtAl()
@@ -892,7 +888,7 @@ namespace C5UnitTests.arrays.hashed
             public void Init()
             {
                 list = new HashedArrayList<int>(TenEqualityComparer.Default);
-                pred = delegate(int i) { return i % 5 == 0; };
+                pred = delegate (int i) { return i % 5 == 0; };
             }
 
             [TearDown]
@@ -979,7 +975,9 @@ namespace C5UnitTests.arrays.hashed
                 list = new HashedArrayList<int>();
                 a = new int[10];
                 for (int i = 0; i < 10; i++)
+                {
                     a[i] = 1000 + i;
+                }
             }
 
 
@@ -1031,32 +1029,27 @@ namespace C5UnitTests.arrays.hashed
 
 
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void CopyToBad()
             {
-                list.CopyTo(a, 11);
+                Assert.Throws<ArgumentOutOfRangeException>(() => list.CopyTo(a, 11));
             }
 
 
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void CopyToBad2()
             {
-                list.CopyTo(a, -1);
+                Assert.Throws<ArgumentOutOfRangeException>(() => list.CopyTo(a, -1));
             }
 
 
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void CopyToTooFar()
             {
                 list.Add(3);
                 list.Add(4);
-                list.CopyTo(a, 9);
+                Assert.Throws<ArgumentOutOfRangeException>(() => list.CopyTo(a, 9));
             }
         }
-
-
 
         [TestFixture]
         public class Sync
@@ -1083,9 +1076,6 @@ namespace C5UnitTests.arrays.hashed
         }
     }
 
-
-
-
     namespace EditableCollection
     {
         [TestFixture]
@@ -1099,17 +1089,15 @@ namespace C5UnitTests.arrays.hashed
 
 
             [Test]
-            [ExpectedException(typeof(NullReferenceException))]
             public void NullEqualityComparerinConstructor1()
             {
-                new HashedArrayList<int>(null);
+                Assert.Throws<NullReferenceException>(() => new HashedArrayList<int>(null));
             }
 
             [Test]
-            [ExpectedException(typeof(NullReferenceException))]
             public void NullEqualityComparerinConstructor2()
             {
-                new HashedArrayList<int>(5, null);
+                Assert.Throws<NullReferenceException>(() => new HashedArrayList<int>(5, null));
             }
 
             [Test]
@@ -1173,7 +1161,7 @@ namespace C5UnitTests.arrays.hashed
             [Test]
             public void FindAll()
             {
-                Func<int, bool> f = delegate(int i) { return i % 2 == 0; };
+                Func<int, bool> f = delegate (int i) { return i % 2 == 0; };
 
                 Assert.IsTrue(list.FindAll(f).IsEmpty);
                 list.Add(5); list.Add(8); list.Add(10);
@@ -1312,7 +1300,6 @@ namespace C5UnitTests.arrays.hashed
                 Assert.AreEqual(1, dit.LastIndexOf(5));
             }
 
-
             [TearDown]
             public void Dispose()
             {
@@ -1320,20 +1307,16 @@ namespace C5UnitTests.arrays.hashed
             }
         }
 
-
-
         [TestFixture]
         public class Removing
         {
             private IIndexed<int> dit;
-
 
             [SetUp]
             public void Init()
             {
                 dit = new HashedArrayList<int>();
             }
-
 
             [Test]
             public void RemoveAt()
@@ -1350,31 +1333,24 @@ namespace C5UnitTests.arrays.hashed
                 Assert.IsTrue(IC.eq(dit, 9, 1));
             }
 
-
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void RemoveAtBad0()
             {
-                dit.RemoveAt(0);
+                Assert.Throws<IndexOutOfRangeException>(() => dit.RemoveAt(0));
             }
 
-
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void RemoveAtBadM1()
             {
-                dit.RemoveAt(-1);
+                Assert.Throws<IndexOutOfRangeException>(() => dit.RemoveAt(-1));
             }
 
-
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void RemoveAtBad1()
             {
                 dit.Add(8);
-                dit.RemoveAt(1);
+                Assert.Throws<IndexOutOfRangeException>(() => dit.RemoveAt(1));
             }
-
 
             [Test]
             public void RemoveInterval()
@@ -1402,7 +1378,6 @@ namespace C5UnitTests.arrays.hashed
                 Assert.IsTrue(IC.eq(dit, 30, 40));
             }
 
-
             [TearDown]
             public void Dispose()
             {
@@ -1411,16 +1386,12 @@ namespace C5UnitTests.arrays.hashed
         }
     }
 
-
-
-
     namespace IList
     {
         [TestFixture]
         public class Searching
         {
             private IList<int> lst;
-
 
             [SetUp]
             public void Init() { lst = new HashedArrayList<int>(); }
@@ -1429,22 +1400,23 @@ namespace C5UnitTests.arrays.hashed
             [TearDown]
             public void Dispose() { lst = null; }
 
-
             [Test]
-            [ExpectedException(typeof(NoSuchItemException))]
             public void FirstBad()
             {
-                int f = lst.First;
+                Assert.Throws<NoSuchItemException>(() =>
+                {
+                    int f = lst.First;
+                });
             }
-
 
             [Test]
-            [ExpectedException(typeof(NoSuchItemException))]
             public void LastBad()
             {
-                int f = lst.Last;
+                Assert.Throws<NoSuchItemException>(() =>
+                {
+                    int f = lst.Last;
+                });
             }
-
 
             [Test]
             public void FirstLast()
@@ -1491,7 +1463,6 @@ namespace C5UnitTests.arrays.hashed
             }
 
             [Test]
-            [ExpectedException(typeof(DuplicateNotAllowedException))]
             public void ThisWithUpdatesBad()
             {
                 HashedArrayList<KeyValuePair<int, int>> pairlist = new HashedArrayList<KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
@@ -1499,80 +1470,71 @@ namespace C5UnitTests.arrays.hashed
                 pairlist.Add(new KeyValuePair<int, int>(11, 51));
                 pairlist.Add(new KeyValuePair<int, int>(12, 52));
                 pairlist.Add(new KeyValuePair<int, int>(13, 53));
-                pairlist[2] = new KeyValuePair<int, int>(11, 102);
+
+                Assert.Throws<DuplicateNotAllowedException>(() => pairlist[2] = new KeyValuePair<int, int>(11, 102));
             }
 
-
-
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void ThisBadEmptyGet()
             {
-                int f = lst[0];
+                Assert.Throws<IndexOutOfRangeException>(() =>
+                {
+                    int f = lst[0];
+                });
             }
 
-
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void ThisBadLowGet()
             {
                 lst.Add(7);
-
-                int f = lst[-1];
+                Assert.Throws<IndexOutOfRangeException>(() =>
+                {
+                    int f = lst[-1];
+                });
             }
 
-
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void ThisBadHiGet()
             {
                 lst.Add(6);
 
-                int f = lst[1];
+                Assert.Throws<IndexOutOfRangeException>(() =>
+                {
+                    int f = lst[1];
+                });
             }
 
-
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void ThisBadEmptySet()
             {
-                lst[0] = 4;
+                Assert.Throws<IndexOutOfRangeException>(() => lst[0] = 4);
             }
 
-
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void ThisBadLowSet()
             {
                 lst.Add(7);
-                lst[-1] = 9;
+                Assert.Throws<IndexOutOfRangeException>(() => lst[-1] = 9);
             }
 
-
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void ThisBadHiSet()
             {
                 lst.Add(6);
-                lst[1] = 11;
+                Assert.Throws<IndexOutOfRangeException>(() => lst[1] = 11);
             }
         }
-
-
 
         [TestFixture]
         public class Inserting
         {
             private IList<int> lst;
 
-
             [SetUp]
             public void Init() { lst = new HashedArrayList<int>(); }
 
-
             [TearDown]
             public void Dispose() { lst = null; }
-
 
             [Test]
             public void Insert()
@@ -1588,14 +1550,14 @@ namespace C5UnitTests.arrays.hashed
             }
 
             [Test]
-            [ExpectedException(typeof(DuplicateNotAllowedException))]
             public void InsertDuplicate()
             {
                 lst.Insert(0, 5);
                 Assert.IsTrue(IC.eq(lst, 5));
                 lst.Insert(0, 7);
                 Assert.IsTrue(IC.eq(lst, 7, 5));
-                lst.Insert(1, 5);
+
+                Assert.Throws<DuplicateNotAllowedException>(() => lst.Insert(1, 5));
             }
 
             [Test]
@@ -1634,31 +1596,28 @@ namespace C5UnitTests.arrays.hashed
                 Assert.IsTrue(IC.eq(lst, 7, 5, 6, 3));
             }
 
-
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void BadInsertLow()
             {
                 lst.Add(7);
-                lst.Insert(-1, 9);
+
+                Assert.Throws<IndexOutOfRangeException>(() => lst.Insert(-1, 9));
             }
 
-
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void BadInsertHi()
             {
                 lst.Add(6);
-                lst.Insert(2, 11);
+                Assert.Throws<IndexOutOfRangeException>(() => lst.Insert(2, 11));
             }
-
 
             [Test]
             public void FIFO()
             {
                 for (int i = 0; i < 7; i++)
+                {
                     lst.Add(2 * i);
-
+                }
                 Assert.IsFalse(lst.FIFO);
                 Assert.AreEqual(12, lst.Remove());
                 Assert.AreEqual(10, lst.Remove());
@@ -1669,7 +1628,6 @@ namespace C5UnitTests.arrays.hashed
                 Assert.AreEqual(8, lst.Remove());
                 Assert.AreEqual(6, lst.Remove());
             }
-
 
             [Test]
             public void InsertFirstLast()
@@ -1704,7 +1662,6 @@ namespace C5UnitTests.arrays.hashed
                 Assert.IsTrue(IC.eq(lst, 7, 2, 8, 3, 4, 9, 5));
             }
 
-
             [Test]
             public void BadFirst()
             {
@@ -1714,7 +1671,6 @@ namespace C5UnitTests.arrays.hashed
                 lst.Add(5);
                 Assert.IsNull(lst.ViewOf(4));
             }
-
 
             [Test]
             public void InsertAfter()
@@ -1735,7 +1691,6 @@ namespace C5UnitTests.arrays.hashed
                 Assert.IsTrue(IC.eq(lst, 1, 8, 2, 7, 3, 4, 5, 9));
             }
 
-
             [Test]
             public void BadInsertAfter()
             {
@@ -1745,7 +1700,6 @@ namespace C5UnitTests.arrays.hashed
                 lst.Add(5);
                 Assert.IsNull(lst.ViewOf(4));
             }
-
 
             [Test]
             public void InsertAll()
@@ -1772,7 +1726,6 @@ namespace C5UnitTests.arrays.hashed
             }
 
             [Test]
-            [ExpectedException(typeof(DuplicateNotAllowedException))]
             public void InsertAllBad()
             {
                 lst.Add(1);
@@ -1783,14 +1736,14 @@ namespace C5UnitTests.arrays.hashed
                 IList<int> lst2 = new HashedArrayList<int>();
 
                 lst2.Add(5); lst2.Add(2); lst2.Add(9);
-                lst.InsertAll(0, lst2);
-            }
 
+                Assert.Throws<DuplicateNotAllowedException>(() => lst.InsertAll(0, lst2));
+            }
 
             [Test]
             public void Map()
             {
-                Func<int, string> m = delegate(int i) { return "<<" + i + ">>"; };
+                Func<int, string> m = delegate (int i) { return "<<" + i + ">>"; };
                 IList<string> r = lst.Map(m);
 
                 Assert.IsTrue(((HashedArrayList<string>)r).Check());
@@ -1803,66 +1756,74 @@ namespace C5UnitTests.arrays.hashed
                 Assert.IsTrue(((HashedArrayList<string>)r).Check());
                 Assert.AreEqual(4, r.Count);
                 for (int i = 0; i < 4; i++)
+                {
                     Assert.AreEqual("<<" + (i + 1) + ">>", r[i]);
+                }
             }
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void BadMapper()
             {
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
-                lst.Map(m);
+                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
+
+                Assert.Throws<CollectionModifiedException>(() => lst.Map(m));
             }
 
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void ModifyingFindAll()
             {
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
-                lst.FindAll(m);
+                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
+
+                Assert.Throws<CollectionModifiedException>(() => lst.FindAll(m));
             }
+
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void BadMapperView()
             {
                 lst = lst.View(0, 0);
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
-                lst.Map(m);
+                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
+
+                Assert.Throws<CollectionModifiedException>(() => lst.Map(m));
             }
 
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void ModifyingFindAllView()
             {
                 lst = lst.View(0, 0);
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
-                lst.FindAll(m);
+                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
+
+                Assert.Throws<CollectionModifiedException>(() => lst.FindAll(m));
             }
 
 
             [Test]
-            [ExpectedException(typeof(NoSuchItemException))]
-            public void BadRemove() { lst.Remove(); }
+            public void BadRemove()
+            {
+                Assert.Throws<NoSuchItemException>(() => lst.Remove());
+            }
 
             [Test]
-            [ExpectedException(typeof(NoSuchItemException))]
-            public void BadRemoveFirst() { lst.RemoveFirst(); }
+            public void BadRemoveFirst()
+            {
+                Assert.Throws<NoSuchItemException>(() => lst.RemoveFirst());
+            }
 
             [Test]
-            [ExpectedException(typeof(NoSuchItemException))]
-            public void BadRemoveLast() { lst.RemoveLast(); }
-
+            public void BadRemoveLast()
+            {
+                Assert.Throws<NoSuchItemException>(() => lst.RemoveLast());
+            }
 
             [Test]
             public void RemoveFirstLast()
@@ -1904,16 +1865,16 @@ namespace C5UnitTests.arrays.hashed
 
 
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void BadReverse()
             {
                 for (int i = 0; i < 10; i++)
+                {
                     lst.Add(i);
+                }
 
-                lst.View(8, 3).Reverse();
+                Assert.Throws<ArgumentOutOfRangeException>(() => lst.View(8, 3).Reverse());
             }
         }
-
 
         [TestFixture]
         public class Combined
@@ -1926,13 +1887,16 @@ namespace C5UnitTests.arrays.hashed
             {
                 lst = new HashedArrayList<KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
                 for (int i = 0; i < 10; i++)
+                {
                     lst.Add(new KeyValuePair<int, int>(i, i + 30));
+                }
             }
 
-
             [TearDown]
-            public void Dispose() { lst = null; }
-
+            public void Dispose()
+            {
+                lst = null;
+            }
 
             [Test]
             public void Find()
@@ -2103,23 +2067,21 @@ namespace C5UnitTests.arrays.hashed
                 Assert.AreEqual(10, lst.Backwards().Count);
             }
 
-
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void MoveNextAfterUpdate()
             {
                 for (int i = 0; i < 10; i++) lst.Add(i);
 
-                foreach (int i in lst)
+                Assert.Throws<CollectionModifiedException>(() =>
                 {
-                    lst.Add(45 + i);
-                }
+                    foreach (int i in lst)
+                    {
+                        lst.Add(45 + i);
+                    }
+                });
             }
         }
     }
-
-
-
 
     namespace View
     {
@@ -2172,33 +2134,28 @@ namespace C5UnitTests.arrays.hashed
             }
 
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void InsertPointerBad1()
             {
-                view.Insert(list.View(0, 0), 7);
+                Assert.Throws<IndexOutOfRangeException>(() => view.Insert(list.View(0, 0), 7));
             }
 
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void InsertPointerBad2()
             {
-                view.Insert(list, 7);
+                Assert.Throws<IndexOutOfRangeException>(() => view.Insert(list, 7));
             }
 
             [Test]
-            [ExpectedException(typeof(IncompatibleViewException))]
             public void InsertPointerBad3()
             {
-                list.Insert(new ArrayList<int>(), 7);
+                Assert.Throws<IncompatibleViewException>(() => list.Insert(new ArrayList<int>(), 7));
             }
 
             [Test]
-            [ExpectedException(typeof(IncompatibleViewException))]
             public void InsertPointerBad4()
             {
-                list.Insert(new ArrayList<int>().View(0, 0), 7);
+                Assert.Throws<IncompatibleViewException>(() => list.Insert(new ArrayList<int>().View(0, 0), 7));
             }
-
 
             [Test]
             public void Span()
@@ -2372,14 +2329,14 @@ namespace C5UnitTests.arrays.hashed
             [Test]
             public void MapEtc()
             {
-                HashedArrayList<double> dbl = (HashedArrayList<double>)view.Map(new Func<int, double>(delegate(int i) { return i / 10.0; }));
+                HashedArrayList<double> dbl = (HashedArrayList<double>)view.Map(new Func<int, double>(delegate (int i) { return i / 10.0; }));
 
                 Assert.IsTrue(dbl.Check());
                 Assert.AreEqual(0.1, dbl[0]);
                 Assert.AreEqual(0.2, dbl[1]);
                 for (int i = 0; i < 10; i++) view.Add(i);
 
-                HashedArrayList<int> list2 = (HashedArrayList<int>)view.FindAll(new Func<int, bool>(delegate(int i) { return i % 4 == 1; }));
+                HashedArrayList<int> list2 = (HashedArrayList<int>)view.FindAll(new Func<int, bool>(delegate (int i) { return i % 4 == 1; }));
 
                 Assert.IsTrue(list2.Check());
                 Assert.IsTrue(IC.eq(list2, 1, 5, 9));
