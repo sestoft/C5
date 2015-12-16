@@ -105,7 +105,7 @@ namespace C5
     }
 
     /// <summary>
-    /// An excption thrown when trying to access a view (a list view on a <see cref="T:C5.IList`1"/> or 
+    /// An exception thrown when trying to access a view (a list view on a <see cref="T:C5.IList`1"/> or 
     /// a snapshot on a <see cref="T:C5.IPersistentSorted`1"/>)
     /// that has been invalidated by some earlier operation.
     /// <para>

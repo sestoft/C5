@@ -234,7 +234,7 @@ namespace C5
         /// <summary>
         /// Expand the internal array, resetting the index of the first unused element.
         /// </summary>
-        /// <param name="newcapacity">The new capacity (will be rouded upwards to a power of 2).</param>
+        /// <param name="newcapacity">The new capacity (will be rounded upwards to a power of 2).</param>
         /// <param name="newsize">The new count of </param>
         protected override void expand(int newcapacity, int newsize)
         {
@@ -284,7 +284,7 @@ namespace C5
         /// <para>To be used by enumerators and range </para>
         /// </summary>
         /// <exception cref="ViewDisposedException"> If check fails by this list being a disposed view.</exception>
-        /// <exception cref="CollectionModifiedException">If the list *has* beeen updated since that  time..</exception>
+        /// <exception cref="CollectionModifiedException">If the list *has* been updated since that  time..</exception>
         /// <param name="stamp">The stamp indicating the time.</param>
         protected override void modifycheck(int stamp)
         {
@@ -766,7 +766,7 @@ namespace C5
         /// <summary>
         /// Insert an item at the end of a compatible view, used as a pointer.
         /// <para>The <code>pointer</code> must be a view on the same list as
-        /// <code>this</code> and the endpoitn of <code>pointer</code> must be
+        /// <code>this</code> and the endpoint of <code>pointer</code> must be
         /// a valid insertion point of <code>this</code></para>
         /// </summary>
         /// <exception cref="IncompatibleViewException">If <code>pointer</code> 
@@ -982,7 +982,7 @@ namespace C5
         }
 
         /// <summary>
-        /// Remove one item from the fromnt of the list.
+        /// Remove one item from the front of the list.
         /// </summary>
         /// <exception cref="NoSuchItemException"> if this list is empty.</exception>
         /// <returns>The removed item.</returns>
@@ -1169,7 +1169,7 @@ namespace C5
         }
 
         /// <summary>
-        /// Reverst the list so the items are in the opposite sequence order.
+        /// Reverse the list so the items are in the opposite sequence order.
         /// </summary>
         public virtual void Reverse()
         {
@@ -1274,7 +1274,7 @@ namespace C5
         #region IIndexed<T> Members
 
         /// <summary>
-        /// Search for an item in the list going forwrds from the start.
+        /// Search for an item in the list going forwards from the start.
         /// </summary>
         /// <param name="item">Item to search for.</param>
         /// <returns>Index of item from start.</returns>
@@ -1282,7 +1282,7 @@ namespace C5
 
 
         /// <summary>
-        /// Search for an item in the list going backwords from the end.
+        /// Search for an item in the list going backwards from the end.
         /// </summary>
         /// <param name="item">Item to search for.</param>
         /// <returns>Index of item from the end.</returns>
@@ -1470,7 +1470,7 @@ namespace C5
         /// Check if this collection contains an item equivalent according to the
         /// itemequalityComparer to a particular value. If so, update the item in the collection 
         /// to with a binary copy of the supplied value. This will only update the first 
-        /// mathching item.
+        /// matching item.
         /// </summary>
         /// <param name="item">Value to update.</param>
         /// <returns>True if the item was found and hence updated.</returns>
@@ -2077,7 +2077,7 @@ namespace C5
         /// <summary>
         /// Create a collection containing the same items as this collection, but
         /// whose enumerator will enumerate the items backwards. The new collection
-        /// will become invalid if the original is modified. Method typicaly used as in
+        /// will become invalid if the original is modified. Method typically used as in
         /// <code>foreach (T x in coll.Backwards()) {...}</code>
         /// </summary>
         /// <returns>The backwards collection.</returns>

@@ -46,7 +46,7 @@ namespace C5
 
         #region Constructors
         /// <summary>
-        /// Create a hash bag with the deafult item equalityComparer.
+        /// Create a hash bag with the default item equalityComparer.
         /// </summary>
         public HashBag() : this(EqualityComparer<T>.Default) { }
 
@@ -220,7 +220,7 @@ namespace C5
         }
 
         /// <summary>
-        /// Remove one copy af an item from the bag
+        /// Remove one copy of an item from the bag
         /// </summary>
         /// <param name="item">The item to remove</param>
         /// <returns>True if item was (found and) removed </returns>

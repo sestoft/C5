@@ -48,7 +48,7 @@ namespace C5
             this.comparer = comparer;
         }
         /// <summary>
-        /// A trivial, inefficient hash fuction. Compatible with any equality relation.
+        /// A trivial, inefficient hash function. Compatible with any equality relation.
         /// </summary>
         /// <param name="item"></param>
         /// <returns>0</returns>

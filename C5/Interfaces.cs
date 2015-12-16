@@ -808,7 +808,7 @@ namespace C5
         /// <summary>
         /// Insert an item at the end of a compatible view, used as a pointer.
         /// <para>The <code>pointer</code> must be a view on the same list as
-        /// <code>this</code> and the endpoitn of <code>pointer</code> must be
+        /// <code>this</code> and the endpoint of <code>pointer</code> must be
         /// a valid insertion point of <code>this</code></para>
         /// </summary>
         /// <exception cref="IncompatibleViewException">If <code>pointer</code> 
@@ -1464,7 +1464,7 @@ namespace C5
         /// Determine the number of items at or above a supplied threshold.
         /// </summary>
         /// <param name="bot">The lower bound (inclusive)</param>
-        /// <returns>The number of matcing items.</returns>
+        /// <returns>The number of matching items.</returns>
         int CountFrom(T bot);
 
 
@@ -1473,7 +1473,7 @@ namespace C5
         /// </summary>
         /// <param name="bot">The lower bound (inclusive)</param>
         /// <param name="top">The upper bound (exclusive)</param>
-        /// <returns>The number of matcing items.</returns>
+        /// <returns>The number of matching items.</returns>
         int CountFromTo(T bot, T top);
 
 
@@ -1481,7 +1481,7 @@ namespace C5
         /// Determine the number of items below a supplied threshold.
         /// </summary>
         /// <param name="top">The upper bound (exclusive)</param>
-        /// <returns>The number of matcing items.</returns>
+        /// <returns>The number of matching items.</returns>
         int CountTo(T top);
 
 
@@ -1579,7 +1579,7 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <value>A collection containg the all the keys of the dictionary</value>
+        /// <value>A collection containing all the keys of the dictionary</value>
         ICollectionValue<K> Keys { get; }
 
 
@@ -1730,7 +1730,7 @@ namespace C5
 
         /// <summary>
         /// Check the integrity of the internal data structures of this dictionary.
-        /// Only avaliable in DEBUG builds???
+        /// Only available in DEBUG builds???
         /// </summary>
         /// <returns>True if check does not fail.</returns>
         bool Check();

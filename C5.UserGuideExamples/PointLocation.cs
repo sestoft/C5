@@ -118,7 +118,7 @@ namespace PointLocation
     /// 
     /// The creation of the inner sorted sets is done by maintaining a
     /// (persistent) tree of edges, inserting and deleting edges according
-    /// to a horzontal sweep of the edges while saving a snapshot of the
+    /// to a horizontal sweep of the edges while saving a snapshot of the
     /// inner tree in the outer dictionary at each new x coordinate.
     ///
     /// If there are n edges, there will be 2n updates to the inner tree,
@@ -127,7 +127,7 @@ namespace PointLocation
     /// sorting the endpoints. If we use a nodecopying persistent inner tree,
     /// we will use O(n) space and time for building the data structure proper.
     /// If we use a pathcopy persistent tree, we will use O(n*logn) time and
-    /// space for the data struicture. Finally, if we use a non-persistent
+    /// space for the data structure. Finally, if we use a non-persistent
     /// tree with a full copy for snapshot, we may use up to O(n^2) space and
     /// time for building the datastructure.
     ///
