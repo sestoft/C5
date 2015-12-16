@@ -61,6 +61,8 @@
     <Compile Include="arrays\HashedArrayList.cs" />
     <Compile Include="arrays\SortedArray.cs" />
     <Compile Include="comparers\EqualityComparer.cs" />
+    <Compile Include="IReadOnlyCollection.cs" />
+    <Compile Include="IReadOnlyList.cs" />
     <Compile Include="SerializableAttribute.cs" />
     <Compile Include="Collections.cs" />
     <Compile Include="comparers\InternalComparer.cs" />

@@ -110,6 +110,12 @@
     <Compile Include="..\C5\Interfaces.cs">
       <Link>Interfaces.cs</Link>
     </Compile>
+    <Compile Include="..\C5\IReadOnlyCollection.cs">
+      <Link>IReadOnlyCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\C5\IReadOnlyList.cs">
+      <Link>IReadOnlyList.cs</Link>
+    </Compile>
     <Compile Include="..\C5\linkedlists\HashedLinkedList.cs">
       <Link>HashedLinkedList.cs</Link>
     </Compile>

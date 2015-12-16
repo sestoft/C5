@@ -28,7 +28,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>3</WarningLevel>
     <DocumentationFile>bin\Release\C5.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
@@ -148,6 +148,8 @@
     <Compile Include="..\C5\Wrappers.cs">
       <Link>Wrappers.cs</Link>
     </Compile>
+    <Compile Include="IReadOnlyCollection.cs" />
+    <Compile Include="IReadOnlyList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
