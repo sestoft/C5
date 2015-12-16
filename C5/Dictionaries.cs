@@ -74,16 +74,6 @@ namespace C5
             return Equals(other);
         }
 
-
-        /// <summary>
-        /// Create an instance of the KeyValuePair using type inference.
-        /// </summary>
-        public static KeyValuePair<K, V> Create<K, V>(K key, V value)
-        {
-            return new KeyValuePair<K, V>(key, value);
-        }
-
-
         /// <summary>
         /// Get the hash code of the pair.
         /// </summary>
@@ -1260,6 +1250,20 @@ namespace C5
             return Showing.ShowDictionary<K, V>(this, stringbuilder, ref rest, formatProvider);
         }
 
+    }
+
+    /// <summary>
+    /// Static class to allow creation of KeyValuePair using type inference
+    /// </summary>
+    public static class KeyValuePair
+    {
+        /// <summary>
+        /// Create an instance of the KeyValuePair using type inference.
+        /// </summary>
+        public static KeyValuePair<K, V> Create<K, V>(K key, V value)
+        {
+            return new KeyValuePair<K, V>(key, value);
+        }
     }
 
     [Serializable]
