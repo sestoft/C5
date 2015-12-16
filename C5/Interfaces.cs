@@ -548,16 +548,8 @@ namespace C5
     /// <summary>
     /// A sequenced collection, where indices of items in the order are maintained
     /// </summary>
-    public interface IIndexed<T> : ISequenced<T>
+    public interface IIndexed<T> : ISequenced<T>, IReadOnlyList<T>
     {
-        /// <summary>
-        /// </summary>
-        /// <exception cref="IndexOutOfRangeException"> if <code>index</code> is negative or
-        /// &gt;= the size of the collection.</exception>
-        /// <value>The <code>index</code>'th item of this list.</value>
-        /// <param name="index">the index to lookup</param>
-        T this[int index] { get; }
-
         /// <summary>
         /// 
         /// </summary>
