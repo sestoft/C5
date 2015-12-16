@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("C5")]
-[assembly: AssemblyDescription("The C5 Generic Collection Library for C# and CLI is a comprehensive collection library supporting lists, sets, bags, dictionaries, priority queues, (FIFO) queues, and (LIFO) stacks. C5 runs on .NET 4.0, Silverlight 4, Windows Phone 7, Xbox 360, and Mono.")]
+[assembly: AssemblyDescription("The C5 Generic Collection Library for C# and CLI is a comprehensive collection library supporting lists, sets, bags, dictionaries, priority queues, (FIFO) queues, and (LIFO) stacks. C5 runs on .NET 3.5+, Silverlight 5, Windows Phone 8, Xamarin.iOS, Xamarin.Android, and Mono.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm")]
 [assembly: AssemblyProduct("C5")]

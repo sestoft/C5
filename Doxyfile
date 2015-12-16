@@ -44,7 +44,7 @@ PROJECT_NUMBER         = 2.4
 # for a project that appears at the top of each page and should give viewer a
 # quick idea about the purpose of the project. Keep the description short.
 
-PROJECT_BRIEF          = "The C5 Generic Collection Library for C# and CLI is a comprehensive collection library supporting lists, sets, bags, dictionaries, priority queues, (FIFO) queues, and (LIFO) stacks. C5 runs on .NET 4.0, Silverlight 4, Windows Phone 7, Xbox 360, and Mono."
+PROJECT_BRIEF          = "The C5 Generic Collection Library for C# and CLI is a comprehensive collection library supporting lists, sets, bags, dictionaries, priority queues, (FIFO) queues, and (LIFO) stacks. C5 runs on .NET 3.5+, Silverlight 5, Windows Phone 8, Xamarin.iOS, Xamarin.Android, and Mono."
 
 # With the PROJECT_LOGO tag one can specify a logo or an icon that is included
 # in the documentation. The maximum height of the logo should not exceed 55

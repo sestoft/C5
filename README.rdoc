@@ -76,7 +76,8 @@ The C5 implementation was originally built on .NET 2.0 and has only recently bee
 upgraded to .NET 4.0. It does not (yet) use a great number of the new features 
 introduced with C# 3 and 4, notably LINQ and covariant and contravariant type parameters.
 
-C5 is a portable library supporting .NET 4.0, Silverlight, Windows Phone 8, and Mono.
+C5 is a portable library supporting .NET 3.5, .NET 4.0, .NET 4.5, 
+Universal Windows Platform, Silverlight 5, Windows Phone 8, and Mono (Xamarin).
 
 == Getting Started
 
@@ -94,9 +95,9 @@ C5 is a portable library supporting .NET 4.0, Silverlight, Windows Phone 8, and 
    
 == C5 on Mono
 
-1. Open C5.csproj with Xamarin Studio (Mono 3.0) to build C5.dll or
+1. Open C5.csproj with Xamarin Studio or MonoDevelop to build C5.dll or
 
-2. Build manually using <tt>xbuild C5.Mono.csproj</tt>.
+2. Build manually using <tt>xbuild C5.csproj</tt>.
 
 == License
 

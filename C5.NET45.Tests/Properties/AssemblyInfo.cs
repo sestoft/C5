@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("C5.NET45.Tests")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Unit testing suite for C5.NET45")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("C5.NET45.Tests")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCompany("Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm")]
+[assembly: AssemblyProduct("C5")]
+[assembly: AssemblyCopyright("Copyright © Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm 2003-2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
