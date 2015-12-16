@@ -48,6 +48,9 @@ namespace C5
         //TODO: wonder if we should remove that
         int blackdepth = 0;
 
+        // maintain a unique items counter
+        public int uniqueCount = 0;
+
         //We double these stacks for the iterative add and remove on demand
         //TODO: refactor dirs[] into bool fields on Node (?)
         private int[] dirs = new int[2];
@@ -883,7 +886,10 @@ namespace C5
             {
                 size++;
                 if (!wasFound)
+                {
+                    uniqueCount++;
                     j = item;
+                }
                 return true;
             }
             else
@@ -903,24 +909,28 @@ namespace C5
                 throw new ViewDisposedException("Snapshot has been disposed");
             updatecheck();
 
-            int c = 0;
+            int c = 0, _uniqueAdds = 0;
             T j = default(T);
-            bool tmp;
+            bool wasfound;
 
             bool raiseAdded = (ActiveEvents & EventTypeEnum.Added) != 0;
             CircularQueue<T> wasAdded = raiseAdded ? new CircularQueue<T>() : null;
 
             foreach (T i in items)
-                if (addIterative(i, ref j, false, out tmp))
+                if (addIterative(i, ref j, false, out wasfound))
                 {
                     c++;
+                    if (!wasfound)
+                        _uniqueAdds++;
                     if (raiseAdded)
-                        wasAdded.Enqueue(tmp ? j : i);
+                        wasAdded.Enqueue(wasfound ? j : i);
                 }
             if (c == 0)
                 return;
 
             size += c;
+            uniqueCount += _uniqueAdds;
+
             //TODO: implement a RaiseForAddAll() method
             if (raiseAdded)
                 foreach (T item in wasAdded)
@@ -1065,6 +1075,7 @@ namespace C5
             root = TreeBag<T>.maketreer(ref head, blackheight, maxred, red);
             blackdepth = blackheight;
             size = z;
+            uniqueCount = z;
 
             size += ec;
 
@@ -1188,6 +1199,8 @@ namespace C5
             if (addIterative(item, ref item, false, out wasfound))
             {
                 size++;
+                if (!wasfound)
+                    uniqueCount++;
                 if (ActiveEvents != 0 && !wasfound)
                     raiseForAdd(item);
                 return wasfound;
@@ -1305,6 +1318,8 @@ namespace C5
             if (addIterative(item, ref olditem, true, out wasfound))
             {
                 size++;
+                if (!wasfound)
+                    uniqueCount++;
                 if (ActiveEvents != 0)
                     raiseForAdd(wasfound ? olditem : item);
                 return wasfound;
@@ -1434,7 +1449,7 @@ namespace C5
                 return true;
             }
 
-
+            uniqueCount--;
             size -= cursor.items;
 
             //Stage 2: if item's node has no null child, find predecessor
@@ -1755,6 +1770,7 @@ namespace C5
         private void clear()
         {
             size = 0;
+            uniqueCount = 0;
             root = null;
             blackdepth = 0;
         }
@@ -1847,6 +1863,7 @@ namespace C5
 
             root = t.root;
             size = t.size;
+            uniqueCount = t.uniqueCount;
             blackdepth = t.blackdepth;
             if (wasRemoved != null)
                 foreach (KeyValuePair<T, int> p in wasRemoved)
@@ -1945,7 +1962,7 @@ namespace C5
             res.root = TreeBag<T>.maketreer(ref head, blackheight, maxred, red);
             res.blackdepth = blackheight;
             res.size = z;
-
+            res.uniqueCount = z;
             res.size += ec;
 
             return res;
@@ -2038,6 +2055,7 @@ namespace C5
             res.root = TreeBag<V>.maketreer(ref head, blackheight, maxred, red);
             res.blackdepth = blackheight;
             res.size = size;
+            res.uniqueCount = uniqueCount;
             return res;
         }
 
@@ -3873,10 +3891,10 @@ namespace C5
         /// </summary>
         public void dump(string msg)
         {
-            Logger.Log(string.Format(">>>>>>>>>>>>>>>>>>> dump {0} (count={1}, blackdepth={2}, depth={3}, gen={4})", msg, size, blackdepth,
+            Logger.Log(string.Format(">>>>>>>>>>>>>>>>>>> dump {0} (count={1}, blackdepth={2}, depth={3}, gen={4}, uniqueCount={5})", msg, size, blackdepth,
             0
             ,
- generation
+ generation, uniqueCount
 ));
             minidump(root, "");
             check(""); Logger.Log("<<<<<<<<<<<<<<<<<<<");
@@ -3890,10 +3908,10 @@ namespace C5
         /// <param name="err">Extra (error)message to include</param>
         void dump(string msg, string err)
         {
-            Logger.Log(string.Format(">>>>>>>>>>>>>>>>>>> dump {0} (count={1}, blackdepth={2}, depth={3}, gen={4})", msg, size, blackdepth,
+            Logger.Log(string.Format(">>>>>>>>>>>>>>>>>>> dump {0} (count={1}, blackdepth={2}, depth={3}, gen={4}, uniqueCount={5})", msg, size, blackdepth,
             0
             ,
- generation
+ generation, uniqueCount
 ));
             minidump(root, ""); Logger.Log(err);
             Logger.Log("<<<<<<<<<<<<<<<<<<<");
