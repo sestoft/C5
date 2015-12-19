@@ -773,23 +773,23 @@ namespace C5UnitTests.wrappers
                 catch (FixedSizeCollectionException) { }
             }
 
-            [Test]
-            [ExpectedException(typeof (Exception))]
+            [Test] 
             public void FilterShouldRaiseAnExceptionInStrictMemoryMode()
             {
-                if (MemoryType != MemoryType.Strict) throw new Exception(""); //Dummy exception for cases different from strict
-
-                int[] inner = new int[] { 3, 4, 6, 5, 7 };
+				if ( MemoryType != MemoryType.Strict )
+					return;
+					
+				int[] inner = new int[] { 3, 4, 6, 5, 7 };
                 WrappedArray<int> outerwrapped = new WrappedArray<int>(inner, MemoryType);
 
                 WrappedArray<int> wrapped = (WrappedArray<int>)outerwrapped.View(1, 3);
                 Func<int, bool> is4 = delegate(int i) { return i == 4; };
 
-                if (MemoryType == MemoryType.Strict)
-                    Assert.IsTrue(IC.eq(wrapped.Filter(is4), 4));
-
-            
-            }
+				if ( MemoryType == MemoryType.Strict )
+				{
+					Assert.Throws<Exception>(()=> IC.eq ( wrapped.Filter ( is4 ), 4 ) );
+				}
+			}
 
 
             [Test]
