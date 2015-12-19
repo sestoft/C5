@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
+ Copyright (c) 2003-2015 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -569,7 +569,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="item"></param>
         /// <returns></returns>
         public virtual bool FindOrAdd(ref T item)
@@ -578,7 +578,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="item"></param>
         /// <returns></returns>
         public virtual bool Update(T item)
@@ -587,7 +587,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="item"></param>
         /// <param name="olditem"></param>
         /// <returns></returns>
@@ -597,7 +597,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="item"></param>
         /// <returns></returns>
         public virtual bool UpdateOrAdd(T item)
@@ -606,7 +606,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="item"></param>
         /// <param name="olditem"></param>
         /// <returns></returns>
@@ -615,7 +615,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="item"></param>
         /// <returns></returns>
         public virtual bool Remove(T item)
@@ -624,7 +624,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="item">The value to remove.</param>
         /// <param name="removeditem">The removed value.</param>
         /// <returns></returns>
@@ -634,7 +634,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="item"></param>
         public virtual void RemoveAllCopies(T item)
         { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
@@ -642,21 +642,21 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="items"></param>
         public virtual void RemoveAll(SCG.IEnumerable<T> items)
         { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         public virtual void Clear()
         { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
 
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="items"></param>
         public virtual void RetainAll(SCG.IEnumerable<T> items)
         { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
@@ -697,7 +697,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="item"></param>
         /// <returns></returns>
         public virtual bool Add(T item)
@@ -705,14 +705,14 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="item"></param>
         void SCG.ICollection<T>.Add(T item)
         { throw new ReadOnlyCollectionException(); }
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="items"></param>
         public virtual void AddAll(SCG.IEnumerable<T> items)
         { throw new ReadOnlyCollectionException(); }
@@ -1000,14 +1000,14 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="items"></param>
         public void AddSorted(SCG.IEnumerable<T> items)
         { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="low"></param>
         public void RemoveRangeFrom(T low)
         { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
@@ -1015,7 +1015,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="low"></param>
         /// <param name="hi"></param>
         public void RemoveRangeFromTo(T low, T hi)
@@ -1024,7 +1024,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="hi"></param>
         public void RemoveRangeTo(T hi)
         { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
@@ -1042,7 +1042,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <returns></returns>
         public T DeleteMin()
         { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
@@ -1057,7 +1057,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <returns></returns>
         public T DeleteMax()
         { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
@@ -1224,7 +1224,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="i"></param>
         /// <returns></returns>
         public T RemoveAt(int i)
@@ -1233,7 +1233,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="start"></param>
         /// <param name="count"></param>
         public void RemoveInterval(int start, int count)
@@ -1348,7 +1348,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="index"></param>
         /// <param name="item"></param>
         public void Insert(int index, T item)
@@ -1356,7 +1356,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="pointer"></param>
         /// <param name="item"></param>
         public void Insert(IList<T> pointer, T item)
@@ -1364,21 +1364,21 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="item"></param>
         public void InsertFirst(T item)
         { throw new ReadOnlyCollectionException("List is read only"); }
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="item"></param>
         public void InsertLast(T item)
         { throw new ReadOnlyCollectionException("List is read only"); }
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="item"></param>
         /// <param name="target"></param>
         public void InsertBefore(T item, T target)
@@ -1387,7 +1387,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="item"></param>
         /// <param name="target"></param>
         public void InsertAfter(T item, T target)
@@ -1396,7 +1396,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="i"></param>
         /// <param name="items"></param>
         public void InsertAll(int i, SCG.IEnumerable<T> items)
@@ -1430,21 +1430,21 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <returns></returns>
         public T Remove() { throw new ReadOnlyCollectionException("List is read only"); }
 
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <returns></returns>
         public T RemoveFirst() { throw new ReadOnlyCollectionException("List is read only"); }
 
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <returns></returns>
         public T RemoveLast() { throw new ReadOnlyCollectionException("List is read only"); }
 
@@ -1520,7 +1520,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="offset"></param>
         /// <param name="size"></param>
         public IList<T> Slide(int offset, int size)
@@ -1538,7 +1538,7 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="offset"></param>
         /// <returns></returns>
         public bool TrySlide(int offset)
@@ -1552,7 +1552,7 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="offset"></param>
         /// <param name="size"></param>
         /// <returns></returns>
@@ -1581,14 +1581,14 @@ namespace C5
         }
 
         /// <summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// </summary>
         public void Reverse() { throw new ReadOnlyCollectionException("List is read only"); }
 
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="start"></param>
         /// <param name="count"></param>
         public void Reverse(int start, int count)
@@ -1613,28 +1613,28 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         public void Sort()
         { throw new ReadOnlyCollectionException("List is read only"); }
 
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="c"></param>
         public void Sort(SCG.IComparer<T> c)
         { throw new ReadOnlyCollectionException("List is read only"); }
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         public void Shuffle()
         { throw new ReadOnlyCollectionException("List is read only"); }
 
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="rnd"></param>
         public void Shuffle(Random rnd)
         { throw new ReadOnlyCollectionException("List is read only"); }
@@ -1667,7 +1667,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="i"></param>
         /// <returns></returns>
         public T RemoveAt(int i)
@@ -1676,7 +1676,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="start"></param>
         /// <param name="count"></param>
         public void RemoveInterval(int start, int count)
@@ -1697,7 +1697,7 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <returns>-</returns>
         public void Push(T item)
         { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
@@ -1705,7 +1705,7 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <returns>-</returns>
         public T Pop()
         { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
@@ -1717,7 +1717,7 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <returns>-</returns>
         public void Enqueue(T item)
         { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
@@ -1725,7 +1725,7 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <returns>-</returns>
         public T Dequeue()
         { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
@@ -1865,7 +1865,7 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <returns>-</returns>
         public void Enqueue(T item)
         { throw new ReadOnlyCollectionException("Queue cannot be modified through this guard object"); }
@@ -1873,7 +1873,7 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <returns>-</returns>
         public T Dequeue()
         { throw new ReadOnlyCollectionException("Queue cannot be modified through this guard object"); }
@@ -1916,7 +1916,7 @@ namespace C5
         /// <summary>
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a
-        /// read-only wrappper if used as a setter</exception>
+        /// read-only wrapper if used as a setter</exception>
         /// <value>Get the value corresponding to a key in the wrapped dictionary</value>
         public V this[K key]
         {
@@ -1949,7 +1949,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="key"></param>
         /// <param name="val"></param>
         public void Add(K key, V val)
@@ -1958,7 +1958,7 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="items"></param>
         public void AddAll<L, W>(SCG.IEnumerable<KeyValuePair<L, W>> items)
             where L : K
@@ -1967,7 +1967,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="key"></param>
         /// <returns></returns>
         public bool Remove(K key)
@@ -1976,7 +1976,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="key"></param>
         /// <param name="val"></param>
         /// <returns></returns>
@@ -1986,7 +1986,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         public void Clear()
         { throw new ReadOnlyCollectionException(); }
 
@@ -2020,7 +2020,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="key"></param>
         /// <param name="val"></param>
         /// <returns></returns>
@@ -2030,7 +2030,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="key"></param>
         /// <param name="val"></param>
         /// <param name="oldval"></param>
@@ -2041,7 +2041,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="key"></param>
         /// <param name="val"></param>
         /// <returns></returns>
@@ -2051,7 +2051,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="key"></param>
         /// <param name="val"></param>
         /// <returns></returns>
@@ -2060,7 +2060,7 @@ namespace C5
 
         /// <summary>
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="key"></param>
         /// <param name="val"></param>
         /// <param name="oldval"></param>
@@ -2222,7 +2222,7 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <returns></returns>
         public KeyValuePair<K, V> DeleteMin()
         { throw new ReadOnlyCollectionException(); }
@@ -2239,7 +2239,7 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <returns></returns>
         public KeyValuePair<K, V> DeleteMax()
         { throw new ReadOnlyCollectionException(); }
@@ -2301,7 +2301,7 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="items"></param>
         public void AddSorted(System.Collections.Generic.IEnumerable<KeyValuePair<K, V>> items)
         { throw new ReadOnlyCollectionException(); }
@@ -2309,7 +2309,7 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="low"></param>
         public void RemoveRangeFrom(K low)
         { throw new ReadOnlyCollectionException(); }
@@ -2317,7 +2317,7 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="low"></param>
         /// <param name="hi"></param>
         public void RemoveRangeFromTo(K low, K hi)
@@ -2326,7 +2326,7 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrappper</exception>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="hi"></param>
         public void RemoveRangeTo(K hi)
         { throw new ReadOnlyCollectionException(); }

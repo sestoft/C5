@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
+ Copyright (c) 2003-2015 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -33,9 +33,9 @@ namespace C5UnitTests.hashtable.bag
     {
         [Test]
         public void TestEvents()
-        {
-            Func<CollectionOfInt> factory = () => new CollectionOfInt(TenEqualityComparer.Default);
-            new C5UnitTests.Templates.Events.CollectionTester<CollectionOfInt>().Test(factory, MemoryType);
+        { 
+            Func<CollectionOfInt> factory = delegate () { return new CollectionOfInt(TenEqualityComparer.Default); };
+            new C5UnitTests.Templates.Events.CollectionTester<CollectionOfInt>().Test(factory, MemoryType); 
         }
 
         //[Test]
@@ -212,24 +212,21 @@ namespace C5UnitTests.hashtable.bag
         }
 
         [Test]
-        [ExpectedException(typeof(NullReferenceException))]
         public void NullEqualityComparerinConstructor1()
         {
-            new HashBag<int>(null);
+            Assert.Throws<NullReferenceException>(() => new HashBag<int>(null));
         }
 
         [Test]
-        [ExpectedException(typeof(NullReferenceException))]
         public void NullEqualityComparerinConstructor2()
         {
-            new HashBag<int>(5, null);
+            Assert.Throws<NullReferenceException>(() => new HashBag<int>(5, null));
         }
 
         [Test]
-        [ExpectedException(typeof(NullReferenceException))]
         public void NullEqualityComparerinConstructor3()
         {
-            new HashBag<int>(5, 0.5, null);
+            Assert.Throws<NullReferenceException>(() => new HashBag<int>(5, 0.5, null));
         }
 
         [Test]
@@ -240,12 +237,10 @@ namespace C5UnitTests.hashtable.bag
         }
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void BadChoose()
         {
-            hashbag.Choose();
+            Assert.Throws<NoSuchItemException>(() => hashbag.Choose());
         }
-
 
         [Test]
         public void CountEtAl()
@@ -423,7 +418,7 @@ namespace C5UnitTests.hashtable.bag
         {
             Debug.UseDeterministicHashing = true;
             list = new HashBag<int>(TenEqualityComparer.Default);
-            pred = delegate(int i) { return i % 5 == 0; };
+            pred = delegate (int i) { return i % 5 == 0; };
         }
 
         [TearDown]
@@ -549,32 +544,28 @@ namespace C5UnitTests.hashtable.bag
 
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void CopyToBad()
         {
-            hashbag.CopyTo(a, 11);
+            Assert.Throws<ArgumentOutOfRangeException>(() => hashbag.CopyTo(a, 11));
         }
 
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void CopyToBad2()
         {
-            hashbag.CopyTo(a, -1);
+            Assert.Throws<ArgumentOutOfRangeException>(() => hashbag.CopyTo(a, -1));
         }
 
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void CopyToTooFar()
         {
             hashbag.Add(3);
             hashbag.Add(8);
-            hashbag.CopyTo(a, 9);
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => hashbag.CopyTo(a, 9));
         }
     }
-
-
 
     [TestFixture]
     public class HashingEquals

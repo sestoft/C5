@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
+ Copyright (c) 2003-2015 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -87,11 +87,12 @@ namespace Graph
   /// </summary>
   /// <typeparam name="V"></typeparam>
   /// <typeparam name="E"></typeparam>
-  interface IGraphVertex<V, E,W> where W : IComparable<W>
+    /// <typeparam name="W"></typeparam>
+    interface IGraphVertex<V, E, W> where W : IComparable<W>
   {
-    V Value { get;}
-    IGraph<V, E, W> Graph { get;}
-    ICollectionValue<KeyValuePair<V, E>> Adjacent { get;}
+        V Value { get; }
+        IGraph<V, E, W> Graph { get; }
+        ICollectionValue<KeyValuePair<V, E>> Adjacent { get; }
 
   }
 
@@ -111,19 +112,19 @@ namespace Graph
     /// 
     /// </summary>
     /// <value>The weight object for this graph</value>
-    IWeight<E, W> Weight { get;}
+        IWeight<E, W> Weight { get; }
 
     /// <summary>
     /// 
     /// </summary>
     /// <value>The number of vertices in this graph</value>
-    int VertexCount { get;}
+        int VertexCount { get; }
 
     /// <summary>
     /// 
     /// </summary>
     /// <value>The number of edges in this graph</value>
-    int EdgeCount { get;}
+        int EdgeCount { get; }
 
     /// <summary>
     /// The collection of vertices of this graph.
@@ -206,10 +207,10 @@ namespace Graph
     /// 
     /// </summary>
     /// <value>The number of connected components of this graph</value>
-    int ComponentCount { get;}
+        int ComponentCount { get; }
 
     /// <summary>
-    /// Compute the connnected components of this graph. 
+    /// Compute the connected components of this graph. 
     /// </summary>
     /// <returns>A collection of (vertex,component) pairs, where the first part of the
     /// pair is some vertex in the component.</returns>
@@ -228,7 +229,7 @@ namespace Graph
     /// <summary>
     /// Traverse an undirected graph in either BFS or DFS order, performing the action 
     /// <code>act</code> on each vertex. 
-    /// The start vertex of each component of the graph is undefinded. 
+    /// The start vertex of each component of the graph is undefined. 
     /// </summary>
     /// <param name="bfs">True if BFS, false if DFS</param>
     /// <param name="act"></param>
@@ -252,7 +253,7 @@ namespace Graph
     /// <param name="beforevertex">Action to perform when a vertex is first encountered.</param>
     /// <param name="aftervertex">Action to perform when all edges out of a vertex has been handles.</param>
     /// <param name="onfollow">Action to perform as an edge is traversed.</param>
-    /// <param name="onfollowed">Action to perform when an edge is travesed back.</param>
+    /// <param name="onfollowed">Action to perform when an edge is traversed back.</param>
     /// <param name="onnotfollowed">Action to perform when an edge (a backedge)is seen, but not followed.</param>
     void DepthFirstSearch(V start, System.Action<V> beforevertex, System.Action<V> aftervertex,
             System.Action<Edge<V, E>> onfollow, System.Action<Edge<V, E>> onfollowed, System.Action<Edge<V, E>> onnotfollowed);
@@ -263,14 +264,13 @@ namespace Graph
     /// from start according to the weight function. Perform act on the edges of the 
     /// traversal as they are recognised.
     /// </summary>
-    /// <typeparam name="W"></typeparam>
-    /// <param name="weight"></param>
+        /// <param name="accumulating"></param>
     /// <param name="start"></param>
     /// <param name="act"></param>
     void PriorityFirstTraverse(bool accumulating, V start, EdgeAction<V, E, W> act);
 
     /// <summary>
-    /// Compute the (a) shortest path from start to end. THrow an exception if end cannot be reached rom start.
+    /// Compute the (a) shortest path from start to end. Throw an exception if end cannot be reached from start.
     /// </summary>
     /// <param name="weight"></param>
     /// <param name="start"></param>
@@ -280,7 +280,7 @@ namespace Graph
 
     /// <summary>
     /// Compute the Distance from start to end, i.e. the total weight of a shortest path from start to end. 
-    /// Throw an exception if end cannot be reached rom start.
+    /// Throw an exception if end cannot be reached from start.
     /// </summary>
     /// <param name="start"></param>
     /// <param name="end"></param>
@@ -330,7 +330,7 @@ namespace Graph
 /// an edge of the graph in a particular traversal direction.
 /// </summary>
 /// <typeparam name="V">The type of a vertex.</typeparam>
-/// <typeparam name="E">The type of data asociated with edges.</typeparam>
+/// <typeparam name="E">The type of data associated with edges.</typeparam>
   struct Edge<V, E>
   {
     static SCG.IEqualityComparer<V> vequalityComparer = EqualityComparer<V>.Default;
@@ -408,7 +408,7 @@ namespace Graph
 /// It is required that weight values are comparable.
 /// 
 /// The user must assure that the add operation is commutative and fulfills 
-/// Add(w1,w2) &le; w1 for all w1 and w2 that can appear as weights or sums of
+    /// Add(w1,w2) &#x2264; w1 for all w1 and w2 that can appear as weights or sums of
 /// weights. In practise, W will be int or double, all weight values will be 
 /// non-negative and the addition will be the natural addition on W.
 /// </summary>
@@ -437,7 +437,7 @@ namespace Graph
 /// The "extra" parameter is for additional information supplied by the traversal 
 /// algorithm. 
 /// The intention of the bool return value is that returning false is a signal to the
-/// traversal algorithm to abandon the traversl because the user has already found
+/// traversal algorithm to abandon the traversal because the user has already found
 /// what he was looking for.
 /// </summary>
 /// <typeparam name="V"></typeparam>
@@ -468,7 +468,7 @@ namespace Graph
 */
 
 /// <summary>
-/// An implementation of IGraph&le;V,E,W&ge; based on an adjacency list representation using hash dictionaries.
+    /// An implementation of IGraph&#x2264;V,E,W&#x2265; based on an adjacency list representation using hash dictionaries.
 /// As a consequence, this will be most efficient for sparse graphs.
 /// </summary>
 /// <typeparam name="V"></typeparam>
@@ -528,6 +528,7 @@ namespace Graph
     /// Will only allow these vertices.
     /// Duplicate edges are allowed.
     /// </summary>
+        /// <param name="weight"></param>
     /// <param name="vertices"></param>
     /// <param name="edges"></param>
     public HashGraph(IWeight<E, W> weight, SCG.IEnumerable<V> vertices, SCG.IEnumerable<Edge<V, E>> edges) : this(weight)
@@ -687,7 +688,7 @@ namespace Graph
 
       return new HashGraph<V, E, W>(weight,
           vs,
-          Edges().Filter(delegate(Edge<V, E> e) { return vertexset.Contains(e.start) && vertexset.Contains(e.end); }));
+                Edges().Filter(delegate (Edge<V, E> e) { return vertexset.Contains(e.start) && vertexset.Contains(e.end); }));
     }
 
     public bool IsConnected
@@ -701,7 +702,7 @@ namespace Graph
       get
       {
         int components = 0;
-        TraverseVertices(false, null, delegate(V v) { components++; }, null);
+                TraverseVertices(false, null, delegate (V v) { components++; }, null);
         return components;
       }
     }
@@ -711,16 +712,16 @@ namespace Graph
       ArrayList<KeyValuePair<V, IGraph<V, E, W>>> retval = new ArrayList<KeyValuePair<V, IGraph<V, E, W>>>();
       HashGraph<V, E, W> component;
       ArrayList<V> vertices = null;
-      System.Action<Edge<V, E>> edgeaction = delegate(Edge<V, E> e)
+            System.Action<Edge<V, E>> edgeaction = delegate (Edge<V, E> e)
       {
         vertices.Add(e.end);
       };
-      System.Action<V> beforecomponent = delegate(V v)
+            System.Action<V> beforecomponent = delegate (V v)
       {
         vertices = new ArrayList<V>();
         vertices.Add(v);
       };
-      System.Action<V> aftercomponent = delegate(V v)
+            System.Action<V> aftercomponent = delegate (V v)
       {
         //component = SubGraph(vertices);
         component = new HashGraph<V, E, W>(weight);
@@ -776,7 +777,7 @@ namespace Graph
 
     public void TraverseVertices(bool bfs, System.Action<V> act)
     {
-      TraverseVertices(bfs, delegate(Edge<V, E> e) { act(e.end); }, act, null);
+            TraverseVertices(bfs, delegate (Edge<V, E> e) { act(e.end); }, act, null);
     }
 
     //TODO: merge the hash set here with the intra omponent one?
@@ -784,8 +785,8 @@ namespace Graph
     {
       HashSet<V> missing = new HashSet<V>();
       missing.AddAll(Vertices());
-      System.Action<Edge<V, E>> myact = act + delegate(Edge<V, E> e) { missing.Remove(e.end); };
-      System.Action<V> mybeforecomponent = beforecomponent + delegate(V v) { missing.Remove(v); };
+            System.Action<Edge<V, E>> myact = act + delegate (Edge<V, E> e) { missing.Remove(e.end); };
+            System.Action<V> mybeforecomponent = beforecomponent + delegate (V v) { missing.Remove(v); };
       while (!missing.IsEmpty)
       {
         V start = default(V);
@@ -810,7 +811,7 @@ namespace Graph
       //If we do not first set visit = null, the compiler will complain at visit(end)
       //that visit is uninitialized
       Visitor visit = null;
-      visit = delegate(V v, V parent, bool atRoot)
+            visit = delegate (V v, V parent, bool atRoot)
       {
         before(v);
         HashDictionary<V, E> adjacent;
@@ -892,7 +893,7 @@ namespace Graph
     {
       W dist = default(W);
       bool found = false;
-      PriorityFirstTraverse(true, start, delegate(Edge<V, E> e, W w)
+            PriorityFirstTraverse(true, start, delegate (Edge<V, E> e, W w)
       {
         if (end.Equals(e.end)) { dist = w; found = true; return false; }
         else return true;
@@ -906,7 +907,7 @@ namespace Graph
     public ICollectionValue<Edge<V, E>> ShortestPath(V start, V end)
     {
       HashDictionary<V, Edge<V, E>> backtrack = new HashDictionary<V, Edge<V, E>>();
-      PriorityFirstTraverse(true, start, delegate(Edge<V, E> e, W w) { backtrack[e.end] = e; return !end.Equals(e.end); });
+            PriorityFirstTraverse(true, start, delegate (Edge<V, E> e, W w) { backtrack[e.end] = e; return !end.Equals(e.end); });
       ArrayList<Edge<V, E>> path = new ArrayList<Edge<V, E>>();
       Edge<V, E> edge;
       V v = end;
@@ -924,8 +925,7 @@ namespace Graph
     /// <summary>
     /// NB: assume connected, throw exception if not
     /// </summary>
-    /// <typeparam name="W"></typeparam>
-    /// <param name="edgeWeight"></param>
+        /// <param name="start"></param>
     /// <returns></returns>
     public IGraph<V, E, W> MinimumSpanningTree(out V start)
     {
@@ -933,7 +933,7 @@ namespace Graph
       start = default(V);
       foreach (V v in graph.Keys)
       { start = v; break; }
-      PriorityFirstTraverse(false, start, delegate(Edge<V, E> e, W w) { edges.Add(e); return true; });
+            PriorityFirstTraverse(false, start, delegate (Edge<V, E> e, W w) { edges.Add(e); return true; });
       if (edges.Count != graph.Count - 1)
         throw new ArgumentException("Graph not connected");
       return new HashGraph<V, E, W>(weight, edges);
@@ -1140,7 +1140,7 @@ namespace Graph
     }
 
     /// <summary>
-    /// (Refer to the litterature, Vazirani)
+    /// (Refer to the literature, Vazirani)
     /// 
     /// (Describe: MST+Euler+shortcuts)
     /// </summary>
@@ -1158,7 +1158,7 @@ namespace Graph
       tour.Add(root);
       IList<V> view = tour.View(1, 1);
 
-      System.Action<Edge<V, E>> onfollow = delegate(Edge<V, E> e)
+            System.Action<Edge<V, E>> onfollow = delegate (Edge<V, E> e)
       {
         //slide the view until it points to the last copy of e.start
         while (!view[0].Equals(e.start))
@@ -1234,7 +1234,7 @@ namespace Graph
   }
 
 /// <summary>
-/// Attribute used for marking which examples use a particuler graph method
+/// Attribute used for marking which examples use a particular graph method
 /// </summary>
   class UsedByAttribute : Attribute
   {
@@ -1323,7 +1323,7 @@ namespace Graph
     }
 
     /// <summary>
-    /// Create edges of a graph correspondingto a "wheel" shape: the ecnter and equidistant 
+    /// Create edges of a graph corresponding to a "wheel" shape: the ecnter and equidistant 
     /// points around the perimeter. The edgedata and edge weights are the euclidean distances.
     /// </summary>
     /// <param name="complete">True means the graph will be complete, false that the graph
@@ -1363,9 +1363,9 @@ namespace Graph
       IGraph<int, int, int> g = new HashGraph<int, int, int>(new CountWeight<int>(), Grid(3));
       Console.WriteLine("Edge count: {0}", g.Edges().Count);
       Console.WriteLine("BFS:");
-      g.TraverseVertices(true, 1001, delegate(Edge<int, int> e) { Console.WriteLine(e); });
+            g.TraverseVertices(true, 1001, delegate (Edge<int, int> e) { Console.WriteLine(e); });
       Console.WriteLine("DFS:");
-      g.TraverseVertices(false, 1001, delegate(Edge<int, int> e) { Console.WriteLine(e); });
+            g.TraverseVertices(false, 1001, delegate (Edge<int, int> e) { Console.WriteLine(e); });
     }
 
     /// <summary>
@@ -1394,12 +1394,12 @@ namespace Graph
       g.PriorityFirstTraverse(
           true,
           2002,
-          delegate(Edge<int, int> e, int d) { Console.WriteLine("Edge: {0}, at distance {1}", e, d); return true; });
+                delegate (Edge<int, int> e, int d) { Console.WriteLine("Edge: {0}, at distance {1}", e, d); return true; });
       Console.WriteLine("========= PFS not accum =========");
       g.PriorityFirstTraverse(
           false,
           2002,
-          delegate(Edge<int, int> e, int d) { Console.WriteLine("Edge: {0}, at distance {1}", e, d); return true; });
+                delegate (Edge<int, int> e, int d) { Console.WriteLine("Edge: {0}, at distance {1}", e, d); return true; });
       Console.WriteLine("========= MST =========");
       int root;
       g.MinimumSpanningTree(out root).Print(Console.Out);
@@ -1415,13 +1415,13 @@ namespace Graph
       Console.WriteLine("========= PFS =========");
       g.PriorityFirstTraverse(false,
           "U3",
-          delegate(Edge<string, int> e, int d) { Console.WriteLine("Edge: {0}, at distance {1}", e, d); return true; });
+                delegate (Edge<string, int> e, int d) { Console.WriteLine("Edge: {0}, at distance {1}", e, d); return true; });
       Console.WriteLine("========= MST =========");
       string root;
       IGraph<string, int, int> mst = g.MinimumSpanningTree(out root);
       mst.Print(Console.Out);
       Console.WriteLine("DFS:");
-      mst.TraverseVertices(false, root, delegate(Edge<string, int> e) { Console.WriteLine(e); });
+            mst.TraverseVertices(false, root, delegate (Edge<string, int> e) { Console.WriteLine(e); });
       Console.WriteLine("ATSP:");
       int first = 0;
       foreach (string s in g.ApproximateTSP())
@@ -1433,7 +1433,7 @@ namespace Graph
     /// <summary>
     /// This example examines the two variants of a priority-first search:
     ///  with accumulated weights, leading to shortest paths from start;
-    ///  with non-acumulated weights, leading to a minimum spanning tree.
+    ///  with non-accumulated weights, leading to a minimum spanning tree.
     /// </summary>
     [ExampleDescription("Priority-first-search with and without accumulated weights")]
     static void testPFS()
@@ -1443,11 +1443,11 @@ namespace Graph
       Console.WriteLine("========= PFS non-accumulated weights (-> MST) =========");
       g.PriorityFirstTraverse(false,
           "P0",
-          delegate(Edge<string, double> e, double d) { Console.WriteLine("Edge: {0}, at distance {1}", e, d); return true; });
-      Console.WriteLine("========= PFS accumulated weights (-> Shortst paths from start) =========");
+                delegate (Edge<string, double> e, double d) { Console.WriteLine("Edge: {0}, at distance {1}", e, d); return true; });
+            Console.WriteLine("========= PFS accumulated weights (-> Shortest paths from start) =========");
       g.PriorityFirstTraverse(true,
           "P0",
-          delegate(Edge<string, double> e, double d) { Console.WriteLine("Edge: {0}, at distance {1}", e, d); return true; });
+                delegate (Edge<string, double> e, double d) { Console.WriteLine("Edge: {0}, at distance {1}", e, d); return true; });
     }
 
     /// <summary>
@@ -1467,7 +1467,7 @@ namespace Graph
       IGraph<string, double, double> mst = g.MinimumSpanningTree(out root);
       mst.TraverseVertices(false,
          root,
-         delegate(Edge<string, double> e) { Console.WriteLine("Edge: {0} -> {1}", e.start, e.end); });
+               delegate (Edge<string, double> e) { Console.WriteLine("Edge: {0} -> {1}", e.start, e.end); });
       Console.WriteLine("========= Approximate TSP =========");
       int first = 0;
       foreach (string s in g.ApproximateTSP())
@@ -1598,22 +1598,22 @@ namespace Graph
       int[] leastIndexReachableFrom = new int[g.VertexCount];
       int nextindex = 0;
       int outgoingFromRoot = 0;
-      System.Action<string> beforevertex = delegate(string v)
+            System.Action<string> beforevertex = delegate (string v)
       {
         int i = (index[v] = nextindex++);
         leastIndexReachableFrom[i] = i;
       };
-      System.Action<string> aftervertex = delegate(string v)
+            System.Action<string> aftervertex = delegate (string v)
       {
         int i = index[v];
         if (i == 0 && outgoingFromRoot > 1)
           Console.WriteLine("Articulation point: {0} ({1}>1 outgoing DFS edges from start)",
               v, outgoingFromRoot);
       };
-      System.Action<Edge<string, int>> onfollow = delegate(Edge<string, int> e)
+            System.Action<Edge<string, int>> onfollow = delegate (Edge<string, int> e)
       {
       };
-      System.Action<Edge<string, int>> onfollowed = delegate(Edge<string, int> e)
+            System.Action<Edge<string, int>> onfollowed = delegate (Edge<string, int> e)
       {
         int startind = index[e.start], endind = index[e.end];
         if (startind == 0)
@@ -1628,7 +1628,7 @@ namespace Graph
             leastIndexReachableFrom[startind] = leastIndexReachable;
         }
       };
-      System.Action<Edge<string, int>> onnotfollowed = delegate(Edge<string, int> e)
+            System.Action<Edge<string, int>> onnotfollowed = delegate (Edge<string, int> e)
       {
         int startind = index[e.start], endind = index[e.end];
         if (leastIndexReachableFrom[startind] > endind)

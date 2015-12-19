@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
+ Copyright (c) 2003-2015 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -80,10 +80,9 @@ namespace C5UnitTests.trees.RBDictionary
         public void Dispose() { dict = null; }
 
         [Test]
-        [ExpectedException(typeof(NullReferenceException))]
         public void NullEqualityComparerinConstructor1()
         {
-            new TreeDictionary<int, int>(null);
+            Assert.Throws<NullReferenceException>(() => new TreeDictionary<int, int>(null));
         }
 
         [Test]
@@ -94,10 +93,9 @@ namespace C5UnitTests.trees.RBDictionary
         }
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void BadChoose()
         {
-            dict.Choose();
+            Assert.Throws<NoSuchItemException>(() => dict.Choose());
         }
 
         [Test]
@@ -193,19 +191,19 @@ namespace C5UnitTests.trees.RBDictionary
 
 
         [Test]
-        [ExpectedException(typeof(DuplicateNotAllowedException), ExpectedMessage = "Key being added: 'A'")]
         public void IllegalAdd()
         {
             dict.Add("A", "B");
-            dict.Add("A", "B");
+
+            var exception = Assert.Throws<DuplicateNotAllowedException>(() => dict.Add("A", "B"));
+            Assert.AreEqual("Key being added: 'A'", exception.Message);
         }
 
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void GettingNonExisting()
         {
-            Console.WriteLine(dict["R"]);
+            Assert.Throws<NoSuchItemException>(() => Console.WriteLine(dict["R"]));
         }
 
 
@@ -309,37 +307,32 @@ namespace C5UnitTests.trees.RBDictionary
         }
 
         [Test]
-        [ExpectedException(typeof(ReadOnlyCollectionException))]
         public void IllegalAdd()
         {
-            dict.Add("Q", "7");
+            Assert.Throws<ReadOnlyCollectionException>(() => dict.Add("Q", "7"));
         }
 
         [Test]
-        [ExpectedException(typeof(ReadOnlyCollectionException))]
         public void IllegalClear()
         {
-            dict.Clear();
+            Assert.Throws<ReadOnlyCollectionException>(() => dict.Clear());
         }
         [Test]
 
-        [ExpectedException(typeof(ReadOnlyCollectionException))]
         public void IllegalSet()
         {
-            dict["A"] = "8";
+            Assert.Throws<ReadOnlyCollectionException>(() => dict["A"] = "8");
         }
 
-        [ExpectedException(typeof(ReadOnlyCollectionException))]
         public void IllegalRemove()
         {
-            dict.Remove("A");
+            Assert.Throws<ReadOnlyCollectionException>(() => dict.Remove("A"));
         }
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void GettingNonExisting()
         {
-            Console.WriteLine(dict["R"]);
+            Assert.Throws<NoSuchItemException>(() => Console.WriteLine(dict["R"]));
         }
     }
 
@@ -394,13 +387,13 @@ namespace C5UnitTests.trees.RBDictionary
             Assert.AreEqual(3, keys.Count);
             // This doesn't hold, maybe because the dict uses a special key comparer?
             // Assert.IsTrue(keys.SequencedEquals(new WrappedArray<string>(new string[] { "R", "S", "T" })));
-            Assert.IsTrue(keys.UniqueItems().All(delegate(String s) { return s == "R" || s == "S" || s == "T"; }));
-            Assert.IsTrue(keys.All(delegate(String s) { return s == "R" || s == "S" || s == "T"; }));
-            Assert.IsFalse(keys.Exists(delegate(String s) { return s != "R" && s != "S" && s != "T"; }));
+            Assert.IsTrue(keys.UniqueItems().All(delegate (String s) { return s == "R" || s == "S" || s == "T"; }));
+            Assert.IsTrue(keys.All(delegate (String s) { return s == "R" || s == "S" || s == "T"; }));
+            Assert.IsFalse(keys.Exists(delegate (String s) { return s != "R" && s != "S" && s != "T"; }));
             String res;
-            Assert.IsTrue(keys.Find(delegate(String s) { return s == "R"; }, out res));
+            Assert.IsTrue(keys.Find(delegate (String s) { return s == "R"; }, out res));
             Assert.AreEqual("R", res);
-            Assert.IsFalse(keys.Find(delegate(String s) { return s == "Q"; }, out res));
+            Assert.IsFalse(keys.Find(delegate (String s) { return s == "Q"; }, out res));
             Assert.AreEqual(null, res);
         }
 
@@ -510,10 +503,9 @@ namespace C5UnitTests.trees.RBDictionary
 
 
             [Test]
-            [ExpectedException(typeof(ReadOnlyCollectionException))]
             public void UpdateSnap()
             {
-                snap["Y"] = "J";
+                Assert.Throws<ReadOnlyCollectionException>(() => snap["Y"] = "J");
             }
 
 

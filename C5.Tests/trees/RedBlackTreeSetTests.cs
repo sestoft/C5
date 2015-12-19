@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
+ Copyright (c) 2003-2015 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -33,8 +33,8 @@ namespace C5UnitTests.trees.TreeSet
     {
         [Test]
         public void TestEvents()
-        {
-            Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
+        { 
+            Func<CollectionOfInt> factory = delegate () { return new CollectionOfInt(TenEqualityComparer.Default); };
             new C5UnitTests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory, MemoryType.Normal);
         }
 
@@ -212,23 +212,21 @@ namespace C5UnitTests.trees.TreeSet
 
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void Enumerator2()
         {
             SCG.IEnumerator<int> e = tree.RangeFromTo(5, 17).GetEnumerator();
-            int i = e.Current;
+            Assert.Throws<InvalidOperationException>(() => { int i = e.Current; });
         }
 
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void Enumerator3()
         {
             SCG.IEnumerator<int> e = tree.RangeFromTo(5, 17).GetEnumerator();
 
             while (e.MoveNext()) ;
 
-            int i = e.Current;
+            Assert.Throws<InvalidOperationException>(() => { int i = e.Current; });
         }
 
 
@@ -409,31 +407,27 @@ namespace C5UnitTests.trees.TreeSet
         }
 
         [Test]
-        [ExpectedException(typeof(NullReferenceException))]
         public void NullEqualityComparerinConstructor1()
         {
-            new TreeSet<int>(null);
+            Assert.Throws<NullReferenceException>(() => new TreeSet<int>(null));
         }
 
         [Test]
-        [ExpectedException(typeof(NullReferenceException))]
         public void NullEqualityComparerinConstructor3()
         {
-            new TreeSet<int>(null, EqualityComparer<int>.Default);
+            Assert.Throws<NullReferenceException>(() => new TreeSet<int>(null, EqualityComparer<int>.Default));
         }
 
         [Test]
-        [ExpectedException(typeof(NullReferenceException))]
         public void NullEqualityComparerinConstructor4()
         {
-            new TreeSet<int>(SCG.Comparer<int>.Default, null);
+            Assert.Throws<NullReferenceException>(() => new TreeSet<int>(SCG.Comparer<int>.Default, null));
         }
 
         [Test]
-        [ExpectedException(typeof(NullReferenceException))]
         public void NullEqualityComparerinConstructor5()
         {
-            new TreeSet<int>(null, null);
+            Assert.Throws<NullReferenceException>(() => new TreeSet<int>(null, null));
         }
 
         [Test]
@@ -444,10 +438,9 @@ namespace C5UnitTests.trees.TreeSet
         }
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void BadChoose()
         {
-            tree.Choose();
+            Assert.Throws<NoSuchItemException>(() => tree.Choose());
         }
 
 
@@ -523,7 +516,7 @@ namespace C5UnitTests.trees.TreeSet
         public void Init()
         {
             list = new TreeSet<int>(TenEqualityComparer.Default);
-            pred = delegate(int i) { return i % 5 == 0; };
+            pred = delegate (int i) { return i % 5 == 0; };
         }
 
         [TearDown]
@@ -621,12 +614,17 @@ namespace C5UnitTests.trees.TreeSet
         private string aeq(int[] a, params int[] b)
         {
             if (a.Length != b.Length)
+            {
                 return "Lengths differ: " + a.Length + " != " + b.Length;
+            }
 
             for (int i = 0; i < a.Length; i++)
+            {
                 if (a[i] != b[i])
+                {
                     return string.Format("{0}'th elements differ: {1} != {2}", i, a[i], b[i]);
-
+                }
+            }
             return "Alles klar";
         }
 
@@ -661,39 +659,30 @@ namespace C5UnitTests.trees.TreeSet
 
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void CopyToBad()
         {
-            tree.CopyTo(a, 11);
+            Assert.Throws<ArgumentOutOfRangeException>(() => tree.CopyTo(a, 11));
         }
 
-
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void CopyToBad2()
         {
-            tree.CopyTo(a, -1);
+            Assert.Throws<ArgumentOutOfRangeException>(() => tree.CopyTo(a, -1));
         }
 
-
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void CopyToTooFar()
         {
             tree.Add(3);
             tree.Add(4);
-            tree.CopyTo(a, 9);
+            Assert.Throws<ArgumentOutOfRangeException>(() => tree.CopyTo(a, 9));
         }
     }
-
-
-
 
     [TestFixture]
     public class Remove
     {
         private TreeSet<int> tree;
-
 
         [SetUp]
         public void Init()
@@ -767,27 +756,27 @@ namespace C5UnitTests.trees.TreeSet
 
 
         [Test]
-        [ExpectedException(typeof(IndexOutOfRangeException), ExpectedMessage = "Index out of range for sequenced collectionvalue")]
         public void Empty()
         {
             tree.Clear();
-            tree.RemoveAt(0);
+            var exception = Assert.Throws<IndexOutOfRangeException>(() => tree.RemoveAt(0));
+            Assert.AreEqual("Index out of range for sequenced collectionvalue", exception.Message);
         }
 
 
         [Test]
-        [ExpectedException(typeof(IndexOutOfRangeException), ExpectedMessage = "Index out of range for sequenced collectionvalue")]
         public void HighIndex()
         {
-            tree.RemoveAt(tree.Count);
+            var exception = Assert.Throws<IndexOutOfRangeException>(() => tree.RemoveAt(tree.Count));
+            Assert.AreEqual("Index out of range for sequenced collectionvalue", exception.Message);
         }
 
 
         [Test]
-        [ExpectedException(typeof(IndexOutOfRangeException), ExpectedMessage = "Index out of range for sequenced collectionvalue")]
         public void LowIndex()
         {
-            tree.RemoveAt(-1);
+            var exception = Assert.Throws<IndexOutOfRangeException>(() => tree.RemoveAt(-1));
+            Assert.AreEqual("Index out of range for sequenced collectionvalue", exception.Message);
         }
 
 
@@ -1005,20 +994,17 @@ namespace C5UnitTests.trees.TreeSet
 
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void PredecessorTooLow1()
         {
-            tree.Predecessor(-2);
+            Assert.Throws<NoSuchItemException>(() => tree.Predecessor(-2));
         }
 
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void PredecessorTooLow2()
         {
-            tree.Predecessor(0);
+            Assert.Throws<NoSuchItemException>(() => tree.Predecessor(0));
         }
-
 
         [Test]
         public void WeakPredecessor()
@@ -1036,12 +1022,10 @@ namespace C5UnitTests.trees.TreeSet
             Assert.AreEqual(38, tree.WeakPredecessor(38));
         }
 
-
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void WeakPredecessorTooLow1()
         {
-            tree.WeakPredecessor(-2);
+            Assert.Throws<NoSuchItemException>(() => tree.WeakPredecessor(-2));
         }
 
 
@@ -1062,20 +1046,16 @@ namespace C5UnitTests.trees.TreeSet
 
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void SuccessorTooHigh1()
         {
-            tree.Successor(38);
+            Assert.Throws<NoSuchItemException>(() => tree.Successor(38));
         }
-
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void SuccessorTooHigh2()
         {
-            tree.Successor(39);
+            Assert.Throws<NoSuchItemException>(() => tree.Successor(39));
         }
-
 
         [Test]
         public void WeakSuccessor()
@@ -1095,10 +1075,9 @@ namespace C5UnitTests.trees.TreeSet
 
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void WeakSuccessorTooHigh1()
         {
-            tree.WeakSuccessor(39);
+            Assert.Throws<NoSuchItemException>(() => tree.WeakSuccessor(39));
         }
 
 
@@ -1108,8 +1087,6 @@ namespace C5UnitTests.trees.TreeSet
             tree = null;
         }
     }
-
-
 
     [TestFixture]
     public class PriorityQueue
@@ -1123,13 +1100,11 @@ namespace C5UnitTests.trees.TreeSet
             tree = new TreeSet<int>(new IC());
         }
 
-
         private void loadup()
         {
             foreach (int i in new int[] { 1, 2, 3, 4 })
                 tree.Add(i);
         }
-
 
         [Test]
         public void Normal()
@@ -1147,38 +1122,29 @@ namespace C5UnitTests.trees.TreeSet
             Assert.IsTrue(tree.Check("Normal test 2"), "Bad tree");
         }
 
-
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void Empty1()
         {
-            tree.FindMin();
+            Assert.Throws<NoSuchItemException>(() => tree.FindMin());
         }
 
-
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void Empty2()
         {
-            tree.FindMax();
+            Assert.Throws<NoSuchItemException>(() => tree.FindMax());
         }
 
-
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void Empty3()
         {
-            tree.DeleteMin();
+            Assert.Throws<NoSuchItemException>(() => tree.DeleteMin());
         }
-
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void Empty4()
         {
-            tree.DeleteMax();
+            Assert.Throws<NoSuchItemException>(() => tree.DeleteMax());
         }
-
 
         [TearDown]
         public void Dispose()
@@ -1187,20 +1153,16 @@ namespace C5UnitTests.trees.TreeSet
         }
     }
 
-
-
     [TestFixture]
     public class IndexingAndCounting
     {
         private TreeSet<int> tree;
-
 
         [SetUp]
         public void Init()
         {
             tree = new TreeSet<int>(new IC());
         }
-
 
         private void populate()
         {
@@ -1209,7 +1171,6 @@ namespace C5UnitTests.trees.TreeSet
             tree.Add(10);
             tree.Add(70);
         }
-
 
         [Test]
         public void ToArray()
@@ -1254,20 +1215,18 @@ namespace C5UnitTests.trees.TreeSet
 
 
         [Test]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
         public void IndexTooLarge()
         {
             populate();
-            Console.WriteLine(tree[4]);
+            Assert.Throws<IndexOutOfRangeException>(() => Console.WriteLine(tree[4]));
         }
 
 
         [Test]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
         public void IndexTooSmall()
         {
             populate();
-            Console.WriteLine(tree[-1]);
+            Assert.Throws<IndexOutOfRangeException>(() => Console.WriteLine(tree[-1]));
         }
 
 
@@ -1307,7 +1266,6 @@ namespace C5UnitTests.trees.TreeSet
             Assert.AreEqual(2, tree.CountTo(50));
         }
 
-
         [Test]
         public void CountEmptyTree()
         {
@@ -1316,16 +1274,12 @@ namespace C5UnitTests.trees.TreeSet
             Assert.AreEqual(0, tree.CountTo(40));
         }
 
-
         [TearDown]
         public void Dispose()
         {
             tree = null;
         }
     }
-
-
-
 
     namespace ModificationCheck
     {
@@ -1358,31 +1312,28 @@ namespace C5UnitTests.trees.TreeSet
 
 
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void MoveNextAfterAdd()
             {
                 tree.Add(34);
-                e.MoveNext();
+
+                Assert.Throws<CollectionModifiedException>(() => e.MoveNext());
             }
 
-
-
-
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void MoveNextAfterRemove()
             {
                 tree.Remove(34);
-                e.MoveNext();
+
+                Assert.Throws<CollectionModifiedException>(() => e.MoveNext());
             }
 
 
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void MoveNextAfterClear()
             {
                 tree.Clear();
-                e.MoveNext();
+
+                Assert.Throws<CollectionModifiedException>(() => e.MoveNext());
             }
 
 
@@ -1394,15 +1345,12 @@ namespace C5UnitTests.trees.TreeSet
             }
         }
 
-
-
         [TestFixture]
         public class RangeEnumerator
         {
             private TreeSet<int> tree;
 
             private SCG.IEnumerator<int> e;
-
 
             [SetUp]
             public void Init()
@@ -1414,7 +1362,6 @@ namespace C5UnitTests.trees.TreeSet
                 e = tree.RangeFromTo(3, 7).GetEnumerator();
             }
 
-
             [Test]
             public void CurrentAfterModification()
             {
@@ -1425,31 +1372,28 @@ namespace C5UnitTests.trees.TreeSet
 
 
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void MoveNextAfterAdd()
             {
                 tree.Add(34);
-                e.MoveNext();
+
+                Assert.Throws<CollectionModifiedException>(() => e.MoveNext());
             }
 
-
-
-
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void MoveNextAfterRemove()
             {
                 tree.Remove(34);
-                e.MoveNext();
+
+                Assert.Throws<CollectionModifiedException>(() => e.MoveNext());
             }
 
 
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void MoveNextAfterClear()
             {
                 tree.Clear();
-                e.MoveNext();
+
+                Assert.Throws<CollectionModifiedException>(() => e.MoveNext());
             }
 
 
@@ -1462,9 +1406,6 @@ namespace C5UnitTests.trees.TreeSet
         }
     }
 
-
-
-
     namespace PathcopyPersistence
     {
         [TestFixture]
@@ -1473,7 +1414,6 @@ namespace C5UnitTests.trees.TreeSet
             private TreeSet<int> tree, snap;
 
             private SCG.IComparer<int> ic;
-
 
             [SetUp]
             public void Init()
@@ -1536,20 +1476,17 @@ namespace C5UnitTests.trees.TreeSet
                 //Assert.AreEqual(snap.RangeFromTo(6, 16).Count, 5);
             }
 
-
             [Test]
             public void Contains()
             {
                 Assert.IsTrue(snap.Contains(5));
             }
 
-
             [Test]
             public void FindMin()
             {
                 Assert.AreEqual(1, snap.FindMin());
             }
-
 
             [Test]
             public void FindMax()
@@ -1662,28 +1599,34 @@ namespace C5UnitTests.trees.TreeSet
 
 
             [Test]
-            [ExpectedException(typeof(NotSupportedException), ExpectedMessage = "Indexing not supported for snapshots")]
             public void CountTo()
             {
-                int j = snap.CountTo(15);
+                var exception = Assert.Throws<NotSupportedException>(() =>
+                {
+                    int j = snap.CountTo(15);
+                });
+                Assert.AreEqual("Indexing not supported for snapshots", exception.Message);
             }
 
-
             [Test]
-            [ExpectedException(typeof(NotSupportedException), ExpectedMessage = "Indexing not supported for snapshots")]
             public void Indexing()
             {
-                int j = snap[4];
+                var exception = Assert.Throws<NotSupportedException>(() =>
+                {
+                    int j = snap[4];
+                });
+                Assert.AreEqual("Indexing not supported for snapshots", exception.Message);
             }
-
 
             [Test]
-            [ExpectedException(typeof(NotSupportedException), ExpectedMessage = "Indexing not supported for snapshots")]
             public void Indexing2()
             {
-                int j = snap.IndexOf(5);
+                var exception = Assert.Throws<NotSupportedException>(() =>
+                {
+                    int j = snap.IndexOf(5);
+                });
+                Assert.AreEqual("Indexing not supported for snapshots", exception.Message);
             }
-
 
             [TearDown]
             public void Dispose()
@@ -1692,8 +1635,6 @@ namespace C5UnitTests.trees.TreeSet
                 ic = null;
             }
         }
-
-
 
         [TestFixture]
         public class Single
@@ -1904,14 +1845,13 @@ namespace C5UnitTests.trees.TreeSet
 
 
             [Test]
-            [ExpectedException(typeof(InvalidOperationException), ExpectedMessage = "Cannot snapshot a snapshot")]
             public void SnapSnap()
             {
                 TreeSet<int> snap = (TreeSet<int>)tree.Snapshot();
 
-                snap.Snapshot();
+                var exception = Assert.Throws<InvalidOperationException>(() => snap.Snapshot());
+                Assert.AreEqual("Cannot snapshot a snapshot", exception.Message);
             }
-
 
             [TearDown]
             public void Dispose()
@@ -1921,15 +1861,12 @@ namespace C5UnitTests.trees.TreeSet
             }
         }
 
-
-
         [TestFixture]
         public class Multiple
         {
             private TreeSet<int> tree;
 
             private SCG.IComparer<int> ic;
-
 
             private bool eq(SCG.IEnumerable<int> me, int[] that)
             {
@@ -1942,7 +1879,6 @@ namespace C5UnitTests.trees.TreeSet
                 return true;
             }
 
-
             [SetUp]
             public void Init()
             {
@@ -1951,7 +1887,6 @@ namespace C5UnitTests.trees.TreeSet
                 for (int i = 0; i < 10; i++)
                     tree.Add(2 * i + 1);
             }
-
 
             [Test]
             public void First()
@@ -2206,13 +2141,18 @@ namespace C5UnitTests.trees.TreeSet
 
 
             [Test]
-            [ExpectedException(typeof(ArgumentException), ExpectedMessage = "mapper not monotonic")]
             public void BadMap()
             {
                 for (int i = 0; i < 11; i++)
+                {
                     tree.Add(i * i * i);
+                }
 
-                ISorted<string> res = tree.Map(new Func<int, string>(badmap), new SC());
+                var exception = Assert.Throws<ArgumentException>(() =>
+                {
+                    ISorted<string> res = tree.Map(new Func<int, string>(badmap), new SC());
+                });
+                Assert.AreEqual("mapper not monotonic", exception.Message);
             }
 
 
@@ -2447,10 +2387,10 @@ namespace C5UnitTests.trees.TreeSet
             }
 
             [Test]
-            [ExpectedException(typeof(ArgumentException), ExpectedMessage = "Argument not sorted")]
             public void EmptyBad()
             {
-                tree.AddSorted(new FunEnumerable(9, new Func<int, int>(bad)));
+                var exception = Assert.Throws<ArgumentException>(() => tree.AddSorted(new FunEnumerable(9, new Func<int, int>(bad))));
+                Assert.AreEqual("Argument not sorted", exception.Message);
             }
 
 
@@ -2572,26 +2512,23 @@ namespace C5UnitTests.trees.TreeSet
 
 
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void RemoveRangeBad1()
             {
-                tree.RemoveInterval(-3, 8);
+                Assert.Throws<ArgumentOutOfRangeException>(() => tree.RemoveInterval(-3, 8));
             }
 
 
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void RemoveRangeBad2()
             {
-                tree.RemoveInterval(3, -8);
+                Assert.Throws<ArgumentOutOfRangeException>(() => tree.RemoveInterval(3, -8));
             }
 
 
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void RemoveRangeBad3()
             {
-                tree.RemoveInterval(3, 8);
+                Assert.Throws<ArgumentOutOfRangeException>(() => tree.RemoveInterval(3, 8));
             }
 
 
@@ -2604,30 +2541,32 @@ namespace C5UnitTests.trees.TreeSet
                 Assert.IsTrue(IC.eq(e));
             }
 
-
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void GetRangeBad1()
             {
-                object foo = tree[-3, 0];
+                Assert.Throws<ArgumentOutOfRangeException>(() =>
+                {
+                    object foo = tree[-3, 0];
+                });
             }
 
-
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void GetRangeBad2()
             {
-                object foo = tree[3, -1];
+                Assert.Throws<ArgumentOutOfRangeException>(() =>
+                {
+                    object foo = tree[3, -1];
+                });
             }
-
 
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void GetRangeBad3()
             {
-                object foo = tree[3, 8];
+                Assert.Throws<ArgumentOutOfRangeException>(() =>
+                {
+                    object foo = tree[3, 8];
+                });
             }
-
 
             [TearDown]
             public void Dispose() { tree = null; tree2 = null; }

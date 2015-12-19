@@ -20,6 +20,7 @@
     <DefineConstants>TRACE;DEBUG;NET35</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\C5.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -27,7 +28,8 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>bin\Release\C5.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -61,6 +63,9 @@
     </Compile>
     <Compile Include="..\C5\comparers\ComparerFactory.cs">
       <Link>ComparerFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\C5\comparers\EqualityComparer.cs">
+      <Link>EqualityComparer.cs</Link>
     </Compile>
     <Compile Include="..\C5\comparers\InternalComparer.cs">
       <Link>InternalComparer.cs</Link>
@@ -149,6 +154,8 @@
     <Compile Include="..\C5\Wrappers.cs">
       <Link>Wrappers.cs</Link>
     </Compile>
+    <Compile Include="IReadOnlyCollection.cs" />
+    <Compile Include="IReadOnlyList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\C5.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\C5.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -62,6 +64,9 @@
     </Compile>
     <Compile Include="..\C5\comparers\ComparerFactory.cs">
       <Link>ComparerFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\C5\comparers\EqualityComparer.cs">
+      <Link>EqualityComparer.cs</Link>
     </Compile>
     <Compile Include="..\C5\comparers\InternalComparer.cs">
       <Link>InternalComparer.cs</Link>
@@ -107,6 +112,12 @@
     </Compile>
     <Compile Include="..\C5\Interfaces.cs">
       <Link>Interfaces.cs</Link>
+    </Compile>
+    <Compile Include="..\C5\IReadOnlyCollection.cs">
+      <Link>IReadOnlyCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\C5\IReadOnlyList.cs">
+      <Link>IReadOnlyList.cs</Link>
     </Compile>
     <Compile Include="..\C5\linkedlists\HashedLinkedList.cs">
       <Link>HashedLinkedList.cs</Link>

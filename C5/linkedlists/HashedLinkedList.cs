@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
+ Copyright (c) 2003-2015 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -118,7 +118,7 @@ namespace C5
         }
 
         /// <summary>
-        /// Check if we are a view that the underlyinglist has only been updated through us.
+        /// Check if we are a view that the underlying list has only been updated through us.
         /// <br/>
         /// This method should be called from enumerators etc to guard against 
         /// modification of the base collection.
@@ -1218,7 +1218,7 @@ namespace C5
         /// <summary>
         /// Insert an item at the end of a compatible view, used as a pointer.
         /// <para>The <code>pointer</code> must be a view on the same list as
-        /// <code>this</code> and the endpoitn of <code>pointer</code> must be
+        /// <code>this</code> and the endpoint of <code>pointer</code> must be
         /// a valid insertion point of <code>this</code></para>
         /// </summary>
         /// <exception cref="IncompatibleViewException">If <code>pointer</code> 
@@ -2033,7 +2033,7 @@ namespace C5
         }
 
         /// <summary>
-        /// Searches for an item in the list going forwrds from the start.
+        /// Searches for an item in the list going forwards from the start.
         /// </summary>
         /// <param name="item">Item to search for.</param>
         /// <returns>Index of item from start.</returns>
@@ -2052,7 +2052,7 @@ namespace C5
         }
 
         /// <summary>
-        /// Searches for an item in the list going backwords from the end.
+        /// Searches for an item in the list going backwards from the end.
         /// </summary>
         /// <param name="item">Item to search for.</param>
         /// <returns>Index of of item from the end.</returns>
@@ -2128,7 +2128,7 @@ namespace C5
         /// <summary>
         /// Create a collection containing the same items as this collection, but
         /// whose enumerator will enumerate the items backwards. The new collection
-        /// will become invalid if the original is modified. Method typicaly used as in
+        /// will become invalid if the original is modified. Method typically used as in
         /// <code>foreach (T x in coll.Backwards()) {...}</code>
         /// </summary>
         /// <returns>The backwards collection.</returns>
@@ -2475,7 +2475,7 @@ namespace C5
         /// <para>The asymptotic running time complexity of this method is <code>O(n+m+v*log(v))</code>, 
         /// where <code>n</code> is the size of this collection, <code>m</code> is the size of the
         /// <code>items</code> collection and <code>v</code> is the number of views. 
-        /// The method will temporarily allocate memory of size <code>O(m+v)</code>. The stated complexitiy 
+        /// The method will temporarily allocate memory of size <code>O(m+v)</code>. The stated complexity 
         /// holds under the assumption that the itemequalityComparer of this list is well-behaved.
         /// </para>
         /// </summary>

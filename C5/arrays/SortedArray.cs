@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
+ Copyright (c) 2003-2015 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -172,7 +172,7 @@ namespace C5
         /// Determine the number of items at or above a supplied threshold.
         /// </summary>
         /// <param name="bot">The lower bound (inclusive)</param>
-        /// <returns>The number of matcing items.</returns>
+        /// <returns>The number of matching items.</returns>
         public int CountFrom(T bot)
         {
             int lo;
@@ -187,7 +187,7 @@ namespace C5
         /// </summary>
         /// <param name="bot">The lower bound (inclusive)</param>
         /// <param name="top">The upper bound (exclusive)</param>
-        /// <returns>The number of matcing items.</returns>
+        /// <returns>The number of matching items.</returns>
         public int CountFromTo(T bot, T top)
         {
             int lo, hi;
@@ -202,7 +202,7 @@ namespace C5
         /// Determine the number of items below a supplied threshold.
         /// </summary>
         /// <param name="top">The upper bound (exclusive)</param>
-        /// <returns>The number of matcing items.</returns>
+        /// <returns>The number of matching items.</returns>
         public int CountTo(T top)
         {
             int hi;
@@ -507,7 +507,7 @@ namespace C5
 
         /// <summary>
         /// Perform a search in the sorted collection for the ranges in which a
-        /// non-increasing (i.e. weakly decrerasing) function from the item type to 
+        /// non-increasing (i.e. weakly decreasing) function from the item type to 
         /// <code>int</code> is
         /// negative, zero respectively positive. If the supplied cut function is
         /// not non-increasing, the result of this call is undefined.
@@ -1077,7 +1077,7 @@ namespace C5
 
         /// <summary>
         /// Check the integrity of the internal data structures of this collection.
-        /// Only avaliable in DEBUG builds???
+        /// Only available in DEBUG builds???
         /// </summary>
         /// <returns>True if check does not fail.</returns>
         public override bool Check()
@@ -1140,7 +1140,7 @@ namespace C5
 
             if (BinarySearch(item, out ind)) return false;
 
-            insert(ind, item);
+            InsertProtected(ind, item);
             raiseForAdd(item);
             return true;
         }
@@ -1309,7 +1309,7 @@ namespace C5
         public virtual Speed IndexingSpeed { get { return Speed.Constant; } }
 
         /// <summary>
-        /// Searches for an item in the list going forwrds from the start.
+        /// Searches for an item in the list going forwards from the start.
         /// </summary>
         /// <param name="item">Item to search for.</param>
         /// <returns>Index of item from start.</returns>
@@ -1317,7 +1317,7 @@ namespace C5
 
 
         /// <summary>
-        /// Searches for an item in the list going backwords from the end.
+        /// Searches for an item in the list going backwards from the end.
         /// </summary>
         /// <param name="item">Item to search for.</param>
         /// <returns>Index of of item from the end.</returns>
@@ -1379,7 +1379,7 @@ namespace C5
         /// <summary>
         /// Create a collection containing the same items as this collection, but
         /// whose enumerator will enumerate the items backwards. The new collection
-        /// will become invalid if the original is modified. Method typicaly used as in
+        /// will become invalid if the original is modified. Method typically used as in
         /// <code>foreach (T x in coll.Backwards()) {...}</code>
         /// </summary>
         /// <returns>The backwards collection.</returns>

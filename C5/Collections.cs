@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
+ Copyright (c) 2003-2015 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -857,7 +857,7 @@ namespace C5
         /// <summary>
         /// Check if it is valid to perform update operations, and if so increment stamp.
         /// </summary>
-        /// <exception cref="ReadOnlyCollectionException">If colection is read-only</exception>
+        /// <exception cref="ReadOnlyCollectionException">If collection is read-only</exception>
         protected virtual void updatecheck()
         {
             if (isReadOnlyBase)
@@ -1142,14 +1142,9 @@ namespace C5
         /// The offset into the internal array container of the first item. The offset is 0 for a 
         /// base dynamic array and may be positive for an updatable view into a base dynamic array.
         /// </summary>
-        protected int offset;
+        protected int offsetField;
 
         private readonly Enumerator _internalEnumerator;
-
-        /// <summary>
-        /// 
-        /// </summary> 
-
         #endregion
 
         #region Util
@@ -1189,7 +1184,7 @@ namespace C5
         /// </summary>
         /// <param name="i">The index at which to insert.</param>
         /// <param name="item">The item to insert.</param>
-        protected virtual void insert(int i, T item)
+        protected virtual void InsertProtected(int i, T item)
         {
             if (size == array.Length)
                 expand();
@@ -1265,7 +1260,7 @@ namespace C5
         {
             T[] res = new T[size];
 
-            Array.Copy(array, offset, res, 0, size);
+            Array.Copy(array, offsetField, res, 0, size);
             return res;
         }
 
@@ -1395,7 +1390,7 @@ namespace C5
         /// <returns>The enumerator</returns>
         public override SCG.IEnumerator<T> GetEnumerator()
         {
-            int thestamp = stamp, theend = size + offset, thestart = offset;
+            int thestamp = stamp, theend = size + offsetField, thestart = offsetField;
 
             var enumerator = (Enumerator)_internalEnumerator.GetEnumerator();
 
@@ -1423,7 +1418,8 @@ namespace C5
 
                 this.thebase = thebase; stamp = thebase.stamp;
                 delta = forwards ? 1 : -1;
-                this.start = start + thebase.offset; this.count = count;
+
+                this.start = start + thebase.offsetField; this.count = count;
                 _rangeInternalEnumerator = new RangeEnumerator(thebase, memoryType);
             }
 
@@ -1483,7 +1479,7 @@ namespace C5
 
 
             /// <summary>
-            /// Create a araay collection range with the same contents as this one, but 
+            /// Create an array collection range with the same contents as this one, but 
             /// opposite enumeration sequence.
             /// </summary>
             /// <exception cref="CollectionModifiedException">if underlying collection has been modified.</exception>

@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
+ Copyright (c) 2003-2015 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -47,6 +47,9 @@ namespace C5
 
         //TODO: wonder if we should remove that
         int blackdepth = 0;
+
+        // maintain a unique items counter
+        public int uniqueCount = 0;
 
         //We double these stacks for the iterative add and remove on demand
         //TODO: refactor dirs[] into bool fields on Node (?)
@@ -439,7 +442,7 @@ namespace C5
             #endregion
 
             /// <summary>
-            /// Creta an enumerator for a snapshot of a node copy persistent red-black tree
+            /// Create an enumerator for a snapshot of a node copy persistent red-black tree
             /// collection
             /// </summary>
             /// <param name="tree">The snapshot</param>
@@ -624,7 +627,7 @@ namespace C5
         /// <param name="item">Item to add</param>
         /// <param name="founditem">item found</param>
         /// <param name="update">whether item in node should be updated</param>
-        /// <param name="wasfound">true if found in bag, false if not found or tre is a set</param>
+        /// <param name="wasfound">true if found in bag, false if not found or tree is a set</param>
         /// <returns>True if item was added</returns>
         bool addIterative(T item, ref T founditem, bool update, out bool wasfound)
         {
@@ -889,7 +892,10 @@ namespace C5
             {
                 size++;
                 if (!wasFound)
+                {
+                    uniqueCount++;
                     j = item;
+                }
                 return true;
             }
             else
@@ -909,24 +915,28 @@ namespace C5
                 throw new ViewDisposedException("Snapshot has been disposed");
             updatecheck();
 
-            int c = 0;
+            int c = 0, _uniqueAdds = 0;
             T j = default(T);
-            bool tmp;
+            bool wasfound;
 
             bool raiseAdded = (ActiveEvents & EventTypeEnum.Added) != 0;
             CircularQueue<T> wasAdded = raiseAdded ? new CircularQueue<T>() : null;
 
             foreach (T i in items)
-                if (addIterative(i, ref j, false, out tmp))
+                if (addIterative(i, ref j, false, out wasfound))
                 {
                     c++;
+                    if (!wasfound)
+                        _uniqueAdds++;
                     if (raiseAdded)
-                        wasAdded.Enqueue(tmp ? j : i);
+                        wasAdded.Enqueue(wasfound ? j : i);
                 }
             if (c == 0)
                 return;
 
             size += c;
+            uniqueCount += _uniqueAdds;
+
             //TODO: implement a RaiseForAddAll() method
             if (raiseAdded)
                 foreach (T item in wasAdded)
@@ -1071,6 +1081,7 @@ namespace C5
             root = TreeBag<T>.maketreer(ref head, blackheight, maxred, red);
             blackdepth = blackheight;
             size = z;
+            uniqueCount = z;
 
             size += ec;
 
@@ -1177,7 +1188,7 @@ namespace C5
 
         /// <summary>
         /// Find or add the item to the tree. If the tree does not contain
-        /// an item equivalent to this item add it, else return the exisiting
+        /// an item equivalent to this item add it, else return the existing
         /// one in the ref argument. 
         ///
         /// </summary>
@@ -1194,6 +1205,8 @@ namespace C5
             if (addIterative(item, ref item, false, out wasfound))
             {
                 size++;
+                if (!wasfound)
+                    uniqueCount++;
                 if (ActiveEvents != 0 && !wasfound)
                     raiseForAdd(item);
                 return wasfound;
@@ -1311,6 +1324,8 @@ namespace C5
             if (addIterative(item, ref olditem, true, out wasfound))
             {
                 size++;
+                if (!wasfound)
+                    uniqueCount++;
                 if (ActiveEvents != 0)
                     raiseForAdd(wasfound ? olditem : item);
                 return wasfound;
@@ -1440,7 +1455,7 @@ namespace C5
                 return true;
             }
 
-
+            uniqueCount--;
             size -= cursor.items;
 
             //Stage 2: if item's node has no null child, find predecessor
@@ -1761,6 +1776,7 @@ namespace C5
         private void clear()
         {
             size = 0;
+            uniqueCount = 0;
             root = null;
             blackdepth = 0;
         }
@@ -1853,6 +1869,7 @@ namespace C5
 
             root = t.root;
             size = t.size;
+            uniqueCount = t.uniqueCount;
             blackdepth = t.blackdepth;
             if (wasRemoved != null)
                 foreach (KeyValuePair<T, int> p in wasRemoved)
@@ -1951,7 +1968,7 @@ namespace C5
             res.root = TreeBag<T>.maketreer(ref head, blackheight, maxred, red);
             res.blackdepth = blackheight;
             res.size = z;
-
+            res.uniqueCount = z;
             res.size += ec;
 
             return res;
@@ -2044,6 +2061,7 @@ namespace C5
             res.root = TreeBag<V>.maketreer(ref head, blackheight, maxred, red);
             res.blackdepth = blackheight;
             res.size = size;
+            res.uniqueCount = uniqueCount;
             return res;
         }
 
@@ -2279,7 +2297,7 @@ namespace C5
 
 
         /// <summary>
-        /// Searches for an item in the tree going backwords from the end.
+        /// Searches for an item in the tree going backwards from the end.
         /// </summary>
         /// <param name="item">Item to search for.</param>
         /// <returns>Index of last occurrence from the end of item if found, 
@@ -2630,7 +2648,7 @@ namespace C5
         /// <summary>
         /// Create a collection containing the same items as this collection, but
         /// whose enumerator will enumerate the items backwards. The new collection
-        /// will become invalid if the original is modified. Method typicaly used as in
+        /// will become invalid if the original is modified. Method typically used as in
         /// <code>foreach (T x in coll.Backwards()) {...}</code>
         /// </summary>
         /// <returns>The backwards collection.</returns>
@@ -3153,7 +3171,7 @@ namespace C5
 
         /// <summary>
         /// Perform a search in the sorted collection for the ranges in which a
-        /// non-increasing (i.e. weakly decrerasing) function from the item type to 
+        /// non-increasing (i.e. weakly decreasing) function from the item type to 
         /// <code>int</code> is
         /// negative, zero respectively positive. If the supplied cut function is
         /// not non-increasing, the result of this call is undefined.
@@ -3258,7 +3276,7 @@ namespace C5
         /// Determine the number of items at or above a supplied threshold.
         /// </summary>
         /// <param name="bot">The lower bound (inclusive)</param>
-        /// <returns>The number of matcing items.</returns>
+        /// <returns>The number of matching items.</returns>
         public int CountFrom(T bot)
         {
             if (!isValid)
@@ -3272,7 +3290,7 @@ namespace C5
         /// </summary>
         /// <param name="bot">The lower bound (inclusive)</param>
         /// <param name="top">The upper bound (exclusive)</param>
-        /// <returns>The number of matcing items.</returns>
+        /// <returns>The number of matching items.</returns>
         public int CountFromTo(T bot, T top)
         {
             if (!isValid)
@@ -3288,7 +3306,7 @@ namespace C5
         /// Determine the number of items below a supplied threshold.
         /// </summary>
         /// <param name="top">The upper bound (exclusive)</param>
-        /// <returns>The number of matcing items.</returns>
+        /// <returns>The number of matching items.</returns>
         public int CountTo(T top)
         {
             if (!isValid)
@@ -3879,10 +3897,10 @@ namespace C5
         /// </summary>
         public void dump(string msg)
         {
-            Logger.Log(string.Format(">>>>>>>>>>>>>>>>>>> dump {0} (count={1}, blackdepth={2}, depth={3}, gen={4})", msg, size, blackdepth,
+            Logger.Log(string.Format(">>>>>>>>>>>>>>>>>>> dump {0} (count={1}, blackdepth={2}, depth={3}, gen={4}, uniqueCount={5})", msg, size, blackdepth,
             0
             ,
- generation
+ generation, uniqueCount
 ));
             minidump(root, "");
             check(""); Logger.Log("<<<<<<<<<<<<<<<<<<<");
@@ -3896,10 +3914,10 @@ namespace C5
         /// <param name="err">Extra (error)message to include</param>
         void dump(string msg, string err)
         {
-            Logger.Log(string.Format(">>>>>>>>>>>>>>>>>>> dump {0} (count={1}, blackdepth={2}, depth={3}, gen={4})", msg, size, blackdepth,
+            Logger.Log(string.Format(">>>>>>>>>>>>>>>>>>> dump {0} (count={1}, blackdepth={2}, depth={3}, gen={4}, uniqueCount={5})", msg, size, blackdepth,
             0
             ,
- generation
+ generation, uniqueCount
 ));
             minidump(root, ""); Logger.Log(err);
             Logger.Log("<<<<<<<<<<<<<<<<<<<");

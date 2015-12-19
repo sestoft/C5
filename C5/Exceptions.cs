@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
+ Copyright (c) 2003-2015 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -132,7 +132,7 @@ namespace C5
     }
 
     /// <summary>
-    /// An excption thrown when trying to access a view (a list view on a <see cref="T:C5.IList`1"/> or 
+    /// An exception thrown when trying to access a view (a list view on a <see cref="T:C5.IList`1"/> or 
     /// a snapshot on a <see cref="T:C5.IPersistentSorted`1"/>)
     /// that has been invalidated by some earlier operation.
     /// <para>

@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
+ Copyright (c) 2003-2015 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -35,7 +35,7 @@ namespace C5UnitTests.arrays.sorted
     {
         [Test]
         public void TestEvents()
-        {
+        { 
             Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
             new C5UnitTests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory, MemoryType);
         }
@@ -122,14 +122,14 @@ namespace C5UnitTests.arrays.sorted
 
 
         [Test]
-        [ExpectedException(typeof(CollectionModifiedException))]
         public void Enumerator3()
         {
             SCG.IEnumerator<int> e = array.RangeFromTo(5, 17).GetEnumerator();
 
             e.MoveNext();
             array.Add(67);
-            e.MoveNext();
+
+            Assert.Throws<CollectionModifiedException>(() => e.MoveNext());
         }
 
 
@@ -314,38 +314,33 @@ namespace C5UnitTests.arrays.sorted
         }
 
         [Test]
-        [ExpectedException(typeof(NullReferenceException))]
         public void NullEqualityComparerinConstructor1()
-        {
-            new SortedArray<int>(null, MemoryType);
+        { 
+            Assert.Throws<NullReferenceException>(() => new SortedArray<int>(null, MemoryType));
         }
 
         [Test]
-        [ExpectedException(typeof(NullReferenceException))]
         public void NullEqualityComparerinConstructor2()
-        {
-            new SortedArray<int>(5, null, MemoryType);
+        { 
+            Assert.Throws<NullReferenceException>(() => new SortedArray<int>(5, null, MemoryType)); 
         }
 
         [Test]
-        [ExpectedException(typeof(NullReferenceException))]
         public void NullEqualityComparerinConstructor3()
         {
-            new SortedArray<int>(5, null, EqualityComparer<int>.Default, MemoryType);
+            Assert.Throws<NullReferenceException>(() => new SortedArray<int>(5, null, EqualityComparer<int>.Default, MemoryType));
         }
 
         [Test]
-        [ExpectedException(typeof(NullReferenceException))]
         public void NullEqualityComparerinConstructor4()
-        {
-            new SortedArray<int>(5, SCG.Comparer<int>.Default, null, MemoryType);
+        { 
+            Assert.Throws<NullReferenceException>(() => new SortedArray<int>(5, SCG.Comparer<int>.Default, null, MemoryType));
         }
 
         [Test]
-        [ExpectedException(typeof(NullReferenceException))]
         public void NullEqualityComparerinConstructor5()
-        {
-            new SortedArray<int>(5, null, null, MemoryType);
+        { 
+            Assert.Throws<NullReferenceException>(() => new SortedArray<int>(5, null, null, MemoryType));
         }
 
         [Test]
@@ -356,13 +351,10 @@ namespace C5UnitTests.arrays.sorted
         }
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void BadChoose()
         {
-            array.Choose();
+            Assert.Throws<NoSuchItemException>(() => array.Choose());
         }
-
-
 
         private void loadup()
         {
@@ -463,7 +455,7 @@ namespace C5UnitTests.arrays.sorted
         public void Init()
         {
             list = new SortedArray<int>(TenEqualityComparer.Default, MemoryType);
-            pred = delegate(int i) { return i % 5 == 0; };
+            pred = delegate (int i) { return i % 5 == 0; };
         }
 
         [TearDown]
@@ -613,28 +605,25 @@ namespace C5UnitTests.arrays.sorted
 
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void CopyToBad()
         {
-            tree.CopyTo(a, 11);
+            Assert.Throws<ArgumentOutOfRangeException>(() => tree.CopyTo(a, 11));
         }
 
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void CopyToBad2()
         {
-            tree.CopyTo(a, -1);
+            Assert.Throws<ArgumentOutOfRangeException>(() => tree.CopyTo(a, -1));
         }
 
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void CopyToTooFar()
         {
             tree.Add(3);
             tree.Add(4);
-            tree.CopyTo(a, 9);
+            Assert.Throws<ArgumentOutOfRangeException>(() => tree.CopyTo(a, 9));
         }
 
         public ArrayTest(MemoryType memoryType) : base(memoryType)
@@ -656,9 +645,10 @@ namespace C5UnitTests.arrays.sorted
         {
             lst = new SortedArray<KeyValuePair<int, int>>(new KeyValuePairComparer<int, int>(new IC()), MemoryType);
             for (int i = 0; i < 10; i++)
+            {
                 lst.Add(new KeyValuePair<int, int>(i, i + 30));
+            }
         }
-
 
         [TearDown]
         public void Dispose() { lst = null; }
@@ -859,27 +849,28 @@ namespace C5UnitTests.arrays.sorted
 
 
         [Test]
-        [ExpectedException(typeof(IndexOutOfRangeException), ExpectedMessage = "Index out of range for sequenced collectionvalue")]
         public void Empty()
         {
             array.Clear();
-            array.RemoveAt(0);
+
+            var exception = Assert.Throws<IndexOutOfRangeException>(() => array.RemoveAt(0));
+            Assert.AreEqual("Index out of range for sequenced collectionvalue", exception.Message);
         }
 
 
         [Test]
-        [ExpectedException(typeof(IndexOutOfRangeException), ExpectedMessage = "Index out of range for sequenced collectionvalue")]
         public void HighIndex()
         {
-            array.RemoveAt(array.Count);
+            var exception = Assert.Throws<IndexOutOfRangeException>(() => array.RemoveAt(array.Count));
+            Assert.AreEqual("Index out of range for sequenced collectionvalue", exception.Message);
         }
 
 
         [Test]
-        [ExpectedException(typeof(IndexOutOfRangeException), ExpectedMessage = "Index out of range for sequenced collectionvalue")]
         public void LowIndex()
         {
-            array.RemoveAt(-1);
+            var exception = Assert.Throws<IndexOutOfRangeException>(() => array.RemoveAt(-1));
+            Assert.AreEqual("Index out of range for sequenced collectionvalue", exception.Message);
         }
 
 
@@ -1102,18 +1093,16 @@ namespace C5UnitTests.arrays.sorted
         }
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void PredecessorTooLow1()
         {
-            tree.Predecessor(-2);
+            Assert.Throws<NoSuchItemException>(() => tree.Predecessor(-2));
         }
 
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void PredecessorTooLow2()
         {
-            tree.Predecessor(0);
+            Assert.Throws<NoSuchItemException>(() => tree.Predecessor(0));
         }
 
         [Test]
@@ -1133,10 +1122,9 @@ namespace C5UnitTests.arrays.sorted
         }
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void WeakPredecessorTooLow1()
         {
-            tree.WeakPredecessor(-1);
+            Assert.Throws<NoSuchItemException>(() => tree.WeakPredecessor(-1));
         }
 
 
@@ -1157,18 +1145,16 @@ namespace C5UnitTests.arrays.sorted
 
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void SuccessorTooHigh1()
         {
-            tree.Successor(38);
+            Assert.Throws<NoSuchItemException>(() => tree.Successor(38));
         }
 
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void SuccessorTooHigh2()
         {
-            tree.Successor(39);
+            Assert.Throws<NoSuchItemException>(() => tree.Successor(39));
         }
 
 
@@ -1189,10 +1175,9 @@ namespace C5UnitTests.arrays.sorted
         }
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void WeakSuccessorTooHigh1()
         {
-            tree.WeakSuccessor(39);
+            Assert.Throws<NoSuchItemException>(() => tree.WeakSuccessor(39));
         }
 
 
@@ -1249,34 +1234,30 @@ namespace C5UnitTests.arrays.sorted
 
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void Empty1()
         {
-            tree.FindMin();
+            Assert.Throws<NoSuchItemException>(() => tree.FindMin());
         }
 
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void Empty2()
         {
-            tree.FindMax();
+            Assert.Throws<NoSuchItemException>(() => tree.FindMax());
         }
 
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void Empty3()
         {
-            tree.DeleteMin();
+            Assert.Throws<NoSuchItemException>(() => tree.DeleteMin());
         }
 
 
         [Test]
-        [ExpectedException(typeof(NoSuchItemException))]
         public void Empty4()
         {
-            tree.DeleteMax();
+            Assert.Throws<NoSuchItemException>(() => tree.DeleteMax());
         }
 
 
@@ -1360,20 +1341,18 @@ namespace C5UnitTests.arrays.sorted
 
 
         [Test]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
         public void IndexTooLarge()
         {
             populate();
-            Console.WriteLine(array[4]);
+            Assert.Throws<IndexOutOfRangeException>(() => Console.WriteLine(array[4]));
         }
 
 
         [Test]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
         public void IndexTooSmall()
         {
             populate();
-            Console.WriteLine(array[-1]);
+            Assert.Throws<IndexOutOfRangeException>(() => Console.WriteLine(array[-1]));
         }
 
 
@@ -1454,8 +1433,9 @@ namespace C5UnitTests.arrays.sorted
             {
                 tree = new SortedArray<int>(new IC(), MemoryType);
                 for (int i = 0; i < 10; i++)
+                {
                     tree.Add(i);
-
+                }
                 e = tree.GetEnumerator();
             }
 
@@ -1470,34 +1450,31 @@ namespace C5UnitTests.arrays.sorted
 
 
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void MoveNextAfterAdd()
             {
                 e.MoveNext();
                 tree.Add(34);
-                e.MoveNext();
+
+                Assert.Throws<CollectionModifiedException>(() => e.MoveNext());
             }
 
-
-
-
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void MoveNextAfterRemove()
             {
                 e.MoveNext();
                 tree.Remove(34);
-                e.MoveNext();
+
+                Assert.Throws<CollectionModifiedException>(() => e.MoveNext());
             }
 
 
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void MoveNextAfterClear()
             {
                 e.MoveNext();
                 tree.Clear();
-                e.MoveNext();
+
+                Assert.Throws<CollectionModifiedException>(() => e.MoveNext());
             }
 
 
@@ -1511,9 +1488,7 @@ namespace C5UnitTests.arrays.sorted
             public Enumerator(MemoryType memoryType) : base(memoryType)
             {
             }
-        }
-
-
+        } 
 
         [TestFixture(MemoryType.Normal)]
         [TestFixture(MemoryType.Strict)]
@@ -1546,31 +1521,31 @@ namespace C5UnitTests.arrays.sorted
 
 
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void MoveNextAfterAdd()
             {
                 tree.Add(34);
-                e.MoveNext();
+
+                Assert.Throws<CollectionModifiedException>(() => e.MoveNext());
             }
 
 
 
 
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void MoveNextAfterRemove()
             {
                 tree.Remove(34);
-                e.MoveNext();
+
+                Assert.Throws<CollectionModifiedException>(() => e.MoveNext());
             }
 
 
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void MoveNextAfterClear()
             {
                 tree.Clear();
-                e.MoveNext();
+
+                Assert.Throws<CollectionModifiedException>(() => e.MoveNext());
             }
 
 
@@ -1764,13 +1739,15 @@ namespace C5UnitTests.arrays.sorted
 
 
             [Test]
-            [ExpectedException(typeof(ArgumentException), ExpectedMessage = "mapper not monotonic")]
             public void BadMap()
             {
                 for (int i = 0; i < 11; i++)
+                {
                     array.Add(i * i * i);
+                }
 
-                ISorted<string> res = array.Map(new Func<int, string>(badmap), new SC());
+                var exception = Assert.Throws<ArgumentException>(() => { ISorted<string> res = array.Map(new Func<int, string>(badmap), new SC()); });
+                Assert.AreEqual("mapper not monotonic", exception.Message);
             }
 
 
@@ -2017,10 +1994,10 @@ namespace C5UnitTests.arrays.sorted
             }
 
             [Test]
-            [ExpectedException(typeof(ArgumentException), ExpectedMessage = "Argument not sorted")]
             public void EmptyBad()
             {
-                array.AddSorted(new FunEnumerable(9, new Func<int, int>(bad)));
+                var exception = Assert.Throws<ArgumentException>(() => array.AddSorted(new FunEnumerable(9, new Func<int, int>(bad))));
+                Assert.AreEqual("Argument not sorted", exception.Message);
             }
 
 
@@ -2156,26 +2133,23 @@ namespace C5UnitTests.arrays.sorted
 
 
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void RemoveRangeBad1()
             {
-                array.RemoveInterval(-3, 8);
+                Assert.Throws<ArgumentOutOfRangeException>(() => array.RemoveInterval(-3, 8));
             }
 
 
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void RemoveRangeBad2()
             {
-                array.RemoveInterval(3, -8);
+                Assert.Throws<ArgumentOutOfRangeException>(() => array.RemoveInterval(3, -8));
             }
 
 
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void RemoveRangeBad3()
             {
-                array.RemoveInterval(3, 8);
+                Assert.Throws<ArgumentOutOfRangeException>(() => array.RemoveInterval(3, 8));
             }
 
 
@@ -2189,30 +2163,23 @@ namespace C5UnitTests.arrays.sorted
                 Assert.IsTrue(IC.eq(e));
             }
 
-
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void GetRangeBad1()
             {
-                object foo = array[-3, 0];
+                Assert.Throws<ArgumentOutOfRangeException>(() => { object foo = array[-3, 0]; });
             }
 
-
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void GetRangeBad2()
             {
-                object foo = array[3, -1];
+                Assert.Throws<ArgumentOutOfRangeException>(() => { object foo = array[3, -1]; });
             }
-
 
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void GetRangeBad3()
             {
-                object foo = array[3, 8];
+                Assert.Throws<ArgumentOutOfRangeException>(() => { object foo = array[3, 8]; });
             }
-
 
             [TearDown]
             public void Dispose() { array = null; array2 = null; }

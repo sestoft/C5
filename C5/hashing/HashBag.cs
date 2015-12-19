@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
+ Copyright (c) 2003-2015 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -46,7 +46,7 @@ namespace C5
 
         #region Constructors
         /// <summary>
-        /// Create a hash bag with the deafult item equalityComparer.
+        /// Create a hash bag with the default item equalityComparer.
         /// </summary>
 		public HashBag(MemoryType memoryType = MemoryType.Normal) : this(EqualityComparer<T>.Default, memoryType) { }
 
@@ -232,7 +232,7 @@ namespace C5
         }
 
         /// <summary>
-        /// Remove one copy af an item from the bag
+        /// Remove one copy of an item from the bag
         /// </summary>
         /// <param name="item">The item to remove</param>
         /// <returns>True if item was (found and) removed </returns>

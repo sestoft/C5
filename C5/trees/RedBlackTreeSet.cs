@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
+ Copyright (c) 2003-2015 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -436,7 +436,7 @@ namespace C5
             #endregion
 
             /// <summary>
-            /// Creta an enumerator for a snapshot of a node copy persistent red-black tree
+            /// Create an enumerator for a snapshot of a node copy persistent red-black tree
             /// collection
             /// </summary>
             /// <param name="tree">The snapshot</param>
@@ -582,7 +582,7 @@ namespace C5
         /// <param name="item">Item to add</param>
         /// <param name="founditem">item found</param>
         /// <param name="update">whether item in node should be updated</param>
-        /// <param name="wasfound">true if found in bag, false if not found or tre is a set</param>
+        /// <param name="wasfound">true if found in bag, false if not found or tree is a set</param>
         /// <returns>True if item was added</returns>
         bool addIterative(T item, ref T founditem, bool update, out bool wasfound)
         {
@@ -1106,7 +1106,7 @@ namespace C5
 
         /// <summary>
         /// Find or add the item to the tree. If the tree does not contain
-        /// an item equivalent to this item add it, else return the exisiting
+        /// an item equivalent to this item add it, else return the existing
         /// one in the ref argument. 
         ///
         /// </summary>
@@ -2054,7 +2054,7 @@ namespace C5
 
 
         /// <summary>
-        /// Searches for an item in the tree going backwords from the end.
+        /// Searches for an item in the tree going backwards from the end.
         /// </summary>
         /// <param name="item">Item to search for.</param>
         /// <returns>Index of last occurrence from the end of item if found, 
@@ -2355,7 +2355,7 @@ namespace C5
         /// <summary>
         /// Create a collection containing the same items as this collection, but
         /// whose enumerator will enumerate the items backwards. The new collection
-        /// will become invalid if the original is modified. Method typicaly used as in
+        /// will become invalid if the original is modified. Method typically used as in
         /// <code>foreach (T x in coll.Backwards()) {...}</code>
         /// </summary>
         /// <returns>The backwards collection.</returns>
@@ -2861,7 +2861,7 @@ namespace C5
 
         /// <summary>
         /// Perform a search in the sorted collection for the ranges in which a
-        /// non-increasing (i.e. weakly decrerasing) function from the item type to 
+        /// non-increasing (i.e. weakly decreasing) function from the item type to 
         /// <code>int</code> is
         /// negative, zero respectively positive. If the supplied cut function is
         /// not non-increasing, the result of this call is undefined.
@@ -2966,7 +2966,7 @@ namespace C5
         /// Determine the number of items at or above a supplied threshold.
         /// </summary>
         /// <param name="bot">The lower bound (inclusive)</param>
-        /// <returns>The number of matcing items.</returns>
+        /// <returns>The number of matching items.</returns>
         public int CountFrom(T bot)
         {
             if (!isValid)
@@ -2980,7 +2980,7 @@ namespace C5
         /// </summary>
         /// <param name="bot">The lower bound (inclusive)</param>
         /// <param name="top">The upper bound (exclusive)</param>
-        /// <returns>The number of matcing items.</returns>
+        /// <returns>The number of matching items.</returns>
         public int CountFromTo(T bot, T top)
         {
             if (!isValid)
@@ -2996,7 +2996,7 @@ namespace C5
         /// Determine the number of items below a supplied threshold.
         /// </summary>
         /// <param name="top">The upper bound (exclusive)</param>
-        /// <returns>The number of matcing items.</returns>
+        /// <returns>The number of matching items.</returns>
         public int CountTo(T top)
         {
             if (!isValid)

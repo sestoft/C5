@@ -16,6 +16,7 @@ local.properties
 .classpath
 .settings/
 .loadpath
+docs/
 
 # External tool builders
 .externalToolBuilders/
@@ -42,7 +43,7 @@ local.properties
 *.user
 *.sln.docstates
 *.DotSettings
-#*.nupkg
+*.nupkg
 packages/
 
 

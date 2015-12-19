@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
+ Copyright (c) 2003-2015 Niels Kokholm, Peter Sestoft, and Rasmus Lystr�m
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -24,15 +24,16 @@ using SCG = System.Collections.Generic;
 
 namespace C5
 {
-	/// <summary>
-	/// An entry in a dictionary from K to V.
-	/// </summary>
-	public struct KeyValuePair<K, V> : IEquatable<KeyValuePair<K, V>>, IShowable
-	{
-		/// <summary>
-		/// The key field of the entry
-		/// </summary>
-		public K Key;
+    /// <summary>
+    /// An entry in a dictionary from K to V.
+    /// </summary>
+    [Serializable]
+    public struct KeyValuePair<K, V> : IEquatable<KeyValuePair<K, V>>, IShowable
+    {
+        /// <summary>
+        /// The key field of the entry
+        /// </summary>
+        public K Key;
 
 		/// <summary>
 		/// The value field of the entry
@@ -115,7 +116,6 @@ namespace C5
 		{
 			return pair1.Equals ( pair2 );
 		}
-
 		/// <summary>
 		/// 
 		/// </summary>
@@ -203,25 +203,14 @@ namespace C5
 		}
 	}
 
-
-
-	/// <summary>
-	/// Default equalityComparer for dictionary entries.
-	/// Operations only look at keys and uses an externaly defined equalityComparer for that.
-	/// </summary>
-	[Serializable]
-	public sealed class KeyValuePairEqualityComparer<K, V> : SCG.IEqualityComparer<KeyValuePair<K, V>>
-	{
-		SCG.IEqualityComparer<K> keyequalityComparer;
-
-
-		/// <summary>
-		/// Create an entry equalityComparer using the default equalityComparer for keys
-		/// </summary>
-		public KeyValuePairEqualityComparer ( )
-		{
-			keyequalityComparer = EqualityComparer<K>.Default;
-		}
+    /// <summary>
+    /// Default equalityComparer for dictionary entries.
+    /// Operations only look at keys and uses an externally defined equalityComparer for that.
+    /// </summary>
+    [Serializable]
+    public sealed class KeyValuePairEqualityComparer<K, V> : SCG.IEqualityComparer<KeyValuePair<K, V>>
+    {
+        SCG.IEqualityComparer<K> keyequalityComparer;
 
 
 		/// <summary>
@@ -1352,7 +1341,6 @@ namespace C5
 					IteratorState = 0;
 					return false;
 				}
-
 				public override void Reset ( )
 				{
 					try
@@ -1715,6 +1703,20 @@ namespace C5
 		}
 
 	}
+
+	/// <summary>
+    /// Static class to allow creation of KeyValuePair using type inference
+    /// </summary>
+    public static class KeyValuePair
+    {
+        /// <summary>
+        /// Create an instance of the KeyValuePair using type inference.
+        /// </summary>
+        public static KeyValuePair<K, V> Create<K, V>(K key, V value)
+        {
+            return new KeyValuePair<K, V>(key, value);
+        }
+    }
 
 	[Serializable]
 	class SortedArrayDictionary<K, V> : SortedDictionaryBase<K, V>

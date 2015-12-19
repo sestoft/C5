@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>C5/C5.csproj</id>
+    <version>$version$</version>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>http://www.itu.dk/research/c5/</projectUrl>
+    <iconUrl>https://github.com/sestoft/C5/raw/master/images/icon-nuget.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Support for Universal Windows Platform</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>Generics Collections Heap TreeSet PriorityQueue</tags>
+  </metadata>
+</package>

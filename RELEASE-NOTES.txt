@@ -1,6 +1,17 @@
 RELEASE NOTES FOR C5 GENERIC COLLECTION LIBRARY FOR C#/CLI
 ------------------------------
 
+Release 2.4.5828 of 2015-12-15
+
+ * KeyValuePair Serializable
+ * KeyValuePair.Create using type inference.
+ * Added .NET 4.5 version: IIndexed<T> implements IReadOnlyList<T>.
+ * Fixed typos.
+
+Release 2.4 of 2015-12-15
+
+ * Support for Universal Windows Platform
+
 Release 2.3.0.0 of 2014-06-10
 
  * Added .NET 4.0 build which reintroduces support for serialization

@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
+ Copyright (c) 2003-2015 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -38,7 +38,7 @@ namespace C5UnitTests.linkedlists.plain
         [Test]
         public void TestEvents()
         {
-            Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
+            Func<CollectionOfInt> factory = delegate () { return new CollectionOfInt(TenEqualityComparer.Default); };
             new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory, MemoryType);
             new C5UnitTests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory, MemoryType);
             new C5UnitTests.Templates.Events.StackTester<CollectionOfInt>().Test(factory, MemoryType);
@@ -86,7 +86,7 @@ namespace C5UnitTests.linkedlists.plain
                 list = new LinkedList<int>();
                 always = delegate { return true; };
                 never = delegate { return false; };
-                even = delegate(int i) { return i % 2 == 0; };
+                even = delegate (int i) { return i % 2 == 0; };
             }
 
 
@@ -128,7 +128,7 @@ namespace C5UnitTests.linkedlists.plain
             public void Apply()
             {
                 int sum = 0;
-                Action<int> a = delegate(int i) { sum = i + 10 * sum; };
+                Action<int> a = delegate (int i) { sum = i + 10 * sum; };
 
                 list.Apply(a);
                 Assert.AreEqual(0, sum);
@@ -208,7 +208,6 @@ namespace C5UnitTests.linkedlists.plain
 
 
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void MoveNextAfterUpdate()
             {
                 list.Add(5);
@@ -219,7 +218,8 @@ namespace C5UnitTests.linkedlists.plain
 
                 e.MoveNext();
                 list.Add(99);
-                e.MoveNext();
+
+                Assert.Throws<CollectionModifiedException>(() => e.MoveNext());
             }
 
 
@@ -261,10 +261,9 @@ namespace C5UnitTests.linkedlists.plain
             public void Init() { list = new LinkedList<int>(); }
 
             [Test]
-            [ExpectedException(typeof(NullReferenceException))]
             public void NullEqualityComparerinConstructor1()
             {
-                new LinkedList<int>(null);
+                Assert.Throws<NullReferenceException>(() => new LinkedList<int>(null));
             }
 
             [Test]
@@ -275,12 +274,10 @@ namespace C5UnitTests.linkedlists.plain
             }
 
             [Test]
-            [ExpectedException(typeof(NoSuchItemException))]
             public void BadChoose()
             {
-                list.Choose();
+                Assert.Throws<NoSuchItemException>(() => list.Choose());
             }
-
 
             [Test]
             public void CountEtAl()
@@ -328,7 +325,7 @@ namespace C5UnitTests.linkedlists.plain
             public void Init()
             {
                 list = new LinkedList<int>(TenEqualityComparer.Default);
-                pred = delegate(int i) { return i % 5 == 0; };
+                pred = delegate (int i) { return i % 5 == 0; };
             }
 
             [TearDown]
@@ -465,40 +462,32 @@ namespace C5UnitTests.linkedlists.plain
                 Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 6, 1003, 6, 4, 4, 9, 1008, 7));
             }
 
-
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void CopyToBad()
             {
-                list.CopyTo(a, 11);
+                Assert.Throws<ArgumentOutOfRangeException>(() => list.CopyTo(a, 11));
             }
 
-
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void CopyToBad2()
             {
-                list.CopyTo(a, -1);
+                Assert.Throws<ArgumentOutOfRangeException>(() => list.CopyTo(a, -1));
             }
 
-
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void CopyToTooFar()
             {
                 list.Add(3);
                 list.Add(3);
-                list.CopyTo(a, 9);
+
+                Assert.Throws<ArgumentOutOfRangeException>(() => list.CopyTo(a, 9));
             }
         }
-
-
 
         [TestFixture]
         public class Sync
         {
             private LinkedList<int> list;
-
 
             [SetUp]
             public void Init()
@@ -506,10 +495,8 @@ namespace C5UnitTests.linkedlists.plain
                 list = new LinkedList<int>();
             }
 
-
             [TearDown]
             public void Dispose() { list = null; }
-
 
             [Test]
             public void Get()
@@ -519,9 +506,6 @@ namespace C5UnitTests.linkedlists.plain
         }
     }
 
-
-
-
     namespace EditableCollection
     {
         [TestFixture]
@@ -529,10 +513,8 @@ namespace C5UnitTests.linkedlists.plain
         {
             private LinkedList<int> list;
 
-
             [SetUp]
             public void Init() { list = new LinkedList<int>(); }
-
 
             [Test]
             public void Contains()
@@ -553,7 +535,6 @@ namespace C5UnitTests.linkedlists.plain
                 Assert.IsFalse(list.Contains(8));
                 Assert.IsTrue(list.Contains(10));
             }
-
 
             [Test]
             public void ContainsCount()
@@ -591,7 +572,7 @@ namespace C5UnitTests.linkedlists.plain
             [Test]
             public void FindAll()
             {
-                Func<int, bool> f = delegate(int i) { return i % 2 == 0; };
+                Func<int, bool> f = delegate (int i) { return i % 2 == 0; };
 
                 Assert.IsTrue(list.FindAll(f).IsEmpty);
                 list.Add(5); list.Add(8); list.Add(5); list.Add(10); list.Add(8);
@@ -792,29 +773,24 @@ namespace C5UnitTests.linkedlists.plain
 
 
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void RemoveAtBad0()
             {
-                dit.RemoveAt(0);
+                Assert.Throws<IndexOutOfRangeException>(() => dit.RemoveAt(0));
             }
 
-
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void RemoveAtBadM1()
             {
-                dit.RemoveAt(-1);
+                Assert.Throws<IndexOutOfRangeException>(() => dit.RemoveAt(-1));
             }
 
-
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void RemoveAtBad1()
             {
                 dit.Add(8);
-                dit.RemoveAt(1);
-            }
 
+                Assert.Throws<IndexOutOfRangeException>(() => dit.RemoveAt(1));
+            }
 
             [Test]
             public void RemoveInterval()
@@ -863,28 +839,28 @@ namespace C5UnitTests.linkedlists.plain
 
 
             [SetUp]
-            public void Init() { lst = new LinkedList<int>(); }
-
+            public void Init()
+            {
+                lst = new LinkedList<int>();
+            }
 
             [TearDown]
-            public void Dispose() { lst = null; }
-
+            public void Dispose()
+            {
+                lst = null;
+            }
 
             [Test]
-            [ExpectedException(typeof(NoSuchItemException))]
             public void FirstBad()
             {
-                int f = lst.First;
+                Assert.Throws<NoSuchItemException>(() => { int f = lst.First; });
             }
-
 
             [Test]
-            [ExpectedException(typeof(NoSuchItemException))]
             public void LastBad()
             {
-                int f = lst.Last;
+                Assert.Throws<NoSuchItemException>(() => { int f = lst.Last; });
             }
-
 
             [Test]
             public void FirstLast()
@@ -910,61 +886,60 @@ namespace C5UnitTests.linkedlists.plain
                 Assert.IsTrue(IC.eq(lst, 45, 7, 78, 7, 101));
             }
 
-
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void ThisBadEmptyGet()
             {
-                int f = lst[0];
+                Assert.Throws<IndexOutOfRangeException>(() =>
+                {
+                    int f = lst[0];
+                });
             }
 
-
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void ThisBadLowGet()
             {
                 lst.Add(7);
 
-                int f = lst[-1];
+                Assert.Throws<IndexOutOfRangeException>(() =>
+                {
+                    int f = lst[-1];
+                });
             }
 
-
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void ThisBadHiGet()
             {
                 lst.Add(6);
 
-                int f = lst[1];
+                Assert.Throws<IndexOutOfRangeException>(() =>
+                {
+                    int f = lst[1];
+                });
             }
 
-
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void ThisBadEmptySet()
             {
-                lst[0] = 4;
+                Assert.Throws<IndexOutOfRangeException>(() => lst[0] = 4);
             }
 
-
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void ThisBadLowSet()
             {
                 lst.Add(7);
-                lst[-1] = 9;
+
+                Assert.Throws<IndexOutOfRangeException>(() => lst[-1] = 9);
             }
 
 
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void ThisBadHiSet()
             {
                 lst.Add(6);
-                lst[1] = 11;
+
+                Assert.Throws<IndexOutOfRangeException>(() => lst[1] = 11);
             }
         }
-
 
         [TestFixture]
         public class Combined
@@ -1132,20 +1107,19 @@ namespace C5UnitTests.linkedlists.plain
             }
 
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void BadInsertLow()
             {
                 lst.Add(7);
-                lst.Insert(-1, 9);
+
+                Assert.Throws<IndexOutOfRangeException>(() => lst.Insert(-1, 9));
             }
 
-
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void BadInsertHi()
             {
                 lst.Add(6);
-                lst.Insert(2, 11);
+
+                Assert.Throws<IndexOutOfRangeException>(() => lst.Insert(2, 11));
             }
 
 
@@ -1269,7 +1243,7 @@ namespace C5UnitTests.linkedlists.plain
             [Test]
             public void Map()
             {
-                Func<int, string> m = delegate(int i) { return "<<" + i + ">>"; };
+                Func<int, string> m = delegate (int i) { return "<<" + i + ">>"; };
                 IList<string> r = lst.Map(m);
 
                 Assert.IsTrue(r.Check());
@@ -1285,64 +1259,69 @@ namespace C5UnitTests.linkedlists.plain
                     Assert.AreEqual("<<" + (i + 1) + ">>", r[i]);
             }
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void BadMapper()
             {
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
-                lst.Map(m);
+                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
+
+                Assert.Throws<CollectionModifiedException>(() => lst.Map(m));
             }
 
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void ModifyingFindAll()
             {
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
-                lst.FindAll(m);
+                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
+
+                Assert.Throws<CollectionModifiedException>(() => lst.FindAll(m));
             }
 
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void BadMapperView()
             {
                 lst = lst.View(0, 0);
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
-                lst.Map(m);
+                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
+
+                Assert.Throws<CollectionModifiedException>(() => lst.Map(m));
             }
 
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void ModifyingFindAllView()
             {
                 lst = lst.View(0, 0);
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
-                lst.FindAll(m);
+                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
+
+                Assert.Throws<CollectionModifiedException>(() => lst.FindAll(m));
             }
 
 
             [Test]
-            [ExpectedException(typeof(NoSuchItemException))]
-            public void BadRemove() { lst.Remove(); }
+            public void BadRemove()
+            {
+                Assert.Throws<NoSuchItemException>(() => lst.Remove());
+            }
 
             [Test]
-            [ExpectedException(typeof(NoSuchItemException))]
-            public void BadRemoveFirst() { lst.RemoveFirst(); }
+            public void BadRemoveFirst()
+            {
+                Assert.Throws<NoSuchItemException>(() => lst.RemoveFirst());
+            }
 
             [Test]
-            [ExpectedException(typeof(NoSuchItemException))]
-            public void BadRemoveLast() { lst.RemoveLast(); }
-
+            public void BadRemoveLast()
+            {
+                Assert.Throws<NoSuchItemException>(() => lst.RemoveLast());
+            }
 
             [Test]
             public void RemoveFirstLast()
@@ -1359,17 +1338,15 @@ namespace C5UnitTests.linkedlists.plain
             }
 
             [Test]
-            [ExpectedException(typeof(NoSuchItemException))]
             public void RemoveFirstEmpty()
             {
-                lst.RemoveFirst();
+                Assert.Throws<NoSuchItemException>(() => lst.RemoveFirst());
             }
 
             [Test]
-            [ExpectedException(typeof(NoSuchItemException))]
             public void RemoveLastEmpty()
             {
-                lst.RemoveLast();
+                Assert.Throws<NoSuchItemException>(() => lst.RemoveLast());
             }
 
             [Test]
@@ -1397,13 +1374,14 @@ namespace C5UnitTests.linkedlists.plain
 
 
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void BadReverse()
             {
                 for (int i = 0; i < 10; i++)
+                {
                     lst.Add(i);
+                }
 
-                lst.View(8, 3).Reverse();
+                Assert.Throws<ArgumentOutOfRangeException>(() => lst.View(8, 3).Reverse());
             }
         }
 
@@ -1536,16 +1514,13 @@ namespace C5UnitTests.linkedlists.plain
                 Assert.AreEqual(7, list.Pop());
             }
 
-
             [Test]
-            [ExpectedException(typeof(NoSuchItemException))]
             public void PopEmpty()
             {
                 list.Push(5);
                 Assert.AreEqual(5, list.Pop());
-                list.Pop();
+                Assert.Throws<NoSuchItemException>(() => list.Pop());
             }
-
 
             [TearDown]
             public void Dispose() { list = null; }
@@ -1575,22 +1550,18 @@ namespace C5UnitTests.linkedlists.plain
                 Assert.AreEqual(9, list.Dequeue());
             }
 
-
             [Test]
-            [ExpectedException(typeof(NoSuchItemException))]
             public void DeQueueEmpty()
             {
                 list.Enqueue(5);
                 Assert.AreEqual(5, list.Dequeue());
-                list.Dequeue();
+                Assert.Throws<NoSuchItemException>(() => list.Dequeue());
             }
-
 
             [TearDown]
             public void Dispose() { list = null; }
         }
     }
-
 
     namespace Range
     {
@@ -1619,14 +1590,14 @@ namespace C5UnitTests.linkedlists.plain
                 Assert.IsTrue(IC.eq(lst[6, 4], 6, 7, 8, 9));
             }
 
-
             [Test]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void BadGetRange()
             {
-                object foo = lst[0, 11];
+                Assert.Throws<ArgumentOutOfRangeException>(() =>
+                {
+                    object foo = lst[0, 11];
+                });
             }
-
 
             [Test]
             public void Backwards()
@@ -1638,7 +1609,6 @@ namespace C5UnitTests.linkedlists.plain
                 Assert.IsTrue(IC.eq(lst[3, 4].Backwards(), 6, 5, 4, 3));
                 Assert.IsTrue(IC.eq(lst[6, 4].Backwards(), 9, 8, 7, 6));
             }
-
 
             [Test]
             public void DirectionAndCount()
@@ -1654,17 +1624,18 @@ namespace C5UnitTests.linkedlists.plain
                 Assert.AreEqual(10, lst.Backwards().Count);
             }
 
-
             [Test]
-            [ExpectedException(typeof(CollectionModifiedException))]
             public void MoveNextAfterUpdate()
             {
                 for (int i = 0; i < 10; i++) lst.Add(i);
 
-                foreach (int i in lst)
+                Assert.Throws<CollectionModifiedException>(() =>
                 {
-                    lst.Add(45 + i);
-                }
+                    foreach (int i in lst)
+                    {
+                        lst.Add(45 + i);
+                    }
+                });
             }
         }
     }
@@ -1722,31 +1693,28 @@ namespace C5UnitTests.linkedlists.plain
             }
 
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void InsertPointerBad1()
             {
-                view.Insert(list.View(0, 0), 7);
+
+                Assert.Throws<IndexOutOfRangeException>(() => view.Insert(list.View(0, 0), 7));
             }
 
             [Test]
-            [ExpectedException(typeof(IndexOutOfRangeException))]
             public void InsertPointerBad2()
             {
-                view.Insert(list, 7);
+                Assert.Throws<IndexOutOfRangeException>(() => view.Insert(list, 7));
             }
 
             [Test]
-            [ExpectedException(typeof(IncompatibleViewException))]
             public void InsertPointerBad3()
             {
-                list.Insert(new ArrayList<int>(), 7);
+                Assert.Throws<IncompatibleViewException>(() => list.Insert(new ArrayList<int>(), 7));
             }
 
             [Test]
-            [ExpectedException(typeof(IncompatibleViewException))]
             public void InsertPointerBad4()
             {
-                list.Insert(new ArrayList<int>().View(0, 0), 7);
+                Assert.Throws<IncompatibleViewException>(() => list.Insert(new ArrayList<int>().View(0, 0), 7));
             }
 
             [Test]
@@ -1919,14 +1887,14 @@ namespace C5UnitTests.linkedlists.plain
             [Test]
             public void MapEtc()
             {
-                LinkedList<double> dbl = (LinkedList<double>)view.Map(new Func<int, double>(delegate(int i) { return i / 10.0; }));
+                LinkedList<double> dbl = (LinkedList<double>)view.Map(new Func<int, double>(delegate (int i) { return i / 10.0; }));
 
                 Assert.IsTrue(dbl.Check());
                 Assert.AreEqual(0.1, dbl[0]);
                 Assert.AreEqual(0.2, dbl[1]);
                 for (int i = 0; i < 10; i++) view.Add(i);
 
-                list = (LinkedList<int>)view.FindAll(new Func<int, bool>(delegate(int i) { return i % 4 == 1; }));
+                list = (LinkedList<int>)view.FindAll(new Func<int, bool>(delegate (int i) { return i % 4 == 1; }));
                 Assert.IsTrue(list.Check());
                 Assert.IsTrue(IC.eq(list, 1, 1, 5, 9));
             }
@@ -2584,120 +2552,121 @@ namespace C5UnitTests.linkedlists.plain
       Underlying
       */
             [Test]
-            [ExpectedException(typeof(ViewDisposedException))]
             public void Add()
             {
-                view.Add(5);
+                Assert.Throws<ViewDisposedException>(() => view.Add(5));
             }
+
             [Test]
-            [ExpectedException(typeof(ViewDisposedException))]
             public void AddAll_int_()
             {
-                view.AddAll(new int[] { });
+                Assert.Throws<ViewDisposedException>(() => view.AddAll(new int[] { }));
             }
+
             [Test]
-            [ExpectedException(typeof(ViewDisposedException))]
             public void AddAll()
             {
-                view.AddAll(new int[] { });
+                Assert.Throws<ViewDisposedException>(() => view.AddAll(new int[] { }));
             }
+
             [Test]
-            [ExpectedException(typeof(ViewDisposedException))]
             public void All()
             {
-                view.All(delegate(int i) { return false; });
+                Assert.Throws<ViewDisposedException>(() => view.All(delegate (int i) { return false; }));
             }
+
             [Test]
-            [ExpectedException(typeof(ViewDisposedException))]
             public void Apply()
             {
-                view.Apply(delegate(int i) { });
+                Assert.Throws<ViewDisposedException>(() => view.Apply(delegate (int i) { }));
             }
+
             [Test]
-            [ExpectedException(typeof(ViewDisposedException))]
             public void Backwards()
             {
-                view.Backwards();
+                Assert.Throws<ViewDisposedException>(() => view.Backwards());
             }
+
             [Test]
-            [ExpectedException(typeof(ViewDisposedException))]
             public void Choose()
             {
-                view.Choose();
+                Assert.Throws<ViewDisposedException>(() => view.Choose());
             }
+
             [Test]
-            [ExpectedException(typeof(ViewDisposedException))]
             public void Contains()
             {
-                view.Contains(0);
+                Assert.Throws<ViewDisposedException>(() => view.Contains(0));
             }
+
             [Test]
-            [ExpectedException(typeof(ViewDisposedException))]
             public void Clear()
             {
-                view.Clear();
+                Assert.Throws<ViewDisposedException>(() => view.Clear());
             }
+
             [Test]
-            [ExpectedException(typeof(ViewDisposedException))]
             public void ContainsAll()
             {
-                view.ContainsAll(new int[] { });
+                Assert.Throws<ViewDisposedException>(() => view.ContainsAll(new int[] { }));
             }
+
             [Test]
-            [ExpectedException(typeof(ViewDisposedException))]
             public void ContainsCount()
             {
-                view.ContainsCount(0);
+                Assert.Throws<ViewDisposedException>(() => view.ContainsCount(0));
             }
+
             [Test]
-            [ExpectedException(typeof(ViewDisposedException))]
             public void CopyTo()
             {
-                view.CopyTo(new int[1], 0);
+                Assert.Throws<ViewDisposedException>(() => view.CopyTo(new int[1], 0));
             }
+
             [Test]
-            [ExpectedException(typeof(ViewDisposedException))]
             public void Dequeue()
             {
-                ((LinkedList<int>)view).Dequeue();
+                Assert.Throws<ViewDisposedException>(() => ((LinkedList<int>)view).Dequeue());
             }
+
             [Test]
-            [ExpectedException(typeof(ViewDisposedException))]
             public void Enqueue()
             {
-                ((LinkedList<int>)view).Enqueue(0);
+                Assert.Throws<ViewDisposedException>(() => ((LinkedList<int>)view).Enqueue(0));
             }
+
             [Test]
-            [ExpectedException(typeof(ViewDisposedException))]
             public void Exists()
             {
-                view.Exists(delegate(int i) { return false; });
+                Assert.Throws<ViewDisposedException>(() => view.Exists(delegate (int i) { return false; }));
             }
+
             [Test]
-            [ExpectedException(typeof(ViewDisposedException))]
             public void Filter()
             {
-                view.Filter(delegate(int i) { return true; });
+                Assert.Throws<ViewDisposedException>(() => view.Filter(delegate (int i) { return true; }));
             }
+
             [Test]
-            [ExpectedException(typeof(ViewDisposedException))]
             public void Find()
             {
                 int i = 0;
-                view.Find(ref i);
+
+                Assert.Throws<ViewDisposedException>(() => view.Find(ref i));
             }
+
             [Test]
-            [ExpectedException(typeof(ViewDisposedException))]
             public void FindAll()
             {
-                view.FindAll(delegate(int i) { return false; });
+                Assert.Throws<ViewDisposedException>(() => view.FindAll(delegate (int i) { return false; }));
             }
+
             [Test]
-            [ExpectedException(typeof(ViewDisposedException))]
             public void FindOrAdd()
             {
                 int i = 0;
-                view.FindOrAdd(ref i);
+
+                Assert.Throws<ViewDisposedException>(() => view.FindOrAdd(ref i));
             }
 
             //TODO: wonder if it is allright to wait with the exception till the enumerator is actually used?

@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2014 Niels Kokholm, Peter Sestoft, and Rasmus Nielsen
+ Copyright (c) 2003-2015 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -21,6 +21,7 @@
 
 using System;
 using SCG = System.Collections.Generic;
+
 namespace C5
 {
     /// <summary>
@@ -543,21 +544,11 @@ namespace C5
         bool SequencedEquals(ISequenced<T> otherCollection);
     }
 
-
-
     /// <summary>
     /// A sequenced collection, where indices of items in the order are maintained
     /// </summary>
-    public interface IIndexed<T> : ISequenced<T>
+    public interface IIndexed<T> : ISequenced<T>, SCG.IReadOnlyList<T>
     {
-        /// <summary>
-        /// </summary>
-        /// <exception cref="IndexOutOfRangeException"> if <code>index</code> is negative or
-        /// &gt;= the size of the collection.</exception>
-        /// <value>The <code>index</code>'th item of this list.</value>
-        /// <param name="index">the index to lookup</param>
-        T this[int index] { get; }
-
         /// <summary>
         /// 
         /// </summary>
@@ -817,7 +808,7 @@ namespace C5
         /// <summary>
         /// Insert an item at the end of a compatible view, used as a pointer.
         /// <para>The <code>pointer</code> must be a view on the same list as
-        /// <code>this</code> and the endpoitn of <code>pointer</code> must be
+        /// <code>this</code> and the endpoint of <code>pointer</code> must be
         /// a valid insertion point of <code>this</code></para>
         /// </summary>
         /// <exception cref="IncompatibleViewException">If <code>pointer</code> 
@@ -1473,7 +1464,7 @@ namespace C5
         /// Determine the number of items at or above a supplied threshold.
         /// </summary>
         /// <param name="bot">The lower bound (inclusive)</param>
-        /// <returns>The number of matcing items.</returns>
+        /// <returns>The number of matching items.</returns>
         int CountFrom(T bot);
 
 
@@ -1482,7 +1473,7 @@ namespace C5
         /// </summary>
         /// <param name="bot">The lower bound (inclusive)</param>
         /// <param name="top">The upper bound (exclusive)</param>
-        /// <returns>The number of matcing items.</returns>
+        /// <returns>The number of matching items.</returns>
         int CountFromTo(T bot, T top);
 
 
@@ -1490,7 +1481,7 @@ namespace C5
         /// Determine the number of items below a supplied threshold.
         /// </summary>
         /// <param name="top">The upper bound (exclusive)</param>
-        /// <returns>The number of matcing items.</returns>
+        /// <returns>The number of matching items.</returns>
         int CountTo(T top);
 
 
@@ -1588,7 +1579,7 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <value>A collection containg the all the keys of the dictionary</value>
+        /// <value>A collection containing all the keys of the dictionary</value>
         ICollectionValue<K> Keys { get; }
 
 
@@ -1739,7 +1730,7 @@ namespace C5
 
         /// <summary>
         /// Check the integrity of the internal data structures of this dictionary.
-        /// Only avaliable in DEBUG builds???
+        /// Only available in DEBUG builds???
         /// </summary>
         /// <returns>True if check does not fail.</returns>
         bool Check();
