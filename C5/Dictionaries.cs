@@ -212,6 +212,10 @@ namespace C5
     {
         SCG.IEqualityComparer<K> keyequalityComparer;
 
+		/// <summary>
+		/// Create an entry equalityComparer using the default equalityComparer for keys
+		/// </summary>
+		public KeyValuePairEqualityComparer() { keyequalityComparer = EqualityComparer<K>.Default; }
 
 		/// <summary>
 		/// Create an entry equalityComparer from a specified item equalityComparer for the keys

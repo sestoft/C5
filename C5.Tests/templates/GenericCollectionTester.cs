@@ -41,7 +41,7 @@ namespace C5UnitTests.Templates
             }
         }
 
-        public virtual void Test(Func<U> factory, MemoryType memoryType)
+		public virtual void Test(Func<U> factory, MemoryType memoryType = MemoryType.Normal)
         {
             foreach (MethodInfo minfo in testMethods)
             {

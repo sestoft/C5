@@ -2413,12 +2413,12 @@ namespace C5UnitTests.arrays.sorted
 
             private static bool ErrorOnChildThread;
 
-            [Test]
-            [ExpectedException(typeof(ConcurrentEnumerationException))]
+            [Test] 
             public void RegrettablyUnsafeStrictMemory()
             {
-                if (MemoryType != MemoryType.Strict) throw new ConcurrentEnumerationException(); //Fake exception
-
+				if ( MemoryType != MemoryType.Strict )
+					return;
+               
                 System.Threading.Thread[] t = new System.Threading.Thread[10];
                 A[] a = new A[10];
                 Action onError = () => { ErrorOnChildThread = true; };
@@ -2434,9 +2434,7 @@ namespace C5UnitTests.arrays.sorted
                 for (int i = 0; i < 10; i++)
                     t[i].Join();
 
-                if (ErrorOnChildThread) throw new ConcurrentEnumerationException();
-                //                for (int i = 0; i < 10; i++)
-                //                    Assert.AreEqual(sz, a[i].count);
+				Assert.True ( ErrorOnChildThread );
 
             }
 
