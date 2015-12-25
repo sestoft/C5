@@ -29,21 +29,21 @@ namespace C5UnitTests.support
 {
     namespace bases
     {
-		
-		[TestFixture(MemoryType.Normal)]
-		[TestFixture(MemoryType.Strict)]
-		[TestFixture(MemoryType.Safe)]
-		public class ArrayBaseTest : BaseMemoryType
+
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+        public class ArrayBaseTest : BaseMemoryType
         {
 
-			public ArrayBaseTest ( MemoryType memoryType )
-				: base(memoryType)
-			{
-				
-			}
+            public ArrayBaseTest(MemoryType memoryType)
+                : base(memoryType)
+            {
+
+            }
             class ABT : ArrayBase<string>
             {
-				public ABT(MemoryType memoryType) : base(8, C5.EqualityComparer<string>.Default, memoryType) { }
+                public ABT(MemoryType memoryType) : base(8, C5.EqualityComparer<string>.Default, memoryType) { }
 
                 public override string Choose() { if (size > 0) return array[0]; throw new NoSuchItemException(); }
 
@@ -57,7 +57,7 @@ namespace C5UnitTests.support
             [Test]
             public void Check()
             {
-				ABT abt = new ABT(MemoryType);
+                ABT abt = new ABT(MemoryType);
 
                 abt.thesize = 3;
                 abt[2] = "aaa";
@@ -117,7 +117,7 @@ namespace C5UnitTests.support
             public void GenericCViaBuilder()
             {
                 SCG.IComparer<dbl> h = SCG.Comparer<dbl>.Default;
-                var s = new dbl(3.4);
+                dbl s = new dbl(3.4);
                 dbl t = new dbl(3.4);
                 dbl u = new dbl(7.4);
 

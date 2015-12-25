@@ -89,12 +89,12 @@ namespace C5
     /// <summary>
     /// An exception  thrown by the MemorySafeEnumerator if the collection is enumerated by multiple threads concurrently
     /// </summary>
-     [Serializable]
+    [Serializable]
     public class ConcurrentEnumerationException : Exception
     {
         public ConcurrentEnumerationException()
         {
-            
+
         }
 
         public ConcurrentEnumerationException(string message) : base(message) { }
@@ -108,7 +108,7 @@ namespace C5
     {
         public MultipleEnumerationException()
         {
-            
+
         }
 
         public MultipleEnumerationException(string message) : base(message) { }

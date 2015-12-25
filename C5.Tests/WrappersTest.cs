@@ -655,13 +655,13 @@ namespace C5UnitTests.wrappers
                 Assert.AreEqual(6, wrapped[1]);
                 Assert.IsTrue(IC.eq(wrapped[1, 2], 6, 5));
                 //
-                Func<int, bool> is4 = delegate (int i) { return i == 4; };
+                Func<int, bool> is4 = delegate(int i) { return i == 4; };
                 Assert.AreEqual(EventTypeEnum.None, wrapped.ActiveEvents);
                 Assert.AreEqual(false, wrapped.All(is4));
                 Assert.AreEqual(true, wrapped.AllowsDuplicates);
 
-                wrapped.Apply(delegate (int i) { });
-                
+                wrapped.Apply(delegate(int i) { });
+
                 Assert.AreEqual("{ 5, 6, 4 }", wrapped.Backwards().ToString());
                 Assert.AreEqual(true, wrapped.Check());
                 wrapped.Choose();
@@ -703,7 +703,7 @@ namespace C5UnitTests.wrappers
                 Assert.AreEqual(5, wrapped.Last);
                 Assert.AreEqual(2, wrapped.LastIndexOf(5));
                 Assert.AreEqual(EventTypeEnum.None, wrapped.ListenableEvents);
-                Func<int, string> i2s = delegate (int i) { return string.Format("T{0}", i); };
+                Func<int, string> i2s = delegate(int i) { return string.Format("T{0}", i); };
                 Assert.AreEqual("[ 0:T4, 1:T6, 2:T5 ]", wrapped.Map<string>(i2s).ToString());
                 Assert.AreEqual(0, wrapped.Offset);
                 wrapped.Reverse();
@@ -773,23 +773,23 @@ namespace C5UnitTests.wrappers
                 catch (FixedSizeCollectionException) { }
             }
 
-            [Test] 
+            [Test]
             public void FilterShouldRaiseAnExceptionInStrictMemoryMode()
             {
-				if ( MemoryType != MemoryType.Strict )
-					return;
-					
-				int[] inner = new int[] { 3, 4, 6, 5, 7 };
+                if (MemoryType != MemoryType.Strict)
+                    return;
+
+                int[] inner = new int[] { 3, 4, 6, 5, 7 };
                 WrappedArray<int> outerwrapped = new WrappedArray<int>(inner, MemoryType);
 
                 WrappedArray<int> wrapped = (WrappedArray<int>)outerwrapped.View(1, 3);
                 Func<int, bool> is4 = delegate(int i) { return i == 4; };
 
-				if ( MemoryType == MemoryType.Strict )
-				{
-					Assert.Throws<Exception>(()=> IC.eq ( wrapped.Filter ( is4 ), 4 ) );
-				}
-			}
+                if (MemoryType == MemoryType.Strict)
+                {
+                    Assert.Throws<Exception>(() => IC.eq(wrapped.Filter(is4), 4));
+                }
+            }
 
 
             [Test]
@@ -802,11 +802,11 @@ namespace C5UnitTests.wrappers
                 Assert.AreEqual(6, wrapped[1]);
                 Assert.IsTrue(IC.eq(wrapped[1, 2], 6, 5));
                 //
-                Func<int, bool> is4 = delegate (int i) { return i == 4; };
+                Func<int, bool> is4 = delegate(int i) { return i == 4; };
                 Assert.AreEqual(EventTypeEnum.None, wrapped.ActiveEvents);
                 Assert.AreEqual(false, wrapped.All(is4));
                 Assert.AreEqual(true, wrapped.AllowsDuplicates);
-                wrapped.Apply(delegate (int i) { });
+                wrapped.Apply(delegate(int i) { });
                 Assert.AreEqual("{ 5, 6, 4 }", wrapped.Backwards().ToString());
                 Assert.AreEqual(true, wrapped.Check());
                 wrapped.Choose();
@@ -845,7 +845,7 @@ namespace C5UnitTests.wrappers
                 Assert.AreEqual(5, wrapped.Last);
                 Assert.AreEqual(2, wrapped.LastIndexOf(5));
                 Assert.AreEqual(EventTypeEnum.None, wrapped.ListenableEvents);
-                Func<int, string> i2s = delegate (int i) { return string.Format("T{0}", i); };
+                Func<int, string> i2s = delegate(int i) { return string.Format("T{0}", i); };
                 Assert.AreEqual("[ 0:T4, 1:T6, 2:T5 ]", wrapped.Map<string>(i2s).ToString());
                 Assert.AreEqual(1, wrapped.Offset);
                 wrapped.Reverse();

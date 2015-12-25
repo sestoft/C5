@@ -41,7 +41,7 @@ namespace C5UnitTests.Templates
             }
         }
 
-		public virtual void Test(Func<U> factory, MemoryType memoryType = MemoryType.Normal)
+        public virtual void Test(Func<U> factory, MemoryType memoryType = MemoryType.Normal)
         {
             foreach (MethodInfo minfo in testMethods)
             {
@@ -79,7 +79,7 @@ namespace C5UnitTests.Templates
 
         public override void SetUp(U collection, int testSpec, MemoryType memoryType)
         {
-            SetUp(collection,memoryType );
+            SetUp(collection, memoryType);
         }
 
         public abstract void SetUp(object collection, MemoryType memoryType);

@@ -45,10 +45,10 @@ namespace C5UnitTests
     {
         protected MemoryType MemoryType;
 
-       protected BaseMemoryType(MemoryType memoryType)
-       {
-           MemoryType = memoryType;
-       }
+        protected BaseMemoryType(MemoryType memoryType)
+        {
+            MemoryType = memoryType;
+        }
     }
 
     class TenEqualityComparer : SCG.IEqualityComparer<int>, SCG.IComparer<int>

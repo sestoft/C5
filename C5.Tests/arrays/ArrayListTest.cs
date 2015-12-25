@@ -35,7 +35,7 @@ namespace C5UnitTests.arrays.list
     {
         [Test]
         public void TestEvents()
-        { 
+        {
             Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default, MemoryType); };
             new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory, MemoryType);
             new C5UnitTests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory, MemoryType);
@@ -55,8 +55,8 @@ namespace C5UnitTests.arrays.list
         [Test]
         public void List()
         {
-			C5UnitTests.Templates.List.Dispose.Tester<CollectionOfInt>();
-			C5UnitTests.Templates.List.SCG_IList.Tester<CollectionOfInt>();
+            C5UnitTests.Templates.List.Dispose.Tester<CollectionOfInt>();
+            C5UnitTests.Templates.List.SCG_IList.Tester<CollectionOfInt>();
         }
 
         public GenericTesters(MemoryType memoryType)
@@ -774,7 +774,7 @@ namespace C5UnitTests.arrays.list
                 list = new ArrayList<int>(MemoryType);
                 always = delegate { return true; };
                 never = delegate { return false; };
-                even = delegate (int i) { return i % 2 == 0; };
+                even = delegate(int i) { return i % 2 == 0; };
             }
 
 
@@ -816,7 +816,7 @@ namespace C5UnitTests.arrays.list
             public void Apply()
             {
                 int sum = 0;
-                Action<int> a = delegate (int i) { sum = i + 10 * sum; };
+                Action<int> a = delegate(int i) { sum = i + 10 * sum; };
 
                 list.Apply(a);
                 Assert.AreEqual(0, sum);
@@ -926,19 +926,19 @@ namespace C5UnitTests.arrays.list
                 list.Add(8);
                 list.Add(5);
 
-				Assert.Throws<MultipleEnumerationException> ( ( ) =>
-				{
+                Assert.Throws<MultipleEnumerationException>(() =>
+                {
 
-					foreach ( var item in list )
-					{
-						foreach ( var item2 in list )
-						{
-						}
-					}
-				} );
+                    foreach (var item in list)
+                    {
+                        foreach (var item2 in list)
+                        {
+                        }
+                    }
+                });
             }
 
-             [Test]
+            [Test]
             public void MultipleSeparateEnumeration()
             {
                 list.Add(5);
@@ -946,19 +946,19 @@ namespace C5UnitTests.arrays.list
                 list.Add(5);
                 foreach (var item in list)
                 {
-                    
+
                 }
 
-                 int j = 0;
+                int j = 0;
                 foreach (var item2 in list)
                 {
                     switch (j)
                     {
                         case 0:
-                            Assert.AreEqual(item2,5);
+                            Assert.AreEqual(item2, 5);
                             break;
                         case 1:
-                             Assert.AreEqual(item2,8);
+                            Assert.AreEqual(item2, 8);
                             break;
                         case 2:
                             Assert.AreEqual(item2, 5);
@@ -1187,7 +1187,8 @@ namespace C5UnitTests.arrays.list
                 Assert.IsTrue(IC.seteq(list.ItemMultiplicities(), 7, 2, 9, 1));
             }
 
-            public UniqueItems(MemoryType memoryType) : base(memoryType)
+            public UniqueItems(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -1288,7 +1289,8 @@ namespace C5UnitTests.arrays.list
                 Assert.Throws<ArgumentOutOfRangeException>(() => list.CopyTo(a, 9));
             }
 
-            public ArrayTest(MemoryType memoryType) : base(memoryType)
+            public ArrayTest(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -1318,7 +1320,8 @@ namespace C5UnitTests.arrays.list
                 Assert.IsNotNull(((System.Collections.IList)list).SyncRoot);
             }
 
-            public Sync(MemoryType memoryType) : base(memoryType)
+            public Sync(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -1406,7 +1409,7 @@ namespace C5UnitTests.arrays.list
             [Test]
             public void FindAll()
             {
-                Func<int, bool> f = delegate (int i) { return i % 2 == 0; };
+                Func<int, bool> f = delegate(int i) { return i % 2 == 0; };
 
                 Assert.IsTrue(list.FindAll(f).IsEmpty);
                 list.Add(5); list.Add(8); list.Add(5); list.Add(10); list.Add(8);
@@ -1530,7 +1533,8 @@ namespace C5UnitTests.arrays.list
             [TearDown]
             public void Dispose() { list = null; }
 
-            public Searching(MemoryType memoryType) : base(memoryType)
+            public Searching(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -1578,11 +1582,12 @@ namespace C5UnitTests.arrays.list
                 dit = null;
             }
 
-            public Searching(MemoryType memoryType) : base(memoryType)
+            public Searching(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
- 
+
         [TestFixture(MemoryType.Normal)]
         [TestFixture(MemoryType.Strict)]
         [TestFixture(MemoryType.Safe)]
@@ -1668,7 +1673,8 @@ namespace C5UnitTests.arrays.list
                 dit = null;
             }
 
-            public Removing(MemoryType memoryType) : base(memoryType)
+            public Removing(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -1798,7 +1804,8 @@ namespace C5UnitTests.arrays.list
                 });
             }
 
-            public Searching(MemoryType memoryType) : base(memoryType)
+            public Searching(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -1982,7 +1989,7 @@ namespace C5UnitTests.arrays.list
             [Test]
             public void Map()
             {
-                Func<int, string> m = delegate (int i) { return "<<" + i + ">>"; };
+                Func<int, string> m = delegate(int i) { return "<<" + i + ">>"; };
                 IList<string> r = lst.Map(m);
 
                 Assert.IsTrue(r.Check());
@@ -2004,7 +2011,7 @@ namespace C5UnitTests.arrays.list
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
+                Func<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
 
                 Assert.Throws<CollectionModifiedException>(() => lst.Map(m));
             }
@@ -2015,7 +2022,7 @@ namespace C5UnitTests.arrays.list
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
+                Func<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
 
                 Assert.Throws<CollectionModifiedException>(() => lst.FindAll(m));
             }
@@ -2027,7 +2034,7 @@ namespace C5UnitTests.arrays.list
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
+                Func<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
 
                 Assert.Throws<CollectionModifiedException>(() => lst.Map(m));
             }
@@ -2039,7 +2046,7 @@ namespace C5UnitTests.arrays.list
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
+                Func<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
 
                 Assert.Throws<CollectionModifiedException>(() => lst.FindAll(m));
             }
@@ -2113,7 +2120,8 @@ namespace C5UnitTests.arrays.list
                 Assert.Throws<ArgumentOutOfRangeException>(() => lst.View(8, 3).Reverse());
             }
 
-            public Inserting(MemoryType memoryType) : base(memoryType)
+            public Inserting(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -2219,7 +2227,8 @@ namespace C5UnitTests.arrays.list
                 Assert.IsFalse(lst.Remove(p, out p));
             }
 
-            public Combined(MemoryType memoryType) : base(memoryType)
+            public Combined(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -2295,7 +2304,8 @@ namespace C5UnitTests.arrays.list
                 Assert.IsTrue(lst2.IsEmpty);
             }
 
-            public SortingTests(MemoryType memoryType) : base(memoryType)
+            public SortingTests(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -2330,7 +2340,8 @@ namespace C5UnitTests.arrays.list
                 }
             }
 
-            public ShuffleTests(MemoryType memoryType) : base(memoryType)
+            public ShuffleTests(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -2377,13 +2388,14 @@ namespace C5UnitTests.arrays.list
                 Assert.Throws<NoSuchItemException>(() => list.Pop());
             }
 
-            [TearDown] 
+            [TearDown]
             public void Dispose()
             {
                 list = null;
             }
 
-            public Stack(MemoryType memoryType) : base(memoryType)
+            public Stack(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -2426,7 +2438,8 @@ namespace C5UnitTests.arrays.list
             [TearDown]
             public void Dispose() { list = null; }
 
-            public Queue(MemoryType memoryType) : base(memoryType)
+            public Queue(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -2513,7 +2526,8 @@ namespace C5UnitTests.arrays.list
                 });
             }
 
-            public Range(MemoryType memoryType) : base(memoryType)
+            public Range(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -2764,14 +2778,14 @@ namespace C5UnitTests.arrays.list
             [Test]
             public void MapEtc()
             {
-                ArrayList<double> dbl = (ArrayList<double>)view.Map(new Func<int, double>(delegate (int i) { return i / 10.0; }));
+                ArrayList<double> dbl = (ArrayList<double>)view.Map(new Func<int, double>(delegate(int i) { return i / 10.0; }));
 
                 Assert.IsTrue(dbl.Check());
                 Assert.AreEqual(0.1, dbl[0]);
                 Assert.AreEqual(0.2, dbl[1]);
                 for (int i = 0; i < 10; i++) view.Add(i);
 
-                list = (ArrayList<int>)view.FindAll(new Func<int, bool>(delegate (int i) { return i % 4 == 1; }));
+                list = (ArrayList<int>)view.FindAll(new Func<int, bool>(delegate(int i) { return i % 4 == 1; }));
                 Assert.IsTrue(list.Check());
                 Assert.IsTrue(IC.eq(list, 1, 1, 5, 9));
             }
@@ -2987,7 +3001,8 @@ namespace C5UnitTests.arrays.list
                 Assert.AreSame(((System.Collections.IList)view).SyncRoot, ((System.Collections.IList)list).SyncRoot);
             }
 
-            public Simple(MemoryType memoryType) : base(memoryType)
+            public Simple(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -3409,7 +3424,8 @@ namespace C5UnitTests.arrays.list
             }
 
 
-            public MulipleViews(MemoryType memoryType) : base(memoryType)
+            public MulipleViews(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -3470,7 +3486,8 @@ namespace C5UnitTests.arrays.list
                 Dit = Dat = Dut = null;
             }
 
-            public MultiLevelUnorderedOfUnOrdered(MemoryType memoryType) : base(memoryType)
+            public MultiLevelUnorderedOfUnOrdered(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -3528,7 +3545,8 @@ namespace C5UnitTests.arrays.list
                 Dit = Dat = Dut = null;
             }
 
-            public MultiLevelOrderedOfUnOrdered(MemoryType memoryType) : base(memoryType)
+            public MultiLevelOrderedOfUnOrdered(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -3592,7 +3610,8 @@ namespace C5UnitTests.arrays.list
                 Dit = Dat = Dut = Dot = null;
             }
 
-            public MultiLevelUnOrderedOfOrdered(MemoryType memoryType) : base(memoryType)
+            public MultiLevelUnOrderedOfOrdered(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -3656,7 +3675,8 @@ namespace C5UnitTests.arrays.list
                 Dit = Dat = Dut = Dot = null;
             }
 
-            public MultiLevelOrderedOfOrdered(MemoryType memoryType) : base(memoryType)
+            public MultiLevelOrderedOfOrdered(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -3772,7 +3792,8 @@ namespace C5UnitTests.arrays.list
                 dut = null;
             }
 
-            public ISequenced(MemoryType memoryType) : base(memoryType)
+            public ISequenced(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -3885,7 +3906,8 @@ namespace C5UnitTests.arrays.list
                 dut = null;
             }
 
-            public IEditableCollection(MemoryType memoryType) : base(memoryType)
+            public IEditableCollection(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -3942,7 +3964,8 @@ namespace C5UnitTests.arrays.list
                 Dit = Dat = Dut = null;
             }
 
-            public MultiLevelUnorderedOfUnOrdered(MemoryType memoryType) : base(memoryType)
+            public MultiLevelUnorderedOfUnOrdered(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -4000,7 +4023,8 @@ namespace C5UnitTests.arrays.list
                 Dit = Dat = Dut = null;
             }
 
-            public MultiLevelOrderedOfUnOrdered(MemoryType memoryType) : base(memoryType)
+            public MultiLevelOrderedOfUnOrdered(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -4064,7 +4088,8 @@ namespace C5UnitTests.arrays.list
                 Dit = Dat = Dut = Dot = null;
             }
 
-            public MultiLevelUnOrderedOfOrdered(MemoryType memoryType) : base(memoryType)
+            public MultiLevelUnOrderedOfOrdered(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }
@@ -4128,7 +4153,8 @@ namespace C5UnitTests.arrays.list
                 Dit = Dat = Dut = Dot = null;
             }
 
-            public MultiLevelOrderedOfOrdered(MemoryType memoryType) : base(memoryType)
+            public MultiLevelOrderedOfOrdered(MemoryType memoryType)
+                : base(memoryType)
             {
             }
         }

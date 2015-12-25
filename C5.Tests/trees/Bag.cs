@@ -80,8 +80,8 @@ namespace C5UnitTests.trees.TreeBag
     {
         [Test]
         public void TestEvents()
-        { 
-            Func<CollectionOfInt> factory = delegate () { return new CollectionOfInt(TenEqualityComparer.Default); };
+        {
+            Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
             new C5UnitTests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory, MemoryType.Normal);
         }
 
@@ -91,7 +91,8 @@ namespace C5UnitTests.trees.TreeBag
         //    C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
         //    C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
         //}
-        public GenericTesters(MemoryType memoryType) : base(memoryType)
+        public GenericTesters(MemoryType memoryType)
+            : base(memoryType)
         {
         }
     }
@@ -736,7 +737,7 @@ namespace C5UnitTests.trees.TreeBag
         public void Init()
         {
             list = new TreeBag<int>(TenEqualityComparer.Default);
-            pred = delegate (int i) { return i % 5 == 0; };
+            pred = delegate(int i) { return i % 5 == 0; };
         }
 
         [TearDown]
@@ -984,7 +985,7 @@ namespace C5UnitTests.trees.TreeBag
 
             Assert.AreEqual(list.UniqueItems().Count, list.uniqueCount);
             Assert.AreEqual(list.ItemMultiplicities().Count, list.uniqueCount);
-        
+
         }
     }
 
