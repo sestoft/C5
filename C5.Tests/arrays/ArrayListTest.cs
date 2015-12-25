@@ -920,22 +920,24 @@ namespace C5UnitTests.arrays.list
 
             [Test]
             public void MultipleEnumerationRaiseMultipleEnumerationExceptionWhenMemoryModeIsStrict()
-            {
-                if (MemoryType != MemoryType.Strict) throw new MultipleEnumerationException(); //Fake exception
+            { 
                 list.Add(5);
                 list.Add(8);
                 list.Add(5);
 
-                Assert.Throws<MultipleEnumerationException>(() =>
-                {
-
-                    foreach (var item in list)
+                if (MemoryType == MemoryType.Strict)
+                    Assert.Throws<MultipleEnumerationException>(() =>
                     {
-                        foreach (var item2 in list)
+
+                        foreach (var item in list)
                         {
+                            foreach (var item2 in list)
+                            {
+
+                            }
                         }
-                    }
-                });
+                    });
+     
             }
 
             [Test]
