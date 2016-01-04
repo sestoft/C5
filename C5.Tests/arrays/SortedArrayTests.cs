@@ -2418,7 +2418,7 @@ namespace C5UnitTests.arrays.sorted
                 for (int i = 0; i < 10; i++)
                 {
                     a[i] = new A(tree);
-                    t[i] = new System.Threading.Thread(new System.Threading.ThreadStart(a[i].traverse));
+					t[i] = new System.Threading.Thread(new System.Threading.ThreadStart(() => a[i].traverse()));
                 }
 
                 for (int i = 0; i < 10; i++)
