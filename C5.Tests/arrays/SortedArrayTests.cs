@@ -2376,6 +2376,10 @@ namespace C5UnitTests.arrays.sorted
 
                 public void a(int i) { count++; }
 
+				public void traverse()
+				{
+					traverse ( null );
+				}
 				/// <summary>
 				/// It calls the method a(int i) but it raises an exception if an error occur. This has been added to test
 				/// exception being thrown if multithread mode and MemoryMode.Strict is selected.
@@ -2418,7 +2422,7 @@ namespace C5UnitTests.arrays.sorted
                 for (int i = 0; i < 10; i++)
                 {
                     a[i] = new A(tree);
-					t[i] = new System.Threading.Thread(new System.Threading.ThreadStart(() => a[i].traverse()));
+					t[i] = new System.Threading.Thread(new System.Threading.ThreadStart(a[i].traverse));
                 }
 
                 for (int i = 0; i < 10; i++)
