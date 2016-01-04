@@ -2376,11 +2376,11 @@ namespace C5UnitTests.arrays.sorted
 
                 public void a(int i) { count++; }
 
-
-                public void traverse()
-                {
-                    traverse(null);
-                }
+				/// <summary>
+				/// It calls the method a(int i) but it raises an exception if an error occur. This has been added to test
+				/// exception being thrown if multithread mode and MemoryMode.Strict is selected.
+				/// </summary>
+				/// <param name="onError">On error.</param>
                 public void traverse(Action onError = null)
                 {
                     try
@@ -2430,6 +2430,8 @@ namespace C5UnitTests.arrays.sorted
 
             }
 
+			// This is a static placeholder to detect exception in a multithread context. Unfortunately
+			// exception risen in secondary threads are swallowed and not detected.
             private static bool ErrorOnChildThread;
 
             [Test]

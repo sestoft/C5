@@ -41,6 +41,9 @@ namespace C5UnitTests
         }
     }
 
+	/// <summary>
+	/// Base memory type. This abstract class is necessary for every unit test that needs to test all memory types.
+	/// </summary>
     public abstract class BaseMemoryType
     {
         protected MemoryType MemoryType;

@@ -679,6 +679,9 @@ namespace C5UnitTests.wrappers
                 Assert.AreEqual(System.Collections.Generic.EqualityComparer<int>.Default, wrapped.EqualityComparer);
                 Assert.AreEqual(true, wrapped.Exists(is4));
 
+				// The following condition can be tested only if we are not in memory strict mode.
+				// the reason behind that is that the method Filter is not memory safe and thus
+				// will cannot be used in MemoryType.Strict (it will raise an exception)
                 if (MemoryType != MemoryType.Strict)
                     Assert.IsTrue(IC.eq(wrapped.Filter(is4), 4));
 
@@ -690,6 +693,10 @@ namespace C5UnitTests.wrappers
                 Assert.AreEqual(true, wrapped.FindLast(is4, out j));
                 Assert.AreEqual(0, wrapped.FindLastIndex(is4));
                 Assert.AreEqual(4, wrapped.First);
+
+				// the using below is needed when testing MemoryType.Strict. In this memory mode
+				// only one enumerator per collection is available. Requesting more than one enumerator
+				// in this specific memory mode will raise an exception
                 using (var enumerator = wrapped.GetEnumerator()) ;
 
                 Assert.AreEqual(CHC.sequencedhashcode(4, 6, 5), wrapped.GetSequencedHashCode());
@@ -703,7 +710,7 @@ namespace C5UnitTests.wrappers
                 Assert.AreEqual(5, wrapped.Last);
                 Assert.AreEqual(2, wrapped.LastIndexOf(5));
                 Assert.AreEqual(EventTypeEnum.None, wrapped.ListenableEvents);
-                Func<int, string> i2s = delegate(int i) { return string.Format("T{0}", i); };
+                Func<int, string> i2s = delegate (int i) { return string.Format("T{0}", i); };
                 Assert.AreEqual("[ 0:T4, 1:T6, 2:T5 ]", wrapped.Map<string>(i2s).ToString());
                 Assert.AreEqual(0, wrapped.Offset);
                 wrapped.Reverse();
@@ -823,9 +830,14 @@ namespace C5UnitTests.wrappers
                 Assert.AreEqual(false, wrapped.DuplicatesByCounting);
                 Assert.AreEqual(System.Collections.Generic.EqualityComparer<int>.Default, wrapped.EqualityComparer);
                 Assert.AreEqual(true, wrapped.Exists(is4));
+
+				// The following condition can be tested only if we are not in memory strict mode.
+				// the reason behind that is that the method Filter is not memory safe and thus
+				// will cannot be used in MemoryType.Strict (it will raise an exception)
                 if (MemoryType != MemoryType.Strict)
                     Assert.IsTrue(IC.eq(wrapped.Filter(is4), 4));
-                int j = 5;
+                
+				int j = 5;
                 Assert.AreEqual(true, wrapped.Find(ref j));
                 Assert.AreEqual(true, wrapped.Find(is4, out j));
                 Assert.AreEqual("[ 0:4 ]", wrapped.FindAll(is4).ToString());
@@ -833,6 +845,10 @@ namespace C5UnitTests.wrappers
                 Assert.AreEqual(true, wrapped.FindLast(is4, out j));
                 Assert.AreEqual(0, wrapped.FindLastIndex(is4));
                 Assert.AreEqual(4, wrapped.First);
+
+				// the using below is needed when testing MemoryType.Strict. In this memory mode
+				// only one enumerator per collection is available. Requesting more than one enumerator
+				// in this specific memory mode will raise an exception
                 using (var enumerator = wrapped.GetEnumerator()) ;
                 Assert.AreEqual(CHC.sequencedhashcode(4, 6, 5), wrapped.GetSequencedHashCode());
                 Assert.AreEqual(CHC.unsequencedhashcode(4, 6, 5), wrapped.GetUnsequencedHashCode());
@@ -845,7 +861,7 @@ namespace C5UnitTests.wrappers
                 Assert.AreEqual(5, wrapped.Last);
                 Assert.AreEqual(2, wrapped.LastIndexOf(5));
                 Assert.AreEqual(EventTypeEnum.None, wrapped.ListenableEvents);
-                Func<int, string> i2s = delegate(int i) { return string.Format("T{0}", i); };
+                Func<int, string> i2s = delegate (int i) { return string.Format("T{0}", i); };
                 Assert.AreEqual("[ 0:T4, 1:T6, 2:T5 ]", wrapped.Map<string>(i2s).ToString());
                 Assert.AreEqual(1, wrapped.Offset);
                 wrapped.Reverse();
