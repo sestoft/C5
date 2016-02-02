@@ -465,7 +465,8 @@ namespace C5
         /// Create a linked list with en external item equalityComparer
         /// </summary>
         /// <param name="itemequalityComparer">The external equalitySCG.Comparer</param>
-		public LinkedList(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
+        /// <param name="memoryType">The type of memory for the enumerator used to iterate the collection</param>
+        public LinkedList(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
 			: base(itemequalityComparer, memoryType)
         {
 			if ( memoryType != MemoryType.Normal )

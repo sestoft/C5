@@ -594,11 +594,7 @@ namespace C5
                 private ICollection<KeyValuePair<K, V>> _internalList;
 
                 private SCG.IEnumerator<KeyValuePair<K, V>> _internalEnumerator;
-
-                //-1 means an iterator is not in use.
-                private int _iteratorState;
-
-
+                 
                 public ValueEnumerator(ICollection<KeyValuePair<K, V>> list, MemoryType memoryType)
                     : base(memoryType)
                 {
@@ -610,13 +606,7 @@ namespace C5
                     _internalList = list;
                     Current = default(V);
                 }
-
-
-                public void Dispose()
-                {
-                    _iteratorState = -1;
-                }
-
+                 
                 public override bool MoveNext()
                 {
                     ICollection<KeyValuePair<K, V>> list = _internalList;
@@ -630,8 +620,6 @@ namespace C5
                         return true;
                     }
 
-
-
                     Current = default(V);
                     return false;
                 }
@@ -640,8 +628,6 @@ namespace C5
                 {
                     Current = default(V);
                 }
-
-
                 protected override MemorySafeEnumerator<V> Clone()
                 {
                     var enumerator = new ValueEnumerator(_internalList, MemoryType)
@@ -694,11 +680,7 @@ namespace C5
                 private ICollection<KeyValuePair<K, V>> _internalList;
 
                 private SCG.IEnumerator<KeyValuePair<K, V>> _internalEnumerator;
-
-                //-1 means an iterator is not in use.
-                private int _iteratorState;
-
-
+                 
                 public KeyEnumerator(ICollection<KeyValuePair<K, V>> list, MemoryType memoryType)
                     : base(memoryType)
                 {
@@ -710,13 +692,8 @@ namespace C5
                     _internalList = list;
                     Current = default(K);
                 }
-
-
-                public void Dispose()
-                {
-                    _iteratorState = -1;
-                }
-
+                 
+            
                 public override bool MoveNext()
                 {
                     ICollection<KeyValuePair<K, V>> list = _internalList;
@@ -729,9 +706,7 @@ namespace C5
                         Current = _internalEnumerator.Current.Key;
                         return true;
                     }
-
-
-
+                     
                     Current = default(K);
                     return false;
                 }
@@ -740,8 +715,7 @@ namespace C5
                 {
                     Current = default(K);
                 }
-
-
+                 
                 protected override MemorySafeEnumerator<K> Clone()
                 {
                     var enumerator = new KeyEnumerator(_internalList, MemoryType)
@@ -1214,7 +1188,7 @@ namespace C5
         }
 
         [Serializable]
-        class SortedKeysCollection : SequencedBase<K>, ISorted<K>
+        sealed class SortedKeysCollection : SequencedBase<K>, ISorted<K>
         {
 
             #region Private Enumerator
@@ -1226,9 +1200,7 @@ namespace C5
 
                 private SCG.IEnumerator<KeyValuePair<K, V>> _internalEnumerator;
 
-                //-1 means an iterator is not in use.
-                private int _iteratorState;
-
+              
 
                 public KeyEnumerator(ICollection<KeyValuePair<K, V>> list, MemoryType memoryType)
                     : base(memoryType)
@@ -1243,9 +1215,8 @@ namespace C5
                 }
 
 
-                public void Dispose()
-                {
-                    _iteratorState = -1;
+                public override void Dispose()
+                { 
                     _internalEnumerator.Dispose();
                     _internalEnumerator = null;
                 }
@@ -1274,7 +1245,7 @@ namespace C5
                     {
                         _internalEnumerator.Reset();
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         //swallow the exception
                     }
@@ -1435,7 +1406,7 @@ namespace C5
             /// 
             /// </summary>
             /// <returns></returns>
-            public virtual ICollectionValue<K> UniqueItems()
+            public ICollectionValue<K> UniqueItems()
             {
                 return this;
             }
@@ -1444,7 +1415,7 @@ namespace C5
             /// 
             /// </summary>
             /// <returns></returns>
-            public virtual ICollectionValue<KeyValuePair<K, int>> ItemMultiplicities()
+            public ICollectionValue<KeyValuePair<K, int>> ItemMultiplicities()
             {
                 return new MultiplicityOne<K>(this);
             }

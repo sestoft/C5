@@ -90,7 +90,8 @@ namespace C5
         /// 
         /// </summary>
         /// <param name="capacity"></param>
-		public CircularQueue(int capacity, MemoryType memoryType = MemoryType.Normal)
+        /// <param name="memoryType">The memory type strategy of the internal enumerator used to iterate over the collection</param>
+        public CircularQueue(int capacity, MemoryType memoryType = MemoryType.Normal)
 			: base(EqualityComparer<T>.Default, memoryType)
         {
             int newlength = 8;

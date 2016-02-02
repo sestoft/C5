@@ -697,7 +697,9 @@ namespace C5UnitTests.wrappers
 				// the using below is needed when testing MemoryType.Strict. In this memory mode
 				// only one enumerator per collection is available. Requesting more than one enumerator
 				// in this specific memory mode will raise an exception
-                using (var enumerator = wrapped.GetEnumerator()) ;
+                using (wrapped.GetEnumerator())
+                {
+                }
 
                 Assert.AreEqual(CHC.sequencedhashcode(4, 6, 5), wrapped.GetSequencedHashCode());
                 Assert.AreEqual(CHC.unsequencedhashcode(4, 6, 5), wrapped.GetUnsequencedHashCode());
@@ -849,7 +851,9 @@ namespace C5UnitTests.wrappers
 				// the using below is needed when testing MemoryType.Strict. In this memory mode
 				// only one enumerator per collection is available. Requesting more than one enumerator
 				// in this specific memory mode will raise an exception
-                using (var enumerator = wrapped.GetEnumerator()) ;
+                using (wrapped.GetEnumerator())
+                {
+                }
                 Assert.AreEqual(CHC.sequencedhashcode(4, 6, 5), wrapped.GetSequencedHashCode());
                 Assert.AreEqual(CHC.unsequencedhashcode(4, 6, 5), wrapped.GetUnsequencedHashCode());
                 Assert.AreEqual(Speed.Constant, wrapped.IndexingSpeed);

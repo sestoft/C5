@@ -2391,7 +2391,7 @@ namespace C5UnitTests.arrays.sorted
                     {
                         t.Apply(a);
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         if (onError != null)
                             onError();

@@ -113,6 +113,7 @@ namespace C5
         /// <exception cref="NotComparableException">If <code>T</code> is not comparable.
         /// </exception>
         /// <param name="capacity">The capacity</param>
+        /// <param name="memoryType">The type of memory for the enumerator used to iterate the collection</param>
         public SortedArray(int capacity, MemoryType memoryType = MemoryType.Normal)
             : this(capacity, SCG.Comparer<T>.Default, EqualityComparer<T>.Default, memoryType) { }
 
@@ -128,6 +129,7 @@ namespace C5
         /// </para>
         /// </summary>
         /// <param name="comparer">The comparer</param>
+        /// <param name="memoryType">The type of memory for the enumerator used to iterate the collection</param>
         public SortedArray(SCG.IComparer<T> comparer, MemoryType memoryType = MemoryType.Normal)
             : this(8, comparer, memoryType) { }
 
@@ -144,6 +146,7 @@ namespace C5
         /// </summary>
         /// <param name="capacity">The capacity</param>
         /// <param name="comparer">The comparer</param>
+        /// <param name="memoryType">The type of memory for the enumerator used to iterate the collection</param>
         public SortedArray(int capacity, SCG.IComparer<T> comparer, MemoryType memoryType = MemoryType.Normal)
             : this(capacity, comparer, new ComparerZeroHashCodeEqualityComparer<T>(comparer), memoryType) { }
 
@@ -155,7 +158,7 @@ namespace C5
         /// <param name="capacity">The capacity</param>
         /// <param name="comparer">The item comparer</param>
         /// <param name="equalityComparer">The item equalityComparer (assumed compatible)</param>
-        /// <param name="memoryType"></param>
+        /// <param name="memoryType">The type of memory for the enumerator used to iterate the collection</param>
         public SortedArray(int capacity, SCG.IComparer<T> comparer, SCG.IEqualityComparer<T> equalityComparer, MemoryType memoryType = MemoryType.Normal)
             : base(capacity, equalityComparer, memoryType)
         {

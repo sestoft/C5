@@ -48,7 +48,10 @@ namespace C5
         //TODO: wonder if we should remove that
         int blackdepth = 0;
 
-        // maintain a unique items counter
+ 
+        /// <summary>
+        /// maintain a unique items counter
+        /// </summary>
         public int uniqueCount = 0;
 
         //We double these stacks for the iterative add and remove on demand

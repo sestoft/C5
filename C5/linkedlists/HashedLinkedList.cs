@@ -496,6 +496,9 @@ namespace C5
             dict = new HashDictionary<T, Node>(itemequalityComparer);
         }
 
+		/// <summary>
+        /// Default constructor. An <see cref="EqualityComparer{T}.Default"/> is used as the default equality comparer
+		/// </summary>
 		public HashedLinkedList ( ) : this(EqualityComparer<T>.Default)
 		{
 			

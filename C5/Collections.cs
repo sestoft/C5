@@ -386,9 +386,7 @@ namespace C5
         #endregion
 
         #endregion
-
-
-
+         
         internal MemoryType MemoryType { get; set; }
 
         /// <summary>
@@ -531,13 +529,7 @@ namespace C5
         /// <exception cref="NoSuchItemException">if collection is empty.</exception>
         /// <returns></returns>
         public abstract T Choose();
-
-
-        /// <summary>
-        /// Create an enumerator for this collection.
-        /// </summary>
-        /// <returns>The enumerator</returns>
-        // public override abstract SCG.IEnumerator<T> GetEnumerator();
+ 
 
         #region IShowable Members
 
@@ -657,7 +649,7 @@ namespace C5
         /// 
         /// </summary>
         /// <param name="itemequalityComparer"></param>
-        /// <param name = "memoryType"></param>
+        /// <param name = "memoryType">The type of memory for the enumerator used to iterate the collection</param>
         protected CollectionBase(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType)
         {
             if (itemequalityComparer == null)
@@ -846,7 +838,7 @@ namespace C5
         /// </summary>
         /// <exception cref="CollectionModifiedException"> if this collection has been updated 
         /// since a target time</exception>
-        /// <param name="thestamp">The stamp identifying the target time</param
+        /// <param name="thestamp">The stamp identifying the target time</param>
         protected virtual void modifycheck(int thestamp)
         {
             if (stamp != thestamp)
@@ -926,7 +918,7 @@ namespace C5
         /// 
         /// </summary>
         /// <param name="itemequalityComparer"></param>
-        /// <param name = "memoryType"></param>
+        /// <param name = "memoryType">The type of memory for the enumerator used to iterate the collection</param>
         protected DirectedCollectionBase(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType) : base(itemequalityComparer, memoryType) { }
         /// <summary>
         /// <code>Forwards</code> if same, else <code>Backwards</code>
@@ -979,7 +971,7 @@ namespace C5
         /// 
         /// </summary>
         /// <param name="itemequalityComparer"></param>
-        /// <param name = "memoryType"></param>
+        /// <param name = "memoryType">The type of memory for the enumerator used to iterate the collection</param>
         protected SequencedBase(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType) : base(itemequalityComparer, memoryType) { }
 
         #region Util
@@ -1074,13 +1066,7 @@ namespace C5
 
 
         #endregion
-
-        /// <summary>
-        /// Create an enumerator for this collection.
-        /// </summary>
-        /// <returns>The enumerator</returns>
-        //  public override abstract SCG.IEnumerator<T> GetEnumerator();
-
+         
         /// <summary>
         /// <code>Forwards</code> if same, else <code>Backwards</code>
         /// </summary>
@@ -1323,7 +1309,8 @@ namespace C5
             private int _internalIncrementalIndex;
             private int _theStamp;
             private int _end;
-            //-1 means an iterator is not in use. 
+            
+
 
             public Enumerator(ArrayBase<T> list, MemoryType memoryType)
                 : base(memoryType)
@@ -1340,11 +1327,7 @@ namespace C5
                 Current = default(T);
                 _theStamp = theStamp;
             }
-
-
-            public void Dispose()
-            {
-            }
+             
 
             public override bool MoveNext()
             {

@@ -604,6 +604,7 @@ namespace C5
         /// Create an array list with external item equalityComparer and initial capacity 8 items.
         /// </summary>
         /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
+        /// <param name="memoryType"> The memory type strategy of the internal enumerator used to iterate over the collection</param>
         public ArrayList(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal) : this(8, itemequalityComparer, memoryType) { }
 
 
@@ -611,6 +612,7 @@ namespace C5
         /// Create an array list with default item equalityComparer and prescribed initial capacity.
         /// </summary>
         /// <param name="capacity">The prescribed capacity</param>
+        /// <param name="memoryType">The memory type strategy of the internal enumerator used to iterate over the collection</param>
         public ArrayList(int capacity, MemoryType memoryType = MemoryType.Normal) : this(capacity, EqualityComparer<T>.Default, memoryType) { }
 
 
@@ -619,6 +621,7 @@ namespace C5
         /// </summary>
         /// <param name="capacity">The prescribed capacity</param>
         /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
+        /// <param name="memoryType">The memory type strategy of the internal enumerator used to iterate over the collection</param>
         public ArrayList(int capacity, SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
             : base(capacity, itemequalityComparer, memoryType)
         {
