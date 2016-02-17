@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\C5.xml</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\C5\C5.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -75,10 +81,10 @@
     <Compile Include="..\C5\Dictionaries.cs">
       <Link>Dictionaries.cs</Link>
     </Compile>
-	 <Compile Include="..\C5\EnumerableBase.cs">
+    <Compile Include="..\C5\EnumerableBase.cs">
       <Link>EnumerableBase.cs</Link>
     </Compile>
-	<Compile Include="..\C5\MemorySafeEnumerator.cs">
+    <Compile Include="..\C5\MemorySafeEnumerator.cs">
       <Link>MemorySafeEnumerator.cs</Link>
     </Compile>
     <Compile Include="..\C5\Enums.cs">
