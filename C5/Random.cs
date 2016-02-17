@@ -162,8 +162,7 @@ namespace C5
         /// Create a random number generator with a specified internal start state.
         /// </summary>
         /// <exception cref="ArgumentException">If Q is not of length exactly 16</exception>
-        /// <param name="Q">The start state. Must be a collection of random bits given by an array of exactly 16 uints.</param>
-        [CLSCompliant(false)]
+        /// <param name="Q">The start state. Must be a collection of random bits given by an array of exactly 16 uints.</param> 
         public C5Random(uint[] Q)
         {
             if (Q.Length != 16)

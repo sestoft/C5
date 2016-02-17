@@ -25,74 +25,95 @@ using SCG = System.Collections.Generic;
 namespace C5
 {
 
-  /// <summary>
-  /// The symbolic characterization of the speed of lookups for a collection.
-  /// The values may refer to worst-case, amortized and/or expected asymtotic 
-  /// complexity wrt. the collection size.
-  /// </summary>
-  public enum Speed : short
-  {
     /// <summary>
-    /// Counting the collection with the <code>Count property</code> may not return
-    /// (for a synthetic and potentially infinite collection).
+    /// The symbolic characterization of the speed of lookups for a collection.
+    /// The values may refer to worst-case, amortized and/or expected asymtotic 
+    /// complexity wrt. the collection size.
     /// </summary>
-    PotentiallyInfinite = 1,
+    public enum Speed : short
+    {
+        /// <summary>
+        /// Counting the collection with the <code>Count property</code> may not return
+        /// (for a synthetic and potentially infinite collection).
+        /// </summary>
+        PotentiallyInfinite = 1,
+        /// <summary>
+        /// Lookup operations like <code>Contains(T item)</code> or the <code>Count</code>
+        /// property may take time O(n),
+        /// where n is the size of the collection.
+        /// </summary>
+        Linear = 2,
+        /// <summary>
+        /// Lookup operations like <code>Contains(T item)</code> or the <code>Count</code>
+        /// property  takes time O(log n),
+        /// where n is the size of the collection.
+        /// </summary>
+        Log = 3,
+        /// <summary>
+        /// Lookup operations like <code>Contains(T item)</code> or the <code>Count</code>
+        /// property  takes time O(1),
+        /// where n is the size of the collection.
+        /// </summary>
+        Constant = 4
+    }
+    /*
     /// <summary>
-    /// Lookup operations like <code>Contains(T item)</code> or the <code>Count</code>
-    /// property may take time O(n),
-    /// where n is the size of the collection.
+    /// 
     /// </summary>
-    Linear = 2,
-    /// <summary>
-    /// Lookup operations like <code>Contains(T item)</code> or the <code>Count</code>
-    /// property  takes time O(log n),
-    /// where n is the size of the collection.
-    /// </summary>
-    Log = 3,
-    /// <summary>
-    /// Lookup operations like <code>Contains(T item)</code> or the <code>Count</code>
-    /// property  takes time O(1),
-    /// where n is the size of the collection.
-    /// </summary>
-    Constant = 4
-  }
-  /*
-  /// <summary>
-  /// 
-  /// </summary>
-  public enum ItemEqualityTypeEnum
-  {
-    /// <summary>
-    /// Only an Equals(T,T)
-    /// </summary>
-    Equator, 
-    /// <summary>
-    /// Equals(T,T) and GetHashCode(T)
-    /// </summary>
-    HashingEqualityComparer, 
-    /// <summary>
-    /// Compare(T,T)
-    /// </summary>
-    Comparer, 
-    /// <summary>
-    /// Compatible Compare(T,T) and GetHashCode(T)
-    /// </summary>
-    Both
-  }
-*/
+    public enum ItemEqualityTypeEnum
+    {
+      /// <summary>
+      /// Only an Equals(T,T)
+      /// </summary>
+      Equator, 
+      /// <summary>
+      /// Equals(T,T) and GetHashCode(T)
+      /// </summary>
+      HashingEqualityComparer, 
+      /// <summary>
+      /// Compare(T,T)
+      /// </summary>
+      Comparer, 
+      /// <summary>
+      /// Compatible Compare(T,T) and GetHashCode(T)
+      /// </summary>
+      Both
+    }
+  */
 
-  /// <summary>
-  /// Direction of enumeration order relative to original collection.
-  /// </summary>
-  public enum EnumerationDirection
-  {
     /// <summary>
-    /// Same direction
+    /// Direction of enumeration order relative to original collection.
     /// </summary>
-    Forwards,
+    public enum EnumerationDirection
+    {
+        /// <summary>
+        /// Same direction
+        /// </summary>
+        Forwards,
+        /// <summary>
+        /// Opposite direction
+        /// </summary>
+        Backwards
+    }
+
     /// <summary>
-    /// Opposite direction
+    /// It specifies the memory type strategy of the internal enumerator implemented to iterate over the collection.
     /// </summary>
-    Backwards
-  }
+    public enum MemoryType
+    {
+        /// <summary>
+        /// Normal is the usual operator type. A new instance of an enumerator is always returned
+        /// for multithread safety purposes.
+        /// </summary>
+        Normal,
+        /// <summary>
+        /// Safe returns the same enumerator instance and updates references or a new instance in case of multiple enumeration and multithread access  
+        /// </summary>
+        Safe,
+        /// <summary>
+        /// Strict always returns the same enumerator instance. An exception is raised if the collection is enumerated more than once or
+        /// if the collection is accessed by multiple threads concurrently.
+        /// </summary>
+        Strict
+    }
 }

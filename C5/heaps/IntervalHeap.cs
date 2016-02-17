@@ -205,14 +205,15 @@ namespace C5
         /// <summary>
         /// Create an interval heap with natural item comparer and default initial capacity (16)
         /// </summary>
-        public IntervalHeap() : this(16) { }
+		public IntervalHeap(MemoryType memoryType = MemoryType.Normal) : this(16, memoryType) { }
 
 
         /// <summary>
         /// Create an interval heap with external item comparer and default initial capacity (16)
         /// </summary>
-        /// <param name="comparer">The external comparer</param>
-        public IntervalHeap(SCG.IComparer<T> comparer) : this(16, comparer) { }
+		/// <param name="comparer">The external comparer</param>
+		/// <param name = "memoryType"></param>
+		public IntervalHeap(SCG.IComparer<T> comparer, MemoryType memoryType = MemoryType.Normal) : this(16, comparer, memoryType) { }
 
 
         //TODO: maybe remove
@@ -220,22 +221,28 @@ namespace C5
         /// Create an interval heap with natural item comparer and prescribed initial capacity
         /// </summary>
         /// <param name="capacity">The initial capacity</param>
-        public IntervalHeap(int capacity) : this(capacity, SCG.Comparer<T>.Default, EqualityComparer<T>.Default) { }
+		/// <param name = "memoryType"></param>
+		public IntervalHeap(int capacity, MemoryType memoryType = MemoryType.Normal) : this(capacity, SCG.Comparer<T>.Default, EqualityComparer<T>.Default, memoryType) { }
 
 
         /// <summary>
         /// Create an interval heap with external item comparer and prescribed initial capacity
         /// </summary>
         /// <param name="comparer">The external comparer</param>
-        /// <param name="capacity">The initial capacity</param>
-        public IntervalHeap(int capacity, SCG.IComparer<T> comparer) : this(capacity, comparer, new ComparerZeroHashCodeEqualityComparer<T>(comparer)) { }
+		/// <param name="capacity">The initial capacity</param>
+		/// <param name = "memoryType"></param>
+		public IntervalHeap(int capacity, SCG.IComparer<T> comparer, MemoryType memoryType = MemoryType.Normal) : this(capacity, comparer, new ComparerZeroHashCodeEqualityComparer<T>(comparer), memoryType) { }
 
-        IntervalHeap(int capacity, SCG.IComparer<T> comparer, SCG.IEqualityComparer<T> itemequalityComparer)
+		IntervalHeap(int capacity, SCG.IComparer<T> comparer, SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
         {
             if (comparer == null)
                 throw new NullReferenceException("Item comparer cannot be null");
             if (itemequalityComparer == null)
                 throw new NullReferenceException("Item equality comparer cannot be null");
+
+			if ( memoryType != MemoryType.Normal )
+				throw new Exception ( "IntervalHeap still doesn't support MemoryType Strict or Safe" );
+			
             this.comparer = comparer;
             this.itemequalityComparer = itemequalityComparer;
             int length = 1;

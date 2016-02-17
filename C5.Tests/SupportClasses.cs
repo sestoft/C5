@@ -41,6 +41,19 @@ namespace C5UnitTests
         }
     }
 
+	/// <summary>
+	/// Base memory type. This abstract class is necessary for every unit test that needs to test all memory types.
+	/// </summary>
+    public abstract class BaseMemoryType
+    {
+        protected MemoryType MemoryType;
+
+        protected BaseMemoryType(MemoryType memoryType)
+        {
+            MemoryType = memoryType;
+        }
+    }
+
     class TenEqualityComparer : SCG.IEqualityComparer<int>, SCG.IComparer<int>
     {
         TenEqualityComparer() { }
@@ -195,9 +208,9 @@ namespace C5UnitTests
         ArrayList<CollectionEvent<T>> happened;
         EventTypeEnum listenTo;
         SCG.IEqualityComparer<T> itemequalityComparer;
-        public CollectionEventList(SCG.IEqualityComparer<T> itemequalityComparer)
+        public CollectionEventList(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType)
         {
-            happened = new ArrayList<CollectionEvent<T>>();
+            happened = new ArrayList<CollectionEvent<T>>(memoryType);
             this.itemequalityComparer = itemequalityComparer;
         }
         public void Listen(ICollectionValue<T> list, EventTypeEnum listenTo)

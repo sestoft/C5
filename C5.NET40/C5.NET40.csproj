@@ -80,6 +80,9 @@
     <Compile Include="..\C5\Dictionaries.cs">
       <Link>Dictionaries.cs</Link>
     </Compile>
+    <Compile Include="..\C5\EnumerableBase.cs">
+      <Link>EnumerableBase.cs</Link>
+    </Compile>
     <Compile Include="..\C5\Enums.cs">
       <Link>Enums.cs</Link>
     </Compile>
@@ -127,6 +130,9 @@
     </Compile>
     <Compile Include="..\C5\MappedEnumerators.cs">
       <Link>MappedEnumerators.cs</Link>
+    </Compile>
+    <Compile Include="..\C5\MemorySafeEnumerator.cs">
+      <Link>MemorySafeEnumerator.cs</Link>
     </Compile>
     <Compile Include="..\C5\Random.cs">
       <Link>Random.cs</Link>

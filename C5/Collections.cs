@@ -23,48 +23,6 @@ using System;
 using SCG = System.Collections.Generic;
 namespace C5
 {
-    /// <summary>
-    /// A base class for implementing an IEnumerable&lt;T&gt;
-    /// </summary>
-    [Serializable]
-    public abstract class EnumerableBase<T> : SCG.IEnumerable<T>
-    {
-        /// <summary>
-        /// Create an enumerator for this collection.
-        /// </summary>
-        /// <returns>The enumerator</returns>
-        public abstract SCG.IEnumerator<T> GetEnumerator();
-
-        /// <summary>
-        /// Count the number of items in an enumerable by enumeration
-        /// </summary>
-        /// <param name="items">The enumerable to count</param>
-        /// <returns>The size of the enumerable</returns>
-        protected static int countItems(SCG.IEnumerable<T> items)
-        {
-            ICollectionValue<T> jtems = items as ICollectionValue<T>;
-
-            if (jtems != null)
-                return jtems.Count;
-
-            int count = 0;
-
-            using (SCG.IEnumerator<T> e = items.GetEnumerator())
-                while (e.MoveNext()) count++;
-
-            return count;
-        }
-
-        #region IEnumerable Members
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        #endregion
-    }
-
 
     /// <summary>
     /// Base class for classes implementing ICollectionValue[T]
@@ -428,6 +386,8 @@ namespace C5
         #endregion
 
         #endregion
+         
+        internal MemoryType MemoryType { get; set; }
 
         /// <summary>
         /// Check if collection is empty.
@@ -556,6 +516,8 @@ namespace C5
         /// <returns>The filtered enumerable</returns>
         public virtual SCG.IEnumerable<T> Filter(Func<T, bool> predicate)
         {
+            if (MemoryType == MemoryType.Strict) throw new Exception("This is not a memory safe function and cannot be used in MemoryType.Strict");
+
             foreach (T item in this)
                 if (predicate(item))
                     yield return item;
@@ -567,13 +529,7 @@ namespace C5
         /// <exception cref="NoSuchItemException">if collection is empty.</exception>
         /// <returns></returns>
         public abstract T Choose();
-
-
-        /// <summary>
-        /// Create an enumerator for this collection.
-        /// </summary>
-        /// <returns>The enumerator</returns>
-        public override abstract SCG.IEnumerator<T> GetEnumerator();
+ 
 
         #region IShowable Members
 
@@ -613,7 +569,6 @@ namespace C5
         {
             return ToString(null, null);
         }
-
     }
 
     /// <summary>
@@ -674,7 +629,7 @@ namespace C5
         /// <summary>
         /// The current stamp value
         /// </summary>
-        protected int stamp;
+        protected int stamp { get; set; }
 
         /// <summary>
         /// The number of items in the collection
@@ -694,11 +649,14 @@ namespace C5
         /// 
         /// </summary>
         /// <param name="itemequalityComparer"></param>
-        protected CollectionBase(SCG.IEqualityComparer<T> itemequalityComparer)
+        /// <param name = "memoryType">The type of memory for the enumerator used to iterate the collection</param>
+        protected CollectionBase(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType)
         {
             if (itemequalityComparer == null)
                 throw new NullReferenceException("Item EqualityComparer cannot be null.");
             this.itemequalityComparer = itemequalityComparer;
+
+            MemoryType = memoryType;
         }
 
         #region Util
@@ -772,7 +730,7 @@ namespace C5
         /// <returns>True if equal</returns>
         public static bool StaticEquals(ICollection<T> collection1, ICollection<T> collection2, SCG.IEqualityComparer<T> itemequalityComparer)
         {
-            if (object.ReferenceEquals(collection1, collection2))
+            if (ReferenceEquals(collection1, collection2))
                 return true;
 
             // bug20070227:
@@ -883,7 +841,7 @@ namespace C5
         /// <param name="thestamp">The stamp identifying the target time</param>
         protected virtual void modifycheck(int thestamp)
         {
-            if (this.stamp != thestamp)
+            if (stamp != thestamp)
                 throw new CollectionModifiedException();
         }
 
@@ -947,13 +905,6 @@ namespace C5
 
         #endregion
 
-        #region IEnumerable<T> Members
-        /// <summary>
-        /// Create an enumerator for this collection.
-        /// </summary>
-        /// <returns>The enumerator</returns>
-        public override abstract SCG.IEnumerator<T> GetEnumerator();
-        #endregion
     }
 
     /// <summary>
@@ -967,7 +918,8 @@ namespace C5
         /// 
         /// </summary>
         /// <param name="itemequalityComparer"></param>
-        protected DirectedCollectionBase(SCG.IEqualityComparer<T> itemequalityComparer) : base(itemequalityComparer) { }
+        /// <param name = "memoryType">The type of memory for the enumerator used to iterate the collection</param>
+        protected DirectedCollectionBase(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType) : base(itemequalityComparer, memoryType) { }
         /// <summary>
         /// <code>Forwards</code> if same, else <code>Backwards</code>
         /// </summary>
@@ -980,7 +932,7 @@ namespace C5
         /// <returns></returns>
         public abstract IDirectedCollectionValue<T> Backwards();
 
-        IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards() { return this.Backwards(); }
+        IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards() { return Backwards(); }
 
         /// <summary>
         /// Check if there exists an item  that satisfies a
@@ -1019,7 +971,8 @@ namespace C5
         /// 
         /// </summary>
         /// <param name="itemequalityComparer"></param>
-        protected SequencedBase(SCG.IEqualityComparer<T> itemequalityComparer) : base(itemequalityComparer) { }
+        /// <param name = "memoryType">The type of memory for the enumerator used to iterate the collection</param>
+        protected SequencedBase(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType) : base(itemequalityComparer, memoryType) { }
 
         #region Util
 
@@ -1059,7 +1012,7 @@ namespace C5
         /// <returns>True if equal</returns>
         public static bool StaticEquals(ISequenced<T> collection1, ISequenced<T> collection2, SCG.IEqualityComparer<T> itemequalityComparer)
         {
-            if (object.ReferenceEquals(collection1, collection2))
+            if (ReferenceEquals(collection1, collection2))
                 return true;
 
             if (collection1.Count != collection2.Count)
@@ -1113,13 +1066,7 @@ namespace C5
 
 
         #endregion
-
-        /// <summary>
-        /// Create an enumerator for this collection.
-        /// </summary>
-        /// <returns>The enumerator</returns>
-        public override abstract SCG.IEnumerator<T> GetEnumerator();
-
+         
         /// <summary>
         /// <code>Forwards</code> if same, else <code>Backwards</code>
         /// </summary>
@@ -1182,6 +1129,8 @@ namespace C5
         /// base dynamic array and may be positive for an updatable view into a base dynamic array.
         /// </summary>
         protected int offsetField;
+
+        private readonly Enumerator _internalEnumerator;
         #endregion
 
         #region Util
@@ -1243,18 +1192,22 @@ namespace C5
         /// <param name="capacity">The initial capacity of the internal array container.
         /// Will be rounded upwards to the nearest power of 2 greater than or equal to 8.</param>
         /// <param name="itemequalityComparer">The item equalityComparer to use, primarily for item equality</param>
-        protected ArrayBase(int capacity, SCG.IEqualityComparer<T> itemequalityComparer)
-            : base(itemequalityComparer)
+        /// <param name="memoryType">The type of memory for the enumerator used to iterate the collection</param>
+        protected ArrayBase(int capacity, SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType)
+            : base(itemequalityComparer, memoryType)
         {
             int newlength = 8;
             while (newlength < capacity) newlength *= 2;
             array = new T[newlength];
+
+            _internalEnumerator = new Enumerator(this, memoryType);
         }
+
+
 
         #endregion
 
         #region IIndexed members
-
         /// <summary>
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">If the arguments does not describe a 
@@ -1345,6 +1298,74 @@ namespace C5
         /// <returns></returns>
         public override T Choose() { if (size > 0) return array[size - 1]; throw new NoSuchItemException(); }
 
+
+        #region Private Enumerator
+
+        [Serializable]
+        private class Enumerator : MemorySafeEnumerator<T>
+        {
+            private ArrayBase<T> _internalList;
+
+            private int _internalIncrementalIndex;
+            private int _theStamp;
+            private int _end;
+            
+
+
+            public Enumerator(ArrayBase<T> list, MemoryType memoryType)
+                : base(memoryType)
+            {
+                _internalList = list;
+
+            }
+
+            internal void UpdateReference(ArrayBase<T> list, int start, int end, int theStamp)
+            {
+                _internalIncrementalIndex = start;
+                _end = end;
+                _internalList = list;
+                Current = default(T);
+                _theStamp = theStamp;
+            }
+             
+
+            public override bool MoveNext()
+            {
+                ArrayBase<T> list = _internalList;
+
+                if (list.stamp != _theStamp)
+                    throw new CollectionModifiedException();
+
+                if (_internalIncrementalIndex < _end)
+                {
+                    Current = list.array[_internalIncrementalIndex];
+                    _internalIncrementalIndex++;
+
+                    return true;
+                }
+
+                Current = default(T);
+                return false;
+            }
+
+            public override void Reset()
+            {
+                _internalIncrementalIndex = 0;
+                Current = default(T);
+            }
+
+
+            protected override MemorySafeEnumerator<T> Clone()
+            {
+                var enumerator = new Enumerator(_internalList, MemoryType)
+                {
+                    Current = default(T),
+
+                };
+                return enumerator;
+            }
+        }
+        #endregion
         #region IEnumerable<T> Members
         /// <summary>
         /// Create an enumerator for this array based collection.
@@ -1354,11 +1375,11 @@ namespace C5
         {
             int thestamp = stamp, theend = size + offsetField, thestart = offsetField;
 
-            for (int i = thestart; i < theend; i++)
-            {
-                modifycheck(thestamp);
-                yield return array[i];
-            }
+            var enumerator = (Enumerator)_internalEnumerator.GetEnumerator();
+
+            enumerator.UpdateReference(this, thestart, theend, thestamp);
+
+            return enumerator;
         }
         #endregion
 
@@ -1373,12 +1394,16 @@ namespace C5
 
             ArrayBase<T> thebase;
 
+            private readonly RangeEnumerator _rangeInternalEnumerator;
 
-            internal Range(ArrayBase<T> thebase, int start, int count, bool forwards)
+            internal Range(ArrayBase<T> thebase, int start, int count, bool forwards, MemoryType memoryType = MemoryType.Normal)
             {
+
                 this.thebase = thebase; stamp = thebase.stamp;
                 delta = forwards ? 1 : -1;
+
                 this.start = start + thebase.offsetField; this.count = count;
+                _rangeInternalEnumerator = new RangeEnumerator(thebase, memoryType);
             }
 
             /// <summary>
@@ -1428,11 +1453,11 @@ namespace C5
             /// <returns>The enumerator</returns>
             public override SCG.IEnumerator<T> GetEnumerator()
             {
-                for (int i = 0; i < count; i++)
-                {
-                    thebase.modifycheck(stamp);
-                    yield return thebase.array[start + delta * i];
-                }
+                var enumerator = (RangeEnumerator)_rangeInternalEnumerator.GetEnumerator();
+
+                enumerator.UpdateReference(thebase, start, delta, stamp, count);
+
+                return enumerator;
             }
 
 
@@ -1454,11 +1479,74 @@ namespace C5
             }
 
 
-            IDirectedEnumerable<T> C5.IDirectedEnumerable<T>.Backwards()
+            IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards()
             {
                 return Backwards();
             }
 
+            private sealed class RangeEnumerator : MemorySafeEnumerator<T>
+            {
+                private ArrayBase<T> _rangeEnumeratorArrayBase;
+
+                private int _start;
+                private int _count;
+                private int _theStamp;
+                private int _delta;
+                private int _index;
+
+
+                public RangeEnumerator(ArrayBase<T> internalList, MemoryType memoryType)
+                    : base(memoryType)
+                {
+                    _rangeEnumeratorArrayBase = internalList;
+                    IteratorState = -1;
+                    _index = 0;
+                }
+
+                internal void UpdateReference(ArrayBase<T> list, int start, int delta, int theStamp, int count)
+                {
+                    _count = count;
+                    _start = start;
+                    _delta = delta;
+                    _rangeEnumeratorArrayBase = list;
+                    Current = default(T);
+                    _theStamp = theStamp;
+                }
+
+
+                protected override MemorySafeEnumerator<T> Clone()
+                {
+                    var enumerator = new RangeEnumerator(_rangeEnumeratorArrayBase, MemoryType)
+                    {
+                        Current = default(T),
+
+                    };
+                    return enumerator;
+                }
+
+                public override bool MoveNext()
+                {
+                    ArrayBase<T> list = _rangeEnumeratorArrayBase;
+
+                    list.modifycheck(_theStamp);
+
+                    if (_index < _count)
+                    {
+                        Current = list.array[_start + _delta * _index];
+                        _index++;
+                        return true;
+                    }
+
+                    Current = default(T);
+                    return false;
+                }
+
+                public override void Reset()
+                {
+                    _index = 0;
+                    Current = default(T);
+                }
+            }
 
             /// <summary>
             /// <code>Forwards</code> if same, else <code>Backwards</code>

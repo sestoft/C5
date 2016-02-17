@@ -28,14 +28,16 @@ namespace C5UnitTests.arrays.sorted
 {
     using CollectionOfInt = SortedArray<int>;
 
-    [TestFixture]
-    public class GenericTesters
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class GenericTesters : BaseMemoryType
     {
         [Test]
         public void TestEvents()
         {
-            Func<CollectionOfInt> factory = delegate () { return new CollectionOfInt(TenEqualityComparer.Default); };
-            new C5UnitTests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory);
+            Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
+            new C5UnitTests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory, MemoryType);
         }
 
         //[Test]
@@ -44,21 +46,27 @@ namespace C5UnitTests.arrays.sorted
         //    C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
         //    C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
         //}
+        public GenericTesters(MemoryType memoryType)
+            : base(memoryType)
+        {
+        }
     }
 
     static class Factory
     {
-        public static ICollection<T> New<T>() { return new SortedArray<T>(); }
+        public static ICollection<T> New<T>(MemoryType memoryType) { return new SortedArray<T>(memoryType); }
     }
 
 
-    [TestFixture]
-    public class Formatting
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class Formatting : BaseMemoryType
     {
         ICollection<int> coll;
         IFormatProvider rad16;
         [SetUp]
-        public void Init() { coll = Factory.New<int>(); rad16 = new RadixFormatProvider(16); }
+        public void Init() { coll = Factory.New<int>(MemoryType); rad16 = new RadixFormatProvider(16); }
         [TearDown]
         public void Dispose() { coll = null; rad16 = null; }
         [Test]
@@ -71,10 +79,17 @@ namespace C5UnitTests.arrays.sorted
             Assert.AreEqual("{ -4, 28, 129... }", coll.ToString("L14", null));
             Assert.AreEqual("{ -4, 1C, 81... }", coll.ToString("L14", rad16));
         }
+
+        public Formatting(MemoryType memoryType)
+            : base(memoryType)
+        {
+        }
     }
 
-    [TestFixture]
-    public class Ranges
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class Ranges : BaseMemoryType
     {
         private SortedArray<int> array;
 
@@ -85,7 +100,7 @@ namespace C5UnitTests.arrays.sorted
         public void Init()
         {
             c = new IC();
-            array = new SortedArray<int>(c);
+            array = new SortedArray<int>(c, MemoryType);
             for (int i = 1; i <= 10; i++)
             {
                 array.Add(i * 2);
@@ -237,10 +252,17 @@ namespace C5UnitTests.arrays.sorted
             array = null;
             c = null;
         }
+
+        public Ranges(MemoryType memoryType)
+            : base(memoryType)
+        {
+        }
     }
 
-    [TestFixture]
-    public class BagItf
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class BagItf : BaseMemoryType
     {
         private SortedArray<int> array;
 
@@ -248,7 +270,7 @@ namespace C5UnitTests.arrays.sorted
         [SetUp]
         public void Init()
         {
-            array = new SortedArray<int>(new IC());
+            array = new SortedArray<int>(new IC(), MemoryType);
             for (int i = 10; i < 20; i++)
             {
                 array.Add(i);
@@ -273,11 +295,18 @@ namespace C5UnitTests.arrays.sorted
         {
             array = null;
         }
+
+        public BagItf(MemoryType memoryType)
+            : base(memoryType)
+        {
+        }
     }
 
 
-    [TestFixture]
-    public class Div
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class Div : BaseMemoryType
     {
         private SortedArray<int> array;
 
@@ -285,37 +314,37 @@ namespace C5UnitTests.arrays.sorted
         [SetUp]
         public void Init()
         {
-            array = new SortedArray<int>(new IC());
+            array = new SortedArray<int>(new IC(), MemoryType);
         }
 
         [Test]
         public void NullEqualityComparerinConstructor1()
         {
-            Assert.Throws<NullReferenceException>(() => new SortedArray<int>(null));
+            Assert.Throws<NullReferenceException>(() => new SortedArray<int>(null, MemoryType));
         }
 
         [Test]
         public void NullEqualityComparerinConstructor2()
         {
-            Assert.Throws<NullReferenceException>(() => new SortedArray<int>(5, null));
+            Assert.Throws<NullReferenceException>(() => new SortedArray<int>(5, null, MemoryType));
         }
 
         [Test]
         public void NullEqualityComparerinConstructor3()
         {
-            Assert.Throws<NullReferenceException>(() => new SortedArray<int>(5, null, EqualityComparer<int>.Default));
+            Assert.Throws<NullReferenceException>(() => new SortedArray<int>(5, null, EqualityComparer<int>.Default, MemoryType));
         }
 
         [Test]
         public void NullEqualityComparerinConstructor4()
         {
-            Assert.Throws<NullReferenceException>(() => new SortedArray<int>(5, SCG.Comparer<int>.Default, null));
+            Assert.Throws<NullReferenceException>(() => new SortedArray<int>(5, SCG.Comparer<int>.Default, null, MemoryType));
         }
 
         [Test]
         public void NullEqualityComparerinConstructor5()
         {
-            Assert.Throws<NullReferenceException>(() => new SortedArray<int>(5, null, null));
+            Assert.Throws<NullReferenceException>(() => new SortedArray<int>(5, null, null, MemoryType));
         }
 
         [Test]
@@ -369,11 +398,18 @@ namespace C5UnitTests.arrays.sorted
         {
             array = null;
         }
+
+        public Div(MemoryType memoryType)
+            : base(memoryType)
+        {
+        }
     }
 
 
-    [TestFixture]
-    public class FindOrAdd
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class FindOrAdd : BaseMemoryType
     {
         private SortedArray<KeyValuePair<int, string>> bag;
 
@@ -381,7 +417,7 @@ namespace C5UnitTests.arrays.sorted
         [SetUp]
         public void Init()
         {
-            bag = new SortedArray<KeyValuePair<int, string>>(new KeyValuePairComparer<int, string>(new IC()));
+            bag = new SortedArray<KeyValuePair<int, string>>(new KeyValuePairComparer<int, string>(new IC()), MemoryType);
         }
 
 
@@ -405,10 +441,18 @@ namespace C5UnitTests.arrays.sorted
             Assert.AreEqual(1, bag.ContainsCount(p));
             Assert.AreEqual("tre", bag[0].Value);
         }
+
+        public FindOrAdd(MemoryType memoryType)
+            : base(memoryType)
+        {
+        }
     }
 
-    [TestFixture]
-    public class FindPredicate
+
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class FindPredicate : BaseMemoryType
     {
         private SortedArray<int> list;
         Func<int, bool> pred;
@@ -416,8 +460,8 @@ namespace C5UnitTests.arrays.sorted
         [SetUp]
         public void Init()
         {
-            list = new SortedArray<int>(TenEqualityComparer.Default);
-            pred = delegate (int i) { return i % 5 == 0; };
+            list = new SortedArray<int>(TenEqualityComparer.Default, MemoryType);
+            pred = delegate(int i) { return i % 5 == 0; };
         }
 
         [TearDown]
@@ -466,15 +510,22 @@ namespace C5UnitTests.arrays.sorted
             list.AddAll(new int[] { 45, 122, 675, 137 });
             Assert.AreEqual(7, list.FindLastIndex(pred));
         }
+
+        public FindPredicate(MemoryType memoryType)
+            : base(memoryType)
+        {
+        }
     }
 
-    [TestFixture]
-    public class UniqueItems
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class UniqueItems : BaseMemoryType
     {
         private SortedArray<int> list;
 
         [SetUp]
-        public void Init() { list = new SortedArray<int>(); }
+        public void Init() { list = new SortedArray<int>(MemoryType); }
 
         [TearDown]
         public void Dispose() { list = null; }
@@ -488,10 +539,17 @@ namespace C5UnitTests.arrays.sorted
             Assert.IsTrue(IC.seteq(list.UniqueItems(), 7, 9));
             Assert.IsTrue(IC.seteq(list.ItemMultiplicities(), 7, 1, 9, 1));
         }
+
+        public UniqueItems(MemoryType memoryType)
+            : base(memoryType)
+        {
+        }
     }
 
-    [TestFixture]
-    public class ArrayTest
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class ArrayTest : BaseMemoryType
     {
         private SortedArray<int> tree;
 
@@ -501,7 +559,7 @@ namespace C5UnitTests.arrays.sorted
         [SetUp]
         public void Init()
         {
-            tree = new SortedArray<int>(new IC());
+            tree = new SortedArray<int>(new IC(), MemoryType);
             a = new int[10];
             for (int i = 0; i < 10; i++)
                 a[i] = 1000 + i;
@@ -575,11 +633,18 @@ namespace C5UnitTests.arrays.sorted
             tree.Add(4);
             Assert.Throws<ArgumentOutOfRangeException>(() => tree.CopyTo(a, 9));
         }
+
+        public ArrayTest(MemoryType memoryType)
+            : base(memoryType)
+        {
+        }
     }
 
 
-    [TestFixture]
-    public class Combined
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class Combined : BaseMemoryType
     {
         private IIndexedSorted<KeyValuePair<int, int>> lst;
 
@@ -587,7 +652,7 @@ namespace C5UnitTests.arrays.sorted
         [SetUp]
         public void Init()
         {
-            lst = new SortedArray<KeyValuePair<int, int>>(new KeyValuePairComparer<int, int>(new IC()));
+            lst = new SortedArray<KeyValuePair<int, int>>(new KeyValuePairComparer<int, int>(new IC()), MemoryType);
             for (int i = 0; i < 10; i++)
             {
                 lst.Add(new KeyValuePair<int, int>(i, i + 30));
@@ -706,11 +771,18 @@ namespace C5UnitTests.arrays.sorted
             p = new KeyValuePair<int, int>(13, 78);
             Assert.IsFalse(lst.Remove(p, out p));
         }
+
+        public Combined(MemoryType memoryType)
+            : base(memoryType)
+        {
+        }
     }
 
 
-    [TestFixture]
-    public class Remove
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class Remove : BaseMemoryType
     {
         private SortedArray<int> array;
 
@@ -718,7 +790,7 @@ namespace C5UnitTests.arrays.sorted
         [SetUp]
         public void Init()
         {
-            array = new SortedArray<int>(new IC());
+            array = new SortedArray<int>(new IC(), MemoryType);
             for (int i = 10; i < 20; i++)
             {
                 array.Add(i);
@@ -885,12 +957,19 @@ namespace C5UnitTests.arrays.sorted
         {
             array = null;
         }
+
+        public Remove(MemoryType memoryType)
+            : base(memoryType)
+        {
+        }
     }
 
 
 
-    [TestFixture]
-    public class PredecessorStructure
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class PredecessorStructure : BaseMemoryType
     {
         private SortedArray<int> tree;
 
@@ -898,7 +977,7 @@ namespace C5UnitTests.arrays.sorted
         [SetUp]
         public void Init()
         {
-            tree = new SortedArray<int>(new IC());
+            tree = new SortedArray<int>(new IC(), MemoryType);
         }
 
 
@@ -1118,12 +1197,19 @@ namespace C5UnitTests.arrays.sorted
         {
             tree = null;
         }
+
+        public PredecessorStructure(MemoryType memoryType)
+            : base(memoryType)
+        {
+        }
     }
 
 
 
-    [TestFixture]
-    public class PriorityQueue
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class PriorityQueue : BaseMemoryType
     {
         private SortedArray<int> tree;
 
@@ -1131,7 +1217,7 @@ namespace C5UnitTests.arrays.sorted
         [SetUp]
         public void Init()
         {
-            tree = new SortedArray<int>(new IC());
+            tree = new SortedArray<int>(new IC(), MemoryType);
         }
 
 
@@ -1192,12 +1278,19 @@ namespace C5UnitTests.arrays.sorted
         {
             tree = null;
         }
+
+        public PriorityQueue(MemoryType memoryType)
+            : base(memoryType)
+        {
+        }
     }
 
 
 
-    [TestFixture]
-    public class IndexingAndCounting
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class IndexingAndCounting : BaseMemoryType
     {
         private SortedArray<int> array;
 
@@ -1205,7 +1298,7 @@ namespace C5UnitTests.arrays.sorted
         [SetUp]
         public void Init()
         {
-            array = new SortedArray<int>(new IC());
+            array = new SortedArray<int>(new IC(), MemoryType);
         }
 
 
@@ -1327,6 +1420,11 @@ namespace C5UnitTests.arrays.sorted
         {
             array = null;
         }
+
+        public IndexingAndCounting(MemoryType memoryType)
+            : base(memoryType)
+        {
+        }
     }
 
 
@@ -1334,8 +1432,10 @@ namespace C5UnitTests.arrays.sorted
 
     namespace ModificationCheck
     {
-        [TestFixture]
-        public class Enumerator
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+        public class Enumerator : BaseMemoryType
         {
             private SortedArray<int> tree;
 
@@ -1345,7 +1445,7 @@ namespace C5UnitTests.arrays.sorted
             [SetUp]
             public void Init()
             {
-                tree = new SortedArray<int>(new IC());
+                tree = new SortedArray<int>(new IC(), MemoryType);
                 for (int i = 0; i < 10; i++)
                 {
                     tree.Add(i);
@@ -1398,10 +1498,17 @@ namespace C5UnitTests.arrays.sorted
                 tree = null;
                 e = null;
             }
+
+            public Enumerator(MemoryType memoryType)
+                : base(memoryType)
+            {
+            }
         }
 
-        [TestFixture]
-        public class RangeEnumerator
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+        public class RangeEnumerator : BaseMemoryType
         {
             private SortedArray<int> tree;
 
@@ -1411,7 +1518,7 @@ namespace C5UnitTests.arrays.sorted
             [SetUp]
             public void Init()
             {
-                tree = new SortedArray<int>(new IC());
+                tree = new SortedArray<int>(new IC(), MemoryType);
                 for (int i = 0; i < 10; i++)
                     tree.Add(i);
 
@@ -1463,6 +1570,11 @@ namespace C5UnitTests.arrays.sorted
                 tree = null;
                 e = null;
             }
+
+            public RangeEnumerator(MemoryType memoryType)
+                : base(memoryType)
+            {
+            }
         }
     }
 
@@ -1498,9 +1610,10 @@ namespace C5UnitTests.arrays.sorted
         }
 
 
-
-        [TestFixture]
-        public class Simple
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+        public class Simple : BaseMemoryType
         {
             private SortedArray<int> array;
 
@@ -1511,7 +1624,7 @@ namespace C5UnitTests.arrays.sorted
             public void Init()
             {
                 ic = new IC();
-                array = new SortedArray<int>(ic);
+                array = new SortedArray<int>(ic, MemoryType);
             }
 
 
@@ -1541,13 +1654,13 @@ namespace C5UnitTests.arrays.sorted
             [Test]
             public void Apply()
             {
-                Simple simple1 = new Simple();
+                Simple simple1 = new Simple(MemoryType);
 
                 array.Apply(new Action<int>(simple1.apply));
                 Assert.AreEqual(0, simple1.appfield1);
                 Assert.AreEqual(0, simple1.appfield2);
 
-                Simple simple2 = new Simple();
+                Simple simple2 = new Simple(MemoryType);
 
                 for (int i = 0; i < 10; i++) array.Add(i);
 
@@ -1749,6 +1862,11 @@ namespace C5UnitTests.arrays.sorted
 
             [TearDown]
             public void Dispose() { ic = null; array = null; }
+
+            public Simple(MemoryType memoryType)
+                : base(memoryType)
+            {
+            }
         }
     }
 
@@ -1757,8 +1875,10 @@ namespace C5UnitTests.arrays.sorted
 
     namespace MultiOps
     {
-        [TestFixture]
-        public class AddAll
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+        public class AddAll : BaseMemoryType
         {
             private int sqr(int i) { return i * i; }
 
@@ -1767,7 +1887,7 @@ namespace C5UnitTests.arrays.sorted
 
 
             [SetUp]
-            public void Init() { array = new SortedArray<int>(new IC()); }
+            public void Init() { array = new SortedArray<int>(new IC(), MemoryType); }
 
 
             [Test]
@@ -1817,12 +1937,19 @@ namespace C5UnitTests.arrays.sorted
 
             [TearDown]
             public void Dispose() { array = null; }
+
+            public AddAll(MemoryType memoryType)
+                : base(memoryType)
+            {
+            }
         }
 
 
 
-        [TestFixture]
-        public class AddSorted
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+        public class AddSorted : BaseMemoryType
         {
             private int sqr(int i) { return i * i; }
 
@@ -1834,7 +1961,7 @@ namespace C5UnitTests.arrays.sorted
 
 
             [SetUp]
-            public void Init() { array = new SortedArray<int>(new IC()); }
+            public void Init() { array = new SortedArray<int>(new IC(), MemoryType); }
 
 
             [Test]
@@ -1894,19 +2021,34 @@ namespace C5UnitTests.arrays.sorted
 
             [TearDown]
             public void Dispose() { array = null; }
+
+            public AddSorted(MemoryType memoryType)
+                : base(memoryType)
+            {
+            }
         }
 
-        [TestFixture]
-        public class Rest
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+        public class Rest : BaseMemoryType
         {
             SortedArray<int> array, array2;
 
 
+
+            public Rest(MemoryType memoryType)
+                : base(memoryType)
+            {
+
+
+            }
+
             [SetUp]
             public void Init()
             {
-                array = new SortedArray<int>(new IC());
-                array2 = new SortedArray<int>(new IC());
+                array = new SortedArray<int>(new IC(), MemoryType);
+                array2 = new SortedArray<int>(new IC(), MemoryType);
                 for (int i = 0; i < 10; i++)
                     array.Add(i);
 
@@ -2068,13 +2210,24 @@ namespace C5UnitTests.arrays.sorted
 
     namespace Sync
     {
-        [TestFixture]
-        public class SyncRoot
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+
+        public class SyncRoot : BaseMemoryType
         {
             private SortedArray<int> tree;
             private readonly Object mySyncRoot = new Object();
             int sz = 5000;
 
+
+
+            public SyncRoot(MemoryType memoryType)
+                : base(memoryType)
+            {
+
+
+            }
 
             [Test]
             public void Safe()
@@ -2131,7 +2284,7 @@ namespace C5UnitTests.arrays.sorted
 
 
             [SetUp]
-            public void Init() { tree = new SortedArray<int>(new IC()); }
+            public void Init() { tree = new SortedArray<int>(new IC(), MemoryType); }
 
 
             private void unsafe1()
@@ -2184,18 +2337,25 @@ namespace C5UnitTests.arrays.sorted
 
 
 
-        //[TestFixture]
-        public class ConcurrentQueries
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+        public class ConcurrentQueries : BaseMemoryType
         {
             private SortedArray<int> tree;
 
             int sz = 500000;
+            public ConcurrentQueries(MemoryType memoryType)
+                : base(memoryType)
+            {
 
+
+            }
 
             [SetUp]
             public void Init()
             {
-                tree = new SortedArray<int>(new IC());
+                tree = new SortedArray<int>(new IC(), MemoryType);
                 for (int i = 0; i < sz; i++)
                 {
                     tree.Add(i);
@@ -2216,8 +2376,27 @@ namespace C5UnitTests.arrays.sorted
 
                 public void a(int i) { count++; }
 
-
-                public void traverse() { t.Apply(new Action<int>(a)); }
+				public void traverse()
+				{
+					traverse ( null );
+				}
+				/// <summary>
+				/// It calls the method a(int i) but it raises an exception if an error occur. This has been added to test
+				/// exception being thrown if multithread mode and MemoryMode.Strict is selected.
+				/// </summary>
+				/// <param name="onError">On error.</param>
+                public void traverse(Action onError = null)
+                {
+                    try
+                    {
+                        t.Apply(a);
+                    }
+                    catch (Exception)
+                    {
+                        if (onError != null)
+                            onError();
+                    }
+                }
             }
 
 
@@ -2236,12 +2415,14 @@ namespace C5UnitTests.arrays.sorted
             [Test]
             public void RegrettablyUnsafe()
             {
+                if (MemoryType == MemoryType.Strict) return;
+
                 System.Threading.Thread[] t = new System.Threading.Thread[10];
                 A[] a = new A[10];
                 for (int i = 0; i < 10; i++)
                 {
                     a[i] = new A(tree);
-                    t[i] = new System.Threading.Thread(new System.Threading.ThreadStart(a[i].traverse));
+					t[i] = new System.Threading.Thread(new System.Threading.ThreadStart(a[i].traverse));
                 }
 
                 for (int i = 0; i < 10; i++)
@@ -2250,6 +2431,35 @@ namespace C5UnitTests.arrays.sorted
                     t[i].Join();
                 for (int i = 0; i < 10; i++)
                     Assert.AreEqual(sz, a[i].count);
+
+            }
+
+			// This is a static placeholder to detect exception in a multithread context. Unfortunately
+			// exception risen in secondary threads are swallowed and not detected.
+            private static bool ErrorOnChildThread;
+
+            [Test]
+            public void RegrettablyUnsafeStrictMemory()
+            {
+                if (MemoryType != MemoryType.Strict)
+                    return;
+
+                System.Threading.Thread[] t = new System.Threading.Thread[10];
+                A[] a = new A[10];
+                Action onError = () => { ErrorOnChildThread = true; };
+                for (int i = 0; i < 10; i++)
+                {
+                    a[i] = new A(tree);
+                    var i1 = i;
+                    t[i] = new System.Threading.Thread(obj => { a[i1].traverse(onError); });
+                }
+
+                for (int i = 0; i < 10; i++)
+                    t[i].Start();
+                for (int i = 0; i < 10; i++)
+                    t[i].Join();
+
+                Assert.True(ErrorOnChildThread);
 
             }
 
@@ -2264,18 +2474,26 @@ namespace C5UnitTests.arrays.sorted
 
     namespace Hashing
     {
-        [TestFixture]
-        public class ISequenced
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+        public class ISequenced : BaseMemoryType
         {
             private ISequenced<int> dit, dat, dut;
 
+            public ISequenced(MemoryType memoryType)
+                : base(memoryType)
+            {
+
+
+            }
 
             [SetUp]
             public void Init()
             {
-                dit = new SortedArray<int>(8, SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
-                dat = new SortedArray<int>(8, SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
-                dut = new SortedArray<int>(8, new RevIC(), EqualityComparer<int>.Default);
+                dit = new SortedArray<int>(8, SCG.Comparer<int>.Default, EqualityComparer<int>.Default, MemoryType);
+                dat = new SortedArray<int>(8, SCG.Comparer<int>.Default, EqualityComparer<int>.Default, MemoryType);
+                dut = new SortedArray<int>(8, new RevIC(), EqualityComparer<int>.Default, MemoryType);
             }
 
 
@@ -2359,19 +2577,21 @@ namespace C5UnitTests.arrays.sorted
         }
 
 
-
-        [TestFixture]
-        public class IEditableCollection
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+        public class IEditableCollection : BaseMemoryType
         {
             private ICollection<int> dit, dat, dut;
+
 
 
             [SetUp]
             public void Init()
             {
-                dit = new SortedArray<int>(8, SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
-                dat = new SortedArray<int>(8, SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
-                dut = new SortedArray<int>(8, new RevIC(), EqualityComparer<int>.Default);
+                dit = new SortedArray<int>(8, SCG.Comparer<int>.Default, EqualityComparer<int>.Default, MemoryType);
+                dat = new SortedArray<int>(8, SCG.Comparer<int>.Default, EqualityComparer<int>.Default, MemoryType);
+                dut = new SortedArray<int>(8, new RevIC(), EqualityComparer<int>.Default, MemoryType);
             }
 
 
@@ -2452,6 +2672,12 @@ namespace C5UnitTests.arrays.sorted
                 dit = null;
                 dat = null;
                 dut = null;
+            }
+
+            public IEditableCollection(MemoryType memoryType)
+                : base(memoryType)
+            {
+
             }
         }
 

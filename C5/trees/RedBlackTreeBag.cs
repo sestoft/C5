@@ -48,7 +48,10 @@ namespace C5
         //TODO: wonder if we should remove that
         int blackdepth = 0;
 
-        // maintain a unique items counter
+ 
+        /// <summary>
+        /// maintain a unique items counter
+        /// </summary>
         public int uniqueCount = 0;
 
         //We double these stacks for the iterative add and remove on demand
@@ -226,7 +229,7 @@ namespace C5
         /// </summary>
         /// <exception cref="NotComparableException">If <code>T</code> is not comparable.
         /// </exception>
-        public TreeBag() : this(SCG.Comparer<T>.Default, EqualityComparer<T>.Default) { }
+		public TreeBag(MemoryType memoryType = MemoryType.Normal) : this(SCG.Comparer<T>.Default, EqualityComparer<T>.Default, memoryType) { }
 
 
         /// <summary>
@@ -240,7 +243,8 @@ namespace C5
         /// </para>
         /// </summary>
         /// <param name="comparer">The external comparer</param>
-        public TreeBag(SCG.IComparer<T> comparer) : this(comparer, new ComparerZeroHashCodeEqualityComparer<T>(comparer)) { }
+		/// <param name = "memoryType"></param>
+		public TreeBag(SCG.IComparer<T> comparer, MemoryType memoryType = MemoryType.Normal) : this(comparer, new ComparerZeroHashCodeEqualityComparer<T>(comparer), memoryType) { }
 
         /// <summary>
         /// Create a red-black tree collection with an external comparer and an external
@@ -248,11 +252,16 @@ namespace C5
         /// </summary>
         /// <param name="comparer">The external comparer</param>
         /// <param name="equalityComparer">The external item equalitySCG.Comparer</param>
-        public TreeBag(SCG.IComparer<T> comparer, SCG.IEqualityComparer<T> equalityComparer)
-            : base(equalityComparer)
+		/// <param name = "memoryType"></param>
+		public TreeBag(SCG.IComparer<T> comparer, SCG.IEqualityComparer<T> equalityComparer, MemoryType memoryType = MemoryType.Normal)
+			: base(equalityComparer, memoryType)
         {
             if (comparer == null)
                 throw new NullReferenceException("Item comparer cannot be null");
+
+			if ( memoryType != MemoryType.Normal )
+				throw new Exception ( "TreeBag doesn't support MemoryType Strict or Safe." );
+			
             this.comparer = comparer;
         }
 

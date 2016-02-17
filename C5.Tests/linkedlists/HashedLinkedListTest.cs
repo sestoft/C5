@@ -29,14 +29,16 @@ namespace C5UnitTests.linkedlists.hashed
 {
     using CollectionOfInt = HashedLinkedList<int>;
 
-    [TestFixture]
-    public class GenericTesters
+    [TestFixture(MemoryType.Normal)]
+    [TestFixture(MemoryType.Strict)]
+    [TestFixture(MemoryType.Safe)]
+    public class GenericTesters : BaseMemoryType
     {
         [Test]
         public void TestEvents()
         {
             Func<CollectionOfInt> factory = delegate () { return new CollectionOfInt(TenEqualityComparer.Default); };
-            new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory);
+            new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory, MemoryType);
         }
 
         //[Test]
@@ -47,12 +49,17 @@ namespace C5UnitTests.linkedlists.hashed
         //    C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
         //    C5UnitTests.Templates.Extensible.Serialization.ViewTester<CollectionOfInt>();
         //}
-
+        
         [Test]
         public void List()
         {
-            C5UnitTests.Templates.List.Dispose.Tester<CollectionOfInt>();
-            C5UnitTests.Templates.List.SCG_IList.Tester<CollectionOfInt>();
+			C5UnitTests.Templates.List.Dispose.Tester<CollectionOfInt>();
+			C5UnitTests.Templates.List.SCG_IList.Tester<CollectionOfInt>();
+        }
+
+        public GenericTesters(MemoryType memoryType) : base(memoryType)
+        {
+
         }
     }
 

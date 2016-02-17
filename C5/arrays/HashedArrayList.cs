@@ -603,32 +603,41 @@ namespace C5
 
         #region Constructors
         /// <summary>
-        /// Create an array list with default item equalityComparer and initial capacity 8 items.
+        /// 
         /// </summary>
         public HashedArrayList() : this(8) { }
+
+
+
+        /// <summary>
+        /// Create an array list with default item equalityComparer and initial capacity 8 items.
+        /// </summary>
+        public HashedArrayList(MemoryType memoryType = MemoryType.Normal) : this(8, memoryType) { }
 
 
         /// <summary>
         /// Create an array list with external item equalityComparer and initial capacity 8 items.
         /// </summary>
         /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
-        public HashedArrayList(SCG.IEqualityComparer<T> itemequalityComparer) : this(8, itemequalityComparer) { }
+        /// <param name="memoryType"></param>
+        public HashedArrayList(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal) : this(8, itemequalityComparer, memoryType) { }
 
 
         /// <summary>
         /// Create an array list with default item equalityComparer and prescribed initial capacity.
         /// </summary>
         /// <param name="capacity">The prescribed capacity</param>
-        public HashedArrayList(int capacity) : this(capacity, EqualityComparer<T>.Default) { }
-
+        /// <param name="memoryType"></param>
+        public HashedArrayList(int capacity, MemoryType memoryType = MemoryType.Normal) : this(capacity, EqualityComparer<T>.Default, memoryType) { }
 
         /// <summary>
         /// Create an array list with external item equalityComparer and prescribed initial capacity.
         /// </summary>
         /// <param name="capacity">The prescribed capacity</param>
         /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
-        public HashedArrayList(int capacity, SCG.IEqualityComparer<T> itemequalityComparer)
-            : base(capacity, itemequalityComparer)
+        /// <param name="memoryType"></param>
+        public HashedArrayList(int capacity, SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
+            : base(capacity, itemequalityComparer, memoryType)
         {
             itemIndex = new HashSet<KeyValuePair<T, int>>(new KeyValuePairEqualityComparer<T, int>(itemequalityComparer));
         }
@@ -942,7 +951,7 @@ namespace C5
         {
             validitycheck();
 
-            HashedArrayList<V> res = new HashedArrayList<V>(size, itemequalityComparer);
+            HashedArrayList<V> res = new HashedArrayList<V>(size, itemequalityComparer, MemoryType);
 
             return map<V>(mapper, res);
         }

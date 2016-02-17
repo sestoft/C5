@@ -28,8 +28,10 @@ namespace C5UnitTests.wrappers
 {
     namespace events
     {
-        [TestFixture]
-        public class IList_
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+        public class IList_ : BaseMemoryType
         {
             private ArrayList<int> list;
             ICollectionValue<int> guarded;
@@ -40,7 +42,7 @@ namespace C5UnitTests.wrappers
             {
                 list = new ArrayList<int>(TenEqualityComparer.Default);
                 guarded = new GuardedList<int>(list);
-                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
+                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default, MemoryType);
             }
 
             private void listen() { seen.Listen(guarded, EventTypeEnum.All); }
@@ -495,10 +497,17 @@ namespace C5UnitTests.wrappers
             {
                 throw new NotImplementedException();
             }
+
+            public IList_(MemoryType memoryType)
+                : base(memoryType)
+            {
+            }
         }
 
-        [TestFixture]
-        public class StackQueue
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+        public class StackQueue : BaseMemoryType
         {
             private ArrayList<int> list;
             ICollectionValue<int> guarded;
@@ -507,9 +516,9 @@ namespace C5UnitTests.wrappers
             [SetUp]
             public void Init()
             {
-                list = new ArrayList<int>(TenEqualityComparer.Default);
+                list = new ArrayList<int>(TenEqualityComparer.Default, MemoryType);
                 guarded = new GuardedList<int>(list);
-                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
+                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default, MemoryType);
             }
 
             private void listen() { seen.Listen(guarded, EventTypeEnum.All); }
@@ -570,6 +579,11 @@ namespace C5UnitTests.wrappers
 
             [TearDown]
             public void Dispose() { list = null; seen = null; }
+
+            public StackQueue(MemoryType memoryType)
+                : base(memoryType)
+            {
+            }
         }
 
 
@@ -577,10 +591,16 @@ namespace C5UnitTests.wrappers
 
     namespace wrappedarray
     {
-        [TestFixture]
-        public class Basic
+        [TestFixture(MemoryType.Normal)]
+        [TestFixture(MemoryType.Strict)]
+        [TestFixture(MemoryType.Safe)]
+        public class Basic : BaseMemoryType
         {
+            public Basic(MemoryType memoryType)
+                : base(memoryType)
+            {
 
+            }
             [SetUp]
             public void Init()
             {
@@ -592,17 +612,56 @@ namespace C5UnitTests.wrappers
             }
 
             [Test]
+            public void MultipleSeparateEnumeration()
+            {
+                WrappedArray<int> wrapped = new WrappedArray<int>(new int[] { 4, 6, 5 }, MemoryType);
+
+                int j = 0;
+
+                foreach (var item in wrapped)
+                {
+
+                    j++;
+
+                }
+                Assert.AreEqual(j, 3);
+
+                j = 0;
+
+                foreach (var item2 in wrapped)
+                {
+                    switch (j)
+                    {
+                        case 0:
+                            Assert.AreEqual(item2, 4);
+                            break;
+                        case 1:
+                            Assert.AreEqual(item2, 6);
+                            break;
+                        case 2:
+                            Assert.AreEqual(item2, 5);
+                            break;
+                    }
+                    j++;
+                }
+
+                Assert.AreEqual(j, 3);
+            }
+
+            [Test]
             public void NoExc()
             {
-                WrappedArray<int> wrapped = new WrappedArray<int>(new int[] { 4, 6, 5 });
+                WrappedArray<int> wrapped = new WrappedArray<int>(new int[] { 4, 6, 5 }, MemoryType);
                 Assert.AreEqual(6, wrapped[1]);
                 Assert.IsTrue(IC.eq(wrapped[1, 2], 6, 5));
                 //
-                Func<int, bool> is4 = delegate (int i) { return i == 4; };
+                Func<int, bool> is4 = delegate(int i) { return i == 4; };
                 Assert.AreEqual(EventTypeEnum.None, wrapped.ActiveEvents);
                 Assert.AreEqual(false, wrapped.All(is4));
                 Assert.AreEqual(true, wrapped.AllowsDuplicates);
-                wrapped.Apply(delegate (int i) { });
+
+                wrapped.Apply(delegate(int i) { });
+
                 Assert.AreEqual("{ 5, 6, 4 }", wrapped.Backwards().ToString());
                 Assert.AreEqual(true, wrapped.Check());
                 wrapped.Choose();
@@ -619,7 +678,13 @@ namespace C5UnitTests.wrappers
                 Assert.AreEqual(false, wrapped.DuplicatesByCounting);
                 Assert.AreEqual(System.Collections.Generic.EqualityComparer<int>.Default, wrapped.EqualityComparer);
                 Assert.AreEqual(true, wrapped.Exists(is4));
-                Assert.IsTrue(IC.eq(wrapped.Filter(is4), 4));
+
+				// The following condition can be tested only if we are not in memory strict mode.
+				// the reason behind that is that the method Filter is not memory safe and thus
+				// will cannot be used in MemoryType.Strict (it will raise an exception)
+                if (MemoryType != MemoryType.Strict)
+                    Assert.IsTrue(IC.eq(wrapped.Filter(is4), 4));
+
                 int j = 5;
                 Assert.AreEqual(true, wrapped.Find(ref j));
                 Assert.AreEqual(true, wrapped.Find(is4, out j));
@@ -628,7 +693,14 @@ namespace C5UnitTests.wrappers
                 Assert.AreEqual(true, wrapped.FindLast(is4, out j));
                 Assert.AreEqual(0, wrapped.FindLastIndex(is4));
                 Assert.AreEqual(4, wrapped.First);
-                wrapped.GetEnumerator();
+
+				// the using below is needed when testing MemoryType.Strict. In this memory mode
+				// only one enumerator per collection is available. Requesting more than one enumerator
+				// in this specific memory mode will raise an exception
+                using (wrapped.GetEnumerator())
+                {
+                }
+
                 Assert.AreEqual(CHC.sequencedhashcode(4, 6, 5), wrapped.GetSequencedHashCode());
                 Assert.AreEqual(CHC.unsequencedhashcode(4, 6, 5), wrapped.GetUnsequencedHashCode());
                 Assert.AreEqual(Speed.Constant, wrapped.IndexingSpeed);
@@ -663,7 +735,7 @@ namespace C5UnitTests.wrappers
             [Test]
             public void WithExc()
             {
-                WrappedArray<int> wrapped = new WrappedArray<int>(new int[] { 3, 4, 6, 5, 7 });
+                WrappedArray<int> wrapped = new WrappedArray<int>(new int[] { 3, 4, 6, 5, 7 }, MemoryType);
                 //
                 try { wrapped.Add(1); Assert.Fail("No throw"); }
                 catch (FixedSizeCollectionException) { }
@@ -711,20 +783,39 @@ namespace C5UnitTests.wrappers
             }
 
             [Test]
+            public void FilterShouldRaiseAnExceptionInStrictMemoryMode()
+            {
+                if (MemoryType != MemoryType.Strict)
+                    return;
+
+                int[] inner = new int[] { 3, 4, 6, 5, 7 };
+                WrappedArray<int> outerwrapped = new WrappedArray<int>(inner, MemoryType);
+
+                WrappedArray<int> wrapped = (WrappedArray<int>)outerwrapped.View(1, 3);
+                Func<int, bool> is4 = delegate(int i) { return i == 4; };
+
+                if (MemoryType == MemoryType.Strict)
+                {
+                    Assert.Throws<Exception>(() => IC.eq(wrapped.Filter(is4), 4));
+                }
+            }
+
+
+            [Test]
             public void View()
             {
                 int[] inner = new int[] { 3, 4, 6, 5, 7 };
-                WrappedArray<int> outerwrapped = new WrappedArray<int>(inner);
+                WrappedArray<int> outerwrapped = new WrappedArray<int>(inner, MemoryType);
                 WrappedArray<int> wrapped = (WrappedArray<int>)outerwrapped.View(1, 3);
                 //
                 Assert.AreEqual(6, wrapped[1]);
                 Assert.IsTrue(IC.eq(wrapped[1, 2], 6, 5));
                 //
-                Func<int, bool> is4 = delegate (int i) { return i == 4; };
+                Func<int, bool> is4 = delegate(int i) { return i == 4; };
                 Assert.AreEqual(EventTypeEnum.None, wrapped.ActiveEvents);
                 Assert.AreEqual(false, wrapped.All(is4));
                 Assert.AreEqual(true, wrapped.AllowsDuplicates);
-                wrapped.Apply(delegate (int i) { });
+                wrapped.Apply(delegate(int i) { });
                 Assert.AreEqual("{ 5, 6, 4 }", wrapped.Backwards().ToString());
                 Assert.AreEqual(true, wrapped.Check());
                 wrapped.Choose();
@@ -741,8 +832,14 @@ namespace C5UnitTests.wrappers
                 Assert.AreEqual(false, wrapped.DuplicatesByCounting);
                 Assert.AreEqual(System.Collections.Generic.EqualityComparer<int>.Default, wrapped.EqualityComparer);
                 Assert.AreEqual(true, wrapped.Exists(is4));
-                Assert.IsTrue(IC.eq(wrapped.Filter(is4), 4));
-                int j = 5;
+
+				// The following condition can be tested only if we are not in memory strict mode.
+				// the reason behind that is that the method Filter is not memory safe and thus
+				// will cannot be used in MemoryType.Strict (it will raise an exception)
+                if (MemoryType != MemoryType.Strict)
+                    Assert.IsTrue(IC.eq(wrapped.Filter(is4), 4));
+                
+				int j = 5;
                 Assert.AreEqual(true, wrapped.Find(ref j));
                 Assert.AreEqual(true, wrapped.Find(is4, out j));
                 Assert.AreEqual("[ 0:4 ]", wrapped.FindAll(is4).ToString());
@@ -750,7 +847,13 @@ namespace C5UnitTests.wrappers
                 Assert.AreEqual(true, wrapped.FindLast(is4, out j));
                 Assert.AreEqual(0, wrapped.FindLastIndex(is4));
                 Assert.AreEqual(4, wrapped.First);
-                wrapped.GetEnumerator();
+
+				// the using below is needed when testing MemoryType.Strict. In this memory mode
+				// only one enumerator per collection is available. Requesting more than one enumerator
+				// in this specific memory mode will raise an exception
+                using (wrapped.GetEnumerator())
+                {
+                }
                 Assert.AreEqual(CHC.sequencedhashcode(4, 6, 5), wrapped.GetSequencedHashCode());
                 Assert.AreEqual(CHC.unsequencedhashcode(4, 6, 5), wrapped.GetUnsequencedHashCode());
                 Assert.AreEqual(Speed.Constant, wrapped.IndexingSpeed);
@@ -798,7 +901,7 @@ namespace C5UnitTests.wrappers
             public void ViewWithExc()
             {
                 int[] inner = new int[] { 3, 4, 6, 5, 7 };
-                WrappedArray<int> outerwrapped = new WrappedArray<int>(inner);
+                WrappedArray<int> outerwrapped = new WrappedArray<int>(inner, MemoryType);
                 WrappedArray<int> wrapped = (WrappedArray<int>)outerwrapped.View(1, 3);
                 //
                 try { wrapped.Add(1); Assert.Fail("No throw"); }

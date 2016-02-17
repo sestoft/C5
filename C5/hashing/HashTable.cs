@@ -96,6 +96,8 @@ namespace C5
         int resizethreshhold;
 
         private static readonly Random Random = new Random();
+
+        private readonly HashEnumerator _internalEnumerator;
         uint _randomhashfactor;
 
         #endregion
@@ -301,12 +303,22 @@ namespace C5
         #endregion
 
         #region Constructors
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public HashSet() 
+            : this(MemoryType.Normal)
+        {
+                
+        }
+
         /// <summary>
         /// Create a hash set with natural item equalityComparer and default fill threshold (66%)
         /// and initial table size (16).
         /// </summary>
-        public HashSet()
-            : this(EqualityComparer<T>.Default) { }
+        public HashSet(MemoryType memoryType = MemoryType.Normal)
+            : this(EqualityComparer<T>.Default, memoryType) { }
 
 
         /// <summary>
@@ -314,8 +326,9 @@ namespace C5
         /// and initial table size (16).
         /// </summary>
         /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
-        public HashSet(SCG.IEqualityComparer<T> itemequalityComparer)
-            : this(16, itemequalityComparer) { }
+        /// <param name="memoryType"></param>
+        public HashSet(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
+            : this(16, itemequalityComparer, memoryType) { }
 
 
         /// <summary>
@@ -323,8 +336,9 @@ namespace C5
         /// </summary>
         /// <param name="capacity">Initial table size (rounded to power of 2, at least 16)</param>
         /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
-        public HashSet(int capacity, SCG.IEqualityComparer<T> itemequalityComparer)
-            : this(capacity, 0.66, itemequalityComparer) { }
+        /// <param name="memoryType"></param>
+        public HashSet(int capacity, SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
+            : this(capacity, 0.66, itemequalityComparer, memoryType) { }
 
 
         /// <summary>
@@ -333,8 +347,9 @@ namespace C5
         /// <param name="capacity">Initial table size (rounded to power of 2, at least 16)</param>
         /// <param name="fill">Fill threshold (in range 10% to 90%)</param>
         /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
-        public HashSet(int capacity, double fill, SCG.IEqualityComparer<T> itemequalityComparer)
-            : base(itemequalityComparer)
+        /// <param name="memoryType"></param>
+        public HashSet(int capacity, double fill, SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
+            : base(itemequalityComparer, memoryType)
         {
             _randomhashfactor = (Debug.UseDeterministicHashing) ? 1529784659 : (2 * (uint)Random.Next() + 1) * 1529784659;
 
@@ -346,6 +361,7 @@ namespace C5
             origbits = 4;
             while (capacity - 1 >> origbits > 0) origbits++;
             clear();
+            _internalEnumerator = new HashEnumerator();
         }
 
 
@@ -619,6 +635,115 @@ namespace C5
 
         #endregion
 
+        #region Enumerator
+
+        [Serializable]
+        private class HashEnumerator : SCG.IEnumerator<T>, SCG.IEnumerable<T>
+        {
+            private HashSet<T> _hashSet;
+            private int _stamp;
+            private int _index;
+            Bucket b;
+
+            private static int mainThreadId;
+            // If called in the non main thread, will return false;
+            private static bool IsMainThread
+            {
+                get { return System.Threading.Thread.CurrentThread.ManagedThreadId == mainThreadId; }
+            }
+
+            public HashEnumerator()
+            {
+                mainThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
+                _index = -1;
+                Current = default(T);
+            }
+
+            internal void UpdateReference(HashSet<T> hashSet, int theStamp)
+            {
+                _hashSet = hashSet;
+                _stamp = theStamp;
+                Current = default(T);
+                _index = -1;
+            }
+
+
+            public void Dispose()
+            {
+                //Do nothing
+                _index = -1;
+                b = null;
+            }
+            
+
+            public bool MoveNext()
+            {
+                int len = _hashSet.table.Length;
+
+                if (_stamp != _hashSet.stamp)
+                    throw new CollectionModifiedException();
+                //if (_index == len) return false;
+              
+                if (b == null || b.overflow == null)
+                {
+                    do
+                    {
+                        if (++_index < len) continue; 
+                        return false;
+                    } while (_hashSet.table[_index] == null);
+
+                    b = _hashSet.table[_index];
+                    Current = b.item;
+                
+                    return true;
+                } 
+                b = b.overflow;
+                Current = b.item;
+                return true;
+            }
+
+            public void Reset()
+            {
+                Current = default(T);
+                _index = -1;
+                b = null;
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public T Current { get; private set; }
+
+            object System.Collections.IEnumerator.Current
+            {
+                get { return Current; }
+            }
+
+            private HashEnumerator Clone()
+            {
+                var enumerator = new HashEnumerator()
+                {
+                    Current = default(T),
+                };
+                enumerator._hashSet = _hashSet;
+
+                return enumerator;
+            }
+
+            public SCG.IEnumerator<T> GetEnumerator()
+            {
+                var enumerator = !IsMainThread ? Clone() : this;
+                return enumerator;
+            }
+
+            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
+        }
+        #endregion
+
+
         #region IEnumerable<T> Members
 
 
@@ -643,33 +768,11 @@ namespace C5
         /// <returns>The enumerator</returns>
         public override SCG.IEnumerator<T> GetEnumerator()
         {
-            int index = -1;
-            int mystamp = stamp;
-            int len = table.Length;
+            var enumerator = (HashEnumerator)_internalEnumerator.GetEnumerator();
 
-            Bucket b = null;
+            enumerator.UpdateReference(this, stamp);
 
-            while (true)
-            {
-                if (mystamp != stamp)
-                    throw new CollectionModifiedException();
-
-                if (b == null || b.overflow == null)
-                {
-                    do
-                    {
-                        if (++index >= len) yield break;
-                    } while (table[index] == null);
-
-                    b = table[index];
-                    yield return b.item;
-                }
-                else
-                {
-                    b = b.overflow;
-                    yield return b.item;
-                }
-            }
+            return enumerator;
         }
 
         #endregion

@@ -588,24 +588,32 @@ namespace C5
         #endregion
 
         #region Constructors
+         /// <summary>
+        /// Create an array list with default item equalityComparer and initial capacity 8 items and a Normal memory type
+        /// </summary>
+        public ArrayList() : this(8) { }
+     
+
         /// <summary>
         /// Create an array list with default item equalityComparer and initial capacity 8 items.
         /// </summary>
-        public ArrayList() : this(8) { }
+        public ArrayList(MemoryType memoryType = MemoryType.Normal) : this(8, memoryType) { }
 
 
         /// <summary>
         /// Create an array list with external item equalityComparer and initial capacity 8 items.
         /// </summary>
         /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
-        public ArrayList(SCG.IEqualityComparer<T> itemequalityComparer) : this(8, itemequalityComparer) { }
+        /// <param name="memoryType"> The memory type strategy of the internal enumerator used to iterate over the collection</param>
+        public ArrayList(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal) : this(8, itemequalityComparer, memoryType) { }
 
 
         /// <summary>
         /// Create an array list with default item equalityComparer and prescribed initial capacity.
         /// </summary>
         /// <param name="capacity">The prescribed capacity</param>
-        public ArrayList(int capacity) : this(capacity, EqualityComparer<T>.Default) { }
+        /// <param name="memoryType">The memory type strategy of the internal enumerator used to iterate over the collection</param>
+        public ArrayList(int capacity, MemoryType memoryType = MemoryType.Normal) : this(capacity, EqualityComparer<T>.Default, memoryType) { }
 
 
         /// <summary>
@@ -613,8 +621,9 @@ namespace C5
         /// </summary>
         /// <param name="capacity">The prescribed capacity</param>
         /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
-        public ArrayList(int capacity, SCG.IEqualityComparer<T> itemequalityComparer)
-            : base(capacity, itemequalityComparer)
+        /// <param name="memoryType">The memory type strategy of the internal enumerator used to iterate over the collection</param>
+        public ArrayList(int capacity, SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
+            : base(capacity, itemequalityComparer, memoryType)
         {
 
         }

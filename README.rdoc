@@ -79,6 +79,10 @@ introduced with C# 3 and 4, notably LINQ and covariant and contravariant type pa
 C5 is a portable library supporting .NET 3.5, .NET 4.0, .NET 4.5, 
 Universal Windows Platform, Silverlight 5, Windows Phone 8, and Mono (Xamarin).
 
+== New Memory Model for Game and Mobile development
+
+C5 now supports a new memory model, designed specifically to reduce garbage collection. Collections can be iterated with foreach's and iterators without generating garbage.  
+
 == Getting Started
 
 1. Get C5 from {NuGet}[https://www.nuget.org/packages/C5]: <tt>PM> Install-Package C5</tt>
@@ -95,9 +99,16 @@ Universal Windows Platform, Silverlight 5, Windows Phone 8, and Mono (Xamarin).
    
 == C5 on Mono
 
-1. Open C5.csproj with Xamarin Studio or MonoDevelop to build C5.dll or
+1. Open C5.csproj with either Xamarin Studio or MonoDevelop to build C5.dll or
 
 2. Build manually using <tt>xbuild C5.csproj</tt>.
+
+== C5 on Unity3d
+
+
+1. Open C5.csproj with either Xamarin Studio, MonoDevelop to build C5.dll 
+
+2. Copy C5.dll into the Asset folder of your project
 
 == License
 

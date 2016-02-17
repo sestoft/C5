@@ -222,7 +222,7 @@ namespace C5
         /// </summary>
         /// <exception cref="NotComparableException">If <code>T</code> is not comparable.
         /// </exception>
-        public TreeSet() : this(SCG.Comparer<T>.Default, EqualityComparer<T>.Default) { }
+		public TreeSet(MemoryType memoryType = MemoryType.Normal) : this(SCG.Comparer<T>.Default, EqualityComparer<T>.Default, memoryType) { }
 
 
         /// <summary>
@@ -236,7 +236,8 @@ namespace C5
         /// </para>
         /// </summary>
         /// <param name="comparer">The external comparer</param>
-        public TreeSet(SCG.IComparer<T> comparer) : this(comparer, new ComparerZeroHashCodeEqualityComparer<T>(comparer)) { }
+		/// <param name = "memoryType"></param>
+		public TreeSet(SCG.IComparer<T> comparer, MemoryType memoryType = MemoryType.Normal) : this(comparer, new ComparerZeroHashCodeEqualityComparer<T>(comparer)) { }
 
         /// <summary>
         /// Create a red-black tree collection with an external comparer and an external
@@ -244,11 +245,16 @@ namespace C5
         /// </summary>
         /// <param name="comparer">The external comparer</param>
         /// <param name="equalityComparer">The external item equalitySCG.Comparer</param>
-        public TreeSet(SCG.IComparer<T> comparer, SCG.IEqualityComparer<T> equalityComparer)
-            : base(equalityComparer)
+		/// <param name = "memoryType"></param>
+		public TreeSet(SCG.IComparer<T> comparer, SCG.IEqualityComparer<T> equalityComparer, MemoryType memoryType = MemoryType.Normal)
+			: base(equalityComparer, memoryType)
         {
             if (comparer == null)
                 throw new NullReferenceException("Item comparer cannot be null");
+			
+			if ( memoryType != MemoryType.Normal )
+				throw new Exception ( "TreeSet doesn't support MemoryType Strict or Safe" );
+			
             this.comparer = comparer;
         }
 
@@ -533,36 +539,6 @@ namespace C5
         #endregion
 
         #region IEnumerable<T> Members
-
-        private SCG.IEnumerator<T> getEnumerator(Node node, int origstamp)
-        {
-            if (node == null)
-                yield break;
-
-            if (node.left != null)
-            {
-                SCG.IEnumerator<T> child = getEnumerator(node.left, origstamp);
-
-                while (child.MoveNext())
-                {
-                    modifycheck(origstamp);
-                    yield return child.Current;
-                }
-            }
-
-            modifycheck(origstamp);
-            yield return node.item;
-            if (node.right != null)
-            {
-                SCG.IEnumerator<T> child = getEnumerator(node.right, origstamp);
-
-                while (child.MoveNext())
-                {
-                    modifycheck(origstamp);
-                    yield return child.Current;
-                }
-            }
-        }
 
         /// <summary>
         /// 

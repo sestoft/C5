@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\C5\C5.csproj">
+      <Project>{d02e0664-c56c-4c3f-98e5-c8ec881a8439}</Project>
       <Project>{b63037be-9d34-4b4d-91b2-8b2e215cb571}</Project>
       <Name>C5</Name>
     </ProjectReference>
