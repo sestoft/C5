@@ -1,4 +1,7 @@
-﻿namespace System.Collections.Generic
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace C5
 {
     /// <summary>
     /// Represents a read-only collection of elements that can be accessed by index. 

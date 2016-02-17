@@ -20,18 +20,19 @@
 */
 
 using System;
-using SCG = System.Collections.Generic;
+using System.Collections.Generic;
+
 namespace C5
 {
     /// <summary>
     /// A read-only wrapper class for a generic enumerator
     /// </summary>
     [Serializable]
-    public class GuardedEnumerator<T> : SCG.IEnumerator<T>
+    public class GuardedEnumerator<T> : IEnumerator<T>
     {
         #region Fields
 
-        SCG.IEnumerator<T> enumerator;
+        IEnumerator<T> enumerator;
 
         #endregion
 
@@ -41,7 +42,7 @@ namespace C5
         /// Create a wrapper around a generic enumerator
         /// </summary>
         /// <param name="enumerator">The enumerator to wrap</param>
-        public GuardedEnumerator(SCG.IEnumerator<T> enumerator)
+        public GuardedEnumerator(IEnumerator<T> enumerator)
         { this.enumerator = enumerator; }
 
         #endregion
@@ -98,11 +99,11 @@ namespace C5
     /// <i>This is mainly interesting as a base of other guard classes</i>
     /// </summary>
     [Serializable]
-    public class GuardedEnumerable<T> : SCG.IEnumerable<T>
+    public class GuardedEnumerable<T> : System.Collections.Generic.IEnumerable<T>
     {
         #region Fields
 
-        SCG.IEnumerable<T> enumerable;
+        System.Collections.Generic.IEnumerable<T> enumerable;
 
         #endregion
 
@@ -112,18 +113,18 @@ namespace C5
         /// Wrap an enumerable in a read-only wrapper
         /// </summary>
         /// <param name="enumerable">The enumerable to wrap</param>
-        public GuardedEnumerable(SCG.IEnumerable<T> enumerable)
+        public GuardedEnumerable(System.Collections.Generic.IEnumerable<T> enumerable)
         { this.enumerable = enumerable; }
 
         #endregion
 
-        #region SCG.IEnumerable<T> Members
+        #region System.Collections.Generic.IEnumerable<T> Members
 
         /// <summary>
         /// Get an enumerator from the wrapped enumerable
         /// </summary>
         /// <returns>The enumerator (itself wrapped)</returns>
-        public SCG.IEnumerator<T> GetEnumerator()
+        public IEnumerator<T> GetEnumerator()
         { return new GuardedEnumerator<T>(enumerable.GetEnumerator()); }
 
         #endregion
@@ -359,7 +360,7 @@ namespace C5
         /// </summary>
         /// <param name="filter">The T->bool filter delegate defining the condition</param>
         /// <returns>The filtered enumerable</returns>
-        public virtual SCG.IEnumerable<T> Filter(Func<T, bool> filter) { return collectionvalue.Filter(filter); }
+        public virtual System.Collections.Generic.IEnumerable<T> Filter(Func<T, bool> filter) { return collectionvalue.Filter(filter); }
 
         /// <summary>
         /// Choose some item of this collection. 
@@ -557,7 +558,7 @@ namespace C5
         /// </summary>
         /// <param name="items">The items</param>
         /// <returns>True if so</returns>
-        public virtual bool ContainsAll(SCG.IEnumerable<T> items) { return collection.ContainsAll(items); }
+        public virtual bool ContainsAll(System.Collections.Generic.IEnumerable<T> items) { return collection.ContainsAll(items); }
 
         /// <summary> 
         /// Search for an item in the wrapped collection
@@ -644,7 +645,7 @@ namespace C5
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="items"></param>
-        public virtual void RemoveAll(SCG.IEnumerable<T> items)
+        public virtual void RemoveAll(System.Collections.Generic.IEnumerable<T> items)
         { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
 
         /// <summary>
@@ -658,7 +659,7 @@ namespace C5
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="items"></param>
-        public virtual void RetainAll(SCG.IEnumerable<T> items)
+        public virtual void RetainAll(System.Collections.Generic.IEnumerable<T> items)
         { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
 
         /// <summary>
@@ -680,7 +681,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public virtual SCG.IEqualityComparer<T> EqualityComparer { get { return collection.EqualityComparer; } }
+        public virtual System.Collections.Generic.IEqualityComparer<T> EqualityComparer { get { return collection.EqualityComparer; } }
 
         /// <summary>
         /// By convention this is true for any collection with set semantics.
@@ -707,14 +708,14 @@ namespace C5
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="item"></param>
-        void SCG.ICollection<T>.Add(T item)
+        void System.Collections.Generic.ICollection<T>.Add(T item)
         { throw new ReadOnlyCollectionException(); }
 
         /// <summary>
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="items"></param>
-        public virtual void AddAll(SCG.IEnumerable<T> items)
+        public virtual void AddAll(System.Collections.Generic.IEnumerable<T> items)
         { throw new ReadOnlyCollectionException(); }
 
         #endregion
@@ -1002,7 +1003,7 @@ namespace C5
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="items"></param>
-        public void AddSorted(SCG.IEnumerable<T> items)
+        public void AddSorted(System.Collections.Generic.IEnumerable<T> items)
         { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
 
         /// <summary>
@@ -1067,7 +1068,7 @@ namespace C5
         /// The comparer object supplied at creation time for the underlying collection
         /// </summary>
         /// <value>The comparer</value>
-        public SCG.IComparer<T> Comparer { get { return sorted.Comparer; } }
+        public System.Collections.Generic.IComparer<T> Comparer { get { return sorted.Comparer; } }
         #endregion
 
         #region IDirectedEnumerable<T> Members
@@ -1181,7 +1182,7 @@ namespace C5
         /// <param name="m"></param>
         /// <param name="c">The comparer to use in the result</param>
         /// <returns></returns>
-        public IIndexedSorted<V> Map<V>(Func<T, V> m, SCG.IComparer<V> c)
+        public IIndexedSorted<V> Map<V>(Func<T, V> m, System.Collections.Generic.IComparer<V> c)
         { return indexedsorted.Map(m, c); }
 
         #endregion
@@ -1261,7 +1262,7 @@ namespace C5
     /// </i>
     /// </summary>
     [Serializable]
-    public class GuardedList<T> : GuardedSequenced<T>, IList<T>, SCG.IList<T>
+    public class GuardedList<T> : GuardedSequenced<T>, IList<T>, System.Collections.Generic.IList<T>
     {
         #region Fields
 
@@ -1399,7 +1400,7 @@ namespace C5
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="i"></param>
         /// <param name="items"></param>
-        public void InsertAll(int i, SCG.IEnumerable<T> items)
+        public void InsertAll(int i, System.Collections.Generic.IEnumerable<T> items)
         { throw new ReadOnlyCollectionException("List is read only"); }
 
 
@@ -1426,7 +1427,7 @@ namespace C5
         /// <param name="mapper">The delegate defining the map.</param>
         /// <param name="itemequalityComparer">The itemequalityComparer to use for the new list</param>
         /// <returns>The new list.</returns>
-        public IList<V> Map<V>(Func<T, V> mapper, SCG.IEqualityComparer<V> itemequalityComparer) { return innerlist.Map(mapper, itemequalityComparer); }
+        public IList<V> Map<V>(Func<T, V> mapper, System.Collections.Generic.IEqualityComparer<V> itemequalityComparer) { return innerlist.Map(mapper, itemequalityComparer); }
 
         /// <summary>
         /// </summary>
@@ -1601,14 +1602,14 @@ namespace C5
         /// </summary>
         /// <exception cref="NotComparableException">if T is not comparable</exception>
         /// <returns>True if the list is sorted, else false.</returns>
-        public bool IsSorted() { return innerlist.IsSorted(SCG.Comparer<T>.Default); }
+        public bool IsSorted() { return innerlist.IsSorted(System.Collections.Generic.Comparer<T>.Default); }
 
         /// <summary>
         /// Check if wrapped list is sorted
         /// </summary>
         /// <param name="c">The sorting order to use</param>
         /// <returns>True if sorted</returns>
-        public bool IsSorted(SCG.IComparer<T> c) { return innerlist.IsSorted(c); }
+        public bool IsSorted(System.Collections.Generic.IComparer<T> c) { return innerlist.IsSorted(c); }
 
 
         /// <summary>
@@ -1622,7 +1623,7 @@ namespace C5
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="c"></param>
-        public void Sort(SCG.IComparer<T> c)
+        public void Sort(System.Collections.Generic.IComparer<T> c)
         { throw new ReadOnlyCollectionException("List is read only"); }
 
         /// <summary>
@@ -1911,7 +1912,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public SCG.IEqualityComparer<K> EqualityComparer { get { return dict.EqualityComparer; } }
+        public System.Collections.Generic.IEqualityComparer<K> EqualityComparer { get { return dict.EqualityComparer; } }
 
         /// <summary>
         /// </summary>
@@ -1960,7 +1961,7 @@ namespace C5
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="items"></param>
-        public void AddAll<L, W>(SCG.IEnumerable<KeyValuePair<L, W>> items)
+        public void AddAll<L, W>(System.Collections.Generic.IEnumerable<KeyValuePair<L, W>> items)
             where L : K
             where W : V
         { throw new ReadOnlyCollectionException(); }
@@ -2008,7 +2009,7 @@ namespace C5
         /// </summary>
         /// <param name="keys"></param>
         /// <returns></returns>
-        public bool ContainsAll<H>(SCG.IEnumerable<H> keys) where H : K { return dict.ContainsAll(keys); }
+        public bool ContainsAll<H>(System.Collections.Generic.IEnumerable<H> keys) where H : K { return dict.ContainsAll(keys); }
 
         /// <summary>
         /// Search for a key in the wrapped dictionary, reporting the value if found
@@ -2112,7 +2113,7 @@ namespace C5
         /// The key comparer used by this dictionary.
         /// </summary>
         /// <value></value>
-        public SCG.IComparer<K> Comparer { get { return sorteddict.Comparer; } }
+        public System.Collections.Generic.IComparer<K> Comparer { get { return sorteddict.Comparer; } }
 
         /// <summary>
         /// 

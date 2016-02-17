@@ -19,7 +19,7 @@
  SOFTWARE.
 */
 using System;
-using SCG = System.Collections.Generic;
+
 namespace C5
 {
     /// <summary>
@@ -31,27 +31,28 @@ namespace C5
     [Serializable]
     public class C5Random : Random
     {
-        private uint[] Q = new uint[16];
+        private uint[] _q = new uint[16];
 
-        private uint c = 362436, i = 15;
+        private uint _c = 362436;
 
+        private uint _i = 15;
 
         private uint Cmwc()
         {
             ulong t, a = 487198574UL;
             uint x, r = 0xfffffffe;
 
-            i = (i + 1) & 15;
-            t = a * Q[i] + c;
-            c = (uint)(t >> 32);
-            x = (uint)(t + c);
-            if (x < c)
+            _i = (_i + 1) & 15;
+            t = a * _q[_i] + _c;
+            _c = (uint)(t >> 32);
+            x = (uint)(t + _c);
+            if (x < _c)
             {
                 x++;
-                c++;
+                _c++;
             }
 
-            return Q[i] = r - x;
+            return _q[_i] = r - x;
         }
 
 
@@ -74,7 +75,6 @@ namespace C5
             return NextDouble();
         }
 
-
         /// <summary>
         /// Get a new random System.Int32 value
         /// </summary>
@@ -83,7 +83,6 @@ namespace C5
         {
             return (int)Cmwc();
         }
-
 
         /// <summary>
         /// Get a random non-negative integer less than a given upper bound
@@ -94,11 +93,12 @@ namespace C5
         public override int Next(int max)
         {
             if (max < 0)
+            {
                 throw new ArgumentException("max must be non-negative");
+            }
 
             return (int)(Cmwc() / 4294967296.0 * max);
         }
-
 
         /// <summary>
         /// Get a random integer between two given bounds
@@ -110,7 +110,9 @@ namespace C5
         public override int Next(int min, int max)
         {
             if (min > max)
+            {
                 throw new ArgumentException("min must be less than or equal to max");
+            }
 
             return min + (int)(Cmwc() / 4294967296.0 * (max - min));
         }
@@ -122,7 +124,9 @@ namespace C5
         public override void NextBytes(byte[] buffer)
         {
             for (int i = 0, length = buffer.Length; i < length; i++)
+            {
                 buffer[i] = (byte)Cmwc();
+            }
         }
 
 
@@ -143,7 +147,9 @@ namespace C5
         public C5Random(long seed)
         {
             if (seed == 0)
+            {
                 throw new ArgumentException("Seed must be non-zero");
+            }
 
             uint j = (uint)(seed & 0xFFFFFFFF);
 
@@ -152,22 +158,25 @@ namespace C5
                 j ^= j << 13;
                 j ^= j >> 17;
                 j ^= j << 5;
-                Q[i] = j;
+                _q[i] = j;
             }
 
-            Q[15] = (uint)(seed ^ (seed >> 32));
+            _q[15] = (uint)(seed ^ (seed >> 32));
         }
 
         /// <summary>
         /// Create a random number generator with a specified internal start state.
         /// </summary>
         /// <exception cref="ArgumentException">If Q is not of length exactly 16</exception>
-        /// <param name="Q">The start state. Must be a collection of random bits given by an array of exactly 16 uints.</param> 
-        public C5Random(uint[] Q)
+        /// <param name="q">The start state. Must be a collection of random bits given by an array of exactly 16 uints.</param> 
+        [CLSCompliant(false)]
+        public C5Random(uint[] q)
         {
-            if (Q.Length != 16)
-                throw new ArgumentException("Q must have length 16, was " + Q.Length);
-            Array.Copy(Q, this.Q, 16);
+            if (q.Length != 16)
+            {
+                throw new ArgumentException("Q must have length 16, was " + q.Length);
+            }
+            Array.Copy(q, _q, 16);
         }
     }
 }

@@ -94,7 +94,7 @@ C5 now supports a new memory model, designed specifically to reduce garbage coll
 3. Building the unit test project requires NUnit. If you have NuGet installed it 
    should automatically add the reference.
    
-   There are more than 1430 NUnit test cases which should execute in less
+   There are more than 2700 NUnit test cases which should execute in less
    than 30 seconds. All should pass.
    
 == C5 on Mono
@@ -105,8 +105,7 @@ C5 now supports a new memory model, designed specifically to reduce garbage coll
 
 == C5 on Unity3d
 
-
-1. Open C5.csproj with either Xamarin Studio, MonoDevelop to build C5.dll 
+1. Open C5.csproj with either Xamarin Studio or MonoDevelop to build C5.dll 
 
 2. Copy C5.dll into the Asset folder of your project
 

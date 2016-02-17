@@ -20,14 +20,14 @@
 */
 
 using System;
-using SCG = System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace C5
 {
     /// <summary>
     /// A generic collection, that can be enumerated backwards.
     /// </summary>
-    public interface IDirectedEnumerable<T> : SCG.IEnumerable<T> // TODO: Type parameter should be 'out T' when Silverlight supports is (version 5 and onwards)
+    public interface IDirectedEnumerable<T> : IEnumerable<T> // TODO: Type parameter should be 'out T' when Silverlight supports is (version 5 and onwards)
     {
         /// <summary>
         /// Create a collection containing the same items as this collection, but
@@ -37,7 +37,6 @@ namespace C5
         /// </summary>
         /// <returns>The backwards collection.</returns>
         IDirectedEnumerable<T> Backwards();
-
 
         /// <summary>
         /// <code>Forwards</code> if same, else <code>Backwards</code>
@@ -53,7 +52,7 @@ namespace C5
     /// collection. The main usage for this interface is to be the return type of 
     /// query operations on generic collection.
     /// </summary>
-    public interface ICollectionValue<T> : SCG.IEnumerable<T>, IShowable
+    public interface ICollectionValue<T> : IEnumerable<T>, IShowable
     {
         /// <summary>
         /// A flag bitmap of the events subscribable to by this collection.
@@ -185,7 +184,7 @@ namespace C5
         /// </summary>
         /// <param name="filter">The T->bool filter delegate defining the condition</param>
         /// <returns>The filtered enumerable</returns>
-        SCG.IEnumerable<T> Filter(Func<T, bool> filter);
+        IEnumerable<T> Filter(Func<T, bool> filter);
     }
 
 
@@ -243,7 +242,7 @@ namespace C5
         /// </summary>
         /// <value>The equalityComparer used by this collection to check equality of items. 
         /// Or null (????) if collection does not check equality at all or uses a comparer.</value>
-        SCG.IEqualityComparer<T> EqualityComparer { get; }
+        System.Collections.Generic.IEqualityComparer<T> EqualityComparer { get; }
 
         //ItemEqualityTypeEnum ItemEqualityType {get ;}
 
@@ -272,7 +271,7 @@ namespace C5
         /// will be added.
         /// </summary>
         /// <param name="items">The items to add</param>
-        void AddAll(SCG.IEnumerable<T> items);
+        void AddAll(IEnumerable<T> items);
 
         //void Clear(); // for priority queue
         //int Count why not?
@@ -288,7 +287,7 @@ namespace C5
     /// The simplest interface of a main stream generic collection
     /// with lookup, insertion and removal operations. 
     /// </summary>
-    public interface ICollection<T> : IExtensible<T>, SCG.ICollection<T>
+    public interface ICollection<T> : IExtensible<T>, System.Collections.Generic.ICollection<T>
     {
         //This is somewhat similar to the RandomAccess marker itf in java
         /// <summary>
@@ -390,7 +389,7 @@ namespace C5
         /// </summary>
         /// <param name="items">The </param>
         /// <returns>True if all values in <code>items</code>is in this collection.</returns>
-        bool ContainsAll(SCG.IEnumerable<T> items);
+        bool ContainsAll(IEnumerable<T> items);
 
 
         /// <summary>
@@ -492,7 +491,7 @@ namespace C5
         /// has bag semantics, take multiplicities into account.
         /// </summary>
         /// <param name="items">The items to remove.</param>
-        void RemoveAll(SCG.IEnumerable<T> items);
+        void RemoveAll(IEnumerable<T> items);
 
         //void RemoveAll(Func<T, bool> predicate);
 
@@ -507,7 +506,7 @@ namespace C5
         /// has bag semantics, take multiplicities into account.
         /// </summary>
         /// <param name="items">The items to retain.</param>
-        void RetainAll(SCG.IEnumerable<T> items);
+        void RetainAll(IEnumerable<T> items);
 
         //void RetainAll(Func<T, bool> predicate);
         //IDictionary<T> UniqueItems()
@@ -547,7 +546,7 @@ namespace C5
     /// <summary>
     /// A sequenced collection, where indices of items in the order are maintained
     /// </summary>
-    public interface IIndexed<T> : ISequenced<T>, SCG.IReadOnlyList<T>
+    public interface IIndexed<T> : ISequenced<T>, IReadOnlyList<T>
     {
         /// <summary>
         /// 
@@ -686,7 +685,7 @@ namespace C5
     ///
     /// NBNBNB: we need a description of the view functionality here!
     /// </summary>
-    public interface IList<T> : IIndexed<T>, IDisposable, SCG.IList<T>, System.Collections.IList
+    public interface IList<T> : IIndexed<T>, IDisposable, System.Collections.Generic.IList<T>, System.Collections.IList
     {
         /// <summary>
         /// </summary>
@@ -709,11 +708,6 @@ namespace C5
         bool FIFO { get; set; }
 
         /// <summary>
-        /// 
-        /// </summary>
-        bool IsFixedSize { get; }
-
-        /// <summary>
         /// On this list, this indexer is read/write.
         /// </summary>
         /// <exception cref="IndexOutOfRangeException"> if index is negative or
@@ -722,9 +716,9 @@ namespace C5
         /// <param name="index">The index of the item to fetch or store.</param>
         new T this[int index] { get; set; }
 
-        #region Ambiguous calls when extending SCG.IList<T>
+        #region Ambiguous calls when extending System.Collections.Generic.IList<T>
 
-        #region SCG.ICollection<T>
+        #region System.Collections.Generic.ICollection<T>
         /// <summary>
         /// 
         /// </summary>
@@ -770,7 +764,7 @@ namespace C5
 
         #endregion
 
-        #region SCG.IList<T> proper
+        #region System.Collections.Generic.IList<T> proper
 
         /// <summary>
         /// Searches for an item in the list going forwards from the start. 
@@ -851,7 +845,7 @@ namespace C5
         /// already in the list.</exception>
         /// <param name="index">Index to start inserting at</param>
         /// <param name="items">Items to insert</param>
-        void InsertAll(int index, SCG.IEnumerable<T> items);
+        void InsertAll(int index, IEnumerable<T> items);
 
         /// <summary>
         /// Create a new list consisting of the items of this list satisfying a 
@@ -878,7 +872,7 @@ namespace C5
         /// <param name="mapper">The delegate defining the map.</param>
         /// <param name="equalityComparer">The equalityComparer to use for the new list</param>
         /// <returns>The new list.</returns>
-        IList<V> Map<V>(Func<T, V> mapper, SCG.IEqualityComparer<V> equalityComparer);
+        IList<V> Map<V>(Func<T, V> mapper, System.Collections.Generic.IEqualityComparer<V> equalityComparer);
 
         /// <summary>
         /// Remove one item from the list: from the front if <code>FIFO</code>
@@ -1010,7 +1004,7 @@ namespace C5
         /// </summary>
         /// <param name="comparer">The comparer defining the sorting order.</param>
         /// <returns>True if the list is sorted, else false.</returns>
-        bool IsSorted(SCG.IComparer<T> comparer);
+        bool IsSorted(System.Collections.Generic.IComparer<T> comparer);
 
         /// <summary>
         /// Sort the items of the list according to the default sorting order
@@ -1027,7 +1021,7 @@ namespace C5
         /// </para>
         /// </summary>
         /// <param name="comparer">The comparer defining the sorting order.</param>
-        void Sort(SCG.IComparer<T> comparer);
+        void Sort(System.Collections.Generic.IComparer<T> comparer);
 
 
         /// <summary>
@@ -1100,7 +1094,7 @@ namespace C5
         /// The comparer object supplied at creation time for this collection
         /// </summary>
         /// <value>The comparer</value>
-        SCG.IComparer<T> Comparer { get; }
+        System.Collections.Generic.IComparer<T> Comparer { get; }
         /// <summary>
         /// Get or set the item corresponding to a handle. Throws exceptions on 
         /// invalid handles.
@@ -1190,7 +1184,7 @@ namespace C5
     /// Usually there will also be constructors without a comparer argument, in which case the 
     /// comparer should be the defalt comparer for the item type, <see cref="P:C5.Comparer`1.Default"/>.</para>
     /// 
-    /// <para>The comparer of the sorted collection is available as the <code>SCG.Comparer</code> property 
+    /// <para>The comparer of the sorted collection is available as the <code>System.Collections.Generic.Comparer</code> property 
     /// (<see cref="P:C5.ISorted`1.Comparer"/>).</para>
     /// 
     /// <para>The methods are grouped according to
@@ -1249,7 +1243,7 @@ namespace C5
         /// The comparer object supplied at creation time for this sorted collection.
         /// </summary>
         /// <value>The comparer</value>
-        SCG.IComparer<T> Comparer { get; }
+        System.Collections.Generic.IComparer<T> Comparer { get; }
 
         /// <summary>
         /// Find the strict predecessor of item in the sorted collection,
@@ -1427,7 +1421,7 @@ namespace C5
         /// <exception cref="ArgumentException"> if the enumerated items turns out
         /// not to be in increasing order.</exception>
         /// <param name="items">The collection to add.</param>
-        void AddSorted(SCG.IEnumerable<T> items);
+        void AddSorted(IEnumerable<T> items);
 
 
         /// <summary>
@@ -1529,7 +1523,7 @@ namespace C5
         /// <param name="mapper">The delegate definging the map.</param>
         /// <param name="comparer">The comparion relation to use for the result.</param>
         /// <returns>The new sorted collection.</returns>
-        IIndexedSorted<V> Map<V>(Func<T, V> mapper, SCG.IComparer<V> comparer);
+        IIndexedSorted<V> Map<V>(Func<T, V> mapper, System.Collections.Generic.IComparer<V> comparer);
     }
 
 
@@ -1559,7 +1553,7 @@ namespace C5
         /// The key equalityComparer.
         /// </summary>
         /// <value></value>
-        SCG.IEqualityComparer<K> EqualityComparer { get; }
+        System.Collections.Generic.IEqualityComparer<K> EqualityComparer { get; }
 
         /// <summary>
         /// Indexer for dictionary.
@@ -1611,7 +1605,7 @@ namespace C5
         /// <exception cref="DuplicateNotAllowedException"> 
         /// If the input contains duplicate keys or a key already present in this dictionary.</exception>
         /// <param name="entries"></param>
-        void AddAll<U, W>(SCG.IEnumerable<KeyValuePair<U, W>> entries)
+        void AddAll<U, W>(IEnumerable<KeyValuePair<U, W>> entries)
             where U : K
             where W : V
           ;
@@ -1634,7 +1628,7 @@ namespace C5
         /// </summary>
         /// <param name="items">The </param>
         /// <returns>True if all values in <code>items</code>is in this collection.</returns>
-        bool ContainsAll<H>(SCG.IEnumerable<H> items) where H : K;
+        bool ContainsAll<H>(IEnumerable<H> items) where H : K;
 
         /// <summary>
         /// Remove an entry with a given key from the dictionary
@@ -1784,7 +1778,7 @@ namespace C5
         /// The key comparer used by this dictionary.
         /// </summary>
         /// <value></value>
-        SCG.IComparer<K> Comparer { get; }
+        System.Collections.Generic.IComparer<K> Comparer { get; }
 
         /// <summary>
         /// Find the entry in the dictionary whose key is the
@@ -1948,7 +1942,7 @@ namespace C5
         /// <exception cref="ArgumentException"> if the enumerated items turns out
         /// not to be in increasing order.</exception>
         /// <param name="items">The collection to add.</param>
-        void AddSorted(SCG.IEnumerable<KeyValuePair<K, V>> items);
+        void AddSorted(IEnumerable<KeyValuePair<K, V>> items);
 
 
         /// <summary>
@@ -1989,7 +1983,7 @@ namespace C5
     /// and never throw exceptions.</i>
     /// <i>This interface is identical to System.Collections.Generic.IComparer&lt;T&gt;</i>
     /// </summary>
-    public interface ISCG.Comparer<T>
+    public interface ISystem.Collections.Generic.Comparer<T>
     {
       /// <summary>
       /// Compare two items with respect to this item comparer
@@ -2013,7 +2007,7 @@ namespace C5
     /// and never throw exceptions.</i>
     /// <i>This interface is similar in function to System.IKeyComparer&lt;T&gt;</i>
     /// </summary>
-    public interface SCG.IEqualityComparer<T>
+    public interface System.Collections.Generic.IEqualityComparer<T>
     {
       /// <summary>
       /// Get the hash code with respect to this item equalityComparer
