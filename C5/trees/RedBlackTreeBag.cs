@@ -20,6 +20,7 @@
 */
 
 using System;
+using System.Text;
 using SCG = System.Collections.Generic;
 
 namespace C5
@@ -43,16 +44,10 @@ namespace C5
 
         SCG.IComparer<T> comparer;
 
-        Node root;
+        private Node root;
 
         //TODO: wonder if we should remove that
-        int blackdepth = 0;
-
- 
-        /// <summary>
-        /// maintain a unique items counter
-        /// </summary>
-        public int uniqueCount = 0;
+        private int blackdepth = 0;
 
         //We double these stacks for the iterative add and remove on demand
         //TODO: refactor dirs[] into bool fields on Node (?)
@@ -61,15 +56,20 @@ namespace C5
         private Node[] path = new Node[2];
 
         //TODO: refactor into separate class
-        bool isSnapShot = false;
+        private bool isSnapShot = false;
 
-        int generation;
+        private int generation;
 
-        bool isValid = true;
+        private bool isValid = true;
 
-        SnapRef snapList;
+        private SnapRef snapList;
 
         #endregion
+
+        /// <summary>
+        /// maintain a unique items counter
+        /// </summary>
+        public int UniqueCount { get; private set; }
 
         #region Events
 
@@ -254,14 +254,14 @@ namespace C5
         /// <param name="equalityComparer">The external item equalitySCG.Comparer</param>
 		/// <param name = "memoryType"></param>
 		public TreeBag(SCG.IComparer<T> comparer, SCG.IEqualityComparer<T> equalityComparer, MemoryType memoryType = MemoryType.Normal)
-			: base(equalityComparer, memoryType)
+            : base(equalityComparer, memoryType)
         {
             if (comparer == null)
                 throw new NullReferenceException("Item comparer cannot be null");
 
-			if ( memoryType != MemoryType.Normal )
-				throw new Exception ( "TreeBag doesn't support MemoryType Strict or Safe." );
-			
+            if (memoryType != MemoryType.Normal)
+                throw new Exception("TreeBag doesn't support MemoryType Strict or Safe.");
+
             this.comparer = comparer;
         }
 
@@ -688,7 +688,7 @@ namespace C5
                     }
 
                     // bug20120422: the root was never updated because this was missing:
-                    root = cursor; 
+                    root = cursor;
 
                     return !update;
 
@@ -896,7 +896,7 @@ namespace C5
                 size++;
                 if (!wasFound)
                 {
-                    uniqueCount++;
+                    UniqueCount++;
                     j = item;
                 }
                 return true;
@@ -938,7 +938,7 @@ namespace C5
                 return;
 
             size += c;
-            uniqueCount += _uniqueAdds;
+            UniqueCount += _uniqueAdds;
 
             //TODO: implement a RaiseForAddAll() method
             if (raiseAdded)
@@ -1084,7 +1084,7 @@ namespace C5
             root = TreeBag<T>.maketreer(ref head, blackheight, maxred, red);
             blackdepth = blackheight;
             size = z;
-            uniqueCount = z;
+            UniqueCount = z;
 
             size += ec;
 
@@ -1209,7 +1209,7 @@ namespace C5
             {
                 size++;
                 if (!wasfound)
-                    uniqueCount++;
+                    UniqueCount++;
                 if (ActiveEvents != 0 && !wasfound)
                     raiseForAdd(item);
                 return wasfound;
@@ -1328,7 +1328,7 @@ namespace C5
             {
                 size++;
                 if (!wasfound)
-                    uniqueCount++;
+                    UniqueCount++;
                 if (ActiveEvents != 0)
                     raiseForAdd(wasfound ? olditem : item);
                 return wasfound;
@@ -1458,7 +1458,7 @@ namespace C5
                 return true;
             }
 
-            uniqueCount--;
+            UniqueCount--;
             size -= cursor.items;
 
             //Stage 2: if item's node has no null child, find predecessor
@@ -1779,7 +1779,7 @@ namespace C5
         private void clear()
         {
             size = 0;
-            uniqueCount = 0;
+            UniqueCount = 0;
             root = null;
             blackdepth = 0;
         }
@@ -1872,7 +1872,7 @@ namespace C5
 
             root = t.root;
             size = t.size;
-            uniqueCount = t.uniqueCount;
+            UniqueCount = t.UniqueCount;
             blackdepth = t.blackdepth;
             if (wasRemoved != null)
                 foreach (KeyValuePair<T, int> p in wasRemoved)
@@ -1971,7 +1971,7 @@ namespace C5
             res.root = TreeBag<T>.maketreer(ref head, blackheight, maxred, red);
             res.blackdepth = blackheight;
             res.size = z;
-            res.uniqueCount = z;
+            res.UniqueCount = z;
             res.size += ec;
 
             return res;
@@ -2064,7 +2064,7 @@ namespace C5
             res.root = TreeBag<V>.maketreer(ref head, blackheight, maxred, red);
             res.blackdepth = blackheight;
             res.size = size;
-            res.uniqueCount = uniqueCount;
+            res.UniqueCount = UniqueCount;
             return res;
         }
 
@@ -3903,7 +3903,7 @@ namespace C5
             Logger.Log(string.Format(">>>>>>>>>>>>>>>>>>> dump {0} (count={1}, blackdepth={2}, depth={3}, gen={4}, uniqueCount={5})", msg, size, blackdepth,
             0
             ,
- generation, uniqueCount
+ generation, UniqueCount
 ));
             minidump(root, "");
             check(""); Logger.Log("<<<<<<<<<<<<<<<<<<<");
@@ -3917,12 +3917,9 @@ namespace C5
         /// <param name="err">Extra (error)message to include</param>
         void dump(string msg, string err)
         {
-            Logger.Log(string.Format(">>>>>>>>>>>>>>>>>>> dump {0} (count={1}, blackdepth={2}, depth={3}, gen={4}, uniqueCount={5})", msg, size, blackdepth,
-            0
-            ,
- generation, uniqueCount
-));
-            minidump(root, ""); Logger.Log(err);
+            Logger.Log(string.Format(">>>>>>>>>>>>>>>>>>> dump {0} (count={1}, blackdepth={2}, depth={3}, gen={4}, uniqueCount={5})", msg, size, blackdepth, 0, generation, UniqueCount));
+            minidump(root, "");
+            Logger.Log(err);
             Logger.Log("<<<<<<<<<<<<<<<<<<<");
         }
 
@@ -3934,18 +3931,16 @@ namespace C5
         /// <param name="n">Place (used for id display)</param>
         /// <param name="m">Message</param>
         /// <returns>b</returns>
-        bool massert(bool b, Node n, string m)
+        private bool massert(bool b, Node n, string m)
         {
-            if (!b) Logger.Log(string.Format("*** Node (item={0}, id={1}): {2}", n.item,
-              0
-              , m));
+            if (!b) Logger.Log(string.Format("*** Node (item={0}, id={1}): {2}", n.item, 0, m));
 
             return b;
         }
 
-
-        bool rbminicheck(Node n, bool redp, out T min, out T max, out int blackheight)
-        {//Red-Black invariant
+        private bool rbminicheck(Node n, bool redp, out T min, out T max, out int blackheight)
+        {
+            //Red-Black invariant
             bool res = true;
 
             res = massert(!(n.red && redp), n, "RED parent of RED node") && res;
@@ -3977,10 +3972,6 @@ namespace C5
             blackheight = n.red ? rbh : rbh + 1;
             return res;
         }
-
-
-
-
 
         bool rbminisnapcheck(Node n, out int size, out T min, out T max)
         {
@@ -4018,10 +4009,12 @@ namespace C5
         /// <returns>false if invariant violation</returns>
         public bool Check(string name)
         {
-            System.Text.StringBuilder e = new System.Text.StringBuilder();
+            var e = new StringBuilder();
 
             if (!check(name))
+            {
                 return true;
+            }
             else
             {
                 dump(name, e.ToString());
@@ -4039,7 +4032,9 @@ namespace C5
             //return check("");
             //Logger.Log("bamse");
             if (!isValid)
+            {
                 return true;
+            }
             return Check("-");
         }
 
@@ -4068,7 +4063,9 @@ namespace C5
                 return !res;
             }
             else
+            {
                 return false;
+            }
         }
         #endregion
     }
