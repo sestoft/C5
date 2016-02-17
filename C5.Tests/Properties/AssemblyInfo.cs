@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm")]
 [assembly: AssemblyProduct("C5")]
-[assembly: AssemblyCopyright("Copyright © Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm 2003-2015")]
+[assembly: AssemblyCopyright("Copyright © Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm 2003-2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("2.4.*")]
