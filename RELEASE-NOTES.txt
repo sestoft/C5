@@ -1,11 +1,15 @@
 RELEASE NOTES FOR C5 GENERIC COLLECTION LIBRARY FOR C#/CLI
 ------------------------------
 
+Release C5.2.4.5891 of 2016-02-17
+
+ * Memory safe enumerators for mobile development courtesy of nbasakuragi
+
 Release 2.4.5828 of 2015-12-15
 
  * KeyValuePair Serializable
- * KeyValuePair.Create using type inference.
- * Added .NET 4.5 version: IIndexed<T> implements IReadOnlyList<T>.
+ * KeyValuePair.Create using type inference
+ * Added .NET 4.5 version: IIndexed<T> implements IReadOnlyList<T>
  * Fixed typos.
 
 Release 2.4 of 2015-12-15
