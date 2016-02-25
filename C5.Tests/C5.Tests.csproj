@@ -53,6 +53,7 @@
     <Compile Include="BasesTest.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="hashing\HashDictionaryTests2.cs" />
     <Compile Include="InterfacesTest.cs" />
     <Compile Include="KeyValuePairTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
