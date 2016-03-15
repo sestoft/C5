@@ -47,7 +47,7 @@ namespace C5
         public HashDictionary(SCG.IEqualityComparer<K> keyequalityComparer, MemoryType memoryType = MemoryType.Normal)
             : base(keyequalityComparer, memoryType)
         {
-            pairs = new HashSet<KeyValuePair<K, V>>(new KeyValuePairEqualityComparer<K, V>(keyequalityComparer));
+            pairs = new HashSet<KeyValuePair<K, V>>(new KeyValuePairEqualityComparer<K, V>(keyequalityComparer), memoryType);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace C5
         public HashDictionary(int capacity, double fill, SCG.IEqualityComparer<K> keyequalityComparer, MemoryType memoryType = MemoryType.Normal)
             : base(keyequalityComparer, memoryType)
         {
-            pairs = new HashSet<KeyValuePair<K, V>>(capacity, fill, new KeyValuePairEqualityComparer<K, V>(keyequalityComparer));
+            pairs = new HashSet<KeyValuePair<K, V>>(capacity, fill, new KeyValuePairEqualityComparer<K, V>(keyequalityComparer), memoryType);
         }
     }
 }

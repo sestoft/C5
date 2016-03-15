@@ -325,9 +325,10 @@ namespace C5
             if (keyequalityComparer == null)
                 throw new NullReferenceException("Key equality comparer cannot be null");
             this.keyequalityComparer = keyequalityComparer;
-            _keyCollection = new KeysCollection(pairs);
-            _valueCollection = new ValuesCollection(pairs);
             MemoryType = memoryType;
+
+            _keyCollection = new KeysCollection(pairs, memoryType);
+            _valueCollection = new ValuesCollection(pairs, memoryType);
         }
 
         #region IDictionary<K,V> Members
@@ -575,51 +576,53 @@ namespace C5
         [Serializable]
         internal class ValuesCollection : CollectionValueBase<V>, ICollectionValue<V>
         {
-            ICollection<KeyValuePair<K, V>> _pairs;
+            private ICollection<KeyValuePair<K, V>> _pairs;
+            private readonly ValueEnumerator _valueEnumerator;
 
 
-            internal ValuesCollection(ICollection<KeyValuePair<K, V>> pairs)
+            internal ValuesCollection(ICollection<KeyValuePair<K, V>> keyValuePairs, MemoryType memoryType)
             {
-                _pairs = pairs;
-                _internalEnumerator = new ValueEnumerator(pairs, MemoryType);
+                _pairs = keyValuePairs;
+                _valueEnumerator = new ValueEnumerator(keyValuePairs, memoryType);
             }
 
-            private readonly ValueEnumerator _internalEnumerator;
 
             #region Private Enumerator
 
             [Serializable]
             private class ValueEnumerator : MemorySafeEnumerator<V>
             {
-                private ICollection<KeyValuePair<K, V>> _internalList;
+                private ICollection<KeyValuePair<K, V>> _keyValuePairs;
 
-                private SCG.IEnumerator<KeyValuePair<K, V>> _internalEnumerator;
+                private SCG.IEnumerator<KeyValuePair<K, V>> _keyValuePairEnumerator;
                  
-                public ValueEnumerator(ICollection<KeyValuePair<K, V>> list, MemoryType memoryType)
+                public ValueEnumerator(ICollection<KeyValuePair<K, V>> keyValuePairs, MemoryType memoryType)
                     : base(memoryType)
                 {
-                    _internalList = list;
+                    _keyValuePairs = keyValuePairs;
                 }
 
-                internal void UpdateReference(ICollection<KeyValuePair<K, V>> list)
+                internal void UpdateReference(ICollection<KeyValuePair<K, V>> keyValuePairs)
                 {
-                    _internalList = list;
+                    _keyValuePairs = keyValuePairs;
                     Current = default(V);
                 }
                  
                 public override bool MoveNext()
                 {
-                    ICollection<KeyValuePair<K, V>> list = _internalList;
+                    ICollection<KeyValuePair<K, V>> list = _keyValuePairs;
 
-                    if (_internalEnumerator == null)
-                        _internalEnumerator = list.GetEnumerator();
+                    if (_keyValuePairEnumerator == null)
+                        _keyValuePairEnumerator = list.GetEnumerator();
 
-                    if (_internalEnumerator.MoveNext())
+                    if (_keyValuePairEnumerator.MoveNext())
                     {
-                        Current = _internalEnumerator.Current.Value;
+                        var curr = _keyValuePairEnumerator.Current;
+                        Current = curr.Value;
                         return true;
                     }
 
+                    _keyValuePairEnumerator.Dispose();
                     Current = default(V);
                     return false;
                 }
@@ -630,7 +633,7 @@ namespace C5
                 }
                 protected override MemorySafeEnumerator<V> Clone()
                 {
-                    var enumerator = new ValueEnumerator(_internalList, MemoryType)
+                    var enumerator = new ValueEnumerator(_keyValuePairs, MemoryType)
                     {
                         Current = default(V)
                     };
@@ -649,8 +652,9 @@ namespace C5
             public override SCG.IEnumerator<V> GetEnumerator()
             {
                 //Updatecheck is performed by the pairs enumerator
-                _internalEnumerator.UpdateReference(_pairs);
-                return _internalEnumerator;
+                var enumerator =(ValueEnumerator) _valueEnumerator.GetEnumerator();
+                enumerator.UpdateReference(_pairs);
+                return enumerator;
             }
 
             public override bool IsEmpty { get { return _pairs.IsEmpty; } }
@@ -670,7 +674,7 @@ namespace C5
         {
             ICollection<KeyValuePair<K, V>> _pairs;
 
-            private readonly KeyEnumerator _internalEnumerator;
+            private readonly KeyEnumerator _keyEnumerator;
 
             #region Private Enumerator
 
@@ -679,7 +683,7 @@ namespace C5
             {
                 private ICollection<KeyValuePair<K, V>> _internalList;
 
-                private SCG.IEnumerator<KeyValuePair<K, V>> _internalEnumerator;
+                private SCG.IEnumerator<KeyValuePair<K, V>> _keyValuePairEnumerator;
                  
                 public KeyEnumerator(ICollection<KeyValuePair<K, V>> list, MemoryType memoryType)
                     : base(memoryType)
@@ -698,15 +702,17 @@ namespace C5
                 {
                     ICollection<KeyValuePair<K, V>> list = _internalList;
 
-                    if (_internalEnumerator == null)
-                        _internalEnumerator = list.GetEnumerator();
+                    if (_keyValuePairEnumerator == null)
+                        _keyValuePairEnumerator = list.GetEnumerator();
 
-                    if (_internalEnumerator.MoveNext())
+                    if (_keyValuePairEnumerator.MoveNext())
                     {
-                        Current = _internalEnumerator.Current.Key;
+                        Current = _keyValuePairEnumerator.Current.Key;
                         return true;
                     }
-                     
+
+                    _keyValuePairEnumerator.Dispose();
+
                     Current = default(K);
                     return false;
                 }
@@ -728,11 +734,11 @@ namespace C5
 
             #endregion
 
-            internal KeysCollection(ICollection<KeyValuePair<K, V>> pairs)
+            internal KeysCollection(ICollection<KeyValuePair<K, V>> pairs, MemoryType memoryType)
             {
                 _pairs = pairs;
 
-                _internalEnumerator = new KeyEnumerator(pairs, MemoryType);
+                _keyEnumerator = new KeyEnumerator(pairs, memoryType);
             }
 
             public void Update(ICollection<KeyValuePair<K, V>> pairs)
@@ -747,8 +753,9 @@ namespace C5
 
             public override SCG.IEnumerator<K> GetEnumerator()
             {
-                _internalEnumerator.UpdateReference(_pairs);
-                return _internalEnumerator;
+                var enumerator = (KeyEnumerator) _keyEnumerator.GetEnumerator();
+                enumerator.UpdateReference(_pairs);
+                return enumerator;
             }
 
             public override bool IsEmpty { get { return _pairs.IsEmpty; } }

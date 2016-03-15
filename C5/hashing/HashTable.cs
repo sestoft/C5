@@ -97,7 +97,7 @@ namespace C5
 
         private static readonly Random Random = new Random();
 
-        private readonly HashEnumerator _internalEnumerator;
+        private readonly HashEnumerator _hashEnumerator;
         uint _randomhashfactor;
 
         #endregion
@@ -361,7 +361,7 @@ namespace C5
             origbits = 4;
             while (capacity - 1 >> origbits > 0) origbits++;
             clear();
-            _internalEnumerator = new HashEnumerator();
+            _hashEnumerator = new HashEnumerator(memoryType);
         }
 
 
@@ -638,23 +638,17 @@ namespace C5
         #region Enumerator
 
         [Serializable]
-        private class HashEnumerator : SCG.IEnumerator<T>, SCG.IEnumerable<T>
+        private class HashEnumerator : MemorySafeEnumerator<T>
         {
             private HashSet<T> _hashSet;
             private int _stamp;
             private int _index;
             Bucket b;
-
-            private static int mainThreadId;
-            // If called in the non main thread, will return false;
-            private static bool IsMainThread
+             
+            
+            public HashEnumerator(MemoryType memoryType) : base(memoryType)
             {
-                get { return System.Threading.Thread.CurrentThread.ManagedThreadId == mainThreadId; }
-            }
 
-            public HashEnumerator()
-            {
-                mainThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
                 _index = -1;
                 Current = default(T);
             }
@@ -668,77 +662,55 @@ namespace C5
             }
 
 
-            public void Dispose()
+            public override void Dispose()
             {
+                base.Dispose();
+
                 //Do nothing
                 _index = -1;
                 b = null;
             }
             
+            protected override MemorySafeEnumerator<T> Clone()
+            {
+                var enumerator = new HashEnumerator(MemoryType)
+                {
+                    Current = default(T),
+                    _hashSet = _hashSet,
+                };
 
-            public bool MoveNext()
+                return enumerator;
+            }
+
+            public override bool MoveNext()
             {
                 int len = _hashSet.table.Length;
 
                 if (_stamp != _hashSet.stamp)
                     throw new CollectionModifiedException();
                 //if (_index == len) return false;
-              
+
                 if (b == null || b.overflow == null)
                 {
                     do
                     {
-                        if (++_index < len) continue; 
+                        if (++_index < len) continue;
                         return false;
                     } while (_hashSet.table[_index] == null);
 
                     b = _hashSet.table[_index];
                     Current = b.item;
-                
+
                     return true;
-                } 
+                }
                 b = b.overflow;
                 Current = b.item;
                 return true;
             }
 
-            public void Reset()
+            public override void Reset()
             {
-                Current = default(T);
-                _index = -1;
-                b = null;
-            }
-
-            /// <summary>
-            /// 
-            /// </summary>
-            public T Current { get; private set; }
-
-            object System.Collections.IEnumerator.Current
-            {
-                get { return Current; }
-            }
-
-            private HashEnumerator Clone()
-            {
-                var enumerator = new HashEnumerator()
-                {
-                    Current = default(T),
-                };
-                enumerator._hashSet = _hashSet;
-
-                return enumerator;
-            }
-
-            public SCG.IEnumerator<T> GetEnumerator()
-            {
-                var enumerator = !IsMainThread ? Clone() : this;
-                return enumerator;
-            }
-
-            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-            {
-                return GetEnumerator();
+                throw new NotImplementedException(); 
             }
         }
         #endregion
@@ -768,7 +740,7 @@ namespace C5
         /// <returns>The enumerator</returns>
         public override SCG.IEnumerator<T> GetEnumerator()
         {
-            var enumerator = (HashEnumerator)_internalEnumerator.GetEnumerator();
+            var enumerator = (HashEnumerator)_hashEnumerator.GetEnumerator();
 
             enumerator.UpdateReference(this, stamp);
 
