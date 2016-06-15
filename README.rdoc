@@ -87,10 +87,14 @@ C5 now supports a new memory model, designed specifically to reduce garbage coll
 
 1. Get C5 from {NuGet}[https://www.nuget.org/packages/C5]: <tt>PM> Install-Package C5</tt>
 
-2. Documentation is available online at {c5docs.azurewebsites.net}[https://c5docs.azurewebsites.net/].
-   Documentation was built using Doxygen {www.doxygen.org}[http://www.doxygen.org/] and the
+2. Online documentation is at {c5docs.azurewebsites.net}[https://c5docs.azurewebsites.net/].
+   It was built using Doxygen {www.doxygen.org}[http://www.doxygen.org/] and the
    <tt>Doxyfile</tt> file.
- 
+
+   There is also a {comprehensive manual in PDF}[http://www.itu.dk/research/c5/latest/ITU-TR-2006-76.pdf],
+   presenting asymptotic runtime complexity, numerous examples and usage patterns, design decisions and implementation considerations.
+   It was last updated in 2008 and so is outdated in places.
+
 3. Building the unit test project requires NUnit. If you have NuGet installed it 
    should automatically add the reference.
    
