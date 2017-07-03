@@ -17,7 +17,7 @@ namespace C5
 
         protected static bool IsMainThread
         {
-#if NETSTANDARD1_0
+#if NETSTANDARD1_0 || PROFILE259
             get { return Environment.CurrentManagedThreadId == MainThreadId; }
 #else
             get { return Thread.CurrentThread.ManagedThreadId == MainThreadId; }
@@ -27,7 +27,7 @@ namespace C5
         protected MemorySafeEnumerator(MemoryType memoryType)
         {
             MemoryType = memoryType;
-#if NETSTANDARD1_0
+#if NETSTANDARD1_0 || PROFILE259
             MainThreadId = Environment.CurrentManagedThreadId;
 #else
             MainThreadId = Thread.CurrentThread.ManagedThreadId;
