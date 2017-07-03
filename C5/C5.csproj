@@ -4,7 +4,6 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>C5.snk</AssemblyOriginatorKeyFile>
-    <Version>3.0-beta</Version>
 
     <copyright>Copyright © Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm 2003-2016</copyright>
     <Company>Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm</Company>
