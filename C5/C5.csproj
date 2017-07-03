@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>portable-net4+sl50+win8+wpa81+wp8;net35;net40;net45;netstandard1.0</TargetFrameworks>
+    <TargetFrameworks>portable-net40+sl50+win8+wpa81+wp8;net35;net40;net45;netstandard1.0</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>C5.snk</AssemblyOriginatorKeyFile>
@@ -18,7 +18,7 @@
     <PackageReleaseNotes>Support for Universal Windows Platform</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.0.0" PrivateAssets="all" />
+    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.0.4" PrivateAssets="all" />
   </ItemGroup>
   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>
