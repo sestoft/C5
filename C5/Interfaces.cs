@@ -549,6 +549,11 @@ namespace C5
     public interface IIndexed<T> : ISequenced<T>, IReadOnlyList<T>
     {
         /// <summary>
+        /// Gets the number of elements in the collection.
+        /// </summary>
+        new int Count { get; }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <value></value>
@@ -1454,11 +1459,6 @@ namespace C5
     /// </summary>
     public interface IIndexedSorted<T> : ISorted<T>, IIndexed<T>
     {
-        /// <summary>
-        /// Gets the number of elements in the collection.
-        /// </summary>
-        int Count { get; }
-
         /// <summary>
         /// Determine the number of items at or above a supplied threshold.
         /// </summary>
