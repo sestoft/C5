@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-#if NET35 || PROFILE328
+#if NET35 || NET40 || PROFILE328
 
 namespace C5
 {

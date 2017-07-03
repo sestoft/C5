@@ -9,7 +9,7 @@ namespace C5
 #if NETSTANDARD1_0 || PROFILE259
         internal static Type[] GetGenericArguments(this TypeInfo typeInfo) => typeInfo.GenericTypeArguments;
         internal static IEnumerable<Type> GetInterfaces(this TypeInfo typeInfo) => typeInfo.ImplementedInterfaces;
-#else
+#elif !NET45
         internal static Type GetTypeInfo(this Type type) => type;
 #endif
     }
