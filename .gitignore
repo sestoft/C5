@@ -47,7 +47,6 @@ docs/
 *.nupkg
 packages/
 
-
 # Build results
 
 [Dd]ebug/
@@ -84,6 +83,9 @@ build/
 *.pidb
 *.log
 *.scc
+
+# NUnit results
+TestResult.xml
 
 # Visual C++ cache files
 ipch/

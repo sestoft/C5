@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net40</TargetFramework>
+    <TargetFrameworks>net40;net45</TargetFrameworks>
 
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>C5.snk</AssemblyOriginatorKeyFile>
