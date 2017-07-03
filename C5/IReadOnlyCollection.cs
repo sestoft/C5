@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 #if NET35 || NET40 || PROFILE328
 
-namespace C5
+namespace System.Collections.Generic
 {
     /// <summary>
     /// Represents a strongly-typed, read-only collection of elements.
@@ -16,13 +17,15 @@ namespace C5
     public interface IReadOnlyCollection<out T> : IEnumerable<T>, IEnumerable
 #endif
     {
-#if NET35
         /// <summary>
         /// Gets the number of elements in the collection.
         /// </summary>
         int Count { get; }
-#endif
     }
 }
+
+#else
+
+[assembly: TypeForwardedTo(typeof(IReadOnlyCollection<>))]
 
 #endif

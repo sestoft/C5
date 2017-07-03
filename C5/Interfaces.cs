@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2016 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
+ Copyright (c) 2003-2016 Niels Kokholm, Peter Sestoft, and Rasmus Lystrï¿½m
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -1454,6 +1454,11 @@ namespace C5
     /// </summary>
     public interface IIndexedSorted<T> : ISorted<T>, IIndexed<T>
     {
+        /// <summary>
+        /// Gets the number of elements in the collection.
+        /// </summary>
+        int Count { get; }
+
         /// <summary>
         /// Determine the number of items at or above a supplied threshold.
         /// </summary>

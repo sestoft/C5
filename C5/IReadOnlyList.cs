@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 #if NET35 || NET40 || PROFILE328
 
-namespace C5
+namespace System.Collections.Generic
 {
     /// <summary>
     /// Represents a read-only collection of elements that can be accessed by index.
@@ -24,5 +25,9 @@ namespace C5
         T this[int index] { get; }
     }
 }
+
+#else
+
+[assembly: TypeForwardedTo(typeof(IReadOnlyList<>))]
 
 #endif
