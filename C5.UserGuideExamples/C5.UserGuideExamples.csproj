@@ -1,47 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B2A29FF2-A5C5-4F07-8CE7-FF5D744D7562}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>C5.UserGuideExamples</RootNamespace>
-    <AssemblyName>C5.UserGuideExamples</AssemblyName>
-    <WarningLevel>4</WarningLevel>
-    <StartupObject>
-    </StartupObject>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\C5\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>.\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DocumentationFile>
-    </DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugSymbols>false</DebugSymbols>
-    <Optimize>true</Optimize>
-    <OutputPath>.\bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup>
+    <TargetFramework>net40</TargetFramework>
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="**\*.cs" />
     <Compile Include="AnagramHashBag.cs" />
     <Compile Include="Anagrams.cs" />
     <Compile Include="AnagramStrings.cs" />
@@ -67,7 +30,6 @@
     <Compile Include="MultiCollection.cs" />
     <Compile Include="MultiDictionary.cs" />
     <Compile Include="PointLocation.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomSelection.cs" />
     <Compile Include="ReadOnlyPatterns.cs" />
     <Compile Include="Sets.cs" />
@@ -82,21 +44,16 @@
     <Compile Include="WrappedArray.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GCHForm.resx">
+    <EmbeddedResource Update="GCHForm.resx">
       <DependentUpon>GCHForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\C5\C5.csproj">
-      <Project>{D02E0664-C56C-4C3F-98E5-C8EC881A8439}</Project>
-      <Name>C5</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\C5\C5.csproj" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
 </Project>
