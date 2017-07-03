@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
+#if NET35 || PROFILE328
+
 namespace C5
 {
     /// <summary>
@@ -22,3 +24,5 @@ namespace C5
 #endif
     }
 }
+
+#endif
