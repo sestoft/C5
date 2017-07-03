@@ -20,10 +20,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{D9E9280C
 		RELEASE-NOTES.txt = RELEASE-NOTES.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C5.NETStandard", "C5.NETStandard\C5.NETStandard.csproj", "{72391A11-FE24-4D9B-8144-0E20D8A068A0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C5.NETCore", "C5.NETCore\C5.NETCore.csproj", "{4B2C27D0-F479-4A15-A74A-1FF9223C4078}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

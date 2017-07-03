@@ -27,11 +27,11 @@ namespace C5
         /// <item>If the actual generic argument T implements the generic interface
         /// <see cref="T:C5.ISequenced`1"/> for some value W of its generic parameter T,
         /// the equalityComparer will be <see cref="T:C5.SequencedCollectionEqualityComparer`2"/></item>
-        /// <item>If the actual generic argument T implements 
+        /// <item>If the actual generic argument T implements
         /// <see cref="T:C5.ICollection`1"/> for some value W of its generic parameter T,
         /// the equalityComparer will be <see cref="T:C5.UnsequencedCollectionEqualityComparer`2"/></item>
         /// <item>Otherwise the SCG.EqualityComparer&lt;T&gt;.Default is returned</item>
-        /// </list>   
+        /// </list>
         /// </summary>
         /// <value>The comparer</value>
         public static SCG.IEqualityComparer<T> Default
@@ -44,28 +44,28 @@ namespace C5
                 }
 
                 var type = typeof(T);
-                var interfaces = type.GetInterfaces();
+                var interfaces = type.GetTypeInfo().GetInterfaces();
 
-                if (type.IsGenericType && type.GetGenericTypeDefinition().Equals(typeof(ISequenced<>)))
+                if (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition().Equals(typeof(ISequenced<>)))
                 {
-                    return CreateAndCache(SequencedCollectionEqualityComparer.MakeGenericType(new[] { type, type.GetGenericArguments()[0] }));
+                    return CreateAndCache(SequencedCollectionEqualityComparer.MakeGenericType(new[] { type, type.GetTypeInfo().GetGenericArguments()[0] }));
                 }
 
-                var isequenced = interfaces.FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition().Equals(typeof(ISequenced<>)));
+                var isequenced = interfaces.FirstOrDefault(i => i.GetTypeInfo().IsGenericType && i.GetGenericTypeDefinition().Equals(typeof(ISequenced<>)));
                 if (isequenced != null)
                 {
-                    return CreateAndCache(SequencedCollectionEqualityComparer.MakeGenericType(new[] { type, isequenced.GetGenericArguments()[0] }));
+                    return CreateAndCache(SequencedCollectionEqualityComparer.MakeGenericType(new[] { type, isequenced.GetTypeInfo().GetGenericArguments()[0] }));
                 }
 
-                if (type.IsGenericType && type.GetGenericTypeDefinition().Equals(typeof(ICollection<>)))
+                if (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition().Equals(typeof(ICollection<>)))
                 {
-                    return CreateAndCache(UnsequencedCollectionEqualityComparer.MakeGenericType(new[] { type, type.GetGenericArguments()[0] }));
+                    return CreateAndCache(UnsequencedCollectionEqualityComparer.MakeGenericType(new[] { type, type.GetTypeInfo().GetGenericArguments()[0] }));
                 }
 
-                var icollection = interfaces.FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition().Equals(typeof(ICollection<>)));
+                var icollection = interfaces.FirstOrDefault(i => i.GetTypeInfo().IsGenericType && i.GetGenericTypeDefinition().Equals(typeof(ICollection<>)));
                 if (icollection != null)
                 {
-                    return CreateAndCache(UnsequencedCollectionEqualityComparer.MakeGenericType(new[] { type, icollection.GetGenericArguments()[0] }));
+                    return CreateAndCache(UnsequencedCollectionEqualityComparer.MakeGenericType(new[] { type, icollection.GetTypeInfo().GetGenericArguments()[0] }));
                 }
 
                 return _default = SCG.EqualityComparer<T>.Default;
@@ -74,7 +74,7 @@ namespace C5
 
         private static SCG.IEqualityComparer<T> CreateAndCache(Type equalityComparertype)
         {
-            return _default = (SCG.IEqualityComparer<T>)(equalityComparertype.GetProperty("Default", BindingFlags.Static | BindingFlags.Public).GetValue(null, null));
+            return _default = (SCG.IEqualityComparer<T>)(equalityComparertype.GetTypeInfo().GetProperty("Default", BindingFlags.Static | BindingFlags.Public).GetValue(null, null));
         }
     }
 }
