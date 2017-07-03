@@ -1,6 +1,6 @@
 using System;
 
-#if !NETSTANDARD1_6 && !NET45
+#if !NETSTANDARD1_5 && !NET45
 
 namespace C5
 {
