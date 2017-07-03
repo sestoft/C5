@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net40</TargetFramework>
     <SignAssembly>false</SignAssembly>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="**\*.cs" />
