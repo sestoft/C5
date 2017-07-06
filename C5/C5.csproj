@@ -1,112 +1,23 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D02E0664-C56C-4C3F-98E5-C8EC881A8439}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>C5</RootNamespace>
-    <AssemblyName>C5</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile Condition="'$(PCL)' != 'false'">Profile136</TargetFrameworkProfile>
-    <TargetFrameworkProfile>Profile136</TargetFrameworkProfile>
-    <TargetFrameworkProfile>Profile328</TargetFrameworkProfile>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\C5\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
-    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>4.0</OldToolsVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\C5.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\C5.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup>
+    <TargetFrameworks>portable-net40+sl50+win8+wpa81+wp8;portable-net45+win8+wpa81+wp8;net35;net40;net45;netstandard1.0</TargetFrameworks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
     <AssemblyOriginatorKeyFile>C5.snk</AssemblyOriginatorKeyFile>
+    <Version>3.0-beta</Version>
+
+    <copyright>Copyright © Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm 2003-2016</copyright>
+    <Company>Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm</Company>
+    <Description>The C5 Generic Collection Library for C# and CLI is a comprehensive collection library supporting lists, sets, bags, dictionaries, priority queues, (FIFO) queues, and (LIFO) stacks. C5 runs on .NET 3.5+, Silverlight 5, Windows Phone 8, Xamarin.iOS, Xamarin.Android, and Mono.</Description>
+    <PackageTags>Generics Collections Heap TreeSet PriorityQueue</PackageTags>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageIconUrl>https://github.com/sestoft/C5/raw/master/images/icon-nuget.png</PackageIconUrl>
+    <PackageProjectUrl>http://www.itu.dk/research/c5/</PackageProjectUrl>
+    <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageReleaseNotes>New support for .NET Standard 1.0 and Profile259</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Xml" />
+    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.0.3" PrivateAssets="all" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="arrays\ArrayList.cs" />
-    <Compile Include="arrays\CircularQueue.cs" />
-    <Compile Include="arrays\HashedArrayList.cs" />
-    <Compile Include="arrays\SortedArray.cs" />
-    <Compile Include="EnumerableBase.cs" />
-    <Compile Include="MemorySafeEnumerator.cs" />
-    <Compile Include="comparers\EqualityComparer.cs" />
-    <Compile Include="IReadOnlyCollection.cs" />
-    <Compile Include="IReadOnlyList.cs" />
-    <Compile Include="SerializableAttribute.cs" />
-    <Compile Include="Collections.cs" />
-    <Compile Include="comparers\InternalComparer.cs" />
-    <Compile Include="comparers\ComparerFactory.cs" />
-    <Compile Include="comparers\InternalEqualityComparer.cs" />
-    <Compile Include="Debug.cs" />
-    <Compile Include="Dictionaries.cs" />
-    <Compile Include="Enums.cs" />
-    <Compile Include="Events.cs" />
-    <Compile Include="Exceptions.cs" />
-    <Compile Include="Formatting.cs" />
-    <Compile Include="Hashers.cs" />
-    <Compile Include="hashing\HashBag.cs" />
-    <Compile Include="hashing\HashDictionary.cs" />
-    <Compile Include="hashing\HashTable.cs" />
-    <Compile Include="heaps\IntervalHeap.cs" />
-    <Compile Include="Interfaces.cs" />
-    <Compile Include="linkedlists\HashedLinkedList.cs" />
-    <Compile Include="linkedlists\LinkedList.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="MappedEnumerators.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Random.cs" />
-    <Compile Include="Records.cs" />
-    <Compile Include="Sorting.cs" />
-    <Compile Include="trees\RedBlackTreeBag.cs" />
-    <Compile Include="trees\RedBlackTreeDictionary.cs" />
-    <Compile Include="trees\RedBlackTreeSet.cs" />
-    <Compile Include="ViewSupport.cs" />
-    <Compile Include="WrappedArray.cs" />
-    <Compile Include="Wrappers.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="C5.snk" />
-  </ItemGroup>
-  <Import Condition="'$(PCL)' != 'false'" Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <Import Condition="'$(PCL)' == 'false'" Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>

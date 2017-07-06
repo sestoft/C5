@@ -10,21 +10,29 @@ namespace C5
     {
         private static int MainThreadId;
 
-        //-1 means an iterator is not in use. 
+        //-1 means an iterator is not in use.
         protected int IteratorState;
 
         protected MemoryType MemoryType { get; private set; }
-       
+
         protected static bool IsMainThread
         {
+#if NETSTANDARD1_0 || PROFILE259
+            get { return Environment.CurrentManagedThreadId == MainThreadId; }
+#else
             get { return Thread.CurrentThread.ManagedThreadId == MainThreadId; }
+#endif
         }
 
         protected MemorySafeEnumerator(MemoryType memoryType)
         {
-             MemoryType = memoryType;
-             MainThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
-             IteratorState = -1;
+            MemoryType = memoryType;
+#if NETSTANDARD1_0 || PROFILE259
+            MainThreadId = Environment.CurrentManagedThreadId;
+#else
+            MainThreadId = Thread.CurrentThread.ManagedThreadId;
+#endif
+            IteratorState = -1;
         }
 
         protected abstract MemorySafeEnumerator<T> Clone();
@@ -84,7 +92,7 @@ namespace C5
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-           
+
 
             return enumerator;
         }

@@ -1,161 +1,21 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
-    <ProductVersion>9.0.21022</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{08CBFDEB-A2E2-4F0E-A4E1-B996B05569DE}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <StartupObject>
-    </StartupObject>
-    <RootNamespace>C5.Tests</RootNamespace>
-    <NoStandardLibraries>false</NoStandardLibraries>
-    <AssemblyName>C5.Tests</AssemblyName>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\C5\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <DebugSymbols>true</DebugSymbols>
-    <Optimize>false</Optimize>
-    <OutputPath>.\bin\Debug\</OutputPath>
-    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <WarningLevel>4</WarningLevel>
-    <IncrementalBuild>false</IncrementalBuild>
-    <DocumentationFile>
-    </DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DebugSymbols>false</DebugSymbols>
-    <Optimize>true</Optimize>
-    <OutputPath>.\bin\Release\</OutputPath>
-    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
-    <DefineConstants>TRACE</DefineConstants>
-    <WarningLevel>4</WarningLevel>
-    <IncrementalBuild>false</IncrementalBuild>
-  </PropertyGroup>
-  <PropertyGroup>
+    <TargetFrameworks>net40;net45</TargetFrameworks>
+
     <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
     <AssemblyOriginatorKeyFile>C5.snk</AssemblyOriginatorKeyFile>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="arrays\CircularQueueTest.cs" />
-    <Compile Include="BasesTest.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="hashing\HashDictionaryTests2.cs" />
-    <Compile Include="hashing\TreeDictionaryTests.cs" />
-    <Compile Include="InterfacesTest.cs" />
-    <Compile Include="KeyValuePairTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Records.cs" />
-    <Compile Include="Sorting.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="SupportClasses.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="arrays\ArrayListTest.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="arrays\HashedArrayListTest.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="arrays\SortedArrayTests.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="hashing\HashBagTests.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="hashing\HashDictionaryTests.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="hashing\HashTableTests.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="heaps\HeapTests.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="linkedlists\HashedLinkedListTest.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="linkedlists\LinkedListTest.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="templates\Clone.cs" />
-    <Compile Include="templates\Events.cs" />
-    <Compile Include="templates\GenericCollectionTester.cs" />
-    <Compile Include="templates\List.cs" />
-    <Compile Include="trees\Bag.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="trees\Dictionary.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="trees\RedBlackTreeSetTests.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WrappersTest.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <AppDesigner Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit3TestAdapter.3.0.8-ctp-8\lib\Mono.Cecil.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="nunit.engine, Version=3.0.5813.39036, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit3TestAdapter.3.0.8-ctp-8\lib\nunit.engine.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="nunit.engine.api, Version=3.0.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit3TestAdapter.3.0.8-ctp-8\lib\nunit.engine.api.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="nunit.framework, Version=3.0.5813.39032, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.3.0.1\lib\net40\nunit.framework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="NUnit3.TestAdapter, Version=3.0.8.0, Culture=neutral, PublicKeyToken=4cb40d35494691ac, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit3TestAdapter.3.0.8-ctp-8\lib\NUnit3.TestAdapter.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="C5.snk" />
-    <None Include="packages.config" />
+    <PackageReference Include="NUnit" version="3.0.1" />
+    <PackageReference Include="NUnit.Console" version="3.0.1" />
+    <PackageReference Include="NUnit.Runners" version="3.0.1" />
+    <PackageReference Include="NUnit3TestAdapter" version="3.0.8-ctp-8" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\C5\C5.csproj">
-      <Project>{d02e0664-c56c-4c3f-98e5-c8ec881a8439}</Project>
-      <Project>{b63037be-9d34-4b4d-91b2-8b2e215cb571}</Project>
-      <Name>C5</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\C5\C5.csproj" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
-  <ProjectExtensions>
-    <VisualStudio>
-    </VisualStudio>
-  </ProjectExtensions>
 </Project>

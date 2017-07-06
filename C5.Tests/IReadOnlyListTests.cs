@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace C5.NET45.Tests
 {
+#if NET45
     [TestFixture]
     public class IReadOnlyListTests
     {
@@ -15,4 +16,5 @@ namespace C5.NET45.Tests
             Assert.AreEqual(2, list[2]);
         }
     }
+#endif
 }
