@@ -1139,7 +1139,7 @@ namespace C5
         /// </summary>
         protected virtual void expand()
         {
-            expand(2 * array.Length, size);
+            expand(checked(2 * array.Length), size);
         }
 
 
@@ -1155,7 +1155,8 @@ namespace C5
 
             int newlength = array.Length;
 
-            while (newlength < newcapacity) newlength *= 2;
+            while (newlength < newcapacity)
+                newlength = checked(newlength * 2);
 
             T[] newarray = new T[newlength];
 
