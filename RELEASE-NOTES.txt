@@ -1,6 +1,10 @@
 RELEASE NOTES FOR C5 GENERIC COLLECTION LIBRARY FOR C#/CLI
 ------------------------------
 
+Release C5.2.5 of 2017-07-07
+
+ * Support for .NET Standard and .NET Core thanks to Andrew Arnott (https://github.com/AArnott)
+
 Release C5.2.4.5891 of 2016-02-17
 
  * Memory safe enumerators for mobile development courtesy of nbasakuragi

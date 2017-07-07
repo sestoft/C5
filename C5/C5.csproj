@@ -4,20 +4,20 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>C5.snk</AssemblyOriginatorKeyFile>
-    <Version>3.0-beta</Version>
-
-    <copyright>Copyright © Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm 2003-2016</copyright>
+    <Version>2.5</Version>
+    <Copyright>Copyright © Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm 2003-2017</Copyright>
     <Company>Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm</Company>
     <Description>The C5 Generic Collection Library for C# and CLI is a comprehensive collection library supporting lists, sets, bags, dictionaries, priority queues, (FIFO) queues, and (LIFO) stacks. C5 runs on .NET 3.5+, Silverlight 5, Windows Phone 8, Xamarin.iOS, Xamarin.Android, and Mono.</Description>
     <PackageTags>Generics Collections Heap TreeSet PriorityQueue</PackageTags>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageIconUrl>https://github.com/sestoft/C5/raw/master/images/icon-nuget.png</PackageIconUrl>
-    <PackageProjectUrl>http://www.itu.dk/research/c5/</PackageProjectUrl>
+    <PackageProjectUrl>https://www.itu.dk/research/c5/</PackageProjectUrl>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
     <PackageReleaseNotes>New support for .NET Standard 1.0 and Profile259</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.0.3" PrivateAssets="all" />
-  </ItemGroup>
   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
+  <ItemGroup>
+    <PackageReference Include="msbuild.sdk.extras" Version="1.0.3" />
+  </ItemGroup>
 </Project>

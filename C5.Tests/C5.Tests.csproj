@@ -7,10 +7,10 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="NUnit" version="3.0.1" />
-    <PackageReference Include="NUnit.Console" version="3.0.1" />
-    <PackageReference Include="NUnit.Runners" version="3.0.1" />
-    <PackageReference Include="NUnit3TestAdapter" version="3.0.8-ctp-8" />
+    <PackageReference Include="NUnit" version="3.7.1" />
+    <PackageReference Include="NUnit.Console" version="3.6.1" />
+    <PackageReference Include="NUnit.Runners" version="3.6.1" />
+    <PackageReference Include="NUnit3TestAdapter" version="3.7.0" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

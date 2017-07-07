@@ -2,7 +2,6 @@
 // See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
 
 using System;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 
 [assembly: CLSCompliant(true)]
