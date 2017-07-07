@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{D9E9280C
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
 		RELEASE-NOTES.txt = RELEASE-NOTES.txt
+		version.json = version.json
 	EndProjectSection
 EndProject
 Global
