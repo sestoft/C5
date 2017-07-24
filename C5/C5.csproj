@@ -19,6 +19,6 @@
   </PropertyGroup>
   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
   <ItemGroup>
-    <PackageReference Include="msbuild.sdk.extras" Version="1.0.3" PrivateAssets="all" />
+    <PackageReference Include="msbuild.sdk.extras" Version="1.0.5" PrivateAssets="all" />
   </ItemGroup>
 </Project>
