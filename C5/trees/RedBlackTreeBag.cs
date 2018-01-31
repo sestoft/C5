@@ -229,6 +229,15 @@ namespace C5
         /// </summary>
         /// <exception cref="NotComparableException">If <code>T</code> is not comparable.
         /// </exception>
+        public TreeBag() : this(SCG.Comparer<T>.Default, EqualityComparer<T>.Default, MemoryType.Normal) { }
+
+        /// <summary>
+        /// Create a red-black tree collection with natural comparer and item equalityComparer.
+        /// We assume that if <code>T</code> is comparable, its default equalityComparer 
+        /// will be compatible with the comparer.
+        /// </summary>
+        /// <exception cref="NotComparableException">If <code>T</code> is not comparable.
+        /// </exception>
 		public TreeBag(MemoryType memoryType = MemoryType.Normal) : this(SCG.Comparer<T>.Default, EqualityComparer<T>.Default, memoryType) { }
 
 

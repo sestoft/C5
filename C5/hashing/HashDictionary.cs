@@ -30,6 +30,14 @@ namespace C5
     [Serializable]
     public class HashDictionary<K, V> : DictionaryBase<K, V>, IDictionary<K, V>
     {
+
+        /// <summary>
+        /// Create a hash dictionary using a default equalityComparer for the keys.
+        /// Initial capacity of internal table will be 16 entries and threshold for 
+        /// expansion is 66% fill.
+        /// </summary>
+        public HashDictionary() : this(EqualityComparer<K>.Default, MemoryType.Normal) { }
+
         /// <summary>
         /// Create a hash dictionary using a default equalityComparer for the keys.
         /// Initial capacity of internal table will be 16 entries and threshold for 

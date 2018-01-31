@@ -102,6 +102,14 @@ namespace C5
         /// </summary>
         /// <exception cref="NotComparableException">If <code>T</code> is not comparable.
         /// </exception>
+        public SortedArray() : this(8, MemoryType.Normal) { }
+
+        /// <summary>
+        /// Create a dynamic sorted array with a natural comparer
+        /// (and item equalityComparer,  assumed compatible)
+        /// </summary>
+        /// <exception cref="NotComparableException">If <code>T</code> is not comparable.
+        /// </exception>
         public SortedArray(MemoryType memoryType = MemoryType.Normal) : this(8, memoryType) { }
 
 

@@ -80,6 +80,10 @@ namespace C5
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// 
+        /// </summary>
+        public CircularQueue() : this(8, MemoryType.Normal) { }
 
         /// <summary>
         /// 

@@ -48,6 +48,11 @@ namespace C5
         /// <summary>
         /// Create a hash bag with the default item equalityComparer.
         /// </summary>
+        public HashBag() : this(EqualityComparer<T>.Default, MemoryType.Normal) { }
+        
+        /// <summary>
+        /// Create a hash bag with the default item equalityComparer.
+        /// </summary>
 		public HashBag(MemoryType memoryType = MemoryType.Normal) : this(EqualityComparer<T>.Default, memoryType) { }
 
         /// <summary>

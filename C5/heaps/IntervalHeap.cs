@@ -205,6 +205,11 @@ namespace C5
         /// <summary>
         /// Create an interval heap with natural item comparer and default initial capacity (16)
         /// </summary>
+        public IntervalHeap() : this(16, MemoryType.Normal) { }
+        
+        /// <summary>
+        /// Create an interval heap with natural item comparer and default initial capacity (16)
+        /// </summary>
 		public IntervalHeap(MemoryType memoryType = MemoryType.Normal) : this(16, memoryType) { }
 
 
