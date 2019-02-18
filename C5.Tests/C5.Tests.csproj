@@ -1,25 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net40;net45</TargetFrameworks>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
 
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>C5.snk</AssemblyOriginatorKeyFile>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="NUnit" version="3.7.1" />
-    <PackageReference Include="NUnit.Console" version="3.6.1" />
-    <PackageReference Include="NUnit.Runners" version="3.6.1" />
-    <PackageReference Include="NUnit3TestAdapter" version="3.7.0" />
+    <PackageReference Include="nunit" Version="3.11.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.11.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
   </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\C5\C5.csproj" />
-    <ProjectReference Include="..\C5\C5.csproj">
-      <Project>{b63037be-9d34-4b4d-91b2-8b2e215cb571}</Project>
-      <Name>C5</Name>
-    </ProjectReference>
   </ItemGroup>
 </Project>

@@ -12,8 +12,7 @@ before_build:
 build_script:
 - msbuild /nologo /m /fl /v:minimal /t:build,pack
 test_script:
-- nunit3-console C5.Tests\bin\%Configuration%\net40\C5.Tests.dll
-- nunit3-console C5.Tests\bin\%Configuration%\net45\C5.Tests.dll
+- nunit3-console C5.Tests\bin\%Configuration%\netcoreapp2.2\C5.Tests.dll
 artifacts:
 - path: C5\bin\%Configuration%\C5.*.nupkg
   name: NuGet Package
