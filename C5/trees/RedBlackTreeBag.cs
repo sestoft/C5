@@ -48,8 +48,10 @@ namespace C5
         //TODO: wonder if we should remove that
         int blackdepth = 0;
 
-        // maintain a unique items counter
-        public int uniqueCount = 0;
+        /// <summary>
+        /// Maintain a unique items counter
+        /// </summary>
+        public int UniqueCount { get; private set; }
 
         //We double these stacks for the iterative add and remove on demand
         //TODO: refactor dirs[] into bool fields on Node (?)
@@ -887,7 +889,7 @@ namespace C5
                 size++;
                 if (!wasFound)
                 {
-                    uniqueCount++;
+                    UniqueCount++;
                     j = item;
                 }
                 return true;
@@ -929,7 +931,7 @@ namespace C5
                 return;
 
             size += c;
-            uniqueCount += _uniqueAdds;
+            UniqueCount += _uniqueAdds;
 
             //TODO: implement a RaiseForAddAll() method
             if (raiseAdded)
@@ -1075,7 +1077,7 @@ namespace C5
             root = TreeBag<T>.maketreer(ref head, blackheight, maxred, red);
             blackdepth = blackheight;
             size = z;
-            uniqueCount = z;
+            UniqueCount = z;
 
             size += ec;
 
@@ -1200,7 +1202,7 @@ namespace C5
             {
                 size++;
                 if (!wasfound)
-                    uniqueCount++;
+                    UniqueCount++;
                 if (ActiveEvents != 0 && !wasfound)
                     raiseForAdd(item);
                 return wasfound;
@@ -1319,7 +1321,7 @@ namespace C5
             {
                 size++;
                 if (!wasfound)
-                    uniqueCount++;
+                    UniqueCount++;
                 if (ActiveEvents != 0)
                     raiseForAdd(wasfound ? olditem : item);
                 return wasfound;
@@ -1449,7 +1451,7 @@ namespace C5
                 return true;
             }
 
-            uniqueCount--;
+            UniqueCount--;
             size -= cursor.items;
 
             //Stage 2: if item's node has no null child, find predecessor
@@ -1770,7 +1772,7 @@ namespace C5
         private void clear()
         {
             size = 0;
-            uniqueCount = 0;
+            UniqueCount = 0;
             root = null;
             blackdepth = 0;
         }
@@ -1863,7 +1865,7 @@ namespace C5
 
             root = t.root;
             size = t.size;
-            uniqueCount = t.uniqueCount;
+            UniqueCount = t.UniqueCount;
             blackdepth = t.blackdepth;
             if (wasRemoved != null)
                 foreach (KeyValuePair<T, int> p in wasRemoved)
@@ -1959,10 +1961,10 @@ namespace C5
                 blackheight++;
             }
 
-            res.root = TreeBag<T>.maketreer(ref head, blackheight, maxred, red);
+            res.root = maketreer(ref head, blackheight, maxred, red);
             res.blackdepth = blackheight;
             res.size = z;
-            res.uniqueCount = z;
+            res.UniqueCount = z;
             res.size += ec;
 
             return res;
@@ -2055,7 +2057,7 @@ namespace C5
             res.root = TreeBag<V>.maketreer(ref head, blackheight, maxred, red);
             res.blackdepth = blackheight;
             res.size = size;
-            res.uniqueCount = uniqueCount;
+            res.UniqueCount = UniqueCount;
             return res;
         }
 
@@ -3443,36 +3445,59 @@ namespace C5
             }
         }
 
+        #region IDisposable Support
+        private bool _disposed = false; // To detect redundant calls
+
+        /// <summary>
+        /// If this tree is a snapshot, remove registration in base tree
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    if (!isValid)
+                        return;
+                    if (isSnapShot)
+                    {
+                        snapList.Dispose();
+                        snapDispose();
+                    }
+                    else
+                    {
+                        if (snapList != null)
+                        {
+                            SnapRef someSnapRef = snapList.Prev;
+                            while (someSnapRef != null)
+                            {
+                                TreeBag<T> lastsnap;
+                                if ((lastsnap = someSnapRef.Tree.Target as TreeBag<T>) != null)
+                                    lastsnap.snapDispose();
+                                someSnapRef = someSnapRef.Prev;
+                            }
+                        }
+                        snapList = null;
+                        Clear();
+                    }
+                }
+
+                _disposed = true;
+            }
+        }
+
         /// <summary>
         /// If this tree is a snapshot, remove registration in base tree
         /// </summary>
         public void Dispose()
         {
-            if (!isValid)
-                return;
-            if (isSnapShot)
-            {
-                snapList.Dispose();
-                snapDispose();
-            }
-            else
-            {
-                if (snapList != null)
-                {
-                    SnapRef someSnapRef = snapList.Prev;
-                    while (someSnapRef != null)
-                    {
-                        TreeBag<T> lastsnap;
-                        if ((lastsnap = someSnapRef.Tree.Target as TreeBag<T>) != null)
-                            lastsnap.snapDispose();
-                        someSnapRef = someSnapRef.Prev;
-                    }
-                }
-                snapList = null;
-                Clear();
-            }
-
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            GC.SuppressFinalize(this);
         }
+        #endregion
 
         private void snapDispose()
         {
@@ -3894,7 +3919,7 @@ namespace C5
             Logger.Log(string.Format(">>>>>>>>>>>>>>>>>>> dump {0} (count={1}, blackdepth={2}, depth={3}, gen={4}, uniqueCount={5})", msg, size, blackdepth,
             0
             ,
- generation, uniqueCount
+ generation, UniqueCount
 ));
             minidump(root, "");
             check(""); Logger.Log("<<<<<<<<<<<<<<<<<<<");
@@ -3911,7 +3936,7 @@ namespace C5
             Logger.Log(string.Format(">>>>>>>>>>>>>>>>>>> dump {0} (count={1}, blackdepth={2}, depth={3}, gen={4}, uniqueCount={5})", msg, size, blackdepth,
             0
             ,
- generation, uniqueCount
+ generation, UniqueCount
 ));
             minidump(root, ""); Logger.Log(err);
             Logger.Log("<<<<<<<<<<<<<<<<<<<");
