@@ -29,21 +29,12 @@ namespace C5UnitTests.support
 {
     namespace bases
     {
-
-        [TestFixture(MemoryType.Normal)]
-        [TestFixture(MemoryType.Strict)]
-        [TestFixture(MemoryType.Safe)]
-        public class ArrayBaseTest : BaseMemoryType
+        [TestFixture]
+        public class ArrayBaseTest
         {
-
-            public ArrayBaseTest(MemoryType memoryType)
-                : base(memoryType)
-            {
-
-            }
             class ABT : ArrayBase<string>
             {
-                public ABT(MemoryType memoryType) : base(8, C5.EqualityComparer<string>.Default, memoryType) { }
+                public ABT() : base(8, C5.EqualityComparer<string>.Default) { }
 
                 public override string Choose() { if (size > 0) return array[0]; throw new NoSuchItemException(); }
 
@@ -57,7 +48,7 @@ namespace C5UnitTests.support
             [Test]
             public void Check()
             {
-                ABT abt = new ABT(MemoryType);
+                ABT abt = new ABT();
 
                 abt.thesize = 3;
                 abt[2] = "aaa";

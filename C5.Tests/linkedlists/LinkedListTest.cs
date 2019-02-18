@@ -29,19 +29,17 @@ namespace C5UnitTests.linkedlists.plain
 {
     using CollectionOfInt = LinkedList<int>;
 
-    [TestFixture(MemoryType.Normal)]
-    [TestFixture(MemoryType.Strict)]
-    [TestFixture(MemoryType.Safe)]
-    public class GenericTesters : BaseMemoryType
+    [TestFixture]
+    public class GenericTesters
     {
 
         [Test]
         public void TestEvents()
         {
-            Func<CollectionOfInt> factory = delegate() { return new CollectionOfInt(TenEqualityComparer.Default); };
-            new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory, MemoryType);
-            new C5UnitTests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory, MemoryType);
-            new C5UnitTests.Templates.Events.StackTester<CollectionOfInt>().Test(factory, MemoryType);
+            Func<CollectionOfInt> factory = delegate () { return new CollectionOfInt(TenEqualityComparer.Default); };
+            new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory);
+            new C5UnitTests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory);
+            new C5UnitTests.Templates.Events.StackTester<CollectionOfInt>().Test(factory);
         }
 
         //[Test]
@@ -58,11 +56,6 @@ namespace C5UnitTests.linkedlists.plain
         {
             C5UnitTests.Templates.List.Dispose.Tester<CollectionOfInt>();
             C5UnitTests.Templates.List.SCG_IList.Tester<CollectionOfInt>();
-        }
-
-        public GenericTesters(MemoryType memoryType)
-            : base(memoryType)
-        {
         }
     }
 
@@ -87,7 +80,7 @@ namespace C5UnitTests.linkedlists.plain
                 list = new LinkedList<int>();
                 always = delegate { return true; };
                 never = delegate { return false; };
-                even = delegate(int i) { return i % 2 == 0; };
+                even = delegate (int i) { return i % 2 == 0; };
             }
 
 
@@ -129,7 +122,7 @@ namespace C5UnitTests.linkedlists.plain
             public void Apply()
             {
                 int sum = 0;
-                Action<int> a = delegate(int i) { sum = i + 10 * sum; };
+                Action<int> a = delegate (int i) { sum = i + 10 * sum; };
 
                 list.Apply(a);
                 Assert.AreEqual(0, sum);
@@ -326,7 +319,7 @@ namespace C5UnitTests.linkedlists.plain
             public void Init()
             {
                 list = new LinkedList<int>(TenEqualityComparer.Default);
-                pred = delegate(int i) { return i % 5 == 0; };
+                pred = delegate (int i) { return i % 5 == 0; };
             }
 
             [TearDown]
@@ -573,7 +566,7 @@ namespace C5UnitTests.linkedlists.plain
             [Test]
             public void FindAll()
             {
-                Func<int, bool> f = delegate(int i) { return i % 2 == 0; };
+                Func<int, bool> f = delegate (int i) { return i % 2 == 0; };
 
                 Assert.IsTrue(list.FindAll(f).IsEmpty);
                 list.Add(5); list.Add(8); list.Add(5); list.Add(10); list.Add(8);
@@ -1244,7 +1237,7 @@ namespace C5UnitTests.linkedlists.plain
             [Test]
             public void Map()
             {
-                Func<int, string> m = delegate(int i) { return "<<" + i + ">>"; };
+                Func<int, string> m = delegate (int i) { return "<<" + i + ">>"; };
                 IList<string> r = lst.Map(m);
 
                 Assert.IsTrue(r.Check());
@@ -1265,7 +1258,7 @@ namespace C5UnitTests.linkedlists.plain
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
+                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
 
                 Assert.Throws<CollectionModifiedException>(() => lst.Map(m));
             }
@@ -1276,7 +1269,7 @@ namespace C5UnitTests.linkedlists.plain
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
+                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
 
                 Assert.Throws<CollectionModifiedException>(() => lst.FindAll(m));
             }
@@ -1288,7 +1281,7 @@ namespace C5UnitTests.linkedlists.plain
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
+                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
 
                 Assert.Throws<CollectionModifiedException>(() => lst.Map(m));
             }
@@ -1300,7 +1293,7 @@ namespace C5UnitTests.linkedlists.plain
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate(int i) { if (i == 2) lst.Add(7); return true; };
+                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
 
                 Assert.Throws<CollectionModifiedException>(() => lst.FindAll(m));
             }
@@ -1888,14 +1881,14 @@ namespace C5UnitTests.linkedlists.plain
             [Test]
             public void MapEtc()
             {
-                LinkedList<double> dbl = (LinkedList<double>)view.Map(new Func<int, double>(delegate(int i) { return i / 10.0; }));
+                LinkedList<double> dbl = (LinkedList<double>)view.Map(new Func<int, double>(delegate (int i) { return i / 10.0; }));
 
                 Assert.IsTrue(dbl.Check());
                 Assert.AreEqual(0.1, dbl[0]);
                 Assert.AreEqual(0.2, dbl[1]);
                 for (int i = 0; i < 10; i++) view.Add(i);
 
-                list = (LinkedList<int>)view.FindAll(new Func<int, bool>(delegate(int i) { return i % 4 == 1; }));
+                list = (LinkedList<int>)view.FindAll(new Func<int, bool>(delegate (int i) { return i % 4 == 1; }));
                 Assert.IsTrue(list.Check());
                 Assert.IsTrue(IC.eq(list, 1, 1, 5, 9));
             }
@@ -2573,13 +2566,13 @@ namespace C5UnitTests.linkedlists.plain
             [Test]
             public void All()
             {
-                Assert.Throws<ViewDisposedException>(() => view.All(delegate(int i) { return false; }));
+                Assert.Throws<ViewDisposedException>(() => view.All(delegate (int i) { return false; }));
             }
 
             [Test]
             public void Apply()
             {
-                Assert.Throws<ViewDisposedException>(() => view.Apply(delegate(int i) { }));
+                Assert.Throws<ViewDisposedException>(() => view.Apply(delegate (int i) { }));
             }
 
             [Test]
@@ -2639,13 +2632,13 @@ namespace C5UnitTests.linkedlists.plain
             [Test]
             public void Exists()
             {
-                Assert.Throws<ViewDisposedException>(() => view.Exists(delegate(int i) { return false; }));
+                Assert.Throws<ViewDisposedException>(() => view.Exists(delegate (int i) { return false; }));
             }
 
             [Test]
             public void Filter()
             {
-                Assert.Throws<ViewDisposedException>(() => view.Filter(delegate(int i) { return true; }));
+                Assert.Throws<ViewDisposedException>(() => view.Filter(delegate (int i) { return true; }));
             }
 
             [Test]
@@ -2659,7 +2652,7 @@ namespace C5UnitTests.linkedlists.plain
             [Test]
             public void FindAll()
             {
-                Assert.Throws<ViewDisposedException>(() => view.FindAll(delegate(int i) { return false; }));
+                Assert.Throws<ViewDisposedException>(() => view.FindAll(delegate (int i) { return false; }));
             }
 
             [Test]

@@ -27,16 +27,14 @@ namespace C5UnitTests.heaps
 {
     using CollectionOfInt = IntervalHeap<int>;
 
-    [TestFixture(MemoryType.Normal)]
-    [TestFixture(MemoryType.Strict)]
-    [TestFixture(MemoryType.Safe)]
-    public class GenericTesters : BaseMemoryType
+    [TestFixture]
+    public class GenericTesters
     {
         [Test]
         public void TestEvents()
         {
             Func<CollectionOfInt> factory = delegate () { return new CollectionOfInt(TenEqualityComparer.Default); };
-            new C5UnitTests.Templates.Events.PriorityQueueTester<CollectionOfInt>().Test(factory, MemoryType);
+            new C5UnitTests.Templates.Events.PriorityQueueTester<CollectionOfInt>().Test(factory);
         }
 
         //[Test]
@@ -45,9 +43,6 @@ namespace C5UnitTests.heaps
         //    C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
         //    C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
         //}
-        public GenericTesters(MemoryType memoryType) : base(memoryType)
-        {
-        }
     }
 
     [TestFixture]

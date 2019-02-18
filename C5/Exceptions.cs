@@ -87,47 +87,6 @@ namespace C5
     }
 
     /// <summary>
-    /// An exception thrown by the MemorySafeEnumerator if the collection is enumerated by multiple threads concurrently
-    /// </summary>
-    [Serializable]
-    public class ConcurrentEnumerationException : Exception
-    {
-        /// <summary>
-        ///  Create a simple exception with no further explanation. 
-        /// </summary>
-        public ConcurrentEnumerationException()
-        {
-
-        }
-
-        /// <summary>
-        /// Create a simple exception with the an explanation contained in the error message.
-        /// </summary>
-        /// <param name="message"></param>
-        public ConcurrentEnumerationException(string message) : base(message) { }
-    }
-    /// <summary>
-    /// An exception thrown by the MemorySafeEnumerator if the collection is enumerated multiple times when the 
-    /// memory mode is set to Strict 
-    /// </summary>
-    [Serializable]
-    public class MultipleEnumerationException : Exception
-    {
-        /// <summary>
-        /// Create a simple exception with no further explanation.
-        /// </summary>
-        public MultipleEnumerationException()
-        {
-
-        }
-
-        /// <summary>
-        /// Create a simple exception with the an explanation contained in the error message.
-        /// </summary>
-        /// <param name="message"></param>
-        public MultipleEnumerationException(string message) : base(message) { }
-    }
-    /// <summary>
     /// An exception thrown by enumerators, range views etc. when accessed after 
     /// the underlying collection has been modified.
     /// </summary>

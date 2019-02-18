@@ -37,22 +37,18 @@ namespace C5
         /// Create a red-black tree dictionary using the natural comparer for keys.
         /// <exception cref="ArgumentException"/> if the key type K is not comparable.
         /// </summary>
-		public TreeDictionary(MemoryType memoryType = MemoryType.Normal) : this(SCG.Comparer<K>.Default, EqualityComparer<K>.Default, memoryType) { }
+        public TreeDictionary() : this(SCG.Comparer<K>.Default, EqualityComparer<K>.Default) { }
 
         /// <summary>
         /// Create a red-black tree dictionary using an external comparer for keys.
         /// </summary>
         /// <param name="comparer">The external comparer</param>
-		/// <param name = "memoryType"></param>
-		public TreeDictionary(SCG.IComparer<K> comparer, MemoryType memoryType = MemoryType.Normal) : this(comparer, new ComparerZeroHashCodeEqualityComparer<K>(comparer)) { }
+        public TreeDictionary(SCG.IComparer<K> comparer) : this(comparer, new ComparerZeroHashCodeEqualityComparer<K>(comparer)) { }
 
-		TreeDictionary(SCG.IComparer<K> comparer, SCG.IEqualityComparer<K> equalityComparer, MemoryType memoryType = MemoryType.Normal)
-			: base(comparer, equalityComparer, memoryType)
+        TreeDictionary(SCG.IComparer<K> comparer, SCG.IEqualityComparer<K> equalityComparer)
+            : base(comparer, equalityComparer)
         {
             pairs = sortedpairs = new TreeSet<KeyValuePair<K, V>>(new KeyValuePairComparer<K, V>(comparer));
-			if ( memoryType != MemoryType.Normal )
-				throw new Exception ( "TreeDictionary doesn't support MemoryType Strict or Safe" );
-			
         }
 
         #endregion

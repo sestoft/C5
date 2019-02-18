@@ -41,13 +41,13 @@ namespace C5UnitTests.Templates
             }
         }
 
-        public virtual void Test(Func<U> factory, MemoryType memoryType = MemoryType.Normal)
+        public virtual void Test(Func<U> factory)
         {
             foreach (MethodInfo minfo in testMethods)
             {
                 foreach (W testSpec in GetSpecs())
                 {
-                    SetUp(factory(), testSpec, memoryType);
+                    SetUp(factory(), testSpec);
                     //Console.WriteLine("Testing {0}, with method {1} and testSpec {{{2}}}", typeof(U), minfo.Name, testSpec);
                     try
                     {
@@ -66,7 +66,7 @@ namespace C5UnitTests.Templates
             }
         }
 
-        public abstract void SetUp(U collection, W testSpec, MemoryType memoryType);
+        public abstract void SetUp(U collection, W testSpec);
         public abstract SCG.IEnumerable<W> GetSpecs();
     }
 
@@ -77,11 +77,11 @@ namespace C5UnitTests.Templates
             return new int[] { 0 };
         }
 
-        public override void SetUp(U collection, int testSpec, MemoryType memoryType)
+        public override void SetUp(U collection, int testSpec)
         {
-            SetUp(collection, memoryType);
+            SetUp(collection);
         }
 
-        public abstract void SetUp(object collection, MemoryType memoryType);
+        public abstract void SetUp(object collection);
     }
 }
