@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2017 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
+ Copyright (c) 2003-2019 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -34,11 +34,11 @@ namespace C5UnitTests.Templates.Events
         protected EventTypeEnum listenTo;
         protected void listen() { seen.Listen(collection, listenTo); }
 
-        public override void SetUp(TCollection list, EventTypeEnum testSpec, MemoryType memoryType)
+        public override void SetUp(TCollection list, EventTypeEnum testSpec)
         {
             this.collection = list;
             listenTo = testSpec;
-            seen = new CollectionEventList<TItem>(EqualityComparer<TItem>.Default, memoryType);
+            seen = new CollectionEventList<TItem>(EqualityComparer<TItem>.Default);
         }
 
         public SCG.IEnumerable<EventTypeEnum> SpecsBasic

@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2017 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
+ Copyright (c) 2003-2019 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -26,28 +26,28 @@ using SCG = System.Collections.Generic;
 
 namespace C5UnitTests.Templates.List
 {
-    class Dispose
+  class Dispose
+  {
+    public static void Tester<U>() where U : class, IList<int>, new()
     {
-        public static void Tester<U>() where U : class, IList<int>, new()
-        {
-            U extensible = new U();
-            extensible.Dispose();
-        }
+      U extensible = new U();
+      extensible.Dispose();
     }
+  }
 
-    class SCG_IList
+  class SCG_IList
+  {
+    public static void Tester<U>() where U : class, IList<int>, SCG.IList<int>, new()
     {
-        public static void Tester<U>() where U : class, IList<int>, SCG.IList<int>, new()
-        {
-            SCG.IList<int> slist = new U();
-            slist.Add(4);
-            slist.Add(5);
-            slist.Add(6);
-            slist.RemoveAt(1);
-            Assert.AreEqual(2, slist.Count);
-            Assert.AreEqual(4, slist[0]);
-            Assert.AreEqual(6, slist[1]);
-        }
+      SCG.IList<int> slist = new U();
+      slist.Add(4);
+      slist.Add(5);
+      slist.Add(6);
+      slist.RemoveAt(1);
+      Assert.AreEqual(2, slist.Count);
+      Assert.AreEqual(4, slist[0]);
+      Assert.AreEqual(6, slist[1]);
     }
+  }
 }
 

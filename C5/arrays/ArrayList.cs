@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2017 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
+ Copyright (c) 2003-2019 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -588,32 +588,24 @@ namespace C5
         #endregion
 
         #region Constructors
-         /// <summary>
-        /// Create an array list with default item equalityComparer and initial capacity 8 items and a Normal memory type
-        /// </summary>
-        public ArrayList() : this(8) { }
-     
-
         /// <summary>
         /// Create an array list with default item equalityComparer and initial capacity 8 items.
         /// </summary>
-        public ArrayList(MemoryType memoryType = MemoryType.Normal) : this(8, memoryType) { }
+        public ArrayList() : this(8) { }
 
 
         /// <summary>
         /// Create an array list with external item equalityComparer and initial capacity 8 items.
         /// </summary>
         /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
-        /// <param name="memoryType"> The memory type strategy of the internal enumerator used to iterate over the collection</param>
-        public ArrayList(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal) : this(8, itemequalityComparer, memoryType) { }
+        public ArrayList(SCG.IEqualityComparer<T> itemequalityComparer) : this(8, itemequalityComparer) { }
 
 
         /// <summary>
         /// Create an array list with default item equalityComparer and prescribed initial capacity.
         /// </summary>
         /// <param name="capacity">The prescribed capacity</param>
-        /// <param name="memoryType">The memory type strategy of the internal enumerator used to iterate over the collection</param>
-        public ArrayList(int capacity, MemoryType memoryType = MemoryType.Normal) : this(capacity, EqualityComparer<T>.Default, memoryType) { }
+        public ArrayList(int capacity) : this(capacity, EqualityComparer<T>.Default) { }
 
 
         /// <summary>
@@ -621,9 +613,8 @@ namespace C5
         /// </summary>
         /// <param name="capacity">The prescribed capacity</param>
         /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
-        /// <param name="memoryType">The memory type strategy of the internal enumerator used to iterate over the collection</param>
-        public ArrayList(int capacity, SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
-            : base(capacity, itemequalityComparer, memoryType)
+        public ArrayList(int capacity, SCG.IEqualityComparer<T> itemequalityComparer)
+            : base(capacity, itemequalityComparer)
         {
 
         }

@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2017 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
+ Copyright (c) 2003-2019 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -102,7 +102,7 @@ namespace C5
         /// </summary>
         /// <exception cref="NotComparableException">If <code>T</code> is not comparable.
         /// </exception>
-        public SortedArray(MemoryType memoryType = MemoryType.Normal) : this(8, memoryType) { }
+        public SortedArray() : this(8) { }
 
 
         /// <summary>
@@ -113,9 +113,8 @@ namespace C5
         /// <exception cref="NotComparableException">If <code>T</code> is not comparable.
         /// </exception>
         /// <param name="capacity">The capacity</param>
-        /// <param name="memoryType">The type of memory for the enumerator used to iterate the collection</param>
-        public SortedArray(int capacity, MemoryType memoryType = MemoryType.Normal)
-            : this(capacity, SCG.Comparer<T>.Default, EqualityComparer<T>.Default, memoryType) { }
+        public SortedArray(int capacity)
+            : this(capacity, SCG.Comparer<T>.Default, EqualityComparer<T>.Default) { }
 
 
         /// <summary>
@@ -129,9 +128,8 @@ namespace C5
         /// </para>
         /// </summary>
         /// <param name="comparer">The comparer</param>
-        /// <param name="memoryType">The type of memory for the enumerator used to iterate the collection</param>
-        public SortedArray(SCG.IComparer<T> comparer, MemoryType memoryType = MemoryType.Normal)
-            : this(8, comparer, memoryType) { }
+        public SortedArray(SCG.IComparer<T> comparer)
+            : this(8, comparer) { }
 
         /// <summary>
         /// Create a dynamic sorted array with an external comparer
@@ -146,9 +144,8 @@ namespace C5
         /// </summary>
         /// <param name="capacity">The capacity</param>
         /// <param name="comparer">The comparer</param>
-        /// <param name="memoryType">The type of memory for the enumerator used to iterate the collection</param>
-        public SortedArray(int capacity, SCG.IComparer<T> comparer, MemoryType memoryType = MemoryType.Normal)
-            : this(capacity, comparer, new ComparerZeroHashCodeEqualityComparer<T>(comparer), memoryType) { }
+        public SortedArray(int capacity, SCG.IComparer<T> comparer)
+            : this(capacity, comparer, new ComparerZeroHashCodeEqualityComparer<T>(comparer)) { }
 
         /// <summary>
         /// Create a dynamic sorted array with an external comparer, an external item equalityComparer
@@ -158,9 +155,8 @@ namespace C5
         /// <param name="capacity">The capacity</param>
         /// <param name="comparer">The item comparer</param>
         /// <param name="equalityComparer">The item equalityComparer (assumed compatible)</param>
-        /// <param name="memoryType">The type of memory for the enumerator used to iterate the collection</param>
-        public SortedArray(int capacity, SCG.IComparer<T> comparer, SCG.IEqualityComparer<T> equalityComparer, MemoryType memoryType = MemoryType.Normal)
-            : base(capacity, equalityComparer, memoryType)
+        public SortedArray(int capacity, SCG.IComparer<T> comparer, SCG.IEqualityComparer<T> equalityComparer)
+            : base(capacity, equalityComparer)
         {
             if (comparer == null)
                 throw new NullReferenceException("Comparer cannot be null");
@@ -225,7 +221,7 @@ namespace C5
             int lo;
 
             BinarySearch(bot, out lo);
-            return new Range(this, lo, size - lo, true, MemoryType);
+            return new Range(this, lo, size - lo, true);
         }
 
 
@@ -244,7 +240,7 @@ namespace C5
 
             int sz = hi - lo;
 
-            return new Range(this, lo, sz, true, MemoryType);
+            return new Range(this, lo, sz, true);
         }
 
 
@@ -258,7 +254,7 @@ namespace C5
             int hi;
 
             BinarySearch(top, out hi);
-            return new Range(this, 0, hi, true, MemoryType);
+            return new Range(this, 0, hi, true);
         }
 
 

@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2017 Niels Kokholm, Peter Sestoft, and Rasmus LystrÃ¸m
+ Copyright (c) 2003-2019 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -248,11 +248,7 @@ namespace C5
 
         SCG.IEqualityComparer<K> keyequalityComparer;
 
-        private readonly KeysCollection _keyCollection;
-        private readonly ValuesCollection _valueCollection;
-
         #region Events
-
         ProxyEventBlock<KeyValuePair<K, V>> eventBlock;
 
         /// <summary>
@@ -319,16 +315,11 @@ namespace C5
         /// 
         /// </summary>
         /// <param name="keyequalityComparer"></param>
-        /// <param name = "memoryType"></param>
-        protected DictionaryBase(SCG.IEqualityComparer<K> keyequalityComparer, MemoryType memoryType)
+        protected DictionaryBase(SCG.IEqualityComparer<K> keyequalityComparer)
         {
             if (keyequalityComparer == null)
                 throw new NullReferenceException("Key equality comparer cannot be null");
             this.keyequalityComparer = keyequalityComparer;
-            MemoryType = memoryType;
-
-            _keyCollection = new KeysCollection(pairs, memoryType);
-            _valueCollection = new ValuesCollection(pairs, memoryType);
         }
 
         #region IDictionary<K,V> Members
@@ -456,8 +447,6 @@ namespace C5
         /// <returns></returns>
         public virtual bool ContainsAll<H>(SCG.IEnumerable<H> keys) where H : K
         {
-            if (MemoryType == MemoryType.Strict)
-                throw new Exception("The use of ContainsAll generates garbage as it still uses a non-memory safe enumerator");
             return pairs.ContainsAll(new LiftedEnumerable<H>(keys));
         }
 
@@ -576,224 +565,66 @@ namespace C5
         [Serializable]
         internal class ValuesCollection : CollectionValueBase<V>, ICollectionValue<V>
         {
-            private ICollection<KeyValuePair<K, V>> _pairs;
-            private readonly ValueEnumerator _valueEnumerator;
+            ICollection<KeyValuePair<K, V>> pairs;
 
 
-            internal ValuesCollection(ICollection<KeyValuePair<K, V>> keyValuePairs, MemoryType memoryType)
-            {
-                _pairs = keyValuePairs;
-                _valueEnumerator = new ValueEnumerator(keyValuePairs, memoryType);
-            }
+            internal ValuesCollection(ICollection<KeyValuePair<K, V>> pairs)
+            { this.pairs = pairs; }
 
 
-            #region Private Enumerator
-
-            [Serializable]
-            private class ValueEnumerator : MemorySafeEnumerator<V>
-            {
-                private ICollection<KeyValuePair<K, V>> _keyValuePairs;
-
-                private SCG.IEnumerator<KeyValuePair<K, V>> _keyValuePairEnumerator;
-                 
-                public ValueEnumerator(ICollection<KeyValuePair<K, V>> keyValuePairs, MemoryType memoryType)
-                    : base(memoryType)
-                {
-                    _keyValuePairs = keyValuePairs;
-                }
-
-                internal void UpdateReference(ICollection<KeyValuePair<K, V>> keyValuePairs)
-                {
-                    _keyValuePairs = keyValuePairs;
-                    Current = default(V);
-                }
-                 
-                public override bool MoveNext()
-                {
-                    ICollection<KeyValuePair<K, V>> list = _keyValuePairs;
-
-                    if (_keyValuePairEnumerator == null)
-                        _keyValuePairEnumerator = list.GetEnumerator();
-
-                    if (_keyValuePairEnumerator.MoveNext())
-                    {
-                        var curr = _keyValuePairEnumerator.Current;
-                        Current = curr.Value;
-                        return true;
-                    }
-
-                    _keyValuePairEnumerator.Dispose();
-                    Current = default(V);
-                    return false;
-                }
-
-                public override void Reset()
-                {
-                    Current = default(V);
-                }
-                protected override MemorySafeEnumerator<V> Clone()
-                {
-                    var enumerator = new ValueEnumerator(_keyValuePairs, MemoryType)
-                    {
-                        Current = default(V)
-                    };
-                    return enumerator;
-                }
-            }
-
-            #endregion
-
-
-            public override V Choose()
-            {
-                return _pairs.Choose().Value;
-            }
+            public override V Choose() { return pairs.Choose().Value; }
 
             public override SCG.IEnumerator<V> GetEnumerator()
             {
                 //Updatecheck is performed by the pairs enumerator
-                var enumerator =(ValueEnumerator) _valueEnumerator.GetEnumerator();
-                enumerator.UpdateReference(_pairs);
-                return enumerator;
+                foreach (KeyValuePair<K, V> p in pairs)
+                    yield return p.Value;
             }
 
-            public override bool IsEmpty { get { return _pairs.IsEmpty; } }
+            public override bool IsEmpty { get { return pairs.IsEmpty; } }
 
-            public override int Count { get { return _pairs.Count; } }
+            public override int Count { get { return pairs.Count; } }
 
             public override Speed CountSpeed { get { return Speed.Constant; } }
-
-            public void Update(ICollection<KeyValuePair<K, V>> keyValuePairs)
-            {
-                _pairs = keyValuePairs;
-            }
         }
 
         [Serializable]
         internal class KeysCollection : CollectionValueBase<K>, ICollectionValue<K>
         {
-            ICollection<KeyValuePair<K, V>> _pairs;
+            ICollection<KeyValuePair<K, V>> pairs;
 
-            private readonly KeyEnumerator _keyEnumerator;
 
-            #region Private Enumerator
+            internal KeysCollection(ICollection<KeyValuePair<K, V>> pairs)
+            { this.pairs = pairs; }
 
-            [Serializable]
-            private class KeyEnumerator : MemorySafeEnumerator<K>
-            {
-                private ICollection<KeyValuePair<K, V>> _internalList;
-
-                private SCG.IEnumerator<KeyValuePair<K, V>> _keyValuePairEnumerator;
-                 
-                public KeyEnumerator(ICollection<KeyValuePair<K, V>> list, MemoryType memoryType)
-                    : base(memoryType)
-                {
-                    _internalList = list;
-                }
-
-                internal void UpdateReference(ICollection<KeyValuePair<K, V>> list)
-                {
-                    _internalList = list;
-                    Current = default(K);
-                }
-                 
-            
-                public override bool MoveNext()
-                {
-                    ICollection<KeyValuePair<K, V>> list = _internalList;
-
-                    if (_keyValuePairEnumerator == null)
-                        _keyValuePairEnumerator = list.GetEnumerator();
-
-                    if (_keyValuePairEnumerator.MoveNext())
-                    {
-                        Current = _keyValuePairEnumerator.Current.Key;
-                        return true;
-                    }
-
-                    _keyValuePairEnumerator.Dispose();
-
-                    Current = default(K);
-                    return false;
-                }
-
-                public override void Reset()
-                {
-                    Current = default(K);
-                }
-                 
-                protected override MemorySafeEnumerator<K> Clone()
-                {
-                    var enumerator = new KeyEnumerator(_internalList, MemoryType)
-                    {
-                        Current = default(K)
-                    };
-                    return enumerator;
-                }
-            }
-
-            #endregion
-
-            internal KeysCollection(ICollection<KeyValuePair<K, V>> pairs, MemoryType memoryType)
-            {
-                _pairs = pairs;
-
-                _keyEnumerator = new KeyEnumerator(pairs, memoryType);
-            }
-
-            public void Update(ICollection<KeyValuePair<K, V>> pairs)
-            {
-                _pairs = pairs;
-            }
-
-            public override K Choose()
-            {
-                return _pairs.Choose().Key;
-            }
+            public override K Choose() { return pairs.Choose().Key; }
 
             public override SCG.IEnumerator<K> GetEnumerator()
             {
-                var enumerator = (KeyEnumerator) _keyEnumerator.GetEnumerator();
-                enumerator.UpdateReference(_pairs);
-                return enumerator;
+                foreach (KeyValuePair<K, V> p in pairs)
+                    yield return p.Key;
             }
 
-            public override bool IsEmpty { get { return _pairs.IsEmpty; } }
+            public override bool IsEmpty { get { return pairs.IsEmpty; } }
 
-            public override int Count { get { return _pairs.Count; } }
+            public override int Count { get { return pairs.Count; } }
 
-            public override Speed CountSpeed { get { return _pairs.CountSpeed; } }
+            public override Speed CountSpeed { get { return pairs.CountSpeed; } }
         }
-
         #endregion
 
         /// <summary>
         /// 
         /// </summary>
         /// <value>A collection containing all the keys of the dictionary</value>
-        public virtual ICollectionValue<K> Keys
-        {
-            get
-            {
-                _keyCollection.Update(pairs);
-                return _keyCollection;
-
-            }
-        }
+        public virtual ICollectionValue<K> Keys { get { return new KeysCollection(pairs); } }
 
 
         /// <summary>
         /// 
         /// </summary>
         /// <value>A collection containing all the values of the dictionary</value>
-        public virtual ICollectionValue<V> Values
-        {
-            get
-            {
-                _valueCollection.Update(pairs);
-                return _valueCollection;
-            }
-        }
+        public virtual ICollectionValue<V> Values { get { return new ValuesCollection(pairs); } }
 
         /// <summary>
         /// 
@@ -872,7 +703,7 @@ namespace C5
         /// <returns>The enumerator</returns>
         public override SCG.IEnumerator<KeyValuePair<K, V>> GetEnumerator()
         {
-            return pairs.GetEnumerator();
+            return pairs.GetEnumerator(); ;
         }
 
         #endregion
@@ -911,13 +742,7 @@ namespace C5
         /// </summary>
         /// <param name="keycomparer"></param>
         /// <param name="keyequalityComparer"></param>
-        /// <param name="memoryType">The memory type of the enumerator used to iterate the collection.</param>
-        protected SortedDictionaryBase(SCG.IComparer<K> keycomparer, SCG.IEqualityComparer<K> keyequalityComparer, MemoryType memoryType = MemoryType.Normal)
-            : base(keyequalityComparer, memoryType)
-        {
-            this.keycomparer = keycomparer;
-            MemoryType = memoryType;
-        }
+        protected SortedDictionaryBase(SCG.IComparer<K> keycomparer, SCG.IEqualityComparer<K> keyequalityComparer) : base(keyequalityComparer) { this.keycomparer = keycomparer; }
 
         #endregion
 
@@ -933,8 +758,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        /// I should add something to return the same instance
-        public new ISorted<K> Keys { get { return new SortedKeysCollection(this, sortedpairs, keycomparer, EqualityComparer, MemoryType); } }
+        public new ISorted<K> Keys { get { return new SortedKeysCollection(this, sortedpairs, keycomparer, EqualityComparer); } }
 
         /// <summary>
         /// Find the entry in the dictionary whose key is the
@@ -1195,115 +1019,28 @@ namespace C5
         }
 
         [Serializable]
-        sealed class SortedKeysCollection : SequencedBase<K>, ISorted<K>
+        class SortedKeysCollection : SequencedBase<K>, ISorted<K>
         {
-
-            #region Private Enumerator
-
-            [Serializable]
-            private class KeyEnumerator : MemorySafeEnumerator<K>
-            {
-                private ICollection<KeyValuePair<K, V>> _internalList;
-
-                private SCG.IEnumerator<KeyValuePair<K, V>> _internalEnumerator;
-
-              
-
-                public KeyEnumerator(ICollection<KeyValuePair<K, V>> list, MemoryType memoryType)
-                    : base(memoryType)
-                {
-                    _internalList = list;
-                }
-
-                internal void UpdateReference(ICollection<KeyValuePair<K, V>> list)
-                {
-                    _internalList = list;
-                    Current = default(K);
-                }
-
-
-                public override void Dispose()
-                { 
-                    _internalEnumerator.Dispose();
-                    _internalEnumerator = null;
-                }
-
-                public override bool MoveNext()
-                {
-                    ICollection<KeyValuePair<K, V>> list = _internalList;
-
-                    if (IteratorState == -1 || IteratorState == 0) // enumerator hasn't initialized yet or it has already run
-                        _internalEnumerator = list.GetEnumerator();
-
-                    IteratorState = 1;
-
-                    if (_internalEnumerator.MoveNext())
-                    {
-                        Current = _internalEnumerator.Current.Key;
-                        return true;
-                    }
-
-                    IteratorState = 0;
-                    return false;
-                }
-                public override void Reset()
-                {
-                    try
-                    {
-                        _internalEnumerator.Reset();
-                    }
-                    catch (Exception)
-                    {
-                        //swallow the exception
-                    }
-                    finally
-                    {
-                        Current = default(K);
-                    }
-                }
-
-
-                protected override MemorySafeEnumerator<K> Clone()
-                {
-                    var enumerator = new KeyEnumerator(_internalList, MemoryType)
-                    {
-                        Current = default(K)
-                    };
-                    return enumerator;
-                }
-            }
-
-            #endregion
-
-            private readonly KeyEnumerator _internalEnumerator;
-
             ISortedDictionary<K, V> sorteddict;
-            //TODO: eliminate this. Only problem is the Find method because we lack method on dictionary that also
+            //TODO: eliminate this. Only problem is the Find method because we lack method on dictionary that also 
             //      returns the actual key.
             ISorted<KeyValuePair<K, V>> sortedpairs;
             SCG.IComparer<K> comparer;
 
-            internal SortedKeysCollection(ISortedDictionary<K, V> sorteddict, ISorted<KeyValuePair<K, V>> sortedpairs, SCG.IComparer<K> comparer, SCG.IEqualityComparer<K> itemequalityComparer, MemoryType memoryType)
-                : base(itemequalityComparer, memoryType)
+            internal SortedKeysCollection(ISortedDictionary<K, V> sorteddict, ISorted<KeyValuePair<K, V>> sortedpairs, SCG.IComparer<K> comparer, SCG.IEqualityComparer<K> itemequalityComparer)
+                : base(itemequalityComparer)
             {
                 this.sorteddict = sorteddict;
                 this.sortedpairs = sortedpairs;
                 this.comparer = comparer;
-
-                _internalEnumerator = new KeyEnumerator(sortedpairs, memoryType);
             }
 
-            public override K Choose()
-            {
-                return sorteddict.Choose().Key;
-            }
+            public override K Choose() { return sorteddict.Choose().Key; }
 
             public override SCG.IEnumerator<K> GetEnumerator()
             {
-                _internalEnumerator.UpdateReference(sortedpairs);
-                return _internalEnumerator.GetEnumerator();
-                //                foreach (KeyValuePair<K, V> p in sorteddict)
-                //                    yield return p.Key;
+                foreach (KeyValuePair<K, V> p in sorteddict)
+                    yield return p.Key;
             }
 
             public override bool IsEmpty { get { return sorteddict.IsEmpty; } }
@@ -1413,7 +1150,7 @@ namespace C5
             /// 
             /// </summary>
             /// <returns></returns>
-            public ICollectionValue<K> UniqueItems()
+            public virtual ICollectionValue<K> UniqueItems()
             {
                 return this;
             }
@@ -1422,7 +1159,7 @@ namespace C5
             /// 
             /// </summary>
             /// <returns></returns>
-            public ICollectionValue<KeyValuePair<K, int>> ItemMultiplicities()
+            public virtual ICollectionValue<KeyValuePair<K, int>> ItemMultiplicities()
             {
                 return new MultiplicityOne<K>(this);
             }

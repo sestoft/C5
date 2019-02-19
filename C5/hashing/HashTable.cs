@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2017 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
+ Copyright (c) 2003-2019 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -96,8 +96,6 @@ namespace C5
         int resizethreshhold;
 
         private static readonly Random Random = new Random();
-
-        private readonly HashEnumerator _hashEnumerator;
         uint _randomhashfactor;
 
         #endregion
@@ -303,22 +301,12 @@ namespace C5
         #endregion
 
         #region Constructors
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public HashSet() 
-            : this(MemoryType.Normal)
-        {
-                
-        }
-
         /// <summary>
         /// Create a hash set with natural item equalityComparer and default fill threshold (66%)
         /// and initial table size (16).
         /// </summary>
-        public HashSet(MemoryType memoryType = MemoryType.Normal)
-            : this(EqualityComparer<T>.Default, memoryType) { }
+        public HashSet()
+            : this(EqualityComparer<T>.Default) { }
 
 
         /// <summary>
@@ -326,9 +314,8 @@ namespace C5
         /// and initial table size (16).
         /// </summary>
         /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
-        /// <param name="memoryType"></param>
-        public HashSet(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
-            : this(16, itemequalityComparer, memoryType) { }
+        public HashSet(SCG.IEqualityComparer<T> itemequalityComparer)
+            : this(16, itemequalityComparer) { }
 
 
         /// <summary>
@@ -336,9 +323,8 @@ namespace C5
         /// </summary>
         /// <param name="capacity">Initial table size (rounded to power of 2, at least 16)</param>
         /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
-        /// <param name="memoryType"></param>
-        public HashSet(int capacity, SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
-            : this(capacity, 0.66, itemequalityComparer, memoryType) { }
+        public HashSet(int capacity, SCG.IEqualityComparer<T> itemequalityComparer)
+            : this(capacity, 0.66, itemequalityComparer) { }
 
 
         /// <summary>
@@ -347,9 +333,8 @@ namespace C5
         /// <param name="capacity">Initial table size (rounded to power of 2, at least 16)</param>
         /// <param name="fill">Fill threshold (in range 10% to 90%)</param>
         /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
-        /// <param name="memoryType"></param>
-        public HashSet(int capacity, double fill, SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
-            : base(itemequalityComparer, memoryType)
+        public HashSet(int capacity, double fill, SCG.IEqualityComparer<T> itemequalityComparer)
+            : base(itemequalityComparer)
         {
             _randomhashfactor = (Debug.UseDeterministicHashing) ? 1529784659 : (2 * (uint)Random.Next() + 1) * 1529784659;
 
@@ -361,7 +346,6 @@ namespace C5
             origbits = 4;
             while (capacity - 1 >> origbits > 0) origbits++;
             clear();
-            _hashEnumerator = new HashEnumerator(memoryType);
         }
 
 
@@ -635,87 +619,6 @@ namespace C5
 
         #endregion
 
-        #region Enumerator
-
-        [Serializable]
-        private class HashEnumerator : MemorySafeEnumerator<T>
-        {
-            private HashSet<T> _hashSet;
-            private int _stamp;
-            private int _index;
-            Bucket b;
-             
-            
-            public HashEnumerator(MemoryType memoryType) : base(memoryType)
-            {
-
-                _index = -1;
-                Current = default(T);
-            }
-
-            internal void UpdateReference(HashSet<T> hashSet, int theStamp)
-            {
-                _hashSet = hashSet;
-                _stamp = theStamp;
-                Current = default(T);
-                _index = -1;
-            }
-
-
-            public override void Dispose()
-            {
-                base.Dispose();
-
-                //Do nothing
-                _index = -1;
-                b = null;
-            }
-            
-            protected override MemorySafeEnumerator<T> Clone()
-            {
-                var enumerator = new HashEnumerator(MemoryType)
-                {
-                    Current = default(T),
-                    _hashSet = _hashSet,
-                };
-
-                return enumerator;
-            }
-
-            public override bool MoveNext()
-            {
-                int len = _hashSet.table.Length;
-
-                if (_stamp != _hashSet.stamp)
-                    throw new CollectionModifiedException();
-                //if (_index == len) return false;
-
-                if (b == null || b.overflow == null)
-                {
-                    do
-                    {
-                        if (++_index < len) continue;
-                        return false;
-                    } while (_hashSet.table[_index] == null);
-
-                    b = _hashSet.table[_index];
-                    Current = b.item;
-
-                    return true;
-                }
-                b = b.overflow;
-                Current = b.item;
-                return true;
-            }
-
-            public override void Reset()
-            {
-                throw new NotImplementedException(); 
-            }
-        }
-        #endregion
-
-
         #region IEnumerable<T> Members
 
 
@@ -740,11 +643,33 @@ namespace C5
         /// <returns>The enumerator</returns>
         public override SCG.IEnumerator<T> GetEnumerator()
         {
-            var enumerator = (HashEnumerator)_hashEnumerator.GetEnumerator();
+            int index = -1;
+            int mystamp = stamp;
+            int len = table.Length;
 
-            enumerator.UpdateReference(this, stamp);
+            Bucket b = null;
 
-            return enumerator;
+            while (true)
+            {
+                if (mystamp != stamp)
+                    throw new CollectionModifiedException();
+
+                if (b == null || b.overflow == null)
+                {
+                    do
+                    {
+                        if (++index >= len) yield break;
+                    } while (table[index] == null);
+
+                    b = table[index];
+                    yield return b.item;
+                }
+                else
+                {
+                    b = b.overflow;
+                    yield return b.item;
+                }
+            }
         }
 
         #endregion

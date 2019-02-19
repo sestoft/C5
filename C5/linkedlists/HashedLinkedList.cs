@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2017 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
+ Copyright (c) 2003-2019 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -473,13 +473,9 @@ namespace C5
         /// Create a linked list with en external item equalityComparer
         /// </summary>
         /// <param name="itemequalityComparer">The external equalitySCG.Comparer</param>
-		/// <param name = "memoryType"></param> 
-		public HashedLinkedList(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
-			: base(itemequalityComparer, memoryType)
+        public HashedLinkedList(SCG.IEqualityComparer<T> itemequalityComparer)
+            : base(itemequalityComparer)
         {
-			if ( memoryType != MemoryType.Normal )
-				throw new Exception ( "HashedLinkedList doesn't support MemoryType Strict or Safe" );
-			
             offset = 0;
             size = stamp = 0;
             startsentinel = new Node(default(T));
@@ -496,18 +492,10 @@ namespace C5
             dict = new HashDictionary<T, Node>(itemequalityComparer);
         }
 
-		/// <summary>
-        /// Default constructor. An <see cref="EqualityComparer{T}.Default"/> is used as the default equality comparer
-		/// </summary>
-		public HashedLinkedList ( ) : this(EqualityComparer<T>.Default)
-		{
-			
-		}
-
         /// <summary>
         /// Create a linked list with the natural item equalityComparer
         /// </summary>
-		public HashedLinkedList(MemoryType memoryType = MemoryType.Normal) : this(EqualityComparer<T>.Default, memoryType) { }
+        public HashedLinkedList() : this(EqualityComparer<T>.Default) { }
 
         #endregion
 

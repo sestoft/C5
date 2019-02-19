@@ -1,23 +1,31 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>portable-net40+sl50+win8+wpa81+wp8;portable-net45+win8+wpa81+wp8;net35;net40;net45;netstandard1.0</TargetFrameworks>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>C5.snk</AssemblyOriginatorKeyFile>
-    <Version>2.5</Version>
-    <Copyright>Copyright © Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm 2003-2017</Copyright>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>3.0.0-beta</Version>
+    <Copyright>Copyright © Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm 2003-2019</Copyright>
     <Company>Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm</Company>
-    <Description>The C5 Generic Collection Library for C# and CLI is a comprehensive collection library supporting lists, sets, bags, dictionaries, priority queues, (FIFO) queues, and (LIFO) stacks. C5 runs on .NET 3.5+, Silverlight 5, Windows Phone 8, Xamarin.iOS, Xamarin.Android, and Mono.</Description>
+    <Description>The C5 Generic Collection Library for C# and CLI is a comprehensive collection library supporting lists, sets, bags, dictionaries, priority queues, (FIFO) queues, and (LIFO) stacks. C5 runs on everything supporting .NET Standard 2.0: .NET Core 2.0+, .NET 4.6.1+, Mono, Xamarin, Universal Windows Platform, and Unity.</Description>
     <PackageTags>Generics Collections Heap TreeSet PriorityQueue</PackageTags>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageIconUrl>https://github.com/sestoft/C5/raw/master/images/icon-nuget.png</PackageIconUrl>
     <PackageProjectUrl>https://www.itu.dk/research/c5/</PackageProjectUrl>
-    <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <PackageReleaseNotes>New support for .NET Standard 1.0 and Profile259</PackageReleaseNotes>
+    <PackageReleaseNotes>C5 is now a .NET Standard 2.0 library</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/sestoft/C5</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
-  <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="msbuild.sdk.extras" Version="1.0.5" PrivateAssets="all" />
+    <PackageReference Include="Nerdbank.GitVersioning" Version="2.3.105">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="SourceLink.Create.GitHub" Version="2.8.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 </Project>

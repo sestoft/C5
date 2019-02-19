@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2017 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
+ Copyright (c) 2003-2019 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -35,7 +35,7 @@ namespace C5
         /// Initial capacity of internal table will be 16 entries and threshold for 
         /// expansion is 66% fill.
         /// </summary>
-        public HashDictionary(MemoryType memoryType = MemoryType.Normal) : this(EqualityComparer<K>.Default, memoryType) { }
+        public HashDictionary() : this(EqualityComparer<K>.Default) { }
 
         /// <summary>
         /// Create a hash dictionary using a custom equalityComparer for the keys.
@@ -43,11 +43,10 @@ namespace C5
         /// expansion is 66% fill.
         /// </summary>
         /// <param name="keyequalityComparer">The external key equalitySCG.Comparer</param>
-        /// <param name="memoryType">The memory type of the enumerator used to iterate the collection</param>
-        public HashDictionary(SCG.IEqualityComparer<K> keyequalityComparer, MemoryType memoryType = MemoryType.Normal)
-            : base(keyequalityComparer, memoryType)
+        public HashDictionary(SCG.IEqualityComparer<K> keyequalityComparer)
+            : base(keyequalityComparer)
         {
-            pairs = new HashSet<KeyValuePair<K, V>>(new KeyValuePairEqualityComparer<K, V>(keyequalityComparer), memoryType);
+            pairs = new HashSet<KeyValuePair<K, V>>(new KeyValuePairEqualityComparer<K, V>(keyequalityComparer));
         }
 
         /// <summary>
@@ -58,11 +57,10 @@ namespace C5
         /// power of 2, at least 16.</param>
         /// <param name="fill">The expansion threshold. Must be between 10% and 90%.</param>
         /// <param name="keyequalityComparer">The external key equalitySCG.Comparer</param>
-        /// <param name="memoryType">The memory type of the enumerator used to iterate the collection</param>
-        public HashDictionary(int capacity, double fill, SCG.IEqualityComparer<K> keyequalityComparer, MemoryType memoryType = MemoryType.Normal)
-            : base(keyequalityComparer, memoryType)
+        public HashDictionary(int capacity, double fill, SCG.IEqualityComparer<K> keyequalityComparer)
+            : base(keyequalityComparer)
         {
-            pairs = new HashSet<KeyValuePair<K, V>>(capacity, fill, new KeyValuePairEqualityComparer<K, V>(keyequalityComparer), memoryType);
+            pairs = new HashSet<KeyValuePair<K, V>>(capacity, fill, new KeyValuePairEqualityComparer<K, V>(keyequalityComparer));
         }
     }
 }

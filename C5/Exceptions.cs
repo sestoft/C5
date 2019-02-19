@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2017 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
+ Copyright (c) 2003-2019 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -86,47 +86,6 @@ namespace C5
         public UnlistenableEventException(string message) : base(message) { }
     }
 
-    /// <summary>
-    /// An exception thrown by the MemorySafeEnumerator if the collection is enumerated by multiple threads concurrently
-    /// </summary>
-    [Serializable]
-    public class ConcurrentEnumerationException : Exception
-    {
-        /// <summary>
-        ///  Create a simple exception with no further explanation. 
-        /// </summary>
-        public ConcurrentEnumerationException()
-        {
-
-        }
-
-        /// <summary>
-        /// Create a simple exception with the an explanation contained in the error message.
-        /// </summary>
-        /// <param name="message"></param>
-        public ConcurrentEnumerationException(string message) : base(message) { }
-    }
-    /// <summary>
-    /// An exception thrown by the MemorySafeEnumerator if the collection is enumerated multiple times when the 
-    /// memory mode is set to Strict 
-    /// </summary>
-    [Serializable]
-    public class MultipleEnumerationException : Exception
-    {
-        /// <summary>
-        /// Create a simple exception with no further explanation.
-        /// </summary>
-        public MultipleEnumerationException()
-        {
-
-        }
-
-        /// <summary>
-        /// Create a simple exception with the an explanation contained in the error message.
-        /// </summary>
-        /// <param name="message"></param>
-        public MultipleEnumerationException(string message) : base(message) { }
-    }
     /// <summary>
     /// An exception thrown by enumerators, range views etc. when accessed after 
     /// the underlying collection has been modified.

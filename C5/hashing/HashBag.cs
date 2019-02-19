@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2017 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
+ Copyright (c) 2003-2019 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -48,20 +48,16 @@ namespace C5
         /// <summary>
         /// Create a hash bag with the default item equalityComparer.
         /// </summary>
-		public HashBag(MemoryType memoryType = MemoryType.Normal) : this(EqualityComparer<T>.Default, memoryType) { }
+        public HashBag() : this(EqualityComparer<T>.Default) { }
 
         /// <summary>
         /// Create a hash bag with an external item equalityComparer.
         /// </summary>
         /// <param name="itemequalityComparer">The external item equalityComparer.</param>
-		/// <param name = "memoryType"></param>
-		public HashBag(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
-			: base(itemequalityComparer, memoryType)
+        public HashBag(SCG.IEqualityComparer<T> itemequalityComparer)
+            : base(itemequalityComparer)
         {
-			if (memoryType != MemoryType.Normal) 
-				throw new Exception("HashBag doesn't still support Safe and Strict memory type.");
-			
-			dict = new HashSet<KeyValuePair<T, int>>(new KeyValuePairEqualityComparer<T, int>(itemequalityComparer), memoryType);
+            dict = new HashSet<KeyValuePair<T, int>>(new KeyValuePairEqualityComparer<T, int>(itemequalityComparer));
         }
 
         /// <summary>
@@ -69,14 +65,10 @@ namespace C5
         /// </summary>
         /// <param name="capacity">Initial table size (rounded to power of 2, at least 16)</param>
         /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
-		/// <param name = "memoryType"></param>
-		public HashBag(int capacity, SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
-			: base(itemequalityComparer, memoryType)
+        public HashBag(int capacity, SCG.IEqualityComparer<T> itemequalityComparer)
+            : base(itemequalityComparer)
         {
-			if (memoryType != MemoryType.Normal) 
-				throw new Exception("HashBag doesn't still support Safe and Strict memory type.");
-			
-			dict = new HashSet<KeyValuePair<T, int>>(capacity, new KeyValuePairEqualityComparer<T, int>(itemequalityComparer), memoryType);
+            dict = new HashSet<KeyValuePair<T, int>>(capacity, new KeyValuePairEqualityComparer<T, int>(itemequalityComparer));
         }
 
 
@@ -86,14 +78,10 @@ namespace C5
         /// <param name="capacity">Initial table size (rounded to power of 2, at least 16)</param>
         /// <param name="fill">Fill threshold (valid range 10% to 90%)</param>
         /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
-		/// <param name = "memoryType"></param>
-		public HashBag(int capacity, double fill, SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
-			: base(itemequalityComparer, memoryType)
+        public HashBag(int capacity, double fill, SCG.IEqualityComparer<T> itemequalityComparer)
+            : base(itemequalityComparer)
         {
-			if (memoryType != MemoryType.Normal) 
-				throw new Exception("HashBag doesn't still support Safe and Strict memory type.");
-			
-			dict = new HashSet<KeyValuePair<T, int>>(capacity, fill, new KeyValuePairEqualityComparer<T, int>(itemequalityComparer), memoryType);
+            dict = new HashSet<KeyValuePair<T, int>>(capacity, fill, new KeyValuePairEqualityComparer<T, int>(itemequalityComparer));
         }
 
         #endregion

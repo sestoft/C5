@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2017 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
+ Copyright (c) 2003-2019 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -84,15 +84,14 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-		public CircularQueue(MemoryType memoryType = MemoryType.Normal) : this(8, memoryType) { }
+        public CircularQueue() : this(8) { }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="capacity"></param>
-        /// <param name="memoryType">The memory type strategy of the internal enumerator used to iterate over the collection</param>
-        public CircularQueue(int capacity, MemoryType memoryType = MemoryType.Normal)
-			: base(EqualityComparer<T>.Default, memoryType)
+        public CircularQueue(int capacity)
+            : base(EqualityComparer<T>.Default)
         {
             int newlength = 8;
             while (newlength < capacity) newlength *= 2;

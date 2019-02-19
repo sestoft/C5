@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2017 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
+ Copyright (c) 2003-2019 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -465,12 +465,9 @@ namespace C5
         /// Create a linked list with en external item equalityComparer
         /// </summary>
         /// <param name="itemequalityComparer">The external equalitySCG.Comparer</param>
-        /// <param name="memoryType">The type of memory for the enumerator used to iterate the collection</param>
-        public LinkedList(SCG.IEqualityComparer<T> itemequalityComparer, MemoryType memoryType = MemoryType.Normal)
-			: base(itemequalityComparer, memoryType)
+        public LinkedList(SCG.IEqualityComparer<T> itemequalityComparer)
+            : base(itemequalityComparer)
         {
-			if ( memoryType != MemoryType.Normal )
-				throw new Exception ( "LinkedList doesn't support MemoryType Strict or Safe" );
             offset = 0;
             size = stamp = 0;
             startsentinel = new Node(default(T));

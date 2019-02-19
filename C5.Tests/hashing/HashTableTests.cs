@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2017 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
+ Copyright (c) 2003-2019 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -27,16 +27,14 @@ namespace C5UnitTests.hashtable.set
 {
     using CollectionOfInt = HashSet<int>;
 
-    [TestFixture(MemoryType.Normal)]
-    [TestFixture(MemoryType.Strict)]
-    [TestFixture(MemoryType.Safe)]
-    public class GenericTesters : BaseMemoryType
+    [TestFixture]
+    public class GenericTesters
     {
         [Test]
         public void TestEvents()
         {
             Func<CollectionOfInt> factory = delegate () { return new CollectionOfInt(TenEqualityComparer.Default); };
-            new C5UnitTests.Templates.Events.CollectionTester<CollectionOfInt>().Test(factory, MemoryType); 
+            new C5UnitTests.Templates.Events.CollectionTester<CollectionOfInt>().Test(factory);
         }
 
         //[Test]
@@ -45,23 +43,18 @@ namespace C5UnitTests.hashtable.set
         //    C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
         //    C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
         //}
-        public GenericTesters(MemoryType memoryType) : base(memoryType)
-        {
-        }
     }
 
     static class Factory
     {
-        public static ICollection<T> New<T>(MemoryType memoryType) { return new HashSet<T>(memoryType); }
+        public static ICollection<T> New<T>() { return new HashSet<T>(); }
     }
 
 
     namespace Enumerable
     {
-        [TestFixture(MemoryType.Normal)]
-        [TestFixture(MemoryType.Strict)]
-        [TestFixture(MemoryType.Safe)]
-        public class Multiops : BaseMemoryType
+        [TestFixture]
+        public class Multiops
         {
             private HashSet<int> list;
 
@@ -72,7 +65,7 @@ namespace C5UnitTests.hashtable.set
             public void Init()
             {
                 Debug.UseDeterministicHashing = true;
-                list = new HashSet<int>(MemoryType);
+                list = new HashSet<int>();
                 always = delegate { return true; };
                 never = delegate { return false; };
                 even = delegate (int i) { return i % 2 == 0; };
@@ -134,24 +127,18 @@ namespace C5UnitTests.hashtable.set
                 Debug.UseDeterministicHashing = false;
                 list = null;
             }
-
-            public Multiops(MemoryType memoryType) : base(memoryType)
-            {
-            }
         }
 
 
 
-        [TestFixture(MemoryType.Normal)]
-        [TestFixture(MemoryType.Strict)]
-        [TestFixture(MemoryType.Safe)]
-        public class GetEnumerator : BaseMemoryType
+        [TestFixture]
+        public class GetEnumerator
         {
             private HashSet<int> hashset;
 
 
             [SetUp]
-            public void Init() { hashset = new HashSet<int>(MemoryType); }
+            public void Init() { hashset = new HashSet<int>(); }
 
 
             [Test]
@@ -211,19 +198,13 @@ namespace C5UnitTests.hashtable.set
 
             [TearDown]
             public void Dispose() { hashset = null; }
-
-            public GetEnumerator(MemoryType memoryType) : base(memoryType)
-            {
-            }
         }
     }
 
     namespace CollectionOrSink
     {
-        [TestFixture(MemoryType.Normal)]
-        [TestFixture(MemoryType.Strict)]
-        [TestFixture(MemoryType.Safe)]
-        public class Formatting : BaseMemoryType
+        [TestFixture]
+        public class Formatting
         {
             ICollection<int> coll;
             IFormatProvider rad16;
@@ -232,7 +213,7 @@ namespace C5UnitTests.hashtable.set
             public void Init()
             {
                 Debug.UseDeterministicHashing = true;
-                coll = Factory.New<int>(MemoryType); rad16 = new RadixFormatProvider(16);
+                coll = Factory.New<int>(); rad16 = new RadixFormatProvider(16);
             }
 
             [TearDown]
@@ -253,26 +234,16 @@ namespace C5UnitTests.hashtable.set
                 Assert.AreEqual("{ 65530, -4, ... }", coll.ToString("L14", null));
                 Assert.AreEqual("{ FFFA, -4, ... }", coll.ToString("L14", rad16));
             }
-
-            public Formatting(MemoryType memoryType) : base(memoryType)
-            {
-            }
         }
 
-        [TestFixture(MemoryType.Normal)]
-        [TestFixture(MemoryType.Strict)]
-        [TestFixture(MemoryType.Safe)]
-		public class CollectionOrSink : BaseMemoryType
+        [TestFixture]
+        public class CollectionOrSink
         {
             private HashSet<int> hashset;
 
-			public CollectionOrSink (MemoryType memoryType ) : base(memoryType)
-			{
-				
-			}
 
             [SetUp]
-			public void Init() { hashset = new HashSet<int>(MemoryType); }
+            public void Init() { hashset = new HashSet<int>(); }
 
             [Test]
             public void Choose()
@@ -326,25 +297,17 @@ namespace C5UnitTests.hashtable.set
             public void Dispose() { hashset = null; }
         }
 
-        [TestFixture(MemoryType.Normal)]
-        [TestFixture(MemoryType.Strict)]
-        [TestFixture(MemoryType.Safe)]
-		public class FindPredicate : BaseMemoryType
+        [TestFixture]
+        public class FindPredicate
         {
             private HashSet<int> list;
             Func<int, bool> pred;
 
-			public FindPredicate (MemoryType memoryType ) : base(memoryType)
-			{
-
-			}
-
-
             [SetUp]
             public void Init()
             {
-                Debug.UseDeterministicHashing = true; 
-                list = new HashSet<int>(TenEqualityComparer.Default, MemoryType);
+                Debug.UseDeterministicHashing = true;
+                list = new HashSet<int>(TenEqualityComparer.Default);
                 pred = delegate (int i) { return i % 5 == 0; };
             }
 
@@ -368,20 +331,13 @@ namespace C5UnitTests.hashtable.set
             }
         }
 
-        [TestFixture(MemoryType.Normal)]
-        [TestFixture(MemoryType.Strict)]
-        [TestFixture(MemoryType.Safe)]
-		public class UniqueItems : BaseMemoryType
+        [TestFixture]
+        public class UniqueItems
         {
             private HashSet<int> list;
 
-			public UniqueItems (MemoryType memoryType ) : base(memoryType)
-			{
-
-			}
-
             [SetUp]
-			public void Init() { list = new HashSet<int>(MemoryType); }
+            public void Init() { list = new HashSet<int>(); }
 
             [TearDown]
             public void Dispose() { list = null; }
@@ -397,25 +353,19 @@ namespace C5UnitTests.hashtable.set
             }
         }
 
-        [TestFixture(MemoryType.Normal)]
-        [TestFixture(MemoryType.Strict)]
-        [TestFixture(MemoryType.Safe)]
-		public class ArrayTest : BaseMemoryType
+        [TestFixture]
+        public class ArrayTest
         {
             private HashSet<int> hashset;
 
             int[] a;
 
-			public ArrayTest (MemoryType memoryType ) : base(memoryType)
-			{
-				
-			}
 
             [SetUp]
             public void Init()
             {
                 Debug.UseDeterministicHashing = true;
-				hashset = new HashSet<int>(MemoryType);
+                hashset = new HashSet<int>();
                 a = new int[10];
                 for (int i = 0; i < 10; i++)
                     a[i] = 1000 + i;
@@ -507,10 +457,8 @@ namespace C5UnitTests.hashtable.set
 
     namespace EditableCollection
     {
-        [TestFixture(MemoryType.Normal)]
-        [TestFixture(MemoryType.Strict)]
-        [TestFixture(MemoryType.Safe)]
-        public class Collision : BaseMemoryType
+        [TestFixture]
+        public class Collision
         {
             HashSet<int> hashset;
 
@@ -518,7 +466,7 @@ namespace C5UnitTests.hashtable.set
             [SetUp]
             public void Init()
             {
-                hashset = new HashSet<int>(MemoryType);
+                hashset = new HashSet<int>();
             }
 
 
@@ -539,17 +487,12 @@ namespace C5UnitTests.hashtable.set
             {
                 hashset = null;
             }
-
-            public Collision(MemoryType memoryType) : base(memoryType)
-            {
-            }
         }
 
 
-        [TestFixture(MemoryType.Normal)]
-        [TestFixture(MemoryType.Strict)]
-        [TestFixture(MemoryType.Safe)]
-        public class Searching : BaseMemoryType
+
+        [TestFixture]
+        public class Searching
         {
             private HashSet<int> hashset;
 
@@ -558,26 +501,26 @@ namespace C5UnitTests.hashtable.set
             public void Init()
             {
                 Debug.UseDeterministicHashing = true;
-                hashset = new HashSet<int>(MemoryType);
+                hashset = new HashSet<int>();
             }
 
 
             [Test]
             public void NullEqualityComparerinConstructor1()
-            { 
-                Assert.Throws<NullReferenceException>(() => new HashSet<int>(null, MemoryType)); 
+            {
+                Assert.Throws<NullReferenceException>(() => new HashSet<int>(null));
             }
 
             [Test]
             public void NullEqualityComparerinConstructor2()
-            { 
-                Assert.Throws<NullReferenceException>(() => new HashSet<int>(5, null, MemoryType)); 
+            {
+                Assert.Throws<NullReferenceException>(() => new HashSet<int>(5, null));
             }
 
             [Test]
             public void NullEqualityComparerinConstructor3()
-            { 
-                Assert.Throws<NullReferenceException>(() => new HashSet<int>(5, 0.5, null, MemoryType)); 
+            {
+                Assert.Throws<NullReferenceException>(() => new HashSet<int>(5, 0.5, null));
             }
 
             [Test]
@@ -680,7 +623,7 @@ namespace C5UnitTests.hashtable.set
             [Test]
             public void ContainsAll()
             {
-                HashSet<int> list2 = new HashSet<int>(MemoryType);
+                HashSet<int> list2 = new HashSet<int>();
 
                 Assert.IsTrue(hashset.ContainsAll(list2));
                 list2.Add(4);
@@ -799,16 +742,10 @@ namespace C5UnitTests.hashtable.set
                 Debug.UseDeterministicHashing = false;
                 hashset = null;
             }
-
-            public Searching(MemoryType memoryType) : base(memoryType)
-            {
-            }
         }
 
-        [TestFixture(MemoryType.Normal)]
-        [TestFixture(MemoryType.Strict)]
-        [TestFixture(MemoryType.Safe)]
-        public class Combined : BaseMemoryType
+        [TestFixture]
+        public class Combined
         {
             private ICollection<KeyValuePair<int, int>> lst;
 
@@ -816,7 +753,7 @@ namespace C5UnitTests.hashtable.set
             [SetUp]
             public void Init()
             {
-                lst = new HashSet<KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>(), MemoryType);
+                lst = new HashSet<KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
                 for (int i = 0; i < 10; i++)
                     lst.Add(new KeyValuePair<int, int>(i, i + 30));
             }
@@ -895,7 +832,7 @@ namespace C5UnitTests.hashtable.set
             [Test]
             public void UpdateOrAdd2()
             {
-                ICollection<String> coll = new HashSet<String>(MemoryType);
+                ICollection<String> coll = new HashSet<String>();
                 // s1 and s2 are distinct objects but contain the same text:
                 String old, s1 = "abc", s2 = ("def" + s1).Substring(3);
                 Assert.IsFalse(coll.UpdateOrAdd(s1, out old));
@@ -917,10 +854,6 @@ namespace C5UnitTests.hashtable.set
                 p = new KeyValuePair<int, int>(13, 78);
                 Assert.IsFalse(lst.Remove(p, out p));
             }
-
-            public Combined(MemoryType memoryType) : base(memoryType)
-            {
-            }
         }
 
 
@@ -931,10 +864,8 @@ namespace C5UnitTests.hashtable.set
 
     namespace HashingAndEquals
     {
-        [TestFixture(MemoryType.Normal)]
-        [TestFixture(MemoryType.Strict)]
-        [TestFixture(MemoryType.Safe)]
-        public class IEditableCollection : BaseMemoryType
+        [TestFixture]
+        public class IEditableCollection
         {
             private ICollection<int> dit, dat, dut;
 
@@ -942,9 +873,9 @@ namespace C5UnitTests.hashtable.set
             [SetUp]
             public void Init()
             {
-                dit = new HashSet<int>(MemoryType);
-                dat = new HashSet<int>(MemoryType);
-                dut = new HashSet<int>(MemoryType);
+                dit = new HashSet<int>();
+                dat = new HashSet<int>();
+                dut = new HashSet<int>();
             }
 
 
@@ -1036,18 +967,12 @@ namespace C5UnitTests.hashtable.set
                 dat = null;
                 dut = null;
             }
-
-            public IEditableCollection(MemoryType memoryType) : base(memoryType)
-            {
-            }
         }
 
 
 
-        [TestFixture(MemoryType.Normal)]
-        [TestFixture(MemoryType.Strict)]
-        [TestFixture(MemoryType.Safe)]
-        public class MultiLevelUnorderedOfUnOrdered : BaseMemoryType
+        [TestFixture]
+        public class MultiLevelUnorderedOfUnOrdered
         {
             private ICollection<int> dit, dat, dut;
 
@@ -1063,9 +988,9 @@ namespace C5UnitTests.hashtable.set
                 dit.Add(2); dit.Add(1);
                 dat.Add(1); dat.Add(2);
                 dut.Add(3);
-                Dit = new HashSet<ICollection<int>>(MemoryType);
-                Dat = new HashSet<ICollection<int>>(MemoryType);
-                Dut = new HashSet<ICollection<int>>(MemoryType);
+                Dit = new HashSet<ICollection<int>>();
+                Dat = new HashSet<ICollection<int>>();
+                Dut = new HashSet<ICollection<int>>();
             }
 
 
@@ -1093,18 +1018,12 @@ namespace C5UnitTests.hashtable.set
                 dit = dat = dut = null;
                 Dit = Dat = Dut = null;
             }
-
-            public MultiLevelUnorderedOfUnOrdered(MemoryType memoryType) : base(memoryType)
-            {
-            }
         }
 
 
 
-        [TestFixture(MemoryType.Normal)]
-        [TestFixture(MemoryType.Strict)]
-        [TestFixture(MemoryType.Safe)]
-        public class MultiLevelOrderedOfUnOrdered : BaseMemoryType
+        [TestFixture]
+        public class MultiLevelOrderedOfUnOrdered
         {
             private ICollection<int> dit, dat, dut;
 
@@ -1114,9 +1033,9 @@ namespace C5UnitTests.hashtable.set
             [SetUp]
             public void Init()
             {
-                dit = new HashSet<int>(MemoryType);
-                dat = new HashSet<int>(MemoryType);
-                dut = new HashSet<int>(MemoryType);
+                dit = new HashSet<int>();
+                dat = new HashSet<int>();
+                dut = new HashSet<int>();
                 dit.Add(2); dit.Add(1);
                 dat.Add(1); dat.Add(2);
                 dut.Add(3);
@@ -1151,18 +1070,12 @@ namespace C5UnitTests.hashtable.set
                 dit = dat = dut = null;
                 Dit = Dat = Dut = null;
             }
-
-            public MultiLevelOrderedOfUnOrdered(MemoryType memoryType) : base(memoryType)
-            {
-            }
         }
 
 
 
-        [TestFixture(MemoryType.Normal)]
-        [TestFixture(MemoryType.Strict)]
-        [TestFixture(MemoryType.Safe)]
-        public class MultiLevelUnOrderedOfOrdered : BaseMemoryType
+        [TestFixture]
+        public class MultiLevelUnOrderedOfOrdered
         {
             private ISequenced<int> dit, dat, dut, dot;
 
@@ -1180,10 +1093,10 @@ namespace C5UnitTests.hashtable.set
                 dat.Add(1); dat.Add(2);
                 dut.Add(3);
                 dot.Add(2); dot.Add(1);
-                Dit = new HashSet<ISequenced<int>>(MemoryType);
-                Dat = new HashSet<ISequenced<int>>(MemoryType);
-                Dut = new HashSet<ISequenced<int>>(MemoryType);
-                Dot = new HashSet<ISequenced<int>>(MemoryType);
+                Dit = new HashSet<ISequenced<int>>();
+                Dat = new HashSet<ISequenced<int>>();
+                Dut = new HashSet<ISequenced<int>>();
+                Dot = new HashSet<ISequenced<int>>();
             }
 
 
@@ -1215,10 +1128,6 @@ namespace C5UnitTests.hashtable.set
             {
                 dit = dat = dut = dot = null;
                 Dit = Dat = Dut = Dot = null;
-            }
-
-            public MultiLevelUnOrderedOfOrdered(MemoryType memoryType) : base(memoryType)
-            {
             }
         }
     }
