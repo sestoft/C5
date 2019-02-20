@@ -34,7 +34,7 @@ namespace C5UnitTests.arrays.sorted
         [Test]
         public void TestEvents()
         {
-            Func<CollectionOfInt> factory = delegate () { return new CollectionOfInt(TenEqualityComparer.Default); };
+            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
             new C5UnitTests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory);
         }
 
@@ -1721,8 +1721,7 @@ namespace C5UnitTests.arrays.sorted
                 Assert.IsFalse(array.Cut(new CubeRoot(1000), out int l, out bool lv, out _, out bool hv));
                 Assert.IsTrue(lv && !hv);
                 Assert.AreEqual(9, l);
-                int h;
-                Assert.IsFalse(array.Cut(new CubeRoot(-50), out _, out lv, out h, out hv));
+                Assert.IsFalse(array.Cut(new CubeRoot(-50), out _, out lv, out int h, out hv));
                 Assert.IsTrue(!lv && hv);
                 Assert.AreEqual(0, h);
             }

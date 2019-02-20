@@ -565,17 +565,6 @@ namespace PointLocation
                 return new String(res);
             }
 
-
-            private string fmtid(int i, int j)
-            {
-                return "";//cell + ";" + cell;
-                /*if (cell < 0 || cell < 0 || cell >= maxi || cell >= maxj)
-                  return "Outside";
-	    
-                  return string.Format("{0}{1}", i2l(cell), cell);*/
-            }
-
-
             public Edge<string> Current
             {
                 get
@@ -587,10 +576,8 @@ namespace PointLocation
                     double ys = currenti * a21 + currentj * a22;
                     double deltax = currenthoriz ? a11 : a12;
                     double deltay = currenthoriz ? a21 : a22;
-                    string r = fmtid(currenti, currenthoriz ? currentj - 1 : currentj);
-                    string l = fmtid(currenthoriz ? currenti : currenti - 1, currentj);
 
-                    return new Edge<string>(xs, ys, xs + deltax, ys + deltay, r, l);
+                    return new Edge<string>(xs, ys, xs + deltax, ys + deltay, "", "");
                 }
             }
 

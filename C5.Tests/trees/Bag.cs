@@ -81,7 +81,7 @@ namespace C5UnitTests.trees.TreeBag
         [Test]
         public void TestEvents()
         {
-            Func<CollectionOfInt> factory = delegate () { return new CollectionOfInt(TenEqualityComparer.Default); };
+            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
             new C5UnitTests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory);
         }
 
@@ -2593,8 +2593,7 @@ namespace C5UnitTests.trees.TreeBag
                 Assert.IsFalse(tree.Cut(new CubeRoot(1000), out int l, out bool lv, out _, out bool hv));
                 Assert.IsTrue(lv && !hv);
                 Assert.AreEqual(9, l);
-                int h;
-                Assert.IsFalse(tree.Cut(new CubeRoot(-50), out _, out lv, out h, out hv));
+                Assert.IsFalse(tree.Cut(new CubeRoot(-50), out _, out lv, out int h, out hv));
                 Assert.IsTrue(!lv && hv);
                 Assert.AreEqual(0, h);
             }

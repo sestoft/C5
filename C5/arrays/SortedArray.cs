@@ -705,7 +705,7 @@ namespace C5
 
             Array.Copy(array, highind, array, 0, size - highind);
             Array.Clear(array, size - highind, highind);
-            size = size - highind;
+            size -= highind;
 
             raiseForRemoveRange(removed);
         }
@@ -1331,10 +1331,10 @@ namespace C5
             Array.Copy(array, start + count, array, start, size - start - count);
             size -= count;
             Array.Clear(array, size, count);
-            raiseForRemoveInterval(start, count);
+            raiseForRemoveInterval(count);
         }
 
-        private void raiseForRemoveInterval(int start, int count)
+        private void raiseForRemoveInterval(int count)
         {
             if (ActiveEvents != 0 && count > 0)
             {

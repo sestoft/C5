@@ -1086,12 +1086,11 @@ namespace C5
         {
             if (!isValid)
                 throw new ViewDisposedException("Snapshot has been disposed");
-            Node next; int comp = 0;
-
+            Node next;
             next = root;
             while (next != null)
             {
-                comp = comparer.Compare(next.item, item);
+                int comp = comparer.Compare(next.item, item);
                 if (comp == 0)
                     return true;
 
@@ -1289,7 +1288,7 @@ namespace C5
             updatecheck();
             if (root == null)
                 return false;
-            bool retval = removeIterative(ref item, false, out _);
+            bool retval = removeIterative(ref item, out _);
             if (ActiveEvents != 0 && retval)
                 raiseForRemove(item);
             return retval;
@@ -1313,7 +1312,7 @@ namespace C5
             removeditem = item;
             if (root == null)
                 return false;
-            bool retval = removeIterative(ref removeditem, false, out _);
+            bool retval = removeIterative(ref removeditem, out _);
             if (ActiveEvents != 0 && retval)
                 raiseForRemove(item);
             return retval;
@@ -1323,10 +1322,9 @@ namespace C5
         /// 
         /// </summary>
         /// <param name="item">input: item to remove; output: item actually removed</param>
-        /// <param name="all">If true, remove all copies</param>
         /// <param name="wasRemoved"></param>
         /// <returns></returns>
-        private bool removeIterative(ref T item, bool all, out int wasRemoved)
+        private bool removeIterative(ref T item, out int wasRemoved)
         {
             wasRemoved = 0;
             //Stage 1: find item
@@ -1698,7 +1696,7 @@ namespace C5
                     break;
 
                 jtem = item;
-                if (removeIterative(ref jtem, false, out int junk) && mustRaise)
+                if (removeIterative(ref jtem, out int junk) && mustRaise)
                     raiseHandler.Remove(jtem);
             }
             if (mustRaise)
@@ -2846,11 +2844,11 @@ namespace C5
         {
             if (isSnapShot)
                 throw new NotSupportedException("Indexing not supported for snapshots");
-            int ind = 0, comp = 0; Node next = root;
+            int ind = 0; Node next = root;
 
             while (next != null)
             {
-                comp = comparer.Compare(item, next.item);
+                int comp = comparer.Compare(item, next.item);
                 if (comp < 0)
                     next = next.left;
                 else
@@ -3071,7 +3069,7 @@ namespace C5
             for (int i = 0; i < count; i++)
             {
                 T item = Predecessor(hi);
-                removeIterative(ref item, false, out _);
+                removeIterative(ref item, out _);
                 if (wasRemoved != null)
                     wasRemoved.Enqueue(item);
             }
@@ -3738,7 +3736,6 @@ namespace C5
         {
             if (root != null)
             {
-                T max, min;
                 if (isSnapShot)
                 {
                     //Logger.Log("Im'a snapshot");

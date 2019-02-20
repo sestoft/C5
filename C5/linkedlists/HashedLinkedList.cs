@@ -843,7 +843,7 @@ namespace C5
                 Endpoint = left ? view.startsentinel.next : view.endsentinel.prev;
 
             }
-            public Position(Node node, int foo) { this.Endpoint = node; View = null; Left = false; }
+            public Position(Node node) { this.Endpoint = node; View = null; Left = false; }
 
         }
 
@@ -887,7 +887,7 @@ namespace C5
                     while (leftEndIndex < viewCount && ((endpoint = leftEnds[leftEndIndex]).Endpoint.prev.precedes(n)))
                     {
                         HashedLinkedList<T> view = endpoint.View;
-                        view.offset = view.offset - removed;//TODO: extract offset.Value?
+                        view.offset -= removed;//TODO: extract offset.Value?
                         view.size += removed;
                         leftEndIndex++;
                     }
@@ -926,7 +926,7 @@ namespace C5
                     while (leftEndIndex < viewCount && ((endpoint = leftEnds[leftEndIndex]).Endpoint.prev.precedes(n)))
                     {
                         HashedLinkedList<T> view = endpoint.View;
-                        view.offset = view.offset - removed; //TODO: fix use of offset
+                        view.offset -= removed; //TODO: fix use of offset
                         view.size += removed;
                         leftEndIndex++;
                     }

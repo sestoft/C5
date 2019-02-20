@@ -33,7 +33,7 @@ namespace C5UnitTests.hashtable.set
         [Test]
         public void TestEvents()
         {
-            Func<CollectionOfInt> factory = delegate () { return new CollectionOfInt(TenEqualityComparer.Default); };
+            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
             new C5UnitTests.Templates.Events.CollectionTester<CollectionOfInt>().Test(factory);
         }
 
@@ -110,7 +110,7 @@ namespace C5UnitTests.hashtable.set
             public void Apply()
             {
                 int sum = 0;
-                Action<int> a = delegate (int i) { sum = i + 10 * sum; };
+                void a(int i) { sum = i + 10 * sum; }
 
                 list.Apply(a);
                 Assert.AreEqual(0, sum);

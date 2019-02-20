@@ -11,7 +11,7 @@ namespace TreeTraversal
     public static void Main(String[] args)
     {
       Tree<int> t = MakeTree(1, 15);
-      Action<int> action = delegate(int val) { Console.Write("{0} ", val); };
+      void action(int val) => Console.Write("{0} ", val);
       Console.WriteLine("Depth-first:");
       Tree<int>.DepthFirst(t, action);
       Console.WriteLine("\nBreadth-first:");

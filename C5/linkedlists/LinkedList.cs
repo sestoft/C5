@@ -600,7 +600,7 @@ namespace C5
                     while (leftEndIndex < viewCount && (endpoint = leftEnds[leftEndIndex]).Index <= realindex)
                     {
                         LinkedList<T> view = endpoint.View;
-                        view.offset = view.offset - removed;
+                        view.offset -= removed;
                         view.size += removed;
                         leftEndIndex++;
                     }

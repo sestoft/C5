@@ -34,7 +34,7 @@ namespace C5UnitTests.hashtable.dictionary
         [Test]
         public void TestEvents()
         {
-            Func<DictionaryIntToInt> factory = delegate () { return new DictionaryIntToInt(TenEqualityComparer.Default); };
+            DictionaryIntToInt factory() { return new DictionaryIntToInt(TenEqualityComparer.Default); }
             new C5UnitTests.Templates.Events.DictionaryTester<DictionaryIntToInt>().Test(factory);
         }
     }

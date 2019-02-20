@@ -35,7 +35,7 @@ namespace C5UnitTests.arrays.hashed
         [Test]
         public void TestEvents()
         {
-            Func<CollectionOfInt> factory = delegate () { return new CollectionOfInt(TenEqualityComparer.Default); };
+            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
             new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory);
         }
 
@@ -702,7 +702,7 @@ namespace C5UnitTests.arrays.hashed
             public void Apply()
             {
                 int sum = 0;
-                Action<int> a = delegate (int i) { sum = i + 10 * sum; };
+                void a(int i) { sum = i + 10 * sum; }
 
                 list.Apply(a);
                 Assert.AreEqual(0, sum);
@@ -1159,7 +1159,7 @@ namespace C5UnitTests.arrays.hashed
             [Test]
             public void FindAll()
             {
-                Func<int, bool> f = delegate (int i) { return i % 2 == 0; };
+                bool f(int i) { return i % 2 == 0; }
 
                 Assert.IsTrue(list.FindAll(f).IsEmpty);
                 list.Add(5); list.Add(8); list.Add(10);
@@ -1751,7 +1751,7 @@ namespace C5UnitTests.arrays.hashed
             [Test]
             public void Map()
             {
-                Func<int, string> m = delegate (int i) { return "<<" + i + ">>"; };
+                string m(int i) { return "<<" + i + ">>"; }
                 IList<string> r = lst.Map(m);
 
                 Assert.IsTrue(((HashedArrayList<string>)r).Check());
@@ -1774,7 +1774,7 @@ namespace C5UnitTests.arrays.hashed
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
+                bool m(int i) { if (i == 2) lst.Add(7); return true; }
 
                 Assert.Throws<CollectionModifiedException>(() => lst.Map(m));
             }
@@ -1785,7 +1785,7 @@ namespace C5UnitTests.arrays.hashed
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
+                bool m(int i) { if (i == 2) lst.Add(7); return true; }
 
                 Assert.Throws<CollectionModifiedException>(() => lst.FindAll(m));
             }
@@ -1797,7 +1797,7 @@ namespace C5UnitTests.arrays.hashed
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
+                bool m(int i) { if (i == 2) lst.Add(7); return true; }
 
                 Assert.Throws<CollectionModifiedException>(() => lst.Map(m));
             }
@@ -1809,7 +1809,7 @@ namespace C5UnitTests.arrays.hashed
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
+                bool m(int i) { if (i == 2) lst.Add(7); return true; }
 
                 Assert.Throws<CollectionModifiedException>(() => lst.FindAll(m));
             }

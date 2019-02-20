@@ -4049,7 +4049,6 @@ namespace C5
         {
             if (root != null)
             {
-                T max, min;
                 if (isSnapShot)
                 {
                     //Logger.Log("Im'a snapshot");

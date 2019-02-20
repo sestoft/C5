@@ -554,7 +554,7 @@ namespace C5
                     while (leftEndIndex < viewCount && (endpoint = leftEnds[leftEndIndex]).index <= realindex)
                     {
                         ArrayList<T> view = endpoint.view;
-                        view.offsetField = view.offsetField - removed;
+                        view.offsetField -= removed;
                         view.size += removed;
                         leftEndIndex++;
                     }

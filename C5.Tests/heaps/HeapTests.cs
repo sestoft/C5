@@ -33,7 +33,7 @@ namespace C5UnitTests.heaps
         [Test]
         public void TestEvents()
         {
-            Func<CollectionOfInt> factory = delegate () { return new CollectionOfInt(TenEqualityComparer.Default); };
+            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
             new C5UnitTests.Templates.Events.PriorityQueueTester<CollectionOfInt>().Test(factory);
         }
 
