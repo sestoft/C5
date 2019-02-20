@@ -73,22 +73,20 @@ namespace MultiCollection
 
     public bool Add(K k, V v)
     {
-      W w;
-      if (!dict.Find(ref k, out w)) 
-        dict.Add(k,w = new W());
-      return w.Add(v);
+            if (!dict.Find(ref k, out W w))
+                dict.Add(k, w = new W());
+            return w.Add(v);
     }
 
     public bool Remove(K k, V v)
     {
-      W w;
-      if (dict.Find(ref k, out w) && w.Remove(v))
-      {
-        if (w.Count == 0)
-          dict.Remove(k);
-        return true;
-      }
-      return false;
+            if (dict.Find(ref k, out W w) && w.Remove(v))
+            {
+                if (w.Count == 0)
+                    dict.Remove(k);
+                return true;
+            }
+            return false;
     }
 
     public ICollectionValue<V> this[K k] { get { return dict[k]; } }

@@ -84,9 +84,8 @@ namespace C5
 
         private int indexOf(T item)
         {
-            int ind;
 
-            if (BinarySearch(item, out ind))
+            if (BinarySearch(item, out int ind))
                 return ind;
 
             return ~ind;
@@ -174,9 +173,8 @@ namespace C5
         /// <returns>The number of matching items.</returns>
         public int CountFrom(T bot)
         {
-            int lo;
 
-            BinarySearch(bot, out lo);
+            BinarySearch(bot, out int lo);
             return size - lo;
         }
 
@@ -189,10 +187,9 @@ namespace C5
         /// <returns>The number of matching items.</returns>
         public int CountFromTo(T bot, T top)
         {
-            int lo, hi;
 
-            BinarySearch(bot, out lo);
-            BinarySearch(top, out hi);
+            BinarySearch(bot, out int lo);
+            BinarySearch(top, out int hi);
             return hi > lo ? hi - lo : 0;
         }
 
@@ -204,9 +201,8 @@ namespace C5
         /// <returns>The number of matching items.</returns>
         public int CountTo(T top)
         {
-            int hi;
 
-            BinarySearch(top, out hi);
+            BinarySearch(top, out int hi);
             return hi;
         }
 
@@ -218,9 +214,8 @@ namespace C5
         /// <returns>The result directed collection.</returns>
         public IDirectedCollectionValue<T> RangeFrom(T bot)
         {
-            int lo;
 
-            BinarySearch(bot, out lo);
+            BinarySearch(bot, out int lo);
             return new Range(this, lo, size - lo, true);
         }
 
@@ -233,10 +228,9 @@ namespace C5
         /// <returns>The result directed collection.</returns>
         public IDirectedCollectionValue<T> RangeFromTo(T bot, T top)
         {
-            int lo, hi;
 
-            BinarySearch(bot, out lo);
-            BinarySearch(top, out hi);
+            BinarySearch(bot, out int lo);
+            BinarySearch(top, out int hi);
 
             int sz = hi - lo;
 
@@ -251,9 +245,8 @@ namespace C5
         /// <returns>The result directed collection.</returns>
         public IDirectedCollectionValue<T> RangeTo(T top)
         {
-            int hi;
 
-            BinarySearch(top, out hi);
+            BinarySearch(top, out int hi);
             return new Range(this, 0, hi, true);
         }
 
@@ -330,8 +323,7 @@ namespace C5
         /// <returns>True if item has a predecessor; otherwise false.</returns>
         public bool TryPredecessor(T item, out T res)
         {
-            int lo;
-            BinarySearch(item, out lo);
+            BinarySearch(item, out int lo);
             if (lo == 0)
             {
                 res = default(T);
@@ -354,8 +346,7 @@ namespace C5
         /// <returns>True if item has a successor; otherwise false.</returns>
         public bool TrySuccessor(T item, out T res)
         {
-            int hi;
-            if (BinarySearch(item, out hi))
+            if (BinarySearch(item, out int hi))
                 hi++;
             if (hi >= size)
             {
@@ -379,9 +370,8 @@ namespace C5
         /// <returns>True if item has a weak predecessor; otherwise false.</returns>
         public bool TryWeakPredecessor(T item, out T res)
         {
-            int lo;
 
-            if (!BinarySearch(item, out lo))
+            if (!BinarySearch(item, out int lo))
                 lo--;
 
             if (lo < 0)
@@ -406,9 +396,8 @@ namespace C5
         /// <returns>True if item has a weak successor; otherwise false.</returns>
         public bool TryWeakSuccessor(T item, out T res)
         {
-            int hi;
 
-            BinarySearch(item, out hi);
+            BinarySearch(item, out int hi);
             if (hi >= size)
             {
                 res = default(T);
@@ -432,9 +421,8 @@ namespace C5
         /// <returns>The predecessor.</returns>
         public T Predecessor(T item)
         {
-            int lo;
 
-            BinarySearch(item, out lo);
+            BinarySearch(item, out int lo);
             if (lo == 0)
                 throw new NoSuchItemException();
 
@@ -452,9 +440,8 @@ namespace C5
         /// <returns>The successor.</returns>
         public T Successor(T item)
         {
-            int hi;
 
-            if (BinarySearch(item, out hi)) hi++;
+            if (BinarySearch(item, out int hi)) hi++;
 
             if (hi >= size)
                 throw new NoSuchItemException();
@@ -473,9 +460,8 @@ namespace C5
         /// <returns>The weak predecessor.</returns>
         public T WeakPredecessor(T item)
         {
-            int lo;
 
-            if (!BinarySearch(item, out lo)) lo--;
+            if (!BinarySearch(item, out int lo)) lo--;
 
             if (lo < 0)
                 throw new NoSuchItemException();
@@ -494,9 +480,8 @@ namespace C5
         /// <returns>The weak successor.</returns>
         public T WeakSuccessor(T item)
         {
-            int hi;
 
-            BinarySearch(item, out hi);
+            BinarySearch(item, out int hi);
             if (hi >= size)
                 throw new NoSuchItemException();
 
@@ -627,7 +612,7 @@ namespace C5
             //too expensive to do repeated inserts, thus:
             updatecheck();
 
-            int j = 0, i = 0, c = -1, itemcount = countItems(items), numAdded = 0;
+            int j = 0, i = 0, c, itemcount = countItems(items), numAdded = 0;
             SortedArray<T> res = new SortedArray<T>(size + itemcount, _comparer);
             T lastitem = default(T);
             T[] addedItems = new T[itemcount];
@@ -663,9 +648,8 @@ namespace C5
         /// <param name="low">The lower threshold (inclusive).</param>
         public void RemoveRangeFrom(T low)
         {
-            int lowind;
 
-            BinarySearch(low, out lowind);
+            BinarySearch(low, out int lowind);
             if (lowind == size)
                 return;
 
@@ -687,10 +671,9 @@ namespace C5
         /// <param name="hi">The upper threshold (exclusive).</param>
         public void RemoveRangeFromTo(T low, T hi)
         {
-            int lowind, highind;
 
-            BinarySearch(low, out lowind);
-            BinarySearch(hi, out highind);
+            BinarySearch(low, out int lowind);
+            BinarySearch(hi, out int highind);
             if (highind <= lowind)
                 return;
 
@@ -712,9 +695,8 @@ namespace C5
         /// <param name="hi">The upper threshold (exclusive).</param>
         public void RemoveRangeTo(T hi)
         {
-            int highind;
 
-            BinarySearch(hi, out highind);
+            BinarySearch(hi, out int highind);
             if (highind == 0)
                 return;
 
@@ -769,9 +751,7 @@ namespace C5
         /// <returns>True if the items is in this collection.</returns>
         public bool Contains(T item)
         {
-            int ind;
-
-            return BinarySearch(item, out ind);
+            return BinarySearch(item, out _);
         }
 
 
@@ -784,9 +764,8 @@ namespace C5
         /// <returns>True if the items is in this collection.</returns>
         public bool Find(ref T item)
         {
-            int ind;
 
-            if (BinarySearch(item, out ind))
+            if (BinarySearch(item, out int ind))
             {
                 item = array[ind];
                 return true;
@@ -808,9 +787,8 @@ namespace C5
         {
             updatecheck();
 
-            int ind;
 
-            if (BinarySearch(item, out ind))
+            if (BinarySearch(item, out int ind))
             {
                 item = array[ind];
                 return true;
@@ -836,7 +814,8 @@ namespace C5
         /// <param name="item">Value to update.</param>
         /// <returns>True if the item was found and hence updated.</returns>
         public bool Update(T item)
-        { T olditem; return Update(item, out olditem); }
+        {
+            return Update(item, out _); }
 
         /// <summary>
         /// 
@@ -848,9 +827,8 @@ namespace C5
         {
             updatecheck();
 
-            int ind;
 
-            if (BinarySearch(item, out ind))
+            if (BinarySearch(item, out int ind))
             {
                 olditem = array[ind];
                 array[ind] = item;
@@ -871,7 +849,8 @@ namespace C5
         /// <param name="item">Value to add or update.</param>
         /// <returns>True if the item was found and updated (hence not added).</returns>
         public bool UpdateOrAdd(T item)
-        { T olditem; return UpdateOrAdd(item, out olditem); }
+        {
+            return UpdateOrAdd(item, out _); }
 
         /// <summary>
         /// 
@@ -883,9 +862,8 @@ namespace C5
         {
             updatecheck();
 
-            int ind;
 
-            if (BinarySearch(item, out ind))
+            if (BinarySearch(item, out int ind))
             {
                 olditem = array[ind];
                 array[ind] = item;
@@ -912,10 +890,9 @@ namespace C5
         /// <returns>True if the item was found (and removed).</returns>
         public bool Remove(T item)
         {
-            int ind;
 
             updatecheck();
-            if (BinarySearch(item, out ind))
+            if (BinarySearch(item, out int ind))
             {
                 T removeditem = array[ind];
                 Array.Copy(array, ind + 1, array, ind, size - ind - 1);
@@ -940,10 +917,9 @@ namespace C5
         /// <returns>True if the item was found (and removed).</returns>
         public bool Remove(T item, out T removeditem)
         {
-            int ind;
 
             updatecheck();
-            if (BinarySearch(item, out ind))
+            if (BinarySearch(item, out int ind))
             {
                 removeditem = array[ind];
                 Array.Copy(array, ind + 1, array, ind, size - ind - 1);
@@ -971,10 +947,10 @@ namespace C5
             bool mustFire = raiseHandler.MustFire;
 
             int[] toremove = new int[(size >> 5) + 1];
-            int ind, j = 0;
+            int j = 0;
 
             foreach (T item in items)
-                if (BinarySearch(item, out ind))
+                if (BinarySearch(item, out int ind))
                     toremove[ind >> 5] |= 1 << (ind & 31);
 
             for (int i = 0; i < size; i++)
@@ -1003,10 +979,10 @@ namespace C5
             bool mustFire = raiseHandler.MustFire;
 
             int[] toretain = new int[(size >> 5) + 1];
-            int ind, j = 0;
+            int j = 0;
 
             foreach (T item in items)
-                if (BinarySearch(item, out ind))
+                if (BinarySearch(item, out int ind))
                     toretain[ind >> 5] |= 1 << (ind & 31);
 
             for (int i = 0; i < size; i++)
@@ -1029,10 +1005,9 @@ namespace C5
         /// <returns>True if all values in <code>items</code>is in this collection.</returns>
         public bool ContainsAll(SCG.IEnumerable<T> items)
         {
-            int tmp;
 
             foreach (T item in items)
-                if (!BinarySearch(item, out tmp))
+                if (!BinarySearch(item, out int tmp))
                     return false;
 
             return true;
@@ -1047,9 +1022,7 @@ namespace C5
         /// <returns>The number of copies found (0 or 1).</returns>
         public int ContainsCount(T item)
         {
-            int tmp;
-
-            return BinarySearch(item, out tmp) ? 1 : 0;
+            return BinarySearch(item, out _) ? 1 : 0;
         }
 
         /// <summary>
@@ -1135,9 +1108,8 @@ namespace C5
         {
             updatecheck();
 
-            int ind;
 
-            if (BinarySearch(item, out ind)) return false;
+            if (BinarySearch(item, out int ind)) return false;
 
             InsertProtected(ind, item);
             raiseForAdd(item);

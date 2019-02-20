@@ -48,9 +48,10 @@ namespace C5UnitTests.support
             [Test]
             public void Check()
             {
-                ABT abt = new ABT();
-
-                abt.thesize = 3;
+                ABT abt = new ABT
+                {
+                    thesize = 3
+                };
                 abt[2] = "aaa";
                 // Assert.IsFalse(abt.Check());
                 abt[0] = "##";
@@ -432,8 +433,7 @@ namespace C5UnitTests.support
             public void SeqequalityComparerViaBuilder2()
             {
                 SCG.IEqualityComparer<LinkedList<int>> h = C5.EqualityComparer<LinkedList<int>>.Default;
-                LinkedList<int> s = new LinkedList<int>();
-                s.Add(1); s.Add(2); s.Add(3);
+                LinkedList<int> s = new LinkedList<int>() { 1, 2, 3 };
                 Assert.AreEqual(CHC.sequencedhashcode(1, 2, 3), h.GetHashCode(s));
             }
 
@@ -441,8 +441,7 @@ namespace C5UnitTests.support
             public void UnseqequalityComparerViaBuilder2()
             {
                 SCG.IEqualityComparer<C5.HashSet<int>> h = C5.EqualityComparer<C5.HashSet<int>>.Default;
-                C5.HashSet<int> s = new C5.HashSet<int>();
-                s.Add(1); s.Add(2); s.Add(3);
+                C5.HashSet<int> s = new C5.HashSet<int>() { 1, 2, 3 };
                 Assert.AreEqual(CHC.unsequencedhashcode(1, 2, 3), h.GetHashCode(s));
             }
 
@@ -451,8 +450,7 @@ namespace C5UnitTests.support
             public void SeqequalityComparerViaBuilder3()
             {
                 SCG.IEqualityComparer<C5.IList<int>> h = C5.EqualityComparer<C5.IList<int>>.Default;
-                C5.IList<int> s = new LinkedList<int>();
-                s.Add(1); s.Add(2); s.Add(3);
+                C5.IList<int> s = new LinkedList<int>() { 1, 2, 3 };
                 Assert.AreEqual(CHC.sequencedhashcode(1, 2, 3), h.GetHashCode(s));
             }
 
@@ -468,8 +466,7 @@ namespace C5UnitTests.support
             public void UnseqequalityComparerViaBuilder3()
             {
                 SCG.IEqualityComparer<IFoo<int>> h = C5.EqualityComparer<IFoo<int>>.Default;
-                IFoo<int> s = new Foo<int>();
-                s.Add(1); s.Add(2); s.Add(3);
+                IFoo<int> s = new Foo<int>() { 1, 2, 3 };
                 Assert.AreEqual(CHC.unsequencedhashcode(1, 2, 3), h.GetHashCode(s));
             }
 
@@ -488,8 +485,7 @@ namespace C5UnitTests.support
             public void SeqequalityComparerViaBuilder4()
             {
                 SCG.IEqualityComparer<IBaz> h = C5.EqualityComparer<IBaz>.Default;
-                IBaz s = new Baz();
-                s.Add(1); s.Add(2); s.Add(3);
+                IBaz s = new Baz() { 1, 2, 3 };
                 Assert.AreEqual(CHC.sequencedhashcode(1, 2, 3), h.GetHashCode(s));
             }
 
@@ -531,8 +527,7 @@ namespace C5UnitTests.support
             public void UnseqequalityComparerViaBuilder4()
             {
                 SCG.IEqualityComparer<IBar> h = C5.EqualityComparer<IBar>.Default;
-                IBar s = new Bar();
-                s.Add(1); s.Add(2); s.Add(3);
+                IBar s = new Bar() { 1, 2, 3 };
                 Assert.AreEqual(CHC.unsequencedhashcode(1, 2, 3), h.GetHashCode(s));
             }
 
@@ -566,8 +561,8 @@ namespace C5UnitTests.support
                 // Repro for bug20101103
                 SCG.IEqualityComparer<Object> eqc = new EveryThingIsEqual();
                 Object o1 = new Object(), o2 = new Object();
-                C5.ICollection<Object> coll1 = new ArrayList<Object>(eqc),
-                  coll2 = new ArrayList<Object>(eqc);
+                C5.ICollection<Object> coll1 = new ArrayList<Object>(eqc);
+                C5.ICollection<Object> coll2 = new ArrayList<Object>(eqc);
                 coll1.Add(o1);
                 coll2.Add(o2);
                 Assert.IsFalse(o1.Equals(o2));

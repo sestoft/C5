@@ -610,7 +610,6 @@ namespace C5UnitTests.heaps
         public void RandomDuplicates()
         {
             int length = 1000;
-            int s;
             int[] a = new int[length];
             Random ran = new Random(6754);
 
@@ -624,7 +623,7 @@ namespace C5UnitTests.heaps
             {
                 Assert.AreEqual(a[i], queue.DeleteMin());
                 Assert.IsTrue(queue.Check());
-                Assert.AreEqual(a[length - i - 1], s = queue.DeleteMax());
+                Assert.AreEqual(a[length - i - 1], _ = queue.DeleteMax());
                 Assert.IsTrue(queue.Check());
             }
 

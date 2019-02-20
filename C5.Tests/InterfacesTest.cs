@@ -401,14 +401,13 @@ namespace C5UnitTests.interfaces
       dict["R"] = "A";
       dict["S"] = "B";
       dict["T"] = "C";
-      String old;
-      Assert.IsTrue(dict.Update("R", "A1"));
-      Assert.AreEqual("A1", dict["R"]);
+            Assert.IsTrue(dict.Update("R", "A1"));
+            Assert.AreEqual("A1", dict["R"]);
 
       Assert.IsFalse(dict.Update("U", "D1"));
       Assert.IsFalse(dict.Contains("U"));
       
-      Assert.IsTrue(dict.Update("R", "A2", out old));
+      Assert.IsTrue(dict.Update("R", "A2", out string old));
       Assert.AreEqual("A2", dict["R"]);
       Assert.AreEqual("A1", old);
       

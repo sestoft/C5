@@ -462,14 +462,13 @@ namespace C5UnitTests
             // The formatting is handled here.
             if (intToBeFormatted == 0)
                 return "0";
-            int digitIndex = 0;
             int intPositive;
             char[] outDigits = new char[31];
 
             // Verify that the argument can be converted to a int integer.
             // Extract the magnitude for conversion.
             intPositive = Math.Abs(intToBeFormatted);
-
+            int digitIndex;
             // Convert the magnitude to a digit string.
             for (digitIndex = 0; digitIndex <= 32; digitIndex++)
             {

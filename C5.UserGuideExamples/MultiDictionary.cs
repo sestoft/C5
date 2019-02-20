@@ -45,14 +45,16 @@ namespace MultiDictionary1 {
   class TestIt {
     public static void Run() { 
       {
-	MultiHashDictionary<int,String> mdict 
-	  = new MultiHashDictionary<int,String>();
-	mdict.Add(2, "to");
-	mdict.Add(2, "deux");
-	mdict.Add(2, "two");
-	mdict.Add(20, "tyve");
-	mdict.Add(20, "twenty");
-	Console.WriteLine(mdict);
+                MultiHashDictionary<int, String> mdict
+                  = new MultiHashDictionary<int, String>
+                  {
+                      { 2, "to" },
+                      { 2, "deux" },
+                      { 2, "two" },
+                      { 20, "tyve" },
+                      { 20, "twenty" }
+                  };
+                Console.WriteLine(mdict);
 	Console.WriteLine("mdict.Count is {0}", mdict.Count);
 	Console.WriteLine("mdict.Count (keys) is {0}", 
 			  ((IDictionary<int,ICollection<String>>)mdict).Count);
@@ -61,9 +63,11 @@ namespace MultiDictionary1 {
 	mdict.Remove(20, "twenty");
 	Console.WriteLine(mdict);
 	Console.WriteLine("mdict.Count is {0}", mdict.Count);
-	ICollection<String> zwei = new HashSet<String>();
-	zwei.Add("zwei");
-	mdict[2] = zwei;
+                ICollection<String> zwei = new HashSet<String>
+                {
+                    "zwei"
+                };
+                mdict[2] = zwei;
 	mdict[-2] = zwei;
 	Console.WriteLine(mdict);
 	Console.WriteLine("mdict.Count is {0}", mdict.Count);
@@ -127,35 +131,35 @@ namespace MultiDictionary1 {
     // Add a (key,value) pair
 
     public virtual void Add(K k, V v) {
-      ICollection<V> values;
-      if (!base.Find(ref k, out values) || values == null) {
-        values = new HashSet<V>();
-        Add(k, values);
-      } 
-      values.Add(v);
+            if (!base.Find(ref k, out ICollection<V> values) || values == null)
+            {
+                values = new HashSet<V>();
+                Add(k, values);
+            }
+            values.Add(v);
     }
 
     // Remove a single (key,value) pair, if present; return true if
     // anything was removed, else false
 
     public virtual bool Remove(K k, V v) {
-      ICollection<V> values;
-      if (base.Find(ref k, out values) && values != null) {
-        if (values.Remove(v)) {
-          if (values.IsEmpty)
-            base.Remove(k);
-          return true;
-        } 
-      }
-      return false;
+            if (base.Find(ref k, out ICollection<V> values) && values != null)
+            {
+                if (values.Remove(v))
+                {
+                    if (values.IsEmpty)
+                        base.Remove(k);
+                    return true;
+                }
+            }
+            return false;
     }
     
     // Determine whether key k is associated with a value
 
-    public override bool Contains(K k) { 
-      ICollection<V> values;
-      return base.Find(ref k, out values) && values != null && !values.IsEmpty;
-    }
+    public override bool Contains(K k) {
+            return base.Find(ref k, out ICollection<V> values) && values != null && !values.IsEmpty;
+        }
 
     // Determine whether each key in ks is associated with a value
 
@@ -170,9 +174,8 @@ namespace MultiDictionary1 {
 
     public override ICollection<V> this[K k] {
       get {
-        ICollection<V> values;
-        return base.Find(ref k, out values) && values != null ? values : new HashSet<V>();
-      }
+                return base.Find(ref k, out ICollection<V> values) && values != null ? values : new HashSet<V>();
+            }
       set {
         base[k] = value;
       }
@@ -203,14 +206,16 @@ namespace MultiDictionary2 {
   class TestIt {
     public static void Run() {
       {
-	MultiHashDictionary<int,String> mdict 
-	  = new MultiHashDictionary<int,String>();
-	mdict.Add(2, "to");
-	mdict.Add(2, "deux");
-	mdict.Add(2, "two");
-	mdict.Add(20, "tyve");
-	mdict.Add(20, "twenty");
-	Console.WriteLine(mdict);
+                MultiHashDictionary<int, String> mdict
+                  = new MultiHashDictionary<int, String>
+                  {
+                      { 2, "to" },
+                      { 2, "deux" },
+                      { 2, "two" },
+                      { 20, "tyve" },
+                      { 20, "twenty" }
+                  };
+                Console.WriteLine(mdict);
 	Console.WriteLine("mdict.Count is {0}", mdict.Count);
 	Console.WriteLine("mdict.Count (keys) is {0}", 
 			  ((IDictionary<int,ICollection<String>>)mdict).Count);
@@ -219,9 +224,11 @@ namespace MultiDictionary2 {
 	mdict.Remove(20, "twenty");
 	Console.WriteLine(mdict);
 	Console.WriteLine("mdict.Count is {0}", mdict.Count);
-	ICollection<String> zwei = new HashSet<String>();
-	zwei.Add("zwei");
-	mdict[2] = zwei;
+                ICollection<String> zwei = new HashSet<String>
+                {
+                    "zwei"
+                };
+                mdict[2] = zwei;
 	mdict[-2] = zwei;
 	Console.WriteLine(mdict);
 	Console.WriteLine("mdict.Count is {0}", mdict.Count);
@@ -245,14 +252,16 @@ namespace MultiDictionary2 {
 	Console.WriteLine("------------------------------");
       }
       {
-	MultiHashDictionary<int,String,HashSet<String>> mdict 
-	  = new MultiHashDictionary<int,String,HashSet<String>>();
-	mdict.Add(2, "to");
-	mdict.Add(2, "deux");
-	mdict.Add(2, "two");
-	mdict.Add(20, "tyve");
-	mdict.Add(20, "twenty");
-	Console.WriteLine(mdict);
+                MultiHashDictionary<int, String, HashSet<String>> mdict
+                  = new MultiHashDictionary<int, String, HashSet<String>>
+                  {
+                      { 2, "to" },
+                      { 2, "deux" },
+                      { 2, "two" },
+                      { 20, "tyve" },
+                      { 20, "twenty" }
+                  };
+                Console.WriteLine(mdict);
 	Console.WriteLine("mdict.Count is {0}", mdict.Count);
 	Console.WriteLine("mdict.Count (keys) is {0}", 
 			  ((IDictionary<int,HashSet<String>>)mdict).Count);
@@ -261,9 +270,11 @@ namespace MultiDictionary2 {
 	mdict.Remove(20, "twenty");
 	Console.WriteLine(mdict);
 	Console.WriteLine("mdict.Count is {0}", mdict.Count);
-	HashSet<String> zwei = new HashSet<String>();
-	zwei.Add("zwei");
-	mdict[2] = zwei;
+                HashSet<String> zwei = new HashSet<String>
+                {
+                    "zwei"
+                };
+                mdict[2] = zwei;
 	mdict[-2] = zwei;
 	Console.WriteLine(mdict);
 	Console.WriteLine("mdict.Count is {0}", mdict.Count);
@@ -350,35 +361,35 @@ namespace MultiDictionary2 {
     // Add a (key,value) pair
 
     public virtual void Add(K k, V v) {
-      ICollection<V> values;
-      if (!base.Find(ref k, out values) || values == null) {
-        values = new HashSet<V>();
-        Add(k, values);
-      } 
-      values.Add(v);
+            if (!base.Find(ref k, out ICollection<V> values) || values == null)
+            {
+                values = new HashSet<V>();
+                Add(k, values);
+            }
+            values.Add(v);
     }
 
     // Remove a single (key,value) pair, if present; return true if
     // anything was removed, else false
 
     public virtual bool Remove(K k, V v) {
-      ICollection<V> values;
-      if (base.Find(ref k, out values) && values != null) {
-        if (values.Remove(v)) {
-          if (values.IsEmpty)
-            base.Remove(k);
-          return true;
-        } 
-      }
-      return false;
+            if (base.Find(ref k, out ICollection<V> values) && values != null)
+            {
+                if (values.Remove(v))
+                {
+                    if (values.IsEmpty)
+                        base.Remove(k);
+                    return true;
+                }
+            }
+            return false;
     }
     
     // Determine whether key k is associated with a value
 
-    public override bool Contains(K k) { 
-      ICollection<V> values;
-      return Find(ref k, out values) && values != null && !values.IsEmpty;
-    }
+    public override bool Contains(K k) {
+            return Find(ref k, out ICollection<V> values) && values != null && !values.IsEmpty;
+        }
 
     // Determine whether each key in ks is associated with a value
 
@@ -393,9 +404,8 @@ namespace MultiDictionary2 {
 
     public override ICollection<V> this[K k] {
       get {
-        ICollection<V> values;
-        return base.Find(ref k, out values) && values != null ? values : new HashSet<V>();
-      }
+                return base.Find(ref k, out ICollection<V> values) && values != null ? values : new HashSet<V>();
+            }
       set {
         base[k] = value;
       }
@@ -483,35 +493,35 @@ namespace MultiDictionary2 {
     // Add a (key,value) pair
 
     public virtual void Add(K k, V v) {
-      VC values;
-      if (!base.Find(ref k, out values) || values == null) {
-        values = new VC();
-        Add(k, values);
-      } 
-      values.Add(v);
+            if (!base.Find(ref k, out VC values) || values == null)
+            {
+                values = new VC();
+                Add(k, values);
+            }
+            values.Add(v);
     }
 
     // Remove a single (key,value) pair, if present; return true if
     // anything was removed, else false
 
     public virtual bool Remove(K k, V v) {
-      VC values;
-      if (base.Find(ref k, out values) && values != null) {
-        if (values.Remove(v)) {
-          if (values.IsEmpty)
-            base.Remove(k);
-          return true;
-        } 
-      }
-      return false;
+            if (base.Find(ref k, out VC values) && values != null)
+            {
+                if (values.Remove(v))
+                {
+                    if (values.IsEmpty)
+                        base.Remove(k);
+                    return true;
+                }
+            }
+            return false;
     }
     
     // Determine whether key k is associated with a value
 
-    public override bool Contains(K k) { 
-      VC values;
-      return Find(ref k, out values) && values != null && !values.IsEmpty;
-    }
+    public override bool Contains(K k) {
+            return Find(ref k, out VC values) && values != null && !values.IsEmpty;
+        }
 
     // Determine whether each key in ks is associated with a value
 
@@ -526,9 +536,8 @@ namespace MultiDictionary2 {
 
     public override VC this[K k] {
       get {
-        VC values;
-        return base.Find(ref k, out values) && values != null ? values : new VC();
-      }
+                return base.Find(ref k, out VC values) && values != null ? values : new VC();
+            }
       set {
         base[k] = value;
       }

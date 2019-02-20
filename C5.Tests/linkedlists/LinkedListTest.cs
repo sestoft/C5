@@ -328,8 +328,7 @@ namespace C5UnitTests.linkedlists.plain
             [Test]
             public void Find()
             {
-                int i;
-                Assert.IsFalse(list.Find(pred, out i));
+                Assert.IsFalse(list.Find(pred, out int i));
                 list.AddAll(new int[] { 4, 22, 67, 37 });
                 Assert.IsFalse(list.Find(pred, out i));
                 list.AddAll(new int[] { 45, 122, 675, 137 });
@@ -340,8 +339,7 @@ namespace C5UnitTests.linkedlists.plain
             [Test]
             public void FindLast()
             {
-                int i;
-                Assert.IsFalse(list.FindLast(pred, out i));
+                Assert.IsFalse(list.FindLast(pred, out int i));
                 list.AddAll(new int[] { 4, 22, 67, 37 });
                 Assert.IsFalse(list.FindLast(pred, out i));
                 list.AddAll(new int[] { 45, 122, 675, 137 });
@@ -1014,8 +1012,8 @@ namespace C5UnitTests.linkedlists.plain
             {
                 ICollection<String> coll = new LinkedList<String>();
                 // s1 and s2 are distinct objects but contain the same text:
-                String old, s1 = "abc", s2 = ("def" + s1).Substring(3);
-                Assert.IsFalse(coll.UpdateOrAdd(s1, out old));
+                String s1 = "abc", s2 = ("def" + s1).Substring(3);
+                Assert.IsFalse(coll.UpdateOrAdd(s1, out string old));
                 Assert.AreEqual(null, old);
                 Assert.IsTrue(coll.UpdateOrAdd(s2, out old));
                 Assert.IsTrue(Object.ReferenceEquals(s1, old));
@@ -1034,7 +1032,7 @@ namespace C5UnitTests.linkedlists.plain
                 Assert.AreEqual(4, lst[3].Key);
                 Assert.AreEqual(34, lst[3].Value);
                 p = new KeyValuePair<int, int>(13, 78);
-                Assert.IsFalse(lst.Remove(p, out p));
+                Assert.IsFalse(lst.Remove(p, out _));
             }
         }
 
@@ -1219,9 +1217,8 @@ namespace C5UnitTests.linkedlists.plain
                 lst.Add(3);
                 lst.Add(4);
 
-                IList<int> lst2 = new LinkedList<int>();
+                IList<int> lst2 = new LinkedList<int>() { 7, 8, 9 };
 
-                lst2.Add(7); lst2.Add(8); lst2.Add(9);
                 lst.InsertAll(0, lst2);
                 Assert.IsTrue(lst.Check());
                 Assert.IsTrue(IC.eq(lst, 7, 8, 9, 1, 2, 3, 4));
@@ -1648,8 +1645,7 @@ namespace C5UnitTests.linkedlists.plain
             [SetUp]
             public void Init()
             {
-                list = new LinkedList<int>();
-                list.Add(0); list.Add(1); list.Add(2); list.Add(3);
+                list = new LinkedList<int>() { 0, 1, 2, 3 };
                 view = (LinkedList<int>)list.View(1, 2);
             }
 
@@ -1803,9 +1799,7 @@ namespace C5UnitTests.linkedlists.plain
                 Assert.IsTrue(IC.eq(list, 0, 8, 18, 12, 15, 3));
                 Assert.IsTrue(IC.eq(view, 8, 18, 12, 15));
 
-                LinkedList<int> lst2 = new LinkedList<int>();
-
-                lst2.Add(90); lst2.Add(92);
+                LinkedList<int> lst2 = new LinkedList<int>() { 90, 92 };
                 view.AddAll(lst2);
                 check();
                 Assert.IsTrue(IC.eq(list, 0, 8, 18, 12, 15, 90, 92, 3));
@@ -1836,9 +1830,8 @@ namespace C5UnitTests.linkedlists.plain
                 Assert.IsTrue(view.Contains(1));
                 Assert.IsFalse(view.Contains(0));
 
-                LinkedList<int> lst2 = new LinkedList<int>();
+                LinkedList<int> lst2 = new LinkedList<int>() { 2 };
 
-                lst2.Add(2);
                 Assert.IsTrue(view.ContainsAll(lst2));
                 lst2.Add(3);
                 Assert.IsFalse(view.ContainsAll(lst2));
@@ -1990,9 +1983,8 @@ namespace C5UnitTests.linkedlists.plain
                 view.Add(1); view.Add(5); view.Add(3); view.Add(1); view.Add(3); view.Add(0);
                 Assert.IsTrue(IC.eq(view, 2, 5, 1, 1, 5, 3, 1, 3, 0));
 
-                LinkedList<int> l2 = new LinkedList<int>();
+                LinkedList<int> l2 = new LinkedList<int>() { 1, 2, 2, 3, 1 };
 
-                l2.Add(1); l2.Add(2); l2.Add(2); l2.Add(3); l2.Add(1);
                 view.RemoveAll(l2);
                 check();
                 Assert.IsTrue(IC.eq(view, 5, 5, 1, 3, 0));
@@ -2260,8 +2252,7 @@ namespace C5UnitTests.linkedlists.plain
             [Test]
             public void RemoveAll1()
             {
-                LinkedList<int> list2 = new LinkedList<int>();
-                list2.Add(1); list2.Add(3); list2.Add(4);
+                LinkedList<int> list2 = new LinkedList<int>() { 1, 3, 4 };
 
                 for (int i = 0; i < 7; i++)
                 {
@@ -2269,7 +2260,7 @@ namespace C5UnitTests.linkedlists.plain
                     {
                         list = new LinkedList<int>();
                         for (int k = 0; k < 6; k++) list.Add(k);
-                        LinkedList<int> v = (LinkedList<int>)list.View(i, j);
+                        _ = (LinkedList<int>)list.View(i, j);
                         list.RemoveAll(list2);
                         Assert.IsTrue(list.Check(), "list check after RemoveAll, i=" + i + ", j=" + j);
                     }
@@ -2278,8 +2269,7 @@ namespace C5UnitTests.linkedlists.plain
             [Test]
             public void RemoveAll2()
             {
-                LinkedList<int> list2 = new LinkedList<int>();
-                list2.Add(1); list2.Add(3); list2.Add(4);
+                LinkedList<int> list2 = new LinkedList<int>() { 1, 3, 4 };
                 Assert.IsTrue(list.Check(), "list check before RemoveAll");
                 list.RemoveAll(list2);
 
@@ -2347,8 +2337,7 @@ namespace C5UnitTests.linkedlists.plain
             [Test]
             public void RetainAll()
             {
-                LinkedList<int> list2 = new LinkedList<int>();
-                list2.Add(2); list2.Add(4); list2.Add(5);
+                LinkedList<int> list2 = new LinkedList<int>() { 2, 4, 5 };
                 Assert.IsTrue(list.Check(), "list check before RetainAll");
                 list.RetainAll(list2);
                 Assert.AreEqual(0, views[0][0].Offset, "view [0][0] offset");
@@ -2416,8 +2405,7 @@ namespace C5UnitTests.linkedlists.plain
             [Test]
             public void RemoveAllCopies()
             {
-                LinkedList<int> list2 = new LinkedList<int>();
-                list2.Add(0); list2.Add(2); list2.Add(2); list2.Add(2); list2.Add(5); list2.Add(2); list2.Add(1);
+                LinkedList<int> list2 = new LinkedList<int>() { 0, 2, 2, 2, 5, 2, 1 };
                 for (int i = 0; i < 7; i++)
                 {
                     for (int j = 0; j < 7 - i; j++)
@@ -2435,10 +2423,10 @@ namespace C5UnitTests.linkedlists.plain
 
             private void checkDisposed(bool reverse, int start, int count)
             {
-                int k = 0;
                 for (int i = 0; i < 7; i++)
                     for (int j = 0; j < 7 - i; j++)
                     {
+                        int k;
                         if (i + j <= start || i >= start + count || (i <= start && i + j >= start + count) || (reverse && start <= i && start + count >= i + j))
                         {
                             try

@@ -251,8 +251,6 @@ namespace PointLocation
 
             //if (DoubleComparer.StaticCompare(cell.key,x)==0)
             //Just note it, we have thrown away the vertical edges!
-            Edge<T> low, high;
-            bool lval, hval;
             PointComparer<T> c = new PointComparer<T>(x, y);
 
             //Return value true here means we are at an edge.
@@ -261,7 +259,7 @@ namespace PointLocation
             //Therefore we do not attempt to sort out completely the case
             //where (x,y) is on an edge or even on several edges,
             //and just deliver some cell it is in.
-            p.Value.Cut(c, out low, out lval, out high, out hval);
+            p.Value.Cut(c, out Edge<T> low, out bool lval, out _, out bool hval);
             if (!lval || !hval)
             {
                 cell = default(T);
@@ -283,7 +281,6 @@ namespace PointLocation
 
             //if (DoubleComparer.StaticCompare(cell.key,x)==0)
             //Just note it, we have thrown away the vertical edges!
-            Edge<T> low, high;
             PointComparer<T> c = new PointComparer<T>(x, y);
 
             //Return value true here means we are at an edge.
@@ -292,7 +289,7 @@ namespace PointLocation
             //Therefore we do not attempt to sort out completely the case
             //where (x,y) is on an edge or even on several edges,
             //and just deliver some cell it is in.
-            p.Value.Cut(c, out low, out lval, out high, out hval);
+            p.Value.Cut(c, out Edge<T> low, out lval, out Edge<T> high, out hval);
             upper = hval ? high.Cell(false) : default(T);
             lower = lval ? low.Cell(true) : default(T);
             return;
@@ -300,9 +297,8 @@ namespace PointLocation
 
         public void Test(double x, double y)
         {
-            T cell;
 
-            if (Place(x, y, out cell))
+            if (Place(x, y, out T cell))
                 Console.WriteLine("({0}; {1}): <- {2} ", x, y, cell);
             else
                 Console.WriteLine("({0}; {1}): -", x, y);
@@ -390,7 +386,7 @@ namespace PointLocation
                         throw new InvalidOperationException();
 
                     double y = (level * 37) % maxlevel;
-                    double deltax = leftend ? 1 : maxlevel;
+                    _ = leftend ? 1 : maxlevel;
 
                     if (leftend)
                         return new Edge<int>(0, y, level, y - 0.5, 0, 0);
@@ -458,9 +454,7 @@ namespace PointLocation
 
                 for (int i = 0; i < count; i++)
                 {
-                    int cell;
-
-                    res ^= pointlocator.Place(random.NextDouble() * d, random.NextDouble() * d, out cell);
+                    res ^= pointlocator.Place(random.NextDouble() * d, random.NextDouble() * d, out _);
                 }
 
                 return res;
@@ -469,7 +463,7 @@ namespace PointLocation
             public static void Run(string[] args)
             {
                 int d = args.Length >= 2 ? int.Parse(args[1]) : 400;//00;
-                int repeats = args.Length >= 3 ? int.Parse(args[2]) : 10;
+                _ = args.Length >= 3 ? int.Parse(args[2]) : 10;
                 int lookups = args.Length >= 4 ? int.Parse(args[3]) : 500;//00;
 
                 new TestUgly(d).run(lookups);
@@ -478,9 +472,7 @@ namespace PointLocation
 
             public void run(int lookups)
             {
-                double s = 0;
-
-                s += Traverse();
+                _ = Traverse();
 
                 pointlocator = new PointLocator<int>(ugly);
                 pointlocator.Build();
@@ -672,9 +664,7 @@ namespace PointLocation
 
                 for (int i = 0; i < count; i++)
                 {
-                    string cell;
-
-                    res ^= pointlocator.Place(random.NextDouble() * d, random.NextDouble() * d, out cell);
+                    res ^= pointlocator.Place(random.NextDouble() * d, random.NextDouble() * d, out _);
                 }
 
                 return res;
@@ -686,10 +676,8 @@ namespace PointLocation
                 int d = 200;
                 int repeats = 2;
                 int lookups = 50000;
-                TestLattice tl = null;
-
                 Console.WriteLine("TestLattice Run({0}), means over {1} repeats:", d, repeats);
-                tl = new TestLattice(d, 0.000001);
+                TestLattice tl = new TestLattice(d, 0.000001);
 
                 tl.Traverse();
 
@@ -736,9 +724,8 @@ namespace PointLocation
 				pl.Add (new Edge<int> (3, 4, 4, 2, 1, -1));
 				pl.Add (new Edge<int> (1, 1, 4, 2, -1, 1));
 				pl.Build ();
-				int x;
 
-				pl.Place(0, 0, out x); Debug.Assert(x == 0);
+                pl.Place(0, 0, out int x); Debug.Assert(x == 0);
 				pl.Place(1, 0, out x); Debug.Assert(x == 0);
 				pl.Place(2, 0, out x); Debug.Assert(x == 0);
 				pl.Place(3, 0, out x); Debug.Assert(x == 0);
@@ -793,9 +780,8 @@ namespace PointLocation
 				pl.Add(new Edge<int>(3, 6, 4, 5, 2, 1));
 				pl.Add(new Edge<int>(2, 4, 4, 5, 1, 2));
 				pl.Build();
-				int x;
 
-				pl.Place(0, 0, out x); Debug.Assert(x == 0);
+                pl.Place(0, 0, out int x); Debug.Assert(x == 0);
 				pl.Place(1, 0, out x); Debug.Assert(x == 0);
 				pl.Place(2, 0, out x); Debug.Assert(x == 0);
 				pl.Place(3, 0, out x); Debug.Assert(x == 0);
@@ -903,9 +889,8 @@ namespace PointLocation
 				pl.Add(new Edge<int>(4, 3, 6, 6, 1, -1));
 				pl.Add(new Edge<int>(1, 1, 4, 3, 1, -1));
 				pl.Build();
-				int x;
 
-				pl.Place(0, 0, out x); Debug.Assert(x == 0);
+                pl.Place(0, 0, out int x); Debug.Assert(x == 0);
 				pl.Place(1, 0, out x); Debug.Assert(x == 0);
 				pl.Place(2, 0, out x); Debug.Assert(x == 0);
 				pl.Place(3, 0, out x); Debug.Assert(x == 0);
@@ -1009,9 +994,8 @@ namespace PointLocation
 				pl.Add(new Edge<int>(9, 4, 11, 2, 2, 5));
 				pl.Build();
 
-				int x;
-				
-				pl.Place(0, 0, out x); Debug.Assert(x == 0);
+
+                pl.Place(0, 0, out int x); Debug.Assert(x == 0);
 				pl.Place(1, 0, out x); Debug.Assert(x == 0);
 				pl.Place(2, 0, out x); Debug.Assert(x == 0);
 				pl.Place(3, 0, out x); Debug.Assert(x == 0);

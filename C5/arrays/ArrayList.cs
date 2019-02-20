@@ -1367,8 +1367,7 @@ namespace C5
         /// <returns>True if the item was found and hence updated.</returns>
         public virtual bool Update(T item)
         {
-            T olditem;
-            return Update(item, out olditem);
+            return Update(item, out _);
         }
 
         /// <summary>

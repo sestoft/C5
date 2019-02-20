@@ -155,14 +155,14 @@ namespace C5
             {
                 T min = heap[i].first, iv = min;
                 Handle minhandle = heap[i].firsthandle;
-                int p = (i + 1) / 2 - 1;
+                _ = (i + 1) / 2 - 1;
 
                 while (i > 0)
                 {
+                    int p;
                     if (comparer.Compare(iv, min = heap[p = (i + 1) / 2 - 1].first) < 0)
                     {
                         updateFirst(i, min, heap[p].firsthandle);
-                        min = iv;
                         i = p;
                     }
                     else
@@ -180,14 +180,14 @@ namespace C5
             {
                 T max = heap[i].last, iv = max;
                 Handle maxhandle = heap[i].lasthandle;
-                int p = (i + 1) / 2 - 1;
+                _ = (i + 1) / 2 - 1;
 
                 while (i > 0)
                 {
+                    int p;
                     if (comparer.Compare(iv, max = heap[p = (i + 1) / 2 - 1].last) > 0)
                     {
                         updateLast(i, max, heap[p].lasthandle);
-                        max = iv;
                         i = p;
                     }
                     else
@@ -268,8 +268,7 @@ namespace C5
         /// <returns>The removed item.</returns>
         public T DeleteMin()
         {
-            IPriorityQueueHandle<T> handle = null;
-            return DeleteMin(out handle);
+            return DeleteMin(out _);
         }
 
 
@@ -296,8 +295,7 @@ namespace C5
         /// <returns>The removed item.</returns>
         public T DeleteMax()
         {
-            IPriorityQueueHandle<T> handle = null;
-            return DeleteMax(out handle);
+            return DeleteMax(out _);
         }
 
 
@@ -631,9 +629,7 @@ namespace C5
         {
             get
             {
-                int cell;
-                bool isfirst;
-                checkHandle(handle, out cell, out isfirst);
+                checkHandle(handle, out int cell, out bool isfirst);
 
                 return isfirst ? heap[cell].first : heap[cell].last;
             }
@@ -718,9 +714,7 @@ namespace C5
         public T Delete(IPriorityQueueHandle<T> handle)
         {
             stamp++;
-            int cell;
-            bool isfirst;
-            Handle myhandle = checkHandle(handle, out cell, out isfirst);
+            Handle myhandle = checkHandle(handle, out int cell, out bool isfirst);
 
             T retval;
             myhandle.index = -1;
@@ -831,9 +825,7 @@ namespace C5
         public T Replace(IPriorityQueueHandle<T> handle, T item)
         {
             stamp++;
-            int cell;
-            bool isfirst;
-            checkHandle(handle, out cell, out isfirst);
+            checkHandle(handle, out int cell, out bool isfirst);
             if (size == 0)
                 throw new NoSuchItemException();
 

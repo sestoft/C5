@@ -271,14 +271,14 @@ namespace C5UnitTests.wrappers
           new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(67, 1), guarded),
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), guarded)
         });
-                list.UpdateOrAdd(51, out val);
+                list.UpdateOrAdd(51, out _);
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventTypeEnum.Removed, new ItemCountEventArgs<int>(53, 1), guarded),
           new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(51, 1), guarded),
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), guarded)
         });
-                val = 67;
-                list.UpdateOrAdd(81, out val);
+                // val = 67;
+                list.UpdateOrAdd(81, out _);
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(81, 1), guarded),
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), guarded)

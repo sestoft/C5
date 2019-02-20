@@ -47,10 +47,9 @@ namespace BipartiteMatching
       for (int i = 0; i < args.Length; i++)
       {
           var j = i;
-        char c;
-        if (!res.Find(ref j,out c))
-          c='-';
-        Console.WriteLine(@"""{0}"" -> '{1}'", args[i], c);
+                if (!res.Find(ref j, out char c))
+                    c = '-';
+                Console.WriteLine(@"""{0}"" -> '{1}'", args[i], c);
       }
     }
 
@@ -123,9 +122,8 @@ namespace BipartiteMatching
         HashSet<RightNode> newrnodes = new HashSet<RightNode>();
         foreach (Rec<TLeftLabel, TRightLabel> edge in graph)
         {
-          RightNode rnode;
-            var x2 = edge.X2;
-          if (!rdict.Find(ref x2, out rnode))
+                    var x2 = edge.X2;
+                    if (!rdict.Find(ref x2, out RightNode rnode))
             rdict.Add(edge.X2, rnode = new RightNode(edge.X2));
 
           HashSet<RightNode> ledges = newrnodes;

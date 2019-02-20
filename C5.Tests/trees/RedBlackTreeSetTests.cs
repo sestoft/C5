@@ -152,8 +152,8 @@ namespace C5UnitTests.trees.TreeSet
         {
             ICollection<String> coll = new TreeSet<String>();
             // s1 and s2 are distinct objects but contain the same text:
-            String old, s1 = "abc", s2 = ("def" + s1).Substring(3);
-            Assert.IsFalse(coll.UpdateOrAdd(s1, out old));
+            String s1 = "abc", s2 = ("def" + s1).Substring(3);
+            Assert.IsFalse(coll.UpdateOrAdd(s1, out string old));
             Assert.AreEqual(null, old);
             Assert.IsTrue(coll.UpdateOrAdd(s2, out old));
             Assert.IsTrue(Object.ReferenceEquals(s1, old));
@@ -171,7 +171,7 @@ namespace C5UnitTests.trees.TreeSet
             Assert.AreEqual(4, lst[3].Key);
             Assert.AreEqual(34, lst[3].Value);
             p = new KeyValuePair<int, int>(13, 78);
-            Assert.IsFalse(lst.Remove(p, out p));
+            Assert.IsFalse(lst.Remove(p, out _));
         }
     }
 
@@ -525,8 +525,7 @@ namespace C5UnitTests.trees.TreeSet
         [Test]
         public void Find()
         {
-            int i;
-            Assert.IsFalse(list.Find(pred, out i));
+            Assert.IsFalse(list.Find(pred, out int i));
             list.AddAll(new int[] { 4, 22, 67, 37 });
             Assert.IsFalse(list.Find(pred, out i));
             list.AddAll(new int[] { 45, 122, 675, 137 });
@@ -537,8 +536,7 @@ namespace C5UnitTests.trees.TreeSet
         [Test]
         public void FindLast()
         {
-            int i;
-            Assert.IsFalse(list.FindLast(pred, out i));
+            Assert.IsFalse(list.FindLast(pred, out int i));
             list.AddAll(new int[] { 4, 22, 67, 37 });
             Assert.IsFalse(list.FindLast(pred, out i));
             list.AddAll(new int[] { 45, 122, 675, 137 });
@@ -880,8 +878,7 @@ namespace C5UnitTests.trees.TreeSet
         public void FindPredecessor()
         {
             loadup();
-            int res;
-            Assert.IsTrue(tree.TryPredecessor(7, out res) && res == 6);
+            Assert.IsTrue(tree.TryPredecessor(7, out int res) && res == 6);
             Assert.IsTrue(tree.TryPredecessor(8, out res) && res == 6);
 
             //The bottom
@@ -894,8 +891,7 @@ namespace C5UnitTests.trees.TreeSet
         [Test]
         public void FindPredecessorTooLow1()
         {
-            int res;
-            Assert.IsFalse(tree.TryPredecessor(-2, out res));
+            Assert.IsFalse(tree.TryPredecessor(-2, out int res));
             Assert.AreEqual(0, res);
             Assert.IsFalse(tree.TryPredecessor(0, out res));
             Assert.AreEqual(0, res);
@@ -905,8 +901,7 @@ namespace C5UnitTests.trees.TreeSet
         public void FindWeakPredecessor()
         {
             loadup();
-            int res;
-            Assert.IsTrue(tree.TryWeakPredecessor(7, out res) && res == 6);
+            Assert.IsTrue(tree.TryWeakPredecessor(7, out int res) && res == 6);
             Assert.IsTrue(tree.TryWeakPredecessor(8, out res) && res == 8);
 
             //The bottom
@@ -921,8 +916,7 @@ namespace C5UnitTests.trees.TreeSet
         [Test]
         public void FindWeakPredecessorTooLow1()
         {
-            int res;
-            Assert.IsFalse(tree.TryWeakPredecessor(-1, out res));
+            Assert.IsFalse(tree.TryWeakPredecessor(-1, out int res));
             Assert.AreEqual(0, res);
         }
 
@@ -930,8 +924,7 @@ namespace C5UnitTests.trees.TreeSet
         public void FindSuccessor()
         {
             loadup();
-            int res;
-            Assert.IsTrue(tree.TrySuccessor(7, out res) && res == 8);
+            Assert.IsTrue(tree.TrySuccessor(7, out int res) && res == 8);
             Assert.IsTrue(tree.TrySuccessor(8, out res) && res == 10);
 
             //The bottom
@@ -945,8 +938,7 @@ namespace C5UnitTests.trees.TreeSet
         [Test]
         public void FindSuccessorTooHigh()
         {
-            int res;
-            Assert.IsFalse(tree.TrySuccessor(38, out res));
+            Assert.IsFalse(tree.TrySuccessor(38, out int res));
             Assert.AreEqual(0, res);
             Assert.IsFalse(tree.TrySuccessor(39, out res));
             Assert.AreEqual(0, res);
@@ -956,8 +948,7 @@ namespace C5UnitTests.trees.TreeSet
         public void FindWeakSuccessor()
         {
             loadup();
-            int res;
-            Assert.IsTrue(tree.TryWeakSuccessor(6, out res) && res == 6);
+            Assert.IsTrue(tree.TryWeakSuccessor(6, out int res) && res == 6);
             Assert.IsTrue(tree.TryWeakSuccessor(7, out res) && res == 8);
 
             //The bottom
@@ -972,8 +963,7 @@ namespace C5UnitTests.trees.TreeSet
         [Test]
         public void FindWeakSuccessorTooHigh1()
         {
-            int res;
-            Assert.IsFalse(tree.TryWeakSuccessor(39, out res));
+            Assert.IsFalse(tree.TryWeakSuccessor(39, out int res));
             Assert.AreEqual(0, res);
         }
 
@@ -1447,10 +1437,8 @@ namespace C5UnitTests.trees.TreeSet
             [Test]
             public void Cut()
             {
-                int lo, hi;
-                bool lv, hv;
 
-                Assert.IsFalse(snap.Cut(new HigherOrder.CubeRoot(64), out lo, out lv, out hi, out hv));
+                Assert.IsFalse(snap.Cut(new HigherOrder.CubeRoot(64), out int lo, out bool lv, out int hi, out bool hv));
                 Assert.IsTrue(lv && hv);
                 Assert.AreEqual(5, hi);
                 Assert.AreEqual(3, lo);
@@ -1458,10 +1446,10 @@ namespace C5UnitTests.trees.TreeSet
                 Assert.IsTrue(lv && hv);
                 Assert.AreEqual(7, hi);
                 Assert.AreEqual(3, lo);
-                Assert.IsFalse(snap.Cut(new HigherOrder.CubeRoot(125000), out lo, out lv, out hi, out hv));
+                Assert.IsFalse(snap.Cut(new HigherOrder.CubeRoot(125000), out lo, out lv, out _, out hv));
                 Assert.IsTrue(lv && !hv);
                 Assert.AreEqual(41, lo);
-                Assert.IsFalse(snap.Cut(new HigherOrder.CubeRoot(-27), out lo, out lv, out hi, out hv));
+                Assert.IsFalse(snap.Cut(new HigherOrder.CubeRoot(-27), out _, out lv, out hi, out hv));
                 Assert.IsTrue(!lv && hv);
                 Assert.AreEqual(1, hi);
             }
@@ -1497,8 +1485,7 @@ namespace C5UnitTests.trees.TreeSet
             [Test]
             public void FindPredecessor()
             {
-                int res;
-                Assert.IsTrue(snap.TryPredecessor(15, out res) && res == 13);
+                Assert.IsTrue(snap.TryPredecessor(15, out int res) && res == 13);
                 Assert.IsTrue(snap.TryPredecessor(16, out res) && res == 15);
                 Assert.IsTrue(snap.TryPredecessor(17, out res) && res == 15);
                 Assert.IsTrue(snap.TryPredecessor(18, out res) && res == 17);
@@ -1513,8 +1500,7 @@ namespace C5UnitTests.trees.TreeSet
             [Test]
             public void FindSuccessor()
             {
-                int res;
-                Assert.IsTrue(snap.TrySuccessor(15, out res) && res == 17);
+                Assert.IsTrue(snap.TrySuccessor(15, out int res) && res == 17);
                 Assert.IsTrue(snap.TrySuccessor(16, out res) && res == 17);
                 Assert.IsTrue(snap.TrySuccessor(17, out res) && res == 19);
                 Assert.IsTrue(snap.TrySuccessor(18, out res) && res == 19);
@@ -1529,8 +1515,7 @@ namespace C5UnitTests.trees.TreeSet
             [Test]
             public void FindWeakPredecessor()
             {
-                int res;
-                Assert.IsTrue(snap.TryWeakPredecessor(15, out res) && res == 15);
+                Assert.IsTrue(snap.TryWeakPredecessor(15, out int res) && res == 15);
                 Assert.IsTrue(snap.TryWeakPredecessor(16, out res) && res == 15);
                 Assert.IsTrue(snap.TryWeakPredecessor(17, out res) && res == 17);
                 Assert.IsTrue(snap.TryWeakPredecessor(18, out res) && res == 17);
@@ -1545,8 +1530,7 @@ namespace C5UnitTests.trees.TreeSet
             [Test]
             public void FindWeakSuccessor()
             {
-                int res;
-                Assert.IsTrue(snap.TryWeakSuccessor(15, out res) && res == 15);
+                Assert.IsTrue(snap.TryWeakSuccessor(15, out int res) && res == 15);
                 Assert.IsTrue(snap.TryWeakSuccessor(16, out res) && res == 17);
                 Assert.IsTrue(snap.TryWeakSuccessor(17, out res) && res == 17);
                 Assert.IsTrue(snap.TryWeakSuccessor(18, out res) && res == 19);
@@ -2162,10 +2146,8 @@ namespace C5UnitTests.trees.TreeSet
                 for (int i = 0; i < 10; i++)
                     tree.Add(i);
 
-                int low, high;
-                bool lval, hval;
 
-                Assert.IsTrue(tree.Cut(new CubeRoot(27), out low, out lval, out high, out hval));
+                Assert.IsTrue(tree.Cut(new CubeRoot(27), out int low, out bool lval, out int high, out bool hval));
                 Assert.IsTrue(lval && hval);
                 Assert.AreEqual(4, high);
                 Assert.AreEqual(2, low);
@@ -2182,10 +2164,8 @@ namespace C5UnitTests.trees.TreeSet
                 for (int i = 0; i < 10; i++)
                     tree.Add(2 * i);
 
-                int low, high;
-                bool lval, hval;
 
-                Assert.IsFalse(tree.Cut(new IC(3), out low, out lval, out high, out hval));
+                Assert.IsFalse(tree.Cut(new IC(3), out int low, out bool lval, out int high, out bool hval));
                 Assert.IsTrue(lval && hval);
                 Assert.AreEqual(4, high);
                 Assert.AreEqual(2, low);
@@ -2202,10 +2182,8 @@ namespace C5UnitTests.trees.TreeSet
                 for (int i = 0; i < 10; i++)
                     tree.Add(2 * i);
 
-                int lo, hi;
-                bool lv, hv;
 
-                Assert.IsTrue(tree.Cut(new Interval(5, 9), out lo, out lv, out hi, out hv));
+                Assert.IsTrue(tree.Cut(new Interval(5, 9), out int lo, out bool lv, out int hi, out bool hv));
                 Assert.IsTrue(lv && hv);
                 Assert.AreEqual(10, hi);
                 Assert.AreEqual(4, lo);
@@ -2236,14 +2214,11 @@ namespace C5UnitTests.trees.TreeSet
             {
                 for (int i = 0; i < 10; i++)
                     tree.Add(i);
-
-                int l, h;
-                bool lv, hv;
-
-                Assert.IsFalse(tree.Cut(new CubeRoot(1000), out l, out lv, out h, out hv));
+                Assert.IsFalse(tree.Cut(new CubeRoot(1000), out int l, out bool lv, out _, out bool hv));
                 Assert.IsTrue(lv && !hv);
                 Assert.AreEqual(9, l);
-                Assert.IsFalse(tree.Cut(new CubeRoot(-50), out l, out lv, out h, out hv));
+                int h;
+                Assert.IsFalse(tree.Cut(new CubeRoot(-50), out _, out lv, out h, out hv));
                 Assert.IsTrue(!lv && hv);
                 Assert.AreEqual(0, h);
             }

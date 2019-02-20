@@ -120,8 +120,7 @@ namespace C5UnitTests.trees.RBDictionary
             dict.Add("A", "1");
             dict.Add("C", "2");
             dict.Add("E", "3");
-            KeyValuePair<String, String> res;
-            Assert.IsTrue(dict.TryPredecessor("B", out res));
+            Assert.IsTrue(dict.TryPredecessor("B", out KeyValuePair<string, string> res));
             Assert.AreEqual("1", res.Value);
             Assert.IsTrue(dict.TryPredecessor("C", out res));
             Assert.AreEqual("1", res.Value);
@@ -229,10 +228,12 @@ namespace C5UnitTests.trees.RBDictionary
         [SetUp]
         public void Init()
         {
-            ISortedDictionary<string, string> dict = new TreeDictionary<string, string>(new SC());
-            dict.Add("A", "1");
-            dict.Add("C", "2");
-            dict.Add("E", "3");
+            ISortedDictionary<string, string> dict = new TreeDictionary<string, string>(new SC())
+            {
+                { "A", "1" },
+                { "C", "2" },
+                { "E", "3" }
+            };
             this.dict = new GuardedSortedDictionary<string, string>(dict);
         }
 
@@ -255,8 +256,7 @@ namespace C5UnitTests.trees.RBDictionary
         [Test]
         public void Pred2()
         {
-            KeyValuePair<String, String> res;
-            Assert.IsTrue(dict.TryPredecessor("B", out res));
+            Assert.IsTrue(dict.TryPredecessor("B", out KeyValuePair<string, string> res));
             Assert.AreEqual("1", res.Value);
             Assert.IsTrue(dict.TryPredecessor("C", out res));
             Assert.AreEqual("1", res.Value);
@@ -347,10 +347,12 @@ namespace C5UnitTests.trees.RBDictionary
         [SetUp]
         public void Init()
         {
-            dict = new TreeDictionary<string, string>(new SC());
-            dict["S"] = "A";
-            dict["T"] = "B";
-            dict["R"] = "C";
+            dict = new TreeDictionary<string, string>(new SC())
+            {
+                ["S"] = "A",
+                ["T"] = "B",
+                ["R"] = "C"
+            };
             dictenum = dict.GetEnumerator();
         }
 
@@ -390,8 +392,7 @@ namespace C5UnitTests.trees.RBDictionary
             Assert.IsTrue(keys.UniqueItems().All(delegate (String s) { return s == "R" || s == "S" || s == "T"; }));
             Assert.IsTrue(keys.All(delegate (String s) { return s == "R" || s == "S" || s == "T"; }));
             Assert.IsFalse(keys.Exists(delegate (String s) { return s != "R" && s != "S" && s != "T"; }));
-            String res;
-            Assert.IsTrue(keys.Find(delegate (String s) { return s == "R"; }, out res));
+            Assert.IsTrue(keys.Find(delegate (String s) { return s == "R"; }, out string res));
             Assert.AreEqual("R", res);
             Assert.IsFalse(keys.Find(delegate (String s) { return s == "Q"; }, out res));
             Assert.AreEqual(null, res);
@@ -401,8 +402,7 @@ namespace C5UnitTests.trees.RBDictionary
         public void KeysISortedPred()
         {
             ISorted<string> keys = dict.Keys;
-            String res;
-            Assert.IsTrue(keys.TryPredecessor("S", out res));
+            Assert.IsTrue(keys.TryPredecessor("S", out string res));
             Assert.AreEqual("R", res);
             Assert.IsTrue(keys.TryWeakPredecessor("R", out res));
             Assert.AreEqual("R", res);
@@ -473,11 +473,13 @@ namespace C5UnitTests.trees.RBDictionary
             [SetUp]
             public void Init()
             {
-                dict = new TreeDictionary<string, string>(new SC());
-                dict["S"] = "A";
-                dict["T"] = "B";
-                dict["R"] = "C";
-                dict["V"] = "G";
+                dict = new TreeDictionary<string, string>(new SC())
+                {
+                    ["S"] = "A",
+                    ["T"] = "B",
+                    ["R"] = "C",
+                    ["V"] = "G"
+                };
                 snap = (TreeDictionary<string, string>)dict.Snapshot();
             }
 
@@ -496,7 +498,7 @@ namespace C5UnitTests.trees.RBDictionary
                 Assert.IsFalse(dict.IsReadOnly);
                 Assert.IsTrue(snap.IsReadOnly);
                 //Finally, update of root node:
-                TreeDictionary<string, string> snap2 = (TreeDictionary<string, string>)dict.Snapshot();
+                _ = (TreeDictionary<string, string>)dict.Snapshot();
                 dict["S"] = "abe";
                 Assert.AreEqual("abe", dict["S"]);
             }

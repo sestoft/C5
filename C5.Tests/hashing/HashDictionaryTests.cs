@@ -193,18 +193,17 @@ namespace C5UnitTests.hashtable.dictionary
             dict["S"] = "VVV";
             dict["T"] = "XYZ";
 
-            string s;
 
-            Assert.IsTrue(dict.Remove("S", out s));
+            Assert.IsTrue(dict.Remove("S", out string s));
             Assert.AreEqual("VVV", s);
             Assert.IsFalse(dict.Contains("S"));
-            Assert.IsFalse(dict.Remove("A", out s));
+            Assert.IsFalse(dict.Remove("A", out _));
 
             //
             string t = "T", a = "A";
             Assert.IsTrue(dict.Find(ref t, out s));
             Assert.AreEqual("XYZ", s);
-            Assert.IsFalse(dict.Find(ref a, out s));
+            Assert.IsFalse(dict.Find(ref a, out _));
 
             //
             Assert.IsTrue(dict.Update("R", "UHU"));
@@ -229,12 +228,11 @@ namespace C5UnitTests.hashtable.dictionary
 
             // bug20071112 fixed 2008-02-03
             s = "NNN";
-            String old;
-            Assert.IsTrue(dict.UpdateOrAdd("R", s, out old));
+            Assert.IsTrue(dict.UpdateOrAdd("R", s, out string old));
             Assert.AreEqual("NNN", dict["R"]);
             Assert.AreEqual("LLL", old);
             s = "OOO";
-            Assert.IsFalse(dict.UpdateOrAdd("D", s, out old));
+            Assert.IsFalse(dict.UpdateOrAdd("D", s, out _));
             Assert.AreEqual("OOO", dict["D"]);
             // Unclear which of these is correct:
             // Assert.AreEqual(null, old);
@@ -269,10 +267,12 @@ namespace C5UnitTests.hashtable.dictionary
         [SetUp]
         public void Init()
         {
-            _dict = new HashDictionary<string, string>();
-            _dict["S"] = "A";
-            _dict["T"] = "B";
-            _dict["R"] = "C";
+            _dict = new HashDictionary<string, string>
+            {
+                ["S"] = "A",
+                ["T"] = "B",
+                ["R"] = "C"
+            };
         }
 
         [TearDown]
