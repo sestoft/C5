@@ -28,6 +28,8 @@ using System;
 using C5;
 using SCG = System.Collections.Generic;
 
+#pragma warning disable IDE0060
+
 namespace ReadOnlyPatterns {
   class ReadOnlyPatterns {
     public static void Main(String[] args) {
@@ -45,13 +47,14 @@ namespace ReadOnlyPatterns {
       DoWork(new GuardedCollection<T>(coll));
     }
 
+ 
     static void DoWork<T>(ICollection<T> gcoll) { 
       // Use gcoll ... 
     }
 
-    // Read-only access to an indexed sorted collection
+        // Read-only access to an indexed sorted collection
 
-    static void GuardTreeSet<T>() {
+        static void GuardTreeSet<T>() {
       IIndexedSorted<T> coll = new TreeSet<T>(); 
       DoWork(new GuardedIndexedSorted<T>(coll));
     }
@@ -94,3 +97,5 @@ namespace ReadOnlyPatterns {
     }
   }
 }
+
+#pragma warning restore IDE0060

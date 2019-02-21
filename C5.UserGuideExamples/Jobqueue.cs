@@ -31,17 +31,18 @@ using SCG = System.Collections.Generic;
 class MyJobQueueTest {
   public static void Main(String[] args) {
     JobQueue jq = new JobQueue();
-    // One user submits three jobs at time=27
-    Rid rid1 = jq.Submit(new Ip("62.150.83.11"), 27),
-        rid2 = jq.Submit(new Ip("62.150.83.11"), 27),
-        rid3 = jq.Submit(new Ip("62.150.83.11"), 27);
-    // One job is executed
-    jq.ExecuteOne();
-    // Another user submits two jobs at time=55
-    Rid rid4 = jq.Submit(new Ip("130.225.17.5"), 55),
-        rid5 = jq.Submit(new Ip("130.225.17.5"), 55);
-    // One more job is executed
-    jq.ExecuteOne();
+        // One user submits three jobs at time=27
+        Rid rid1 = jq.Submit(new Ip("62.150.83.11"), 27);
+        _ = jq.Submit(new Ip("62.150.83.11"), 27);
+        // One user submits three jobs at time=27
+        Rid rid3 = jq.Submit(new Ip("62.150.83.11"), 27);
+        // One job is executed
+        jq.ExecuteOne();
+        // Another user submits two jobs at time=55
+        _ = jq.Submit(new Ip("130.225.17.5"), 55);
+        _ = jq.Submit(new Ip("130.225.17.5"), 55);
+        // One more job is executed
+        jq.ExecuteOne();
     // The first user tries to cancel his first and last job
     jq.Cancel(rid1);
     jq.Cancel(rid3);
@@ -85,13 +86,13 @@ class JobQueue {
   }
 
   public void Cancel(Rid rid) {
-    IPriorityQueueHandle<Job> h;
-    if (jobs.Remove(rid, out h)) {
-      Job job = jobQueue.Delete(h);
-      userJobs.Remove(job.ip);
-      Console.WriteLine("Cancelled {0}", job);
+        if (jobs.Remove(rid, out IPriorityQueueHandle<Job> h))
+        {
+            Job job = jobQueue.Delete(h);
+            userJobs.Remove(job.ip);
+            Console.WriteLine("Cancelled {0}", job);
+        }
     }
-  }
 }
 
 class Job : IComparable<Job> {

@@ -133,7 +133,8 @@ namespace C5
         /// <param name="item">The item object to update with</param>
         /// <returns>True if item was found (and updated)</returns>
         public virtual bool Update(T item)
-        { T olditem = default(T); return Update(item, out olditem); }
+        {
+            return Update(item, out _); }
 
 
         /// <summary>

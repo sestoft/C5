@@ -568,7 +568,7 @@ namespace C5
                     while (leftEndIndex < viewCount && (endpoint = leftEnds[leftEndIndex]).index <= realindex)
                     {
                         HashedArrayList<T> view = endpoint.view;
-                        view.offsetField = view.offsetField - removed;
+                        view.offsetField -= removed;
                         view.size += removed;
                         leftEndIndex++;
                     }
@@ -1031,7 +1031,7 @@ namespace C5
             HashedArrayList<T> retval = (HashedArrayList<T>)MemberwiseClone();
 
 
-            retval.underlying = underlying != null ? underlying : this;
+            retval.underlying = underlying ?? (this);
             retval.offsetField = start + offsetField;
             retval.size = count;
             retval.myWeakReference = views.Add(retval);
@@ -1420,8 +1420,7 @@ namespace C5
         /// <returns>True if the item was found and hence updated.</returns>
         public virtual bool Update(T item)
         {
-            T olditem;
-            return Update(item, out olditem);
+            return Update(item, out _);
         }
 
         /// <summary>

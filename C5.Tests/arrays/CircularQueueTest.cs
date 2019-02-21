@@ -32,7 +32,7 @@ namespace C5UnitTests.arrays.circularqueue
         [Test]
         public void TestEvents()
         {
-            Func<CollectionOfInt> factory = delegate () { return new CollectionOfInt(); };
+            CollectionOfInt factory() { return new CollectionOfInt(); }
             new C5UnitTests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory);
             new C5UnitTests.Templates.Events.StackTester<CollectionOfInt>().Test(factory);
         }
@@ -49,12 +49,10 @@ namespace C5UnitTests.arrays.circularqueue
     //[TestFixture]
     public class Template
     {
-        private CircularQueue<int> queue;
 
         [SetUp]
         public void Init()
         {
-            queue = new CircularQueue<int>();
         }
 
         [Test]
@@ -63,7 +61,7 @@ namespace C5UnitTests.arrays.circularqueue
         }
 
         [TearDown]
-        public void Dispose() { queue = null; }
+        public void Dispose() { }
 
     }
 

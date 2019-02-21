@@ -50,9 +50,8 @@ namespace WrappedArray {
     // This loses the valuable bool returned by C5 Find.
 
     public static T Find<T>(T[] arr, Func<T,bool> p) {
-      T res; 
-      new WrappedArray<T>(arr).Find(p, out res);
-      return res;
+            new WrappedArray<T>(arr).Find(p, out T res);
+            return res;
     }  
 
     // System.Array.FindAll(T[], Predicate)
@@ -85,9 +84,8 @@ namespace WrappedArray {
     // This loses the valuable bool returned by C5 Find.
 
     public static T FindLast<T>(T[] arr, Func<T,bool> p) {
-      T res; 
-      new WrappedArray<T>(arr).FindLast(p, out res);
-      return res;
+            new WrappedArray<T>(arr).FindLast(p, out T res);
+            return res;
     }  
 
     // System.Array.FindLastIndex(T[], Predicate)

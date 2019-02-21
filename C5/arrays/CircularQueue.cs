@@ -118,7 +118,7 @@ namespace C5
             {
                 if (i < 0 || i >= size)
                     throw new IndexOutOfRangeException();
-                i = i + front;
+                i += front;
                 //Bug fix by Steve Wallace 2006/02/10
                 return array[i >= array.Length ? i - array.Length : i];
             }

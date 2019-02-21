@@ -41,11 +41,7 @@ namespace C5
         /// <param name="comparer"></param>
         public ComparerZeroHashCodeEqualityComparer(SCG.IComparer<T> comparer)
         {
-            if (comparer == null)
-            {
-                throw new NullReferenceException("Comparer cannot be null");
-            }
-            this.comparer = comparer;
+            this.comparer = comparer ?? throw new NullReferenceException("Comparer cannot be null");
         }
         /// <summary>
         /// A trivial, inefficient hash function. Compatible with any equality relation.

@@ -133,8 +133,7 @@ namespace AnagramHashBag
             foreach (String s in ss)
             {
                 HashBag<char> anagram = AnagramClass(s);
-                TreeSet<String> anagramClass;
-                if (!classes.Find(ref anagram, out anagramClass))
+                if (!classes.Find(ref anagram, out TreeSet<string> anagramClass))
                     classes[anagram] = anagramClass = new TreeSet<String>();
                 anagramClass.Add(s);
             }

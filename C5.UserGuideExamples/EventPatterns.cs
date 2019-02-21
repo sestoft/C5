@@ -27,6 +27,7 @@
 using System;
 using C5;
 
+#pragma warning disable IDE0059 // Value assigned to symbol is never used
 namespace EventPatterns
 {
     class EventPatterns
@@ -93,6 +94,7 @@ namespace EventPatterns
 
         private static void AddItemsAddedCounter<T>(ICollection<T> coll)
         {
+
             int addedCount = 0;
             coll.ItemsAdded
               += delegate(Object c, ItemCountEventArgs<T> args)
@@ -242,3 +244,4 @@ namespace EventPatterns
         }
     }
 }
+#pragma warning restore IDE0059 // Value assigned to symbol is never used

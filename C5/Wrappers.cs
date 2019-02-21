@@ -755,8 +755,7 @@ namespace C5
         /// <returns>the index, if found, a negative value else</returns>
         public int FindIndex(Func<T, bool> predicate)
         {
-            IIndexed<T> indexed = sequenced as IIndexed<T>;
-            if (indexed != null)
+            if (sequenced is IIndexed<T> indexed)
                 return indexed.FindIndex(predicate);
             int index = 0;
             foreach (T item in this)
@@ -777,8 +776,7 @@ namespace C5
         /// <returns>the index, if found, a negative value else</returns>
         public int FindLastIndex(Func<T, bool> predicate)
         {
-            IIndexed<T> indexed = sequenced as IIndexed<T>;
-            if (indexed != null)
+            if (sequenced is IIndexed<T> indexed)
                 return indexed.FindLastIndex(predicate);
             int index = Count - 1;
             foreach (T item in Backwards())
@@ -1572,8 +1570,7 @@ namespace C5
         /// <returns></returns>
         public IList<T> Span(IList<T> otherView)
         {
-            GuardedList<T> otherGuardedList = otherView as GuardedList<T>;
-            if (otherGuardedList == null)
+            if (!(otherView is GuardedList<T> otherGuardedList))
                 throw new IncompatibleViewException();
             IList<T> span = innerlist.Span(otherGuardedList.innerlist);
             if (span == null)

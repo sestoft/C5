@@ -250,8 +250,7 @@ namespace C5
         /// <returns></returns>
         Node get(int pos, int[] positions, Node[] nodes)
         {
-            int nearest;
-            int delta = dist(pos, out nearest, positions);
+            int delta = dist(pos, out int nearest, positions);
             Node node = nodes[nearest];
             if (delta > 0)
                 for (int i = 0; i < delta; i++)
@@ -273,9 +272,8 @@ namespace C5
         /// <param name="nodes"></param>
         void getPair(int p1, int p2, out Node n1, out Node n2, int[] positions, Node[] nodes)
         {
-            int nearest1, nearest2;
-            int delta1 = dist(p1, out nearest1, positions), d1 = delta1 < 0 ? -delta1 : delta1;
-            int delta2 = dist(p2, out nearest2, positions), d2 = delta2 < 0 ? -delta2 : delta2;
+            int delta1 = dist(p1, out int nearest1, positions), d1 = delta1 < 0 ? -delta1 : delta1;
+            int delta2 = dist(p2, out int nearest2, positions), d2 = delta2 < 0 ? -delta2 : delta2;
 
             if (d1 < d2)
             {
@@ -602,7 +600,7 @@ namespace C5
                     while (leftEndIndex < viewCount && (endpoint = leftEnds[leftEndIndex]).Index <= realindex)
                     {
                         LinkedList<T> view = endpoint.View;
-                        view.offset = view.offset - removed;
+                        view.offset -= removed;
                         view.size += removed;
                         leftEndIndex++;
                     }
@@ -615,10 +613,9 @@ namespace C5
                 }
                 if (viewCount > 0)
                 {
-                    Position endpoint;
-                    while (leftEndIndex2 < viewCount && (endpoint = leftEnds[leftEndIndex2]).Index <= realindex)
+                    while (leftEndIndex2 < viewCount && (_ = leftEnds[leftEndIndex2]).Index <= realindex)
                         leftEndIndex2++;
-                    while (rightEndIndex2 < viewCount && (endpoint = rightEnds[rightEndIndex2]).Index < realindex - 1)
+                    while (rightEndIndex2 < viewCount && (_ = rightEnds[rightEndIndex2]).Index < realindex - 1)
                         rightEndIndex2++;
                 }
             }
@@ -670,7 +667,8 @@ namespace C5
         [Serializable]
         class Range : DirectedCollectionValueBase<T>, IDirectedCollectionValue<T>
         {
-            int start, count, rangestamp;
+            // int start;
+            int count, rangestamp;
             Node startnode, endnode;
 
             LinkedList<T> list;
@@ -679,8 +677,11 @@ namespace C5
 
             internal Range(LinkedList<T> list, int start, int count, bool forwards)
             {
-                this.list = list; this.rangestamp = list.underlying != null ? list.underlying.stamp : list.stamp;
-                this.start = start; this.count = count; this.forwards = forwards;
+                this.list = list;
+                this.rangestamp = list.underlying != null ? list.underlying.stamp : list.stamp;
+                // this.start = start;
+                this.count = count;
+                this.forwards = forwards;
                 if (count > 0)
                 {
                     startnode = list.get(start);
@@ -1119,7 +1120,7 @@ namespace C5
             if (views == null)
                 views = new WeakViewList<LinkedList<T>>();
             LinkedList<T> retval = (LinkedList<T>)MemberwiseClone();
-            retval.underlying = underlying != null ? underlying : this;
+            retval.underlying = underlying ?? (this);
             retval.offset = offset + start;
             retval.size = count;
             getPair(start - 1, start + count, out retval.startsentinel, out retval.endsentinel,
@@ -1788,8 +1789,7 @@ namespace C5
         public virtual bool Contains(T item)
         {
             validitycheck();
-            Node node;
-            return contains(item, out node);
+            return contains(item, out _);
         }
 
         /// <summary>
@@ -1802,8 +1802,7 @@ namespace C5
         public virtual bool Find(ref T item)
         {
             validitycheck();
-            Node node;
-            if (contains(item, out node)) { item = node.item; return true; }
+            if (contains(item, out Node node)) { item = node.item; return true; }
             return false;
         }
 
@@ -1814,7 +1813,7 @@ namespace C5
         /// </summary>
         /// <param name="item">Value to update.</param>
         /// <returns>True if the item was found and hence updated.</returns>
-        public virtual bool Update(T item) { T olditem; return Update(item, out olditem); }
+        public virtual bool Update(T item) { return Update(item, out _); }
 
         /// <summary>
         /// 
@@ -1825,9 +1824,8 @@ namespace C5
         public virtual bool Update(T item, out T olditem)
         {
             updatecheck();
-            Node node;
 
-            if (contains(item, out node))
+            if (contains(item, out Node node))
             {
                 olditem = node.item;
                 node.item = item;
@@ -1865,7 +1863,7 @@ namespace C5
         /// </summary>
         /// <param name="item">Value to add or update.</param>
         /// <returns>True if the item was found and updated (hence not added).</returns>
-        public virtual bool UpdateOrAdd(T item) { T olditem; return UpdateOrAdd(item, out olditem); }
+        public virtual bool UpdateOrAdd(T item) { return UpdateOrAdd(item, out _); }
 
         /// <summary>
         /// 

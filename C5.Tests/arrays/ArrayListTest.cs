@@ -34,7 +34,7 @@ namespace C5UnitTests.arrays.list
         [Test]
         public void TestEvents()
         {
-            Func<CollectionOfInt> factory = delegate () { return new CollectionOfInt(TenEqualityComparer.Default); };
+            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
             new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory);
             new C5UnitTests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory);
             new C5UnitTests.Templates.Events.StackTester<CollectionOfInt>().Test(factory);
@@ -305,14 +305,14 @@ namespace C5UnitTests.arrays.list
           new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(67, 1), list),
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), list)
         });
-                list.UpdateOrAdd(51, out val);
+                list.UpdateOrAdd(51, out _);
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventTypeEnum.Removed, new ItemCountEventArgs<int>(53, 1), list),
           new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(51, 1), list),
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), list)
         });
-                val = 67;
-                list.UpdateOrAdd(81, out val);
+                // val = 67;
+                list.UpdateOrAdd(81, out _);
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(81, 1), list),
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), list)
@@ -704,19 +704,17 @@ namespace C5UnitTests.arrays.list
         [TestFixture]
         public class BadFun
         {
-            private ArrayList<int> list;
 
             [SetUp]
             public void Init()
             {
-                list = new ArrayList<int>();
             }
 
             [Test]
             public void NoTests() { }
 
             [TearDown]
-            public void Dispose() { list = null; }
+            public void Dispose() { }
         }
     }
 
@@ -778,7 +776,7 @@ namespace C5UnitTests.arrays.list
             public void Apply()
             {
                 int sum = 0;
-                Action<int> a = delegate (int i) { sum = i + 10 * sum; };
+                void a(int i) { sum = i + 10 * sum; }
 
                 list.Apply(a);
                 Assert.AreEqual(0, sum);
@@ -974,8 +972,7 @@ namespace C5UnitTests.arrays.list
             [Test]
             public void Find()
             {
-                int i;
-                Assert.IsFalse(list.Find(pred, out i));
+                Assert.IsFalse(list.Find(pred, out int i));
                 list.AddAll(new int[] { 4, 22, 67, 37 });
                 Assert.IsFalse(list.Find(pred, out i));
                 list.AddAll(new int[] { 45, 122, 675, 137 });
@@ -986,8 +983,7 @@ namespace C5UnitTests.arrays.list
             [Test]
             public void FindLast()
             {
-                int i;
-                Assert.IsFalse(list.FindLast(pred, out i));
+                Assert.IsFalse(list.FindLast(pred, out int i));
                 list.AddAll(new int[] { 4, 22, 67, 37 });
                 Assert.IsFalse(list.FindLast(pred, out i));
                 list.AddAll(new int[] { 45, 122, 675, 137 });
@@ -1238,7 +1234,7 @@ namespace C5UnitTests.arrays.list
             [Test]
             public void FindAll()
             {
-                Func<int, bool> f = delegate (int i) { return i % 2 == 0; };
+                bool f(int i) { return i % 2 == 0; }
 
                 Assert.IsTrue(list.FindAll(f).IsEmpty);
                 list.Add(5); list.Add(8); list.Add(5); list.Add(10); list.Add(8);
@@ -1771,9 +1767,8 @@ namespace C5UnitTests.arrays.list
                 lst.Add(3);
                 lst.Add(4);
 
-                IList<int> lst2 = new ArrayList<int>();
+                IList<int> lst2 = new ArrayList<int>() { 7, 8, 9 };
 
-                lst2.Add(7); lst2.Add(8); lst2.Add(9);
                 lst.InsertAll(0, lst2);
                 Assert.IsTrue(lst.Check());
                 Assert.IsTrue(IC.eq(lst, 7, 8, 9, 1, 2, 3, 4));
@@ -1789,7 +1784,7 @@ namespace C5UnitTests.arrays.list
             [Test]
             public void Map()
             {
-                Func<int, string> m = delegate (int i) { return "<<" + i + ">>"; };
+                string m(int i) { return "<<" + i + ">>"; }
                 IList<string> r = lst.Map(m);
 
                 Assert.IsTrue(r.Check());
@@ -1811,7 +1806,7 @@ namespace C5UnitTests.arrays.list
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
+                bool m(int i) { if (i == 2) lst.Add(7); return true; }
 
                 Assert.Throws<CollectionModifiedException>(() => lst.Map(m));
             }
@@ -1822,7 +1817,7 @@ namespace C5UnitTests.arrays.list
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
+                bool m(int i) { if (i == 2) lst.Add(7); return true; }
 
                 Assert.Throws<CollectionModifiedException>(() => lst.FindAll(m));
             }
@@ -1834,7 +1829,7 @@ namespace C5UnitTests.arrays.list
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
+                bool m(int i) { if (i == 2) lst.Add(7); return true; }
 
                 Assert.Throws<CollectionModifiedException>(() => lst.Map(m));
             }
@@ -1846,7 +1841,7 @@ namespace C5UnitTests.arrays.list
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                Func<int, bool> m = delegate (int i) { if (i == 2) lst.Add(7); return true; };
+                bool m(int i) { if (i == 2) lst.Add(7); return true; }
 
                 Assert.Throws<CollectionModifiedException>(() => lst.FindAll(m));
             }
@@ -1998,8 +1993,8 @@ namespace C5UnitTests.arrays.list
             {
                 ICollection<String> coll = new ArrayList<String>();
                 // s1 and s2 are distinct objects but contain the same text:
-                String old, s1 = "abc", s2 = ("def" + s1).Substring(3);
-                Assert.IsFalse(coll.UpdateOrAdd(s1, out old));
+                String s1 = "abc", s2 = ("def" + s1).Substring(3);
+                Assert.IsFalse(coll.UpdateOrAdd(s1, out string old));
                 Assert.AreEqual(null, old);
                 Assert.IsTrue(coll.UpdateOrAdd(s2, out old));
                 Assert.IsTrue(Object.ReferenceEquals(s1, old));
@@ -2017,7 +2012,7 @@ namespace C5UnitTests.arrays.list
                 Assert.AreEqual(4, lst[3].Key);
                 Assert.AreEqual(34, lst[3].Value);
                 p = new KeyValuePair<int, int>(13, 78);
-                Assert.IsFalse(lst.Remove(p, out p));
+                Assert.IsFalse(lst.Remove(p, out _));
             }
         }
 
@@ -2297,8 +2292,7 @@ namespace C5UnitTests.arrays.list
             [SetUp]
             public void Init()
             {
-                list = new ArrayList<int>();
-                list.Add(0); list.Add(1); list.Add(2); list.Add(3);
+                list = new ArrayList<int> { 0, 1, 2, 3 };
                 view = (ArrayList<int>)list.View(1, 2);
             }
 
@@ -2450,9 +2444,7 @@ namespace C5UnitTests.arrays.list
                 Assert.IsTrue(IC.eq(list, 0, 8, 18, 12, 15, 3));
                 Assert.IsTrue(IC.eq(view, 8, 18, 12, 15));
 
-                ArrayList<int> lst2 = new ArrayList<int>();
-
-                lst2.Add(90); lst2.Add(92);
+                ArrayList<int> lst2 = new ArrayList<int> { 90, 92 };
                 view.AddAll(lst2);
                 check();
                 Assert.IsTrue(IC.eq(list, 0, 8, 18, 12, 15, 90, 92, 3));
@@ -2484,9 +2476,8 @@ namespace C5UnitTests.arrays.list
                 Assert.IsTrue(view.Contains(1));
                 Assert.IsFalse(view.Contains(0));
 
-                ArrayList<int> lst2 = new ArrayList<int>();
+                ArrayList<int> lst2 = new ArrayList<int>() { 2 };
 
-                lst2.Add(2);
                 Assert.IsTrue(view.ContainsAll(lst2));
                 lst2.Add(3);
                 Assert.IsFalse(view.ContainsAll(lst2));
@@ -2589,8 +2580,7 @@ namespace C5UnitTests.arrays.list
             [Test]
             public void RangeCheck1()
             {
-                IList<int> lst = new ArrayList<int>();
-                lst.Add(2);
+                IList<int> lst = new ArrayList<int>() { 2 };
 
                 Assert.Throws<ArgumentOutOfRangeException>(() => { lst = lst.View(1, 1); });
             }
@@ -2598,8 +2588,7 @@ namespace C5UnitTests.arrays.list
             [Test]
             public void RangeCheck2()
             {
-                IList<int> lst = new ArrayList<int>();
-                lst.Add(2);
+                IList<int> lst = new ArrayList<int>() { 2 };
 
                 Assert.Throws<ArgumentOutOfRangeException>(() =>
                 {
@@ -2663,9 +2652,8 @@ namespace C5UnitTests.arrays.list
 
                 view.FIFO = false;
 
-                ArrayList<int> l2 = new ArrayList<int>();
+                ArrayList<int> l2 = new ArrayList<int>() { 1, 2, 2, 3, 1 };
 
-                l2.Add(1); l2.Add(2); l2.Add(2); l2.Add(3); l2.Add(1);
                 view.RemoveAll(l2);
                 check();
                 Assert.IsTrue(IC.eq(view, 5, 5, 1, 3, 0));
@@ -2930,8 +2918,7 @@ namespace C5UnitTests.arrays.list
             [Test]
             public void RemoveAll1()
             {
-                ArrayList<int> list2 = new ArrayList<int>();
-                list2.Add(1); list2.Add(3); list2.Add(4);
+                ArrayList<int> list2 = new ArrayList<int>() { 1, 3, 4 };
 
                 for (int i = 0; i < 7; i++)
                 {
@@ -2939,7 +2926,7 @@ namespace C5UnitTests.arrays.list
                     {
                         list = new ArrayList<int>();
                         for (int k = 0; k < 6; k++) list.Add(k);
-                        ArrayList<int> v = (ArrayList<int>)list.View(i, j);
+                        _ = (ArrayList<int>)list.View(i, j);
                         list.RemoveAll(list2);
                         Assert.IsTrue(list.Check(), "list check after RemoveAll, i=" + i + ", j=" + j);
                     }
@@ -2948,8 +2935,7 @@ namespace C5UnitTests.arrays.list
             [Test]
             public void RemoveAll2()
             {
-                ArrayList<int> list2 = new ArrayList<int>();
-                list2.Add(1); list2.Add(3); list2.Add(4);
+                ArrayList<int> list2 = new ArrayList<int>() { 1, 3, 4 };
                 Assert.IsTrue(list.Check(), "list check before RemoveAll");
                 list.RemoveAll(list2);
 
@@ -3017,8 +3003,7 @@ namespace C5UnitTests.arrays.list
             [Test]
             public void RetainAll()
             {
-                ArrayList<int> list2 = new ArrayList<int>();
-                list2.Add(2); list2.Add(4); list2.Add(5);
+                ArrayList<int> list2 = new ArrayList<int>() { 2, 4, 5 };
                 Assert.IsTrue(list.Check(), "list check before RetainAll");
                 list.RetainAll(list2);
 
@@ -3086,8 +3071,8 @@ namespace C5UnitTests.arrays.list
             [Test]
             public void RemoveAllCopies()
             {
-                ArrayList<int> list2 = new ArrayList<int>();
-                list2.Add(0); list2.Add(2); list2.Add(2); list2.Add(2); list2.Add(5); list2.Add(2); list2.Add(1);
+                ArrayList<int> list2 = new ArrayList<int> {0,2,2,2,5,2,1 };
+                   
                 for (int i = 0; i < 7; i++)
                 {
                     for (int j = 0; j < 7 - i; j++)
@@ -3105,10 +3090,10 @@ namespace C5UnitTests.arrays.list
 
             private void checkDisposed(bool reverse, int start, int count)
             {
-                int k = 0;
                 for (int i = 0; i < 7; i++)
                     for (int j = 0; j < 7 - i; j++)
                     {
+                        int k;
                         if (i + j <= start || i >= start + count || (i <= start && i + j >= start + count) || (reverse && start <= i && start + count >= i + j))
                         {
                             try

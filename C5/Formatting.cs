@@ -61,10 +61,9 @@ namespace C5
         /// <returns>True if <code>obj</code> was shown completely.</returns>
         public static bool Show(Object obj, StringBuilder stringbuilder, ref int rest, IFormatProvider formatProvider)
         {
-            IShowable showable;
             if (rest <= 0)
                 return false;
-            else if ((showable = obj as IShowable) != null)
+            else if (obj is IShowable showable)
                 return showable.Show(stringbuilder, ref rest, formatProvider);
             int oldLength = stringbuilder.Length;
             stringbuilder.AppendFormat(formatProvider, "{0}", obj);
@@ -121,9 +120,8 @@ namespace C5
             bool showMultiplicities = false;
             //TODO: do not test here at run time, but select code at compile time
             //      perhaps by delivering the print type to this metod
-            IList<T> list;
             ICollection<T> coll = items as ICollection<T>;
-            if ((list = items as IList<T>) != null)
+            if (items is IList<T>list)
             {
                 startdelim = "[ ";
                 enddelim = " ]";

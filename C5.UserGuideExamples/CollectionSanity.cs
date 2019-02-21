@@ -40,8 +40,12 @@ namespace CollectionSanity
             col2.AddAll(new[] { 7, 9, 13 });
             col3.AddAll(new[] { 9, 7, 13 });
 
-            HashSet<IList<int>> hs1 = new HashSet<IList<int>>();
-            hs1.Add(col1); hs1.Add(col2); hs1.Add(col3);
+            HashSet<IList<int>> hs1 = new HashSet<IList<int>>
+            {
+                col1,
+                col2,
+                col3
+            };
             Console.WriteLine("hs1 is sane: {0}", EqualityComparerSanity<int, IList<int>>(hs1));
         }
 

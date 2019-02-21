@@ -163,9 +163,7 @@ namespace C5
         /// <param name="comparer">Comparer of keys</param>
         public KeyValuePairComparer(SCG.IComparer<K> comparer)
         {
-            if (comparer == null)
-                throw new NullReferenceException();
-            this.comparer = comparer;
+            this.comparer = comparer ?? throw new NullReferenceException();
         }
 
 
@@ -205,9 +203,7 @@ namespace C5
         /// <param name="keyequalityComparer">The key equalitySCG.Comparer</param>
         public KeyValuePairEqualityComparer(SCG.IEqualityComparer<K> keyequalityComparer)
         {
-            if (keyequalityComparer == null)
-                throw new NullReferenceException("Key equality comparer cannot be null");
-            this.keyequalityComparer = keyequalityComparer;
+            this.keyequalityComparer = keyequalityComparer ?? throw new NullReferenceException("Key equality comparer cannot be null");
         }
 
 
@@ -317,9 +313,7 @@ namespace C5
         /// <param name="keyequalityComparer"></param>
         protected DictionaryBase(SCG.IEqualityComparer<K> keyequalityComparer)
         {
-            if (keyequalityComparer == null)
-                throw new NullReferenceException("Key equality comparer cannot be null");
-            this.keyequalityComparer = keyequalityComparer;
+            this.keyequalityComparer = keyequalityComparer ?? throw new NullReferenceException("Key equality comparer cannot be null");
         }
 
         #region IDictionary<K,V> Members
@@ -1063,32 +1057,28 @@ namespace C5
 
             public bool TryPredecessor(K item, out K res)
             {
-                KeyValuePair<K, V> pRes;
-                bool success = sorteddict.TryPredecessor(item, out pRes);
+                bool success = sorteddict.TryPredecessor(item, out KeyValuePair<K, V> pRes);
                 res = pRes.Key;
                 return success;
             }
 
             public bool TrySuccessor(K item, out K res)
             {
-                KeyValuePair<K, V> pRes;
-                bool success = sorteddict.TrySuccessor(item, out pRes);
+                bool success = sorteddict.TrySuccessor(item, out KeyValuePair<K, V> pRes);
                 res = pRes.Key;
                 return success;
             }
 
             public bool TryWeakPredecessor(K item, out K res)
             {
-                KeyValuePair<K, V> pRes;
-                bool success = sorteddict.TryWeakPredecessor(item, out pRes);
+                bool success = sorteddict.TryWeakPredecessor(item, out KeyValuePair<K, V> pRes);
                 res = pRes.Key;
                 return success;
             }
 
             public bool TryWeakSuccessor(K item, out K res)
             {
-                KeyValuePair<K, V> pRes;
-                bool success = sorteddict.TryWeakSuccessor(item, out pRes);
+                bool success = sorteddict.TryWeakSuccessor(item, out KeyValuePair<K, V> pRes);
                 res = pRes.Key;
                 return success;
             }
@@ -1103,8 +1093,7 @@ namespace C5
 
             public bool Cut(IComparable<K> c, out K low, out bool lowIsValid, out K high, out bool highIsValid)
             {
-                KeyValuePair<K, V> lowpair, highpair;
-                bool retval = sorteddict.Cut(c, out lowpair, out lowIsValid, out highpair, out highIsValid);
+                bool retval = sorteddict.Cut(c, out KeyValuePair<K, V> lowpair, out lowIsValid, out KeyValuePair<K, V> highpair, out highIsValid);
                 low = lowpair.Key;
                 high = highpair.Key;
                 return retval;

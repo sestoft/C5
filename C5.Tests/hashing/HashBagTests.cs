@@ -32,7 +32,7 @@ namespace C5UnitTests.hashtable.bag
         [Test]
         public void TestEvents()
         {
-            Func<CollectionOfInt> factory = delegate () { return new CollectionOfInt(TenEqualityComparer.Default); };
+            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
             new C5UnitTests.Templates.Events.CollectionTester<CollectionOfInt>().Test(factory);
         }
 
@@ -169,8 +169,8 @@ namespace C5UnitTests.hashtable.bag
         {
             ICollection<String> coll = new HashBag<String>();
             // s1 and s2 are distinct objects but contain the same text:
-            String old, s1 = "abc", s2 = ("def" + s1).Substring(3);
-            Assert.IsFalse(coll.UpdateOrAdd(s1, out old));
+            String s1 = "abc", s2 = ("def" + s1).Substring(3);
+            Assert.IsFalse(coll.UpdateOrAdd(s1, out string old));
             Assert.AreEqual(null, old);
             Assert.IsTrue(coll.UpdateOrAdd(s2, out old));
             Assert.IsTrue(Object.ReferenceEquals(s1, old));
@@ -187,7 +187,7 @@ namespace C5UnitTests.hashtable.bag
             Assert.AreEqual(3, p.Key);
             Assert.AreEqual(33, p.Value);
             p = new KeyValuePair<int, int>(13, 78);
-            Assert.IsFalse(lst.Remove(p, out p));
+            Assert.IsFalse(lst.Remove(p, out _));
         }
     }
 
@@ -426,8 +426,7 @@ namespace C5UnitTests.hashtable.bag
         [Test]
         public void Find()
         {
-            int i;
-            Assert.IsFalse(list.Find(pred, out i));
+            Assert.IsFalse(list.Find(pred, out int i));
             list.AddAll(new int[] { 4, 22, 67, 37 });
             Assert.IsFalse(list.Find(pred, out i));
             list.AddAll(new int[] { 45, 122, 675, 137 });

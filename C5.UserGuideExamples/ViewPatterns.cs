@@ -41,14 +41,13 @@ namespace ViewPatterns
             InsertBeforeFirst(v1, '<', 'b');
             InsertAfterFirst(v1, '>', 'b');
             Console.WriteLine("v1 = {0}", v1);
-            char x;
-            if (SequencePredecessor(v1, 'b', out x))
+            if (SequencePredecessor(v1, 'b', out char x))
                 Console.WriteLine("Predecessor of b is " + x);
             if (SequenceSuccessor(v1, 'b', out x))
                 Console.WriteLine("Successor of b is " + x);
-            if (!SequencePredecessor(v1, 'c', out x))
+            if (!SequencePredecessor(v1, 'c', out _))
                 Console.WriteLine("c has no predecessor");
-            if (!SequenceSuccessor(v1, 'a', out x))
+            if (!SequenceSuccessor(v1, 'a', out _))
                 Console.WriteLine("a has no successor");
             IList<char> lst2 = new ArrayList<char>();
             lst2.AddAll(new char[] { 'a', 'b', 'c', 'A', 'a', 'd', 'a' });

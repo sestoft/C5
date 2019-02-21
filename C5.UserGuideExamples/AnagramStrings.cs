@@ -97,8 +97,7 @@ namespace AnagramStrings
             foreach (String s in ss)
             {
                 CharBag anagram = AnagramClass(s);
-                HashSet<String> anagramClass;
-                if (!classes.Find(ref anagram, out anagramClass))
+                if (!classes.Find(ref anagram, out HashSet<string> anagramClass))
                     classes[anagram] = anagramClass = new HashSet<String>();
                 anagramClass.Add(s);
             }

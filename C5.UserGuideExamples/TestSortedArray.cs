@@ -24,10 +24,12 @@ namespace TestSortedArray
                         return order == 0 ? r1.X2.CompareTo(r2.X2) : order;
                     }
                 );
-            SortedArray<Rec<string, int>> sarr = new SortedArray<Rec<string, int>>(lexico);
-            sarr.Add(new Rec<string, int>("ole", 32));
-            sarr.Add(new Rec<string, int>("hans", 77));
-            sarr.Add(new Rec<string, int>("ole", 63));
+            SortedArray<Rec<string, int>> sarr = new SortedArray<Rec<string, int>>(lexico)
+            {
+                new Rec<string, int>("ole", 32),
+                new Rec<string, int>("hans", 77),
+                new Rec<string, int>("ole", 63)
+            };
             foreach (Rec<string, int> r in sarr)
                 Console.WriteLine(r);
         }

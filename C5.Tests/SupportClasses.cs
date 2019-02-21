@@ -295,8 +295,8 @@ namespace C5UnitTests
                 case EventTypeEnum.Cleared:
                     if (Args is ClearedRangeEventArgs)
                     {
-                        ClearedRangeEventArgs a = Args as ClearedRangeEventArgs, o = otherEvent.Args as ClearedRangeEventArgs;
-                        if (o == null)
+                        ClearedRangeEventArgs a = Args as ClearedRangeEventArgs;
+                        if (!(otherEvent.Args is ClearedRangeEventArgs o))
                             return false;
                         return a.Full == o.Full && a.Start == o.Start && a.Count == o.Count;
                     }
@@ -462,14 +462,13 @@ namespace C5UnitTests
             // The formatting is handled here.
             if (intToBeFormatted == 0)
                 return "0";
-            int digitIndex = 0;
             int intPositive;
             char[] outDigits = new char[31];
 
             // Verify that the argument can be converted to a int integer.
             // Extract the magnitude for conversion.
             intPositive = Math.Abs(intToBeFormatted);
-
+            int digitIndex;
             // Convert the magnitude to a digit string.
             for (digitIndex = 0; digitIndex <= 32; digitIndex++)
             {

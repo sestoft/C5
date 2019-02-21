@@ -92,7 +92,7 @@ namespace C5
             }
         }
         internal void raiseCollectionChanged(object sender)
-        { if (collectionChanged != null) collectionChanged(sender); }
+        { collectionChanged?.Invoke(sender); }
 
         event CollectionClearedHandler<T> collectionCleared;
         internal event CollectionClearedHandler<T> CollectionCleared
@@ -110,9 +110,9 @@ namespace C5
             }
         }
         internal void raiseCollectionCleared(object sender, bool full, int count)
-        { if (collectionCleared != null) collectionCleared(sender, new ClearedEventArgs(full, count)); }
+        { collectionCleared?.Invoke(sender, new ClearedEventArgs(full, count)); }
         internal void raiseCollectionCleared(object sender, bool full, int count, int? start)
-        { if (collectionCleared != null) collectionCleared(sender, new ClearedRangeEventArgs(full, count, start)); }
+        { collectionCleared?.Invoke(sender, new ClearedRangeEventArgs(full, count, start)); }
 
         event ItemsAddedHandler<T> itemsAdded;
         internal event ItemsAddedHandler<T> ItemsAdded
@@ -130,7 +130,7 @@ namespace C5
             }
         }
         internal void raiseItemsAdded(object sender, T item, int count)
-        { if (itemsAdded != null) itemsAdded(sender, new ItemCountEventArgs<T>(item, count)); }
+        { itemsAdded?.Invoke(sender, new ItemCountEventArgs<T>(item, count)); }
 
         event ItemsRemovedHandler<T> itemsRemoved;
         internal event ItemsRemovedHandler<T> ItemsRemoved
@@ -148,7 +148,7 @@ namespace C5
             }
         }
         internal void raiseItemsRemoved(object sender, T item, int count)
-        { if (itemsRemoved != null) itemsRemoved(sender, new ItemCountEventArgs<T>(item, count)); }
+        { itemsRemoved?.Invoke(sender, new ItemCountEventArgs<T>(item, count)); }
 
         event ItemInsertedHandler<T> itemInserted;
         internal event ItemInsertedHandler<T> ItemInserted
@@ -166,7 +166,7 @@ namespace C5
             }
         }
         internal void raiseItemInserted(object sender, T item, int index)
-        { if (itemInserted != null) itemInserted(sender, new ItemAtEventArgs<T>(item, index)); }
+        { itemInserted?.Invoke(sender, new ItemAtEventArgs<T>(item, index)); }
 
         event ItemRemovedAtHandler<T> itemRemovedAt;
         internal event ItemRemovedAtHandler<T> ItemRemovedAt
@@ -184,7 +184,7 @@ namespace C5
             }
         }
         internal void raiseItemRemovedAt(object sender, T item, int index)
-        { if (itemRemovedAt != null) itemRemovedAt(sender, new ItemAtEventArgs<T>(item, index)); }
+        { itemRemovedAt?.Invoke(sender, new ItemAtEventArgs<T>(item, index)); }
     }
 
     /// <summary>

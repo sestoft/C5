@@ -39,8 +39,7 @@ namespace SortedIterationPatterns
             if (args.Length == 1)
             {
                 int n = int.Parse(args[0]);
-                int res;
-                if (Predecessor(sorted, n, out res))
+                if (Predecessor(sorted, n, out int res))
                     Console.WriteLine("{0} has predecessor {1}", n, res);
                 if (WeakPredecessor(sorted, n, out res))
                     Console.WriteLine("{0} has weak predecessor {1}", n, res);
@@ -69,9 +68,8 @@ namespace SortedIterationPatterns
         public static bool WeakSuccessor<T>(ISorted<T> coll, T y, out T ySucc)
           where T : IComparable<T>
         {
-            T yPred;
-            bool hasPred, hasSucc,
-              hasY = coll.Cut(y, out yPred, out hasPred, out ySucc, out hasSucc);
+            bool hasSucc,
+              hasY = coll.Cut(y, out _, out _, out ySucc, out hasSucc);
             if (hasY)
                 ySucc = y;
             return hasY || hasSucc;
@@ -82,9 +80,7 @@ namespace SortedIterationPatterns
         public static bool WeakPredecessor<T>(ISorted<T> coll, T y, out T yPred)
           where T : IComparable<T>
         {
-            T ySucc;
-            bool hasPred, hasSucc,
-              hasY = coll.Cut(y, out yPred, out hasPred, out ySucc, out hasSucc);
+            bool hasPred, hasY = coll.Cut(y, out yPred, out hasPred, out _, out _);
             if (hasY)
                 yPred = y;
             return hasY || hasPred;
@@ -95,9 +91,7 @@ namespace SortedIterationPatterns
         public static bool Successor<T>(ISorted<T> coll, T y, out T ySucc)
           where T : IComparable<T>
         {
-            bool hasPred, hasSucc;
-            T yPred;
-            coll.Cut(y, out yPred, out hasPred, out ySucc, out hasSucc);
+            coll.Cut(y, out _, out _, out ySucc, out bool hasSucc);
             return hasSucc;
         }
 
@@ -106,9 +100,7 @@ namespace SortedIterationPatterns
         public static bool Predecessor<T>(ISorted<T> coll, T y, out T yPred)
           where T : IComparable<T>
         {
-            bool hasPred, hasSucc;
-            T ySucc;
-            coll.Cut(y, out yPred, out hasPred, out ySucc, out hasSucc);
+            coll.Cut(y, out yPred, out bool hasPred, out _, out _);
             return hasPred;
         }
 
@@ -185,8 +177,7 @@ namespace SortedIterationPatterns
         public static void IterIncInc<T>(ISorted<T> coll, T x1, T x2)
           where T : IComparable<T>
         {
-            T x2Succ;
-            bool x2HasSucc = Successor(coll, x2, out x2Succ);
+            bool x2HasSucc = Successor(coll, x2, out T x2Succ);
             IDirectedEnumerable<T> range =
               x2HasSucc ? coll.RangeFromTo(x1, x2Succ) : coll.RangeFrom(x1);
             foreach (T x in range)
@@ -201,8 +192,7 @@ namespace SortedIterationPatterns
         public static void IterBeginInc<T>(ISorted<T> coll, T x2)
           where T : IComparable<T>
         {
-            T x2Succ;
-            bool x2HasSucc = Successor(coll, x2, out x2Succ);
+            bool x2HasSucc = Successor(coll, x2, out T x2Succ);
             IDirectedEnumerable<T> range =
               x2HasSucc ? coll.RangeTo(x2Succ) : coll.RangeAll();
             foreach (T x in range)
@@ -217,8 +207,7 @@ namespace SortedIterationPatterns
         public static void IterExcExc<T>(ISorted<T> coll, T x1, T x2)
           where T : IComparable<T>
         {
-            T x1Succ;
-            bool x1HasSucc = Successor(coll, x1, out x1Succ);
+            bool x1HasSucc = Successor(coll, x1, out T x1Succ);
             IDirectedEnumerable<T> range =
               x1HasSucc ? coll.RangeFromTo(x1Succ, x2) : new ArrayList<T>();
             foreach (T x in range)
@@ -233,8 +222,7 @@ namespace SortedIterationPatterns
         public static void IterExcEnd<T>(ISorted<T> coll, T x1)
           where T : IComparable<T>
         {
-            T x1Succ;
-            bool x1HasSucc = Successor(coll, x1, out x1Succ);
+            bool x1HasSucc = Successor(coll, x1, out T x1Succ);
             IDirectedEnumerable<T> range =
               x1HasSucc ? coll.RangeFrom(x1Succ) : new ArrayList<T>();
             foreach (T x in range)
@@ -249,9 +237,8 @@ namespace SortedIterationPatterns
         public static void IterExcInc<T>(ISorted<T> coll, T x1, T x2)
           where T : IComparable<T>
         {
-            T x1Succ, x2Succ;
-            bool x1HasSucc = Successor(coll, x1, out x1Succ),
-                 x2HasSucc = Successor(coll, x2, out x2Succ);
+            bool x1HasSucc = Successor(coll, x1, out T x1Succ),
+                 x2HasSucc = Successor(coll, x2, out T x2Succ);
             IDirectedEnumerable<T> range =
               x1HasSucc ? (x2HasSucc ? coll.RangeFromTo(x1Succ, x2Succ)
                                      : coll.RangeFrom(x1Succ))

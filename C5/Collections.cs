@@ -42,9 +42,9 @@ namespace C5
         /// <returns>The size of the enumerable</returns>
         protected static int countItems(SCG.IEnumerable<T> items)
         {
-            ICollectionValue<T> jtems = items as ICollectionValue<T>;
+           // ICollectionValue<T> jtems = items as ICollectionValue<T>;
 
-            if (jtems != null)
+            if (items is ICollectionValue<T> jtems)
                 return jtems.Count;
 
             int count = 0;
@@ -696,9 +696,7 @@ namespace C5
         /// <param name="itemequalityComparer"></param>
         protected CollectionBase(SCG.IEqualityComparer<T> itemequalityComparer)
         {
-            if (itemequalityComparer == null)
-                throw new NullReferenceException("Item EqualityComparer cannot be null.");
-            this.itemequalityComparer = itemequalityComparer;
+            this.itemequalityComparer = itemequalityComparer ?? throw new NullReferenceException("Item EqualityComparer cannot be null.");
         }
 
         #region Util
@@ -760,7 +758,7 @@ namespace C5
 
         }
 
-        static Type isortedtype = typeof(ISorted<T>);
+        // static Type isortedtype = typeof(ISorted<T>);
 
         /// <summary>
         /// Examine if collection1 and collection2 are equal as unsequenced collections
@@ -791,8 +789,7 @@ namespace C5
             //TODO: move this to the sorted implementation classes? 
             //Really depends on speed of InstanceOfType: we could save a cast
             {
-                ISorted<T> stit, stat;
-                if ((stit = collection1 as ISorted<T>) != null && (stat = collection2 as ISorted<T>) != null && stit.Comparer == stat.Comparer)
+                if (collection1 is ISorted<T> stit && collection2 is ISorted<T> stat && stit.Comparer == stat.Comparer)
                 {
                     using (SCG.IEnumerator<T> dat = collection2.GetEnumerator(), dit = collection1.GetEnumerator())
                     {
@@ -834,8 +831,7 @@ namespace C5
                 foreach (T item in collection1)
                 {
                     var i = item;
-                    int count;
-                    if (dict.Find(ref i, out count) && count > 0)
+                    if (dict.Find(ref i, out int count) && count > 0)
                         dict[item] = count - 1;
                     else
                         return false;
