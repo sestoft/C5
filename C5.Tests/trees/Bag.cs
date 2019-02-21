@@ -2216,6 +2216,7 @@ namespace C5UnitTests.trees.TreeBag
             private SCG.IComparer<int> ic;
 
 
+            
             private bool eq(SCG.IEnumerable<int> me, int[] that)
             {
                 int i = 0, maxind = that.Length - 1;

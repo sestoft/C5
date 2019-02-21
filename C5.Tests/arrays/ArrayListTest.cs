@@ -704,19 +704,17 @@ namespace C5UnitTests.arrays.list
         [TestFixture]
         public class BadFun
         {
-            private ArrayList<int> list;
 
             [SetUp]
             public void Init()
             {
-                list = new ArrayList<int>();
             }
 
             [Test]
             public void NoTests() { }
 
             [TearDown]
-            public void Dispose() { list = null; }
+            public void Dispose() { }
         }
     }
 

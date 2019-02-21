@@ -1031,7 +1031,7 @@ namespace C5
             HashedArrayList<T> retval = (HashedArrayList<T>)MemberwiseClone();
 
 
-            retval.underlying = underlying != null ? underlying : this;
+            retval.underlying = underlying ?? (this);
             retval.offsetField = start + offsetField;
             retval.size = count;
             retval.myWeakReference = views.Add(retval);

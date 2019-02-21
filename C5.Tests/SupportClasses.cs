@@ -295,8 +295,8 @@ namespace C5UnitTests
                 case EventTypeEnum.Cleared:
                     if (Args is ClearedRangeEventArgs)
                     {
-                        ClearedRangeEventArgs a = Args as ClearedRangeEventArgs, o = otherEvent.Args as ClearedRangeEventArgs;
-                        if (o == null)
+                        ClearedRangeEventArgs a = Args as ClearedRangeEventArgs;
+                        if (!(otherEvent.Args is ClearedRangeEventArgs o))
                             return false;
                         return a.Full == o.Full && a.Start == o.Start && a.Count == o.Count;
                     }

@@ -669,8 +669,7 @@ namespace Graph
 
         public IGraph<V, E, W> SubGraph(ICollectionValue<V> vs)
         {
-            HashSet<V> vertexset = vs as HashSet<V>;
-            if (vertexset == null)
+            if (!(vs is HashSet<V> vertexset))
             {
                 vertexset = new HashSet<V>();
                 vertexset.AddAll(vs);

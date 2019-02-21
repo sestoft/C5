@@ -302,7 +302,7 @@ namespace C5
 
         #region Insertion
 
-        void insert(int index, Node succ, T item)
+        void insert(Node succ, T item)
         {
             Node newnode = new Node(item);
             if (dict.FindOrAdd(item, ref newnode))
@@ -327,15 +327,15 @@ namespace C5
                 underlying.size++;
             settag(newnode);
             if (updateViews)
-                fixViewsAfterInsert(succ, pred, 1, 0);
+                fixViewsAfterInsert(succ, pred, 1);
         }
 
         #endregion
 
         #region Removal
-        T remove(Node node, int index)
+        T remove(Node node)
         {
-            fixViewsBeforeSingleRemove(node, Offset + index);
+            fixViewsBeforeSingleRemove(node); //, Offset + index);
             node.prev.next = node.next;
             node.next.prev = node.prev;
             size--;
@@ -371,8 +371,7 @@ namespace C5
         /// <param name="added">The actual number of inserted nodes</param>
         /// <param name="pred">The predecessor of the inserted nodes</param>
         /// <param name="succ">The successor of the added nodes</param>
-        /// <param name="realInsertionIndex"></param>
-        void fixViewsAfterInsert(Node succ, Node pred, int added, int realInsertionIndex)
+        void fixViewsAfterInsert(Node succ, Node pred, int added)
         {
             if (views != null)
                 foreach (HashedLinkedList<T> view in views)
@@ -392,7 +391,7 @@ namespace C5
                 }
         }
 
-        void fixViewsBeforeSingleRemove(Node node, int realRemovalIndex)
+        void fixViewsBeforeSingleRemove(Node node)
         {
             if (views != null)
                 foreach (HashedLinkedList<T> view in views)
@@ -980,7 +979,8 @@ namespace C5
         [Serializable]
         class Range : DirectedCollectionValueBase<T>, IDirectedCollectionValue<T>
         {
-            int start, count, rangestamp;
+            // int start;
+            int count, rangestamp;
             Node startnode, endnode;
 
             HashedLinkedList<T> list;
@@ -990,8 +990,11 @@ namespace C5
 
             internal Range(HashedLinkedList<T> list, int start, int count, bool forwards)
             {
-                this.list = list; this.rangestamp = list.underlying != null ? list.underlying.stamp : list.stamp;
-                this.start = start; this.count = count; this.forwards = forwards;
+                this.list = list;
+                this.rangestamp = list.underlying != null ? list.underlying.stamp : list.stamp;
+                // this.start = start;
+                this.count = count;
+                this.forwards = forwards;
                 if (count > 0)
                 {
                     startnode = list.get(start);
@@ -1203,7 +1206,7 @@ namespace C5
         public virtual void Insert(int i, T item)
         {
             updatecheck();
-            insert(i, i == size ? endsentinel : get(i), item);
+            insert(i == size ? endsentinel : get(i), item);
             if (ActiveEvents != EventTypeEnum.None)
                 (underlying ?? this).raiseForInsert(i + Offset, item);
         }
@@ -1289,7 +1292,7 @@ namespace C5
                     size += count;
                     if (underlying != null)
                         underlying.size += count;
-                    fixViewsAfterInsert(succ, pred, count, 0);
+                    fixViewsAfterInsert(succ, pred, count);
                     raiseForInsertAll(pred, i, count, insertion);
                 }
             }
@@ -1321,7 +1324,7 @@ namespace C5
         public virtual void InsertFirst(T item)
         {
             updatecheck();
-            insert(0, startsentinel.next, item);
+            insert(startsentinel.next, item);
             if (ActiveEvents != EventTypeEnum.None)
                 (underlying ?? this).raiseForInsert(0 + Offset, item);
         }
@@ -1333,7 +1336,7 @@ namespace C5
         public virtual void InsertLast(T item)
         {
             updatecheck();
-            insert(size, endsentinel, item);
+            insert(endsentinel, item);
             if (ActiveEvents != EventTypeEnum.None)
                 (underlying ?? this).raiseForInsert(size - 1 + Offset, item);
         }
@@ -1413,7 +1416,7 @@ namespace C5
             updatecheck();
             if (size == 0)
                 throw new NoSuchItemException("List is empty");
-            T item = fIFO ? remove(startsentinel.next, 0) : remove(endsentinel.prev, size - 1);
+            T item = fIFO ? remove(startsentinel.next) : remove(endsentinel.prev);
             dict.Remove(item);
             (underlying ?? this).raiseForRemove(item);
             return item;
@@ -1430,7 +1433,7 @@ namespace C5
             if (size == 0)
                 throw new NoSuchItemException("List is empty");
 
-            T item = remove(startsentinel.next, 0);
+            T item = remove(startsentinel.next);
             dict.Remove(item);
             if (ActiveEvents != EventTypeEnum.None)
                 (underlying ?? this).raiseForRemoveAt(Offset, item);
@@ -1448,7 +1451,7 @@ namespace C5
             if (size == 0)
                 throw new NoSuchItemException("List is empty");
 
-            T item = remove(endsentinel.prev, size - 1);
+            T item = remove(endsentinel.prev);
             dict.Remove(item);
             if (ActiveEvents != EventTypeEnum.None)
                 (underlying ?? this).raiseForRemoveAt(size + Offset, item);
@@ -1470,7 +1473,7 @@ namespace C5
             if (views == null)
                 views = new WeakViewList<HashedLinkedList<T>>();
             HashedLinkedList<T> retval = (HashedLinkedList<T>)MemberwiseClone();
-            retval.underlying = underlying != null ? underlying : this;
+            retval.underlying = underlying ?? (this);
             retval.offset = offset + start;
             retval.size = count;
             getPair(start - 1, start + count, out retval.startsentinel, out retval.endsentinel,
@@ -1495,7 +1498,7 @@ namespace C5
             if (!contains(item, out Node n))
                 return null;
             HashedLinkedList<T> retval = (HashedLinkedList<T>)MemberwiseClone();
-            retval.underlying = underlying != null ? underlying : this;
+            retval.underlying = underlying ?? (this);
             retval.offset = null;
             retval.startsentinel = n.prev;
             retval.endsentinel = n.next;
@@ -2059,7 +2062,7 @@ namespace C5
         public virtual T RemoveAt(int i)
         {
             updatecheck();
-            T retval = remove(get(i), i);
+            T retval = remove(get(i));
             dict.Remove(retval);
             if (ActiveEvents != EventTypeEnum.None)
                 (underlying ?? this).raiseForRemoveAt(Offset + i, retval);
@@ -2294,11 +2297,10 @@ namespace C5
         public virtual bool Remove(T item)
         {
             updatecheck();
-            int i = 0;
             if (!dictremove(item, out Node node))
 
                 return false;
-            T removeditem = remove(node, i);
+            T removeditem = remove(node);
             (underlying ?? this).raiseForRemove(removeditem);
             return true;
         }
@@ -2314,7 +2316,6 @@ namespace C5
         public virtual bool Remove(T item, out T removeditem)
         {
             updatecheck();
-            int i = 0;
 
             if (!dictremove(item, out Node node))
             {
@@ -2322,7 +2323,7 @@ namespace C5
                 return false;
             }
             removeditem = node.item;
-            remove(node, i);
+            remove(node);
             (underlying ?? this).raiseForRemove(removeditem);
             return true;
         }
@@ -2350,7 +2351,7 @@ namespace C5
                 {
                     if (mustFire)
                         raiseHandler.Remove(node.item);
-                    remove(node, 118);
+                    remove(node);
                 }
 
             raiseHandler.Raise();
@@ -2377,7 +2378,7 @@ namespace C5
                     if (removeIt)
                     {
                         dict.Remove(n.item);
-                        remove(n, 119);
+                        remove(n);
                         if (mustFire)
                             raiseHandler.Remove(n.item);
                     }
@@ -2507,7 +2508,7 @@ namespace C5
                     if (toremove.Contains(n.item))
                     {
                         dict.Remove(n.item);
-                        remove(n, 119);
+                        remove(n);
                         if (mustFire)
                             raiseHandler.Remove(n.item);
                     }
@@ -2540,7 +2541,7 @@ namespace C5
                     if (removeIt)
                     {
                         dict.Remove(n.item);
-                        remove(n, 119);
+                        remove(n);
                         if (mustFire)
                             raiseHandler.Remove(n.item);
                     }
@@ -2776,7 +2777,7 @@ namespace C5
             }
             if (added > 0)
             {
-                fixViewsAfterInsert(endsentinel, pred, added, 0);
+                fixViewsAfterInsert(endsentinel, pred, added);
                 raiseForInsertAll(pred, size - added, added, false);
             }
 

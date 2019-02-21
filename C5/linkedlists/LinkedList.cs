@@ -667,7 +667,8 @@ namespace C5
         [Serializable]
         class Range : DirectedCollectionValueBase<T>, IDirectedCollectionValue<T>
         {
-            int start, count, rangestamp;
+            // int start;
+            int count, rangestamp;
             Node startnode, endnode;
 
             LinkedList<T> list;
@@ -676,8 +677,11 @@ namespace C5
 
             internal Range(LinkedList<T> list, int start, int count, bool forwards)
             {
-                this.list = list; this.rangestamp = list.underlying != null ? list.underlying.stamp : list.stamp;
-                this.start = start; this.count = count; this.forwards = forwards;
+                this.list = list;
+                this.rangestamp = list.underlying != null ? list.underlying.stamp : list.stamp;
+                // this.start = start;
+                this.count = count;
+                this.forwards = forwards;
                 if (count > 0)
                 {
                     startnode = list.get(start);
@@ -1116,7 +1120,7 @@ namespace C5
             if (views == null)
                 views = new WeakViewList<LinkedList<T>>();
             LinkedList<T> retval = (LinkedList<T>)MemberwiseClone();
-            retval.underlying = underlying != null ? underlying : this;
+            retval.underlying = underlying ?? (this);
             retval.offset = offset + start;
             retval.size = count;
             getPair(start - 1, start + count, out retval.startsentinel, out retval.endsentinel,

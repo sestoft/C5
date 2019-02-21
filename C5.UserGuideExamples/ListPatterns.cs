@@ -47,8 +47,7 @@ namespace ListPatterns
             list.CollectionCleared
           += delegate(Object c, ClearedEventArgs eargs)
             {
-                ClearedRangeEventArgs ceargs = eargs as ClearedRangeEventArgs;
-                if (ceargs != null)
+                if (eargs is ClearedRangeEventArgs ceargs)
                     Console.WriteLine("Cleared [{0}..{1}]",
                           ceargs.Start, ceargs.Start + ceargs.Count - 1);
             };

@@ -253,9 +253,7 @@ namespace C5
         public TreeBag(SCG.IComparer<T> comparer, SCG.IEqualityComparer<T> equalityComparer)
             : base(equalityComparer)
         {
-            if (comparer == null)
-                throw new NullReferenceException("Item comparer cannot be null");
-            this.comparer = comparer;
+            this.comparer = comparer ?? throw new NullReferenceException("Item comparer cannot be null");
         }
 
         #endregion
@@ -965,7 +963,7 @@ namespace C5
                 if (!isValid)
                     throw new ViewDisposedException("Snapshot has been disposed");
                 updatecheck();
-                addSorted(items, true, true);
+                addSorted(items, true);
             }
         }
 
@@ -1029,7 +1027,7 @@ namespace C5
         }
 
 
-        void addSorted(SCG.IEnumerable<T> items, bool safe, bool raise)
+        void addSorted(SCG.IEnumerable<T> items, bool raise)
         {
             SCG.IEnumerator<T> e = items.GetEnumerator(); ;
             if (size > 0)
@@ -1472,7 +1470,7 @@ namespace C5
             }
 
             //Stage 3: splice out node to be removed
-            Node newchild = cursor.right == null ? cursor.left : cursor.right;
+            Node newchild = cursor.right ?? cursor.left;
             bool demote_or_rotate = newchild == null && !cursor.red;
 
             //assert newchild.red 
@@ -3457,8 +3455,7 @@ namespace C5
                             SnapRef someSnapRef = snapList.Prev;
                             while (someSnapRef != null)
                             {
-                                TreeBag<T> lastsnap;
-                                if ((lastsnap = someSnapRef.Tree.Target as TreeBag<T>) != null)
+                                if (someSnapRef.Tree.Target is TreeBag<T> lastsnap)
                                     lastsnap.snapDispose();
                                 someSnapRef = someSnapRef.Prev;
                             }
@@ -3907,7 +3904,7 @@ namespace C5
  generation, UniqueCount
 ));
             minidump(root, "");
-            check(""); Logger.Log("<<<<<<<<<<<<<<<<<<<");
+            check(); Logger.Log("<<<<<<<<<<<<<<<<<<<");
         }
 
 
@@ -4021,7 +4018,7 @@ namespace C5
         {
             System.Text.StringBuilder e = new System.Text.StringBuilder();
 
-            if (!check(name))
+            if (!check())
                 return true;
             else
             {
@@ -4045,7 +4042,7 @@ namespace C5
         }
 
 
-        bool check(string msg)
+        bool check()
         {
             if (root != null)
             {

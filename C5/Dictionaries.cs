@@ -163,9 +163,7 @@ namespace C5
         /// <param name="comparer">Comparer of keys</param>
         public KeyValuePairComparer(SCG.IComparer<K> comparer)
         {
-            if (comparer == null)
-                throw new NullReferenceException();
-            this.comparer = comparer;
+            this.comparer = comparer ?? throw new NullReferenceException();
         }
 
 
@@ -205,9 +203,7 @@ namespace C5
         /// <param name="keyequalityComparer">The key equalitySCG.Comparer</param>
         public KeyValuePairEqualityComparer(SCG.IEqualityComparer<K> keyequalityComparer)
         {
-            if (keyequalityComparer == null)
-                throw new NullReferenceException("Key equality comparer cannot be null");
-            this.keyequalityComparer = keyequalityComparer;
+            this.keyequalityComparer = keyequalityComparer ?? throw new NullReferenceException("Key equality comparer cannot be null");
         }
 
 
@@ -317,9 +313,7 @@ namespace C5
         /// <param name="keyequalityComparer"></param>
         protected DictionaryBase(SCG.IEqualityComparer<K> keyequalityComparer)
         {
-            if (keyequalityComparer == null)
-                throw new NullReferenceException("Key equality comparer cannot be null");
-            this.keyequalityComparer = keyequalityComparer;
+            this.keyequalityComparer = keyequalityComparer ?? throw new NullReferenceException("Key equality comparer cannot be null");
         }
 
         #region IDictionary<K,V> Members

@@ -232,12 +232,8 @@ namespace C5
 
         IntervalHeap(int capacity, SCG.IComparer<T> comparer, SCG.IEqualityComparer<T> itemequalityComparer)
         {
-            if (comparer == null)
-                throw new NullReferenceException("Item comparer cannot be null");
-            if (itemequalityComparer == null)
-                throw new NullReferenceException("Item equality comparer cannot be null");
-            this.comparer = comparer;
-            this.itemequalityComparer = itemequalityComparer;
+            this.comparer = comparer ?? throw new NullReferenceException("Item comparer cannot be null");
+            this.itemequalityComparer = itemequalityComparer ?? throw new NullReferenceException("Item equality comparer cannot be null");
             int length = 1;
             while (length < capacity) length <<= 1;
             heap = new Interval[length];
@@ -648,8 +644,7 @@ namespace C5
         /// <returns>True if the handle is valid.</returns>
         public bool Find(IPriorityQueueHandle<T> handle, out T item)
         {
-            Handle myhandle = handle as Handle;
-            if (myhandle == null)
+            if (!(handle is Handle myhandle))
             {
                 item = default(T);
                 return false;

@@ -627,19 +627,17 @@ namespace C5UnitTests.arrays.hashed
         [TestFixture]
         public class BadFun
         {
-            private HashedArrayList<int> list;
 
             [SetUp]
             public void Init()
             {
-                list = new HashedArrayList<int>();
             }
 
             [Test]
             public void NoTests() { }
 
             [TearDown]
-            public void Dispose() { list = null; }
+            public void Dispose() { }
         }
     }
 

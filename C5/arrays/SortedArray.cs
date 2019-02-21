@@ -157,9 +157,7 @@ namespace C5
         public SortedArray(int capacity, SCG.IComparer<T> comparer, SCG.IEqualityComparer<T> equalityComparer)
             : base(capacity, equalityComparer)
         {
-            if (comparer == null)
-                throw new NullReferenceException("Comparer cannot be null");
-            this._comparer = comparer;
+            this._comparer = comparer ?? throw new NullReferenceException("Comparer cannot be null");
         }
 
         #endregion

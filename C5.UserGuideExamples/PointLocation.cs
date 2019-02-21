@@ -483,7 +483,7 @@ namespace PointLocation
 
         public class Lattice : EnumerableBase<Edge<string>>, SCG.IEnumerable<Edge<string>>, SCG.IEnumerator<Edge<string>>, System.Collections.IEnumerator
         {
-            private int currenti = -1, currentj = 0, currentid = 0;
+            private int currenti = -1, currentj = 0;
 
             private bool currenthoriz = true;
 
@@ -516,13 +516,11 @@ namespace PointLocation
             {
                 currenti = -1;
                 currentj = 0;
-                currentid = -1;
                 currenthoriz = true;
             }
 
             public bool MoveNext()
             {
-                currentid++;
                 if (currenthoriz)
                 {
                     if (++currenti >= maxi)

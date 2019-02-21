@@ -49,12 +49,10 @@ namespace C5UnitTests.arrays.circularqueue
     //[TestFixture]
     public class Template
     {
-        private CircularQueue<int> queue;
 
         [SetUp]
         public void Init()
         {
-            queue = new CircularQueue<int>();
         }
 
         [Test]
@@ -63,7 +61,7 @@ namespace C5UnitTests.arrays.circularqueue
         }
 
         [TearDown]
-        public void Dispose() { queue = null; }
+        public void Dispose() { }
 
     }
 
