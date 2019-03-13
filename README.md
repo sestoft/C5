@@ -1,4 +1,4 @@
-# C5 Generic Collection Library for C# and CLI
+# C5 Generic Collection Library for C# and CLIs
 
 The C5 library is a set of generic collection classes (or container classes) for the C# programming language and other generics-enabled languages on later versions the CLI platform, as implemented by Microsoft .NET 4.6.1+, .NET Core 2.0+, and Mono.
 
