@@ -1,5 +1,7 @@
 # C5 Generic Collection Library for C# and CLI
 
+[![Build Status](https://dev.azure.com/ondfisk/C5/_apis/build/status/C5-Azure-pipeline?branchName=master)](https://dev.azure.com/ondfisk/C5/_build/latest?definitionId=11&branchName=master)
+
 The C5 library is a set of generic collection classes (or container classes) for the C# programming language and other generics-enabled languages on later versions the CLI platform, as implemented by Microsoft .NET 4.6.1+, .NET Core 2.0+, and Mono.
 
 The C5 library provides a wide range of classic data structures, rich funcionality, the best possible asymptotic time complexity, documented performance, and a thoroughly tested implementation.
