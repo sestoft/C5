@@ -7,15 +7,15 @@ pool:
 variables:
   buildConfiguration: 'Release'
 
-- script: dotnet build --configuration $(buildConfiguration)
+steps:
+- script: dotnet build /P:SourceLinkCreate=false --configuration $(buildConfiguration)
   displayName: Build
 
 - task: DotNetCoreCLI@2
-  displayName: Test
   inputs:
     command: test
-    projects: '**/*Tests/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+    projects: "**/*Tests/*.csproj"
+    arguments: '/P:SourceLinkCreate=false --configuration $(buildConfiguration) --collect "Code coverage"'
 
 - task: PublishBuildArtifacts@1
   displayName: Publish Build Artifacts
