@@ -20,9 +20,10 @@ Include the errors shown at compilation time.
 If it is really long, include just the very first lines.
 
 ## Setup
-<!-- In windows: Windows+R and write "winver" -->
-* **Operative system + version**:
+* **C5 version**:
 * **Visual studio version**:
+* **Target framework**: <!-- Right click on your solution and "Properties" -->
+* **Operative system + version**: <!-- In windows: Windows+R and write "winver" -->
 * **C5 version**: 
 
 ## Additional context
