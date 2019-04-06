@@ -37,9 +37,6 @@ steps:
 - script: |
     npm install -g doxygen
     npm install -g graphviz
-  displayName: 'NPM install'
-  
-- script: |
     doxygen --download
     doxygen --docs --configPath="C5/Doxyfile"
   workingDirectory: $(Build.SourcesDirectory)
