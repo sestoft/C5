@@ -40,13 +40,14 @@ steps:
   displayName: 'NPM install'
   
 - script: |
+    cd $(Build.SourcesDirectory)
     doxygen --download
     doxygen
   displayName: 'Generate documentation'
   
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)/C5.Docs/html' 
+    rootFolderOrFile: '$(Build.SourcesDirectory)/C5.Docs/html' 
     includeRootFolder: false 
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/c5docs.zip' 
