@@ -23,9 +23,10 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    sourceFolder: $(Build.SourcesDirectory)/bin/$(buildConfiguration)
+    sourceFolder: $(Build.SourcesDirectory)/C5/bin/$(buildConfiguration)
     contents: '*.nupkg'
     targetFolder: $(Build.ArtifactStagingDirectory)
+    flattenFolders: true
   displayName: 'Copy files'
 
 - task: NodeTool@0
