@@ -23,8 +23,10 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    sourceFolder: $(Build.SourcesDirectory)/bin/$(buildConfiguration)/*.nupkg
+    sourceFolder: $(Build.SourcesDirectory)/bin/$(buildConfiguration)
+    contents: '*.nupkg'
     targetFolder: $(Build.ArtifactStagingDirectory)
+  displayName: 'Copy files'
 
 - task: NodeTool@0
   inputs:
@@ -46,6 +48,7 @@ steps:
     includeRootFolder: false 
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/c5docs.zip' 
+  displayName: 'Archive documentation'
     
 - task: PublishBuildArtifacts@1
   displayName: Publish Build Artifacts
