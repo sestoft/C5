@@ -1,58 +1,125 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net461</TargetFramework>
-    <SignAssembly>false</SignAssembly>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="**\*.cs" />
-    <Compile Include="AnagramHashBag.cs" />
-    <Compile Include="Anagrams.cs" />
-    <Compile Include="AnagramStrings.cs" />
-    <Compile Include="AnagramTreeBag.cs" />
+    <Compile Remove="AnagramHashBag.cs" />
+    <Compile Remove="Anagrams.cs" />
+    <Compile Remove="AnagramStrings.cs" />
+    <Compile Remove="AnagramTreeBag.cs" />
+    <Compile Remove="Antipatterns.cs" />
+    <Compile Remove="BipartiteMatching.cs" />
+    <Compile Remove="boilerplate.cs" />
+    <Compile Remove="BugHashedArray.cs" />
+    <Compile Remove="C5SerializationTest.cs" />
+    <Compile Remove="CharBags.cs" />
+    <Compile Remove="CollectionCollection.cs" />
+    <Compile Remove="CollectionSanity.cs" />
+    <Compile Remove="Commonwords.cs" />
+    <Compile Remove="ComparerPatterns.cs" />
+    <Compile Remove="DecreaseIncreaseKey.cs" />
+    <Compile Remove="DistinctBag.cs" />
+    <Compile Remove="EventPatterns.cs" />
+    <Compile Remove="Extension.cs" />
+    <Compile Remove="Fileindex.cs" />
+    <Compile Remove="GCHForm.cs" />
+    <Compile Remove="GConvexHull.cs" />
+    <Compile Remove="GettingStarted.cs" />
+    <Compile Remove="GNfaToDfa.cs" />
+    <Compile Remove="Graph.cs" />
+    <Compile Remove="Graphcopy.cs" />
+    <Compile Remove="GuardedView.cs" />
+    <Compile Remove="HashCodes.cs" />
+    <Compile Remove="IndexedObjects.cs" />
+    <Compile Remove="IndexedObjects2.cs" />
+    <Compile Remove="Initializers.cs" />
+    <Compile Remove="Jobqueue.cs" />
+    <Compile Remove="KeywordRecognition.cs" />
+    <Compile Remove="Kwic.cs" />
+    <Compile Remove="ListenableEvents.cs" />
+    <Compile Remove="ListPatterns.cs" />
+    <Compile Remove="Locking.cs" />
+    <Compile Remove="LockstepCollections.cs" />
+    <Compile Remove="MultiCollection.cs" />
+    <Compile Remove="MultiDictionary-njk.cs" />
+    <Compile Remove="MultiDictionary.cs" />
+    <Compile Remove="PointLocation.cs" />
+    <Compile Remove="Quickviewsort.cs" />
+    <Compile Remove="RandomSelection.cs" />
+    <Compile Remove="ReadOnlyPatterns.cs" />
+    <Compile Remove="SerializationExample.cs" />
+    <Compile Remove="Sets.cs" />
+    <Compile Remove="SortedIterationPatterns.cs" />
+    <Compile Remove="SortingPermutation.cs" />
+    <Compile Remove="TestSortedArray.cs" />
+    <Compile Remove="ThisFun.cs" />
+    <Compile Remove="Toposort.cs" />
+    <Compile Remove="TreebagBug20091113.cs" />
+    <Compile Remove="TreeTraversal.cs" />
+    <Compile Remove="UnionFind.cs" />
+    <Compile Remove="ViewPatterns.cs" />
+    <Compile Remove="Views.cs" />
+    <Compile Remove="WrappedArray.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AnagramHashBag.cs" />
+    <None Include="Anagrams.cs" />
+    <None Include="AnagramStrings.cs" />
+    <None Include="AnagramTreeBag.cs" />
     <None Include="Antipatterns.cs" />
-    <Compile Include="BipartiteMatching.cs" />
-    <Compile Include="CollectionCollection.cs" />
-    <Compile Include="CollectionSanity.cs" />
-    <Compile Include="EventPatterns.cs" />
-    <Compile Include="GettingStarted.cs" />
-    <Compile Include="Graph.cs" />
-    <Compile Include="Fileindex.cs" />
-    <Compile Include="GCHForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GConvexHull.cs" />
-    <Compile Include="GNfaToDfa.cs" />
-    <Compile Include="HashCodes.cs" />
-    <Compile Include="Jobqueue.cs" />
-    <Compile Include="KeywordRecognition.cs" />
-    <Compile Include="ListPatterns.cs" />
-    <Compile Include="Locking.cs" />
-    <Compile Include="MultiCollection.cs" />
-    <Compile Include="MultiDictionary.cs" />
-    <Compile Include="PointLocation.cs" />
-    <Compile Include="RandomSelection.cs" />
-    <Compile Include="ReadOnlyPatterns.cs" />
-    <Compile Include="Sets.cs" />
-    <Compile Include="SortedIterationPatterns.cs" />
-    <Compile Include="SortingPermutation.cs" />
-    <Compile Include="TestSortedArray.cs" />
-    <Compile Include="ThisFun.cs" />
-    <Compile Include="Toposort.cs" />
-    <Compile Include="TreeTraversal.cs" />
-    <Compile Include="ViewPatterns.cs" />
-    <Compile Include="Views.cs" />
-    <Compile Include="WrappedArray.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="GCHForm.resx">
-      <DependentUpon>GCHForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
+    <None Include="BipartiteMatching.cs" />
+    <None Include="boilerplate.cs" />
+    <None Include="BugHashedArray.cs" />
+    <None Include="C5SerializationTest.cs" />
+    <None Include="CharBags.cs" />
+    <None Include="CollectionCollection.cs" />
+    <None Include="CollectionSanity.cs" />
+    <None Include="Commonwords.cs" />
+    <None Include="ComparerPatterns.cs" />
+    <None Include="DecreaseIncreaseKey.cs" />
+    <None Include="DistinctBag.cs" />
+    <None Include="EventPatterns.cs" />
+    <None Include="Extension.cs" />
+    <None Include="Fileindex.cs" />
+    <None Include="GCHForm.cs" />
+    <None Include="GConvexHull.cs" />
+    <None Include="GettingStarted.cs" />
+    <None Include="GNfaToDfa.cs" />
+    <None Include="Graph.cs" />
+    <None Include="Graphcopy.cs" />
+    <None Include="GuardedView.cs" />
+    <None Include="HashCodes.cs" />
+    <None Include="IndexedObjects.cs" />
+    <None Include="IndexedObjects2.cs" />
+    <None Include="Initializers.cs" />
+    <None Include="Jobqueue.cs" />
+    <None Include="KeywordRecognition.cs" />
+    <None Include="Kwic.cs" />
+    <None Include="ListenableEvents.cs" />
+    <None Include="ListPatterns.cs" />
+    <None Include="Locking.cs" />
+    <None Include="LockstepCollections.cs" />
+    <None Include="MultiCollection.cs" />
+    <None Include="MultiDictionary-njk.cs" />
+    <None Include="MultiDictionary.cs" />
+    <None Include="PointLocation.cs" />
+    <None Include="Quickviewsort.cs" />
+    <None Include="RandomSelection.cs" />
+    <None Include="ReadOnlyPatterns.cs" />
+    <None Include="SerializationExample.cs" />
+    <None Include="Sets.cs" />
+    <None Include="SortedIterationPatterns.cs" />
+    <None Include="SortingPermutation.cs" />
+    <None Include="TestSortedArray.cs" />
+    <None Include="ThisFun.cs" />
+    <None Include="Toposort.cs" />
+    <None Include="TreebagBug20091113.cs" />
+    <None Include="TreeTraversal.cs" />
+    <None Include="UnionFind.cs" />
+    <None Include="ViewPatterns.cs" />
+    <None Include="Views.cs" />
+    <None Include="WrappedArray.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\C5\C5.csproj" />

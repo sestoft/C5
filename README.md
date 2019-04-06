@@ -1,6 +1,6 @@
 # C5 Generic Collection Library for C# and CLI
 
-[![Build Status](https://dev.azure.com/ondfisk/C5/_apis/build/status/C5-CI?branchName=master)](https://dev.azure.com/ondfisk/C5/_build/latest?definitionId=14&branchName=master) ![Azure DevOps tests](https://img.shields.io/azure-devops/tests/ondfisk/C5/14.svg) ![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/ondfisk/C5/14.svg)
+[![NuGet version (C5)](https://img.shields.io/nuget/v/C5.svg?style=flat-square)](https://www.nuget.org/packages/C5/) [![Build Status](https://dev.azure.com/ondfisk/C5/_apis/build/status/C5-CI?branchName=master)](https://dev.azure.com/ondfisk/C5/_build/latest?definitionId=14&branchName=master) ![Azure DevOps tests](https://img.shields.io/azure-devops/tests/ondfisk/C5/14.svg) ![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/ondfisk/C5/14.svg)
 
 The C5 library is a set of generic collection classes (or container classes) for the C# programming language and other generics-enabled languages on later versions the CLI platform, as implemented by Microsoft .NET 4.6.1+, .NET Core 2.0+, and Mono.
 
