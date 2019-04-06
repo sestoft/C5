@@ -42,7 +42,7 @@ steps:
 - script: |
     cd $(Build.SourcesDirectory)
     doxygen --download
-    doxygen
+    doxygen --docs --configPath="C5\Doxyfile"
   displayName: 'Generate documentation'
   
 - task: ArchiveFiles@2
