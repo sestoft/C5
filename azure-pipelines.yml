@@ -2,13 +2,16 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core?view=vsts
 
 pool:
-  vmImage: 'vs2017-win2016'
+  vmImage: 'ubuntu-16.04'
   
 variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: dotnet build /P:SourceLinkCreate=false --configuration $(buildConfiguration)
+- task: DotNetCoreCLI@2
+  inputs:
+    command: build
+    arguments: /P:SourceLinkCreate=false --configuration $(buildConfiguration)
   displayName: Build
 
 - task: DotNetCoreCLI@2
@@ -16,6 +19,33 @@ steps:
     command: test
     projects: "**/*Tests/*.csproj"
     arguments: '/P:SourceLinkCreate=false --configuration $(buildConfiguration) --collect "Code coverage"'
+  displayName: Test
 
+- task: CopyFiles@2
+  inputs:
+    sourceFolder: $(Build.SourcesDirectory)/bin/$(buildConfiguration)/*.nupkg
+    targetFolder: $(Build.ArtifactStagingDirectory)
+
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+  
+- script: |
+    npm install -g doxygen
+    npm install -g graphviz
+  displayName: 'NPM install'
+  
+- script: |
+    doxygen Doxyfile
+  displayName: 'Generate documentation'
+  
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.BinariesDirectory)/C5.Docs/html' 
+    includeRootFolder: false 
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/c5docs.zip' 
+    
 - task: PublishBuildArtifacts@1
   displayName: Publish Build Artifacts
