@@ -2,7 +2,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core?view=vsts
 
 pool:
-  vmImage: 'ubuntu-16.04'
+  vmImage: 'vs2017-win2016'
   
 variables:
   buildConfiguration: 'Release'
@@ -35,13 +35,12 @@ steps:
   displayName: 'Install Node.js'
   
 - script: |
-    npm install -g doxygen
-    npm install -g graphviz
+    npm install
   displayName: 'NPM install'
   
 - script: |
     doxygen --download
-    doxygen Doxyfile
+    doxygen
   displayName: 'Generate documentation'
   
 - task: ArchiveFiles@2
