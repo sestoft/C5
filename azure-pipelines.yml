@@ -40,6 +40,7 @@ steps:
   displayName: 'NPM install'
   
 - script: |
+    doxygen --download
     doxygen Doxyfile
   displayName: 'Generate documentation'
   
