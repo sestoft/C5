@@ -35,7 +35,8 @@ steps:
   displayName: 'Install Node.js'
   
 - script: |
-    npm install
+    npm install -g doxygen
+    npm install -g graphviz
   displayName: 'NPM install'
   
 - script: |
