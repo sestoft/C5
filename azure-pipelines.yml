@@ -2,7 +2,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core?view=vsts
 
 pool:
-  vmImage: 'ubuntu-16.04'
+  vmImage: 'windows-2019'
   
 variables:
   buildConfiguration: 'Release'
