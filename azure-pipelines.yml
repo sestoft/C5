@@ -2,13 +2,16 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core?view=vsts
 
 pool:
-  vmImage: 'vs2017-win2016'
+  vmImage: 'windows-2019'
   
 variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: dotnet build /P:SourceLinkCreate=false --configuration $(buildConfiguration)
+- task: DotNetCoreCLI@2
+  inputs:
+    command: build
+    arguments: /P:SourceLinkCreate=false --configuration $(buildConfiguration)
   displayName: Build
 
 - task: DotNetCoreCLI@2
@@ -16,6 +19,38 @@ steps:
     command: test
     projects: "**/*Tests/*.csproj"
     arguments: '/P:SourceLinkCreate=false --configuration $(buildConfiguration) --collect "Code coverage"'
+  displayName: Test
 
+- task: CopyFiles@2
+  inputs:
+    sourceFolder: $(Build.SourcesDirectory)/C5/bin/$(buildConfiguration)
+    contents: '*.nupkg'
+    targetFolder: $(Build.ArtifactStagingDirectory)
+    flattenFolders: true
+  displayName: 'Copy files'
+
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+  
+- script: |
+    CALL npm install -g doxygen
+    CALL npm install -g graphviz
+    SET DOXYGEN_OUTPUT_DIRECTORY=$(Build.SourcesDirectory)
+    CALL doxygen --download
+    CALL doxygen --docs --configPath="$(Build.SourcesDirectory)/Doxyfile"
+  workingDirectory: $(Build.SourcesDirectory)
+  displayName: 'Generate documentation'
+  failOnStderr: true
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.SourcesDirectory)/C5.Docs/html' 
+    includeRootFolder: false 
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/c5docs.zip' 
+  displayName: 'Archive documentation'
+    
 - task: PublishBuildArtifacts@1
   displayName: Publish Build Artifacts

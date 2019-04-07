@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Doxygen output
+C5.Docs/
+
 # User-specific files
 *.suo
 *.user
