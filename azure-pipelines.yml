@@ -35,11 +35,11 @@ steps:
   displayName: 'Install Node.js'
   
 - script: |
-    npm install -g doxygen
-    npm install -g graphviz
+    CALL npm install -g doxygen
+    CALL npm install -g graphviz
     SET DOXYGEN_OUTPUT_DIRECTORY=$(Build.SourcesDirectory)
-    doxygen --download
-    doxygen --docs --configPath="$(Build.SourcesDirectory)/C5/Doxyfile"
+    CALL doxygen --download
+    CALL doxygen --docs --configPath="$(Build.SourcesDirectory)/C5/Doxyfile"
   workingDirectory: $(Build.SourcesDirectory)
   displayName: 'Generate documentation'
   failOnStderr: true
