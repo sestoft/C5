@@ -39,7 +39,7 @@ steps:
     CALL npm install -g graphviz
     SET DOXYGEN_OUTPUT_DIRECTORY=$(Build.SourcesDirectory)
     CALL doxygen --download
-    CALL doxygen --docs --configPath="$(Build.SourcesDirectory)/C5/Doxyfile"
+    CALL doxygen --docs --configPath="$(Build.SourcesDirectory)/Doxyfile"
   workingDirectory: $(Build.SourcesDirectory)
   displayName: 'Generate documentation'
   failOnStderr: true
