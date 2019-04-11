@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2003-2007 Niels Kokholm and Peter Sestoft
+ Copyright (c) 2003-2019 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -39,99 +39,126 @@
 
 // What should the meaning of Contains(x) be?
 
-// Compile with 
-//   csc /r:C5.dll DistinctBag.cs 
+// Compile and run with 
+//  dotnet clean
+//  dotnet build ../C5/C5.csproj
+//  dotnet build -p:StartupObject=C5.UserGuideExamples.DistinctBagMain
+//  dotnet run
 
-using System;                           // Console
-using System.Text;                      // StringBuilder
-using C5; 
+using System;
+using System.Text;
 using SCG = System.Collections.Generic;
 
-namespace DistinctBag
+namespace C5.UserGuideExamples
 {
-  static class DistinctBagMain
-  {
-    static void Main(String[] args)
+    class DistinctBagMain
     {
-      DistinctHashBag<Person> nameColl 
-        = new DistinctHashBag<Person>(new Person.NameEqualityComparer());
-      Person p1 = new Person("Peter", 19620625), 
-        p2 = new Person("Carsten", 19640627), 
-        p3 = new Person("Carsten", 19640628);
-      nameColl.Add(p1);      
-      nameColl.Add(p2);
-      nameColl.Add(p3);
-      Console.WriteLine("nameColl = {0}", nameColl);
-    }
-  }
-
-  public class DistinctHashBag<T> where T : class { 
-    private HashDictionary<T, HashSet<T>> dict;
-
-    public DistinctHashBag(SCG.IEqualityComparer<T> eqc) {
-      dict = new HashDictionary<T,HashSet<T>>(eqc);
+        static void Main(string[] args)
+        {
+            var nameColl = new DistinctHashBag<Person>(new Person.NameEqualityComparer());
+            var p1 = new Person("Peter", 19620625);
+            var p2 = new Person("Carsten", 19640627);
+            var p3 = new Person("Carsten", 19640628);
+            nameColl.Add(p1);
+            nameColl.Add(p2);
+            nameColl.Add(p3);
+            Console.WriteLine("nameColl = {0}", nameColl);
+        }
     }
 
-    public DistinctHashBag() : this(EqualityComparer<T>.Default) {
-    }
-    
-    public bool Add(T item) { 
-      if (!dict.Contains(item)) 
-        dict.Add(item, new HashSet<T>(ReferenceEqualityComparer<T>.Default));
-      return dict[item].Add(item);
+    public class DistinctHashBag<T> where T : class
+    {
+        private readonly HashDictionary<T, HashSet<T>> _dict;
+
+        public DistinctHashBag(SCG.IEqualityComparer<T> eqc)
+        {
+            _dict = new HashDictionary<T, HashSet<T>>(eqc);
+        }
+
+        public DistinctHashBag() : this(EqualityComparer<T>.Default)
+        {
+        }
+
+        public bool Add(T item)
+        {
+            if (!_dict.Contains(item))
+            {
+                _dict.Add(item, new HashSet<T>(EqualityComparer<T>.Default));
+            }
+            return _dict[item].Add(item);
+        }
+
+        public bool Remove(T item)
+        {
+            var result = false;
+            if (_dict.Contains(item))
+            {
+                var set = _dict[item];
+                result = set.Remove(item);
+                if (set.IsEmpty)
+                {
+                    _dict.Remove(item);
+                }
+            }
+            return result;
+        }
+
+        public SCG.IEnumerator<T> GetEnumerator()
+        {
+            foreach (var entry in _dict)
+            {
+                foreach (T item in entry.Value)
+                {
+                    yield return item;
+                }
+            }
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            foreach (T item in this)
+            {
+                sb.Append(item).Append(" ");
+            }
+            return sb.ToString();
+        }
     }
 
-    public bool Remove(T item) {
-      bool result = false;
-      if (dict.Contains(item)) {
-        HashSet<T> set = dict[item];
-        result = set.Remove(item);
-        if (set.IsEmpty) 
-          dict.Remove(item);
-      }
-      return result;
-    } 
+    public class Person
+    {
+        private string Name { get; }
+        private int Date { get; }
 
-    public SCG.IEnumerator<T> GetEnumerator() { 
-      foreach (KeyValuePair<T,HashSet<T>> entry in dict) 
-	foreach (T item in entry.Value)
-	  yield return item;
+        public Person(string name, int date)
+        {
+            Name = name;
+            Date = date;
+        }
+
+        public class NameEqualityComparer : SCG.IEqualityComparer<Person>
+        {
+            public bool Equals(Person p1, Person p2)
+            {
+                return p1.Name == p2.Name;
+            }
+            public int GetHashCode(Person p)
+            {
+                return p.Name.GetHashCode();
+            }
+        }
+
+        public class DateComparer : SCG.IComparer<Person>
+        {
+            public int Compare(Person p1, Person p2)
+            {
+                return p1.Date.CompareTo(p2.Date);
+            }
+        }
+
+        public override string ToString()
+        {
+            return $"{Name} ({Date})";
+        }
     }
-
-    public override String ToString() {
-      StringBuilder sb = new StringBuilder();
-      foreach (T item in this) 
-        sb.Append(item).Append(" ");
-      return sb.ToString();
-    }
-  }
-
-  public class Person {
-    String name;
-    int date;
-
-    public Person(String name, int date) {
-      this.name = name;
-      this.date = date;
-    }
-
-    public class NameEqualityComparer : SCG.IEqualityComparer<Person> {
-      public bool Equals(Person p1, Person p2) {
-        return p1.name == p2.name;
-      }
-      public int GetHashCode(Person p) { 
-        return p.name.GetHashCode();
-      }
-    }
-
-    public class DateComparer : SCG.IComparer<Person> {
-      public int Compare(Person p1, Person p2) { 
-        return p1.date.CompareTo(p2.date);
-      }
-    }
-
-    public override String ToString() {
-      return name + " (" + date + ")";
-    }
-  }
 }

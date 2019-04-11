@@ -28,83 +28,90 @@
 // bags are small.  Takes 15 CPU seconds and 138 MB RAM to find the
 // 26,058 anagram classes among 347,000 distinct words.
 
-// Compile with 
-//   csc /r:C5.dll Anagrams.cs 
+// Compile and run with 
+//  dotnet clean
+//  dotnet build ../C5/C5.csproj
+//  dotnet build -p:StartupObject=C5.UserGuideExamples.AnagramStrings
+//  dotnet run
 
 using System;
 using System.Diagnostics;
-using System.IO;                        // StreamReader, TextReader
-using System.Text;			// Encoding
-using System.Text.RegularExpressions;   // Regex
-using C5;
+using System.IO;
+using System.Text.RegularExpressions;
 using SCG = System.Collections.Generic;
 
-namespace AnagramStrings
+namespace C5.UserGuideExamples
 {
-    class MyTest
+    class AnagramStrings
     {
-        public static void Main(String[] args)
+        static void Main(string[] args)
         {
-            Console.OutputEncoding = Encoding.GetEncoding("iso-8859-1");
-            SCG.IEnumerable<String> ss;
-            if (args.Length == 1)
-                ss = ReadFileWords(args[0]);
-            else
-                ss = args;
+            var ss = args.Length == 1 ? ReadFileWords(args[0]) : args;
 
             var sw = Stopwatch.StartNew();
-            SCG.IEnumerable<SCG.IEnumerable<String>> classes = AnagramClasses(ss);
-            int count = 0;
-            foreach (SCG.IEnumerable<String> anagramClass in classes)
+            var classes = AnagramClasses(ss);
+            var count = 0;
+
+            foreach (var anagramClass in classes)
             {
                 count++;
-                // foreach (String s in anagramClass) 
-                //   Console.Write(s + " ");
-                // Console.WriteLine();
+                foreach (string s in anagramClass)
+                {
+                    Console.Write(s + " ");
+                }
+                Console.WriteLine();
             }
-            Console.WriteLine("{0} anagram classes", count);
+            Console.WriteLine($"{count} anagram classes");
             sw.Stop();
             Console.WriteLine(sw.Elapsed);
         }
 
         // Read words from a file
-
-        public static SCG.IEnumerable<String> ReadFileWords(String filename)
+        static SCG.IEnumerable<string> ReadFileWords(string filename)
         {
-            Regex delim = new Regex("[^a-zæøåA-ZÆØÅ0-9-]+");
-            using (TextReader rd = new StreamReader(filename, Encoding.GetEncoding("iso-8859-1")))
+            var delimiter = new Regex("[^a-zæøåA-ZÆØÅ0-9-]+");
+            using (var reader = File.OpenText(filename))
             {
-                for (String line = rd.ReadLine(); line != null; line = rd.ReadLine())
-                    foreach (String s in delim.Split(line))
+                for (var line = reader.ReadLine(); line != null; line = reader.ReadLine())
+                {
+                    foreach (var s in delimiter.Split(line))
+                    {
                         if (s != "")
+                        {
                             yield return s.ToLower();
+                        }
+                    }
+                }
             }
         }
 
         // From an anagram point of view, a word is just a bag of characters.
-
-        public static CharBag AnagramClass(String s)
+        static CharBag AnagramClass(string s)
         {
             return new CharBag(s);
         }
 
         // Given a sequence of strings, return all non-trivial anagram classes   
 
-        public static SCG.IEnumerable<SCG.IEnumerable<String>> AnagramClasses(SCG.IEnumerable<String> ss)
+        static SCG.IEnumerable<SCG.IEnumerable<string>> AnagramClasses(SCG.IEnumerable<string> ss)
         {
-            IDictionary<CharBag, HashSet<String>> classes
-              = new TreeDictionary<CharBag, HashSet<String>>();
-            foreach (String s in ss)
+            var classes = new TreeDictionary<CharBag, HashSet<string>>();
+            foreach (string s in ss)
             {
-                CharBag anagram = AnagramClass(s);
+                var anagram = AnagramClass(s);
                 if (!classes.Find(ref anagram, out HashSet<string> anagramClass))
-                    classes[anagram] = anagramClass = new HashSet<String>();
+                {
+                    classes[anagram] = anagramClass = new HashSet<string>();
+                }
                 anagramClass.Add(s);
             }
-            foreach (HashSet<String> anagramClass in classes.Values)
-                if (anagramClass.Count > 1
-              ) // && anagramClass.Exists(delegate(String s) { return !s.EndsWith("s"); }))
+            foreach (HashSet<string> anagramClass in classes.Values)
+            {
+                if (anagramClass.Count > 1) // && anagramClass.Exists(delegate(string s) { return !s.EndsWith("s"); }))
+                {
                     yield return anagramClass;
+                }
+            }
         }
     }
 
@@ -112,31 +119,30 @@ namespace AnagramStrings
     // characters, with multiplicity.  Since natural language words are
     // short, the bags are small, so this is vastly better than
     // representing character bags using HashBag<char> or TreeBag<char>
-
     class CharBag : IComparable<CharBag>
     {
-        private readonly String contents; // The bag's characters, sorted, with multiplicity
+        private readonly string _contents; // The bag's characters, sorted, with multiplicity
 
-        public CharBag(String s)
+        public CharBag(string s)
         {
-            char[] chars = s.ToCharArray();
+            var chars = s.ToCharArray();
             Array.Sort(chars);
-            this.contents = new String(chars);
+            _contents = new string(chars);
         }
 
         public override int GetHashCode()
         {
-            return contents.GetHashCode();
+            return _contents.GetHashCode();
         }
 
         public bool Equals(CharBag that)
         {
-            return this.contents.Equals(that.contents);
+            return _contents.Equals(that._contents);
         }
 
         public int CompareTo(CharBag that)
         {
-            return this.contents.CompareTo(that.contents);
+            return _contents.CompareTo(that._contents);
         }
     }
 }

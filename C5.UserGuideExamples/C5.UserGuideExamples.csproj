@@ -1,34 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <IsPackable>false</IsPackable>
+    <ApplicationIcon />
+    <OutputType>Exe</OutputType>
+    <StartupObject>C5.UserGuideExamples.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="AnagramHashBag.cs" />
-    <Compile Remove="Anagrams.cs" />
-    <Compile Remove="AnagramStrings.cs" />
-    <Compile Remove="AnagramTreeBag.cs" />
-    <Compile Remove="Antipatterns.cs" />
-    <Compile Remove="BipartiteMatching.cs" />
-    <Compile Remove="boilerplate.cs" />
-    <Compile Remove="BugHashedArray.cs" />
-    <Compile Remove="C5SerializationTest.cs" />
     <Compile Remove="CharBags.cs" />
-    <Compile Remove="CollectionCollection.cs" />
-    <Compile Remove="CollectionSanity.cs" />
-    <Compile Remove="Commonwords.cs" />
-    <Compile Remove="ComparerPatterns.cs" />
-    <Compile Remove="DecreaseIncreaseKey.cs" />
-    <Compile Remove="DistinctBag.cs" />
-    <Compile Remove="EventPatterns.cs" />
-    <Compile Remove="Extension.cs" />
-    <Compile Remove="Fileindex.cs" />
     <Compile Remove="GCHForm.cs" />
-    <Compile Remove="GConvexHull.cs" />
-    <Compile Remove="GettingStarted.cs" />
-    <Compile Remove="GNfaToDfa.cs" />
-    <Compile Remove="Graph.cs" />
-    <Compile Remove="Graphcopy.cs" />
     <Compile Remove="GuardedView.cs" />
     <Compile Remove="HashCodes.cs" />
     <Compile Remove="IndexedObjects.cs" />
@@ -63,31 +43,8 @@
     <Compile Remove="WrappedArray.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AnagramHashBag.cs" />
-    <None Include="Anagrams.cs" />
-    <None Include="AnagramStrings.cs" />
-    <None Include="AnagramTreeBag.cs" />
-    <None Include="Antipatterns.cs" />
-    <None Include="BipartiteMatching.cs" />
-    <None Include="boilerplate.cs" />
-    <None Include="BugHashedArray.cs" />
-    <None Include="C5SerializationTest.cs" />
     <None Include="CharBags.cs" />
-    <None Include="CollectionCollection.cs" />
-    <None Include="CollectionSanity.cs" />
-    <None Include="Commonwords.cs" />
-    <None Include="ComparerPatterns.cs" />
-    <None Include="DecreaseIncreaseKey.cs" />
-    <None Include="DistinctBag.cs" />
-    <None Include="EventPatterns.cs" />
-    <None Include="Extension.cs" />
-    <None Include="Fileindex.cs" />
     <None Include="GCHForm.cs" />
-    <None Include="GConvexHull.cs" />
-    <None Include="GettingStarted.cs" />
-    <None Include="GNfaToDfa.cs" />
-    <None Include="Graph.cs" />
-    <None Include="Graphcopy.cs" />
     <None Include="GuardedView.cs" />
     <None Include="HashCodes.cs" />
     <None Include="IndexedObjects.cs" />

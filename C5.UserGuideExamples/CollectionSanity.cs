@@ -21,21 +21,24 @@
 
 // C5 example: anagrams 2004-12-08
 
-// Compile with 
-//   csc /r:C5.dll CollectionSanity.cs 
+// Compile and run with 
+//  dotnet clean
+//  dotnet build ../C5/C5.csproj
+//  dotnet build -p:StartupObject=C5.UserGuideExamples.CollectionCollection
+//  dotnet run
 
 using System;
-using C5;
 using SCG = System.Collections.Generic;
 
-namespace CollectionSanity
+namespace C5.UserGuideExamples
 {
     class CollectionSanity
     {
-        public static void Main(String[] args)
+        public static void Main(string[] args)
         {
-            IList<int> col1 = new LinkedList<int>(),
-              col2 = new LinkedList<int>(), col3 = new LinkedList<int>();
+            var col1 = new LinkedList<int>();
+            var col2 = new LinkedList<int>();
+            var col3 = new LinkedList<int>();
             col1.AddAll(new[] { 7, 9, 13 });
             col2.AddAll(new[] { 7, 9, 13 });
             col3.AddAll(new[] { 9, 7, 13 });
@@ -55,17 +58,19 @@ namespace CollectionSanity
         // identical, yet be distinct objects.  However, if the equalityComparers
         // were obtained from EqualityComparer<T>.Default, there will be at most one
         // equalityComparer for each type T.
-
-        public static bool EqualityComparerSanity<T, U>(ICollectionValue<U> colls)
-          where U : IExtensible<T>
+        public static bool EqualityComparerSanity<T, U>(ICollectionValue<U> colls) where U : IExtensible<T>
         {
             SCG.IEqualityComparer<T> equalityComparer = null;
             foreach (IExtensible<T> coll in colls)
             {
                 if (equalityComparer == null)
+                {
                     equalityComparer = coll.EqualityComparer;
+                }
                 if (equalityComparer != coll.EqualityComparer)
+                {
                     return false;
+                }
             }
             return true;
         }

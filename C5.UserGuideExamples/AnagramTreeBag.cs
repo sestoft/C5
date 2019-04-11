@@ -21,62 +21,73 @@
 
 // C5 example: anagrams 2004-08-08, 2004-11-16
 
-// Compile with 
-//   csc /r:C5.dll AnagramTreeBag.cs 
+// Compile and run with 
+//  dotnet clean
+//  dotnet build ../C5/C5.csproj
+//  dotnet build -p:StartupObject=C5.UserGuideExamples.AnagramTreeBag
+//  dotnet run
 
 using System;
 using System.Diagnostics;
-using System.IO;                        // StreamReader, TextReader
-using System.Text;			// Encoding
-using System.Text.RegularExpressions;   // Regex
-using C5;
+using System.IO;
+using System.Text.RegularExpressions;
 using SCG = System.Collections.Generic;
 
-namespace AnagramTreeBag
+namespace C5.UserGuideExamples
 {
-    class MyTest
+    class AnagramTreeBag
     {
-        public static void Main(String[] args)
+        public static void Main(string[] args)
         {
-            Console.OutputEncoding = Encoding.GetEncoding("iso-8859-1");
-            SCG.IEnumerable<String> ss;
-            if (args.Length == 2)
-                ss = ReadFileWords(args[0], int.Parse(args[1]));
-            else
-                ss = args;
-            // foreach (String s in FirstAnagramOnly(ss)) 
-            //   Console.WriteLine(s);
-            //   Console.WriteLine("===");
+            var ss = args.Length == 2 ? ReadFileWords(args[0], int.Parse(args[1])) : args;
+
+            foreach (string s in FirstAnagramOnly(ss))
+            {
+                Console.WriteLine(s);
+            }
+            Console.WriteLine("===");
+
             var sw = Stopwatch.StartNew();
-            SCG.IEnumerable<SCG.IEnumerable<String>> classes = AnagramClasses(ss);
-            int count = 0;
-            foreach (SCG.IEnumerable<String> anagramClass in classes)
+            var classes = AnagramClasses(ss);
+            var count = 0;
+
+            foreach (var anagramClass in classes)
             {
                 count++;
-                // foreach (String s in anagramClass)
-                //   Console.Write(s + " ");
-                // Console.WriteLine();
+                foreach (string s in anagramClass)
+                {
+                    Console.Write(s + " ");
+                }
+                Console.WriteLine();
             }
-            Console.WriteLine("{0} non-trivial anagram classes", count);
+
+            Console.WriteLine($"{count} non-trivial anagram classes");
+
             sw.Stop();
+
             Console.WriteLine(sw.Elapsed);
         }
 
         // Read words at most n words from a file
-
-        public static SCG.IEnumerable<String> ReadFileWords(String filename, int n)
+        public static SCG.IEnumerable<string> ReadFileWords(string filename, int n)
         {
-            Regex delim = new Regex("[^a-zæøåA-ZÆØÅ0-9-]+");
-            Encoding enc = Encoding.GetEncoding("iso-8859-1");
-            using (TextReader rd = new StreamReader(filename, enc))
+            var delimiter = new Regex("[^a-zæøåA-ZÆØÅ0-9-]+");
+
+            using (var reader = File.OpenText(filename))
             {
-                for (String line = rd.ReadLine(); line != null; line = rd.ReadLine())
+                for (var line = reader.ReadLine(); line != null; line = reader.ReadLine())
                 {
-                    foreach (String s in delim.Split(line))
+                    foreach (string s in delimiter.Split(line))
+                    {
                         if (s != "")
+                        {
                             yield return s.ToLower();
-                    if (--n == 0)
-                        yield break;
+                        }
+                        if (--n == 0)
+                        {
+                            yield break;
+                        }
+                    }
                 }
             }
         }
@@ -85,27 +96,32 @@ namespace AnagramTreeBag
         // characters.  So an anagram class is represented as TreeBag<char>
         // which permits fast equality comparison -- we shall use them as
         // elements of hash sets or keys in hash maps.
-
-        public static TreeBag<char> AnagramClass(String s)
+        public static TreeBag<char> AnagramClass(string s)
         {
-            TreeBag<char> anagram = new TreeBag<char>(SCG.Comparer<char>.Default, EqualityComparer<char>.Default);
+            var anagram = new TreeBag<char>(SCG.Comparer<char>.Default, EqualityComparer<char>.Default);
+
             foreach (char c in s)
+            {
                 anagram.Add(c);
+            }
+
             return anagram;
         }
 
         // Given a sequence of strings, return only the first member of each
         // anagram class.
-
-        public static SCG.IEnumerable<String> FirstAnagramOnly(SCG.IEnumerable<String> ss)
+        public static SCG.IEnumerable<string> FirstAnagramOnly(SCG.IEnumerable<string> ss)
         {
-            HashSet<TreeBag<char>> anagrams = new HashSet<TreeBag<char>>();
-            foreach (String s in ss)
+            var anagrams = new HashSet<TreeBag<char>>();
+
+            foreach (string s in ss)
             {
-                TreeBag<char> anagram = AnagramClass(s);
+                var anagram = AnagramClass(s);
+
                 if (!anagrams.Contains(anagram))
                 {
                     anagrams.Add(anagram);
+
                     yield return s;
                 }
             }
@@ -125,22 +141,28 @@ namespace AnagramTreeBag
         // 347 165 words 24 428 classes 121.3 sec (includes swapping)
 
         // The maximal memory consumption is around 180 MB.
-
-        public static SCG.IEnumerable<SCG.IEnumerable<String>>
-          AnagramClasses(SCG.IEnumerable<String> ss)
+        public static SCG.IEnumerable<SCG.IEnumerable<string>> AnagramClasses(SCG.IEnumerable<string> ss)
         {
-            IDictionary<TreeBag<char>, TreeSet<String>> classes;
-            classes = new HashDictionary<TreeBag<char>, TreeSet<String>>();
-            foreach (String s in ss)
+            var classes = new HashDictionary<TreeBag<char>, TreeSet<string>>();
+            foreach (var s in ss)
             {
-                TreeBag<char> anagram = AnagramClass(s);
-                if (!classes.Find(ref anagram, out TreeSet<string> anagramClass))
-                    classes[anagram] = anagramClass = new TreeSet<String>();
+                var anagram = AnagramClass(s);
+
+                if (!classes.Find(ref anagram, out var anagramClass))
+                {
+                    classes[anagram] = anagramClass = new TreeSet<string>();
+                }
+
                 anagramClass.Add(s);
             }
-            foreach (TreeSet<String> anagramClass in classes.Values)
+
+            foreach (TreeSet<string> anagramClass in classes.Values)
+            {
                 if (anagramClass.Count > 1)
+                {
                     yield return anagramClass;
+                }
+            }
         }
     }
 }
