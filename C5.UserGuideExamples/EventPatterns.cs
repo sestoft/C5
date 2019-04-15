@@ -164,7 +164,7 @@ namespace EventPatterns
         private static void AddItemUpdatedHandler<T>(ICollection<T> coll)
         {
             State state = State.Before;
-            T removed = default(T), added = default(T);
+            T removed = default, added = default;
             coll.ItemsRemoved
               += delegate(Object c, ItemCountEventArgs<T> args)
             {

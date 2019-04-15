@@ -373,7 +373,7 @@ namespace C5
                     {
                     }
 
-                    current = default(T);
+                    current = default;
                     cursor = null;
                     path = null;
                     disposed = true;
@@ -517,7 +517,7 @@ namespace C5
             {
                 tree = null;
                 valid = false;
-                current = default(T);
+                current = default;
                 cursor = null;
                 path = null;
             }
@@ -867,7 +867,7 @@ namespace C5
             updatecheck();
 
             //Note: blackdepth of the tree is set inside addIterative
-            T jtem = default(T);
+            T jtem = default;
             if (!add(item, ref jtem))
                 return false;
             if (ActiveEvents != 0)
@@ -917,7 +917,7 @@ namespace C5
             updatecheck();
 
             int c = 0, _uniqueAdds = 0;
-            T j = default(T);
+            T j = default;
 
             bool raiseAdded = (ActiveEvents & EventTypeEnum.Added) != 0;
             CircularQueue<T> wasAdded = raiseAdded ? new CircularQueue<T>() : null;
@@ -1282,7 +1282,7 @@ namespace C5
                 cursor = comp < 0 ? cursor.right : cursor.left;
             }
 
-            olditem = default(T);
+            olditem = default;
             return false;
         }
 
@@ -1311,7 +1311,7 @@ namespace C5
             if (!isValid)
                 throw new ViewDisposedException("Snapshot has been disposed");
             updatecheck();
-            olditem = default(T);
+            olditem = default;
 
 
             //Note: blackdepth of the tree is set inside addIterative
@@ -1818,7 +1818,7 @@ namespace C5
 #warning how does this work together with persistence?
             TreeBag<T> t = (TreeBag<T>)MemberwiseClone();
 
-            T jtem = default(T);
+            T jtem = default;
             t.clear();
             foreach (T item in items)
                 if (ContainsCount(item) > t.ContainsCount(item))
@@ -1985,10 +1985,10 @@ namespace C5
 
             SCG.IEnumerator<T> e = GetEnumerator();
             TreeBag<V>.Node head = null, tail = null;
-            V oldv = default(V);
+            V oldv = default;
             int z = 0;
 
-            T lastitem = default(T);
+            T lastitem = default;
 
             while (e.MoveNext())
             {
@@ -2841,7 +2841,7 @@ namespace C5
             }
             if (bestsofar == null)
             {
-                res = default(T);
+                res = default;
                 return false;
             }
             else
@@ -2889,7 +2889,7 @@ namespace C5
 
             if (bestsofar == null)
             {
-                res = default(T);
+                res = default;
                 return false;
             }
             else
@@ -2932,7 +2932,7 @@ namespace C5
             }
             if (bestsofar == null)
             {
-                res = default(T);
+                res = default;
                 return false;
             }
             else
@@ -2976,7 +2976,7 @@ namespace C5
 
             if (bestsofar == null)
             {
-                res = default(T);
+                res = default;
                 return false;
             }
             else
@@ -3064,7 +3064,7 @@ namespace C5
         {
             if (!isValid)
                 throw new ViewDisposedException("Snapshot has been disposed");
-            return new Range(this, true, bot, false, default(T), EnumerationDirection.Forwards);
+            return new Range(this, true, bot, false, default, EnumerationDirection.Forwards);
         }
 
 
@@ -3091,7 +3091,7 @@ namespace C5
         {
             if (!isValid)
                 throw new ViewDisposedException("Snapshot has been disposed");
-            return new Range(this, false, default(T), true, top, EnumerationDirection.Forwards);
+            return new Range(this, false, default, true, top, EnumerationDirection.Forwards);
         }
 
 
@@ -3103,7 +3103,7 @@ namespace C5
         {
             if (!isValid)
                 throw new ViewDisposedException("Snapshot has been disposed");
-            return new Range(this, false, default(T), false, default(T), EnumerationDirection.Forwards);
+            return new Range(this, false, default, false, default, EnumerationDirection.Forwards);
         }
 
 
@@ -3241,12 +3241,12 @@ namespace C5
             if (highIsValid = (rbest != null))
                 high = rbest.item;
             else
-                high = default(T);
+                high = default;
 
             if (lowIsValid = (lbest != null))
                 low = lbest.item;
             else
-                low = default(T);
+                low = default;
 
             return res;
         }
@@ -3766,7 +3766,7 @@ namespace C5
                 public void Dispose()
                 {
                     comparer = null;
-                    current = default(T);
+                    current = default;
                     cursor = null;
                     path = null;
                     range = null;

@@ -368,7 +368,7 @@ namespace C5
             addtosize(-1);
             if (underlyingsize > i)
                 Array.Copy(array, i + 1, array, i, underlyingsize - i);
-            array[underlyingsize] = default(T);
+            array[underlyingsize] = default;
             itemIndex.Remove(new KeyValuePair<T, int>(retval));
             reindex(i);
             return retval;
@@ -1443,7 +1443,7 @@ namespace C5
                 return true;
             }
 
-            olditem = default(T);
+            olditem = default;
             return false;
         }
 
@@ -1496,7 +1496,7 @@ namespace C5
                 return true;
 
             Add(item);
-            olditem = default(T);
+            olditem = default;
             return false;
         }
 
@@ -1540,7 +1540,7 @@ namespace C5
 
             if (i < 0)
             {
-                removeditem = default(T);
+                removeditem = default;
                 return false;
             }
 
@@ -1922,7 +1922,7 @@ namespace C5
 
             for (int i = underlyingsize, length = array.Length; i < length; i++)
             {
-                if (!equals(array[i], default(T)))
+                if (!equals(array[i], default))
                 {
                     Logger.Log(string.Format("Bad element: != default(T) at (base)index {0}", i));
                     retval = false;

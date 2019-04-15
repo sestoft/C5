@@ -526,7 +526,7 @@ namespace C5
                     item = jtem;
                     return true;
                 }
-            item = default(T);
+            item = default;
             return false;
         }
 
@@ -653,7 +653,7 @@ namespace C5
                     item = jtem;
                     return true;
                 }
-            item = default(T);
+            item = default;
             return false;
         }
     }
@@ -994,7 +994,7 @@ namespace C5
                     item = jtem;
                     return true;
                 }
-            item = default(T);
+            item = default;
             return false;
         }
     }

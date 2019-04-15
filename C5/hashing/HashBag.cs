@@ -163,7 +163,7 @@ namespace C5
                 return true;
             }
 
-            olditem = default(T);
+            olditem = default;
             return false;
         }
 
@@ -276,7 +276,7 @@ namespace C5
                 return true;
             }
 
-            removeditem = default(T);
+            removeditem = default;
             return false;
         }
 

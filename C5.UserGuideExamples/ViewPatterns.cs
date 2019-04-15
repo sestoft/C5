@@ -173,7 +173,7 @@ namespace ViewPatterns
         {
             IList<T> view = list.ViewOf(y);
             bool ok = view != null && view.TrySlide(-1);
-            x = ok ? view[0] : default(T);
+            x = ok ? view[0] : default;
             return ok;
         }
 
@@ -190,7 +190,7 @@ namespace ViewPatterns
         {
             IList<T> view = list.ViewOf(y);
             bool ok = view != null && view.TrySlide(+1);
-            x = ok ? view[0] : default(T);
+            x = ok ? view[0] : default;
             return ok;
         }
 
