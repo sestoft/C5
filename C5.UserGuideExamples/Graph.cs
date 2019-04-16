@@ -647,7 +647,7 @@ namespace Graph
         {
             if (!graph.Find(ref start, out HashDictionary<V, E> edgeset))
             {
-                edgedata = default(E);
+                edgedata = default;
                 return false;
             }
             if (!edgeset.Remove(end, out edgedata))
@@ -661,7 +661,7 @@ namespace Graph
         {
             if (!graph.Find(ref start, out HashDictionary<V, E> edges))
             {
-                edgedata = default(E);
+                edgedata = default;
                 return false;
             }
             return edges.Find(ref end, out edgedata);
@@ -771,7 +771,7 @@ namespace Graph
             Action<V> mybeforecomponent = beforecomponent + delegate (V v) { missing.Remove(v); };
             while (!missing.IsEmpty)
             {
-                V start = default(V);
+                V start = default;
                 foreach (V v in missing)
                 { start = v; break; }
                 mybeforecomponent(start);
@@ -810,7 +810,7 @@ namespace Graph
                     }
                 after(v);
             }
-            visit(start, default(V), true);
+            visit(start, default, true);
         }
 
         public void PriorityFirstTraverse(bool accumulated, V start, EdgeAction<V, E, W> act)
@@ -830,7 +830,7 @@ namespace Graph
                 {
                     seen.Add(start, h);
                     current = start;
-                    currentdist = default(W);
+                    currentdist = default;
                 }
                 else
                 {
@@ -866,7 +866,7 @@ namespace Graph
 
         public W Distance(V start, V end)
         {
-            W dist = default(W);
+            W dist = default;
             bool found = false;
             PriorityFirstTraverse(true, start, delegate (Edge<V, E> e, W w)
       {
@@ -904,7 +904,7 @@ namespace Graph
         public IGraph<V, E, W> MinimumSpanningTree(out V start)
         {
             ArrayList<Edge<V, E>> edges = new ArrayList<Edge<V, E>>();
-            start = default(V);
+            start = default;
             foreach (V v in graph.Keys)
             { start = v; break; }
             PriorityFirstTraverse(false, start, delegate (Edge<V, E> e, W w) { edges.Add(e); return true; });
@@ -919,17 +919,17 @@ namespace Graph
             HashGraph<V, E, W> clone = new HashGraph<V, E, W>(Weight, Edges());
             ArrayList<Edge<V, E>> evenpath = new ArrayList<Edge<V, E>>();
             ArrayList<Edge<V, E>> oddpath = new ArrayList<Edge<V, E>>();
-            V start = default(V);
+            V start = default;
             foreach (V v in clone.Vertices()) { start = v; break; }
             V current = start;
             W evenweight, oddweight;
-            evenweight = oddweight = default(W);
+            evenweight = oddweight = default;
             bool even = true;
             while (clone.VertexCount > 0)
             {
-                V bestvertex = default(V);
-                E bestedge = default(E);
-                W bestweight = default(W);
+                V bestvertex = default;
+                E bestedge = default;
+                W bestweight = default;
                 if (clone.VertexCount == 1)
                 {
                     bestvertex = start;
@@ -999,7 +999,7 @@ namespace Graph
             LinkedList<V> path = new LinkedList<V>();
             //Clone the graph data to keep track of used edges.
             HashDictionary<V, HashedArrayList<V>> edges = new HashDictionary<V, HashedArrayList<V>>();
-            V start = default(V);
+            V start = default;
             HashedArrayList<V> adjacent = null;
             foreach (KeyValuePair<V, HashDictionary<V, E>> p in graph)
             {
@@ -1052,7 +1052,7 @@ namespace Graph
             internal readonly V vertex; internal readonly int id;
             static readonly SCG.IEqualityComparer<V> vequalityComparer = EqualityComparer<V>.Default;
             internal Vplus(V v) { vertex = v; id = 0; }
-            internal Vplus(int i) { vertex = default(V); id = i; }
+            internal Vplus(int i) { vertex = default; id = i; }
             //We should override Equals and GetHashCode
 
             public override string ToString()

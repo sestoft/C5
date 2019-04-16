@@ -468,8 +468,8 @@ namespace C5
         {
             offset = 0;
             size = stamp = 0;
-            startsentinel = new Node(default(T));
-            endsentinel = new Node(default(T));
+            startsentinel = new Node(default);
+            endsentinel = new Node(default);
             startsentinel.next = endsentinel;
             endsentinel.prev = startsentinel;
 
@@ -1834,7 +1834,7 @@ namespace C5
                 return true;
             }
 
-            olditem = default(T);
+            olditem = default;
             return false;
         }
 
@@ -1878,7 +1878,7 @@ namespace C5
             if (Update(item, out olditem))
                 return true;
             Add(item);
-            olditem = default(T);
+            olditem = default;
             return false;
         }
 
@@ -1919,7 +1919,7 @@ namespace C5
             node = fIFO ? startsentinel.next : endsentinel.prev;
             if (!(fIFO ? find(item, ref node, ref i) : dnif(item, ref node, ref i)))
             {
-                removeditem = default(T);
+                removeditem = default;
                 return false;
             }
             removeditem = node.item;

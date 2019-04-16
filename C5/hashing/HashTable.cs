@@ -242,7 +242,7 @@ namespace C5
             if (raise && add)
                 raiseForAdd(item);
             if (update)
-                item = default(T);
+                item = default;
             return false;
         }
 
