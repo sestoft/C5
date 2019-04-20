@@ -9,8 +9,6 @@
   <ItemGroup>
     <Compile Remove="CharBags.cs" />
     <Compile Remove="GCHForm.cs" />
-    <Compile Remove="GuardedView.cs" />
-    <Compile Remove="HashCodes.cs" />
     <Compile Remove="IndexedObjects.cs" />
     <Compile Remove="IndexedObjects2.cs" />
     <Compile Remove="Initializers.cs" />
@@ -45,8 +43,6 @@
   <ItemGroup>
     <None Include="CharBags.cs" />
     <None Include="GCHForm.cs" />
-    <None Include="GuardedView.cs" />
-    <None Include="HashCodes.cs" />
     <None Include="IndexedObjects.cs" />
     <None Include="IndexedObjects2.cs" />
     <None Include="Initializers.cs" />
