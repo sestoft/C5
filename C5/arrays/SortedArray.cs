@@ -324,7 +324,7 @@ namespace C5
             BinarySearch(item, out int lo);
             if (lo == 0)
             {
-                res = default(T);
+                res = default;
                 return false;
             }
             else
@@ -348,7 +348,7 @@ namespace C5
                 hi++;
             if (hi >= size)
             {
-                res = default(T);
+                res = default;
                 return false;
             }
             else
@@ -374,7 +374,7 @@ namespace C5
 
             if (lo < 0)
             {
-                res = default(T);
+                res = default;
                 return false;
             }
             else
@@ -398,7 +398,7 @@ namespace C5
             BinarySearch(item, out int hi);
             if (hi >= size)
             {
-                res = default(T);
+                res = default;
                 return false;
             }
             else
@@ -510,9 +510,9 @@ namespace C5
         {
             int lbest = -1, rbest = size;
 
-            low = default(T);
+            low = default;
             lowIsValid = false;
-            high = default(T);
+            high = default;
             highIsValid = false;
 
             int bot = 0, top = size, mid, comp = -1, sol;
@@ -612,7 +612,7 @@ namespace C5
 
             int j = 0, i = 0, c, itemcount = countItems(items), numAdded = 0;
             SortedArray<T> res = new SortedArray<T>(size + itemcount, _comparer);
-            T lastitem = default(T);
+            T lastitem = default;
             T[] addedItems = new T[itemcount];
 
             foreach (T item in items)
@@ -834,7 +834,7 @@ namespace C5
                 return true;
             }
 
-            olditem = default(T);
+            olditem = default;
             return false;
         }
 
@@ -874,7 +874,7 @@ namespace C5
             Array.Copy(array, ind, array, ind + 1, size - ind);
             array[ind] = item;
             size++;
-            olditem = default(T);
+            olditem = default;
             raiseForAdd(item);
             return false;
         }
@@ -894,7 +894,7 @@ namespace C5
             {
                 T removeditem = array[ind];
                 Array.Copy(array, ind + 1, array, ind, size - ind - 1);
-                array[--size] = default(T);
+                array[--size] = default;
                 raiseForRemove(removeditem);
                 return true;
             }
@@ -921,12 +921,12 @@ namespace C5
             {
                 removeditem = array[ind];
                 Array.Copy(array, ind + 1, array, ind, size - ind - 1);
-                array[--size] = default(T);
+                array[--size] = default;
                 raiseForRemove(removeditem);
                 return true;
             }
 
-            removeditem = default(T);
+            removeditem = default;
             return false;
         }
 
@@ -1145,7 +1145,7 @@ namespace C5
             Sorting.IntroSort<T>(newarr, size, toadd, _comparer);
 
             int j = 0, i = 0, numAdded = 0;
-            T lastitem = default(T);
+            T lastitem = default;
             T[] addedItems = new T[toadd];
 
             //The following eliminates duplicates (including duplicates in input)
@@ -1207,7 +1207,7 @@ namespace C5
 
             size--;
             Array.Copy(array, 1, array, 0, size);
-            array[size] = default(T);
+            array[size] = default;
             raiseForRemove(retval);
             return retval;
         }
@@ -1239,7 +1239,7 @@ namespace C5
             T retval = array[size - 1];
 
             size--;
-            array[size] = default(T);
+            array[size] = default;
             raiseForRemove(retval);
             return retval;
         }
@@ -1311,7 +1311,7 @@ namespace C5
 
             size--;
             Array.Copy(array, i + 1, array, i, size - i);
-            array[size] = default(T);
+            array[size] = default;
             raiseForRemoveAt(i, retval);
             return retval;
         }

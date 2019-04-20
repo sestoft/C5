@@ -475,8 +475,8 @@ namespace C5
         {
             offset = 0;
             size = stamp = 0;
-            startsentinel = new Node(default(T));
-            endsentinel = new Node(default(T));
+            startsentinel = new Node(default);
+            endsentinel = new Node(default);
             startsentinel.next = endsentinel;
             endsentinel.prev = startsentinel;
             //It is important that the sentinels are different:
@@ -2220,7 +2220,7 @@ namespace C5
                 return true;
             }
 
-            olditem = default(T);
+            olditem = default;
             return false;
         }
 
@@ -2284,7 +2284,7 @@ namespace C5
             insertNode(true, endsentinel, node);
             (underlying ?? this).raiseForAdd(item);
 
-            olditem = default(T);
+            olditem = default;
             return false;
         }
 
@@ -2319,7 +2319,7 @@ namespace C5
 
             if (!dictremove(item, out Node node))
             {
-                removeditem = default(T);
+                removeditem = default;
                 return false;
             }
             removeditem = node.item;

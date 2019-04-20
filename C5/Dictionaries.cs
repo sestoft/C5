@@ -51,7 +51,7 @@ namespace C5
         /// Create an entry with a specified key. The value will be the default value of type <code>V</code>.
         /// </summary>
         /// <param name="key">The key</param>
-        public KeyValuePair(K key) { Key = key; Value = default(V); }
+        public KeyValuePair(K key) { Key = key; Value = default; }
 
 
         /// <summary>
@@ -388,7 +388,7 @@ namespace C5
             }
             else
             {
-                value = default(V);
+                value = default;
                 return false;
             }
         }
@@ -463,7 +463,7 @@ namespace C5
             }
             else
             {
-                value = default(V);
+                value = default;
                 return false;
             }
         }

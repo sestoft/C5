@@ -144,7 +144,7 @@ namespace Views
                     return true;
                 }
             }
-            res = default(T);
+            res = default;
             return false;
         }
 
@@ -160,7 +160,7 @@ namespace Views
                     return true;
                 }
             }
-            res = default(T);
+            res = default;
             return false;
         }
 
@@ -178,7 +178,7 @@ namespace Views
                     return true;
                 }
             }
-            res = default(T);
+            res = default;
             return false;
         }
     }

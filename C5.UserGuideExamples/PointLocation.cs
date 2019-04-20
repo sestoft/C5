@@ -262,7 +262,7 @@ namespace PointLocation
             p.Value.Cut(c, out Edge<T> low, out bool lval, out _, out bool hval);
             if (!lval || !hval)
             {
-                cell = default(T);
+                cell = default;
                 return false;
             }
             else
@@ -290,8 +290,8 @@ namespace PointLocation
             //where (x,y) is on an edge or even on several edges,
             //and just deliver some cell it is in.
             p.Value.Cut(c, out Edge<T> low, out lval, out Edge<T> high, out hval);
-            upper = hval ? high.Cell(false) : default(T);
-            lower = lval ? low.Cell(true) : default(T);
+            upper = hval ? high.Cell(false) : default;
+            lower = lval ? low.Cell(true) : default;
             return;
         }
 

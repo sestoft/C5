@@ -646,7 +646,7 @@ namespace C5
         {
             if (!(handle is Handle myhandle))
             {
-                item = default(T);
+                item = default;
                 return false;
             }
             int toremove = myhandle.index;
@@ -655,13 +655,13 @@ namespace C5
             {
                 if (toremove == -1 || toremove >= size)
                 {
-                    item = default(T);
+                    item = default;
                     return false;
                 }
                 Handle actualhandle = isfirst ? heap[cell].firsthandle : heap[cell].lasthandle;
                 if (actualhandle != myhandle)
                 {
-                    item = default(T);
+                    item = default;
                     return false;
                 }
             }
@@ -723,19 +723,19 @@ namespace C5
                     if (size % 2 == 0)
                     {
                         updateFirst(cell, heap[cell].last, heap[cell].lasthandle);
-                        heap[cell].last = default(T);
+                        heap[cell].last = default;
                         heap[cell].lasthandle = null;
                     }
                     else
                     {
-                        heap[cell].first = default(T);
+                        heap[cell].first = default;
                         heap[cell].firsthandle = null;
                     }
                 }
                 else
                 {
                     retval = heap[cell].last;
-                    heap[cell].last = default(T);
+                    heap[cell].last = default;
                     heap[cell].lasthandle = null;
                 }
                 size--;
@@ -747,13 +747,13 @@ namespace C5
                 if (size % 2 == 0)
                 {
                     updateFirst(cell, heap[lastcell].last, heap[lastcell].lasthandle);
-                    heap[lastcell].last = default(T);
+                    heap[lastcell].last = default;
                     heap[lastcell].lasthandle = null;
                 }
                 else
                 {
                     updateFirst(cell, heap[lastcell].first, heap[lastcell].firsthandle);
-                    heap[lastcell].first = default(T);
+                    heap[lastcell].first = default;
                     heap[lastcell].firsthandle = null;
                 }
 
@@ -770,13 +770,13 @@ namespace C5
                 if (size % 2 == 0)
                 {
                     updateLast(cell, heap[lastcell].last, heap[lastcell].lasthandle);
-                    heap[lastcell].last = default(T);
+                    heap[lastcell].last = default;
                     heap[lastcell].lasthandle = null;
                 }
                 else
                 {
                     updateLast(cell, heap[lastcell].first, heap[lastcell].firsthandle);
-                    heap[lastcell].first = default(T);
+                    heap[lastcell].first = default;
                     heap[lastcell].firsthandle = null;
                 }
 
@@ -923,7 +923,7 @@ namespace C5
             if (size == 1)
             {
                 size = 0;
-                heap[0].first = default(T);
+                heap[0].first = default;
                 heap[0].firsthandle = null;
             }
             else
@@ -933,13 +933,13 @@ namespace C5
                 if (size % 2 == 0)
                 {
                     updateFirst(0, heap[lastcell].last, heap[lastcell].lasthandle);
-                    heap[lastcell].last = default(T);
+                    heap[lastcell].last = default;
                     heap[lastcell].lasthandle = null;
                 }
                 else
                 {
                     updateFirst(0, heap[lastcell].first, heap[lastcell].firsthandle);
-                    heap[lastcell].first = default(T);
+                    heap[lastcell].first = default;
                     heap[lastcell].firsthandle = null;
                 }
 
@@ -974,7 +974,7 @@ namespace C5
                 myhandle = heap[0].firsthandle;
                 if (myhandle != null)
                     myhandle.index = -1;
-                heap[0].first = default(T);
+                heap[0].first = default;
                 heap[0].firsthandle = null;
             }
             else
@@ -989,13 +989,13 @@ namespace C5
                 if (size % 2 == 0)
                 {
                     updateLast(0, heap[lastcell].last, heap[lastcell].lasthandle);
-                    heap[lastcell].last = default(T);
+                    heap[lastcell].last = default;
                     heap[lastcell].lasthandle = null;
                 }
                 else
                 {
                     updateLast(0, heap[lastcell].first, heap[lastcell].firsthandle);
-                    heap[lastcell].first = default(T);
+                    heap[lastcell].first = default;
                     heap[lastcell].firsthandle = null;
                 }
 
