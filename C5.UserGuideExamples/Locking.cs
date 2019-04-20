@@ -1,96 +1,147 @@
+// This file is part of the C5 Generic Collection Library for C# and CLI
+// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+
 // C5 example: locking 2005-11-07
 
-// Compile with 
-//   csc /r:C5.dll Locking.cs 
+// Compile and run with 
+//  dotnet clean
+//  dotnet build ../C5/C5.csproj
+//  dotnet build -p:StartupObject=C5.UserGuideExamples.Locking
+//  dotnet run
 
 using System;
 using System.Threading;
-using C5;
 
-namespace Locking {
-  class Locking {
-    static ArrayList<int> coll = new ArrayList<int>();
-    // static SCG.List<int> coll = new SCG.List<int>();
-    static readonly int count = 1000;
+namespace C5.UserGuideExamples
+{
+    class Locking
+    {
+        private static ArrayList<int> _collection = new ArrayList<int>();
+        private static readonly int _count = 1000;
 
-    public static void Main(String[] args) {
-      Console.WriteLine("Adding and removing without locking:");
-      RunTwoThreads(delegate { AddAndRemove(15000); });
-      Console.WriteLine("coll has {0} items, should be 0", coll.Count);
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("Adding and removing without locking:");
+            RunTwoThreads(delegate { AddAndRemove(15000); });
+            Console.WriteLine($"Collection has {_collection.Count} items, should be 0");
 
-      coll = new ArrayList<int>();
-      Console.WriteLine("Adding and removing with locking:");
-      RunTwoThreads(delegate { SafeAddAndRemove(15000); });
-      Console.WriteLine("coll has {0} items, should be 0", coll.Count);
+            _collection = new ArrayList<int>();
+            Console.WriteLine("Adding and removing with locking:");
+            RunTwoThreads(delegate { SafeAddAndRemove(15000); });
+            Console.WriteLine($"Collection has {_collection.Count} items, should be 0");
 
-      Console.WriteLine("Moving items without locking:");
-      ArrayList<int> from, to;
-      from = new ArrayList<int>();
-      to = new ArrayList<int>();
-      for (int i=0; i<count; i++) 
-        from.Add(i);
-      RunTwoThreads(delegate { while (!from.IsEmpty) Move(from, to); });
-      Console.WriteLine("coll has {0} items, should be {1}", to.Count, count);
+            Console.WriteLine("Moving items without locking:");
+            ArrayList<int> from, to;
+            from = new ArrayList<int>();
+            to = new ArrayList<int>();
 
-      Console.WriteLine("Moving items with locking:");
-      from = new ArrayList<int>();
-      to = new ArrayList<int>();
-      for (int i=0; i<count; i++) 
-        from.Add(i);
-      RunTwoThreads(delegate { while (!from.IsEmpty) SafeMove(from, to); });
-      Console.WriteLine("coll has {0} items, should be {1}", to.Count, count);
-    }
+            for (var i = 0; i < _count; i++)
+            {
+                from.Add(i);
+            }
 
-    public static void RunTwoThreads(Action run) {
-      Thread t1 = new Thread(new ThreadStart(run)),
-             t2 = new Thread(new ThreadStart(run));
-      t1.Start(); t2.Start();
-      t1.Join(); t2.Join();
-    }
+            RunTwoThreads(() =>
+            {
+                while (!from.IsEmpty)
+                {
+                    Move(from, to);
+                }
+            });
+            Console.WriteLine($"Collection has {to.Count} items, should be {_count}");
 
-    // Concurrently adding to and removing from an arraylist
+            Console.WriteLine("Moving items with locking:");
+            from = new ArrayList<int>();
+            to = new ArrayList<int>();
 
-    public static void AddAndRemove(int count) {
-      for (int i=0; i<count; i++) 
-        coll.Add(i);
-      for (int i=0; i<count; i++)
-        coll.Remove(i);
-    }
+            for (var i = 0; i < _count; i++)
+            {
+                from.Add(i);
+            }
 
-    private static readonly Object sync = new Object();
+            RunTwoThreads(() =>
+            {
+                while (!from.IsEmpty)
+                {
+                    SafeMove(from, to);
+                }
+            });
+            Console.WriteLine("coll has {0} items, should be {1}", to.Count, _count);
+        }
 
-    public static void SafeAddAndRemove(int count) {
-      for (int i=0; i<count; i++) 
-        lock (sync)
-          coll.Add(i);
-      for (int i=0; i<count; i++)
-        lock (sync)
-          coll.Remove(i);
-    }
+        public static void RunTwoThreads(Action run)
+        {
+            var t1 = new Thread(new ThreadStart(run));
+            var t2 = new Thread(new ThreadStart(run));
+            t1.Start(); t2.Start();
+            t1.Join(); t2.Join();
+        }
 
-    public static void SafeAdd<T>(IExtensible<T> coll, T x) { 
-      lock (sync) {
-        coll.Add(x);
-      }
-    }
+        // Concurrently adding to and removing from an arraylist
+        public static void AddAndRemove(int count)
+        {
+            for (var i = 0; i < count; i++)
+            {
+                _collection.Add(i);
+            }
 
-    public static void Move<T>(ICollection<T> from, ICollection<T> to) { 
-      if (!from.IsEmpty) {  
-        T x = from.Choose();
-        Thread.Sleep(0);        // yield processor to other threads
-        from.Remove(x);
-        to.Add(x);
-      }
-    }
-    
-    public static void SafeMove<T>(ICollection<T> from, ICollection<T> to) { 
-      lock (sync) 
-        if (!from.IsEmpty) {  
-          T x = from.Choose();
-          Thread.Sleep(0);      // yield processor to other threads
-          from.Remove(x);
-          to.Add(x);
+            for (var i = 0; i < count; i++)
+            {
+                _collection.Remove(i);
+            }
+        }
+
+        private static readonly object _lock = new object();
+
+        public static void SafeAddAndRemove(int count)
+        {
+            for (var i = 0; i < count; i++)
+            {
+                lock (_lock)
+                {
+                    _collection.Add(i);
+                }
+            }
+
+            for (var i = 0; i < count; i++)
+            {
+                lock (_lock)
+                {
+                    _collection.Remove(i);
+                }
+            }
+        }
+
+        public static void SafeAdd<T>(IExtensible<T> coll, T x)
+        {
+            lock (_lock)
+            {
+                coll.Add(x);
+            }
+        }
+
+        public static void Move<T>(ICollection<T> from, ICollection<T> to)
+        {
+            if (!from.IsEmpty)
+            {
+                var x = from.Choose();
+                Thread.Sleep(0);        // yield processor to other threads
+                from.Remove(x);
+                to.Add(x);
+            }
+        }
+
+        public static void SafeMove<T>(ICollection<T> from, ICollection<T> to)
+        {
+            lock (_lock)
+            {
+                if (!from.IsEmpty)
+                {
+                    var x = from.Choose();
+                    Thread.Sleep(0);      // yield processor to other threads
+                    from.Remove(x);
+                    to.Add(x);
+                }
+            }
         }
     }
-  }
 }

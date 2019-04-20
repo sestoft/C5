@@ -3,13 +3,11 @@
 
 // C5 example: Graph representation with basic algorithms using C5 
 
-
 // Compile and run with 
 //  dotnet clean
 //  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.Test
+//  dotnet build -p:StartupObject=C5.UserGuideExamples.Graph
 //  dotnet run
-
 
 // The code is structured as a rudimentary Graph library, with an interface
 // for (edge)weighted graphs and a single implementation based on an
@@ -81,7 +79,6 @@ namespace C5.UserGuideExamples
     {
         //V v;
     }
-
 
     interface IGraph<V, E, W> where W : IComparable<W>
     {
@@ -1388,7 +1385,7 @@ namespace C5.UserGuideExamples
     /// <summary>
     /// A selection of test cases
     /// </summary>
-    class Test
+    class Graph
     {
         static SCG.IEnumerable<Edge<int, int>> Grid(int n)
         {
@@ -1786,7 +1783,7 @@ namespace C5.UserGuideExamples
             if (args.Length != 1)
             {
                 Console.WriteLine("Usage: Graph.exe testno");
-                System.Reflection.MethodInfo[] mis = typeof(Test).GetMethods(
+                System.Reflection.MethodInfo[] mis = typeof(Graph).GetMethods(
                     System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
                 foreach (System.Reflection.MethodInfo mi in mis)
                 {
@@ -1801,7 +1798,7 @@ namespace C5.UserGuideExamples
             {
                 string testMethodName = string.Format("test{0}", args[0]);
 
-                System.Reflection.MethodInfo mi = typeof(Test).GetMethod(testMethodName,
+                System.Reflection.MethodInfo mi = typeof(Graph).GetMethod(testMethodName,
                     System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
 
                 if (mi == null)

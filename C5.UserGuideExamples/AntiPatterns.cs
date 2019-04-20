@@ -6,7 +6,7 @@
 // Compile and run with 
 //  dotnet clean
 //  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.Antipatterns
+//  dotnet build -p:StartupObject=C5.UserGuideExamples.AntiPatterns
 //  dotnet run
 
 using System;

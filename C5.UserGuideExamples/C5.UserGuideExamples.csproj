@@ -9,21 +9,10 @@
   <ItemGroup>
     <Compile Remove="CharBags.cs" />
     <Compile Remove="GCHForm.cs" />
-    <Compile Remove="IndexedObjects.cs" />
-    <Compile Remove="IndexedObjects2.cs" />
-    <Compile Remove="Initializers.cs" />
-    <Compile Remove="Jobqueue.cs" />
-    <Compile Remove="KeywordRecognition.cs" />
     <Compile Remove="Kwic.cs" />
-    <Compile Remove="ListenableEvents.cs" />
-    <Compile Remove="ListPatterns.cs" />
-    <Compile Remove="Locking.cs" />
-    <Compile Remove="LockstepCollections.cs" />
-    <Compile Remove="MultiCollection.cs" />
-    <Compile Remove="MultiDictionary-njk.cs" />
     <Compile Remove="MultiDictionary.cs" />
+    <Compile Remove="MultiDictionary2.cs" />
     <Compile Remove="PointLocation.cs" />
-    <Compile Remove="Quickviewsort.cs" />
     <Compile Remove="RandomSelection.cs" />
     <Compile Remove="ReadOnlyPatterns.cs" />
     <Compile Remove="SerializationExample.cs" />
@@ -43,21 +32,10 @@
   <ItemGroup>
     <None Include="CharBags.cs" />
     <None Include="GCHForm.cs" />
-    <None Include="IndexedObjects.cs" />
-    <None Include="IndexedObjects2.cs" />
-    <None Include="Initializers.cs" />
-    <None Include="Jobqueue.cs" />
-    <None Include="KeywordRecognition.cs" />
     <None Include="Kwic.cs" />
-    <None Include="ListenableEvents.cs" />
-    <None Include="ListPatterns.cs" />
-    <None Include="Locking.cs" />
-    <None Include="LockstepCollections.cs" />
-    <None Include="MultiCollection.cs" />
-    <None Include="MultiDictionary-njk.cs" />
     <None Include="MultiDictionary.cs" />
+    <None Include="MultiDictionary2.cs" />
     <None Include="PointLocation.cs" />
-    <None Include="Quickviewsort.cs" />
     <None Include="RandomSelection.cs" />
     <None Include="ReadOnlyPatterns.cs" />
     <None Include="SerializationExample.cs" />

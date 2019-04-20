@@ -24,7 +24,7 @@
 // Compile and run with 
 //  dotnet clean
 //  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.DistinctBagMain
+//  dotnet build -p:StartupObject=C5.UserGuideExamples.DistinctBagProgram
 //  dotnet run
 
 using System;
@@ -33,14 +33,14 @@ using SCG = System.Collections.Generic;
 
 namespace C5.UserGuideExamples
 {
-    class DistinctBagMain
+    class DistinctBagProgram
     {
         static void Main(string[] args)
         {
-            var nameColl = new DistinctHashBag<Person>(new Person.NameEqualityComparer());
-            var p1 = new Person("Peter", 19620625);
-            var p2 = new Person("Carsten", 19640627);
-            var p3 = new Person("Carsten", 19640628);
+            var nameColl = new DistinctHashBag<PersonDistinctBag>(new PersonDistinctBag.NameEqualityComparer());
+            var p1 = new PersonDistinctBag("Peter", 19620625);
+            var p2 = new PersonDistinctBag("Carsten", 19640627);
+            var p3 = new PersonDistinctBag("Carsten", 19640628);
             nameColl.Add(p1);
             nameColl.Add(p2);
             nameColl.Add(p3);
@@ -107,32 +107,32 @@ namespace C5.UserGuideExamples
         }
     }
 
-    public class Person
+    public class PersonDistinctBag
     {
         private string Name { get; }
         private int Date { get; }
 
-        public Person(string name, int date)
+        public PersonDistinctBag(string name, int date)
         {
             Name = name;
             Date = date;
         }
 
-        public class NameEqualityComparer : SCG.IEqualityComparer<Person>
+        public class NameEqualityComparer : SCG.IEqualityComparer<PersonDistinctBag>
         {
-            public bool Equals(Person p1, Person p2)
+            public bool Equals(PersonDistinctBag p1, PersonDistinctBag p2)
             {
                 return p1.Name == p2.Name;
             }
-            public int GetHashCode(Person p)
+            public int GetHashCode(PersonDistinctBag p)
             {
                 return p.Name.GetHashCode();
             }
         }
 
-        public class DateComparer : SCG.IComparer<Person>
+        public class DateComparer : SCG.IComparer<PersonDistinctBag>
         {
-            public int Compare(Person p1, Person p2)
+            public int Compare(PersonDistinctBag p1, PersonDistinctBag p2)
             {
                 return p1.Date.CompareTo(p2.Date);
             }

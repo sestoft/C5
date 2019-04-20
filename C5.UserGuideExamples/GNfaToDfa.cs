@@ -1,12 +1,6 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.TestNFA
-//  dotnet run
-
 // C5 examples: RegExp -> NFA -> DFA -> Graph
 // Java 2000-10-07, GC# 2001-10-23, C# 2.0 2003-09-03, C# 2.0+C5 2004-08-08
 
@@ -22,6 +16,12 @@
 //   * A test class that creates an NFA, a DFA, and a dot input file 
 //     for a number of small regular expressions.  The DFAs are 
 //     not minimized.
+
+// Compile and run with 
+//  dotnet clean
+//  dotnet build ../C5/C5.csproj
+//  dotnet build -p:StartupObject=C5.UserGuideExamples.GNfaToDfa
+//  dotnet run
 
 using System;
 using System.Text;
@@ -687,9 +687,9 @@ namespace C5.UserGuideExamples
     }
 
     // Trying the RE->NFA->DFA translation on three regular expressions
-    class TestNFA
+    class GNfaToDfa
     {
-        public static void Main()
+        public static void Main(string[] args)
         {
             var a = new Sym("A");
             var b = new Sym("B");

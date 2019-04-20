@@ -1,30 +1,12 @@
-/*
- Copyright (c) 2003-2008 Niels Kokholm and Peter Sestoft
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
-*/
+// This file is part of the C5 Generic Collection Library for C# and CLI
+// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
 
 // Experiment with extension methods and C5, 2007-10-31
 
 // Compile and run with 
 //  dotnet clean
 //  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.AddOn
+//  dotnet build -p:StartupObject=C5.UserGuideExamples.Extension
 //  dotnet run
 
 using System;
@@ -33,7 +15,7 @@ using SCG = System.Collections.Generic;
 
 namespace C5.UserGuideExamples
 {
-    static class AddOn
+    static class Extension
     {
         public static int Added<T>(this ICollection<T> coll, int x)
         {
