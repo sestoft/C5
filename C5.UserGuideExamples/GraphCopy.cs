@@ -6,7 +6,7 @@
 // Compile and run with 
 //  dotnet clean
 //  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.TestGraphCopy
+//  dotnet build -p:StartupObject=C5.UserGuideExamples.GraphCopy
 //  dotnet run
 
 using System;
@@ -14,7 +14,7 @@ using System.Text;
 
 namespace C5.UserGuideExamples
 {
-    class TestGraphCopy
+    class GraphCopy
     {
         public static void Main(string[] args)
         {
