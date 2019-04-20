@@ -132,7 +132,7 @@ namespace C5.UserGuideExamples
 
         private static void AddItemUpdatedHandler<T>(ICollection<T> coll)
         {
-            State state = State.Before;
+            var state = State.Before;
             T removed = default;
             T added = default;
 
