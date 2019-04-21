@@ -12,7 +12,6 @@
     <Compile Remove="Kwic.cs" />
     <Compile Remove="MultiDictionary.cs" />
     <Compile Remove="MultiDictionary2.cs" />
-    <Compile Remove="SerializationExample.cs" />
     <Compile Remove="Sets.cs" />
     <Compile Remove="SortedIterationPatterns.cs" />
     <Compile Remove="SortingPermutation.cs" />
@@ -32,7 +31,6 @@
     <None Include="Kwic.cs" />
     <None Include="MultiDictionary.cs" />
     <None Include="MultiDictionary2.cs" />
-    <None Include="SerializationExample.cs" />
     <None Include="Sets.cs" />
     <None Include="SortedIterationPatterns.cs" />
     <None Include="SortingPermutation.cs" />
