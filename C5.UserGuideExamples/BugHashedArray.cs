@@ -1,6 +1,5 @@
-/*
- Copyright (c) 2003-2006 Niels Kokholm and Peter Sestoft
-*/
+// This file is part of the C5 Generic Collection Library for C# and CLI
+// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
 
 // C5 bugs 2007-09-16
 
