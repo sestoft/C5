@@ -3,211 +3,230 @@
 
 // C5 example: bipartite matching 2006-02-04
 
-// Compile with 
-//   csc /r:C5.dll BipartiteMatching.cs 
+// Compile and run with 
+//  dotnet clean
+//  dotnet build ../C5/C5.csproj
+//  dotnet build -p:StartupObject=C5.UserGuideExamples.BipartiteMatchingProgram
+//  dotnet run
 
 using System;
 using System.Diagnostics;
-// StreamReader, TextReader
-// Encoding
-// Regex
-using C5;
 using SCG = System.Collections.Generic;
 
-namespace BipartiteMatching
+namespace C5.UserGuideExamples
 {
-  class MyTest
-  {
-    public static void Main(String[] args)
+    class BipartiteMatchingProgram
     {
-      BipartiteMatching<int, char> bmi = new BipartiteMatching<int, char>(generateGraph(args));
-      HashDictionary<int, char> res = new HashDictionary<int, char>();
-      foreach (Rec<int,char> rec in bmi.Result)
-      {
-        res.Add(rec.X1, rec.X2);
-      }
-      for (int i = 0; i < args.Length; i++)
-      {
-          var j = i;
+        static void Main(string[] args)
+        {
+            var bmi = new BipartiteMatching<int, char>(GenerateGraph(args));
+            var res = new HashDictionary<int, char>();
+            foreach (var rec in bmi.Result)
+            {
+                res.Add(rec.X1, rec.X2);
+            }
+            for (var i = 0; i < args.Length; i++)
+            {
+                var j = i;
                 if (!res.Find(ref j, out char c))
+                {
                     c = '-';
-                Console.WriteLine(@"""{0}"" -> '{1}'", args[i], c);
-      }
-    }
+                }
+                Console.WriteLine($@"""{args[i]}"" -> '{c}'");
+            }
+        }
 
-    static SCG.IEnumerable<Rec<int, char>> generateGraph(string[] words)
-    {
-      int i = 0;
-      foreach (string s in words)
-      {
-        foreach (char c in s)
+        static SCG.IEnumerable<Rec<int, char>> GenerateGraph(string[] words)
         {
-          yield return new Rec<int, char>(i, c);
+            var i = 0;
+            foreach (var s in words)
+            {
+                foreach (char c in s)
+                {
+                    yield return new Rec<int, char>(i, c);
+                }
+                i++;
+            }
         }
-        i++;
-      }
-    }
 
-    /// <summary>
-    /// Implements Hopcroft and Karps algorithm for Maximum bipartite matching.
-    /// 
-    /// Input (to the constructor): the edges of the graph as a collection of pairs 
-    ///                             of labels of left and right nodes.
-    /// 
-    /// Output (from Result property): a maximum matching as a collection of pairs 
-    ///                             of labels of left and right nodes.
-    /// 
-    /// The algorithm uses natural equality on the label types to identify nodes.
-    /// 
-    /// </summary>
-    /// <typeparam name="TLeftLabel"></typeparam>
-    /// <typeparam name="TRightLabel"></typeparam>
-    public class BipartiteMatching<TLeftLabel, TRightLabel>
-    {
-      LeftNode[] leftNodes;
-      RightNode[] rightNodes;
+        /// <summary>
+        /// Implements Hopcroft and Karps algorithm for Maximum bipartite matching.
+        /// Input (to the constructor): the edges of the graph as a collection of pairs of labels of left and right nodes.
+        /// Output (from Result property): a maximum matching as a collection of pairs of labels of left and right nodes.
+        /// The algorithm uses natural equality on the label types to identify nodes.
+        /// </summary>
+        /// <typeparam name="TLeftLabel"></typeparam>
+        /// <typeparam name="TRightLabel"></typeparam>
+        public class BipartiteMatching<TLeftLabel, TRightLabel>
+        {
+            private readonly LeftNode[] _leftNodes;
+            private readonly RightNode[] _rightNodes;
 
-      class LeftNode
-      {
-        public TLeftLabel label;
-        public RightNode match;
-        public RightNode[] edges;
-        public LeftNode(TLeftLabel label, params RightNode[] edges)
-        {
-          this.label = label;
-          this.edges = (RightNode[])edges.Clone();
-        }
-        public override string ToString()
-        {
-          return string.Format(@"""{0}"" -> '{1}'", label, match);
-        }
-      }
-      class RightNode
-      {
-        public TRightLabel label;
-        public LeftNode match;
-        public LeftNode backref;
-        public LeftNode origin;
-        public RightNode(TRightLabel label)
-        {
-          this.label = label;
-        }
-        public override string ToString()
-        {
-          return string.Format(@"'{0}'", label);
-        }
-      }
-      public BipartiteMatching(SCG.IEnumerable<Rec<TLeftLabel, TRightLabel>> graph)
-      {
-        HashDictionary<TRightLabel, RightNode> rdict = new HashDictionary<TRightLabel, RightNode>();
-        HashDictionary<TLeftLabel, HashSet<RightNode>> edges = new HashDictionary<TLeftLabel, HashSet<RightNode>>();
-        HashSet<RightNode> newrnodes = new HashSet<RightNode>();
-        foreach (Rec<TLeftLabel, TRightLabel> edge in graph)
-        {
+            class LeftNode
+            {
+                public TLeftLabel Label { get; }
+                public RightNode Match { get; set; }
+                public RightNode[] Edges { get; }
+
+                public LeftNode(TLeftLabel label, params RightNode[] edges)
+                {
+                    Label = label;
+                    Edges = (RightNode[])edges.Clone();
+                }
+
+                public override string ToString()
+                {
+                    return $@"""{Label}"" -> '{Match}'";
+                }
+            }
+            class RightNode
+            {
+                public TRightLabel Label { get; }
+                public LeftNode Match { get; set; }
+                public LeftNode BackRef { get; set; }
+                public LeftNode Origin { get; set; }
+
+                public RightNode(TRightLabel label)
+                {
+                    Label = label;
+                }
+
+                public override string ToString()
+                {
+                    return $"'{Label}'";
+                }
+            }
+
+            public BipartiteMatching(SCG.IEnumerable<Rec<TLeftLabel, TRightLabel>> graph)
+            {
+                var rdict = new HashDictionary<TRightLabel, RightNode>();
+                var edges = new HashDictionary<TLeftLabel, HashSet<RightNode>>();
+                var newrnodes = new HashSet<RightNode>();
+
+                foreach (var edge in graph)
+                {
                     var x2 = edge.X2;
-                    if (!rdict.Find(ref x2, out RightNode rnode))
-            rdict.Add(edge.X2, rnode = new RightNode(edge.X2));
+                    if (!rdict.Find(ref x2, out var rnode))
+                    {
+                        rdict.Add(edge.X2, rnode = new RightNode(edge.X2));
+                    }
+                    HashSet<RightNode> ledges = newrnodes;
+                    if (!edges.FindOrAdd(edge.X1, ref ledges))
+                    {
+                        newrnodes = new HashSet<RightNode>();
+                    }
+                    ledges.Add(rnode);
+                }
 
-          HashSet<RightNode> ledges = newrnodes;
-          if (!edges.FindOrAdd(edge.X1, ref ledges))
-            newrnodes = new HashSet<RightNode>();
-          ledges.Add(rnode);
-        }
+                _rightNodes = rdict.Values.ToArray();
 
-        rightNodes = rdict.Values.ToArray();
+                _leftNodes = new LeftNode[edges.Count];
 
-        leftNodes = new LeftNode[edges.Count];
-        int li = 0;
-        foreach (KeyValuePair<TLeftLabel, HashSet<RightNode>> les in edges)
-        {
-          leftNodes[li++] = new LeftNode(les.Key, les.Value.ToArray());
-        }
+                var li = 0;
 
-        Compute();
-      }
+                foreach (var les in edges)
+                {
+                    _leftNodes[li++] = new LeftNode(les.Key, les.Value.ToArray());
+                }
 
-      public SCG.IEnumerable<Rec<TLeftLabel, TRightLabel>> Result
-      {
-        get
-        {
-          foreach (LeftNode l in leftNodes)
-          {
-            if (l.match != null)
-            {
-              yield return new Rec<TLeftLabel, TRightLabel>(l.label, l.match.label);
+                Compute();
             }
-          }
-        }
-      }
 
-      HashSet<RightNode> endPoints;
-      bool foundAugmentingPath;
-
-      void Compute()
-      {
-        HashSet<LeftNode> unmatchedLeftNodes = new HashSet<LeftNode>();
-        unmatchedLeftNodes.AddAll(leftNodes);
-        foundAugmentingPath = true;
-        Debug.Print("Compute start");
-        while (foundAugmentingPath)
-        {
-          Debug.Print("Start outer");
-          foundAugmentingPath = false;
-          endPoints = new HashSet<RightNode>();
-          foreach (RightNode rightNode in rightNodes)
-            rightNode.backref = null;
-          foreach (LeftNode l in unmatchedLeftNodes)
-          {
-            Debug.Print("Unmatched: {0}", l);
-            search(l, l);
-          }
-          while (!foundAugmentingPath && endPoints.Count > 0)
-          {
-            HashSet<RightNode> oldLayer = endPoints;
-            endPoints = new HashSet<RightNode>();
-            foreach (RightNode rb in oldLayer)
-              search(rb.match, rb.origin);
-          }
-          if (endPoints.Count == 0)
-            return;
-          //Flip
-          Debug.Print("Flip");
-          foreach (RightNode r in endPoints)
-          {
-            if (r.match == null && unmatchedLeftNodes.Contains(r.origin))
+            public SCG.IEnumerable<Rec<TLeftLabel, TRightLabel>> Result
             {
-              RightNode nextR = r;
-              LeftNode nextL = null;
-              while (nextR != null)
-              {
-                nextL = nextR.match = nextR.backref;
-                RightNode rSwap = nextL.match;
-                nextL.match = nextR;
-                nextR = rSwap;
-              }
-              unmatchedLeftNodes.Remove(nextL);
+                get
+                {
+                    foreach (var l in _leftNodes)
+                    {
+                        if (l.Match != null)
+                        {
+                            yield return new Rec<TLeftLabel, TRightLabel>(l.Label, l.Match.Label);
+                        }
+                    }
+                }
             }
-          }
-        }
-      }
 
-      void search(LeftNode l, LeftNode origin)
-      {
-        foreach (RightNode r in l.edges)
-        {
-          if (r.backref == null)
-          {
-            r.backref = l;
-            r.origin = origin;
-            endPoints.Add(r);
-            if (r.match == null)
-              foundAugmentingPath = true;
-            //First round should be greedy
-            if (l == origin)
-              return;
-          }
+            private HashSet<RightNode> _endPoints;
+            private bool _foundAugmentingPath;
+
+            private void Compute()
+            {
+                var unmatchedLeftNodes = new HashSet<LeftNode>();
+                unmatchedLeftNodes.AddAll(_leftNodes);
+                _foundAugmentingPath = true;
+                Debug.Print("Compute start");
+                while (_foundAugmentingPath)
+                {
+                    Debug.Print("Start outer");
+                    _foundAugmentingPath = false;
+                    _endPoints = new HashSet<RightNode>();
+                    foreach (var rightNode in _rightNodes)
+                    {
+                        rightNode.BackRef = null;
+                    }
+                    foreach (LeftNode l in unmatchedLeftNodes)
+                    {
+                        Debug.Print("Unmatched: {0}", l);
+                        Search(l, l);
+                    }
+                    while (!_foundAugmentingPath && _endPoints.Count > 0)
+                    {
+                        var oldLayer = _endPoints;
+                        _endPoints = new HashSet<RightNode>();
+                        foreach (var rb in oldLayer)
+                        {
+                            Search(rb.Match, rb.Origin);
+                        }
+                    }
+                    if (_endPoints.Count == 0)
+                    {
+                        return;
+                    }
+                    //Flip
+                    Debug.Print("Flip");
+                    foreach (RightNode r in _endPoints)
+                    {
+                        if (r.Match == null && unmatchedLeftNodes.Contains(r.Origin))
+                        {
+                            RightNode nextR = r;
+                            LeftNode nextL = null;
+                            while (nextR != null)
+                            {
+                                nextL = nextR.Match = nextR.BackRef;
+                                var rSwap = nextL.Match;
+                                nextL.Match = nextR;
+                                nextR = rSwap;
+                            }
+                            unmatchedLeftNodes.Remove(nextL);
+                        }
+                    }
+                }
+            }
+
+            void Search(LeftNode l, LeftNode origin)
+            {
+                foreach (RightNode r in l.Edges)
+                {
+                    if (r.BackRef == null)
+                    {
+                        r.BackRef = l;
+                        r.Origin = origin;
+                        _endPoints.Add(r);
+
+                        if (r.Match == null)
+                        {
+                            _foundAugmentingPath = true;
+                        }
+
+                        // First round should be greedy
+
+                        if (l == origin)
+                        {
+                            return;
+                        }
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }

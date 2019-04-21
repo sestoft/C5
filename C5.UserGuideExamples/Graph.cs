@@ -3,15 +3,15 @@
 
 // C5 example: Graph representation with basic algorithms using C5 
 
-
-// Compile with 
-//   csc /r:C5.dll Graph.cs 
-
+// Compile and run with 
+//  dotnet clean
+//  dotnet build ../C5/C5.csproj
+//  dotnet build -p:StartupObject=C5.UserGuideExamples.Graph
+//  dotnet run
 
 // The code is structured as a rudimentary Graph library, with an interface
 // for (edge)weighted graphs and a single implementation based on an
 // adjacency list representation using hash dictionaries. 
-
 
 // The algorithms implemented include:
 //
@@ -28,7 +28,6 @@
 //
 // An approximation algorithm for Travelling Salesman Problems, 
 // where the weights satisfies the triangle inequality. 
-
 
 // Pervasive generic parameters:
 //                      V: The type of a vertex in a graph. Vertices are identified
@@ -59,13 +58,12 @@
 // The code only supports "natural" equality of vertices.
 
 using System;
-using C5;
 using SCG = System.Collections.Generic;
 
-namespace Graph
+namespace C5.UserGuideExamples
 {
     /// <summary>
-    /// (Duer ikke)
+    /// (Does not work)
     /// </summary>
     /// <typeparam name="V"></typeparam>
     /// <typeparam name="E"></typeparam>
@@ -75,19 +73,13 @@ namespace Graph
         V Value { get; }
         IGraph<V, E, W> Graph { get; }
         ICollectionValue<KeyValuePair<V, E>> Adjacent { get; }
-
     }
 
     class Vertex<V>
     {
         //V v;
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <typeparam name="V"></typeparam>
-    /// <typeparam name="E"></typeparam>
-    /// <typeparam name="W"></typeparam>
+
     interface IGraph<V, E, W> where W : IComparable<W>
     {
         /// <summary>
@@ -315,31 +307,38 @@ namespace Graph
     /// <typeparam name="E">The type of data associated with edges.</typeparam>
     struct Edge<V, E>
     {
-        static readonly SCG.IEqualityComparer<V> vequalityComparer = EqualityComparer<V>.Default;
-        public readonly V start, end;
-        public readonly E edgedata;
+        private static readonly SCG.IEqualityComparer<V> vequalityComparer = EqualityComparer<V>.Default;
+        public V Start { get; }
+        public V End { get; }
+        public E EdgeData { get; }
+
         public Edge(V start, V end, E edgedata)
         {
             if (vequalityComparer.Equals(start, end))
+            {
                 throw new ArgumentException("Illegal: start and end are equal");
-            this.start = start; this.end = end; this.edgedata = edgedata;
+            }
+
+            Start = start;
+            End = end;
+            EdgeData = edgedata;
         }
 
         public Edge<V, E> Reverse()
         {
-            return new Edge<V, E>(end, start, edgedata);
+            return new Edge<V, E>(End, Start, EdgeData);
         }
 
         public override string ToString()
         {
-            return string.Format("(start='{0}', end='{1}', edgedata='{2}')", start, end, edgedata); ;
+            return string.Format("(start='{0}', end='{1}', edgedata='{2}')", Start, End, EdgeData); ;
         }
 
         public override bool Equals(object obj)
         {
             if (obj is Edge<V, E> other)
             {
-                return vequalityComparer.Equals(start, other.start) && vequalityComparer.Equals(end, other.end);
+                return vequalityComparer.Equals(Start, other.Start) && vequalityComparer.Equals(End, other.End);
             }
             return false;
         }
@@ -351,7 +350,7 @@ namespace Graph
         public override int GetHashCode()
         {
             //TODO: should we use xor? Or a random factor?
-            return start.GetHashCode() + 148712671 * end.GetHashCode();
+            return Start.GetHashCode() + 148712671 * End.GetHashCode();
         }
 
         /// <summary>
@@ -367,8 +366,8 @@ namespace Graph
             /// <returns></returns>
             public bool Equals(Edge<V, E> i1, Edge<V, E> i2)
             {
-                return (vequalityComparer.Equals(i1.start, i2.start) && vequalityComparer.Equals(i1.end, i2.end)) ||
-                    (vequalityComparer.Equals(i1.end, i2.start) && vequalityComparer.Equals(i1.start, i2.end));
+                return (vequalityComparer.Equals(i1.Start, i2.Start) && vequalityComparer.Equals(i1.End, i2.End)) ||
+                       (vequalityComparer.Equals(i1.End, i2.Start) && vequalityComparer.Equals(i1.Start, i2.End));
             }
 
             /// <summary>
@@ -378,7 +377,7 @@ namespace Graph
             /// <returns></returns>
             public int GetHashCode(Edge<V, E> item)
             {
-                return item.start.GetHashCode() ^ item.end.GetHashCode();
+                return item.Start.GetHashCode() ^ item.End.GetHashCode();
             }
         }
     }
@@ -457,9 +456,7 @@ namespace Graph
     /// <typeparam name="W"></typeparam>
     class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
     {
-        int edgecount;
-
-        HashDictionary<V, HashDictionary<V, E>> graph;
+        private readonly HashDictionary<V, HashDictionary<V, E>> _graph;
 
         public IWeight<E, W> Weight { get; }
 
@@ -470,9 +467,9 @@ namespace Graph
         [UsedBy("testTSP")]
         public HashGraph(IWeight<E, W> weight)
         {
-            this.Weight = weight;
-            edgecount = 0;
-            graph = new HashDictionary<V, HashDictionary<V, E>>();
+            Weight = weight;
+            EdgeCount = 0;
+            _graph = new HashDictionary<V, HashDictionary<V, E>>();
         }
 
         /// <summary>
@@ -482,21 +479,31 @@ namespace Graph
         [UsedBy()]
         public HashGraph(IWeight<E, W> weight, SCG.IEnumerable<Edge<V, E>> edges) : this(weight)
         {
-            foreach (Edge<V, E> edge in edges)
+            foreach (var edge in edges)
             {
-                if (edge.start.Equals(edge.end))
-                    throw new ApplicationException("Edge has equal start and end");
+                if (edge.Start.Equals(edge.End))
                 {
-                    //TODO: utilize upcoming FindOrAddSome operation
-                    V start = edge.start, end = edge.end;
-                    if (!graph.Find(ref start, out HashDictionary<V, E> edgeset))
-                        graph.Add(edge.start, edgeset = new HashDictionary<V, E>());
-                    if (!edgeset.UpdateOrAdd(edge.end, edge.edgedata))
-                        edgecount++;
-                    if (!graph.Find(ref end, out edgeset))
-                        graph.Add(edge.end, edgeset = new HashDictionary<V, E>());
-                    edgeset.UpdateOrAdd(edge.start, edge.edgedata);
+                    throw new ApplicationException("Edge has equal start and end");
                 }
+
+                //TODO: utilize upcoming FindOrAddSome operation
+                V start = edge.Start, end = edge.End;
+                if (!_graph.Find(ref start, out HashDictionary<V, E> edgeset))
+                {
+                    _graph.Add(edge.Start, edgeset = new HashDictionary<V, E>());
+                }
+
+                if (!edgeset.UpdateOrAdd(edge.End, edge.EdgeData))
+                {
+                    EdgeCount++;
+                }
+
+                if (!_graph.Find(ref end, out edgeset))
+                {
+                    _graph.Add(edge.End, edgeset = new HashDictionary<V, E>());
+                }
+
+                edgeset.UpdateOrAdd(edge.Start, edge.EdgeData);
             }
         }
 
@@ -510,68 +517,95 @@ namespace Graph
         /// <param name="edges"></param>
         public HashGraph(IWeight<E, W> weight, SCG.IEnumerable<V> vertices, SCG.IEnumerable<Edge<V, E>> edges) : this(weight)
         {
-            foreach (V v in vertices)
-                graph.Add(v, new HashDictionary<V, E>());
-            foreach (Edge<V, E> edge in edges)
+            foreach (var v in vertices)
             {
-                if (edge.start.Equals(edge.end))
+                _graph.Add(v, new HashDictionary<V, E>());
+            }
+
+            foreach (var edge in edges)
+            {
+                if (edge.Start.Equals(edge.End))
+                {
                     throw new ApplicationException("Edge has equal start and end");
-                V start = edge.start, end = edge.end;
-                if (!graph.Find(ref start, out HashDictionary<V, E> edgeset))
+                }
+
+                var start = edge.Start;
+                var end = edge.End;
+
+                if (!_graph.Find(ref start, out HashDictionary<V, E> edgeset))
+                {
                     throw new ApplicationException("Edge has unknown start");
-                if (!edgeset.UpdateOrAdd(edge.end, edge.edgedata))
-                    edgecount++;
-                if (!graph.Find(ref end, out edgeset))
+                }
+
+                if (!edgeset.UpdateOrAdd(edge.End, edge.EdgeData))
+                {
+                    EdgeCount++;
+                }
+
+                if (!_graph.Find(ref end, out edgeset))
+                {
                     throw new ApplicationException("Edge has unknown end");
-                edgeset.UpdateOrAdd(edge.start, edge.edgedata);
+                }
+
+                edgeset.UpdateOrAdd(edge.Start, edge.EdgeData);
             }
         }
 
         [UsedBy("testCOMP")]
-        public int VertexCount { get { return graph.Count; } }
+        public int VertexCount { get { return _graph.Count; } }
 
         [UsedBy("testCOMP")]
-        public int EdgeCount { get { return edgecount; } }
+        public int EdgeCount { get; private set; }
 
         public ICollectionValue<V> Vertices()
         {
-            return new GuardedCollectionValue<V>(graph.Keys);
+            return new GuardedCollectionValue<V>(_graph.Keys);
         }
 
         public ICollectionValue<KeyValuePair<V, E>> Adjacent(V vertex)
         {
-            return new GuardedCollectionValue<KeyValuePair<V, E>>(graph[vertex]);
+            return new GuardedCollectionValue<KeyValuePair<V, E>>(_graph[vertex]);
         }
 
         class EdgesValue : CollectionValueBase<Edge<V, E>>
         {
-            readonly HashGraph<V, E, W> graph;
-            internal EdgesValue(HashGraph<V, E, W> g) { graph = g; }
+            private readonly HashGraph<V, E, W> _graph;
 
-            public override bool IsEmpty { get { return graph.edgecount == 0; } }
+            internal EdgesValue(HashGraph<V, E, W> g)
+            {
+                _graph = g;
+            }
 
-            public override int Count { get { return graph.edgecount; } }
+            public override bool IsEmpty => _graph.EdgeCount == 0;
 
-            public override Speed CountSpeed { get { return Speed.Constant; } }
+            public override int Count => _graph.EdgeCount;
+
+            public override Speed CountSpeed => Speed.Constant;
 
 
             public override Edge<V, E> Choose()
             {
-                KeyValuePair<V, HashDictionary<V, E>> adjacent = graph.graph.Choose();
-                KeyValuePair<V, E> otherend = graph.graph[adjacent.Key].Choose();
+                var adjacent = _graph._graph.Choose();
+                var otherend = _graph._graph[adjacent.Key].Choose();
+
                 return new Edge<V, E>(adjacent.Key, otherend.Key, otherend.Value);
             }
 
             public override SCG.IEnumerator<Edge<V, E>> GetEnumerator()
             {
-                HashSet<Edge<V, E>> seen = new HashSet<Edge<V, E>>(new Edge<V, E>.UnorderedEqualityComparer());
-                foreach (V v in graph.graph.Keys)
-                    foreach (KeyValuePair<V, E> p in graph.graph[v])
+                var seen = new HashSet<Edge<V, E>>(new Edge<V, E>.UnorderedEqualityComparer());
+
+                foreach (var v in _graph._graph.Keys)
+                {
+                    foreach (var p in _graph._graph[v])
                     {
-                        Edge<V, E> edge = new Edge<V, E>(v, p.Key, p.Value);
+                        var edge = new Edge<V, E>(v, p.Key, p.Value);
                         if (!seen.FindOrAdd(ref edge))
+                        {
                             yield return edge;
+                        }
                     }
+                }
             }
         }
 
@@ -582,9 +616,13 @@ namespace Graph
 
         public bool AddVertex(V v)
         {
-            if (graph.Contains(v))
+            if (_graph.Contains(v))
+            {
                 return false;
-            graph.Add(v, new HashDictionary<V, E>());
+            }
+
+            _graph.Add(v, new HashDictionary<V, E>());
+
             return true;
         }
 
@@ -594,58 +632,79 @@ namespace Graph
         public bool AddEdge(V start, V end, E edgedata)
         {
             bool retval;
-            if (graph.Find(ref start, out HashDictionary<V, E> edgeset))
+            if (_graph.Find(ref start, out HashDictionary<V, E> edgeset))
+            {
                 retval = !edgeset.UpdateOrAdd(end, edgedata);
+            }
             else
             {
-                graph[start] = edgeset = new HashDictionary<V, E>();
+                _graph[start] = edgeset = new HashDictionary<V, E>();
                 edgeset[end] = edgedata;
                 retval = true;
             }
-            if (graph.Find(ref end, out edgeset))
+            if (_graph.Find(ref end, out edgeset))
+            {
                 edgeset.UpdateOrAdd(start, edgedata);
+            }
             else
             {
-                graph[end] = edgeset = new HashDictionary<V, E>();
+                _graph[end] = edgeset = new HashDictionary<V, E>();
                 edgeset[start] = edgedata;
             }
             if (retval)
-                edgecount++;
+            {
+                EdgeCount++;
+            }
+
             return retval;
         }
 
         public bool RemoveVertex(V vertex)
         {
-            if (!graph.Find(ref vertex, out HashDictionary<V, E> edgeset))
+            if (!_graph.Find(ref vertex, out HashDictionary<V, E> edgeset))
+            {
                 return false;
-            foreach (V othervertex in edgeset.Keys)
-                graph[othervertex].Remove(vertex); //Assert retval==true
-            edgecount -= edgeset.Count;
-            graph.Remove(vertex);
+            }
+
+            foreach (var othervertex in edgeset.Keys)
+            {
+                _graph[othervertex].Remove(vertex); //Assert retval==true
+            }
+
+            EdgeCount -= edgeset.Count;
+            _graph.Remove(vertex);
+
             return true;
         }
 
         public bool RemoveEdge(V start, V end, out E edgedata)
         {
-            if (!graph.Find(ref start, out HashDictionary<V, E> edgeset))
+            if (!_graph.Find(ref start, out var edgeset))
             {
                 edgedata = default;
+
                 return false;
             }
+
             if (!edgeset.Remove(end, out edgedata))
+            {
                 return false;
-            graph[end].Remove(start);
-            edgecount--;
+            }
+
+            _graph[end].Remove(start);
+            EdgeCount--;
+
             return true;
         }
 
         public bool FindEdge(V start, V end, out E edgedata)
         {
-            if (!graph.Find(ref start, out HashDictionary<V, E> edges))
+            if (!_graph.Find(ref start, out var edges))
             {
                 edgedata = default;
                 return false;
             }
+
             return edges.Find(ref end, out edgedata);
         }
 
@@ -659,7 +718,7 @@ namespace Graph
 
             return new HashGraph<V, E, W>(Weight,
                 vs,
-                      Edges().Filter(delegate (Edge<V, E> e) { return vertexset.Contains(e.start) && vertexset.Contains(e.end); }));
+                      Edges().Filter(delegate (Edge<V, E> e) { return vertexset.Contains(e.Start) && vertexset.Contains(e.End); }));
         }
 
         public bool IsConnected
@@ -672,7 +731,7 @@ namespace Graph
         {
             get
             {
-                int components = 0;
+                var components = 0;
                 TraverseVertices(false, null, delegate (V v) { components++; }, null);
                 return components;
             }
@@ -683,7 +742,7 @@ namespace Graph
             ArrayList<KeyValuePair<V, IGraph<V, E, W>>> retval = new ArrayList<KeyValuePair<V, IGraph<V, E, W>>>();
             HashGraph<V, E, W> component;
             ArrayList<V> vertices = null;
-            void edgeaction(Edge<V, E> e) => vertices.Add(e.end);
+            void edgeaction(Edge<V, E> e) => vertices.Add(e.End);
             void beforecomponent(V v) => vertices = new ArrayList<V>() { v };
             void aftercomponent(V v)
             {
@@ -692,8 +751,8 @@ namespace Graph
                 foreach (V start in vertices)
                 {
                     //component.graph[start] = graph[start].Clone();
-                    HashDictionary<V, E> edgeset = component.graph[start] = new HashDictionary<V, E>();
-                    foreach (KeyValuePair<V, E> adjacent in graph[start])
+                    HashDictionary<V, E> edgeset = component._graph[start] = new HashDictionary<V, E>();
+                    foreach (KeyValuePair<V, E> adjacent in _graph[start])
                         edgeset[adjacent.Key] = adjacent.Value;
                 }
                 retval.Add(new KeyValuePair<V, IGraph<V, E, W>>(v, component));
@@ -705,21 +764,24 @@ namespace Graph
         [UsedBy("test1")]
         public void TraverseVertices(bool bfs, V start, Action<Edge<V, E>> act)
         {
-            if (!graph.Contains(start))
+            if (!_graph.Contains(start))
+            {
                 throw new ArgumentException("start Vertex not in graph");
-            IList<Edge<V, E>> todo = new LinkedList<Edge<V, E>>
+            }
+
+            var todo = new LinkedList<Edge<V, E>>
             {
                 FIFO = bfs
             };
-            HashSet<V> seen = new HashSet<V>();
+            var seen = new HashSet<V>();
             V v;
             while (!todo.IsEmpty || seen.Count == 0)
             {
                 if (seen.Count > 1)
                 {
-                    Edge<V, E> e = todo.Remove();
+                    var e = todo.Remove();
                     act?.Invoke(e);
-                    v = e.end;
+                    v = e.End;
                 }
                 else
                 {
@@ -727,13 +789,15 @@ namespace Graph
                     v = start;
                 }
 
-                if (graph.Find(ref v, out HashDictionary<V, E> adjacent))
+                if (_graph.Find(ref v, out HashDictionary<V, E> adjacent))
                 {
                     foreach (KeyValuePair<V, E> p in adjacent)
                     {
-                        V end = p.Key;
+                        var end = p.Key;
                         if (!seen.FindOrAdd(ref end))
+                        {
                             todo.Add(new Edge<V, E>(v, end, p.Value));
+                        }
                     }
                 }
             }
@@ -741,21 +805,24 @@ namespace Graph
 
         public void TraverseVertices(bool bfs, Action<V> act)
         {
-            TraverseVertices(bfs, delegate (Edge<V, E> e) { act(e.end); }, act, null);
+            TraverseVertices(bfs, e => act(e.End), act, null);
         }
 
         //TODO: merge the hash set here with the intra omponent one?
         public void TraverseVertices(bool bfs, Action<Edge<V, E>> act, Action<V> beforecomponent, Action<V> aftercomponent)
         {
-            HashSet<V> missing = new HashSet<V>();
+            var missing = new HashSet<V>();
             missing.AddAll(Vertices());
-            Action<Edge<V, E>> myact = act + delegate (Edge<V, E> e) { missing.Remove(e.end); };
-            Action<V> mybeforecomponent = beforecomponent + delegate (V v) { missing.Remove(v); };
+            var myact = act + (e => missing.Remove(e.End));
+            Action<V> mybeforecomponent = beforecomponent + (v => missing.Remove(v));
             while (!missing.IsEmpty)
             {
                 V start = default;
-                foreach (V v in missing)
-                { start = v; break; }
+                foreach (var v in missing)
+                {
+                    start = v;
+                    break;
+                }
                 mybeforecomponent(start);
                 TraverseVertices(bfs, start, myact);
                 aftercomponent?.Invoke(start);
@@ -766,14 +833,15 @@ namespace Graph
 
         //TODO: allow actions to be null
         [UsedBy("testDFS")]
-        public void DepthFirstSearch(V start, Action<V> before, Action<V> after,
-            Action<Edge<V, E>> onfollow, Action<Edge<V, E>> onfollowed, Action<Edge<V, E>> onnotfollowed)
+        public void DepthFirstSearch(V start, Action<V> before, Action<V> after, Action<Edge<V, E>> onfollow, Action<Edge<V, E>> onfollowed, Action<Edge<V, E>> onnotfollowed)
         {
-            HashSet<V> seen = new HashSet<V> { start };
+            var seen = new HashSet<V> { start };
+
             void visit(V v, V parent, bool atRoot)
             {
                 before(v);
-                if (graph.Find(ref v, out HashDictionary<V, E> adjacent))
+                if (_graph.Find(ref v, out HashDictionary<V, E> adjacent))
+                {
                     foreach (KeyValuePair<V, E> p in adjacent)
                     {
                         V end = p.Key;
@@ -790,6 +858,8 @@ namespace Graph
                                 onnotfollowed(e);
                         }
                     }
+                }
+
                 after(v);
             }
             visit(start, default, true);
@@ -797,11 +867,14 @@ namespace Graph
 
         public void PriorityFirstTraverse(bool accumulated, V start, EdgeAction<V, E, W> act)
         {
-            if (!graph.Contains(start))
+            if (!_graph.Contains(start))
+            {
                 throw new ArgumentException("Graph does not contain start");
+            }
+
             IPriorityQueue<W> fringe = new IntervalHeap<W>();
-            HashDictionary<V, IPriorityQueueHandle<W>> seen = new HashDictionary<V, IPriorityQueueHandle<W>>();
-            HashDictionary<IPriorityQueueHandle<W>, Edge<V, E>> bestedge = new HashDictionary<IPriorityQueueHandle<W>, Edge<V, E>>();
+            var seen = new HashDictionary<V, IPriorityQueueHandle<W>>();
+            var bestedge = new HashDictionary<IPriorityQueueHandle<W>, Edge<V, E>>();
 
             IPriorityQueueHandle<W> h = null;
             V current;
@@ -821,15 +894,21 @@ namespace Graph
                     if (!act(e, currentdist))
                         break;
                     bestedge.Remove(h);
-                    current = e.end;
+                    current = e.End;
                 }
-                if (graph.Find(ref current, out HashDictionary<V, E> adjacentnodes))
+                if (_graph.Find(ref current, out HashDictionary<V, E> adjacentnodes))
+                {
                     foreach (KeyValuePair<V, E> adjacent in adjacentnodes)
                     {
                         V end = adjacent.Key;
                         E edgedata = adjacent.Value;
                         W dist = Weight.Weight(edgedata);
-                        if (accumulated && !current.Equals(start)) dist = Weight.Add(currentdist, Weight.Weight(edgedata));
+
+                        if (accumulated && !current.Equals(start))
+                        {
+                            dist = Weight.Add(currentdist, Weight.Weight(edgedata));
+                        }
+
                         if (!seen.Find(ref end, out h))
                         {
                             h = null;
@@ -843,37 +922,56 @@ namespace Graph
                             bestedge[h] = new Edge<V, E>(current, end, edgedata);
                         }
                     }
+                }
             }
         }
 
         public W Distance(V start, V end)
         {
             W dist = default;
-            bool found = false;
-            PriorityFirstTraverse(true, start, delegate (Edge<V, E> e, W w)
-      {
-          if (end.Equals(e.end)) { dist = w; found = true; return false; }
-          else return true;
-      });
+            var found = false;
+            PriorityFirstTraverse(true, start, (e, w) =>
+            {
+                if (end.Equals(e.End))
+                {
+                    dist = w; found = true;
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            });
+
             if (found)
+            {
                 return dist;
+            }
+
             throw new ArgumentException(string.Format("No path from {0} to {1}", start, end));
         }
 
 
         public ICollectionValue<Edge<V, E>> ShortestPath(V start, V end)
         {
-            HashDictionary<V, Edge<V, E>> backtrack = new HashDictionary<V, Edge<V, E>>();
-            PriorityFirstTraverse(true, start, delegate (Edge<V, E> e, W w) { backtrack[e.end] = e; return !end.Equals(e.end); });
-            ArrayList<Edge<V, E>> path = new ArrayList<Edge<V, E>>();
-            V v = end;
+            var backtrack = new HashDictionary<V, Edge<V, E>>();
+            PriorityFirstTraverse(true, start, (e, w) =>
+            {
+                backtrack[e.End] = e;
+                return !end.Equals(e.End);
+            });
+            var path = new ArrayList<Edge<V, E>>();
+            var v = end;
             while (backtrack.Find(ref v, out Edge<V, E> edge))
             {
                 path.Add(edge);
-                v = edge.start;
+                v = edge.Start;
             }
             if (path.IsEmpty)
+            {
                 throw new ArgumentException(string.Format("No path from {0} to {1}", start, end));
+            }
+
             path.Reverse();
             return path;
         }
@@ -885,43 +983,57 @@ namespace Graph
         /// <returns></returns>
         public IGraph<V, E, W> MinimumSpanningTree(out V start)
         {
-            ArrayList<Edge<V, E>> edges = new ArrayList<Edge<V, E>>();
+            var edges = new ArrayList<Edge<V, E>>();
             start = default;
-            foreach (V v in graph.Keys)
-            { start = v; break; }
+
+            foreach (var v in _graph.Keys)
+            {
+                start = v;
+                break;
+            }
+
             PriorityFirstTraverse(false, start, delegate (Edge<V, E> e, W w) { edges.Add(e); return true; });
-            if (edges.Count != graph.Count - 1)
+
+            if (edges.Count != _graph.Count - 1)
+            {
                 throw new ArgumentException("Graph not connected");
+            }
+
             return new HashGraph<V, E, W>(Weight, edges);
         }
 
         public ICollectionValue<Edge<V, E>> ApproximateMWPM()
         {
             //Assume graph complete and even number of vertices
-            HashGraph<V, E, W> clone = new HashGraph<V, E, W>(Weight, Edges());
-            ArrayList<Edge<V, E>> evenpath = new ArrayList<Edge<V, E>>();
-            ArrayList<Edge<V, E>> oddpath = new ArrayList<Edge<V, E>>();
+            var clone = new HashGraph<V, E, W>(Weight, Edges());
+            var evenpath = new ArrayList<Edge<V, E>>();
+            var oddpath = new ArrayList<Edge<V, E>>();
             V start = default;
-            foreach (V v in clone.Vertices()) { start = v; break; }
+            foreach (var v in clone.Vertices())
+            {
+                start = v;
+                break;
+            }
             V current = start;
             W evenweight, oddweight;
             evenweight = oddweight = default;
-            bool even = true;
+            var even = true;
             while (clone.VertexCount > 0)
             {
                 V bestvertex = default;
                 E bestedge = default;
                 W bestweight = default;
+
                 if (clone.VertexCount == 1)
                 {
                     bestvertex = start;
-                    bestedge = graph[current][start];
+                    bestedge = _graph[current][start];
                     bestweight = Weight.Weight(bestedge);
                 }
                 else
                 {
                     bool first = true;
-                    foreach (KeyValuePair<V, E> p in clone.graph[current])
+                    foreach (KeyValuePair<V, E> p in clone._graph[current])
                     {
                         W thisweight = Weight.Weight(p.Value);
                         if (first || bestweight.CompareTo(thisweight) > 0)
@@ -971,19 +1083,23 @@ namespace Graph
         /// <returns></returns>
         public IList<V> EulerTour()
         {
-            bool debug = false;
+            var debug = false;
             //Assert connected and all degrees even. (Connected is checked at the end)
-            string fmt = "Graph does not have a closed Euler tour: vertex {0} has odd degree {1}";
-            foreach (KeyValuePair<V, HashDictionary<V, E>> adj in graph)
+            var fmt = "Graph does not have a closed Euler tour: vertex {0} has odd degree {1}";
+            foreach (var adj in _graph)
+            {
                 if (adj.Value.Count % 2 != 0)
+                {
                     throw new ArgumentException(string.Format(fmt, adj.Key, adj.Value.Count));
+                }
+            }
 
-            LinkedList<V> path = new LinkedList<V>();
+            var path = new LinkedList<V>();
             //Clone the graph data to keep track of used edges.
-            HashDictionary<V, HashedArrayList<V>> edges = new HashDictionary<V, HashedArrayList<V>>();
+            var edges = new HashDictionary<V, HashedArrayList<V>>();
             V start = default;
-            HashedArrayList<V> adjacent = null;
-            foreach (KeyValuePair<V, HashDictionary<V, E>> p in graph)
+            HashedArrayList<V> adjacent = default;
+            foreach (var p in _graph)
             {
                 adjacent = new HashedArrayList<V>();
                 adjacent.AddAll(p.Value.Keys);
@@ -992,20 +1108,34 @@ namespace Graph
             }
 
             path.Add(start);
-            IList<V> view = path.View(0, 1);
+            var view = path.View(0, 1);
             while (adjacent.Count > 0)
             {
-                V current = view[0];
-                if (debug) Console.WriteLine("==> {0}", current);
+                var current = view[0];
+                if (debug)
+                {
+                    Console.WriteLine("==> {0}", current);
+                }
                 //Augment the path (randomly) until we return here and all edges
                 while (adjacent.Count > 0)
                 {
-                    if (debug) Console.WriteLine(" => {0}, {1}", current, path.Count);
-                    V next = adjacent.RemoveFirst();
+                    if (debug)
+                    {
+                        Console.WriteLine(" => {0}, {1}", current, path.Count);
+                    }
+
+                    var next = adjacent.RemoveFirst();
                     view.Add(next);
-                    if (debug) Console.WriteLine("EDGE: " + current + "->" + next);
+                    if (debug)
+                    {
+                        Console.WriteLine("EDGE: " + current + "->" + next);
+                    }
+
                     if (!edges[next].Remove(current))
+                    {
                         Console.WriteLine("Bad");
+                    }
+
                     current = next;
                     adjacent = edges[current];
                 }
@@ -1016,12 +1146,20 @@ namespace Graph
                 while (view.Offset < path.Count - 1 && adjacent.Count == 0)
                 {
                     view.Slide(1, 1);
-                    if (debug) Console.WriteLine(" -> {0}, {1}", view[0], path.Count);
+                    if (debug)
+                    {
+                        Console.WriteLine(" -> {0}, {1}", view[0], path.Count);
+                    }
+
                     adjacent = edges[view[0]];
                 }
             }
+
             if (path.Count <= edges.Count)
+            {
                 throw new ArgumentException("Graph was not connected");
+            }
+
             return path;
         }
 
@@ -1031,20 +1169,32 @@ namespace Graph
         /// </summary>
         struct Vplus : IEquatable<Vplus>
         {
-            internal readonly V vertex; internal readonly int id;
-            static readonly SCG.IEqualityComparer<V> vequalityComparer = EqualityComparer<V>.Default;
-            internal Vplus(V v) { vertex = v; id = 0; }
-            internal Vplus(int i) { vertex = default; id = i; }
+            private static readonly SCG.IEqualityComparer<V> _vequalityComparer = EqualityComparer<V>.Default;
+
+            public V Vertex { get; }
+            public int Id { get; }
+
+            internal Vplus(V v) { Vertex = v; Id = 0; }
+            internal Vplus(int i) { Vertex = default; Id = i; }
+
             //We should override Equals and GetHashCode
 
             public override string ToString()
-            { return id == 0 ? string.Format("real({0})", vertex) : string.Format("fake({0})", id); }
+            {
+                return Id == 0 ? string.Format("real({0})", Vertex) : string.Format("fake({0})", Id);
+            }
 
-            public override bool Equals(object obj) { throw new NotImplementedException(); }
+            public override bool Equals(object obj)
+            {
+                throw new NotImplementedException();
+            }
 
-            public bool Equals(Vplus other) { return vequalityComparer.Equals(vertex, other.vertex) && id == other.id; }
+            public bool Equals(Vplus other)
+            {
+                return _vequalityComparer.Equals(Vertex, other.Vertex) && Id == other.Id;
+            }
 
-            public override int GetHashCode() { return vequalityComparer.GetHashCode(vertex) + id; }
+            public override int GetHashCode() { return _vequalityComparer.GetHashCode(Vertex) + Id; }
         }
 
         /// <summary>
@@ -1054,13 +1204,17 @@ namespace Graph
         public IDirectedCollectionValue<V> ApproximateTSP2()
         {
             /* Construct a minimum spanning tree for the graph */
-            IGraph<V, E, W> tree = MinimumSpanningTree(out V _);
+            var tree = MinimumSpanningTree(out V _);
 
             //Console.WriteLine("========= Matching of odd vertices of mst =========");
-            ArrayList<V> oddvertices = new ArrayList<V>();
+            var oddvertices = new ArrayList<V>();
             foreach (V v in tree.Vertices())
+            {
                 if (tree.Adjacent(v).Count % 2 != 0)
+                {
                     oddvertices.Add(v);
+                }
+            }
 
             ICollectionValue<Edge<V, E>> matching = SubGraph(oddvertices).ApproximateMWPM();
 
@@ -1068,28 +1222,33 @@ namespace Graph
             //We must split the edges of the matching with fake temporary vertices
             //since the matching and the tree may have common edges
 
-            HashGraph<Vplus, E, W> fused = new HashGraph<Vplus, E, W>(Weight);
+            var fused = new HashGraph<Vplus, E, W>(Weight);
             foreach (Edge<V, E> e in tree.Edges())
-                fused.AddEdge(new Vplus(e.start), new Vplus(e.end), e.edgedata);
-            int fakeid = 1;
+            {
+                fused.AddEdge(new Vplus(e.Start), new Vplus(e.End), e.EdgeData);
+            }
+
+            var fakeid = 1;
             foreach (Edge<V, E> e in matching)
             {
                 Vplus fakevertex = new Vplus(fakeid++);
-                fused.AddEdge(new Vplus(e.start), fakevertex, e.edgedata);
-                fused.AddEdge(fakevertex, new Vplus(e.end), e.edgedata);
+                fused.AddEdge(new Vplus(e.Start), fakevertex, e.EdgeData);
+                fused.AddEdge(fakevertex, new Vplus(e.End), e.EdgeData);
             }
             fused.Print(Console.Out);
 
             //Console.WriteLine("========= Remove fake vertices and perform shortcuts =========");
             _ = fused.EulerTour();
-            HashSet<V> seen = new HashSet<V>();
+            var seen = new HashSet<V>();
             IList<V> tour = new ArrayList<V>();
 
-            foreach (Vplus vplus in fused.EulerTour())
+            foreach (var vplus in fused.EulerTour())
             {
-                V v = vplus.vertex;
-                if (vplus.id == 0 && !seen.FindOrAdd(ref v))
+                var v = vplus.Vertex;
+                if (vplus.Id == 0 && !seen.FindOrAdd(ref v))
+                {
                     tour.Add(v);
+                }
             }
             return tour;
         }
@@ -1107,44 +1266,53 @@ namespace Graph
             IGraph<V, E, W> tree = MinimumSpanningTree(out V root);
 
             /* (Virtually) double all edges of MST and construct an Euler tour of the vertices*/
-            LinkedList<V> tour = new LinkedList<V> { root, root };
+            var tour = new LinkedList<V> { root, root };
             IList<V> view = tour.View(1, 1);
 
             void onfollow(Edge<V, E> e)
             {
                 //slide the view until it points to the last copy of e.start
-                while (!view[0].Equals(e.start))
+                while (!view[0].Equals(e.Start))
+                {
                     view.Slide(1);
+                }
                 //then insert two copies of e.end and slide the view one backwards
-                view.InsertFirst(e.end);
-                view.InsertFirst(e.end);
+                view.InsertFirst(e.End);
+                view.InsertFirst(e.End);
                 view.Slide(1, 1);
             }
 
             tree.TraverseVertices(false, root, onfollow);
 
             /* Finally, slide along the Euler tour and shortcut by removing vertices already seen*/
-            HashSet<V> seen = new HashSet<V>();
+            var seen = new HashSet<V>();
             view = tour.View(0, tour.Count);
             while (view.Offset < tour.Count - 1)
             {
-                V v = view[0];
+                var v = view[0];
                 if (seen.FindOrAdd(ref v))
+                {
                     view.RemoveFirst();
+                }
                 else
+                {
                     view.Slide(1, view.Count - 1);
+                }
             }
             return tour;
         }
 
         public void Print(System.IO.TextWriter output)
         {
-            output.WriteLine("Graph has {0} vertices, {1} edges, {2} components", graph.Count, edgecount, ComponentCount);
-            foreach (KeyValuePair<V, HashDictionary<V, E>> p in graph)
+            output.WriteLine("Graph has {0} vertices, {1} edges, {2} components", _graph.Count, EdgeCount, ComponentCount);
+            foreach (KeyValuePair<V, HashDictionary<V, E>> p in _graph)
             {
                 output.Write(" {0} ->  ", p.Key);
                 foreach (KeyValuePair<V, E> p2 in p.Value)
+                {
                     output.Write("{1} (data {2}), ", p.Key, p2.Key, p2.Value);
+                }
+
                 output.WriteLine();
             }
         }
@@ -1166,7 +1334,6 @@ namespace Graph
     /// </summary>
     class IntWeight : IWeight<int, int>
     {
-
         public int Weight(int edgedata) { return edgedata; }
 
         public int Add(int w1, int w2) { return w1 + w2; }
@@ -1178,7 +1345,6 @@ namespace Graph
     /// </summary>
     class DoubleWeight : IWeight<double, double>
     {
-
         public double Weight(double edgedata) { return edgedata; }
 
         public double Add(double w1, double w2) { return w1 + w2; }
@@ -1213,14 +1379,13 @@ namespace Graph
     {
         readonly string text;
         internal ExampleDescriptionAttribute(string text) { this.text = text; }
-
         public override string ToString() { return text; }
     }
 
     /// <summary>
     /// A selection of test cases
     /// </summary>
-    class Test
+    class Graph
     {
         static SCG.IEnumerable<Edge<int, int>> Grid(int n)
         {
@@ -1256,19 +1421,27 @@ namespace Graph
             for (int i = 0; i < treeCount; i++)
             {
                 IList<string> q = new ArrayList<string>();
-                string root = string.Format("[{0}]", i);
-                int lmax = height + root.Length;
+                var root = string.Format("[{0}]", i);
+                var lmax = height + root.Length;
                 q.Add(root);
                 while (!q.IsEmpty)
                 {
-                    string s = q.Remove();
-                    string s2 = s + "L";
+                    var s = q.Remove();
+                    var s2 = s + "L";
+
                     if (s2.Length < lmax)
+                    {
                         q.Add(s2);
+                    }
+
                     yield return new Edge<string, int>(s, s2, 0);
                     s2 = s + "R";
+
                     if (s2.Length < lmax)
+                    {
                         q.Add(s2);
+                    }
+
                     yield return new Edge<string, int>(s, s2, 0);
                 }
             }
@@ -1285,22 +1458,36 @@ namespace Graph
         static SCG.IEnumerable<Edge<string, double>> Wheel(bool complete, int n)
         {
             if (n < 3)
+            {
                 throw new ArgumentOutOfRangeException("n must be at least 3");
-            string center = "C";
-            string[] perimeter = new string[n];
+            }
+
+            var center = "C";
+            var perimeter = new string[n];
+
             for (int i = 0; i < n; i++)
             {
                 perimeter[i] = "P" + i;
                 yield return new Edge<string, double>(perimeter[i], center, 1);
             }
+
             if (complete)
+            {
                 for (int i = 0; i < n - 1; i++)
+                {
                     for (int j = i + 1; j < n; j++)
+                    {
                         yield return new Edge<string, double>(perimeter[i], perimeter[j], 2 * Math.Sin((j - i) * Math.PI / n));
+                    }
+                }
+            }
             else
             {
                 for (int i = 0; i < n - 1; i++)
+                {
                     yield return new Edge<string, double>(perimeter[i], perimeter[i + 1], 2 * Math.Sin(Math.PI / n));
+                }
+
                 yield return new Edge<string, double>(perimeter[n - 1], perimeter[0], 2 * Math.Sin(Math.PI / n));
             }
         }
@@ -1310,7 +1497,7 @@ namespace Graph
         /// []
         /// </summary>
         [ExampleDescription("Basic BFS and DFS using TraverseVertices method")]
-        static void test1()
+        public static void Test1()
         {
             IGraph<int, int, int> g = new HashGraph<int, int, int>(new CountWeight<int>(), Grid(3));
             Console.WriteLine("Edge count: {0}", g.Edges().Count);
@@ -1324,7 +1511,7 @@ namespace Graph
         /// 
         /// </summary>
         [ExampleDescription("Component methods")]
-        static void TestCOMP()
+        public static void TestCOMP()
         {
             IGraph<string, int, int> g = new HashGraph<string, int, int>(new CountWeight<int>(), Forest(2, 2));
             Console.WriteLine("Forest has: Vertices: {0}, Edges: {1}, Components: {2}", g.VertexCount, g.EdgeCount, g.ComponentCount);
@@ -1337,7 +1524,7 @@ namespace Graph
         }
 
         //TODO: remove?
-        static void Test3()
+        public static void Test3()
         {
             HashGraph<int, int, int> g = new HashGraph<int, int, int>(new CountWeight<int>(), Grid(5));
             g.Print(Console.Out);
@@ -1356,10 +1543,12 @@ namespace Graph
             g.MinimumSpanningTree(out int root).Print(Console.Out);
             Console.WriteLine("========= SP =========");
             foreach (Edge<int, int> edge in g.ShortestPath(1001, 5005))
+            {
                 Console.WriteLine(edge);
+            }
         }
 
-        static void test4()
+        public static void Test4()
         {
             IGraph<string, int, int> g = new HashGraph<string, int, int>(new IntWeight(), Snake(5));
             Console.WriteLine("Edge count: {0}", g.Edges().Count);
@@ -1373,7 +1562,7 @@ namespace Graph
             Console.WriteLine("DFS:");
             mst.TraverseVertices(false, root, delegate (Edge<string, int> e) { Console.WriteLine(e); });
             Console.WriteLine("ATSP:");
-            int first = 0;
+            var first = 0;
             foreach (string s in g.ApproximateTSP())
             {
                 Console.Write((first++ == 0 ? "" : " -> ") + s);
@@ -1386,7 +1575,7 @@ namespace Graph
         ///  with non-accumulated weights, leading to a minimum spanning tree.
         /// </summary>
         [ExampleDescription("Priority-first-search with and without accumulated weights")]
-        static void TestPFS()
+        public static void TestPFS()
         {
             IGraph<string, double, double> g = new HashGraph<string, double, double>(new DoubleWeight(), Wheel(false, 10));
             g.Print(Console.Out);
@@ -1408,7 +1597,7 @@ namespace Graph
         /// Note that the tour created is not optimal. [Describe why]
         /// </summary>
         [ExampleDescription("Approximate TSP")]
-        static void TestTSP()
+        public static void TestTSP()
         {
             IGraph<string, double, double> g = new HashGraph<string, double, double>(new DoubleWeight(), Wheel(true, 10));
             //g.Print(Console.Out);
@@ -1416,7 +1605,7 @@ namespace Graph
             IGraph<string, double, double> mst = g.MinimumSpanningTree(out string root);
             mst.TraverseVertices(false,
          root,
-               delegate (Edge<string, double> e) { Console.WriteLine("Edge: {0} -> {1}", e.start, e.end); });
+               delegate (Edge<string, double> e) { Console.WriteLine("Edge: {0} -> {1}", e.Start, e.End); });
             Console.WriteLine("========= Approximate TSP =========");
             int first = 0;
             foreach (string s in g.ApproximateTSP())
@@ -1433,7 +1622,7 @@ namespace Graph
         /// Note that the tour created is not optimal. [Describe why]
         /// </summary>
         [ExampleDescription("Approximate TSP2")]
-        static void TestTSP2()
+        public static void TestTSP2()
         {
             HashGraph<string, double, double> g = new HashGraph<string, double, double>(new DoubleWeight(), Wheel(true, 20));
 
@@ -1497,7 +1686,7 @@ namespace Graph
         /// <summary>
         /// 
         /// </summary>
-        static void TestEuler()
+        public static void TestEuler()
         {
             HashGraph<string, double, double> g = new HashGraph<string, double, double>(new DoubleWeight(), Wheel(true, 6));
             foreach (string s in g.EulerTour())
@@ -1528,7 +1717,7 @@ namespace Graph
         /// vertex is greater or equal to the index of va. 
         /// </summary>
         [ExampleDescription("Using the advanced DFS to compute articulation points")]
-        static void TestDFS()
+        public static void TestDFS()
         {
             HashGraph<string, int, int> g = new HashGraph<string, int, int>(new IntWeight());
             g.AddEdge("A", "B", 0);
@@ -1562,7 +1751,7 @@ namespace Graph
             void onfollow(Edge<string, int> e) { }
             void onfollowed(Edge<string, int> e)
             {
-                int startind = index[e.start], endind = index[e.end];
+                int startind = index[e.Start], endind = index[e.End];
                 if (startind == 0)
                     outgoingFromRoot++;
                 else
@@ -1570,14 +1759,14 @@ namespace Graph
                     int leastIndexReachable = leastIndexReachableFrom[endind];
                     if (leastIndexReachable >= startind)
                         Console.WriteLine("Articulation point: {0} (least index reachable via {3} is {1} >= this index {2})",
-                            e.start, leastIndexReachable, startind, e);
+                            e.Start, leastIndexReachable, startind, e);
                     if (leastIndexReachableFrom[startind] > leastIndexReachable)
                         leastIndexReachableFrom[startind] = leastIndexReachable;
                 }
             }
             void onnotfollowed(Edge<string, int> e)
             {
-                int startind = index[e.start], endind = index[e.end];
+                int startind = index[e.Start], endind = index[e.End];
                 if (leastIndexReachableFrom[startind] > endind)
                     leastIndexReachableFrom[startind] = endind;
             }
@@ -1589,12 +1778,12 @@ namespace Graph
                 Console.WriteLine("/ {0}", e);
         }
 
-        static void Main(String[] args)
+        static void Main(string[] args)
         {
             if (args.Length != 1)
             {
                 Console.WriteLine("Usage: Graph.exe testno");
-                System.Reflection.MethodInfo[] mis = typeof(Test).GetMethods(
+                System.Reflection.MethodInfo[] mis = typeof(Graph).GetMethods(
                     System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
                 foreach (System.Reflection.MethodInfo mi in mis)
                 {
@@ -1609,7 +1798,7 @@ namespace Graph
             {
                 string testMethodName = string.Format("test{0}", args[0]);
 
-                System.Reflection.MethodInfo mi = typeof(Test).GetMethod(testMethodName,
+                System.Reflection.MethodInfo mi = typeof(Graph).GetMethod(testMethodName,
                     System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
 
                 if (mi == null)

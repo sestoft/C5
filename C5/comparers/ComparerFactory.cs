@@ -10,8 +10,7 @@ namespace C5
     /// Factory class to create comparers and equality comparers using Func delegates
     /// </summary>
     /// <typeparam name="T">The type to compare</typeparam>
-    [Serializable]
-    public class ComparerFactory<T>
+    public static class ComparerFactory<T>
     {
         /// <summary>
         /// Create a new comparer.

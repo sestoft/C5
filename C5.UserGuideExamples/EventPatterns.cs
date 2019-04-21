@@ -3,18 +3,20 @@
 
 // C5 example: EventPatterns.cs for pattern chapter
 
-// Compile with 
-//   csc /r:C5.dll EventPatterns.cs 
+// Compile and run with 
+//  dotnet clean
+//  dotnet build ../C5/C5.csproj
+//  dotnet build -p:StartupObject=C5.UserGuideExamples.EventPatterns
+//  dotnet run
 
 using System;
-using C5;
 
-#pragma warning disable IDE0059 // Value assigned to symbol is never used
-namespace EventPatterns
+//#pragma warning disable IDE0059 // Value assigned to symbol is never used
+namespace C5.UserGuideExamples
 {
     class EventPatterns
     {
-        public static void Main(String[] args)
+        public static void Main()
         {
             UnindexedCollectionEvents();
             Console.WriteLine("--------------------");
@@ -29,126 +31,94 @@ namespace EventPatterns
             ICollection<int> bag1 = new HashBag<int>();
             bag1.AddAll(new[] { 3, 2, 5, 5, 7, 7, 5, 3, 7, 7 });
             // Add change handler
-            coll.CollectionChanged
-              += delegate(Object c)
-            {
-                Console.WriteLine("Collection changed");
-            };
+            coll.CollectionChanged += o => Console.WriteLine("Collection changed");
+
             // Add cleared handler
-            coll.CollectionCleared
-              += delegate(Object c, ClearedEventArgs args)
-            {
-                Console.WriteLine("Collection cleared");
-            };
+            coll.CollectionCleared += (o, a) => Console.WriteLine("Collection cleared");
+
             // Add added handler
-            coll.ItemsAdded
-              += delegate(Object c, ItemCountEventArgs<int> args)
-            {
-                Console.WriteLine("Item {0} added", args.Item);
-            };
+            coll.ItemsAdded += (o, args) => Console.WriteLine($"Item {args.Item} added");
+
             // Add item count handler
             AddItemsAddedCounter(coll);
             AddItemsRemovedCounter(coll);
+
             coll.AddAll(bag1);
             coll.RemoveAll(new[] { 2, 5, 6, 3, 7, 2 });
             coll.Clear();
+
             ICollection<int> bag2 = new HashBag<int>();
+
             // Add added handler with multiplicity
-            bag2.ItemsAdded
-              += delegate(Object c, ItemCountEventArgs<int> args)
-            {
-                Console.WriteLine("{0} copies of {1} added",
-                                  args.Count, args.Item);
-            };
+            bag2.ItemsAdded += (o, args) => Console.WriteLine($"{args.Count} copies of {args.Item} added");
             bag2.AddAll(bag1);
+
             // Add removed handler with multiplicity
-            bag2.ItemsRemoved
-              += delegate(Object c, ItemCountEventArgs<int> args)
-            {
-                Console.WriteLine("{0} copies of {1} removed",
-                                  args.Count, args.Item);
-            };
+            bag2.ItemsRemoved += (o, args) => Console.WriteLine($"{args.Count} copies of {args.Item} removed");
             bag2.RemoveAllCopies(7);
         }
 
         // This works for all kinds of collections, also those with bag
         // semantics and representing duplicates by counting:
-
         private static void AddItemsAddedCounter<T>(ICollection<T> coll)
         {
 
-            int addedCount = 0;
-            coll.ItemsAdded
-              += delegate(Object c, ItemCountEventArgs<T> args)
-            {
-                addedCount += args.Count;
-            };
-            coll.CollectionChanged
-              += delegate(Object c)
+            var addedCount = 0;
+            coll.ItemsAdded += (o, args) => addedCount += args.Count;
+            coll.CollectionChanged += o =>
             {
                 if (addedCount > 0)
+                {
                     Console.WriteLine("{0} items were added", addedCount);
+                }
                 addedCount = 0;
             };
         }
 
         // This works for all kinds of collections, also those with bag
         // semantics and representing duplicates by counting:
-
         private static void AddItemsRemovedCounter<T>(ICollection<T> coll)
         {
-            int removedCount = 0;
-            coll.ItemsRemoved
-              += delegate(Object c, ItemCountEventArgs<T> args)
-            {
-                removedCount += args.Count;
-            };
-            coll.CollectionChanged
-              += delegate(Object c)
+            var removedCount = 0;
+            coll.ItemsRemoved += (o, args) => removedCount += args.Count;
+            coll.CollectionChanged += o =>
             {
                 if (removedCount > 0)
+                {
                     Console.WriteLine("{0} items were removed", removedCount);
+                }
                 removedCount = 0;
             };
         }
 
         // Event patterns on indexed collections
-
         public static void IndexedCollectionEvents()
         {
-            IList<int> coll = new ArrayList<int>();
-            ICollection<int> bag = new HashBag<int>();
+            var coll = new ArrayList<int>();
+            var bag = new HashBag<int>();
             bag.AddAll(new[] { 3, 2, 5, 5, 7, 7, 5, 3, 7, 7 });
+
             // Add item inserted handler
-            coll.ItemInserted
-              += delegate(Object c, ItemAtEventArgs<int> args)
-            {
-                Console.WriteLine("Item {0} inserted at {1}",
-                                  args.Item, args.Index);
-            };
+            coll.ItemInserted += (o, args) => Console.WriteLine($"Item {args.Item} inserted at {args.Index}");
             coll.InsertAll(0, bag);
+
             // Add item removed-at handler
-            coll.ItemRemovedAt
-              += delegate(Object c, ItemAtEventArgs<int> args)
-            {
-                Console.WriteLine("Item {0} removed at {1}",
-                                  args.Item, args.Index);
-            };
+            coll.ItemRemovedAt += (o, args) => Console.WriteLine($"Item {args.Item} removed at {args.Index}");
             coll.RemoveLast();
             coll.RemoveFirst();
             coll.RemoveAt(1);
         }
 
         // Recognizing Update event as a Removed-Added-Changed sequence
-
         private enum State { Before, Removed, Updated };
 
         private static void AddItemUpdatedHandler<T>(ICollection<T> coll)
         {
-            State state = State.Before;
-            T removed = default, added = default;
-            coll.ItemsRemoved
-              += delegate(Object c, ItemCountEventArgs<T> args)
+            var state = State.Before;
+            T removed = default;
+            T added = default;
+
+            coll.ItemsRemoved += (o, args) =>
             {
                 if (state == State.Before)
                 {
@@ -156,10 +126,12 @@ namespace EventPatterns
                     removed = args.Item;
                 }
                 else
+                {
                     state = State.Before;
+                }
             };
-            coll.ItemsAdded
-              += delegate(Object c, ItemCountEventArgs<T> args)
+
+            coll.ItemsAdded += (o, args) =>
             {
                 if (state == State.Removed)
                 {
@@ -167,23 +139,26 @@ namespace EventPatterns
                     added = args.Item;
                 }
                 else
+                {
                     state = State.Before;
+                }
             };
-            coll.CollectionChanged
-              += delegate(Object c)
+
+            coll.CollectionChanged += o =>
             {
                 if (state == State.Updated)
-                    Console.WriteLine("Item {0} was updated to {1}",
-                                      removed, added);
+                {
+                    Console.WriteLine($"Item {removed} was updated to {added}");
+                }
                 state = State.Before;
             };
         }
 
         public static void UpdateEvent()
         {
-            ICollection<Teacher> coll = new HashSet<Teacher>();
+            var coll = new HashSet<Teacher>();
             AddItemUpdatedHandler(coll);
-            Teacher kristian = new Teacher("Kristian", "physics");
+            var kristian = new Teacher("Kristian", "physics");
             coll.Add(kristian);
             coll.Add(new Teacher("Poul Einer", "mathematics"));
             // This should be caught by the update handler:
@@ -192,7 +167,7 @@ namespace EventPatterns
             coll.Remove(kristian);
             coll.Add(new Teacher("Jens", "physics"));
             // The update handler is activated also by indexed updates
-            IList<int> list = new ArrayList<int>();
+            var list = new ArrayList<int>();
             list.AddAll(new[] { 7, 11, 13 });
             AddItemUpdatedHandler(list);
             list[1] = 9;
@@ -200,30 +175,21 @@ namespace EventPatterns
     }
 
     // Example class where objects may be equal yet display differently
-
     class Teacher : IEquatable<Teacher>
     {
-        private readonly String name, subject;
+        public string Name { get; }
+        public string Subject { get; }
 
-        public Teacher(String name, String subject)
+        public Teacher(string name, string subject)
         {
-            this.name = name; this.subject = subject;
+            Name = name;
+            Subject = subject;
         }
 
-        public bool Equals(Teacher that)
-        {
-            return this.subject.Equals(that.subject);
-        }
+        public bool Equals(Teacher that) => Subject == that.Subject;
 
-        public override int GetHashCode()
-        {
-            return subject.GetHashCode();
-        }
+        public override int GetHashCode() => Subject.GetHashCode();
 
-        public override String ToString()
-        {
-            return name + "[" + subject + "]";
-        }
+        public override string ToString() => $"{Name} [{Subject}]";
     }
 }
-#pragma warning restore IDE0059 // Value assigned to symbol is never used

@@ -3,50 +3,64 @@
 
 // Experiment with extension methods and C5, 2007-10-31
 
-// Compile with 
-//   csc /r:C5.dll Extension.cs 
+// Compile and run with 
+//  dotnet clean
+//  dotnet build ../C5/C5.csproj
+//  dotnet build -p:StartupObject=C5.UserGuideExamples.Extension
+//  dotnet run
 
 using System;
 using System.Linq.Expressions;
-using C5;
 using SCG = System.Collections.Generic;
 
-namespace Extension {
-  static class AddOn {
-    public static int Added<T>(this ICollection<T> coll, int x) {
-      return coll.Count + x;
-    }
-
-    public static SCG.IEnumerable<T> Where<T>(this ICollection<T> coll, 
-					      Expression<Func<T,bool>> pred) 
+namespace C5.UserGuideExamples
+{
+    static class Extension
     {
-      Console.WriteLine("hallo");
-      //      Func<T,bool> p = pred.Compile();
-      Delegate p = pred.Compile();
-      foreach (T item in coll) 
-	//  	if (p(item))
-  	if ((bool)p.DynamicInvoke(item))
-  	  yield return item;
+        public static int Added<T>(this ICollection<T> coll, int x)
+        {
+            return coll.Count + x;
+        }
+
+        public static SCG.IEnumerable<T> Where<T>(this ICollection<T> coll, Expression<Func<T, bool>> predicate)
+        {
+            Console.WriteLine("hallo");
+            // Func<T,bool> p = pred.Compile();
+            var p = predicate.Compile();
+            foreach (T item in coll)
+            {   
+                // if (p(item))
+                if ((bool)p.DynamicInvoke(item))
+                {
+                    yield return item;
+                }
+            }
+        }
+
+        static void Main()
+        {
+            var hs = new HashSet<NamedPerson>
+            {
+                new NamedPerson("Ole"),
+                new NamedPerson("Hans")
+            };
+
+            foreach (NamedPerson q in (from p in hs where p.Name.Length == 4 select p))
+            {
+                Console.WriteLine(q);
+            }
+        }
     }
 
-    static void Main(String[] args) {
-      HashSet<Person> hs = new HashSet<Person>();
-      hs.Add(new Person("Ole"));
-      hs.Add(new Person("Hans"));
-      foreach (Person q in (from p in hs where p.name.Length == 4 select p))
-	Console.WriteLine(q);
-    }
-  }
+    class NamedPerson
+    {
+        public string Name { get; }
 
-  class Person {
-    public readonly String name;
+        public NamedPerson(string name)
+        {
+            Name = name;
+        }
 
-    public Person(String name) {
-      this.name = name;
+        public override string ToString() => Name;
     }
-    
-    public override String ToString() {
-      return name;
-    }
-  }
 }

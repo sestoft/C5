@@ -3,58 +3,60 @@
 
 // C5 example: hash codes, good and bad 2005-02-28
 
-// Compile with 
-//   csc /r:C5.dll HashCodes.cs 
+// Compile and run with 
+//  dotnet clean
+//  dotnet build ../C5/C5.csproj
+//  dotnet build -p:StartupObject=C5.UserGuideExamples.HashCodes
+//  dotnet run
 
 using System;
 using System.Diagnostics;
-using C5;
 using SCG = System.Collections.Generic;
 
-namespace MyHashCodesTest
+namespace C5.UserGuideExamples
 {
-    class MyTest
+    class HashCodes
     {
-        public static void Main(String[] args)
+        public static void Main(string[] args)
         {
-            int count = int.Parse(args[0]);
+            var count = int.Parse(args[0]);
             {
                 Console.Write("Good hash function: ");
                 var sw = Stopwatch.StartNew();
-                HashSet<int> good
-                  = MakeRandom(count, new GoodIntegerEqualityComparer());
+                var good = MakeRandom(count, new GoodIntegerEqualityComparer());
                 sw.Stop();
-                Console.WriteLine("({0} sec, {1} items)", sw.Elapsed.TotalSeconds, good.Count);
-                ISortedDictionary<int, int> bcd = good.BucketCostDistribution();
-                foreach (KeyValuePair<int, int> entry in bcd)
-                    Console.WriteLine("{0,7} bucket(s) with cost {1,5}",
-                              entry.Value, entry.Key);
+                Console.WriteLine($"({sw.Elapsed.TotalSeconds} sec, {good.Count} items)");
+                var bcd = good.BucketCostDistribution();
+                foreach (var entry in bcd)
+                {
+                    Console.WriteLine("{0,7} bucket(s) with cost {1,5}", entry.Value, entry.Key);
+                }
             }
             {
-                Console.Write("Bad hash function:  ");
+                Console.Write("Bad hash function: ");
                 var sw = Stopwatch.StartNew();
-                HashSet<int> bad = MakeRandom(count, new BadIntegerEqualityComparer());
+                var bad = MakeRandom(count, new BadIntegerEqualityComparer());
                 sw.Stop();
-                Console.WriteLine("({0} sec, {1} items)", sw.Elapsed.TotalSeconds, bad.Count);
-                ISortedDictionary<int, int> bcd = bad.BucketCostDistribution();
-                foreach (KeyValuePair<int, int> entry in bcd)
-                    Console.WriteLine("{0,7} bucket(s) with cost {1,5}",
-                              entry.Value, entry.Key);
+                Console.WriteLine($"({sw.Elapsed.TotalSeconds} sec, {bad.Count} items)");
+                var bcd = bad.BucketCostDistribution();
+                foreach (var entry in bcd)
+                {
+                    Console.WriteLine("{0,7} bucket(s) with cost {1,5}", entry.Value, entry.Key);
+                }
             }
         }
 
         private static readonly C5Random rnd = new C5Random();
 
-        public static HashSet<int> MakeRandom(int count,
-                          SCG.IEqualityComparer<int> eqc)
+        public static HashSet<int> MakeRandom(int count, SCG.IEqualityComparer<int> eqc)
         {
-            HashSet<int> res;
-            if (eqc == null)
-                res = new HashSet<int>();
-            else
-                res = new HashSet<int>(eqc);
-            for (int i = 0; i < count; i++)
+            var res = eqc == null ? new HashSet<int>() : new HashSet<int>(eqc);
+
+            for (var i = 0; i < count; i++)
+            {
                 res.Add(rnd.Next(1000000));
+            }
+
             return res;
         }
 
@@ -64,6 +66,7 @@ namespace MyHashCodesTest
             {
                 return i1 == i2;
             }
+
             public int GetHashCode(int i)
             {
                 return i % 7;
@@ -76,6 +79,7 @@ namespace MyHashCodesTest
             {
                 return i1 == i2;
             }
+
             public int GetHashCode(int i)
             {
                 return i;

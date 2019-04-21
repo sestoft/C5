@@ -17,19 +17,19 @@ namespace C5
     {
         private static SCG.IEqualityComparer<T> _default;
 
-        readonly static Type SequencedCollectionEqualityComparer = typeof(SequencedCollectionEqualityComparer<,>);
+        private static readonly Type SequencedCollectionEqualityComparer = typeof(SequencedCollectionEqualityComparer<,>);
 
-        readonly static Type UnsequencedCollectionEqualityComparer = typeof(UnsequencedCollectionEqualityComparer<,>);
+        private static readonly Type UnsequencedCollectionEqualityComparer = typeof(UnsequencedCollectionEqualityComparer<,>);
 
         /// <summary>
         /// A default generic equality comparer for type T. The procedure is as follows:
         /// <list>
         /// <item>If the actual generic argument T implements the generic interface
         /// <see cref="T:C5.ISequenced`1"/> for some value W of its generic parameter T,
-        /// the equalityComparer will be <see cref="T:C5.SequencedCollectionEqualityComparer`2"/></item>
+        /// the equality comparer will be <see cref="T:C5.SequencedCollectionEqualityComparer`2"/></item>
         /// <item>If the actual generic argument T implements
         /// <see cref="T:C5.ICollection`1"/> for some value W of its generic parameter T,
-        /// the equalityComparer will be <see cref="T:C5.UnsequencedCollectionEqualityComparer`2"/></item>
+        /// the equality comparer will be <see cref="T:C5.UnsequencedCollectionEqualityComparer`2"/></item>
         /// <item>Otherwise the SCG.EqualityComparer&lt;T&gt;.Default is returned</item>
         /// </list>
         /// </summary>

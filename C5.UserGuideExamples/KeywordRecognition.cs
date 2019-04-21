@@ -3,43 +3,43 @@
 
 // C5 example: Keyword recognition 2004-12-20
 
-// Compile with 
-//   csc /r:C5.dll KeywordRecognition.cs 
+// Compile and run with 
+//  dotnet clean
+//  dotnet build ../C5/C5.csproj
+//  dotnet build -p:StartupObject=C5.UserGuideExamples.KeywordRecognition
+//  dotnet run
 
 using System;
 using System.Diagnostics;
-using C5;
 using SCG = System.Collections.Generic;
 
-namespace KeywordRecognition
+namespace C5.UserGuideExamples
 {
-
     class KeywordRecognition
     {
         // Array of 77 keywords:
+        private static readonly string[] _keywordArray =
+        {
+            "abstract", "as", "base", "bool", "break", "byte", "case", "catch",
+            "char", "checked", "class", "const", "continue", "decimal", "default",
+            "delegate", "do", "double", "else", "enum", "event", "explicit",
+            "extern", "false", "finally", "fixed", "float", "for", "foreach",
+            "goto", "if", "implicit", "in", "int", "interface", "internal", "is",
+            "lock", "long", "namespace", "new", "null", "object", "operator",
+            "out", "override", "params", "private", "protected", "public",
+            "readonly", "ref", "return", "sbyte", "sealed", "short", "sizeof",
+            "stackalloc", "static", "string", "struct", "switch", "this", "throw",
+            "true", "try", "typeof", "uint", "ulong", "unchecked", "unsafe",
+            "ushort", "using", "virtual", "void", "volatile", "while"
+        };
 
-        static readonly String[] keywordArray = 
-    { "abstract", "as", "base", "bool", "break", "byte", "case", "catch",
-      "char", "checked", "class", "const", "continue", "decimal", "default",
-      "delegate", "do", "double", "else", "enum", "event", "explicit",
-      "extern", "false", "finally", "fixed", "float", "for", "foreach",
-      "goto", "if", "implicit", "in", "int", "interface", "internal", "is",
-      "lock", "long", "namespace", "new", "null", "object", "operator",
-      "out", "override", "params", "private", "protected", "public",
-      "readonly", "ref", "return", "sbyte", "sealed", "short", "sizeof",
-      "stackalloc", "static", "string", "struct", "switch", "this", "throw",
-      "true", "try", "typeof", "uint", "ulong", "unchecked", "unsafe",
-      "ushort", "using", "virtual", "void", "volatile", "while" };
+        private static readonly ICollection<string> _keywords1;
 
-        private static readonly ICollection<String> kw1;
+        private static readonly ICollection<string> _keywords2;
 
-        private static readonly ICollection<String> kw2;
+        private static readonly ICollection<string> _keywords3;
 
-        private static readonly ICollection<String> kw3;
-
-        private static readonly SCG.IDictionary<String, bool> kw4 =
-          new SCG.Dictionary<String, bool>();
-
+        private static readonly SCG.IDictionary<string, bool> _keywords4;
 
         class SC : SCG.IComparer<string>
         {
@@ -64,56 +64,65 @@ namespace KeywordRecognition
 
         static KeywordRecognition()
         {
-            kw1 = new HashSet<String>();
-            kw1.AddAll(keywordArray);
-            kw2 = new TreeSet<String>(new SC());
-            kw2.AddAll(keywordArray);
-            kw3 = new SortedArray<String>(new SC());
-            kw3.AddAll(keywordArray);
-            kw4 = new SCG.Dictionary<String, bool>();
-            foreach (String keyword in keywordArray)
-                kw4.Add(keyword, false);
+            _keywords1 = new HashSet<string>();
+            _keywords1.AddAll(_keywordArray);
+            _keywords2 = new TreeSet<string>(new SC());
+            _keywords2.AddAll(_keywordArray);
+            _keywords3 = new SortedArray<string>(new SC());
+            _keywords3.AddAll(_keywordArray);
+            _keywords4 = new SCG.Dictionary<string, bool>();
+
+            foreach (var keyword in _keywordArray)
+            {
+                _keywords4.Add(keyword, false);
+            }
         }
 
-        public static bool IsKeyword1(String s)
+        public static bool IsKeyword1(string s)
         {
-            return kw1.Contains(s);
+            return _keywords1.Contains(s);
         }
 
-        public static bool IsKeyword2(String s)
+        public static bool IsKeyword2(string s)
         {
-            return kw2.Contains(s);
+            return _keywords2.Contains(s);
         }
 
-        public static bool IsKeyword3(String s)
+        public static bool IsKeyword3(string s)
         {
-            return kw3.Contains(s);
+            return _keywords3.Contains(s);
         }
 
-        public static bool IsKeyword4(String s)
+        public static bool IsKeyword4(string s)
         {
-            return kw4.ContainsKey(s);
+            return _keywords4.ContainsKey(s);
         }
 
-        public static bool IsKeyword5(String s)
+        public static bool IsKeyword5(string s)
         {
-            return Array.BinarySearch(keywordArray, s) >= 0;
+            return Array.BinarySearch(_keywordArray, s) >= 0;
         }
 
-        public static void Main(String[] args)
+        public static void Main(string[] args)
         {
             if (args.Length != 2)
-                Console.WriteLine("Usage: KeywordRecognition <iterations> <word>\n");
+            {
+                Console.WriteLine("Usage: KeywordRecognition <iterations> <word>");
+            }
             else
             {
-                int count = int.Parse(args[0]);
-                String id = args[1];
+                var count = int.Parse(args[0]);
+                var id = args[1];
 
                 {
                     Console.Write("HashSet.Contains ");
                     var sw = Stopwatch.StartNew();
-                    for (int i = 0; i < count; i++)
+
+                    for (var i = 0; i < count; i++)
+                    {
                         IsKeyword1(id);
+                    }
+
                     sw.Stop();
                     Console.WriteLine(sw.Elapsed);
                 }
@@ -121,8 +130,12 @@ namespace KeywordRecognition
                 {
                     Console.Write("TreeSet.Contains ");
                     var sw = Stopwatch.StartNew();
-                    for (int i = 0; i < count; i++)
+
+                    for (var i = 0; i < count; i++)
+                    {
                         IsKeyword2(id);
+                    }
+
                     sw.Stop();
                     Console.WriteLine(sw.Elapsed);
                 }
@@ -130,8 +143,12 @@ namespace KeywordRecognition
                 {
                     Console.Write("SortedArray.Contains ");
                     var sw = Stopwatch.StartNew();
-                    for (int i = 0; i < count; i++)
+
+                    for (var i = 0; i < count; i++)
+                    {
                         IsKeyword3(id);
+                    }
+
                     sw.Stop();
                     Console.WriteLine(sw.Elapsed);
                 }
@@ -139,8 +156,12 @@ namespace KeywordRecognition
                 {
                     Console.Write("SCG.Dictionary.ContainsKey ");
                     var sw = Stopwatch.StartNew();
-                    for (int i = 0; i < count; i++)
+
+                    for (var i = 0; i < count; i++)
+                    {
                         IsKeyword4(id);
+                    }
+
                     sw.Stop();
                     Console.WriteLine(sw.Elapsed);
                 }
@@ -148,8 +169,12 @@ namespace KeywordRecognition
                 {
                     Console.Write("Array.BinarySearch ");
                     var sw = Stopwatch.StartNew();
-                    for (int i = 0; i < count; i++)
+
+                    for (var i = 0; i < count; i++)
+                    {
                         IsKeyword5(id);
+                    }
+
                     sw.Stop();
                     Console.WriteLine(sw.Elapsed);
                 }

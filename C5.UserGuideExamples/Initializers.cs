@@ -3,28 +3,37 @@
 
 // C5 and C# 3.0 collection initializers
 
-// Compile with 
-//   csc /r:C5.dll Initializers.cs 
+// Compile and run with 
+//  dotnet clean
+//  dotnet build ../C5/C5.csproj
+//  dotnet build -p:StartupObject=C5.UserGuideExamples.Initializers
+//  dotnet run
 
 using System;
-using C5;
-using SCG = System.Collections.Generic;
 
-namespace Initializers
+namespace C5.UserGuideExamples
 {
-  class MyTest
-  {
-    public static void Main(String[] args)
+    class Initializers
     {
-      var list = new HashSet<int> { 2, 3, 5, 7, 11 };
-      foreach (var x in list) 
-	Console.WriteLine(x);
-      var dict = new HashDictionary<int,String> { 
-	{ 2, "two" },
-	{ 3, "three" }
-      };
-      foreach (var x in dict) 
-	Console.WriteLine(x.Value);
+        public static void Main()
+        {
+            var list = new HashSet<int> { 2, 3, 5, 7, 11 };
+
+            foreach (var x in list)
+            {
+                Console.WriteLine(x);
+            }
+
+            var dict = new HashDictionary<int, string>
+            {
+                { 2, "two" },
+                { 3, "three" }
+            };
+
+            foreach (var x in dict)
+            {
+                Console.WriteLine(x.Value);
+            }
+        }
     }
-  }
 }
