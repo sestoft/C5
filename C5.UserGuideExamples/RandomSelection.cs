@@ -12,7 +12,7 @@
 using System;
 using SCG = System.Collections.Generic;
 
-namespace C5.UserGudeExamples
+namespace C5.UserGuideExamples
 {
     class RandomSelection
     {
