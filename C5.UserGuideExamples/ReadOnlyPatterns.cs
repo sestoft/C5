@@ -10,7 +10,7 @@
 //  dotnet run
 
 #pragma warning disable IDE0060
-namespace C5.UserGudeExamples
+namespace C5.UserGuideExamples
 {
     class ReadOnlyPatterns
     {
