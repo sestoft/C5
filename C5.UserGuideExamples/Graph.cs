@@ -1497,7 +1497,7 @@ namespace C5.UserGuideExamples
         /// []
         /// </summary>
         [ExampleDescription("Basic BFS and DFS using TraverseVertices method")]
-        static void Test1()
+        public static void Test1()
         {
             IGraph<int, int, int> g = new HashGraph<int, int, int>(new CountWeight<int>(), Grid(3));
             Console.WriteLine("Edge count: {0}", g.Edges().Count);
@@ -1511,7 +1511,7 @@ namespace C5.UserGuideExamples
         /// 
         /// </summary>
         [ExampleDescription("Component methods")]
-        static void TestCOMP()
+        public static void TestCOMP()
         {
             IGraph<string, int, int> g = new HashGraph<string, int, int>(new CountWeight<int>(), Forest(2, 2));
             Console.WriteLine("Forest has: Vertices: {0}, Edges: {1}, Components: {2}", g.VertexCount, g.EdgeCount, g.ComponentCount);
@@ -1524,7 +1524,7 @@ namespace C5.UserGuideExamples
         }
 
         //TODO: remove?
-        static void Test3()
+        public static void Test3()
         {
             HashGraph<int, int, int> g = new HashGraph<int, int, int>(new CountWeight<int>(), Grid(5));
             g.Print(Console.Out);
@@ -1548,7 +1548,7 @@ namespace C5.UserGuideExamples
             }
         }
 
-        static void Test4()
+        public static void Test4()
         {
             IGraph<string, int, int> g = new HashGraph<string, int, int>(new IntWeight(), Snake(5));
             Console.WriteLine("Edge count: {0}", g.Edges().Count);
@@ -1575,7 +1575,7 @@ namespace C5.UserGuideExamples
         ///  with non-accumulated weights, leading to a minimum spanning tree.
         /// </summary>
         [ExampleDescription("Priority-first-search with and without accumulated weights")]
-        static void TestPFS()
+        public static void TestPFS()
         {
             IGraph<string, double, double> g = new HashGraph<string, double, double>(new DoubleWeight(), Wheel(false, 10));
             g.Print(Console.Out);
@@ -1597,7 +1597,7 @@ namespace C5.UserGuideExamples
         /// Note that the tour created is not optimal. [Describe why]
         /// </summary>
         [ExampleDescription("Approximate TSP")]
-        static void TestTSP()
+        public static void TestTSP()
         {
             IGraph<string, double, double> g = new HashGraph<string, double, double>(new DoubleWeight(), Wheel(true, 10));
             //g.Print(Console.Out);
@@ -1622,7 +1622,7 @@ namespace C5.UserGuideExamples
         /// Note that the tour created is not optimal. [Describe why]
         /// </summary>
         [ExampleDescription("Approximate TSP2")]
-        static void TestTSP2()
+        public static void TestTSP2()
         {
             HashGraph<string, double, double> g = new HashGraph<string, double, double>(new DoubleWeight(), Wheel(true, 20));
 
@@ -1686,7 +1686,7 @@ namespace C5.UserGuideExamples
         /// <summary>
         /// 
         /// </summary>
-        static void TestEuler()
+        public static void TestEuler()
         {
             HashGraph<string, double, double> g = new HashGraph<string, double, double>(new DoubleWeight(), Wheel(true, 6));
             foreach (string s in g.EulerTour())
@@ -1717,7 +1717,7 @@ namespace C5.UserGuideExamples
         /// vertex is greater or equal to the index of va. 
         /// </summary>
         [ExampleDescription("Using the advanced DFS to compute articulation points")]
-        static void TestDFS()
+        public static void TestDFS()
         {
             HashGraph<string, int, int> g = new HashGraph<string, int, int>(new IntWeight());
             g.AddEdge("A", "B", 0);

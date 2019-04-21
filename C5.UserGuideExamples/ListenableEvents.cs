@@ -15,7 +15,7 @@ namespace C5.UserGuideExamples
 {
     class ListenableEvents
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             PrintEvents("CircularQueue", new CircularQueue<int>());
             PrintEvents("ArrayList", new ArrayList<int>());

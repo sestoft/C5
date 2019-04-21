@@ -15,7 +15,7 @@ namespace C5.UserGuideExamples
 {
     class Initializers
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             var list = new HashSet<int> { 2, 3, 5, 7, 11 };
 

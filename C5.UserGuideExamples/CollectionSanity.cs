@@ -16,7 +16,7 @@ namespace C5.UserGuideExamples
 {
     class CollectionSanity
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             var col1 = new LinkedList<int>();
             var col2 = new LinkedList<int>();

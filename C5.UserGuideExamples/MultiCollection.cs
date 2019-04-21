@@ -107,15 +107,17 @@ namespace C5.UserGuideExamples
 
     class MultiCollectionProgram
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
-            WordIndex wi = new WordIndex();
+            var wi = new WordIndex();
             wi.Add("ja", 2);
             wi.Add("nej", 4);
             wi.Add("ja", 7);
+
             foreach (string s in wi.Keys)
             {
                 Console.WriteLine(s + " -->");
+
                 foreach (int line in wi[s])
                 {
                     Console.WriteLine(" " + line);

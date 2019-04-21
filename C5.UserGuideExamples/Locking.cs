@@ -19,7 +19,7 @@ namespace C5.UserGuideExamples
         private static ArrayList<int> _collection = new ArrayList<int>();
         private static readonly int _count = 1000;
 
-        public static void Main(string[] args)
+        public static void Main()
         {
             Console.WriteLine("Adding and removing without locking:");
             RunTwoThreads(delegate { AddAndRemove(15000); });

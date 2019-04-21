@@ -35,7 +35,7 @@ namespace C5.UserGuideExamples
 {
     class DistinctBagProgram
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var nameColl = new DistinctHashBag<PersonDistinctBag>(new PersonDistinctBag.NameEqualityComparer());
             var p1 = new PersonDistinctBag("Peter", 19620625);

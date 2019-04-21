@@ -18,7 +18,7 @@ namespace C5.UserGuideExamples
 {
     static class IndexedObjects2Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             // Create some PersonIndexed2 objects:
             new PersonIndexedObjects2("Niels", 19470206);
@@ -84,7 +84,7 @@ namespace C5.UserGuideExamples
     public class HashIndex<Q, T> : IIndex<Q, T> where T : class
     {
         private readonly Func<T, Q> _toKey;
-        private HashDictionary<Q, HashSet<T>> _dictionary;
+        private readonly HashDictionary<Q, HashSet<T>> _dictionary;
 
         public HashIndex(Func<T, Q> toKey)
         {
@@ -131,7 +131,7 @@ namespace C5.UserGuideExamples
     public class TreeIndex<Q, T> : IIndex<Q, T> where T : class
     {
         private readonly Func<T, Q> _toKey;
-        private TreeDictionary<Q, HashSet<T>> _dictionary;
+        private readonly TreeDictionary<Q, HashSet<T>> _dictionary;
 
         public TreeIndex(Func<T, Q> toKey)
         {

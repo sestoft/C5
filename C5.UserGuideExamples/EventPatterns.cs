@@ -16,7 +16,7 @@ namespace C5.UserGuideExamples
 {
     class EventPatterns
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             UnindexedCollectionEvents();
             Console.WriteLine("--------------------");

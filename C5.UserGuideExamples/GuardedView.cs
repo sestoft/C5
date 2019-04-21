@@ -15,7 +15,7 @@ namespace C5.UserGuideExamples
 {
     class GuardedView
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             IList<int> list1 = new ArrayList<int> { 2, 5, 7, 11, 37 };
             IList<int> gv = new GuardedList<int>(list1.View(1, 2));

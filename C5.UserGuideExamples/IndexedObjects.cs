@@ -24,7 +24,7 @@ namespace C5.UserGuideExamples
 {
     static class IndexedObjectsProgram
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var persons = new Indexed<PersonIndexedObjects>(
                 new IndexMaker<PersonIndexedObjects, string>("name", delegate (PersonIndexedObjects p) { return p.Name; }),

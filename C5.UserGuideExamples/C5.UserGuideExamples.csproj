@@ -12,9 +12,6 @@
     <Compile Remove="Kwic.cs" />
     <Compile Remove="MultiDictionary.cs" />
     <Compile Remove="MultiDictionary2.cs" />
-    <Compile Remove="PointLocation.cs" />
-    <Compile Remove="RandomSelection.cs" />
-    <Compile Remove="ReadOnlyPatterns.cs" />
     <Compile Remove="SerializationExample.cs" />
     <Compile Remove="Sets.cs" />
     <Compile Remove="SortedIterationPatterns.cs" />
@@ -35,9 +32,6 @@
     <None Include="Kwic.cs" />
     <None Include="MultiDictionary.cs" />
     <None Include="MultiDictionary2.cs" />
-    <None Include="PointLocation.cs" />
-    <None Include="RandomSelection.cs" />
-    <None Include="ReadOnlyPatterns.cs" />
     <None Include="SerializationExample.cs" />
     <None Include="Sets.cs" />
     <None Include="SortedIterationPatterns.cs" />

@@ -16,7 +16,7 @@ namespace ListPatterns
 {
     class ListPatterns
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             IList<int> list = new ArrayList<int> { 23, 29, 31, 37, 41, 43, 47, 53 };
             Console.WriteLine(list);
@@ -90,7 +90,7 @@ namespace ListPatterns
         }
 
         // Pattern for finding and using first (leftmost) x in list
-        private static void PatFirst<T>(IList<T> list, T x)
+        public static void PatFirst<T>(IList<T> list, T x)
         {
             var j = list.IndexOf(x);
             if (j >= 0)
@@ -104,7 +104,7 @@ namespace ListPatterns
         }
 
         // Pattern for finding and using last (rightmost) x in list
-        private static void PatLast<T>(IList<T> list, T x)
+        public static void PatLast<T>(IList<T> list, T x)
         {
             var j = list.LastIndexOf(x);
             if (j >= 0)
@@ -118,7 +118,7 @@ namespace ListPatterns
         }
 
         // Pattern for finding and using first (leftmost) x in list[i..i+n-1]
-        private static void PatFirstSublist<T>(IList<T> list, T x, int i, int n)
+        public static void PatFirstSublist<T>(IList<T> list, T x, int i, int n)
         {
             var j = list.View(i, n).IndexOf(x);
             if (j >= 0)
@@ -132,7 +132,7 @@ namespace ListPatterns
         }
 
         // Pattern for finding and using last (rightmost) x in list[i..i+n-1]
-        private static void PatLastSublist<T>(IList<T> list, T x, int i, int n)
+        public static void PatLastSublist<T>(IList<T> list, T x, int i, int n)
         {
             var j = list.View(i, n).LastIndexOf(x);
             if (j >= 0)

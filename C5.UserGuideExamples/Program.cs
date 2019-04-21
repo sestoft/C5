@@ -7,7 +7,7 @@ namespace C5.UserGuideExamples
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Console.WriteLine("To run an example compile and run with -p:StartupObject switch");
         }

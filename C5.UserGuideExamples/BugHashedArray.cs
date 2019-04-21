@@ -15,7 +15,7 @@ namespace C5.UserGuideExamples
 {
     class BugHashedArray
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             var test = new HashedLinkedList<int>();
 

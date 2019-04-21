@@ -15,7 +15,7 @@ namespace C5.UserGudeExamples
 {
     class JobQueueProgram
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             var jq = new JobQueue();
 

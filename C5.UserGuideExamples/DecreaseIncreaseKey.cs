@@ -15,7 +15,7 @@ namespace C5.UserGuideExamples
 {
     class DecreaseIncreaseKey
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             IPriorityQueue<Prio<string>> pq = new IntervalHeap<Prio<string>>();
             IPriorityQueueHandle<Prio<string>> h1 = null;

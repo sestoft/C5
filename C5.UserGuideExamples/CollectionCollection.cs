@@ -20,7 +20,7 @@ namespace C5.UserGuideExamples
         private readonly static IList<int> _col2 = new LinkedList<int>();
         private readonly static IList<int> _col3 = new LinkedList<int>();
 
-        public static void Main(string[] args)
+        public static void Main()
         {
             ListEqualityComparers();
             IntSetSet();

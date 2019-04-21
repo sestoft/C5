@@ -37,7 +37,7 @@ namespace C5.UserGuideExamples
             }
         }
 
-        static void Main(string[] args)
+        static void Main()
         {
             var hs = new HashSet<NamedPerson>
             {

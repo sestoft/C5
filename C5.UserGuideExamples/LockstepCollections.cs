@@ -48,7 +48,7 @@ namespace C5.UserGuideExamples
 {
     static class LockstepCollections
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var nameColl = new HashSet<PersonLockstepCollections>(new PersonLockstepCollections.NameEqualityComparer());
             var dateColl = new TreeSet<PersonLockstepCollections>(new PersonLockstepCollections.DateComparer());

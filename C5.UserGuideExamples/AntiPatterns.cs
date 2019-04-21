@@ -15,7 +15,7 @@ namespace C5.UserGuideExamples
 {
     class AntiPatterns
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             ModifyInner();
             DontModifyInner();
@@ -31,8 +31,11 @@ namespace C5.UserGuideExamples
             var outer = new HashSet<ISequenced<int>>();
             for (var i = 0; i < 100; i++)
             {
-                ISequenced<int> inner = new TreeSet<int>();
-                inner.Add(i); inner.Add(i + 1);
+                ISequenced<int> inner = new TreeSet<int>
+                {
+                    i,
+                    i + 1
+                };
                 outer.Add(inner);
             }
             ISequenced<int>
@@ -66,8 +69,11 @@ namespace C5.UserGuideExamples
             var outer = new HashSet<ISequenced<int>>();
             for (var i = 0; i < 100; i++)
             {
-                var inner = new TreeSet<int>();
-                inner.Add(i); inner.Add(i + 1);
+                var inner = new TreeSet<int>
+                {
+                    i,
+                    i + 1
+                };
                 outer.Add(inner);
             }
             IPersistentSorted<int>

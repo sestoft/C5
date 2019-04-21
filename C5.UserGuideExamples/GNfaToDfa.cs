@@ -689,7 +689,7 @@ namespace C5.UserGuideExamples
     // Trying the RE->NFA->DFA translation on three regular expressions
     class GNfaToDfa
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             var a = new Sym("A");
             var b = new Sym("B");

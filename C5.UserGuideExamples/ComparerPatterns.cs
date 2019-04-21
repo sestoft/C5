@@ -16,7 +16,7 @@ namespace C5.UserGuideExamples
 {
     class ComparerPatterns
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             var lexico1 = Lexico();
             var lexico2 = Lexico2();

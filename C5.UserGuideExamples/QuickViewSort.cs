@@ -75,7 +75,7 @@ namespace C5.UserGuideExamples
             }
         }
 
-        public static void qwsort<T>(T[] arr) where T : IComparable<T>
+        public static void QwSort<T>(T[] arr) where T : IComparable<T>
         {
             QwSort(arr, 0, arr.Length - 1);
         }
