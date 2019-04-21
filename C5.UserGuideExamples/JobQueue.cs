@@ -11,7 +11,7 @@
 
 using System;
 
-namespace C5.UserGudeExamples
+namespace C5.UserGuideExamples
 {
     class JobQueueProgram
     {
