@@ -4,11 +4,8 @@
 // Experiment: implicit conversion of indexer to function
 // sestoft@dina.kvl.dk * 2005-11-08
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.ThisFun
-//  dotnet run
+// Compile with 
+//   csc /r:netstandard.dll /r:C5.dll ThisFun.cs 
 
 using System;
 

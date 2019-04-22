@@ -17,11 +17,8 @@
 //     for a number of small regular expressions.  The DFAs are 
 //     not minimized.
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.GNfaToDfa
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll GNfaToDfa.cs
 
 using System;
 using System.IO;

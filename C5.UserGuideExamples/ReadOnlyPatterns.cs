@@ -3,11 +3,8 @@
 
 // C5 example: ReadOnlyPatterns.cs for pattern chapter
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.ReadOnlyPatterns
-//  dotnet run
+// Compile with 
+//   csc /r:netstandard.dll /r:C5.dll ReadOnlyPatterns.cs 
 
 #pragma warning disable IDE0060
 namespace C5.UserGuideExamples

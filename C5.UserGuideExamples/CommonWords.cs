@@ -4,11 +4,8 @@
 // C5 example: Find and print the most common words in a text file. 
 // Programming pearl by D.E. Knuth in CACM 29 (June 1986) 471-483.
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.CommonWords
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll CommonWords.cs
 
 using System;
 using System.IO;

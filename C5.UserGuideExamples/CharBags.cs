@@ -3,11 +3,8 @@
 
 // C5 example 2004-09-01
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.CharBags
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll CharBags.cs
 
 using System;
 using SCG = System.Collections.Generic;

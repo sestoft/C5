@@ -3,11 +3,8 @@
 
 // Experiment with extension methods and C5, 2007-10-31
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.Extension
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll Extensions.cs
 
 using System;
 using System.Linq.Expressions;

@@ -3,11 +3,8 @@
 
 // C5 example: topological sorting 2005-09-09
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.Toposort
-//  dotnet run
+// Compile with 
+//   csc /r:netstandard.dll /r:C5.dll Toposort.cs 
 
 using System;
 using SDD = System.Diagnostics.Debug;

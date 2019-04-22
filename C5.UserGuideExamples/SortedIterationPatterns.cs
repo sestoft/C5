@@ -3,16 +3,12 @@
 
 // C5 example: SortedIterationPatterns.cs for pattern chapter
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.SortedIterationPatterns
-//  dotnet run
+// Compile with 
+//   csc /r:netstandard.dll /r:C5.dll SortedIterationPatterns.cs 
 
 using System;
-using C5;
 
-namespace SortedIterationPatterns
+namespace C5.UserGuideExamples
 {
     class SortedIterationPatterns
     {

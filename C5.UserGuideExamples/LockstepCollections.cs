@@ -35,11 +35,8 @@
 // to an existing item, it will be added to that collection but
 // possibly not to others.
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.LockstepCollections
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll LockstepCollections.cs
 
 using System;
 using SCG = System.Collections.Generic;

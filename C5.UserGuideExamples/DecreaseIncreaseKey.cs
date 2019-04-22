@@ -3,11 +3,8 @@
 
 // C5 example: Decrease key and increase key pattern chapter
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.DecreaseIncreaseKey
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll DecreaseIncreaseKey.cs
 
 using System;
 

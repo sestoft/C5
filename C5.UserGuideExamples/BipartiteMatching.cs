@@ -3,11 +3,8 @@
 
 // C5 example: bipartite matching 2006-02-04
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.BipartiteMatchingProgram
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll BipartiteMatching.cs
 
 using System;
 using System.Diagnostics;

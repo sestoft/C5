@@ -3,11 +3,8 @@
 
 // C5 example: ViewPatterns 2005-07-22
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.ViewPatterns
-//  dotnet run
+// Compile with 
+//   csc /r:netstandard.dll /r:C5.dll ViewPatterns.cs 
 
 using System;
 using SCG = System.Collections.Generic;

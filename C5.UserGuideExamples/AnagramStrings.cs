@@ -10,11 +10,8 @@
 // bags are small.  Takes 15 CPU seconds and 138 MB RAM to find the
 // 26,058 anagram classes among 347,000 distinct words.
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.AnagramStrings
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll AnagramStrings.cs
 
 using System;
 using System.Diagnostics;

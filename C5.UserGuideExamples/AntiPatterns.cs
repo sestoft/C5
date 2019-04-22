@@ -3,11 +3,8 @@
 
 // C5 example: Antipatterns 2004-12-29
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.AntiPatterns
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll AntiPatterns.cs
 
 using System;
 

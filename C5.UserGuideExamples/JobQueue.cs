@@ -3,11 +3,8 @@
 
 // C5 example: job queue 2004-11-22
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.JobQueueProgram
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll JobQueue.cs
 
 using System;
 

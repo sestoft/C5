@@ -3,11 +3,8 @@
 
 // C5 example: Keyword recognition 2004-12-20
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.KeywordRecognition
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll KeywordRecognition.cs
 
 using System;
 using System.Diagnostics;

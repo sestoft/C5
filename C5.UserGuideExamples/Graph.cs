@@ -3,11 +3,8 @@
 
 // C5 example: Graph representation with basic algorithms using C5 
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.Graph
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll Graph.cs
 
 // The code is structured as a rudimentary Graph library, with an interface
 // for (edge)weighted graphs and a single implementation based on an

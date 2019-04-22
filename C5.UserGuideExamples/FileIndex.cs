@@ -4,11 +4,8 @@
 // C5 example: File index: read a text file, build and print a list of
 // words and the line numbers (without duplicates) on which they occur.
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.FileIndex
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll FileIndex.cs
 
 using System;
 using System.IO;

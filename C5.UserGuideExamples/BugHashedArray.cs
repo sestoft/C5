@@ -3,11 +3,8 @@
 
 // C5 bugs 2007-09-16
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.BugHashedArray
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll BugHashedArray.cs
 
 using System;
 

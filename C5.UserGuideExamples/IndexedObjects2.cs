@@ -6,11 +6,8 @@
 // Maintaining multiple type safe indices on objects using the C5
 // library.
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.IndexedObjects2Program
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll IndexedObjects2.cs
 
 using System;
 
