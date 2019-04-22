@@ -4,7 +4,7 @@
 // C5 TreeBag bug
 
 // Compile with 
-//   csc /r:C5.dll TreebagBug20091113.cs 
+//   csc /r:netstandard.dll /r:C5.dll TreebagBug20091113.cs 
 
 using System;
 using System.Text;

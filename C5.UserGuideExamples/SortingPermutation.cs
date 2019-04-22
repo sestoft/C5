@@ -4,11 +4,8 @@
 // C5 example
 // 2004-11
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.SortingPermutation
-//  dotnet run
+// Compile with 
+//   csc /r:netstandard.dll /r:C5.dll SortingPermutation.cs 
 
 using System;
 using SCG = System.Collections.Generic;

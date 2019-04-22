@@ -3,11 +3,8 @@
 
 // C5 example: 2006-06-17
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.ListenableEvents
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll ListenableEvents.cs
 
 using System;
 

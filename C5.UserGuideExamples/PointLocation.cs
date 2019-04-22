@@ -1,11 +1,8 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.PointLocationProgram
-//  dotnet run
+// Compile with 
+//   csc /r:netstandard.dll /r:C5.dll PointLocation.cs 
 
 using System;
 using System.Diagnostics;

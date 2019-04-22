@@ -6,11 +6,8 @@
 
 // Similarly for Rec<string,int>
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.SortedArrayTest
-//  dotnet run
+// Compile with 
+//   csc /r:netstandard.dll /r:C5.dll SortedArrayTest.cs 
 
 using System;
 

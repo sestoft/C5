@@ -3,11 +3,8 @@
 
 // C5 example: 2006-06-26
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.GuardedView
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll GuardedView.cs
 
 using System;
 

@@ -3,11 +3,8 @@
 
 // C5 example: graph copying 2005-11-08
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.GraphCopy
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll GraphCopy.cs
 
 using System;
 using System.Text;

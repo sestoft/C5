@@ -3,11 +3,8 @@
 
 // C5 example: locking 2005-11-07
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.Locking
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll Locking.cs
 
 using System;
 using System.Threading;

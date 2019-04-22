@@ -3,11 +3,8 @@
 
 // C5 example: hash codes, good and bad 2005-02-28
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.HashCodes
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll HashCodes.cs
 
 using System;
 using System.Diagnostics;

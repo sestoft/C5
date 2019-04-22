@@ -3,11 +3,8 @@
 
 // C5 example: functional sets 2004-12-21
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.Sets
-//  dotnet run
+// Compile with 
+//   csc /r:netstandard.dll /r:C5.dll Sets.cs 
 
 using System;
 using SCG = System.Collections.Generic;

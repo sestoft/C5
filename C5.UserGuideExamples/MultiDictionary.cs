@@ -4,7 +4,7 @@
 // C5 example: 2006-01-29, 2006-06-26
 
 // Compile with 
-//   csc /r:C5.dll MultiDictionary.cs 
+//   csc /r:netstandard.dll /r:C5.dll MultiDictionary.cs 
 
 using System;
 using C5;

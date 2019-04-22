@@ -3,14 +3,10 @@
 
 // C5 example: Views 2004-12-29 OBSOLETE
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.Views
-//  dotnet run
+// Compile with 
+//   csc /r:netstandard.dll /r:C5.dll Views.cs 
 
 using System;
-using C5;
 
 namespace C5.UserGuideExamples
 {

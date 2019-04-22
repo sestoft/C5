@@ -3,11 +3,8 @@
 
 // C5 example: ListPatterns.cs for pattern chapter
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.ListPatterns
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll ListPatterns.cs
 
 using System;
 using C5;

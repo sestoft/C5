@@ -3,11 +3,8 @@
 
 // C5 and C# 3.0 collection initializers
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.Initializers
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll Initializers.cs
 
 using System;
 

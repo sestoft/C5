@@ -3,11 +3,8 @@
 
 // C5 example: GettingStarted 2005-01-18
 
-// Compile and run with 
-//  dotnet clean
-//  dotnet build ../C5/C5.csproj
-//  dotnet build -p:StartupObject=C5.UserGuideExamples.GettingStarted
-//  dotnet run
+// Compile with
+//   csc /r:netstandard.dll /r:C5.dll GettingStarted.cs
 
 using System;
 using C5;
