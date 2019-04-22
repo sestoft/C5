@@ -4,20 +4,14 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
+    <!-- Broken -->
     <Compile Remove="CharBags.cs" />
     <Compile Remove="GCHForm.cs" />
-    <Compile Remove="Kwic.cs" />
-    <Compile Remove="MultiDictionary.cs" />
-    <Compile Remove="MultiDictionary2.cs" />
-    <Compile Remove="TreebagBug20091113.cs" />
   </ItemGroup>
   <ItemGroup>
+    <!-- Broken -->
     <None Include="CharBags.cs" />
     <None Include="GCHForm.cs" />
-    <None Include="Kwic.cs" />
-    <None Include="MultiDictionary.cs" />
-    <None Include="MultiDictionary2.cs" />
-    <None Include="TreebagBug20091113.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\C5\C5.csproj" />

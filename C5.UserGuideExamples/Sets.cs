@@ -121,7 +121,7 @@ namespace C5.UserGuideExamples
 
     class Sets
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             var s1 = new Set<int>(2, 3, 5, 7, 11);
             var s2 = new Set<int>(2, 4, 6, 8, 10);

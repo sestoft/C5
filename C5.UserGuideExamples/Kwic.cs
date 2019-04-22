@@ -10,14 +10,14 @@
 // for each keyword a list of the contexts in which it appears.  For
 // instance, for this text
 
-This book presents C# version 2.0 as used in Microsoft Visual Studio
-2005, including generics, iterators, anonymous methods and partial
-type declarations, but excluding most of Microsoft's .Net Framework
-class libraries except threads, input-output, and generic collection
-classes.  The book does not cover unsafe code, destructors,
-finalization, reflection, pre-processing directives (#define,
-#if) or details of \textsc{ieee754} floating-point
-numbers.
+// This book presents C# version 2.0 as used in Microsoft Visual Studio
+// 2005, including generics, iterators, anonymous methods and partial
+// type declarations, but excluding most of Microsoft's .Net Framework
+// class libraries except threads, input-output, and generic collection
+// classes.  The book does not cover unsafe code, destructors,
+// finalization, reflection, pre-processing directives (#define,
+// #if) or details of \textsc{ieee754} floating-point
+// numbers.
 
 // the resulting list may look like this:
 // book 
@@ -26,7 +26,7 @@ numbers.
 // Microsoft
 //   in Microsoft Visual
 //   of Microsoft's .Net
-  
+
 // How to proceed: (1) read a stream of words from file; (2) turn this
 // into a stream of (2n+1)-tuples of words, namely a keyword
 // surrounded by n words on either side; (3) create a dictionary
@@ -41,12 +41,16 @@ numbers.
 // dictionary that maps each context to a list of line numbers or page
 // numbers.
 
-using System;
-using C5;
-using SCG = System.Collections.Generic;
+// using System;
+// using C5;
+// using SCG = System.Collections.Generic;
 
-class MyTest {
-  public static void Main(String[] args) {
-
-  }
+namespace C5.UserGuideExamples
+{
+    class Kwic
+    {
+        public static void Main()
+        {
+        }
+    }
 }

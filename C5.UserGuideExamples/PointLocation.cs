@@ -133,7 +133,7 @@ namespace C5.UserGuideExamples
     {
         private TreeDictionary<double, ISorted<Edge<T>>> htree;
 
-        private TreeDictionary<double, KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>> endpoints;
+        private readonly TreeDictionary<double, KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>> endpoints;
 
         private bool built = false;
 
@@ -149,11 +149,11 @@ namespace C5.UserGuideExamples
             endpoints = new TreeDictionary<double, KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>>();
             foreach (Edge<T> edge in edges)
             {
-                add(edge);
+                MyAdd(edge);
             }
         }
 
-        private void add(Edge<T> edge)
+        private void MyAdd(Edge<T> edge)
         {
             if (edge.xs == edge.xe)
             {
@@ -184,7 +184,7 @@ namespace C5.UserGuideExamples
                 throw new InvalidOperationException("PointLocator static when built");
             }
 
-            add(edge);
+            MyAdd(edge);
         }
 
         public void AddAll(SCG.IEnumerable<Edge<T>> edges)
@@ -196,7 +196,7 @@ namespace C5.UserGuideExamples
 
             foreach (Edge<T> edge in edges)
             {
-                add(edge);
+                MyAdd(edge);
             }
         }
 
@@ -348,8 +348,8 @@ namespace C5.UserGuideExamples
     {
         public class Ugly : EnumerableBase<Edge<int>>, SCG.IEnumerable<Edge<int>>, SCG.IEnumerator<Edge<int>>
         {
-            private int level = -1, maxlevel;
-
+            private int level = -1;
+            private readonly int maxlevel;
             private bool leftend = false;
 
             public Ugly(int maxlevel)
@@ -431,9 +431,9 @@ namespace C5.UserGuideExamples
 
         public class TestUgly
         {
-            private Ugly ugly;
+            private readonly Ugly ugly;
 
-            private int d;
+            private readonly int d;
 
             private PointLocator<int> pointlocator;
 
@@ -473,11 +473,11 @@ namespace C5.UserGuideExamples
                 _ = args.Length >= 3 ? int.Parse(args[2]) : 10;
                 int lookups = args.Length >= 4 ? int.Parse(args[3]) : 500;//00;
 
-                new TestUgly(d).run(lookups);
+                new TestUgly(d).Run(lookups);
             }
 
 
-            public void run(int lookups)
+            public void Run(int lookups)
             {
                 _ = Traverse();
 
@@ -494,9 +494,9 @@ namespace C5.UserGuideExamples
 
             private bool currenthoriz = true;
 
-            private int maxi, maxj;
+            private readonly int maxi, maxj;
 
-            private double a11 = 1, a21 = -1, a12 = 1, a22 = 1;
+            private readonly double a11 = 1, a21 = -1, a12 = 1, a22 = 1;
 
             public Lattice(int maxi, int maxj, double a11, double a21, double a12, double a22)
             {
@@ -556,7 +556,9 @@ namespace C5.UserGuideExamples
             }
 
 
-            private string i2l(int i)
+#pragma warning disable IDE0051 // Remove unused private members
+            private string I2l(int i)
+#pragma warning restore IDE0051 // Remove unused private members
             {
                 int ls = 0, j = i;
 
@@ -620,9 +622,9 @@ namespace C5.UserGuideExamples
 
         public class TestLattice
         {
-            private Lattice lattice;
+            private readonly Lattice lattice;
 
-            private int d;
+            private readonly int d;
 
             private PointLocator<string> pointlocator;
 
@@ -708,9 +710,9 @@ namespace C5.UserGuideExamples
                 pointlocator.Test(2.01, 5.01);
             }
         }
-        class T1
+        class T1Class
         {
-            static void t1()
+            static void T1()
             {
                 PointLocator<int> pl = new PointLocator<int>();
                 pl.Add(new Edge<int>(1, 1, 3, 4, 1, -1));
@@ -762,7 +764,7 @@ namespace C5.UserGuideExamples
 
             }
 
-            static void t2()
+            static void T2()
             {
                 PointLocator<int> pl = new PointLocator<int>();
                 //outer triangle
@@ -876,7 +878,7 @@ namespace C5.UserGuideExamples
                 pl.Place(8, 9, out x); Debug.Assert(x == 0);
             }
 
-            static void t3()
+            static void T3()
             {
                 PointLocator<int> pl = new PointLocator<int>();
                 pl.Add(new Edge<int>(1, 1, 5, 2, -1, 1));
@@ -958,7 +960,7 @@ namespace C5.UserGuideExamples
                 pl.Place(7, 7, out x); Debug.Assert(x == 0);
             }
 
-            static void t4()
+            static void T4()
             {
                 PointLocator<int> pl = new PointLocator<int>();
                 pl.Add(new Edge<int>(2, 4, 5, 1, -1, 1));
@@ -1350,12 +1352,12 @@ namespace C5.UserGuideExamples
                 pl.Place(22, 14, out x); Debug.Assert(x == 0);
             }
 
-            public static void run()
+            public static void Run()
             {
-                t1();
-                t2();
-                t3();
-                t4();
+                T1();
+                T2();
+                T3();
+                T4();
             }
         }
     }
@@ -1364,7 +1366,7 @@ namespace C5.UserGuideExamples
     {
         public static void Main()
         {
-            Test.T1.run();
+            Test.T1Class.Run();
             Test.TestUgly.Run(new string[0]);
         }
     }
