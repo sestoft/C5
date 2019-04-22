@@ -6,20 +6,20 @@
 
 // Similarly for Rec<string,int>
 
-// Compile with 
-//   csc /r:C5.dll TestSortedArray.cs 
+// Compile and run with 
+//  dotnet clean
+//  dotnet build ../C5/C5.csproj
+//  dotnet build -p:StartupObject=C5.UserGuideExamples.SortedArrayTest
+//  dotnet run
 
 using System;
-using C5;
-using SCG = System.Collections.Generic;
 
-namespace TestSortedArray
+namespace C5.UserGuideExamples
 {
-    class TestSortedArray
+    class SortedArrayTest
     {
-        public static void Main(String[] args)
+        public static void Main()
         {
-            // SortedArray<Object> sarr = new SortedArray<Object>();
             var lexico = ComparerFactory<Rec<string, int>>.CreateComparer(
                 (r1, r2) =>
                     {
@@ -27,14 +27,18 @@ namespace TestSortedArray
                         return order == 0 ? r1.X2.CompareTo(r2.X2) : order;
                     }
                 );
+
             SortedArray<Rec<string, int>> sarr = new SortedArray<Rec<string, int>>(lexico)
             {
                 new Rec<string, int>("ole", 32),
                 new Rec<string, int>("hans", 77),
                 new Rec<string, int>("ole", 63)
             };
-            foreach (Rec<string, int> r in sarr)
+
+            foreach (var r in sarr)
+            {
                 Console.WriteLine(r);
+            }
         }
     }
 }

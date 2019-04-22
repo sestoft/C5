@@ -11,7 +11,7 @@ using System;
 using System.Diagnostics;
 using SCG = System.Collections.Generic;
 
-namespace C5.UserGudeExamples
+namespace C5.UserGuideExamples
 {
     //public enum Site { Cell, Edge, Outside }
 

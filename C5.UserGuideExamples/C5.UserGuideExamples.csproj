@@ -12,18 +12,7 @@
     <Compile Remove="Kwic.cs" />
     <Compile Remove="MultiDictionary.cs" />
     <Compile Remove="MultiDictionary2.cs" />
-    <Compile Remove="Sets.cs" />
-    <Compile Remove="SortedIterationPatterns.cs" />
-    <Compile Remove="SortingPermutation.cs" />
-    <Compile Remove="TestSortedArray.cs" />
-    <Compile Remove="ThisFun.cs" />
-    <Compile Remove="Toposort.cs" />
     <Compile Remove="TreebagBug20091113.cs" />
-    <Compile Remove="TreeTraversal.cs" />
-    <Compile Remove="UnionFind.cs" />
-    <Compile Remove="ViewPatterns.cs" />
-    <Compile Remove="Views.cs" />
-    <Compile Remove="WrappedArray.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CharBags.cs" />
@@ -31,18 +20,7 @@
     <None Include="Kwic.cs" />
     <None Include="MultiDictionary.cs" />
     <None Include="MultiDictionary2.cs" />
-    <None Include="Sets.cs" />
-    <None Include="SortedIterationPatterns.cs" />
-    <None Include="SortingPermutation.cs" />
-    <None Include="TestSortedArray.cs" />
-    <None Include="ThisFun.cs" />
-    <None Include="Toposort.cs" />
     <None Include="TreebagBug20091113.cs" />
-    <None Include="TreeTraversal.cs" />
-    <None Include="UnionFind.cs" />
-    <None Include="ViewPatterns.cs" />
-    <None Include="Views.cs" />
-    <None Include="WrappedArray.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\C5\C5.csproj" />

@@ -3,18 +3,20 @@
 
 // C5 example: ViewPatterns 2005-07-22
 
-// Compile with 
-//   csc /r:C5.dll ViewPatterns.cs 
+// Compile and run with 
+//  dotnet clean
+//  dotnet build ../C5/C5.csproj
+//  dotnet build -p:StartupObject=C5.UserGuideExamples.ViewPatterns
+//  dotnet run
 
 using System;
-using C5;
 using SCG = System.Collections.Generic;
 
-namespace ViewPatterns
+namespace C5.UserGuideExamples
 {
-    class Views
+    class ViewPatterns
     {
-        public static void Main(String[] args)
+        public static void Main()
         {
             IList<char> lst = new ArrayList<char>();
             lst.AddAll(new char[] { 'a', 'b', 'c', 'd' });
@@ -23,21 +25,42 @@ namespace ViewPatterns
             InsertBeforeFirst(v1, '<', 'b');
             InsertAfterFirst(v1, '>', 'b');
             Console.WriteLine("v1 = {0}", v1);
+
             if (SequencePredecessor(v1, 'b', out char x))
+            {
                 Console.WriteLine("Predecessor of b is " + x);
+            }
+
             if (SequenceSuccessor(v1, 'b', out x))
+            {
                 Console.WriteLine("Successor of b is " + x);
+            }
+
             if (!SequencePredecessor(v1, 'c', out _))
+            {
                 Console.WriteLine("c has no predecessor");
+            }
+
             if (!SequenceSuccessor(v1, 'a', out _))
+            {
                 Console.WriteLine("a has no successor");
+            }
+
             IList<char> lst2 = new ArrayList<char>();
             lst2.AddAll(new char[] { 'a', 'b', 'c', 'A', 'a', 'd', 'a' });
-            foreach (int i in IndexesOf(lst2, 'a'))
+
+            foreach (var i in IndexesOf(lst2, 'a'))
+            {
                 Console.Write("{0} ", i);
+            }
+
             Console.WriteLine();
-            foreach (int i in ReverseIndexesOf(lst2, 'a'))
+
+            foreach (var i in ReverseIndexesOf(lst2, 'a'))
+            {
                 Console.Write("{0} ", i);
+            }
+
             Console.WriteLine();
             Console.WriteLine(lst2);
             IList<char> view = lst2.View(2, 0);
@@ -50,21 +73,18 @@ namespace ViewPatterns
         // --- Patterns for zero-item views -----------------------------
 
         // Number of items before zero-item view
-
         public static int ItemsBefore<T>(IList<T> view)
         {
             return view.Offset;
         }
 
         // Number of items after zero-item view
-
         public static int ItemsAfter<T>(IList<T> view)
         {
             return view.Underlying.Count - view.Offset;
         }
 
         // Move (zero-item) view one item to the left
-
         public static void MoveLeft<T>(IList<T> view)
         {
             // One of these:
@@ -73,7 +93,6 @@ namespace ViewPatterns
         }
 
         // Move (zero-item) view one item to the right
-
         public static void MoveRight<T>(IList<T> view)
         {
             // One of these:
@@ -82,42 +101,36 @@ namespace ViewPatterns
         }
 
         // Test whether (zero-item) view is at beginning of list
-
         public static bool AtBeginning<T>(IList<T> view)
         {
             return view.Offset == 0;
         }
 
         // Test whether (zero-item) view is at end of list
-
         public static bool AtEnd<T>(IList<T> view)
         {
             return view.Offset == view.Underlying.Count;
         }
 
         // Insert x into zero-item view and into underlying list
-
         public static void InsertIntoView<T>(IList<T> view, T x)
         {
             view.Add(x);
         }
 
         // Insert x into list at zero-item view 
-
         public static void InsertAtView<T>(IList<T> list, IList<T> view, T x)
         {
             list.Insert(view, x);
         }
 
         // Delete the item before zero-item view 
-
         public static void DeleteBefore<T>(IList<T> view)
         {
             view.Slide(-1, 1).RemoveFirst();
         }
 
         // Delete the item after zero-item view 
-
         public static void DeleteAfter<T>(IList<T> view)
         {
             view.Slide(0, 1).RemoveFirst();
@@ -125,7 +138,6 @@ namespace ViewPatterns
 
         // Get the zero-item view at left endpoint.  Succeeds on all lists
         // and valid views.
-
         public static IList<T> LeftEndView<T>(IList<T> list)
         {
             return list.View(0, 0);
@@ -133,7 +145,6 @@ namespace ViewPatterns
 
         // Get the zero-item view at right endpoint.  Succeeds on all
         // lists and valid views.
-
         public static IList<T> RightEndView<T>(IList<T> list)
         {
             return list.View(list.Count, 0);
@@ -143,88 +154,72 @@ namespace ViewPatterns
         // --- Patterns for one-item views ------------------------------
 
         // Find the sequence predecessor x of y; or throw exception
-
         public static T SequencePredecessor<T>(IList<T> list, T y)
         {
             return list.ViewOf(y).Slide(-1)[0];
         }
 
         // Find the sequence predecessor x of y; or return false 
-
         public static bool SequencePredecessor<T>(IList<T> list, T y, out T x)
         {
             IList<T> view = list.ViewOf(y);
-            bool ok = view != null && view.TrySlide(-1);
+            var ok = view != null && view.TrySlide(-1);
             x = ok ? view[0] : default;
             return ok;
         }
 
         // Find the sequence successor x of y; or throw exception
-
         public static T SequenceSuccessor<T>(IList<T> list, T y)
         {
             return list.ViewOf(y).Slide(+1)[0];
         }
 
         // Find the sequence successor x of y; or return false
-
         public static bool SequenceSuccessor<T>(IList<T> list, T y, out T x)
         {
             IList<T> view = list.ViewOf(y);
-            bool ok = view != null && view.TrySlide(+1);
+            var ok = view != null && view.TrySlide(+1);
             x = ok ? view[0] : default;
             return ok;
         }
 
-        // Insert x into list after first occurrence of y (or throw
-        // NullReferenceException).
-
+        // Insert x into list after first occurrence of y (or throw NullReferenceException).
         public static void InsertAfterFirst<T>(IList<T> list, T x, T y)
         {
             list.Insert(list.ViewOf(y), x);
         }
 
-        // Insert x into list before first occurrence of y (or throw
-        // NullReferenceException)
-
+        // Insert x into list before first occurrence of y (or throw NullReferenceException)
         public static void InsertBeforeFirst<T>(IList<T> list, T x, T y)
         {
             list.Insert(list.ViewOf(y).Slide(0, 0), x);
         }
 
-        // Insert x into list after last occurrence of y (or throw
-        // NullReferenceException).
-
+        // Insert x into list after last occurrence of y (or throw NullReferenceException).
         public static void InsertAfterLast<T>(IList<T> list, T x, T y)
         {
             list.Insert(list.LastViewOf(y), x);
         }
 
-        // Insert x into list before last occurrence of y (or throw
-        // NullReferenceException)
-
+        // Insert x into list before last occurrence of y (or throw NullReferenceException)
         public static void InsertBeforeLast<T>(IList<T> list, T x, T y)
         {
             list.Insert(list.LastViewOf(y).Slide(0, 0), x);
         }
 
-        // Same meaning as InsertBeforeFirst on a proper list, but not on
-        // a view
-
+        // Same meaning as InsertBeforeFirst on a proper list, but not on a view
         public static void InsertBeforeFirstAlt<T>(IList<T> list, T x, T y)
         {
             list.ViewOf(y).InsertFirst(x);
         }
 
         // Delete the sequence predecessor of first y; or throw exception
-
         public static T RemovePredecessorOfFirst<T>(IList<T> list, T y)
         {
             return list.ViewOf(y).Slide(-1).Remove();
         }
 
         // Delete the sequence successor of first y; or throw exception
-
         public static T RemoveSuccessorOfFirst<T>(IList<T> list, T y)
         {
             return list.ViewOf(y).Slide(+1).Remove();
@@ -233,12 +228,11 @@ namespace ViewPatterns
         // --- Other view patterns --------------------------------------
 
         // Replace the first occurrence of each x from xs by y in list:
-
         public static void ReplaceXsByY<T>(HashedLinkedList<T> list, T[] xs, T y)
         {
-            foreach (T x in xs)
+            foreach (var x in xs)
             {
-                using (IList<T> view = list.ViewOf(x))
+                using (var view = list.ViewOf(x))
                 {
                     if (view != null)
                     {
@@ -250,65 +244,71 @@ namespace ViewPatterns
         }
 
         // Get index in underlying list of view's left end
-
         public static int LeftEndIndex<T>(IList<T> view)
         {
             return view.Offset;
         }
 
         // Get index in underlying list of view's right end
-
         public static int RightEndIndex<T>(IList<T> view)
         {
             return view.Offset + view.Count;
         }
 
         // Test whether views overlap 
-
         public static bool Overlap<T>(IList<T> u, IList<T> w)
         {
             if (u.Underlying == null || u.Underlying != w.Underlying)
+            {
                 throw new ArgumentException("views must have same underlying list");
+            }
             else
+            {
                 return u.Offset < w.Offset + w.Count && w.Offset < u.Offset + u.Count;
+            }
         }
 
         // Find the length of the overlap between two views
-
         public static int OverlapLength<T>(IList<T> u, IList<T> w)
         {
             if (Overlap(u, w))
+            {
                 return Math.Min(u.Offset + u.Count, w.Offset + w.Count)
                      - Math.Max(u.Offset, w.Offset);
+            }
             else
+            {
                 return -1; // No overlap
+            }
         }
 
         // Test whether view u contains view v 
-
         public static bool ContainsView<T>(IList<T> u, IList<T> w)
         {
             if (u.Underlying == null || u.Underlying != w.Underlying)
+            {
                 throw new ArgumentException("views must have same underlying list");
+            }
+            else if (w.Count > 0)
+            {
+                return u.Offset <= w.Offset && w.Offset + w.Count <= u.Offset + u.Count;
+            }
             else
-                if (w.Count > 0)
-                    return u.Offset <= w.Offset && w.Offset + w.Count <= u.Offset + u.Count;
-                else
-                    return u.Offset < w.Offset && w.Offset < u.Offset + u.Count;
+            {
+                return u.Offset < w.Offset && w.Offset < u.Offset + u.Count;
+            }
         }
 
         // Test whether views u and v have (or are) the same underlying list
-
         public static bool SameUnderlying<T>(IList<T> u, IList<T> w)
         {
             return (u.Underlying ?? u) == (w.Underlying ?? w);
         }
 
         // Find the index of the first item that satisfies p
-
         public static int FindFirstIndex<T>(IList<T> list, Func<T, bool> p)
         {
-            using (IList<T> view = list.View(0, 0))
+            using (var view = list.View(0, 0))
             {
                 while (view.TrySlide(0, 1))
                 {
@@ -321,25 +321,25 @@ namespace ViewPatterns
         }
 
         // Find the index of the last item that satisfies p
-
         public static int FindLastIndex<T>(IList<T> list, Func<T, bool> p)
         {
-            using (IList<T> view = list.View(list.Count, 0))
+            using (var view = list.View(list.Count, 0))
             {
                 while (view.TrySlide(-1, 1))
                 {
                     if (p(view.First))
+                    {
                         return view.Offset;
+                    }
                 }
             }
             return -1;
         }
 
         // Yield indexes of all items equal to x, in list order:
-
         public static SCG.IEnumerable<int> IndexesOf<T>(IList<T> list, T x)
         {
-            IList<T> tail = list.View(0, list.Count);
+            var tail = list.View(0, list.Count);
             tail = tail.ViewOf(x);
             while (tail != null)
             {
@@ -350,10 +350,9 @@ namespace ViewPatterns
         }
 
         // Yield indexes of items equal to x, in reverse list order.
-
         public static SCG.IEnumerable<int> ReverseIndexesOf<T>(IList<T> list, T x)
         {
-            IList<T> head = list.View(0, list.Count);
+            var head = list.View(0, list.Count);
             head = head.LastViewOf(x);
             while (head != null)
             {
@@ -362,6 +361,5 @@ namespace ViewPatterns
                 head = head.LastViewOf(x);
             }
         }
-
     }
 }
