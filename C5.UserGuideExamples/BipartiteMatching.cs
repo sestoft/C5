@@ -20,7 +20,7 @@ namespace C5.UserGuideExamples
             var res = new HashDictionary<int, char>();
             foreach (var rec in bmi.Result)
             {
-                res.Add(rec.X1, rec.X2);
+                res.Add(rec.Item1, rec.Item2);
             }
             for (var i = 0; i < args.Length; i++)
             {
@@ -33,14 +33,14 @@ namespace C5.UserGuideExamples
             }
         }
 
-        static SCG.IEnumerable<Rec<int, char>> GenerateGraph(string[] words)
+        static SCG.IEnumerable<(int, char)> GenerateGraph(string[] words)
         {
             var i = 0;
             foreach (var s in words)
             {
                 foreach (char c in s)
                 {
-                    yield return new Rec<int, char>(i, c);
+                    yield return (i, c);
                 }
                 i++;
             }
@@ -94,7 +94,7 @@ namespace C5.UserGuideExamples
                 }
             }
 
-            public BipartiteMatching(SCG.IEnumerable<Rec<TLeftLabel, TRightLabel>> graph)
+            public BipartiteMatching(SCG.IEnumerable<(TLeftLabel, TRightLabel)> graph)
             {
                 var rdict = new HashDictionary<TRightLabel, RightNode>();
                 var edges = new HashDictionary<TLeftLabel, HashSet<RightNode>>();
@@ -102,13 +102,13 @@ namespace C5.UserGuideExamples
 
                 foreach (var edge in graph)
                 {
-                    var x2 = edge.X2;
+                    var x2 = edge.Item2;
                     if (!rdict.Find(ref x2, out var rnode))
                     {
-                        rdict.Add(edge.X2, rnode = new RightNode(edge.X2));
+                        rdict.Add(edge.Item2, rnode = new RightNode(edge.Item2));
                     }
                     HashSet<RightNode> ledges = newrnodes;
-                    if (!edges.FindOrAdd(edge.X1, ref ledges))
+                    if (!edges.FindOrAdd(edge.Item1, ref ledges))
                     {
                         newrnodes = new HashSet<RightNode>();
                     }
@@ -129,7 +129,7 @@ namespace C5.UserGuideExamples
                 Compute();
             }
 
-            public SCG.IEnumerable<Rec<TLeftLabel, TRightLabel>> Result
+            public SCG.IEnumerable<(TLeftLabel, TRightLabel)> Result
             {
                 get
                 {
@@ -137,7 +137,7 @@ namespace C5.UserGuideExamples
                     {
                         if (l.Match != null)
                         {
-                            yield return new Rec<TLeftLabel, TRightLabel>(l.Label, l.Match.Label);
+                            yield return (l.Label, l.Match.Label);
                         }
                     }
                 }
