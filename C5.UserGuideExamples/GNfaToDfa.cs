@@ -5,7 +5,7 @@
 // Java 2000-10-07, GC# 2001-10-23, C# 2.0 2003-09-03, C# 2.0+C5 2004-08-08
 
 // This file contains, in order:
-//   * Helper class Set<T> defined in terms of C5 classes.
+//   * Helper class HashSet<T> defined in terms of C5 classes.
 //   * A class Nfa for representing an NFA (a nondeterministic finite 
 //     automaton), and for converting it to a DFA (a deterministic 
 //     finite automaton).  Most complexity is in this class.
@@ -24,129 +24,10 @@
 //  dotnet run
 
 using System;
-using System.Text;
 using System.IO;
-using SCG = System.Collections.Generic;
 
 namespace C5.UserGuideExamples
 {
-    public class Set<T> : HashSet<T>
-    {
-        public Set(SCG.IEnumerable<T> enm) : base()
-        {
-            AddAll(enm);
-        }
-
-        public Set(params T[] elems) : this((SCG.IEnumerable<T>)elems) { }
-
-        // Set union (+), difference (-), and intersection (*):
-        public static Set<T> operator +(Set<T> s1, Set<T> s2)
-        {
-            if (s1 == null || s2 == null)
-            {
-                throw new ArgumentNullException("Set+Set");
-            }
-            else
-            {
-                Set<T> res = new Set<T>(s1);
-                res.AddAll(s2);
-                return res;
-            }
-        }
-
-        public static Set<T> operator -(Set<T> s1, Set<T> s2)
-        {
-            if (s1 == null || s2 == null)
-            {
-                throw new ArgumentNullException("Set-Set");
-            }
-            else
-            {
-                Set<T> res = new Set<T>(s1);
-                res.RemoveAll(s2);
-                return res;
-            }
-        }
-
-        public static Set<T> operator *(Set<T> s1, Set<T> s2)
-        {
-            if (s1 == null || s2 == null)
-            {
-                throw new ArgumentNullException("Set*Set");
-            }
-            else
-            {
-                Set<T> res = new Set<T>(s1);
-                res.RetainAll(s2);
-                return res;
-            }
-        }
-
-        // Equality of sets; take care to avoid infinite loops
-        public static bool operator ==(Set<T> s1, Set<T> s2)
-        {
-            return EqualityComparer<Set<T>>.Default.Equals(s1, s2);
-        }
-
-        public static bool operator !=(Set<T> s1, Set<T> s2)
-        {
-            return !(s1 == s2);
-        }
-
-        public override bool Equals(object that)
-        {
-            return this == (that as Set<T>);
-        }
-
-        public override int GetHashCode()
-        {
-            return EqualityComparer<Set<T>>.Default.GetHashCode(this);
-        }
-
-        // Subset (<=) and superset (>=) relation:
-        public static bool operator <=(Set<T> s1, Set<T> s2)
-        {
-            if (s1 == null || s2 == null)
-            {
-                throw new ArgumentNullException("Set<=Set");
-            }
-            else
-            {
-                return s1.ContainsAll(s2);
-            }
-        }
-
-        public static bool operator >=(Set<T> s1, Set<T> s2)
-        {
-            if (s1 == null || s2 == null)
-            {
-                throw new ArgumentNullException("Set>=Set");
-            }
-            else
-            {
-                return s2.ContainsAll(s1);
-            }
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.Append("{");
-            var first = true;
-            foreach (T x in this)
-            {
-                if (!first)
-                {
-                    sb.Append(",");
-                }
-                sb.Append(x);
-                first = false;
-            }
-            sb.Append("}");
-            return sb.ToString();
-        }
-    }
-
     // ----------------------------------------------------------------------
 
     // Regular expressions, NFAs, DFAs, and dot graphs
@@ -154,10 +35,10 @@ namespace C5.UserGuideExamples
     // Java 2001-07-10 * C# 2001-10-22 * Gen C# 2001-10-23, 2003-09-03
 
     // In the Generic C# 2.0 version we 
-    //  use Queue<int> and Queue<Set<int>> for worklists
-    //  use Set<int> for pre-DFA states
+    //  use Queue<int> and Queue<HashSet<int>> for worklists
+    //  use HashSet<int> for pre-DFA states
     //  use ArrayList<Transition> for NFA transition relations
-    //  use HashDictionary<Set<int>, HashDictionary<string, Set<int>>>
+    //  use HashDictionary<HashSet<int>, HashDictionary<string, HashSet<int>>>
     //  and HashDictionary<int, HashDictionary<string, int>> for DFA transition relations
 
     /* Class Nfa and conversion from NFA to DFA ---------------------------
@@ -170,15 +51,15 @@ namespace C5.UserGuideExamples
       A DFA is created from an NFA in two steps:
 
         (1) Construct a DFA whose each of whose states is composite,
-            namely a set of NFA states (Set of int).  This is done by
+            namely a set of NFA states (HashSet of int).  This is done by
             methods CompositeDfaTrans and EpsilonClose.
 
-        (2) Replace composite states (Set of int) by simple states
+        (2) Replace composite states (HashSet of int) by simple states
             (int).  This is done by methods Rename and MkRenamer.
 
       Method CompositeDfaTrans works as follows: 
 
-        Create the epsilon-closure S0 (a Set of ints) of the start state
+        Create the epsilon-closure S0 (a HashSet of ints) of the start state
         s0, and put it in a worklist (a Queue).  Create an empty DFA
         transition relation, which is a dictionary mapping a composite
         state (an epsilon-closed set of ints) to a dictionary mapping a
@@ -265,23 +146,23 @@ namespace C5.UserGuideExamples
         // (a set of ints) to a dictionary mapping a label (a string) to a
         // composite state (a set of ints).
 
-        static IDictionary<Set<int>, IDictionary<string, Set<int>>> CompositeDfaTrans(int s0, IDictionary<int, ArrayList<Transition>> trans)
+        static IDictionary<HashSet<int>, IDictionary<string, HashSet<int>>> CompositeDfaTrans(int s0, IDictionary<int, ArrayList<Transition>> trans)
         {
-            var S0 = EpsilonClose(new Set<int>(s0), trans);
-            var worklist = new CircularQueue<Set<int>>();
+            var S0 = EpsilonClose(new HashSet<int> { s0 }, trans);
+            var worklist = new CircularQueue<HashSet<int>>();
             worklist.Enqueue(S0);
 
             // The transition relation of the DFA
-            var res = new HashDictionary<Set<int>, IDictionary<string, Set<int>>>();
+            var res = new HashDictionary<HashSet<int>, IDictionary<string, HashSet<int>>>();
 
             while (!worklist.IsEmpty)
             {
-                Set<int> S = worklist.Dequeue();
+                HashSet<int> S = worklist.Dequeue();
                 if (!res.Contains(S))
                 {
                     // The S -lab-> T transition relation being constructed for a given S
-                    IDictionary<string, Set<int>> STrans =
-                      new HashDictionary<string, Set<int>>();
+                    IDictionary<string, HashSet<int>> STrans =
+                      new HashDictionary<string, HashSet<int>>();
                     // For all s in S, consider all transitions s -lab-> t
                     foreach (int s in S)
                     {
@@ -291,14 +172,14 @@ namespace C5.UserGuideExamples
                             if (tr.Lab != null)
                             {
                                 // Non-epsilon transition
-                                Set<int> toState;
+                                HashSet<int> toState;
                                 if (STrans.Contains(tr.Lab)) // Already a transition on lab
                                 {
                                     toState = STrans[tr.Lab];
                                 }
                                 else // No transitions on lab yet
                                 {
-                                    toState = new Set<int>();
+                                    toState = new HashSet<int>();
                                     STrans.Add(tr.Lab, toState);
                                 }
                                 toState.Add(tr.Target);
@@ -307,7 +188,7 @@ namespace C5.UserGuideExamples
                     }
 
                     // Epsilon-close all T such that S -lab-> T, and put on worklist
-                    var STransClosed = new HashDictionary<string, Set<int>>();
+                    var STransClosed = new HashDictionary<string, HashSet<int>>();
                     foreach (var entry in STrans)
                     {
                         var Tclose = EpsilonClose(entry.Value, trans);
@@ -321,12 +202,13 @@ namespace C5.UserGuideExamples
         }
 
         // Compute epsilon-closure of state set S in transition relation trans.  
-        static Set<int> EpsilonClose(Set<int> set, IDictionary<int, ArrayList<Transition>> trans)
+        static HashSet<int> EpsilonClose(HashSet<int> set, IDictionary<int, ArrayList<Transition>> trans)
         {
             // The worklist initially contains all S members
             var worklist = new CircularQueue<int>();
             set.Apply(worklist.Enqueue);
-            var res = new Set<int>(set);
+            var res = new HashSet<int>();
+            res.AddAll(set);
 
             while (!worklist.IsEmpty)
             {
@@ -344,9 +226,9 @@ namespace C5.UserGuideExamples
         }
 
         // Compute a renamer, which is a dictionary mapping set of int to int
-        static IDictionary<Set<int>, int> MkRenamer(ICollectionValue<Set<int>> states)
+        static IDictionary<HashSet<int>, int> MkRenamer(ICollectionValue<HashSet<int>> states)
         {
-            var renamer = new HashDictionary<Set<int>, int>();
+            var renamer = new HashDictionary<HashSet<int>, int>();
             var count = 0;
             foreach (var k in states)
             {
@@ -363,7 +245,7 @@ namespace C5.UserGuideExamples
         // result is a dictionary mapping from int to a dictionary mapping
         // from string to int.
 
-        static IDictionary<int, IDictionary<string, int>> Rename(IDictionary<Set<int>, int> renamer, IDictionary<Set<int>, IDictionary<string, Set<int>>> trans)
+        static IDictionary<int, IDictionary<string, int>> Rename(IDictionary<HashSet<int>, int> renamer, IDictionary<HashSet<int>, IDictionary<string, HashSet<int>>> trans)
         {
             var newtrans = new HashDictionary<int, IDictionary<string, int>>();
             foreach (var entry in trans)
@@ -380,9 +262,9 @@ namespace C5.UserGuideExamples
             return newtrans;
         }
 
-        static Set<int> AcceptStates(ICollectionValue<Set<int>> states, IDictionary<Set<int>, int> renamer, int exit)
+        static HashSet<int> AcceptStates(ICollectionValue<HashSet<int>> states, IDictionary<HashSet<int>, int> renamer, int exit)
         {
-            var acceptStates = new Set<int>();
+            var acceptStates = new HashSet<int>();
 
             foreach (var state in states)
             {
@@ -398,7 +280,7 @@ namespace C5.UserGuideExamples
         public Dfa ToDfa()
         {
             var cDfaTrans = CompositeDfaTrans(Start, Trans);
-            var cDfaStart = EpsilonClose(new Set<int>(Start), Trans);
+            var cDfaStart = EpsilonClose(new HashSet<int> { Start }, Trans);
             var cDfaStates = cDfaTrans.Keys;
             var renamer = MkRenamer(cDfaStates);
             var simpleDfaTrans = Rename(renamer, cDfaTrans);
@@ -479,10 +361,10 @@ namespace C5.UserGuideExamples
     class Dfa
     {
         public int Start { get; }
-        public Set<int> Accept { get; }
+        public HashSet<int> Accept { get; }
         public IDictionary<int, IDictionary<string, int>> Trans { get; }
 
-        public Dfa(int startState, Set<int> acceptStates,
+        public Dfa(int startState, HashSet<int> acceptStates,
                IDictionary<int, IDictionary<string, int>> trans)
         {
             Start = startState;

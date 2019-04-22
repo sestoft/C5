@@ -3,17 +3,20 @@
 
 // C5 example: Views 2004-12-29 OBSOLETE
 
-// Compile with 
-//   csc /r:C5.dll Views.cs 
+// Compile and run with 
+//  dotnet clean
+//  dotnet build ../C5/C5.csproj
+//  dotnet build -p:StartupObject=C5.UserGuideExamples.Views
+//  dotnet run
 
 using System;
 using C5;
 
-namespace Views
+namespace C5.UserGuideExamples
 {
     class Views
     {
-        public static void Main(String[] args)
+        public static void Main()
         {
             IList<char> lst = new LinkedList<char>();
             lst.AddAll(new char[] { 'a', 'b', 'c', 'd' });
@@ -29,25 +32,31 @@ namespace Views
             Console.WriteLine("ABCDEFG overlaps with:");
             foreach (IList<char> u in views)
             {
-                foreach (IList<char> w in views)
+                foreach (var w in views)
+                {
                     Console.Write(Overlap(u, w) ? '+' : '-');
+                }
+
                 Console.WriteLine();
             }
             Console.WriteLine("ABCDEFG overlap length:");
-            foreach (IList<char> u in views)
+            foreach (var u in views)
             {
-                foreach (IList<char> w in views)
+                foreach (var w in views)
                 {
-                    int len = OverlapLength(u, w);
+                    var len = OverlapLength(u, w);
                     Console.Write(len >= 0 ? string.Format("{0}", len) : " ");
                 }
                 Console.WriteLine();
             }
             Console.WriteLine("ABCDEFG contained in:");
-            foreach (IList<char> u in views)
+            foreach (var u in views)
             {
-                foreach (IList<char> w in views)
+                foreach (var w in views)
+                {
                     Console.Write(ContainsView(u, w) ? '+' : '-');
+                }
+
                 Console.WriteLine();
             }
         }
@@ -65,29 +74,42 @@ namespace Views
         public static bool Overlap<T>(IList<T> u, IList<T> w)
         {
             if (u.Underlying == null || u.Underlying != w.Underlying)
+            {
                 throw new ArgumentException("views must have same underlying list");
+            }
             else
+            {
                 return u.Offset < w.Offset + w.Count && w.Offset < u.Offset + u.Count;
+            }
         }
 
         public static int OverlapLength<T>(IList<T> u, IList<T> w)
         {
             if (Overlap(u, w))
+            {
                 return Math.Min(u.Offset + u.Count, w.Offset + w.Count)
                      - Math.Max(u.Offset, w.Offset);
+            }
             else
+            {
                 return -1; // No overlap
+            }
         }
 
         public static bool ContainsView<T>(IList<T> u, IList<T> w)
         {
             if (u.Underlying == null || u.Underlying != w.Underlying)
+            {
                 throw new ArgumentException("views must have same underlying list");
+            }
+            else if (w.Count > 0)
+            {
+                return u.Offset <= w.Offset && w.Offset + w.Count <= u.Offset + u.Count;
+            }
             else
-                if (w.Count > 0)
-                    return u.Offset <= w.Offset && w.Offset + w.Count <= u.Offset + u.Count;
-                else
-                    return u.Offset < w.Offset && w.Offset < u.Offset + u.Count;
+            {
+                return u.Offset < w.Offset && w.Offset < u.Offset + u.Count;
+            }
         }
 
         public static bool SameUnderlying<T>(IList<T> u, IList<T> w)
@@ -96,7 +118,6 @@ namespace Views
         }
 
         // Replace the first occurrence of each x from xs by y in list:
-
         public static void ReplaceXsByY<T>(HashedLinkedList<T> list, T[] xs, T y)
         {
             foreach (T x in xs)
@@ -113,7 +134,6 @@ namespace Views
         }
 
         // Find first item that satisfies p
-
         public static bool Find<T>(IList<T> list, Func<T, bool> p, out T res)
         {
             IList<T> view = list.View(0, 0);
@@ -147,7 +167,6 @@ namespace Views
         }
 
         // Find last item that satisfies p
-
         public static bool FindLast<T>(IList<T> list, Func<T, bool> p, out T res)
         {
             IList<T> view = list.View(list.Count, 0);
