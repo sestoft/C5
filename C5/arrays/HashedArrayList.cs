@@ -30,9 +30,9 @@ namespace C5
         /// <summary>
         /// The underlying list if we are a view, null else.
         /// </summary>
-        HashedArrayList<T> underlying;
-        WeakViewList<HashedArrayList<T>> views;
-        WeakViewList<HashedArrayList<T>>.Node myWeakReference;
+        HashedArrayList<T>? underlying;
+        WeakViewList<HashedArrayList<T>>? views;
+        WeakViewList<HashedArrayList<T>>.Node? myWeakReference;
 
         /// <summary>
         /// The size of the underlying list.
@@ -43,8 +43,7 @@ namespace C5
         /// The underlying field of the FIFO property
         /// </summary>
         bool fIFO = false;
-
-        HashSet<KeyValuePair<T, int>> itemIndex;
+        readonly HashSet<KeyValuePair<T, int>> itemIndex;
         #endregion
         #region Events
 
@@ -496,7 +495,7 @@ namespace C5
         /// </summary>
         struct Position
         {
-            public readonly HashedArrayList<T> view;
+            public readonly HashedArrayList<T>? view;
             public readonly int index;
             public Position(HashedArrayList<T> view, bool left)
             {
@@ -511,8 +510,8 @@ namespace C5
         /// </summary>
         struct ViewHandler
         {
-            HashedArrayList<Position> leftEnds;
-            HashedArrayList<Position> rightEnds;
+            readonly HashedArrayList<Position>? leftEnds;
+            readonly HashedArrayList<Position>? rightEnds;
             int leftEndIndex, rightEndIndex;
             internal readonly int viewCount;
             internal ViewHandler(HashedArrayList<T> list)
@@ -523,7 +522,7 @@ namespace C5
                     foreach (HashedArrayList<T> v in list.views)
                         if (v != list)
                         {
-                            if (leftEnds == null)
+                            if (leftEnds == null || rightEnds == null)
                             {
                                 leftEnds = new HashedArrayList<Position>();
                                 rightEnds = new HashedArrayList<Position>();
@@ -531,7 +530,7 @@ namespace C5
                             leftEnds.Add(new Position(v, true));
                             rightEnds.Add(new Position(v, false));
                         }
-                if (leftEnds == null)
+                if (leftEnds == null || rightEnds == null)
                     return;
                 viewCount = leftEnds.Count;
                 leftEnds.Sort(new PositionComparer());
@@ -547,16 +546,16 @@ namespace C5
                 if (viewCount > 0)
                 {
                     Position endpoint;
-                    while (leftEndIndex < viewCount && (endpoint = leftEnds[leftEndIndex]).index <= realindex)
+                    while (leftEndIndex < viewCount && (endpoint = leftEnds![leftEndIndex]).index <= realindex)
                     {
-                        HashedArrayList<T> view = endpoint.view;
+                        HashedArrayList<T> view = endpoint.view!;
                         view.offsetField -= removed;
                         view.size += removed;
                         leftEndIndex++;
                     }
-                    while (rightEndIndex < viewCount && (endpoint = rightEnds[rightEndIndex]).index < realindex)
+                    while (rightEndIndex < viewCount && (endpoint = rightEnds![rightEndIndex]).index < realindex)
                     {
-                        endpoint.view.size -= removed;
+                        endpoint.view!.size -= removed;
                         rightEndIndex++;
                     }
                 }
@@ -566,16 +565,16 @@ namespace C5
                 if (viewCount > 0)
                 {
                     Position endpoint;
-                    while (leftEndIndex < viewCount && (endpoint = leftEnds[leftEndIndex]).index <= realindex)
+                    while (leftEndIndex < viewCount && (endpoint = leftEnds![leftEndIndex]).index <= realindex)
                     {
-                        HashedArrayList<T> view = endpoint.view;
-                        view.offsetField = view.Offset - removed;
+                        HashedArrayList<T> view = endpoint.view!;
+                        view!.offsetField = view.Offset - removed;
                         view.size += removed;
                         leftEndIndex++;
                     }
-                    while (rightEndIndex < viewCount && (endpoint = rightEnds[rightEndIndex]).index < realindex)
+                    while (rightEndIndex < viewCount && (endpoint = rightEnds![rightEndIndex]).index < realindex)
                     {
-                        endpoint.view.size -= removed;
+                        endpoint.view!.size -= removed;
                         rightEndIndex++;
                     }
                 }
@@ -1004,7 +1003,7 @@ namespace C5
         /// <param name="start">The index in this list of the start of the view.</param>
         /// <param name="count">The size of the view.</param>
         /// <returns>The new list view.</returns>
-        public virtual IList<T> View(int start, int count)
+        public virtual IList<T>? View(int start, int count)
         {
             validitycheck();
             checkRange(start, count);
@@ -1026,7 +1025,7 @@ namespace C5
         /// </summary>
         /// <param name="item">The item to find.</param>
         /// <returns>The new list view.</returns>
-        public virtual IList<T> ViewOf(T item)
+        public virtual IList<T>? ViewOf(T item)
         {
             int index = indexOf(item);
             if (index < 0)
@@ -1041,7 +1040,7 @@ namespace C5
         /// </summary>
         /// <param name="item">The item to find.</param>
         /// <returns>The new list view.</returns>
-        public virtual IList<T> LastViewOf(T item)
+        public virtual IList<T>? LastViewOf(T item)
         {
             int index = lastIndexOf(item);
             if (index < 0)
@@ -1053,7 +1052,7 @@ namespace C5
         /// Null if this list is not a view.
         /// </summary>
         /// <value>Underlying list for view.</value>
-        public virtual IList<T> Underlying { get { return underlying; } }
+        public virtual IList<T>? Underlying { get { return underlying; } }
 
 
         /// <summary>
@@ -1141,7 +1140,7 @@ namespace C5
         /// <param name="otherView"></param>
         /// <exception cref="IncompatibleViewException">If otherView does not have the same underlying list as this</exception>
         /// <returns></returns>
-        public virtual IList<T> Span(IList<T> otherView)
+        public virtual IList<T>? Span(IList<T> otherView)
         {
             if ((otherView == null) || ((otherView.Underlying ?? otherView) != (underlying ?? this)))
                 throw new IncompatibleViewException();
@@ -1595,6 +1594,7 @@ namespace C5
                 raiseHandler.Raise();
         }
 
+        /*
         /// <summary>
         /// 
         /// </summary>
@@ -1653,7 +1653,7 @@ namespace C5
             reindex(j);
             if (mustFire)
                 raiseHandler.Raise();
-        }
+        } */
 
         /// <summary>
         /// Remove all items from this collection, resetting internal array size.
@@ -1739,6 +1739,7 @@ namespace C5
             raiseHandler.Raise();
         }
 
+        /*
         /// <summary>
         /// 
         /// </summary>
@@ -1796,7 +1797,7 @@ namespace C5
             Array.Clear(array, underlyingsize, removed);
             reindex(j);
             raiseHandler.Raise();
-        }
+        } */
 
 
         /// <summary>
@@ -1895,7 +1896,7 @@ namespace C5
 
             for (int i = 0; i < underlyingsize; i++)
             {
-                if ((object)(array[i]) == null)
+                if (array[i] == null)
                 {
                     Logger.Log(string.Format("Bad element: null at (base)index {0}", i));
                     retval = false;
@@ -2106,7 +2107,7 @@ namespace C5
                 {
                     isValid = false;
                     if (!disposingUnderlying && views != null)
-                        views.Remove(myWeakReference);
+                        views.Remove(myWeakReference!);
                     underlying = null;
                     views = null;
                     myWeakReference = null;
@@ -2201,7 +2202,7 @@ namespace C5
 
         Object System.Collections.IList.this[int index]
         {
-            get { return this[index]; }
+            get { return this[index]!; }
             set { this[index] = (T)value; }
         }
 

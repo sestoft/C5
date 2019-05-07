@@ -21,7 +21,7 @@ namespace C5
         /// <param name="rest"></param>
         /// <param name="formatProvider"></param>
         /// <returns>True if the appended formatted string was complete (not truncated).</returns>
-        bool Show(StringBuilder stringbuilder, ref int rest, IFormatProvider formatProvider);
+        bool Show(StringBuilder stringbuilder, ref int rest, IFormatProvider? formatProvider);
     }
     // ------------------------------------------------------------
 
@@ -41,7 +41,7 @@ namespace C5
         /// <param name="rest"></param>
         /// <param name="formatProvider"></param>
         /// <returns>True if <code>obj</code> was shown completely.</returns>
-        public static bool Show(Object obj, StringBuilder stringbuilder, ref int rest, IFormatProvider formatProvider)
+        public static bool Show(Object? obj, StringBuilder stringbuilder, ref int rest, IFormatProvider? formatProvider)
         {
             if (rest <= 0)
                 return false;
@@ -60,7 +60,7 @@ namespace C5
         /// <param name="format"></param>
         /// <param name="formatProvider"></param>
         /// <returns></returns>
-        public static String ShowString(IShowable showable, String format, IFormatProvider formatProvider)
+        public static String ShowString(IShowable showable, String? format, IFormatProvider? formatProvider)
         {
             int rest = maxLength(format);
             StringBuilder sb = new StringBuilder();
@@ -73,7 +73,7 @@ namespace C5
         /// </summary>
         /// <param name="format"></param>
         /// <returns></returns>
-        static int maxLength(String format)
+        static int maxLength(String? format)
         {
             //TODO: validate format string
             if (format == null)
@@ -95,14 +95,18 @@ namespace C5
         /// <param name="rest"></param>
         /// <param name="formatProvider"></param>
         /// <returns>True if collection was shown completely</returns>
-        public static bool ShowCollectionValue<T>(ICollectionValue<T> items, StringBuilder stringbuilder, ref int rest, IFormatProvider formatProvider)
+        public static bool ShowCollectionValue<T>(ICollectionValue<T>? items, StringBuilder stringbuilder, ref int rest, IFormatProvider formatProvider)
         {
             string startdelim = "{ ", enddelim = " }";
             bool showIndexes = false;
             bool showMultiplicities = false;
+            if (items is null)
+            {
+                return true;
+            }
             //TODO: do not test here at run time, but select code at compile time
-            //      perhaps by delivering the print type to this metod
-            ICollection<T> coll = items as ICollection<T>;
+            //      perhaps by delivering the print type to this method
+            ICollection<T> coll = (items! as ICollection<T>)!;
             if (items is IList<T>list)
             {
                 startdelim = "[ ";
@@ -129,7 +133,7 @@ namespace C5
 
             if (showMultiplicities)
             {
-                foreach (KeyValuePair<T, int> p in coll.ItemMultiplicities())
+                foreach (KeyValuePair<T, int> p in coll!.ItemMultiplicities())
                 {
                     complete = false;
                     if (rest <= 0)
@@ -192,7 +196,7 @@ namespace C5
         /// <param name="formatProvider"></param>
         /// <param name="rest"></param>
         /// <returns></returns>
-        public static bool ShowDictionary<K, V>(IDictionary<K, V> dictionary, StringBuilder stringbuilder, ref int rest, IFormatProvider formatProvider)
+        public static bool ShowDictionary<K, V>(IDictionary<K, V> dictionary, StringBuilder stringbuilder, ref int rest, IFormatProvider? formatProvider)
         {
             bool sorted = dictionary is ISortedDictionary<K, V>;
             stringbuilder.Append(sorted ? "[ " : "{ ");

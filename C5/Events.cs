@@ -177,13 +177,13 @@ namespace C5
     [Serializable]
     internal sealed class ProxyEventBlock<T>
     {
-        ICollectionValue<T> proxy, real;
+        readonly ICollectionValue<T> proxy, real;
 
         internal ProxyEventBlock(ICollectionValue<T> proxy, ICollectionValue<T> real)
         { this.proxy = proxy; this.real = real; }
 
         event CollectionChangedHandler<T> collectionChanged;
-        CollectionChangedHandler<T> collectionChangedProxy;
+        CollectionChangedHandler<T>? collectionChangedProxy = null;
         internal event CollectionChangedHandler<T> CollectionChanged
         {
             add
@@ -205,7 +205,7 @@ namespace C5
         }
 
         event CollectionClearedHandler<T> collectionCleared;
-        CollectionClearedHandler<T> collectionClearedProxy;
+        CollectionClearedHandler<T>? collectionClearedProxy = null;
         internal event CollectionClearedHandler<T> CollectionCleared
         {
             add
@@ -227,7 +227,7 @@ namespace C5
         }
 
         event ItemsAddedHandler<T> itemsAdded;
-        ItemsAddedHandler<T> itemsAddedProxy;
+        ItemsAddedHandler<T>? itemsAddedProxy = null;
         internal event ItemsAddedHandler<T> ItemsAdded
         {
             add
@@ -249,7 +249,7 @@ namespace C5
         }
 
         event ItemInsertedHandler<T> itemInserted;
-        ItemInsertedHandler<T> itemInsertedProxy;
+        ItemInsertedHandler<T>? itemInsertedProxy = null;
         internal event ItemInsertedHandler<T> ItemInserted
         {
             add
@@ -270,8 +270,8 @@ namespace C5
             }
         }
 
-        event ItemsRemovedHandler<T> itemsRemoved;
-        ItemsRemovedHandler<T> itemsRemovedProxy;
+        event ItemsRemovedHandler<T>? itemsRemoved = null;
+        ItemsRemovedHandler<T>? itemsRemovedProxy = null;
         internal event ItemsRemovedHandler<T> ItemsRemoved
         {
             add
@@ -279,7 +279,7 @@ namespace C5
                 if (itemsRemoved == null)
                 {
                     if (itemsRemovedProxy == null)
-                        itemsRemovedProxy = delegate(object sender, ItemCountEventArgs<T> e) { itemsRemoved(proxy, e); };
+                        itemsRemovedProxy = delegate(object sender, ItemCountEventArgs<T> e) { itemsRemoved?.Invoke(proxy, e); };
                     real.ItemsRemoved += itemsRemovedProxy;
                 }
                 itemsRemoved += value;
@@ -293,7 +293,7 @@ namespace C5
         }
 
         event ItemRemovedAtHandler<T> itemRemovedAt;
-        ItemRemovedAtHandler<T> itemRemovedAtProxy;
+        ItemRemovedAtHandler<T>? itemRemovedAtProxy = null;
         internal event ItemRemovedAtHandler<T> ItemRemovedAt
         {
             add

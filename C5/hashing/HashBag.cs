@@ -271,7 +271,7 @@ namespace C5
 #warning Improve if items is a counting bag
             updatecheck();
             bool mustRaise = (ActiveEvents & (EventTypeEnum.Changed | EventTypeEnum.Removed)) != 0;
-            RaiseForRemoveAllHandler raiseHandler = mustRaise ? new RaiseForRemoveAllHandler(this) : null;
+            RaiseForRemoveAllHandler? raiseHandler = mustRaise ? new RaiseForRemoveAllHandler(this) : null;
             foreach (T item in items)
             {
                 KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, 0);
@@ -286,11 +286,11 @@ namespace C5
                         dict.Update(p);
                     }
                     if (mustRaise)
-                        raiseHandler.Remove(p.Key);
+                        raiseHandler?.Remove(p.Key);
                 }
             }
             if (mustRaise)
-                raiseHandler.Raise();
+                raiseHandler?.Raise();
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace C5
             if (size == res.size)
                 return;
 
-            CircularQueue<T> wasRemoved = null;
+            CircularQueue<T>? wasRemoved = null;
             if ((ActiveEvents & EventTypeEnum.Removed) != 0)
             {
                 wasRemoved = new CircularQueue<T>();
@@ -545,7 +545,7 @@ namespace C5
             updatecheck();
 #warning We could easily raise bag events
             bool mustRaiseAdded = (ActiveEvents & EventTypeEnum.Added) != 0;
-            CircularQueue<T> wasAdded = mustRaiseAdded ? new CircularQueue<T>() : null;
+            CircularQueue<T>? wasAdded = mustRaiseAdded ? new CircularQueue<T>() : null;
             bool wasChanged = false;
             foreach (T item in items)
             {
@@ -553,12 +553,13 @@ namespace C5
                 add(ref jtem);
                 wasChanged = true;
                 if (mustRaiseAdded)
-                    wasAdded.Enqueue(jtem);
+                    wasAdded?.Enqueue(jtem);
             }
             if (!wasChanged)
                 return;
             if (mustRaiseAdded)
-                foreach (T item in wasAdded)
+                if (wasAdded != null)
+                  foreach (T item in wasAdded)
                     raiseItemsAdded(item, 1);
             if ((ActiveEvents & EventTypeEnum.Changed) != 0)
                 raiseCollectionChanged();

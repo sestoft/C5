@@ -118,8 +118,8 @@ namespace C5UnitTests
 
     public class FunEnumerable : SCG.IEnumerable<int>
     {
-        int size;
-        Func<int, int> f;
+        readonly int size;
+        readonly Func<int, int> f;
 
         public FunEnumerable(int size, Func<int, int> f)
         {
@@ -147,8 +147,8 @@ namespace C5UnitTests
 
     public class BadEnumerable<T> : CollectionValueBase<T>, ICollectionValue<T>
     {
-        T[] contents;
-        Exception exception;
+        readonly T[] contents;
+        readonly Exception exception;
 
         public BadEnumerable(Exception exception, params T[] contents)
         {
@@ -174,9 +174,9 @@ namespace C5UnitTests
 
     public class CollectionEventList<T>
     {
-        ArrayList<CollectionEvent<T>> happened;
+        readonly ArrayList<CollectionEvent<T>> happened;
         EventTypeEnum listenTo;
-        SCG.IEqualityComparer<T> itemequalityComparer;
+        readonly SCG.IEqualityComparer<T> itemequalityComparer;
         public CollectionEventList(SCG.IEqualityComparer<T> itemequalityComparer)
         {
             happened = new ArrayList<CollectionEvent<T>>();
@@ -342,7 +342,7 @@ namespace C5UnitTests
     //This class is a modified sample from VS2005 beta1 documentation
     public class RadixFormatProvider : IFormatProvider
     {
-        RadixFormatter _radixformatter;
+        readonly RadixFormatter _radixformatter;
         public RadixFormatProvider(int radix)
         {
             if (radix < 2 || radix > 36)
@@ -363,7 +363,7 @@ namespace C5UnitTests
     //This class is a modified sample from VS2005 beta1 documentation
     public class RadixFormatter : ICustomFormatter
     {
-        int radix;
+        readonly int radix;
         public RadixFormatter(int radix)
         {
             if (radix < 2 || radix > 36)
@@ -375,7 +375,7 @@ namespace C5UnitTests
 
         // The value to be formatted is returned as a signed string 
         // of digits from the rDigits array. 
-        private static char[] rDigits = {
+        private static readonly char[] rDigits = {
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 
         'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 

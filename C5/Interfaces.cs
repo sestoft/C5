@@ -891,7 +891,7 @@ namespace C5
         /// <param name="start">The index in this list of the start of the view.</param>
         /// <param name="count">The size of the view.</param>
         /// <returns>The new list view.</returns>
-        IList<T> View(int start, int count);
+        IList<T>? View(int start, int count);
 
         /// <summary>
         /// Create a list view on this list containing the (first) occurrence of a particular item. 
@@ -899,7 +899,7 @@ namespace C5
         /// </summary>
         /// <param name="item">The item to find.</param>
         /// <returns>The new list view.</returns>
-        IList<T> ViewOf(T item);
+        IList<T>? ViewOf(T item);
 
         /// <summary>
         /// Create a list view on this list containing the last occurrence of a particular item. 
@@ -907,13 +907,13 @@ namespace C5
         /// </summary>
         /// <param name="item">The item to find.</param>
         /// <returns>The new list view.</returns>
-        IList<T> LastViewOf(T item);
+        IList<T>? LastViewOf(T item);
 
         /// <summary>
         /// Null if this list is not a view.
         /// </summary>
         /// <value>Underlying list for view.</value>
-        IList<T> Underlying { get; }
+        IList<T>? Underlying { get; }
 
         /// <summary>
         /// </summary>
@@ -971,7 +971,7 @@ namespace C5
         /// <exception cref="IncompatibleViewException">If otherView does not have the same underlying list as this</exception>
         /// <exception cref="ArgumentOutOfRangeException">If <code>otherView</code> is strictly to the left of this view</exception>
         /// <returns></returns>
-        IList<T> Span(IList<T> otherView);
+        IList<T>? Span(IList<T> otherView);
 
         /// <summary>
         /// Reverse the list so the items are in the opposite sequence order.
@@ -1728,7 +1728,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        new ISorted<K> Keys { get; }
+        new ISorted<K>? Keys { get; }
 
         /// <summary>
         /// Find the current least item of this sorted collection.

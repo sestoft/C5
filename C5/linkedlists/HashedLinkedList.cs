@@ -35,11 +35,11 @@ namespace C5
         /// <summary>
         /// Node to the left of first node 
         /// </summary>
-        Node startsentinel;
+        Node? startsentinel;
         /// <summary>
         /// Node to the right of last node
         /// </summary>
-        Node endsentinel;
+        Node? endsentinel;
         /// <summary>
         /// Offset of this view in underlying list
         /// </summary>
@@ -48,19 +48,17 @@ namespace C5
         /// <summary>
         /// underlying list of this view (or null for the underlying list)
         /// </summary>
-        HashedLinkedList<T> underlying;
+        HashedLinkedList<T>? underlying;
 
         //Note: all views will have the same views list since all view objects are created by MemberwiseClone()
-        WeakViewList<HashedLinkedList<T>> views;
-        WeakViewList<HashedLinkedList<T>>.Node myWeakReference;
+        WeakViewList<HashedLinkedList<T>>? views;
+        WeakViewList<HashedLinkedList<T>>.Node? myWeakReference;
 
         /// <summary>
         /// Has this list or view not been invalidated by some operation (by someone calling Dispose())
         /// </summary>
         bool isValid = true;
-
-
-        HashDictionary<T, Node> dict;
+        readonly HashDictionary<T, Node> dict;
         /// <summary>
         /// Number of taggroups
         /// </summary>
@@ -79,7 +77,7 @@ namespace C5
 
         #region Util
 
-        bool equals(T i1, T i2) { return itemequalityComparer.Equals(i1, i2); }
+        // bool equals(T i1, T i2) { return itemequalityComparer.Equals(i1, i2); }
 
         #region Check utilities
         /// <summary>
@@ -146,16 +144,17 @@ namespace C5
             while (node != endsentinel)
             {
                 //if (item.Equals(node.item))
-                if (itemequalityComparer.Equals(item, node.item))
+                if (itemequalityComparer.Equals(item, node!.item))
                     return true;
 
                 index++;
-                node = node.next;
+                node = node.next!;
             }
 
             return false;
         }
 
+        /*
         bool dnif(T item, ref Node node, ref int index)
         {
             while (node != startsentinel)
@@ -165,17 +164,18 @@ namespace C5
                     return true;
 
                 index--;
-                node = node.prev;
+                node = node.prev!;
             }
 
             return false;
         }
+        */
 
         bool insideview(Node node)
         {
             if (underlying == null)
                 return true;
-            return (startsentinel.precedes(node) && node.precedes(endsentinel));
+            return (startsentinel!.precedes(node) && node.precedes(endsentinel!));
         }
 
         #endregion
@@ -192,21 +192,21 @@ namespace C5
                 throw new IndexOutOfRangeException();
             else if (pos < size / 2)
             {              // Closer to front
-                Node node = startsentinel;
+                Node? node = startsentinel;
 
                 for (int i = 0; i <= pos; i++)
-                    node = node.next;
+                    node = node!.next;
 
-                return node;
+                return node!;
             }
             else
             {                            // Closer to end
-                Node node = endsentinel;
+                Node? node = endsentinel;
 
                 for (int i = size; i > pos; i--)
-                    node = node.prev;
+                    node = node!.prev;
 
-                return node;
+                return node!;
             }
         }
 
@@ -247,11 +247,11 @@ namespace C5
             Node node = nodes[nearest];
             if (delta > 0)
                 for (int i = 0; i < delta; i++)
-                    node = node.prev;
+                    node = node.prev!;
             else
                 for (int i = 0; i > delta; i--)
-                    node = node.next;
-            return node;
+                    node = node.next!;
+            return node!;
         }
 
         /// <summary>
@@ -300,15 +300,15 @@ namespace C5
         void insertNode(bool updateViews, Node succ, Node newnode)
         {
             newnode.next = succ;
-            Node pred = newnode.prev = succ.prev;
-            succ.prev.next = newnode;
+            Node pred = newnode.prev = succ.prev!;
+            succ.prev!.next = newnode;
             succ.prev = newnode;
             size++;
             if (underlying != null)
                 underlying.size++;
             settag(newnode);
             if (updateViews)
-                fixViewsAfterInsert(succ, pred, 1);
+                fixViewsAfterInsert(succ, pred!, 1);
         }
 
         #endregion
@@ -317,8 +317,8 @@ namespace C5
         T remove(Node node)
         {
             fixViewsBeforeSingleRemove(node); //, Offset + index);
-            node.prev.next = node.next;
-            node.next.prev = node.prev;
+            node.prev!.next = node.next;
+            node.next!.prev = node.prev;
             size--;
             if (underlying != null)
                 underlying.size--;
@@ -359,9 +359,9 @@ namespace C5
                 {
                     if (view != this)
                     {
-                        if (pred.precedes(view.startsentinel) || (view.startsentinel == pred && view.size > 0))
+                        if (pred.precedes(view.startsentinel!) || (view.startsentinel == pred && view.size > 0))
                             view.offset += added;
-                        if (view.startsentinel.precedes(pred) && succ.precedes(view.endsentinel))
+                        if (view.startsentinel!.precedes(pred) && succ.precedes(view.endsentinel!))
                             view.size += added;
                         if (view.startsentinel == pred && view.size > 0)
                             view.startsentinel = succ.prev;
@@ -379,7 +379,7 @@ namespace C5
                 {
                     if (view != this)
                     {
-                        if (view.startsentinel.precedes(node) && node.precedes(view.endsentinel))
+                        if (view.startsentinel!.precedes(node) && node.precedes(view.endsentinel!))
                             view.size--;
                         if (!view.startsentinel.precedes(node))
                             view.offset--;
@@ -400,14 +400,14 @@ namespace C5
         /// <returns>The position of View(otherOffset, otherSize) wrt. this view</returns>
         MutualViewPosition viewPosition(HashedLinkedList<T> otherView)
         {
-            Node otherstartsentinel = otherView.startsentinel, otherendsentinel = otherView.endsentinel,
-              first = startsentinel.next, last = endsentinel.prev,
-              otherfirst = otherstartsentinel.next, otherlast = otherendsentinel.prev;
-            if (last.precedes(otherfirst) || otherlast.precedes(first))
+            Node otherstartsentinel = otherView.startsentinel!, otherendsentinel = otherView.endsentinel!,
+              first = startsentinel!.next!, last = endsentinel!.prev!,
+              otherfirst = otherstartsentinel.next!, otherlast = otherendsentinel.prev!;
+            if (last.precedes(otherfirst!) || otherlast.precedes(first!))
                 return MutualViewPosition.NonOverlapping;
-            if (size == 0 || (otherstartsentinel.precedes(first) && last.precedes(otherendsentinel)))
+            if (size == 0 || (otherstartsentinel.precedes(first!) && last.precedes(otherendsentinel)))
                 return MutualViewPosition.Contains;
-            if (otherView.size == 0 || (startsentinel.precedes(otherfirst) && otherlast.precedes(endsentinel)))
+            if (otherView.size == 0 || (startsentinel.precedes(otherfirst!) && otherlast.precedes(endsentinel)))
                 return MutualViewPosition.ContainedIn;
             return MutualViewPosition.Overlapping;
 
@@ -489,9 +489,9 @@ namespace C5
         [Serializable]
         class Node
         {
-            public Node prev;
+            public Node? prev;
 
-            public Node next;
+            public Node? next;
 
             public T item;
 
@@ -513,7 +513,7 @@ namespace C5
 
             internal Node(T item) { this.item = item; }
 
-            internal Node(T item, Node prev, Node next)
+            internal Node(T item, Node prev, Node? next)
             {
                 this.item = item; this.prev = prev; this.next = next;
             }
@@ -538,7 +538,7 @@ namespace C5
         {
             internal int tag, count;
 
-            internal Node first, last;
+            internal Node? first, last;
 
             /// <summary>
             /// Pretty print a tag group
@@ -559,7 +559,7 @@ namespace C5
 
         const int hisize = 1 << hibits;
 
-        const int logwordsize = 5;
+        // const int logwordsize = 5;
 
         TagGroup gettaggroup(Node pred, Node succ, out int lowbound, out int highbound)
         {
@@ -599,7 +599,7 @@ namespace C5
         /// <param name="node">The node to tag</param>
         void settag(Node node)
         {
-            Node pred = node.prev, succ = node.next;
+            Node pred = node.prev!, succ = node.next!;
             TagGroup predgroup = pred.taggroup, succgroup = succ.taggroup;
 
             if (predgroup == succgroup)
@@ -663,10 +663,10 @@ namespace C5
             }
 
             if (node == taggroup.first)
-                taggroup.first = node.next;
+                taggroup.first = node.next!;
 
             if (node == taggroup.last)
-                taggroup.last = node.prev;
+                taggroup.last = node.prev!;
 
             //node.taggroup = null;
             if (taggroup.count != losize || Taggroups == 1)
@@ -675,33 +675,33 @@ namespace C5
             TagGroup otg;
             // bug20070911:
             Node neighbor;
-            if ((neighbor = taggroup.first.prev) != startsentinel
+            if ((neighbor = taggroup.first!.prev!) != startsentinel
                 && (otg = neighbor.taggroup).count <= losize)
                 taggroup.first = otg.first;
-            else if ((neighbor = taggroup.last.next) != endsentinel
+            else if ((neighbor = taggroup.last!.next!) != endsentinel
                      && (otg = neighbor.taggroup).count <= losize)
                 taggroup.last = otg.last;
             else
                 return;
 
-            Node n = otg.first;
+            Node n = otg.first!;
 
             for (int i = 0, length = otg.count; i < length; i++)
             {
                 n.taggroup = taggroup;
-                n = n.next;
+                n = n.next!;
             }
 
             taggroup.count += otg.count;
             Taggroups--;
-            n = taggroup.first;
+            n = taggroup.first!;
 
             const int ofs = wordsize - hibits;
 
             for (int i = 0, count = taggroup.count; i < count; i++)
             {
                 n.tag = (i - losize) << ofs; //(i-8)<<28 
-                n = n.next;
+                n = n.next!;
             }
         }
 
@@ -712,9 +712,9 @@ namespace C5
         /// <param name="taggroup">The tag group</param>
         void splittaggroup(TagGroup taggroup)
         {
-            Node n = taggroup.first;
-            int ptgt = taggroup.first.prev.taggroup.tag;
-            int ntgt = taggroup.last.next.taggroup.tag;
+            Node n = taggroup.first!;
+            int ptgt = taggroup.first!.prev!.taggroup.tag;
+            int ntgt = taggroup.last!.next!.taggroup.tag;
 
             System.Diagnostics.Debug.Assert(ptgt + 1 <= ntgt - 1);
 
@@ -735,10 +735,10 @@ namespace C5
                 {
                     n.taggroup = newtaggroup;
                     n.tag = (i - losize) << ofs; //(i-8)<<28 
-                    n = n.next;
+                    n = n.next!;
                 }
 
-                newtaggroup.last = n.prev;
+                newtaggroup.last = n.prev!;
             }
 
             int rest = taggroup.count - hisize * newtgs;
@@ -749,10 +749,10 @@ namespace C5
             for (int i = 0; i < rest; i++)
             {
                 n.tag = (i - hisize) << ofs; //(i-16)<<27 
-                n = n.next;
+                n = n.next!;
             }
 
-            taggroup.last = n.prev;
+            taggroup.last = n.prev!;
             Taggroups += newtgs;
             if (tgtag == ntgt)
                 redistributetaggroups(taggroup);
@@ -771,10 +771,10 @@ namespace C5
                 int lowmask = (1 << bits) - 1;
                 int himask = ~lowmask;
                 int target = taggroup.tag & himask;
-                while ((tmp = pred.first.prev.taggroup).first != null && (tmp.tag & himask) == target)
+                while ((tmp = pred.first!.prev!.taggroup).first != null && (tmp.tag & himask) == target)
                 { count++; pred = tmp; }
 
-                while ((tmp = succ.last.next.taggroup).last != null && (tmp.tag & himask) == target)
+                while ((tmp = succ.last!.next!.taggroup).last != null && (tmp.tag & himask) == target)
                 { count++; succ = tmp; }
 
                 limit *= bigt;
@@ -788,7 +788,7 @@ namespace C5
             for (int i = 0; i < count; i++)
             {
                 pred.tag = lob + (i + 1) * delta;
-                pred = pred.last.next.taggroup;
+                pred = pred.last!.next!.taggroup;
             }
         }
 
@@ -812,7 +812,7 @@ namespace C5
         /// </summary>
         struct Position
         {
-            public readonly HashedLinkedList<T> View;
+            public readonly HashedLinkedList<T>? View;
             public bool Left;
             public readonly Node Endpoint;
 
@@ -820,7 +820,7 @@ namespace C5
             {
                 View = view;
                 Left = left;
-                Endpoint = left ? view.startsentinel.next : view.endsentinel.prev;
+                Endpoint = (left ? view.startsentinel!.next : view.endsentinel!.prev)!;
 
             }
             public Position(Node node) { this.Endpoint = node; View = null; Left = false; }
@@ -833,8 +833,8 @@ namespace C5
         /// </summary>
         struct ViewHandler
         {
-            ArrayList<Position> leftEnds;
-            ArrayList<Position> rightEnds;
+            readonly ArrayList<Position>? leftEnds;
+            readonly ArrayList<Position>? rightEnds;
             int leftEndIndex, rightEndIndex, leftEndIndex2, rightEndIndex2;
             internal readonly int viewCount;
             internal ViewHandler(HashedLinkedList<T> list)
@@ -845,7 +845,7 @@ namespace C5
                     foreach (HashedLinkedList<T> v in list.views)
                         if (v != list)
                         {
-                            if (leftEnds == null)
+                            if (leftEnds == null || rightEnds == null)
                             {
                                 leftEnds = new ArrayList<Position>();
                                 rightEnds = new ArrayList<Position>();
@@ -853,7 +853,7 @@ namespace C5
                             leftEnds.Add(new Position(v, true));
                             rightEnds.Add(new Position(v, false));
                         }
-                if (leftEnds == null)
+                if (leftEnds == null || rightEnds == null)
                     return;
                 viewCount = leftEnds.Count;
                 leftEnds.Sort(PositionComparer.Default);
@@ -864,25 +864,25 @@ namespace C5
                 if (viewCount > 0)
                 {
                     Position endpoint;
-                    while (leftEndIndex < viewCount && ((endpoint = leftEnds[leftEndIndex]).Endpoint.prev.precedes(n)))
+                    while (leftEndIndex < viewCount && ((endpoint = leftEnds![leftEndIndex]).Endpoint.prev!.precedes(n)))
                     {
-                        HashedLinkedList<T> view = endpoint.View;
+                        HashedLinkedList<T> view = endpoint.View!;
                         view.offset -= removed;//TODO: extract offset.Value?
                         view.size += removed;
                         leftEndIndex++;
                     }
-                    while (rightEndIndex < viewCount && (endpoint = rightEnds[rightEndIndex]).Endpoint.precedes(n))
+                    while (rightEndIndex < viewCount && (endpoint = rightEnds![rightEndIndex]).Endpoint.precedes(n))
                     {
-                        HashedLinkedList<T> view = endpoint.View;
+                        HashedLinkedList<T> view = endpoint.View!;
                         view.size -= removed;
                         rightEndIndex++;
                     }
                 }
                 if (viewCount > 0)
                 {
-                    while (leftEndIndex2 < viewCount && (_ = leftEnds[leftEndIndex2]).Endpoint.prev.precedes(n))
+                    while (leftEndIndex2 < viewCount && (_ = leftEnds![leftEndIndex2]).Endpoint.prev!.precedes(n))
                         leftEndIndex2++;
-                    while (rightEndIndex2 < viewCount && (_ = rightEnds[rightEndIndex2]).Endpoint.next.precedes(n))
+                    while (rightEndIndex2 < viewCount && (_ = rightEnds![rightEndIndex2]).Endpoint.next!.precedes(n))
                         rightEndIndex2++;
                 }
             }
@@ -903,16 +903,16 @@ namespace C5
                 if (viewCount > 0)
                 {
                     Position endpoint;
-                    while (leftEndIndex < viewCount && ((endpoint = leftEnds[leftEndIndex]).Endpoint.prev.precedes(n)))
+                    while (leftEndIndex < viewCount && ((endpoint = leftEnds![leftEndIndex]).Endpoint.prev!.precedes(n)))
                     {
-                        HashedLinkedList<T> view = endpoint.View;
+                        HashedLinkedList<T> view = endpoint.View!;
                         view.offset -= removed; //TODO: fix use of offset
                         view.size += removed;
                         leftEndIndex++;
                     }
-                    while (rightEndIndex < viewCount && (endpoint = rightEnds[rightEndIndex]).Endpoint.precedes(n))
+                    while (rightEndIndex < viewCount && (endpoint = rightEnds![rightEndIndex]).Endpoint.precedes(n))
                     {
-                        HashedLinkedList<T> view = endpoint.View;
+                        HashedLinkedList<T> view = endpoint.View!;
                         view.size -= removed;
                         rightEndIndex++;
                     }
@@ -937,15 +937,15 @@ namespace C5
                 if (viewCount > 0)
                 {
                     Position endpoint;
-                    while (leftEndIndex2 < viewCount && (endpoint = leftEnds[leftEndIndex2]).Endpoint.prev.precedes(n))
+                    while (leftEndIndex2 < viewCount && (endpoint = leftEnds![leftEndIndex2]).Endpoint.prev!.precedes(n))
                     {
-                        HashedLinkedList<T> view = endpoint.View;
+                        HashedLinkedList<T> view = endpoint.View!;
                         view.startsentinel = newstart;
                         leftEndIndex2++;
                     }
-                    while (rightEndIndex2 < viewCount && (endpoint = rightEnds[rightEndIndex2]).Endpoint.next.precedes(n))
+                    while (rightEndIndex2 < viewCount && (endpoint = rightEnds![rightEndIndex2]).Endpoint.next!.precedes(n))
                     {
-                        HashedLinkedList<T> view = endpoint.View;
+                        HashedLinkedList<T> view = endpoint.View!;
                         view.endsentinel = newend;
                         rightEndIndex2++;
                     }
@@ -961,10 +961,9 @@ namespace C5
         class Range : DirectedCollectionValueBase<T>, IDirectedCollectionValue<T>
         {
             // int start;
-            int count, rangestamp;
-            Node startnode, endnode;
-
-            HashedLinkedList<T> list;
+            readonly int count, rangestamp;
+            readonly Node? startnode, endnode;
+            readonly HashedLinkedList<T> list;
 
             bool forwards;
 
@@ -994,7 +993,7 @@ namespace C5
             public override T Choose()
             {
                 list.modifycheck(rangestamp);
-                if (count > 0) return startnode.item;
+                if (count > 0) return startnode!.item;
                 throw new NoSuchItemException();
             }
 
@@ -1007,14 +1006,14 @@ namespace C5
                 if (togo == 0)
                     yield break;
 
-                Node cursor = forwards ? startnode : endnode;
+                Node cursor = (forwards ? startnode : endnode)!;
 
                 yield return cursor.item;
                 while (--togo > 0)
                 {
-                    cursor = forwards ? cursor.next : cursor.prev;
+                    cursor = (forwards ? cursor.next : cursor.prev)!;
                     list.modifycheck(rangestamp);
-                    yield return cursor.item;
+                    yield return cursor!.item;
                 }
             }
 
@@ -1062,7 +1061,7 @@ namespace C5
                 {
                     isValid = false;
                     if (!disposingUnderlying && views != null)
-                        views.Remove(myWeakReference);
+                        views.Remove(myWeakReference!);
                     endsentinel = null;
                     startsentinel = null;
                     underlying = null;
@@ -1098,7 +1097,7 @@ namespace C5
                 validitycheck();
                 if (size == 0)
                     throw new NoSuchItemException();
-                return startsentinel.next.item;
+                return startsentinel!.next!.item;
             }
         }
 
@@ -1114,7 +1113,7 @@ namespace C5
                 validitycheck();
                 if (size == 0)
                     throw new NoSuchItemException();
-                return endsentinel.prev.item;
+                return endsentinel!.prev!.item;
             }
         }
 
@@ -1187,7 +1186,7 @@ namespace C5
         public virtual void Insert(int i, T item)
         {
             updatecheck();
-            insert(i == size ? endsentinel : get(i), item);
+            insert((i == size ? endsentinel : get(i))!, item);
             if (ActiveEvents != EventTypeEnum.None)
                 (underlying ?? this).raiseForInsert(i + Offset, item);
         }
@@ -1237,14 +1236,14 @@ namespace C5
             updatecheck();
             Node succ, node, pred;
             int count = 0;
-            succ = i == size ? endsentinel : get(i);
-            pred = node = succ.prev;
-            TagGroup taggroup = gettaggroup(node, succ, out int thetag, out int taglimit);
+            succ = (i == size ? endsentinel : get(i))!;
+            pred = node = succ.prev!;
+            TagGroup taggroup = gettaggroup(node!, succ, out int thetag, out int taglimit);
             try
             {
                 foreach (T item in items)
                 {
-                    Node tmp = new Node(item, node, null);
+                    Node tmp = new Node(item, node!, null);
                     if (!dict.FindOrAdd(item, ref tmp))
                     {
                         tmp.tag = thetag < taglimit ? ++thetag : thetag;
@@ -1263,12 +1262,12 @@ namespace C5
                 {
                     taggroup.count += count;
                     if (taggroup != pred.taggroup)
-                        taggroup.first = pred.next;
+                        taggroup.first = pred.next!;
                     if (taggroup != succ.taggroup)
                         taggroup.last = node;
                     succ.prev = node;
                     node.next = succ;
-                    if (node.tag == node.prev.tag)
+                    if (node.tag == node.prev!.tag)
                         splittaggroup(taggroup);
                     size += count;
                     if (underlying != null)
@@ -1289,8 +1288,8 @@ namespace C5
                     for (int j = index; j < index + added; j++)
                     {
 #warning must we check stamps here?
-                        node = node.next;
-                        T item = node.item;
+                        node = node.next!;
+                        T item = node!.item;
                         if (insertion) raiseItemInserted(item, j);
                         raiseItemsAdded(item, 1);
                     }
@@ -1305,7 +1304,7 @@ namespace C5
         public virtual void InsertFirst(T item)
         {
             updatecheck();
-            insert(startsentinel.next, item);
+            insert(startsentinel!.next!, item);
             if (ActiveEvents != EventTypeEnum.None)
                 (underlying ?? this).raiseForInsert(0 + Offset, item);
         }
@@ -1317,7 +1316,7 @@ namespace C5
         public virtual void InsertLast(T item)
         {
             updatecheck();
-            insert(endsentinel, item);
+            insert(endsentinel!, item);
             if (ActiveEvents != EventTypeEnum.None)
                 (underlying ?? this).raiseForInsert(size - 1 + Offset, item);
         }
@@ -1357,8 +1356,8 @@ namespace C5
             if (size == 0)
                 return retval;
             int stamp = this.stamp;
-            Node cursor = startsentinel.next;
-            HashedLinkedList<V>.Node mcursor = retval.startsentinel;
+            Node cursor = startsentinel!.next!;
+            HashedLinkedList<V>.Node mcursor = retval.startsentinel!;
 
             double tagdelta = int.MaxValue / (size + 1.0);
             int count = 1;
@@ -1367,20 +1366,20 @@ namespace C5
             taggroup.count = size;
             while (cursor != endsentinel)
             {
-                V v = mapper(cursor.item);
+                V v = mapper(cursor!.item);
                 modifycheck(stamp);
                 mcursor.next = new HashedLinkedList<V>.Node(v, mcursor, null);
-                cursor = cursor.next;
+                cursor = cursor.next!;
                 mcursor = mcursor.next;
                 retval.dict.Add(v, mcursor);
                 mcursor.taggroup = taggroup;
                 mcursor.tag = (int)(tagdelta * count++);
             }
 
-            taggroup.first = retval.startsentinel.next;
+            taggroup.first = retval.startsentinel!.next!;
             taggroup.last = mcursor;
 
-            retval.endsentinel.prev = mcursor;
+            retval.endsentinel!.prev = mcursor;
             mcursor.next = retval.endsentinel;
             retval.size = size;
             return retval;
@@ -1397,7 +1396,7 @@ namespace C5
             updatecheck();
             if (size == 0)
                 throw new NoSuchItemException("List is empty");
-            T item = fIFO ? remove(startsentinel.next) : remove(endsentinel.prev);
+            T item = fIFO ? remove(startsentinel!.next!) : remove(endsentinel!.prev!);
             dict.Remove(item);
             (underlying ?? this).raiseForRemove(item);
             return item;
@@ -1414,7 +1413,7 @@ namespace C5
             if (size == 0)
                 throw new NoSuchItemException("List is empty");
 
-            T item = remove(startsentinel.next);
+            T item = remove(startsentinel!.next!);
             dict.Remove(item);
             if (ActiveEvents != EventTypeEnum.None)
                 (underlying ?? this).raiseForRemoveAt(Offset, item);
@@ -1432,7 +1431,7 @@ namespace C5
             if (size == 0)
                 throw new NoSuchItemException("List is empty");
 
-            T item = remove(endsentinel.prev);
+            T item = remove(endsentinel!.prev!);
             dict.Remove(item);
             if (ActiveEvents != EventTypeEnum.None)
                 (underlying ?? this).raiseForRemoveAt(size + Offset, item);
@@ -1447,7 +1446,7 @@ namespace C5
         /// <param name="start">The index in this list of the start of the view.</param>
         /// <param name="count">The size of the view.</param>
         /// <returns>The new list view.</returns>
-        public virtual IList<T> View(int start, int count)
+        public virtual IList<T>? View(int start, int count)
         {
             checkRange(start, count);
             validitycheck();
@@ -1458,7 +1457,7 @@ namespace C5
             retval.offset = offset + start;
             retval.size = count;
             getPair(start - 1, start + count, out retval.startsentinel, out retval.endsentinel,
-                new int[] { -1, size }, new Node[] { startsentinel, endsentinel });
+                new int[] { -1, size }, new Node[] { startsentinel!, endsentinel! });
             //retval.startsentinel = start == 0 ? startsentinel : get(start - 1);
             //retval.endsentinel = start + count == size ? endsentinel : get(start + count);
 
@@ -1473,7 +1472,7 @@ namespace C5
         /// <exception cref="ArgumentException"> if the item is not in this list.</exception>
         /// <param name="item">The item to find.</param>
         /// <returns>The new list view.</returns>
-        public virtual IList<T> ViewOf(T item)
+        public virtual IList<T>? ViewOf(T item)
         {
             validitycheck();
             if (!contains(item, out Node n))
@@ -1494,7 +1493,7 @@ namespace C5
         /// </summary>
         /// <param name="item">The item to find.</param>
         /// <returns>The new list view.</returns>
-        public virtual IList<T> LastViewOf(T item)
+        public virtual IList<T>? LastViewOf(T item)
         {
             return ViewOf(item);
 
@@ -1504,7 +1503,7 @@ namespace C5
         /// Null if this list is not a view.
         /// </summary>
         /// <value>Underlying list for view.</value>
-        public virtual IList<T> Underlying { get { validitycheck(); return underlying; } }
+        public virtual IList<T>? Underlying { get { validitycheck(); return underlying; } }
 
         /// <summary>
         /// 
@@ -1524,12 +1523,13 @@ namespace C5
                 if (offset == null && underlying != null)
                 {
                     //TODO: search from both ends simultaneously!
-                    Node n = underlying.startsentinel;
+                    Node n = underlying.startsentinel!;
                     int i = 0;
-                    while (n != startsentinel) { n = n.next; i++; }
+                    while (n != startsentinel) { n = n.next!; i++; }
                     offset = i;
                 }
-                return (int)offset;
+                if (offset == null) return 0;
+                return offset.Value;
             }
         }
 
@@ -1589,7 +1589,7 @@ namespace C5
                 try
                 {
                     getPair(offset - 1, offset + size, out startsentinel, out endsentinel,
-                        new int[] { -1, this.size }, new Node[] { startsentinel, endsentinel });
+                        new int[] { -1, this.size }, new Node[] { startsentinel!, endsentinel! });
                     //TODO: maybe-update offset field
                 }
                 catch (NullReferenceException)
@@ -1604,7 +1604,7 @@ namespace C5
                 int oldoffset = (int)(this.offset);
                 getPair(offset - 1, offset + size, out startsentinel, out endsentinel,
                     new int[] { -oldoffset - 1, -1, this.size, underlying.size - oldoffset },
-                    new Node[] { underlying.startsentinel, startsentinel, endsentinel, underlying.endsentinel });
+                    new Node[] { underlying.startsentinel!, startsentinel!, endsentinel!, underlying.endsentinel! });
             }
             this.size = size;
             this.offset += offset;
@@ -1620,7 +1620,7 @@ namespace C5
         /// <param name="otherView"></param>
         /// <exception cref="IncompatibleViewException">If otherView does not have the same underlying list as this</exception>
         /// <returns></returns>
-        public virtual IList<T> Span(IList<T> otherView)
+        public virtual IList<T>? Span(IList<T> otherView)
         {
             if ((otherView == null) || ((otherView.Underlying ?? otherView) != (underlying ?? this)))
                 throw new IncompatibleViewException();
@@ -1645,11 +1645,11 @@ namespace C5
             if (size == 0)
                 return;
 
-            Position[] positions = null;
+            Position[]? positions = null;
             int poslow = 0, poshigh = 0;
             if (views != null)
             {
-                CircularQueue<Position> _positions = null;
+                CircularQueue<Position>? _positions = null;
                 foreach (HashedLinkedList<T> view in views)
                 {
                     if (view != this)
@@ -1686,7 +1686,7 @@ namespace C5
 
                 if (positions != null)
                     mirrorViewSentinelsForReverse(positions, ref poslow, ref poshigh, a, b, i);
-                a = a.next; b = b.prev;
+                a = a.next!; b = b.prev!;
             }
             if (positions != null && size % 2 != 0)
                 mirrorViewSentinelsForReverse(positions, ref poslow, ref poshigh, a, b, size / 2);
@@ -1704,10 +1704,10 @@ namespace C5
                 //TODO: Note: in the case og hashed linked list, if this.offset == null, but pos.View.offset!=null
                 //we may at this point compute this.offset and non-null values of aindex and bindex
                 if (pos.Left)
-                    pos.View.endsentinel = b.next;
+                    pos.View!.endsentinel = b.next;
                 else
                 {
-                    pos.View.startsentinel = b.prev;
+                    pos.View!.startsentinel = b.prev;
                     pos.View.offset = bindex;
                 }
                 poslow++;
@@ -1715,10 +1715,10 @@ namespace C5
             while (poslow < poshigh && (pos = positions[poshigh]).Endpoint == b)
             {
                 if (pos.Left)
-                    pos.View.endsentinel = a.next;
+                    pos.View!.endsentinel = a.next;
                 else
                 {
-                    pos.View.startsentinel = a.prev;
+                    pos.View!.startsentinel = a.prev;
                     pos.View.offset = aindex;
                 }
                 poshigh--;
@@ -1744,18 +1744,18 @@ namespace C5
             if (size <= 1)
                 return true;
 
-            Node node = startsentinel.next;
+            Node node = startsentinel!.next!;
             T prevItem = node.item;
 
-            node = node.next;
+            node = node.next!;
             while (node != endsentinel)
             {
-                if (c.Compare(prevItem, node.item) > 0)
+                if (c.Compare(prevItem, node!.item) > 0)
                     return false;
                 else
                 {
                     prevItem = node.item;
-                    node = node.next;
+                    node = node.next!;
                 }
             }
 
@@ -1785,48 +1785,48 @@ namespace C5
             disposeOverlappingViews(false);
             if (underlying != null)
             {
-                Node cursor = startsentinel.next;
+                Node cursor = startsentinel!.next!;
                 while (cursor != endsentinel)
                 {
                     cursor.taggroup.count--;
-                    cursor = cursor.next;
+                    cursor = cursor.next!;
                 }
             }
             // Build a linked list of non-empty runs.
             // The prev field in first node of a run points to next run's first node
-            Node runTail = startsentinel.next;
-            Node prevNode = startsentinel.next;
+            Node runTail = startsentinel!.next!;
+            Node prevNode = startsentinel.next!;
 
-            endsentinel.prev.next = null;
+            endsentinel!.prev!.next = null;
             while (prevNode != null)
             {
-                Node node = prevNode.next;
+                Node node = prevNode.next!;
 
                 while (node != null && c.Compare(prevNode.item, node.item) <= 0)
                 {
                     prevNode = node;
-                    node = prevNode.next;
+                    node = prevNode.next!;
                 }
 
                 // Completed a run; prevNode is the last node of that run
                 prevNode.next = null;	// Finish the run
                 runTail.prev = node;	// Link it into the chain of runs
-                runTail = node;
+                runTail = node!;
                 if (c.Compare(endsentinel.prev.item, prevNode.item) <= 0)
                     endsentinel.prev = prevNode;	// Update last pointer to point to largest
 
-                prevNode = node;		// Start a new run
+                prevNode = node!;		// Start a new run
             }
 
             // Repeatedly merge runs two and two, until only one run remains
-            while (startsentinel.next.prev != null)
+            while (startsentinel.next!.prev != null)
             {
                 Node run = startsentinel.next;
-                Node newRunTail = null;
+                Node? newRunTail = null;
 
                 while (run != null && run.prev != null)
                 { // At least two runs, merge
-                    Node nextRun = run.prev.prev;
+                    Node nextRun = run.prev.prev!;
                     Node newrun = mergeRuns(run, run.prev, c);
 
                     if (newRunTail != null)
@@ -1835,11 +1835,11 @@ namespace C5
                         startsentinel.next = newrun;
 
                     newRunTail = newrun;
-                    run = nextRun;
+                    run = nextRun!;
                 }
 
                 if (run != null) // Add the last run, if any
-                    newRunTail.prev = run;
+                    newRunTail!.prev = run;
             }
 
             endsentinel.prev.next = endsentinel;
@@ -1860,7 +1860,7 @@ namespace C5
                     cursor.tag = tag;
                     t.count++;
                     cursor.taggroup = t;
-                    cursor = cursor.next;
+                    cursor = cursor.next!;
                 }
                 if (t != startsentinel.taggroup)
                     t.first = startsentinel.next;
@@ -1882,13 +1882,13 @@ namespace C5
             {
                 prev = run1;
                 prev1 = true;
-                run1 = run1.next;
+                run1 = run1.next!;
             }
             else
             {
                 prev = run2;
                 prev1 = false;
-                run2 = run2.next;
+                run2 = run2.next!;
             }
 
             Node start = prev;
@@ -1904,7 +1904,7 @@ namespace C5
                     while (run1 != null && c.Compare(run2.item, run1.item) >= 0)
                     {
                         prev = run1;
-                        run1 = prev.next;
+                        run1 = prev.next!;
                     }
 
                     if (run1 != null)
@@ -1912,7 +1912,7 @@ namespace C5
                         prev.next = run2;
                         run2.prev = prev;
                         prev = run2;
-                        run2 = prev.next;
+                        run2 = prev.next!;
                         prev1 = false;
                     }
                 }
@@ -1923,7 +1923,7 @@ namespace C5
                     while (run2 != null && c.Compare(run1.item, run2.item) > 0)
                     {
                         prev = run2;
-                        run2 = prev.next;
+                        run2 = prev.next!;
                     }
 
                     if (run2 != null)
@@ -1931,7 +1931,7 @@ namespace C5
                         prev.next = run1;
                         run1.prev = prev;
                         prev = run1;
-                        run1 = prev.next;
+                        run1 = prev.next!;
                         prev1 = true;
                     }
                 }
@@ -1973,13 +1973,13 @@ namespace C5
             ArrayList<T> a = new ArrayList<T>();
             a.AddAll(this);
             a.Shuffle(rnd);
-            Node cursor = startsentinel.next;
+            Node cursor = startsentinel!.next!;
             int j = 0;
             while (cursor != endsentinel)
             {
                 cursor.item = a[j++];
                 dict[cursor.item] = cursor;
-                cursor = cursor.next;
+                cursor = cursor.next!;
             }
             (underlying ?? this).raiseCollectionChanged();
         }
@@ -2014,7 +2014,7 @@ namespace C5
             validitycheck();
             if (!dict.Find(ref item, out Node node) || !insideview(node))
                 return ~size;
-            node = startsentinel.next;
+            node = startsentinel!.next!;
             int index = 0;
             if (find(item, ref node, ref index))
                 return index;
@@ -2063,7 +2063,7 @@ namespace C5
             if (count == 0)
                 return;
 
-            View(start, count).Clear();
+            View(start, count)!.Clear();
 
         }
 
@@ -2219,7 +2219,7 @@ namespace C5
             Node node = new Node(item);
             if (!dict.FindOrAdd(item, ref node))
             {
-                insertNode(true, endsentinel, node);
+                insertNode(true, endsentinel!, node);
                 (underlying ?? this).raiseForAdd(item);
                 return false;
             }
@@ -2262,7 +2262,7 @@ namespace C5
                 (underlying ?? this).raiseForUpdate(item, olditem);
                 return true;
             }
-            insertNode(true, endsentinel, node);
+            insertNode(true, endsentinel!, node);
             (underlying ?? this).raiseForAdd(item);
 
             olditem = default;
@@ -2338,6 +2338,7 @@ namespace C5
             raiseHandler.Raise();
         }
 
+        /*
         /// <summary>
         /// 
         /// </summary>
@@ -2350,11 +2351,11 @@ namespace C5
             RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
             bool mustFire = raiseHandler.MustFire;
             {
-                Node n = startsentinel.next;
+                Node n = startsentinel!.next!;
 
                 while (n != endsentinel)
                 {
-                    bool removeIt = predicate(n.item);
+                    bool removeIt = predicate(n!.item);
                     updatecheck();
                     if (removeIt)
                     {
@@ -2364,12 +2365,13 @@ namespace C5
                             raiseHandler.Remove(n.item);
                     }
 
-                    n = n.next;
+                    n = n.next!;
                 }
             }
 
             raiseHandler.Raise();
         }
+        */
 
         /// <summary>
         /// Remove all items from this collection.
@@ -2399,26 +2401,26 @@ namespace C5
             if (viewHandler.viewCount > 0)
             {
                 int removed = 0;
-                Node n = startsentinel.next;
+                Node n = startsentinel!.next!;
                 viewHandler.skipEndpoints(0, n);
                 while (n != endsentinel)
                 {
                     removed++;
-                    n = n.next;
-                    viewHandler.updateViewSizesAndCounts(removed, n);
+                    n = n.next!;
+                    viewHandler.updateViewSizesAndCounts(removed, n!);
                 }
-                viewHandler.updateSentinels(endsentinel, startsentinel, endsentinel);
+                viewHandler.updateSentinels(endsentinel!, startsentinel, endsentinel!);
                 if (underlying != null)
-                    viewHandler.updateViewSizesAndCounts(removed, underlying.endsentinel);
+                    viewHandler.updateViewSizesAndCounts(removed, underlying.endsentinel!);
             }
 
             if (underlying != null)
             {
-                Node n = startsentinel.next;
+                Node n = startsentinel!.next!;
 
                 while (n != endsentinel)
                 {
-                    n.next.prev = startsentinel;
+                    n.next!.prev = startsentinel;
                     startsentinel.next = n.next;
                     removefromtaggroup(n);
                     n = n.next;
@@ -2426,8 +2428,8 @@ namespace C5
             }
             else
                 taggroups = 0;
-            endsentinel.prev = startsentinel;
-            startsentinel.next = endsentinel;
+            endsentinel!.prev = startsentinel;
+            startsentinel!.next = endsentinel;
             if (underlying != null)
                 underlying.size -= size;
             size = 0;
@@ -2482,7 +2484,7 @@ namespace C5
                 foreach (T item in items)
                     toremove.Remove(item);
 
-                Node n = startsentinel.next;
+                Node n = startsentinel!.next!;
 
                 while (n != endsentinel && toremove.Count > 0)
                 {
@@ -2494,13 +2496,14 @@ namespace C5
                             raiseHandler.Remove(n.item);
                     }
 
-                    n = n.next;
+                    n = n.next!;
                 }
             }
 
             raiseHandler.Raise();
         }
 
+        /*
         /// <summary>
         /// 
         /// </summary>
@@ -2513,11 +2516,11 @@ namespace C5
             RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
             bool mustFire = raiseHandler.MustFire;
             {
-                Node n = startsentinel.next;
+                Node n = startsentinel!.next!;
 
                 while (n != endsentinel)
                 {
-                    bool removeIt = !predicate(n.item);
+                    bool removeIt = !predicate(n!.item);
                     updatecheck();
                     if (removeIt)
                     {
@@ -2527,12 +2530,12 @@ namespace C5
                             raiseHandler.Remove(n.item);
                     }
 
-                    n = n.next;
+                    n = n.next!;
                 }
             }
 
             raiseHandler.Raise();
-        }
+        } */
 
         /// <summary>
         /// Check if this collection contains all the values in another collection
@@ -2562,8 +2565,8 @@ namespace C5
             validitycheck();
             int stamp = this.stamp;
             HashedLinkedList<T> retval = new HashedLinkedList<T>();
-            Node cursor = startsentinel.next;
-            Node mcursor = retval.startsentinel;
+            Node cursor = startsentinel!.next!;
+            Node mcursor = retval.startsentinel!;
             double tagdelta = int.MaxValue / (size + 1.0);
             int count = 1;
             TagGroup taggroup = new TagGroup();
@@ -2581,15 +2584,15 @@ namespace C5
                     mcursor.taggroup = taggroup;
                     mcursor.tag = (int)(tagdelta * count++);
                 }
-                cursor = cursor.next;
+                cursor = cursor.next!;
             }
             if (retval.size > 0)
             {
                 taggroup.count = retval.size;
-                taggroup.first = retval.startsentinel.next;
-                taggroup.last = mcursor;
+                taggroup.first = retval.startsentinel!.next!;
+                taggroup.last = mcursor!;
             }
-            retval.endsentinel.prev = mcursor;
+            retval.endsentinel!.prev = mcursor;
             mcursor.next = retval.endsentinel;
             return retval;
         }
@@ -2676,14 +2679,14 @@ namespace C5
         public override SCG.IEnumerator<T> GetEnumerator()
         {
             validitycheck();
-            Node cursor = startsentinel.next;
+            Node cursor = startsentinel!.next!;
             int enumeratorstamp = underlying != null ? underlying.stamp : this.stamp;
 
             while (cursor != endsentinel)
             {
                 modifycheck(enumeratorstamp);
-                yield return cursor.item;
-                cursor = cursor.next;
+                yield return cursor!.item;
+                cursor = cursor.next!;
             }
         }
 
@@ -2701,7 +2704,7 @@ namespace C5
             Node node = new Node(item);
             if (!dict.FindOrAdd(item, ref node))
             {
-                insertNode(true, endsentinel, node);
+                insertNode(true, endsentinel!, node);
                 (underlying ?? this).raiseForAdd(item);
                 return true;
             }
@@ -2746,7 +2749,7 @@ namespace C5
 
             updatecheck();
             int added = 0;
-            Node pred = endsentinel.prev;
+            Node pred = endsentinel!.prev!;
             foreach (var item in items)
             {
                 Node node = new Node(item);
@@ -2758,8 +2761,8 @@ namespace C5
             }
             if (added > 0)
             {
-                fixViewsAfterInsert(endsentinel, pred, added);
-                raiseForInsertAll(pred, size - added, added, false);
+                fixViewsAfterInsert(endsentinel, pred!, added);
+                raiseForInsertAll(pred!, size - added, added, false);
             }
 
         }
@@ -2780,11 +2783,11 @@ namespace C5
 
             Node[] nodes = new Node[size + 2];
             int i = 0;
-            Node n = startsentinel;
+            Node n = startsentinel!;
             while (n != null)
             {
                 nodes[i++] = n;
-                n = n.next;
+                n = n.next!;
             }
             //Logger.Log("###");
             foreach (HashedLinkedList<T> view in views)
@@ -2806,7 +2809,7 @@ namespace C5
                 {
                     Logger.Log(string.Format("Bad view(hash {0}, offset {1}, size {2}), startsentinel {3} should be {4}",
                       view.GetHashCode(), view.offset, view.size,
-                      view.startsentinel + " " + view.startsentinel.GetHashCode(),
+                      view.startsentinel + " " + view.startsentinel!.GetHashCode(),
                       nodes[view.Offset] + " " + nodes[view.Offset].GetHashCode()));
                     retval = false;
                 }
@@ -2820,20 +2823,20 @@ namespace C5
                 {
                     Logger.Log(string.Format("Bad view(hash {0}, offset {1}, size {2}), endsentinel {3} should be {4}",
                       view.GetHashCode(), view.offset, view.size,
-                      view.endsentinel + " " + view.endsentinel.GetHashCode(),
+                      view.endsentinel + " " + view.endsentinel!.GetHashCode(),
                       nodes[view.Offset + view.size + 1] + " " + nodes[view.Offset + view.size + 1].GetHashCode()));
                     retval = false;
                 }
                 if (view.views != views)
                 {
                     Logger.Log(string.Format("Bad view(hash {0}, offset {1}, size {2}), wrong views list {3} <> {4}",
-                      view.GetHashCode(), view.offset, view.size, view.views.GetHashCode(), views.GetHashCode()));
+                      view.GetHashCode(), view.offset, view.size, view.views!.GetHashCode(), views.GetHashCode()));
                     retval = false;
                 }
                 if (view.underlying != this)
                 {
                     Logger.Log(string.Format("Bad view(hash {0}, offset {1}, size {2}), wrong underlying {3} <> this {4}",
-                      view.GetHashCode(), view.offset, view.size, view.underlying.GetHashCode(), GetHashCode()));
+                      view.GetHashCode(), view.offset, view.size, view.underlying!.GetHashCode(), GetHashCode()));
                     retval = false;
                 }
                 if (view.stamp != stamp)
@@ -2847,7 +2850,7 @@ namespace C5
 
         string zeitem(Node node)
         {
-            return node == null ? "(null node)" : node.item.ToString();
+            return node == null ? "(null node)" : node.item!.ToString();
         }
 
         /// <summary>
@@ -2904,9 +2907,9 @@ namespace C5
             }
 
             int count = 0;
-            Node node = startsentinel.next, prev = startsentinel;
+            Node node = startsentinel.next!, prev = startsentinel;
             int taggroupsize = 0, oldtaggroupsize = losize + 1, seentaggroups = 0;
-            TagGroup oldtg = null;
+            TagGroup? oldtg = null;
 
             if (underlying == null)
             {
@@ -2918,7 +2921,7 @@ namespace C5
                     retval = false;
                 }
 
-                tg = endsentinel.taggroup;
+                tg = endsentinel!.taggroup;
                 if (tg.count != 0 || tg.first != null || tg.last != null || tg.tag != int.MaxValue)
                 {
                     Logger.Log(string.Format("Bad endsentinel tag group: {0}", tg));
@@ -2935,7 +2938,7 @@ namespace C5
                 }
                 if (underlying == null)
                 {
-                    if (!node.prev.precedes(node))
+                    if (!node.prev!.precedes(node))
                     {
                         Logger.Log(string.Format("node.prev.tag ({0}, {1}) >= node.tag ({2}, {3}) at index={4} item={5} ", node.prev.taggroup.tag, node.prev.tag, node.taggroup.tag, node.tag, count, node.item));
                         retval = false;
@@ -2946,7 +2949,7 @@ namespace C5
 
                         if (node.taggroup.first != node)
                         {
-                            string ntfi = zeitem(node.taggroup.first);
+                            string ntfi = zeitem(node.taggroup.first!);
                             Logger.Log(string.Format("Bad first pointer in taggroup: node.taggroup.first.item ({0}), node.item ({1}) at index={2} item={3}", ntfi, node.item, count, node.item));
                             retval = false;
                         }
@@ -2973,7 +2976,7 @@ namespace C5
 
                             if (oldtg.last != node.prev)
                             {
-                                Logger.Log(string.Format("Bad last pointer in taggroup: oldtg.last.item ({0}), node.prev.item ({1}) at index={2} item={3}", oldtg.last.item, node.prev.item, count, node.item));
+                                Logger.Log(string.Format("Bad last pointer in taggroup: oldtg.last.item ({0}), node.prev.item ({1}) at index={2} item={3}", oldtg.last!.item, node.prev.item, count, node.item));
                                 retval = false;
                             }
 
@@ -2991,7 +2994,7 @@ namespace C5
                 }
 
                 prev = node;
-                node = node.next;
+                node = node.next!;
                 if (node == null)
                 {
                     Logger.Log(string.Format("Null next pointer at node {0}", count));
@@ -3006,7 +3009,7 @@ namespace C5
             }
             if (underlying == null && size > 0)
             {
-                oldtg = node.prev.taggroup;
+                oldtg = node.prev!.taggroup;
                 if (oldtg != null)
                 {
                     if (oldtg.count != taggroupsize)
@@ -3029,7 +3032,7 @@ namespace C5
 
                     if (oldtg.last != node.prev)
                     {
-                        Logger.Log(string.Format("Bad last pointer in taggroup: oldtg.last.item ({0}), node.prev.item ({1}) at index={2} item={3}", zeitem(oldtg.last), zeitem(node.prev), count, node.item));
+                        Logger.Log(string.Format("Bad last pointer in taggroup: oldtg.last.item ({0}), node.prev.item ({1}) at index={2} item={3}", zeitem(oldtg.last!), zeitem(node.prev), count, node.item));
                         retval = false;
                     }
                 }
@@ -3057,10 +3060,10 @@ namespace C5
                     Logger.Log(string.Format("list.size ({0}) != dict.Count ({1})", size, dict.Count));
                     retval = false;
                 }
-                Node n = startsentinel.next;
+                Node n = startsentinel.next!;
                 while (n != endsentinel)
                 {
-                    if (!dict.Find(ref n.item, out Node n2))
+                    if (!dict.Find(ref n!.item, out Node n2))
                     {
                         Logger.Log(string.Format("Item in list but not dict: {0}", n.item));
                         retval = false;
@@ -3070,7 +3073,7 @@ namespace C5
                         Logger.Log(string.Format("Wrong node in dict for item: {0}", n.item));
                         retval = false;
                     }
-                    n = n.next;
+                    n = n.next!;
                 }
             }
             return retval;
@@ -3103,7 +3106,7 @@ namespace C5
         {
             // Presumably safe to use the startsentinel (of type Node, always != null) as SyncRoot
             // since the class Node is private.
-            get { return underlying != null ? ((System.Collections.ICollection)underlying).SyncRoot : startsentinel; }
+            get { return underlying != null ? ((System.Collections.ICollection)underlying).SyncRoot! : startsentinel!; }
         }
 
         void System.Collections.ICollection.CopyTo(Array arr, int index)
@@ -3121,7 +3124,7 @@ namespace C5
 
         Object System.Collections.IList.this[int index]
         {
-            get { return this[index]; }
+            get { return this[index]!; }
             set { this[index] = (T)value; }
         }
 

@@ -15,7 +15,7 @@ namespace C5
     [Serializable]
     internal class ComparerZeroHashCodeEqualityComparer<T> : SCG.IEqualityComparer<T>
     {
-        SCG.IComparer<T> comparer;
+        readonly SCG.IComparer<T> comparer;
         /// <summary>
         /// Create a trivial <see cref="T:System.Collections.Generic.IEqualityComparer`1"/> compatible with the 
         /// <see cref="T:System.Collections.Generic.IComparer`1"/> <code>comparer</code>

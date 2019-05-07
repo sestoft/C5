@@ -140,7 +140,8 @@ namespace C5
             int oldfront = front++;
             if (front == array.Length) front = 0;
             T retval = array[oldfront];
-            array[oldfront] = default;
+            // array[oldfront] = default;
+            // We can't use default as it would be null -> we just store garbage
             if (ActiveEvents != 0)
                 raiseForRemove(retval);
             return retval;
@@ -179,7 +180,8 @@ namespace C5
             back--;
             if (back == -1) back = array.Length - 1;
             T retval = array[back];
-            array[back] = default;
+            //array[back] = default;
+            //We can't use default -> just store garbage
             if (ActiveEvents != 0)
                 raiseForRemove(retval);
             return retval;

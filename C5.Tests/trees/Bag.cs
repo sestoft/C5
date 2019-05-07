@@ -2199,7 +2199,7 @@ namespace C5UnitTests.trees.TreeBag
 
 
             
-            private bool eq(SCG.IEnumerable<int> me, int[] that)
+            /* private bool eq(SCG.IEnumerable<int> me, int[] that)
             {
                 int i = 0, maxind = that.Length - 1;
 
@@ -2208,7 +2208,7 @@ namespace C5UnitTests.trees.TreeBag
                         return false;
 
                 return true;
-            }
+            } */
 
 
             [SetUp]
@@ -2307,7 +2307,7 @@ namespace C5UnitTests.trees.TreeBag
     {
         internal class CubeRoot : IComparable<int>
         {
-            private int c;
+            private readonly int c;
 
 
             internal CubeRoot(int c) { this.c = c; }
@@ -2321,7 +2321,7 @@ namespace C5UnitTests.trees.TreeBag
 
         class Interval : IComparable<int>
         {
-            private int b, t;
+            private readonly int b, t;
 
 
             internal Interval(int b, int t) { this.b = b; this.t = t; }
@@ -2795,6 +2795,7 @@ namespace C5UnitTests.trees.TreeBag
                 Assert.IsTrue(IC.eq(tree));
             }
 
+            /*
             private void pint<T>(SCG.IEnumerable<T> e)
             {
                 foreach (T i in e)
@@ -2802,6 +2803,7 @@ namespace C5UnitTests.trees.TreeBag
 
                 Console.WriteLine();
             }
+            */
 
             [Test]
             public void RetainAll()

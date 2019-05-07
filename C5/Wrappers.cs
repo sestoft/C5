@@ -14,7 +14,7 @@ namespace C5
     {
         #region Fields
 
-        IEnumerator<T> enumerator;
+        readonly IEnumerator<T> enumerator;
 
         #endregion
 
@@ -62,7 +62,7 @@ namespace C5
 
         object System.Collections.IEnumerator.Current
         {
-            get { return enumerator.Current; }
+            get { return enumerator.Current!; }
         }
 
         void System.Collections.IEnumerator.Reset()
@@ -85,7 +85,7 @@ namespace C5
     {
         #region Fields
 
-        System.Collections.Generic.IEnumerable<T> enumerable;
+        readonly System.Collections.Generic.IEnumerable<T> enumerable;
 
         #endregion
 
@@ -134,7 +134,7 @@ namespace C5
     {
         #region Fields
 
-        IDirectedEnumerable<T> directedenumerable;
+        readonly IDirectedEnumerable<T> directedenumerable;
 
         #endregion
 
@@ -193,7 +193,7 @@ namespace C5
         /// <value></value>
         public virtual EventTypeEnum ActiveEvents { get { return collectionvalue.ActiveEvents; } }
 
-        ProxyEventBlock<T> eventBlock;
+        ProxyEventBlock<T>? eventBlock;
         /// <summary>
         /// The change event. Will be raised for every change operation on the collection.
         /// </summary>
@@ -251,7 +251,7 @@ namespace C5
 
         #region Fields
 
-        ICollectionValue<T> collectionvalue;
+        readonly ICollectionValue<T> collectionvalue;
 
         #endregion
 
@@ -362,7 +362,7 @@ namespace C5
         /// <param name="formatProvider"></param>
         /// <param name="rest"></param>
         /// <returns></returns>
-        public bool Show(System.Text.StringBuilder stringbuilder, ref int rest, IFormatProvider formatProvider)
+        public bool Show(System.Text.StringBuilder stringbuilder, ref int rest, IFormatProvider? formatProvider)
         {
             return collectionvalue.Show(stringbuilder, ref rest, formatProvider);
         }
@@ -396,7 +396,7 @@ namespace C5
     {
         #region Fields
 
-        IDirectedCollectionValue<T> directedcollection;
+        readonly IDirectedCollectionValue<T> directedcollection;
 
         #endregion
 
@@ -461,7 +461,7 @@ namespace C5
     {
         #region Fields
 
-        ICollection<T> collection;
+        readonly ICollection<T> collection;
 
         #endregion
 
@@ -714,7 +714,7 @@ namespace C5
     {
         #region Fields
 
-        ISequenced<T> sequenced;
+        readonly ISequenced<T> sequenced;
 
         #endregion
 
@@ -838,7 +838,7 @@ namespace C5
     {
         #region Fields
 
-        ISorted<T> sorted;
+        readonly ISorted<T> sorted;
 
         #endregion
 
@@ -1071,7 +1071,7 @@ namespace C5
     {
         #region Fields
 
-        IIndexedSorted<T> indexedsorted;
+        readonly IIndexedSorted<T> indexedsorted;
 
         #endregion
 
@@ -1246,9 +1246,9 @@ namespace C5
     {
         #region Fields
 
-        IList<T> innerlist;
-        GuardedList<T> underlying;
-        bool slidableView = false;
+        readonly IList<T> innerlist;
+        readonly GuardedList<T>? underlying;
+        readonly bool slidableView = false;
 
         #endregion
 
@@ -1269,7 +1269,7 @@ namespace C5
                 underlying = new GuardedList<T>(list.Underlying, null, false);
         }
 
-        GuardedList(IList<T> list, GuardedList<T> underlying, bool slidableView)
+        GuardedList(IList<T> list, GuardedList<T>? underlying, bool slidableView)
             : base(list)
         {
             this.innerlist = list; this.underlying = underlying; this.slidableView = slidableView;
@@ -1436,9 +1436,9 @@ namespace C5
         /// <param name="start"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public IList<T> View(int start, int count)
+        public IList<T>? View(int start, int count)
         {
-            IList<T> view = innerlist.View(start, count);
+            IList<T>? view = innerlist.View(start, count);
             return view == null ? null : new GuardedList<T>(view, underlying ?? this, true);
         }
 
@@ -1447,9 +1447,9 @@ namespace C5
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public IList<T> ViewOf(T item)
+        public IList<T>? ViewOf(T item)
         {
-            IList<T> view = innerlist.ViewOf(item);
+            IList<T>? view = innerlist.ViewOf(item);
             return view == null ? null : new GuardedList<T>(view, underlying ?? this, true);
         }
 
@@ -1458,9 +1458,9 @@ namespace C5
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public IList<T> LastViewOf(T item)
+        public IList<T>? LastViewOf(T item)
         {
-            IList<T> view = innerlist.LastViewOf(item);
+            IList<T>? view = innerlist.LastViewOf(item);
             return view == null ? null : new GuardedList<T>(view, underlying ?? this, true);
         }
 
@@ -1468,7 +1468,7 @@ namespace C5
         /// <summary>
         /// </summary>
         /// <value>The wrapped underlying list of the wrapped view </value>
-        public IList<T> Underlying { get { return underlying; } }
+        public IList<T>? Underlying { get { return underlying; } }
 
 
         /// <summary>
@@ -1550,11 +1550,11 @@ namespace C5
         /// </summary>
         /// <param name="otherView"></param>
         /// <returns></returns>
-        public IList<T> Span(IList<T> otherView)
+        public IList<T>? Span(IList<T> otherView)
         {
             if (!(otherView is GuardedList<T> otherGuardedList))
                 throw new IncompatibleViewException();
-            IList<T> span = innerlist.Span(otherGuardedList.innerlist);
+            IList<T>? span = innerlist.Span(otherGuardedList.innerlist);
             if (span == null)
                 return null;
             return new GuardedList<T>(span, underlying ?? otherGuardedList.underlying ?? this, true);
@@ -1763,7 +1763,7 @@ namespace C5
 
         Object System.Collections.IList.this[int index]
         {
-            get { return this[index]; }
+            get { return this[index]!; }
             set
             {
                 throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object");
@@ -1814,7 +1814,7 @@ namespace C5
     {
         #region Fields
 
-        IQueue<T> queue;
+        readonly IQueue<T> queue;
 
         #endregion
 
@@ -1871,7 +1871,7 @@ namespace C5
     {
         #region Fields
 
-        IDictionary<K, V> dict;
+        readonly IDictionary<K, V> dict;
 
         #endregion
 
@@ -2070,7 +2070,7 @@ namespace C5
     {
         #region Fields
 
-        ISortedDictionary<K, V> sorteddict;
+        readonly ISortedDictionary<K, V> sorteddict;
 
         #endregion
 
@@ -2098,7 +2098,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public new ISorted<K> Keys { get { return null; } }
+        public new ISorted<K>? Keys { get { return null; } }
 
         /// <summary>
         /// Find the entry in the dictionary whose key is the
