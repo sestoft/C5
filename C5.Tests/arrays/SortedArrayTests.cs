@@ -1442,7 +1442,7 @@ namespace C5UnitTests.arrays.sorted
     {
         internal class CubeRoot : IComparable<int>
         {
-            private int c;
+            private readonly int c;
 
 
             internal CubeRoot(int c) { this.c = c; }
@@ -1458,7 +1458,7 @@ namespace C5UnitTests.arrays.sorted
 
         class Interval : IComparable<int>
         {
-            private int b, t;
+            private readonly int b, t;
 
 
             internal Interval(int b, int t) { this.b = b; this.t = t; }
@@ -2035,7 +2035,7 @@ namespace C5UnitTests.arrays.sorted
         {
             private SortedArray<int> tree;
             private readonly Object mySyncRoot = new Object();
-            int sz = 5000;
+            readonly int sz = 5000;
 
 
             [Test]
@@ -2150,8 +2150,7 @@ namespace C5UnitTests.arrays.sorted
         public class ConcurrentQueries
         {
             private SortedArray<int> tree;
-
-            int sz = 500000;
+            readonly int sz = 500000;
 
 
             [SetUp]
@@ -2169,8 +2168,7 @@ namespace C5UnitTests.arrays.sorted
             class A
             {
                 public int count = 0;
-
-                SortedArray<int> t;
+                readonly SortedArray<int> t;
 
 
                 public A(SortedArray<int> t) { this.t = t; }

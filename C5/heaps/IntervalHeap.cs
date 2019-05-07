@@ -26,16 +26,15 @@ namespace C5
         #region Fields
         struct Interval
         {
-            internal T first, last; internal Handle firsthandle, lasthandle;
+            internal T first, last; internal Handle? firsthandle, lasthandle;
 
 
             public override string ToString() { return string.Format("[{0}; {1}]", first, last); }
         }
 
         int stamp;
-
-        SCG.IComparer<T> comparer;
-        SCG.IEqualityComparer<T> itemequalityComparer;
+        readonly SCG.IComparer<T> comparer;
+        readonly SCG.IEqualityComparer<T> itemequalityComparer;
 
         Interval[] heap;
 
@@ -47,21 +46,21 @@ namespace C5
 
         private void swapFirstWithLast(int cell1, int cell2) {
           T first = heap[cell1].first;
-          Handle firsthandle = heap[cell1].firsthandle;
+          Handle firsthandle = heap[cell1].firsthandle!;
           updateFirst(cell1, heap[cell2].last, heap[cell2].lasthandle);
           updateLast(cell2, first, firsthandle);
         }
 
         private void swapLastWithLast(int cell1, int cell2) {
           T last = heap[cell2].last;
-          Handle lasthandle = heap[cell2].lasthandle;
-          updateLast(cell2, heap[cell1].last, heap[cell1].lasthandle);
+          Handle lasthandle = heap[cell2].lasthandle!;
+          updateLast(cell2, heap[cell1].last, heap[cell1].lasthandle!);
           updateLast(cell1, last, lasthandle);
         }
 
         private void swapFirstWithFirst(int cell1, int cell2) {
           T first = heap[cell2].first;
-          Handle firsthandle = heap[cell2].firsthandle;
+          Handle firsthandle = heap[cell2].firsthandle!;
           updateFirst(cell2, heap[cell1].first, heap[cell1].firsthandle);
           updateFirst(cell1, first, firsthandle);
         }
@@ -136,7 +135,7 @@ namespace C5
             if (i > 0)
             {
                 T min = heap[i].first, iv = min;
-                Handle minhandle = heap[i].firsthandle;
+                Handle minhandle = heap[i].firsthandle!;
                 _ = (i + 1) / 2 - 1;
 
                 while (i > 0)
@@ -161,7 +160,7 @@ namespace C5
             if (i > 0)
             {
                 T max = heap[i].last, iv = max;
-                Handle maxhandle = heap[i].lasthandle;
+                Handle maxhandle = heap[i].lasthandle!;
                 _ = (i + 1) / 2 - 1;
 
                 while (i > 0)
@@ -332,7 +331,7 @@ namespace C5
             return false;
         }
 
-        private bool add(Handle itemhandle, T item)
+        private bool add(Handle? itemhandle, T item)
         {
             if (size == 0)
             {
@@ -390,7 +389,7 @@ namespace C5
             return true;
         }
 
-        private void updateLast(int cell, T item, Handle handle)
+        private void updateLast(int cell, T item, Handle? handle)
         {
             heap[cell].last = item;
             if (handle != null)
@@ -398,7 +397,7 @@ namespace C5
             heap[cell].lasthandle = handle;
         }
 
-        private void updateFirst(int cell, T item, Handle handle)
+        private void updateFirst(int cell, T item, Handle? handle)
         {
             heap[cell].first = item;
             if (handle != null)
@@ -573,7 +572,7 @@ namespace C5
                 return true;
 
             if (size == 1)
-                return (object)(heap[0].first) != null;
+                return heap[0].first != null;
 
             return check(0, heap[0].first, heap[0].last);
         }
@@ -640,7 +639,7 @@ namespace C5
                     item = default;
                     return false;
                 }
-                Handle actualhandle = isfirst ? heap[cell].firsthandle : heap[cell].lasthandle;
+                Handle actualhandle = (isfirst ? heap[cell].firsthandle : heap[cell].lasthandle)!;
                 if (actualhandle != myhandle)
                 {
                     item = default;
@@ -784,7 +783,7 @@ namespace C5
             {
                 if (toremove == -1 || toremove >= size)
                     throw new InvalidPriorityQueueHandleException("Invalid handle, index out of range");
-                Handle actualhandle = isfirst ? heap[cell].firsthandle : heap[cell].lasthandle;
+                Handle actualhandle = (isfirst ? heap[cell].firsthandle : heap[cell].lasthandle)!;
                 if (actualhandle != myhandle)
                     throw new InvalidPriorityQueueHandleException("Invalid handle, doesn't match queue");
             }
@@ -820,7 +819,7 @@ namespace C5
                     int p = (cell + 1) / 2 - 1;
                     if (comparer.Compare(item, heap[p].last) > 0)
                     {
-                        Handle thehandle = heap[cell].firsthandle;
+                        Handle thehandle = heap[cell].firsthandle!;
                         updateFirst(cell, heap[p].last, heap[p].lasthandle);
                         updateLast(p, item, thehandle);
                         bubbleUpMax(p);
@@ -859,7 +858,7 @@ namespace C5
         {
             if (size == 0)
                 throw new NoSuchItemException();
-            handle = heap[0].firsthandle;
+            handle = heap[0].firsthandle!;
 
             return heap[0].first;
         }
@@ -875,12 +874,12 @@ namespace C5
                 throw new NoSuchItemException();
             else if (size == 1)
             {
-                handle = heap[0].firsthandle;
+                handle = heap[0].firsthandle!;
                 return heap[0].first;
             }
             else
             {
-                handle = heap[0].lasthandle;
+                handle = heap[0].lasthandle!;
                 return heap[0].last;
             }
         }
@@ -897,7 +896,7 @@ namespace C5
                 throw new NoSuchItemException();
 
             T retval = heap[0].first;
-            Handle myhandle = heap[0].firsthandle;
+            Handle myhandle = heap[0].firsthandle!;
             handle = myhandle;
             if (myhandle != null)
                 myhandle.index = -1;
@@ -953,7 +952,7 @@ namespace C5
             {
                 size = 0;
                 retval = heap[0].first;
-                myhandle = heap[0].firsthandle;
+                myhandle = heap[0].firsthandle!;
                 if (myhandle != null)
                     myhandle.index = -1;
                 heap[0].first = default;
@@ -962,7 +961,7 @@ namespace C5
             else
             {
                 retval = heap[0].last;
-                myhandle = heap[0].lasthandle;
+                myhandle = heap[0].lasthandle!;
                 if (myhandle != null)
                     myhandle.index = -1;
 
@@ -986,7 +985,7 @@ namespace C5
             }
             raiseItemsRemoved(retval, 1);
             raiseCollectionChanged();
-            handle = myhandle;
+            handle = myhandle!;
             return retval;
         }
 

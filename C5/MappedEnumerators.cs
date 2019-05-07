@@ -57,7 +57,7 @@ namespace C5
     [Serializable]
     abstract class MappedCollectionValue<T, V> : CollectionValueBase<V>, ICollectionValue<V>
     {
-        ICollectionValue<T> collectionvalue;
+        readonly ICollectionValue<T> collectionvalue;
 
         abstract public V Map(T item);
 

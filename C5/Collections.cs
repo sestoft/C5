@@ -55,7 +55,7 @@ namespace C5
     public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionValue<T>, IShowable
     {
         #region Event handling
-        EventBlock<T> eventBlock;
+        EventBlock<T>? eventBlock;
         /// <summary>
         /// 
         /// </summary>
@@ -343,10 +343,11 @@ namespace C5
         /// 
         /// </summary>
         /// <param name="wasRemoved"></param>
-        protected virtual void raiseForRemoveAll(ICollectionValue<T> wasRemoved)
+        protected virtual void raiseForRemoveAll(ICollectionValue<T>? wasRemoved)
         {
             if ((ActiveEvents & EventTypeEnum.Removed) != 0)
-                foreach (T item in wasRemoved)
+                if (wasRemoved != null)
+                  foreach (T item in wasRemoved)
                     raiseItemsRemoved(item, 1);
             if (wasRemoved != null && wasRemoved.Count > 0)
                 raiseCollectionChanged();
@@ -358,8 +359,8 @@ namespace C5
         [Serializable]
         protected class RaiseForRemoveAllHandler
         {
-            CollectionValueBase<T> collection;
-            CircularQueue<T> wasRemoved;
+            readonly CollectionValueBase<T> collection;
+            CircularQueue<T>? wasRemoved = null;
             bool wasChanged = false;
 
             /// <summary>
@@ -373,7 +374,7 @@ namespace C5
                 MustFire = (collection.ActiveEvents & (EventTypeEnum.Removed | EventTypeEnum.Changed)) != 0;
             }
 
-            bool mustFireRemoved;
+            readonly bool mustFireRemoved;
             /// <summary>
             /// 
             /// </summary>
@@ -566,9 +567,9 @@ namespace C5
         /// <param name="rest"></param>
         /// <param name="formatProvider"></param>
         /// <returns></returns>
-        public virtual bool Show(System.Text.StringBuilder stringbuilder, ref int rest, IFormatProvider formatProvider)
+        public virtual bool Show(System.Text.StringBuilder stringbuilder, ref int rest, IFormatProvider? formatProvider)
         {
-            return Showing.ShowCollectionValue<T>(this, stringbuilder, ref rest, formatProvider);
+            return Showing.ShowCollectionValue<T>(this, stringbuilder, ref rest, formatProvider!);
         }
         #endregion
 
@@ -580,7 +581,7 @@ namespace C5
         /// <param name="format"></param>
         /// <param name="formatProvider"></param>
         /// <returns></returns>
-        public virtual string ToString(string format, IFormatProvider formatProvider)
+        public virtual string ToString(string? format, IFormatProvider? formatProvider)
         {
             return Showing.ShowString(this, format, formatProvider);
         }
@@ -773,16 +774,14 @@ namespace C5
             {
                 if (collection1 is ISorted<T> stit && collection2 is ISorted<T> stat && stit.Comparer == stat.Comparer)
                 {
-                    using (SCG.IEnumerator<T> dat = collection2.GetEnumerator(), dit = collection1.GetEnumerator())
+                    using SCG.IEnumerator<T> dat = collection2.GetEnumerator(), dit = collection1.GetEnumerator();
+                    while (dit.MoveNext())
                     {
-                        while (dit.MoveNext())
-                        {
-                            dat.MoveNext();
-                            if (!itemequalityComparer.Equals(dit.Current, dat.Current))
-                                return false;
-                        }
-                        return true;
+                        dat.MoveNext();
+                        if (!itemequalityComparer.Equals(dit.Current, dat.Current))
+                            return false;
                     }
+                    return true;
                 }
             }
 
@@ -1293,7 +1292,7 @@ namespace C5
 
             for (int i = 0; i < size; i++)
             {
-                if ((object)(array[i]) == null)
+                if (array[i] == null)
                 {
                     Logger.Log(string.Format("Bad element: null at index {0}", i));
                     return false;
@@ -1348,9 +1347,11 @@ namespace C5
         [Serializable]
         protected class Range : DirectedCollectionValueBase<T>, IDirectedCollectionValue<T>
         {
-            int start, count, delta, stamp;
-
-            ArrayBase<T> thebase;
+            private int start;
+            private readonly int count;
+            private int delta;
+            private readonly int stamp;
+            readonly ArrayBase<T> thebase;
 
 
             internal Range(ArrayBase<T> thebase, int start, int count, bool forwards)

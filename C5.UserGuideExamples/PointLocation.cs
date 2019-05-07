@@ -133,7 +133,7 @@ namespace C5.UserGuideExamples
     {
         private TreeDictionary<double, ISorted<Edge<T>>> htree;
 
-        private TreeDictionary<double, KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>> endpoints;
+        private readonly TreeDictionary<double, KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>> endpoints;
 
         private bool built = false;
 
@@ -348,8 +348,8 @@ namespace C5.UserGuideExamples
     {
         public class Ugly : EnumerableBase<Edge<int>>, SCG.IEnumerable<Edge<int>>, SCG.IEnumerator<Edge<int>>
         {
-            private int level = -1, maxlevel;
-
+            private int level = -1;
+            private readonly int maxlevel;
             private bool leftend = false;
 
             public Ugly(int maxlevel)
@@ -431,9 +431,9 @@ namespace C5.UserGuideExamples
 
         public class TestUgly
         {
-            private Ugly ugly;
+            private readonly Ugly ugly;
 
-            private int d;
+            private readonly int d;
 
             private PointLocator<int> pointlocator;
 
@@ -494,9 +494,9 @@ namespace C5.UserGuideExamples
 
             private bool currenthoriz = true;
 
-            private int maxi, maxj;
+            private readonly int maxi, maxj;
 
-            private double a11 = 1, a21 = -1, a12 = 1, a22 = 1;
+            private readonly double a11 = 1, a21 = -1, a12 = 1, a22 = 1;
 
             public Lattice(int maxi, int maxj, double a11, double a21, double a12, double a22)
             {
@@ -556,6 +556,7 @@ namespace C5.UserGuideExamples
             }
 
 
+            /*
             private string i2l(int i)
             {
                 int ls = 0, j = i;
@@ -568,7 +569,7 @@ namespace C5.UserGuideExamples
 
                 //res[0]--;
                 return new string(res);
-            }
+            } */
 
             public Edge<string> Current
             {
@@ -620,9 +621,9 @@ namespace C5.UserGuideExamples
 
         public class TestLattice
         {
-            private Lattice lattice;
+            private readonly Lattice lattice;
 
-            private int d;
+            private readonly int d;
 
             private PointLocator<string> pointlocator;
 

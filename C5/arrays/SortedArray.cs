@@ -1044,7 +1044,7 @@ namespace C5
 
             for (int i = 0; i < size; i++)
             {
-                if ((object)(array[i]) == null)
+                if (array[i] == null)
                 {
                     Logger.Log(string.Format("Bad element: null at index {0}", i));
                     return false;

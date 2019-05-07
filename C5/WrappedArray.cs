@@ -20,9 +20,11 @@ namespace C5
         {
             internal InnerList(T[] array) { this.array = array; size = array.Length; }
         }
-        ArrayList<T> innerlist;
+
+        readonly ArrayList<T> innerlist;
+
         //TODO: remember a ref to the wrapped array in WrappedArray to save a little on indexing?
-        WrappedArray<T> underlying;
+        readonly WrappedArray<T>? underlying;
 
         /// <summary>
         /// 
@@ -181,9 +183,9 @@ namespace C5
         /// <param name="start"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public IList<T> View(int start, int count)
+        public IList<T>? View(int start, int count)
         {
-            return new WrappedArray<T>((ArrayList<T>)innerlist.View(start, count), underlying ?? this);
+            return new WrappedArray<T>((ArrayList<T>)innerlist.View(start, count)!, underlying ?? this);
         }
 
         /// <summary>
@@ -191,9 +193,9 @@ namespace C5
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public IList<T> ViewOf(T item)
+        public IList<T>? ViewOf(T item)
         {
-            return new WrappedArray<T>((ArrayList<T>)innerlist.ViewOf(item), underlying ?? this);
+            return new WrappedArray<T>((ArrayList<T>)innerlist.ViewOf(item)!, underlying ?? this);
         }
 
         /// <summary>
@@ -201,16 +203,16 @@ namespace C5
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public IList<T> LastViewOf(T item)
+        public IList<T>? LastViewOf(T item)
         {
-            return new WrappedArray<T>((ArrayList<T>)innerlist.LastViewOf(item), underlying ?? this);
+            return new WrappedArray<T>((ArrayList<T>)innerlist.LastViewOf(item)!, underlying ?? this);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <value></value>
-        public IList<T> Underlying { get { return underlying; } }
+        public IList<T>? Underlying { get { return underlying; } }
 
         /// <summary>
         /// 
@@ -259,7 +261,7 @@ namespace C5
         /// </summary>
         /// <param name="otherView"></param>
         /// <returns></returns>
-        public IList<T> Span(IList<T> otherView) { return innerlist.Span(((WrappedArray<T>)otherView).innerlist); }
+        public IList<T>? Span(IList<T> otherView) { return innerlist.Span(((WrappedArray<T>)otherView).innerlist); }
 
         /// <summary>
         /// 
@@ -745,7 +747,7 @@ namespace C5
         /// <param name="rest"></param>
         /// <param name="formatProvider"></param>
         /// <returns></returns>
-        public bool Show(StringBuilder stringbuilder, ref int rest, IFormatProvider formatProvider)
+        public bool Show(StringBuilder stringbuilder, ref int rest, IFormatProvider? formatProvider)
         { return innerlist.Show(stringbuilder, ref  rest, formatProvider); }
 
         #endregion
@@ -857,7 +859,7 @@ namespace C5
 
         Object System.Collections.IList.this[int index]
         {
-            get { return this[index]; }
+            get { return this[index]!; }
             set { this[index] = (T)value; }
         }
 

@@ -76,9 +76,8 @@ namespace C5
         [Serializable]
         class Sorter<T>
         {
-            T[] a;
-
-            SCG.IComparer<T> c;
+            readonly T[] a;
+            readonly SCG.IComparer<T> c;
 
 
             internal Sorter(T[] a, SCG.IComparer<T> c) { this.a = a; this.c = c; }

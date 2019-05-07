@@ -50,7 +50,7 @@ namespace C5UnitTests.support
         {
             class dbl : IComparable<dbl>
             {
-                double d;
+                readonly double d;
 
                 public dbl(double din) { d = din; }
 
