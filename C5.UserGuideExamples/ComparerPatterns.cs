@@ -18,9 +18,9 @@ namespace C5.UserGuideExamples
             var lexico1 = Lexico();
             var lexico2 = Lexico2();
 
-            var r1 = new Rec<string, int>("Carsten", 1962);
-            var r2 = new Rec<string, int>("Carsten", 1964);
-            var r3 = new Rec<string, int>("Christian", 1932);
+            var r1 = ("Carsten", 1962);
+            var r2 = ("Carsten", 1964);
+            var r3 = ("Christian", 1932);
 
             Console.WriteLine(lexico1.Compare(r1, r1) == 0);
             Console.WriteLine(lexico1.Compare(r1, r2) < 0);
@@ -36,16 +36,16 @@ namespace C5.UserGuideExamples
             Console.WriteLine(rev.Compare("B", "A") < 0);
         }
 
-        static SCG.IComparer<Rec<string, int>> Lexico() => ComparerFactory<Rec<string, int>>.CreateComparer((item1, item2) =>
+        static SCG.IComparer<(string, int)> Lexico() => ComparerFactory<(string, int)>.CreateComparer((item1, item2) =>
         {
-            var major = item1.X1.CompareTo(item2.X1);
-            return major != 0 ? major : item1.X2.CompareTo(item2.X2);
+            var major = item1.Item1.CompareTo(item2.Item1);
+            return major != 0 ? major : item1.Item2.CompareTo(item2.Item2);
         });
 
-        static SCG.IComparer<Rec<string, int>> Lexico2() => ComparerFactory<Rec<string, int>>.CreateComparer((item1, item2) =>
+        static SCG.IComparer<(string, int)> Lexico2() => ComparerFactory<(string, int)>.CreateComparer((item1, item2) =>
         {
-            var major = item1.X1.CompareTo(item2.X1);
-            return major != 0 ? major : item1.X2.CompareTo(item2.X2);
+            var major = item1.Item1.CompareTo(item2.Item1);
+            return major != 0 ? major : item1.Item2.CompareTo(item2.Item2);
         });
 
         static SCG.IComparer<T> ReverseComparer<T>(SCG.IComparer<T> cmp) => ComparerFactory<T>.CreateComparer((item1, item2) => cmp.Compare(item2, item1));

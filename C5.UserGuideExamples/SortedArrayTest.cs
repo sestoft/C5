@@ -17,19 +17,19 @@ namespace C5.UserGuideExamples
     {
         public static void Main()
         {
-            var lexico = ComparerFactory<Rec<string, int>>.CreateComparer(
+            var lexico = ComparerFactory<(string, int)>.CreateComparer(
                 (r1, r2) =>
                     {
-                        int order = r1.X1.CompareTo(r2.X1);
-                        return order == 0 ? r1.X2.CompareTo(r2.X2) : order;
+                        int order = r1.Item1.CompareTo(r2.Item1);
+                        return order == 0 ? r1.Item2.CompareTo(r2.Item2) : order;
                     }
                 );
 
-            SortedArray<Rec<string, int>> sarr = new SortedArray<Rec<string, int>>(lexico)
+            SortedArray<(string, int)> sarr = new SortedArray<(string, int)>(lexico)
             {
-                new Rec<string, int>("ole", 32),
-                new Rec<string, int>("hans", 77),
-                new Rec<string, int>("ole", 63)
+                ("ole", 32),
+                ("hans", 77),
+                ("ole", 63)
             };
 
             foreach (var r in sarr)
