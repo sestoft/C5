@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>3.0.0-beta2</Version>
+    <LangVersion>8.0</LangVersion>
+    <NullableContextOptions>enable</NullableContextOptions>
+    <Version>3.0.0-beta3</Version>
     <Copyright>Copyright © Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm 2003-2019</Copyright>
     <Company>Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm</Company>
     <Description>The C5 Generic Collection Library for C# and CLI is a comprehensive collection library supporting lists, sets, bags, dictionaries, priority queues, (FIFO) queues, and (LIFO) stacks. C5 runs on everything supporting .NET Standard 2.0: .NET Core 2.0+, .NET 4.6.1+, Mono, Xamarin, Universal Windows Platform, and Unity.</Description>
@@ -14,10 +16,6 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/sestoft/C5</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-  </PropertyGroup>
-  <PropertyGroup>
-    <LangVersion>8.0</LangVersion>
-    <NullableContextOptions>enable</NullableContextOptions>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
