@@ -300,15 +300,17 @@ namespace C5.Tests
 
     public sealed class CollectionEvent<T>
     {
-        public readonly EventTypeEnum Act;
-        public readonly EventArgs Args;
-        public readonly object Sender;
+        public EventTypeEnum Act { get; }
+
+        public EventArgs Args { get; }
+
+        public object Sender { get; }
 
         public CollectionEvent(EventTypeEnum act, EventArgs args, object sender)
         {
-            this.Act = act;
-            this.Args = args;
-            this.Sender = sender;
+            Act = act;
+            Args = args;
+            Sender = sender;
         }
 
         public bool Equals(CollectionEvent<T> otherEvent, SCG.IEqualityComparer<T> itemequalityComparer)

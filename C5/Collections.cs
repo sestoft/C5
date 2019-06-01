@@ -447,10 +447,11 @@ namespace C5
             }
 
             private readonly bool mustFireRemoved;
+
             /// <summary>
             /// 
             /// </summary>
-            public readonly bool MustFire;
+            public bool MustFire { get; }
 
             /// <summary>
             /// 

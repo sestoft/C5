@@ -392,17 +392,20 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        public readonly T Item;
+        public T Item { get; }
+
         /// <summary>
         /// 
         /// </summary>
-        public readonly int Index;
+        public int Index { get; }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="item"></param>
         /// <param name="index"></param>
         public ItemAtEventArgs(T item, int index) { Item = item; Index = index; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -423,11 +426,13 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        public readonly T Item;
+        public T Item { get; }
+
         /// <summary>
         /// 
         /// </summary>
-        public readonly int Count;
+        public int Count { get; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -444,8 +449,6 @@ namespace C5
         }
     }
 
-
-
     /// <summary>
     /// 
     /// </summary>
@@ -455,11 +458,13 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        public readonly bool Full;
+        public bool Full { get; }
+
         /// <summary>
         /// 
         /// </summary>
-        public readonly int Count;
+        public int Count { get; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -483,11 +488,11 @@ namespace C5
     [Serializable]
     public class ClearedRangeEventArgs : ClearedEventArgs
     {
-        //WE could let this be of type int? to  allow 
         /// <summary>
         /// 
         /// </summary>
-        public readonly int? Start;
+        public int? Start { get; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -495,6 +500,7 @@ namespace C5
         /// <param name="count"></param>
         /// <param name="start"></param>
         public ClearedRangeEventArgs(bool full, int count, int? start) : base(full, count) { Start = start; }
+        
         /// <summary>
         /// 
         /// </summary>

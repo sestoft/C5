@@ -77,8 +77,8 @@ namespace C5.UserGuideExamples
             if (!_jobQueue.IsEmpty)
             {
                 var job = _jobQueue.DeleteMin();
-                _userJobs.Remove(job._ip);
-                _jobs.Remove(job._rid);
+                _userJobs.Remove(job.Ip);
+                _jobs.Remove(job.Rid);
                 Console.WriteLine($"Executed {job}");
                 return job;
             }
@@ -93,7 +93,7 @@ namespace C5.UserGuideExamples
             if (_jobs.Remove(rid, out IPriorityQueueHandle<Job> h))
             {
                 var job = _jobQueue.Delete(h);
-                _userJobs.Remove(job._ip);
+                _userJobs.Remove(job.Ip);
                 Console.WriteLine($"Cancelled {job}");
             }
         }
@@ -101,25 +101,25 @@ namespace C5.UserGuideExamples
 
     internal class Job : IComparable<Job>
     {
-        public readonly Rid _rid;
-        public readonly Ip _ip;
-        public readonly int _time;
+        public Rid Rid { get; }
+        public Ip Ip { get; }
+        public int Time { get; }
 
         public Job(Rid rid, Ip ip, int time)
         {
-            _rid = rid;
-            _ip = ip;
-            _time = time;
+            Rid = rid;
+            Ip = ip;
+            Time = time;
         }
 
         public int CompareTo(Job that)
         {
-            return _time - that._time;
+            return Time - that.Time;
         }
 
         public override string ToString()
         {
-            return _rid.ToString();
+            return Rid.ToString();
         }
     }
 
@@ -141,21 +141,21 @@ namespace C5.UserGuideExamples
 
     internal class Ip
     {
-        public readonly string _ipString;
+        public string IpString { get; }
 
         public Ip(string ipString)
         {
-            _ipString = ipString;
+            IpString = ipString;
         }
 
         public override int GetHashCode()
         {
-            return _ipString.GetHashCode();
+            return IpString.GetHashCode();
         }
 
         public override bool Equals(object that)
         {
-            return _ipString.Equals(that);
+            return IpString.Equals(that);
         }
     }
 }
