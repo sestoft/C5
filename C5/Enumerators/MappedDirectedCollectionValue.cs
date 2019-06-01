@@ -3,53 +3,51 @@
 
 using System;
 using SCG = System.Collections.Generic;
+
 namespace C5
 {
     [Serializable]
     internal abstract class MappedDirectedCollectionValue<T, V> : DirectedCollectionValueBase<V>, IDirectedCollectionValue<V>
     {
-        private IDirectedCollectionValue<T> directedcollectionvalue;
+        private IDirectedCollectionValue<T> directedCollectionValue;
 
         public abstract V Map(T item);
 
-        public MappedDirectedCollectionValue(IDirectedCollectionValue<T> directedcollectionvalue)
+        protected MappedDirectedCollectionValue(IDirectedCollectionValue<T> directedCollectionValue)
         {
-            this.directedcollectionvalue = directedcollectionvalue;
+            this.directedCollectionValue = directedCollectionValue;
         }
 
-        public override V Choose() { return Map(directedcollectionvalue.Choose()); }
+        public override V Choose() { return Map(directedCollectionValue.Choose()); }
 
-        public override bool IsEmpty => directedcollectionvalue.IsEmpty;
+        public override bool IsEmpty => directedCollectionValue.IsEmpty;
 
-        public override int Count => directedcollectionvalue.Count;
+        public override int Count => directedCollectionValue.Count;
 
-        public override Speed CountSpeed => directedcollectionvalue.CountSpeed;
+        public override Speed CountSpeed => directedCollectionValue.CountSpeed;
 
         public override IDirectedCollectionValue<V> Backwards()
         {
-            MappedDirectedCollectionValue<T, V> retval = (MappedDirectedCollectionValue<T, V>)MemberwiseClone();
-            retval.directedcollectionvalue = directedcollectionvalue.Backwards();
-            return retval;
+            var ret = (MappedDirectedCollectionValue<T, V>)MemberwiseClone();
+            ret.directedCollectionValue = directedCollectionValue.Backwards();
+            return ret;
             //If we made this classs non-abstract we could do
-            //return new MappedDirectedCollectionValue<T,V>(directedcollectionvalue.Backwards());;
+            //return new MappedDirectedCollectionValue<T,V>(directedCollectionValue.Backwards());;
         }
-
 
         public override SCG.IEnumerator<V> GetEnumerator()
         {
-            foreach (T item in directedcollectionvalue)
+            foreach (var item in directedCollectionValue)
             {
                 yield return Map(item);
             }
         }
 
-        public override EnumerationDirection Direction => directedcollectionvalue.Direction;
+        public override EnumerationDirection Direction => directedCollectionValue.Direction;
 
         IDirectedEnumerable<V> IDirectedEnumerable<V>.Backwards()
         {
             return Backwards();
         }
-
-
     }
 }
