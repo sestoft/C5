@@ -63,7 +63,7 @@ namespace C5
         /// <summary>
         /// Show which implementation features was chosen at compilation time
         /// </summary>
-        public static Feature Features { get { return features; } }
+        public static Feature Features => features;
 
         #endregion
         #region Fields
@@ -87,7 +87,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public override EventTypeEnum ListenableEvents { get { return EventTypeEnum.Basic; } }
+        public override EventTypeEnum ListenableEvents => EventTypeEnum.Basic;
 
         #endregion
 
@@ -371,7 +371,7 @@ namespace C5
         /// The complexity of the Contains operation
         /// </summary>
         /// <value>Always returns Speed.Constant</value>
-        public virtual Speed ContainsSpeed { get { return Speed.Constant; } }
+        public virtual Speed ContainsSpeed => Speed.Constant;
 
         /// <summary>
         /// Check if an item is in the set 
@@ -729,14 +729,14 @@ namespace C5
         /// Report if this is a set collection.
         /// </summary>
         /// <value>Always false</value>
-        public virtual bool AllowsDuplicates { get { return false; } }
+        public virtual bool AllowsDuplicates => false;
 
         /// <summary>
         /// By convention this is true for any collection with set semantics.
         /// </summary>
         /// <value>True if only one representative of a group of equal items 
         /// is kept in the collection together with the total count.</value>
-        public virtual bool DuplicatesByCounting { get { return true; } }
+        public virtual bool DuplicatesByCounting => true;
 
         /// <summary>
         /// Add an item to this set.

@@ -183,10 +183,19 @@ namespace C5.UserGuideExamples
             Subject = subject;
         }
 
-        public bool Equals(Teacher that) => Subject == that.Subject;
+        public bool Equals(Teacher that)
+        {
+            return Subject == that.Subject;
+        }
 
-        public override int GetHashCode() => Subject.GetHashCode();
+        public override int GetHashCode()
+        {
+            return Subject.GetHashCode();
+        }
 
-        public override string ToString() => $"{Name} [{Subject}]";
+        public override string ToString()
+        {
+            return $"{Name} [{Subject}]";
+        }
     }
 }

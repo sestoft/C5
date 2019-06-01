@@ -160,7 +160,10 @@ namespace C5.UserGuideExamples
             Children = children;
         }
 
-        public override string ToString() => Id.ToString();
+        public override string ToString()
+        {
+            return Id.ToString();
+        }
 
         public MyNode<T> this[int i]
         {

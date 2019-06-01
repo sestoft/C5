@@ -36,16 +36,12 @@ namespace C5.UserGuideExamples
 
         public Func<int, double> Func => x => this[x];
 
-        public Action<int> Action
+        public Action<int> Action => x => { double junk = this[x]; };
+
+        public static implicit operator Func<int, double>(FooBar fb)
         {
-            get
-            {
-                return x => { double junk = this[x]; };
-            }
+            return x => fb[x];
         }
-
-        public static implicit operator Func<int, double>(FooBar fb) => x => fb[x];
-
 
         public static implicit operator Action<int>(FooBar fb)
         {

@@ -500,7 +500,7 @@ namespace C5
         /// <param name="count"></param>
         /// <param name="start"></param>
         public ClearedRangeEventArgs(bool full, int count, int? start) : base(full, count) { Start = start; }
-        
+
         /// <summary>
         /// 
         /// </summary>

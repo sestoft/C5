@@ -30,8 +30,8 @@ namespace C5
         /// </value>
         public static Action<string> Log
         {
-            get { return _log ?? (x => { return; }); }
-            set { _log = value; }
+            get => _log ?? (x => { return; });
+            set => _log = value;
         }
     }
 }

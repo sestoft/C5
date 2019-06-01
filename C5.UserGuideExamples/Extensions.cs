@@ -58,6 +58,9 @@ namespace C5.UserGuideExamples
             Name = name;
         }
 
-        public override string ToString() => Name;
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

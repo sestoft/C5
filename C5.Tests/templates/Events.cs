@@ -17,7 +17,7 @@ namespace C5.Tests.Templates.Events
 
         public override void SetUp(TCollection list, EventTypeEnum testSpec)
         {
-            this.collection = list;
+            collection = list;
             listenTo = testSpec;
             seen = new CollectionEventList<TItem>(EqualityComparer<TItem>.Default);
         }

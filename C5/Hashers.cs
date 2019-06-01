@@ -57,10 +57,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public static SequencedCollectionEqualityComparer<T, W> Default
-        {
-            get { return cached ?? (cached = new SequencedCollectionEqualityComparer<T, W>()); }
-        }
+        public static SequencedCollectionEqualityComparer<T, W> Default => cached ?? (cached = new SequencedCollectionEqualityComparer<T, W>());
         /// <summary>
         /// Get the hash code with respect to this sequenced equalityComparer
         /// </summary>
@@ -94,7 +91,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public static UnsequencedCollectionEqualityComparer<T, W> Default { get { return cached ?? (cached = new UnsequencedCollectionEqualityComparer<T, W>()); } }
+        public static UnsequencedCollectionEqualityComparer<T, W> Default => cached ?? (cached = new UnsequencedCollectionEqualityComparer<T, W>());
         /// <summary>
         /// Get the hash code with respect to this unsequenced equalityComparer
         /// </summary>

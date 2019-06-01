@@ -19,10 +19,10 @@ namespace C5.Tests.support
 
                 public override string Choose() { if (size > 0) { return array[0]; } throw new NoSuchItemException(); }
 
-                public string this[int i] { get { return array[i]; } set { array[i] = value; } }
+                public string this[int i] { get => array[i]; set => array[i] = value; }
 
 
-                public int thesize { get { return size; } set { size = value; } }
+                public int thesize { get => size; set => size = value; }
             }
 
 

@@ -14,7 +14,7 @@ namespace C5.Tests.Templates
         public GenericCollectionTester()
         {
             testMethods = new CircularQueue<MethodInfo>();
-            foreach (MethodInfo minfo in this.GetType().GetMethods())
+            foreach (MethodInfo minfo in GetType().GetMethods())
             {
                 if (minfo.GetParameters().Length == 0 &&
                      minfo.GetCustomAttributes(typeof(TestAttribute), false).Length > 0)

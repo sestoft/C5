@@ -206,8 +206,8 @@ namespace C5.UserGuideExamples
 
         public Node<T> this[int i]
         {
-            set { Children[i] = value; }
-            get { return Children[i]; }
+            set => Children[i] = value;
+            get => Children[i];
         }
     }
 }

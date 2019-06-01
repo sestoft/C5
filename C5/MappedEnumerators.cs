@@ -10,7 +10,7 @@ namespace C5
     {
         private IDirectedCollectionValue<T> directedcollectionvalue;
 
-        abstract public V Map(T item);
+        public abstract V Map(T item);
 
         public MappedDirectedCollectionValue(IDirectedCollectionValue<T> directedcollectionvalue)
         {
@@ -19,11 +19,11 @@ namespace C5
 
         public override V Choose() { return Map(directedcollectionvalue.Choose()); }
 
-        public override bool IsEmpty { get { return directedcollectionvalue.IsEmpty; } }
+        public override bool IsEmpty => directedcollectionvalue.IsEmpty;
 
-        public override int Count { get { return directedcollectionvalue.Count; } }
+        public override int Count => directedcollectionvalue.Count;
 
-        public override Speed CountSpeed { get { return directedcollectionvalue.CountSpeed; } }
+        public override Speed CountSpeed => directedcollectionvalue.CountSpeed;
 
         public override IDirectedCollectionValue<V> Backwards()
         {
@@ -43,10 +43,7 @@ namespace C5
             }
         }
 
-        public override EnumerationDirection Direction
-        {
-            get { return directedcollectionvalue.Direction; }
-        }
+        public override EnumerationDirection Direction => directedcollectionvalue.Direction;
 
         IDirectedEnumerable<V> IDirectedEnumerable<V>.Backwards()
         {
@@ -61,7 +58,7 @@ namespace C5
     {
         private readonly ICollectionValue<T> collectionvalue;
 
-        abstract public V Map(T item);
+        public abstract V Map(T item);
 
         public MappedCollectionValue(ICollectionValue<T> collectionvalue)
         {
@@ -70,11 +67,11 @@ namespace C5
 
         public override V Choose() { return Map(collectionvalue.Choose()); }
 
-        public override bool IsEmpty { get { return collectionvalue.IsEmpty; } }
+        public override bool IsEmpty => collectionvalue.IsEmpty;
 
-        public override int Count { get { return collectionvalue.Count; } }
+        public override int Count => collectionvalue.Count;
 
-        public override Speed CountSpeed { get { return collectionvalue.CountSpeed; } }
+        public override Speed CountSpeed => collectionvalue.CountSpeed;
 
         public override SCG.IEnumerator<V> GetEnumerator()
         {
@@ -104,7 +101,7 @@ namespace C5
     {
         private IDirectedEnumerable<T> directedenumerable;
 
-        abstract public V Map(T item);
+        public abstract V Map(T item);
 
         public MappedDirectedEnumerable(IDirectedEnumerable<T> directedenumerable)
         {
@@ -129,9 +126,6 @@ namespace C5
             }
         }
 
-        public EnumerationDirection Direction
-        {
-            get { return directedenumerable.Direction; }
-        }
+        public EnumerationDirection Direction => directedenumerable.Direction;
     }
 }

@@ -101,13 +101,7 @@ namespace C5.UserGuideExamples
             _dictionary[key].Add(item);
         }
 
-        public ICollection<T> this[Q key]
-        {
-            get
-            {
-                return new GuardedCollection<T>(_dictionary[key]);
-            }
-        }
+        public ICollection<T> this[Q key] => new GuardedCollection<T>(_dictionary[key]);
 
         public override string ToString()
         {
@@ -148,13 +142,7 @@ namespace C5.UserGuideExamples
             _dictionary[key].Add(item);
         }
 
-        public ICollection<T> this[Q key]
-        {
-            get
-            {
-                return new GuardedCollection<T>(_dictionary[key]);
-            }
-        }
+        public ICollection<T> this[Q key] => new GuardedCollection<T>(_dictionary[key]);
 
         // Bad implementation from a performance point of view: it may be
         // costly to build the result collection and possibly only its

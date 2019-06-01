@@ -45,14 +45,29 @@ namespace C5.UserGuideExamples
             Priority = priority;
         }
 
-        public int CompareTo(Prio<D> that) => Priority.CompareTo(that.Priority);
+        public int CompareTo(Prio<D> that)
+        {
+            return Priority.CompareTo(that.Priority);
+        }
 
-        public bool Equals(Prio<D> that) => Priority == that.Priority;
+        public bool Equals(Prio<D> that)
+        {
+            return Priority == that.Priority;
+        }
 
-        public static Prio<D> operator +(Prio<D> tp, int delta) => new Prio<D>(tp.Data, tp.Priority + delta);
+        public static Prio<D> operator +(Prio<D> tp, int delta)
+        {
+            return new Prio<D>(tp.Data, tp.Priority + delta);
+        }
 
-        public static Prio<D> operator -(Prio<D> tp, int delta) => new Prio<D>(tp.Data, tp.Priority - delta);
+        public static Prio<D> operator -(Prio<D> tp, int delta)
+        {
+            return new Prio<D>(tp.Data, tp.Priority - delta);
+        }
 
-        public override string ToString() => string.Format("{0}[{1}]", Data, Priority);
+        public override string ToString()
+        {
+            return string.Format("{0}[{1}]", Data, Priority);
+        }
     }
 }

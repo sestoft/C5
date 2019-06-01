@@ -28,9 +28,15 @@ namespace C5.UserGuideExamples
 
         public override bool IsEmpty => Count == 0;
 
-        public override T Choose() => _chooser();
+        public override T Choose()
+        {
+            return _chooser();
+        }
 
-        public override SCG.IEnumerator<T> GetEnumerator() => _enumerable.GetEnumerator();
+        public override SCG.IEnumerator<T> GetEnumerator()
+        {
+            return _enumerable.GetEnumerator();
+        }
     }
 
     internal interface IMultiCollection<K, V>

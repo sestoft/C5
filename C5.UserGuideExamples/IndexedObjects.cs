@@ -136,21 +136,9 @@ namespace C5.UserGuideExamples
             return !_dictionary.Contains(key) ? false : _dictionary[key].Remove(item);
         }
 
-        public ICollectionValue<T> this[Q key]
-        {
-            get
-            {
-                return _dictionary[key];
-            }
-        }
+        public ICollectionValue<T> this[Q key] => _dictionary[key];
 
-        public override ICollectionValue<T> this[object key]
-        {
-            get
-            {
-                return _dictionary[(Q)key];
-            }
-        }
+        public override ICollectionValue<T> this[object key] => _dictionary[(Q)key];
 
         public override string ToString()
         {

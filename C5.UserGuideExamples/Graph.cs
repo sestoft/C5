@@ -549,7 +549,7 @@ namespace C5.UserGuideExamples
         }
 
         [UsedBy("testCOMP")]
-        public int VertexCount { get { return _graph.Count; } }
+        public int VertexCount => _graph.Count;
 
         [UsedBy("testCOMP")]
         public int EdgeCount { get; private set; }
@@ -718,11 +718,7 @@ namespace C5.UserGuideExamples
                       Edges().Filter(delegate (Edge<V, E> e) { return vertexset.Contains(e.Start) && vertexset.Contains(e.End); }));
         }
 
-        public bool IsConnected
-        {
-            //TODO: optimize: needs to change Action<Edge<V,E>> to EdgeAction to be able to break out
-            get { return ComponentCount <= 1; }
-        }
+        public bool IsConnected => ComponentCount <= 1;
 
         public int ComponentCount
         {
@@ -739,8 +735,16 @@ namespace C5.UserGuideExamples
             ArrayList<KeyValuePair<V, IGraph<V, E, W>>> retval = new ArrayList<KeyValuePair<V, IGraph<V, E, W>>>();
             HashGraph<V, E, W> component;
             ArrayList<V> vertices = null;
-            void edgeaction(Edge<V, E> e) => vertices.Add(e.End);
-            void beforecomponent(V v) => vertices = new ArrayList<V>() { v };
+            void edgeaction(Edge<V, E> e)
+            {
+                vertices.Add(e.End);
+            }
+
+            void beforecomponent(V v)
+            {
+                vertices = new ArrayList<V>() { v };
+            }
+
             void aftercomponent(V v)
             {
                 //component = SubGraph(vertices);
