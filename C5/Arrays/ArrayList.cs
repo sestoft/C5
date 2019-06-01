@@ -50,7 +50,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public override EventTypeEnum ListenableEvents => underlying == null ? EventTypeEnum.All : EventTypeEnum.None;
+        public override EventType ListenableEvents => underlying == null ? EventType.All : EventType.None;
 
         /*
             /// <summary>
@@ -901,7 +901,7 @@ namespace C5
         {
             if (ActiveEvents != 0)
             {
-                if ((ActiveEvents & (EventTypeEnum.Added | EventTypeEnum.Inserted)) != 0)
+                if ((ActiveEvents & (EventType.Added | EventType.Inserted)) != 0)
                 {
                     for (int j = index; j < index + added; j++)
                     {
@@ -2202,7 +2202,7 @@ namespace C5
         }
         private void RaiseForAddAll(int start, int added)
         {
-            if ((ActiveEvents & EventTypeEnum.Added) != 0)
+            if ((ActiveEvents & EventType.Added) != 0)
             {
                 for (int i = start, end = start + added; i < end; i++)
                 {

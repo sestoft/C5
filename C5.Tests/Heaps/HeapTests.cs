@@ -47,7 +47,7 @@ namespace C5.Tests.heaps
         [Test]
         public void Listenable()
         {
-            Assert.AreEqual(EventTypeEnum.Basic, queue.ListenableEvents);
+            Assert.AreEqual(EventType.Basic, queue.ListenableEvents);
         }
 
         private enum Acts
@@ -61,13 +61,13 @@ namespace C5.Tests.heaps
             CollectionChangedHandler<int> cch;
             ItemsAddedHandler<int> iah;
             ItemsRemovedHandler<int> irh;
-            Assert.AreEqual(EventTypeEnum.None, queue.ActiveEvents);
+            Assert.AreEqual(EventType.None, queue.ActiveEvents);
             queue.CollectionChanged += (cch = new CollectionChangedHandler<int>(queue_CollectionChanged));
-            Assert.AreEqual(EventTypeEnum.Changed, queue.ActiveEvents);
+            Assert.AreEqual(EventType.Changed, queue.ActiveEvents);
             queue.ItemsAdded += (iah = new ItemsAddedHandler<int>(queue_ItemAdded));
-            Assert.AreEqual(EventTypeEnum.Changed | EventTypeEnum.Added, queue.ActiveEvents);
+            Assert.AreEqual(EventType.Changed | EventType.Added, queue.ActiveEvents);
             queue.ItemsRemoved += (irh = new ItemsRemovedHandler<int>(queue_ItemRemoved));
-            Assert.AreEqual(EventTypeEnum.Changed | EventTypeEnum.Added | EventTypeEnum.Removed, queue.ActiveEvents);
+            Assert.AreEqual(EventType.Changed | EventType.Added | EventType.Removed, queue.ActiveEvents);
             queue.Add(34);
             queue.Add(56);
             queue.AddAll(new int[] { });
@@ -87,11 +87,11 @@ namespace C5.Tests.heaps
                 Assert.AreEqual(vals[i], events[i].Value, "Value " + i);
             }
             queue.CollectionChanged -= cch;
-            Assert.AreEqual(EventTypeEnum.Added | EventTypeEnum.Removed, queue.ActiveEvents);
+            Assert.AreEqual(EventType.Added | EventType.Removed, queue.ActiveEvents);
             queue.ItemsAdded -= iah;
-            Assert.AreEqual(EventTypeEnum.Removed, queue.ActiveEvents);
+            Assert.AreEqual(EventType.Removed, queue.ActiveEvents);
             queue.ItemsRemoved -= irh;
-            Assert.AreEqual(EventTypeEnum.None, queue.ActiveEvents);
+            Assert.AreEqual(EventType.None, queue.ActiveEvents);
         }
 
         [Test]

@@ -22,7 +22,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public override EventTypeEnum ListenableEvents => EventTypeEnum.Basic;
+        public override EventType ListenableEvents => EventType.Basic;
 
         #endregion
 
@@ -289,7 +289,7 @@ namespace C5
         {
 #warning Improve if items is a counting bag
             UpdateCheck();
-            bool mustRaise = (ActiveEvents & (EventTypeEnum.Changed | EventTypeEnum.Removed)) != 0;
+            bool mustRaise = (ActiveEvents & (EventType.Changed | EventType.Removed)) != 0;
             RaiseForRemoveAllHandler? raiseHandler = mustRaise ? new RaiseForRemoveAllHandler(this) : null;
             foreach (T item in items)
             {
@@ -332,12 +332,12 @@ namespace C5
             dict.Clear();
             int oldsize = size;
             size = 0;
-            if ((ActiveEvents & EventTypeEnum.Cleared) != 0)
+            if ((ActiveEvents & EventType.Cleared) != 0)
             {
                 RaiseCollectionCleared(true, oldsize);
             }
 
-            if ((ActiveEvents & EventTypeEnum.Changed) != 0)
+            if ((ActiveEvents & EventType.Changed) != 0)
             {
                 RaiseCollectionChanged();
             }
@@ -385,7 +385,7 @@ namespace C5
             }
 
             CircularQueue<T>? wasRemoved = null;
-            if ((ActiveEvents & EventTypeEnum.Removed) != 0)
+            if ((ActiveEvents & EventType.Removed) != 0)
             {
                 wasRemoved = new CircularQueue<T>();
                 foreach (KeyValuePair<T, int> p in dict)
@@ -404,11 +404,11 @@ namespace C5
             dict = res.dict;
             size = res.size;
 
-            if ((ActiveEvents & EventTypeEnum.Removed) != 0)
+            if ((ActiveEvents & EventType.Removed) != 0)
             {
                 RaiseForRemoveAll(wasRemoved);
             }
-            else if ((ActiveEvents & EventTypeEnum.Changed) != 0)
+            else if ((ActiveEvents & EventType.Changed) != 0)
             {
                 RaiseCollectionChanged();
             }
@@ -507,12 +507,12 @@ namespace C5
             {
                 size -= p.Value;
                 dict.Remove(p);
-                if ((ActiveEvents & EventTypeEnum.Removed) != 0)
+                if ((ActiveEvents & EventType.Removed) != 0)
                 {
                     RaiseItemsRemoved(p.Key, p.Value);
                 }
 
-                if ((ActiveEvents & EventTypeEnum.Changed) != 0)
+                if ((ActiveEvents & EventType.Changed) != 0)
                 {
                     RaiseCollectionChanged();
                 }
@@ -616,7 +616,7 @@ namespace C5
         {
             UpdateCheck();
 #warning We could easily raise bag events
-            bool mustRaiseAdded = (ActiveEvents & EventTypeEnum.Added) != 0;
+            bool mustRaiseAdded = (ActiveEvents & EventType.Added) != 0;
             CircularQueue<T>? wasAdded = mustRaiseAdded ? new CircularQueue<T>() : null;
             bool wasChanged = false;
             foreach (T item in items)
@@ -645,7 +645,7 @@ namespace C5
                 }
             }
 
-            if ((ActiveEvents & EventTypeEnum.Changed) != 0)
+            if ((ActiveEvents & EventType.Changed) != 0)
             {
                 RaiseCollectionChanged();
             }
