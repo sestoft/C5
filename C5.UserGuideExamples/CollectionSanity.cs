@@ -11,7 +11,7 @@ using SCG = System.Collections.Generic;
 
 namespace C5.UserGuideExamples
 {
-    class CollectionSanity
+    internal class CollectionSanity
     {
         public static void Main()
         {

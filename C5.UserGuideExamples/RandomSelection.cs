@@ -11,7 +11,7 @@ using SCG = System.Collections.Generic;
 
 namespace C5.UserGuideExamples
 {
-    class RandomSelection
+    internal class RandomSelection
     {
         public static void Main()
         {

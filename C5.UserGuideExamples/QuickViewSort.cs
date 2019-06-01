@@ -21,7 +21,7 @@ using SCG = System.Collections.Generic;
 
 namespace C5.UserGuideExamples
 {
-    class QuickViewSort
+    internal class QuickViewSort
     {
         public static void Main(string[] args)
         {
@@ -39,7 +39,7 @@ namespace C5.UserGuideExamples
             Print(list);
         }
 
-        static void Print<T>(SCG.IEnumerable<T> xs)
+        private static void Print<T>(SCG.IEnumerable<T> xs)
         {
             foreach (var x in xs)
             {
@@ -50,7 +50,7 @@ namespace C5.UserGuideExamples
         }
 
         // Array quicksort a la Wirth
-        static void QwSort<T>(T[] arr, int a, int b) where T : IComparable<T>
+        private static void QwSort<T>(T[] arr, int a, int b) where T : IComparable<T>
         {
             // sort arr[a..b]
             if (a < b)
@@ -59,8 +59,16 @@ namespace C5.UserGuideExamples
                 T x = arr[(i + j) / 2];
                 do
                 {
-                    while (arr[i].CompareTo(x) < 0) i++;
-                    while (x.CompareTo(arr[j]) < 0) j--;
+                    while (arr[i].CompareTo(x) < 0)
+                    {
+                        i++;
+                    }
+
+                    while (x.CompareTo(arr[j]) < 0)
+                    {
+                        j--;
+                    }
+
                     if (i <= j)
                     {
                         var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
@@ -79,7 +87,7 @@ namespace C5.UserGuideExamples
 
         private static readonly Random _random = new Random();
 
-        static int[] RandomInts(int n)
+        private static int[] RandomInts(int n)
         {
             var arr = new int[n];
 
@@ -92,7 +100,7 @@ namespace C5.UserGuideExamples
         }
 
         // View quicksort a la Wirth
-        static void QwSort<T>(IList<T> list) where T : IComparable<T>
+        private static void QwSort<T>(IList<T> list) where T : IComparable<T>
         {
             if (list.Count >= 2)
             {
@@ -100,8 +108,16 @@ namespace C5.UserGuideExamples
                 var x = a[0];
                 do
                 {
-                    while (a[0].CompareTo(x) < 0) a.Slide(+1, 1);
-                    while (x.CompareTo(b[0]) < 0) b.Slide(-1, 1);
+                    while (a[0].CompareTo(x) < 0)
+                    {
+                        a.Slide(+1, 1);
+                    }
+
+                    while (x.CompareTo(b[0]) < 0)
+                    {
+                        b.Slide(-1, 1);
+                    }
+
                     if (a.Offset <= b.Offset)
                     {
                         var tmp = a[0]; a[0] = b[0]; b[0] = tmp;
@@ -114,7 +130,7 @@ namespace C5.UserGuideExamples
         }
 
         // View quicksort a la Lomuto/Bentley
-        static void QlSort<T>(IList<T> list) where T : IComparable<T>
+        private static void QlSort<T>(IList<T> list) where T : IComparable<T>
         {
             if (list.Count >= 2)
             {

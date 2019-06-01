@@ -9,7 +9,7 @@ namespace C5
     /// <summary>
     /// Characterize the mutual position of some view B (other) relative to view A (this)
     /// </summary>
-    enum MutualViewPosition
+    internal enum MutualViewPosition
     {
         /// <summary>
         /// B contains A(this)
@@ -35,9 +35,9 @@ namespace C5
     /// </summary>
     /// <typeparam name="V"></typeparam>
     [Serializable]
-    class WeakViewList<V> where V : class
+    internal class WeakViewList<V> where V : class
     {
-        Node? start;
+        private Node? start;
 
         [Serializable]
         internal class Node
@@ -54,8 +54,20 @@ namespace C5
         }
         internal void Remove(Node n)
         {
-            if (n == start) { start = start!.next; if (start != null) start.prev = null; }
-            else { n.prev!.next = n.next; if (n.next != null) n.next.prev = n.prev; }
+            if (n == start)
+            {
+                start = start!.next; if (start != null)
+                {
+                    start.prev = null;
+                }
+            }
+            else
+            {
+                n.prev!.next = n.next; if (n.next != null)
+                {
+                    n.next.prev = n.prev;
+                }
+            }
         }
         /// <summary>
         /// Note that it is safe to call views.Remove(view.myWeakReference) if view
@@ -71,9 +83,14 @@ namespace C5
                 object o = n.weakview.Target;
                 V? view = o is V ? (V)o : null;
                 if (view == null)
+                {
                     Remove(n);
+                }
                 else
+                {
                     yield return view;
+                }
+
                 n = n.next;
             }
         }

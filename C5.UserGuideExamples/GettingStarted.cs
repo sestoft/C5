@@ -6,12 +6,12 @@
 // Compile with
 //   csc /r:netstandard.dll /r:C5.dll GettingStarted.cs
 
-using System;
 using C5;
+using System;
 
 namespace GettingStarted
 {
-    class GettingStarted
+    internal class GettingStarted
     {
         public static void Main()
         {

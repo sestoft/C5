@@ -1,11 +1,10 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
 
-using System;
-using C5;
 using NUnit.Framework;
+using System;
 
-namespace C5UnitTests.heaps
+namespace C5.Tests.heaps
 {
     using CollectionOfInt = IntervalHeap<int>;
 
@@ -16,22 +15,22 @@ namespace C5UnitTests.heaps
         public void TestEvents()
         {
             CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new C5UnitTests.Templates.Events.PriorityQueueTester<CollectionOfInt>().Test(factory);
+            new C5.Tests.Templates.Events.PriorityQueueTester<CollectionOfInt>().Test(factory);
         }
 
         //[Test]
         //public void Extensible()
         //{
-        //    C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
+        //    C5.Tests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
+        //    C5.Tests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
         //}
     }
 
     [TestFixture]
     public class Events
     {
-        IPriorityQueue<int> queue;
-        ArrayList<KeyValuePair<Acts, int>> events;
+        private IPriorityQueue<int> queue;
+        private ArrayList<KeyValuePair<Acts, int>> events;
 
 
         [SetUp]
@@ -51,7 +50,7 @@ namespace C5UnitTests.heaps
             Assert.AreEqual(EventTypeEnum.Basic, queue.ListenableEvents);
         }
 
-        enum Acts
+        private enum Acts
         {
             Add, Remove, Changed
         }
@@ -121,16 +120,17 @@ namespace C5UnitTests.heaps
             }
         }
 
-
-        void queue_CollectionChanged(object sender)
+        private void queue_CollectionChanged(object sender)
         {
             events.Add(new KeyValuePair<Acts, int>(Acts.Changed, 0));
         }
-        void queue_ItemAdded(object sender, ItemCountEventArgs<int> e)
+
+        private void queue_ItemAdded(object sender, ItemCountEventArgs<int> e)
         {
             events.Add(new KeyValuePair<Acts, int>(Acts.Add, e.Item));
         }
-        void queue_ItemRemoved(object sender, ItemCountEventArgs<int> e)
+
+        private void queue_ItemRemoved(object sender, ItemCountEventArgs<int> e)
         {
             events.Add(new KeyValuePair<Acts, int>(Acts.Remove, e.Item));
         }
@@ -139,8 +139,8 @@ namespace C5UnitTests.heaps
     [TestFixture]
     public class Formatting
     {
-        IntervalHeap<int> coll;
-        IFormatProvider rad16;
+        private IntervalHeap<int> coll;
+        private IFormatProvider rad16;
         [SetUp]
         public void Init() { coll = new IntervalHeap<int>(); rad16 = new RadixFormatProvider(16); }
         [TearDown]
@@ -161,7 +161,7 @@ namespace C5UnitTests.heaps
     [TestFixture]
     public class IntervalHeapTests
     {
-        IPriorityQueue<int> queue;
+        private IPriorityQueue<int> queue;
 
 
         [SetUp]
@@ -303,7 +303,10 @@ namespace C5UnitTests.heaps
                 q.Add(ref handle1, 3.0);
                 Assert.AreEqual(3.0, q.FindMin());
                 for (int i = 1; i < size; i++)
+                {
                     q.Add(i + 3.0);
+                }
+
                 Assert.AreEqual(3.0, q.FindMin());
                 for (int min = 2; min >= -10; min--)
                 {
@@ -312,7 +315,10 @@ namespace C5UnitTests.heaps
                 }
                 Assert.AreEqual(-10.0, q.DeleteMin());
                 for (int i = 1; i < size; i++)
+                {
                     Assert.AreEqual(i + 3.0, q.DeleteMin());
+                }
+
                 Assert.IsTrue(q.IsEmpty);
             }
         }
@@ -327,7 +333,10 @@ namespace C5UnitTests.heaps
                 q.Add(ref handle1, -3.0);
                 Assert.AreEqual(-3.0, q.FindMax());
                 for (int i = 1; i < size; i++)
+                {
                     q.Add(-i - 3.0);
+                }
+
                 Assert.AreEqual(-3.0, q.FindMax());
                 for (int max = -2; max <= 10; max++)
                 {
@@ -336,7 +345,10 @@ namespace C5UnitTests.heaps
                 }
                 Assert.AreEqual(10.0, q.DeleteMax());
                 for (int i = 1; i < size; i++)
+                {
                     Assert.AreEqual(-i - 3.0, q.DeleteMax());
+                }
+
                 Assert.IsTrue(q.IsEmpty);
             }
         }
@@ -437,13 +449,19 @@ namespace C5UnitTests.heaps
             int[] a = new int[4];
             int siz = 0;
             foreach (int i in queue)
+            {
                 siz++;
+            }
+
             Assert.AreEqual(0, siz);
 
             queue.Add(8); queue.Add(18); queue.Add(8); queue.Add(3);
 
             foreach (int i in queue)
+            {
                 a[siz++] = i;
+            }
+
             Assert.AreEqual(4, siz);
             Array.Sort(a, 0, siz);
             Assert.AreEqual(3, a[0]);
@@ -454,7 +472,10 @@ namespace C5UnitTests.heaps
             siz = 0;
             Assert.AreEqual(18, queue.DeleteMax());
             foreach (int i in queue)
+            {
                 a[siz++] = i;
+            }
+
             Assert.AreEqual(3, siz);
             Array.Sort(a, 0, siz);
             Assert.AreEqual(3, a[0]);
@@ -464,7 +485,10 @@ namespace C5UnitTests.heaps
             siz = 0;
             Assert.AreEqual(8, queue.DeleteMax());
             foreach (int i in queue)
+            {
                 a[siz++] = i;
+            }
+
             Assert.AreEqual(2, siz);
             Array.Sort(a, 0, siz);
             Assert.AreEqual(3, a[0]);
@@ -473,7 +497,10 @@ namespace C5UnitTests.heaps
             siz = 0;
             Assert.AreEqual(8, queue.DeleteMax());
             foreach (int i in queue)
+            {
                 a[siz++] = i;
+            }
+
             Assert.AreEqual(1, siz);
             Assert.AreEqual(3, a[0]);
         }
@@ -486,7 +513,9 @@ namespace C5UnitTests.heaps
             Random ran = new Random(6754);
 
             for (int i = 0; i < length; i++)
+            {
                 queue.Add(a[i] = ran.Next());
+            }
 
             Assert.IsTrue(queue.Check());
             Array.Sort(a);
@@ -596,7 +625,10 @@ namespace C5UnitTests.heaps
             Random ran = new Random(6754);
 
             for (int i = 0; i < length; i++)
+            {
                 queue.Add(a[i] = ran.Next(3, 13));
+            }
+
             Assert.IsTrue(queue.Check());
 
             Array.Sort(a);
@@ -622,7 +654,9 @@ namespace C5UnitTests.heaps
 
             LinkedList<int> lst = new LinkedList<int>();
             for (int i = 0; i < length; i++)
+            {
                 lst.Add(a[i] = ran.Next());
+            }
 
             queue.AddAll(lst);
             Assert.IsTrue(queue.Check());

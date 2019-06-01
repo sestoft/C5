@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace C5.UserGuideExamples
 {
-    class Locking
+    internal class Locking
     {
         private static ArrayList<int> _collection = new ArrayList<int>();
         private static readonly int _count = 1000;

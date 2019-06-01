@@ -12,7 +12,7 @@ using SCG = System.Collections.Generic;
 
 namespace C5.UserGuideExamples
 {
-    static class Extension
+    internal static class Extension
     {
         public static int Added<T>(this ICollection<T> coll, int x)
         {
@@ -25,7 +25,7 @@ namespace C5.UserGuideExamples
             // Func<T,bool> p = pred.Compile();
             var p = predicate.Compile();
             foreach (T item in coll)
-            {   
+            {
                 // if (p(item))
                 if ((bool)p.DynamicInvoke(item))
                 {
@@ -34,7 +34,7 @@ namespace C5.UserGuideExamples
             }
         }
 
-        static void Main()
+        private static void Main()
         {
             var hs = new HashSet<NamedPerson>
             {
@@ -49,7 +49,7 @@ namespace C5.UserGuideExamples
         }
     }
 
-    class NamedPerson
+    internal class NamedPerson
     {
         public string Name { get; }
 

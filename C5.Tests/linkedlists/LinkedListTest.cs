@@ -1,13 +1,12 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
 
-using System;
-using C5;
 using NUnit.Framework;
+using System;
 using SCG = System.Collections.Generic;
 
 
-namespace C5UnitTests.linkedlists.plain
+namespace C5.Tests.linkedlists.plain
 {
     using CollectionOfInt = LinkedList<int>;
 
@@ -19,29 +18,29 @@ namespace C5UnitTests.linkedlists.plain
         public void TestEvents()
         {
             CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new C5UnitTests.Templates.Events.ListTester<CollectionOfInt>().Test(factory);
-            new C5UnitTests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory);
-            new C5UnitTests.Templates.Events.StackTester<CollectionOfInt>().Test(factory);
+            new C5.Tests.Templates.Events.ListTester<CollectionOfInt>().Test(factory);
+            new C5.Tests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory);
+            new C5.Tests.Templates.Events.StackTester<CollectionOfInt>().Test(factory);
         }
 
         //[Test]
         //public void Extensible()
         //{
-        //    C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5UnitTests.Templates.Extensible.Clone.ViewTester<CollectionOfInt>();
-        //    C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-        //    C5UnitTests.Templates.Extensible.Serialization.ViewTester<CollectionOfInt>();
+        //    C5.Tests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
+        //    C5.Tests.Templates.Extensible.Clone.ViewTester<CollectionOfInt>();
+        //    C5.Tests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
+        //    C5.Tests.Templates.Extensible.Serialization.ViewTester<CollectionOfInt>();
         //}
 
         [Test]
         public void List()
         {
-            C5UnitTests.Templates.List.Dispose.Tester<CollectionOfInt>();
-            C5UnitTests.Templates.List.SCG_IList.Tester<CollectionOfInt>();
+            C5.Tests.Templates.List.Dispose.Tester<CollectionOfInt>();
+            C5.Tests.Templates.List.SCG_IList.Tester<CollectionOfInt>();
         }
     }
 
-    static class Factory
+    internal static class Factory
     {
         public static ICollection<T> New<T>() { return new LinkedList<T>(); }
     }
@@ -209,8 +208,8 @@ namespace C5UnitTests.linkedlists.plain
         [TestFixture]
         public class Formatting
         {
-            ICollection<int> coll;
-            IFormatProvider rad16;
+            private ICollection<int> coll;
+            private IFormatProvider rad16;
             [SetUp]
             public void Init() { coll = Factory.New<int>(); rad16 = new RadixFormatProvider(16); }
             [TearDown]
@@ -295,7 +294,7 @@ namespace C5UnitTests.linkedlists.plain
         public class FindPredicate
         {
             private LinkedList<int> list;
-            Func<int, bool> pred;
+            private Func<int, bool> pred;
 
             [SetUp]
             public void Init()
@@ -376,8 +375,7 @@ namespace C5UnitTests.linkedlists.plain
         public class ArrayTest
         {
             private LinkedList<int> list;
-
-            int[] a;
+            private int[] a;
 
 
             [SetUp]
@@ -386,7 +384,9 @@ namespace C5UnitTests.linkedlists.plain
                 list = new LinkedList<int>();
                 a = new int[10];
                 for (int i = 0; i < 10; i++)
+                {
                     a[i] = 1000 + i;
+                }
             }
 
 
@@ -397,11 +397,17 @@ namespace C5UnitTests.linkedlists.plain
             private string aeq(int[] a, params int[] b)
             {
                 if (a.Length != b.Length)
+                {
                     return "Lengths differ: " + a.Length + " != " + b.Length;
+                }
 
                 for (int i = 0; i < a.Length; i++)
+                {
                     if (a[i] != b[i])
+                    {
                         return string.Format("{0}'th elements differ: {1} != {2}", i, a[i], b[i]);
+                    }
+                }
 
                 return "Alles klar";
             }
@@ -926,7 +932,9 @@ namespace C5UnitTests.linkedlists.plain
             {
                 lst = new LinkedList<KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
                 for (int i = 0; i < 10; i++)
+                {
                     lst.Add(new KeyValuePair<int, int>(i, i + 30));
+                }
             }
 
 
@@ -1101,7 +1109,9 @@ namespace C5UnitTests.linkedlists.plain
             public void FIFO()
             {
                 for (int i = 0; i < 7; i++)
+                {
                     lst.Add(2 * i);
+                }
 
                 Assert.IsTrue(lst.FIFO);
                 Assert.AreEqual(0, lst.Remove());
@@ -1229,7 +1239,9 @@ namespace C5UnitTests.linkedlists.plain
                 Assert.IsTrue(r.Check());
                 Assert.AreEqual(4, r.Count);
                 for (int i = 0; i < 4; i++)
+                {
                     Assert.AreEqual("<<" + (i + 1) + ">>", r[i]);
+                }
             }
             [Test]
             public void BadMapper()
@@ -1237,7 +1249,7 @@ namespace C5UnitTests.linkedlists.plain
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                bool m(int i) { if (i == 2) lst.Add(7); return true; }
+                bool m(int i) { if (i == 2) { lst.Add(7); } return true; }
 
                 Assert.Throws<CollectionModifiedException>(() => lst.Map(m));
             }
@@ -1248,7 +1260,7 @@ namespace C5UnitTests.linkedlists.plain
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                bool m(int i) { if (i == 2) lst.Add(7); return true; }
+                bool m(int i) { if (i == 2) { lst.Add(7); } return true; }
 
                 Assert.Throws<CollectionModifiedException>(() => lst.FindAll(m));
             }
@@ -1260,7 +1272,7 @@ namespace C5UnitTests.linkedlists.plain
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                bool m(int i) { if (i == 2) lst.Add(7); return true; }
+                bool m(int i) { if (i == 2) { lst.Add(7); } return true; }
 
                 Assert.Throws<CollectionModifiedException>(() => lst.Map(m));
             }
@@ -1272,7 +1284,7 @@ namespace C5UnitTests.linkedlists.plain
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
-                bool m(int i) { if (i == 2) lst.Add(7); return true; }
+                bool m(int i) { if (i == 2) { lst.Add(7); } return true; }
 
                 Assert.Throws<CollectionModifiedException>(() => lst.FindAll(m));
             }
@@ -1326,7 +1338,9 @@ namespace C5UnitTests.linkedlists.plain
             public void Reverse()
             {
                 for (int i = 0; i < 10; i++)
+                {
                     lst.Add(i);
+                }
 
                 lst.Reverse();
                 Assert.IsTrue(lst.Check());
@@ -1556,7 +1570,10 @@ namespace C5UnitTests.linkedlists.plain
             public void GetRange()
             {
                 //Assert.IsTrue(IC.eq(lst[0, 0)));
-                for (int i = 0; i < 10; i++) lst.Add(i);
+                for (int i = 0; i < 10; i++)
+                {
+                    lst.Add(i);
+                }
 
                 Assert.IsTrue(IC.eq(lst[0, 3], 0, 1, 2));
                 Assert.IsTrue(IC.eq(lst[3, 4], 3, 4, 5, 6));
@@ -1575,7 +1592,10 @@ namespace C5UnitTests.linkedlists.plain
             [Test]
             public void Backwards()
             {
-                for (int i = 0; i < 10; i++) lst.Add(i);
+                for (int i = 0; i < 10; i++)
+                {
+                    lst.Add(i);
+                }
 
                 Assert.IsTrue(IC.eq(lst.Backwards(), 9, 8, 7, 6, 5, 4, 3, 2, 1, 0));
                 Assert.IsTrue(IC.eq(lst[0, 4].Backwards(), 3, 2, 1, 0));
@@ -1586,7 +1606,10 @@ namespace C5UnitTests.linkedlists.plain
             [Test]
             public void DirectionAndCount()
             {
-                for (int i = 0; i < 10; i++) lst.Add(i);
+                for (int i = 0; i < 10; i++)
+                {
+                    lst.Add(i);
+                }
 
                 Assert.AreEqual(EnumerationDirection.Forwards, lst.Direction);
                 Assert.AreEqual(EnumerationDirection.Forwards, lst[3, 7].Direction);
@@ -1600,7 +1623,10 @@ namespace C5UnitTests.linkedlists.plain
             [Test]
             public void MoveNextAfterUpdate()
             {
-                for (int i = 0; i < 10; i++) lst.Add(i);
+                for (int i = 0; i < 10; i++)
+                {
+                    lst.Add(i);
+                }
 
                 Assert.Throws<CollectionModifiedException>(() =>
                 {
@@ -1621,7 +1647,7 @@ namespace C5UnitTests.linkedlists.plain
         [TestFixture]
         public class Simple
         {
-            LinkedList<int> list, view;
+            private LinkedList<int> list, view;
 
 
             [SetUp]
@@ -1638,8 +1664,7 @@ namespace C5UnitTests.linkedlists.plain
                 list = view = null;
             }
 
-
-            void check()
+            private void check()
             {
                 Assert.IsTrue(list.Check());
                 Assert.IsTrue(view.Check());
@@ -1708,7 +1733,10 @@ namespace C5UnitTests.linkedlists.plain
             public void ViewOf()
             {
                 for (int i = 0; i < 4; i++)
+                {
                     list.Add(i);
+                }
+
                 IList<int> v = view.ViewOf(2);
                 Assert.IsTrue(v.Check());
                 Assert.IsTrue(IC.eq(v, 2));
@@ -1861,7 +1889,10 @@ namespace C5UnitTests.linkedlists.plain
                 Assert.IsTrue(dbl.Check());
                 Assert.AreEqual(0.1, dbl[0]);
                 Assert.AreEqual(0.2, dbl[1]);
-                for (int i = 0; i < 10; i++) view.Add(i);
+                for (int i = 0; i < 10; i++)
+                {
+                    view.Add(i);
+                }
 
                 list = (LinkedList<int>)view.FindAll(new Func<int, bool>(delegate (int i) { return i % 4 == 1; }));
                 Assert.IsTrue(list.Check());
@@ -1881,14 +1912,26 @@ namespace C5UnitTests.linkedlists.plain
             public void Indexing()
             {
                 list.Clear();
-                for (int i = 0; i < 20; i++) list.Add(i);
+                for (int i = 0; i < 20; i++)
+                {
+                    list.Add(i);
+                }
 
                 view = (LinkedList<int>)list.View(5, 7);
-                for (int i = 0; i < 7; i++) Assert.AreEqual(i + 5, view[i]);
+                for (int i = 0; i < 7; i++)
+                {
+                    Assert.AreEqual(i + 5, view[i]);
+                }
 
-                for (int i = 0; i < 7; i++) Assert.AreEqual(i, view.IndexOf(i + 5));
+                for (int i = 0; i < 7; i++)
+                {
+                    Assert.AreEqual(i, view.IndexOf(i + 5));
+                }
 
-                for (int i = 0; i < 7; i++) Assert.AreEqual(i, view.LastIndexOf(i + 5));
+                for (int i = 0; i < 7; i++)
+                {
+                    Assert.AreEqual(i, view.LastIndexOf(i + 5));
+                }
             }
 
 
@@ -1993,7 +2036,10 @@ namespace C5UnitTests.linkedlists.plain
             public void Reverse()
             {
                 view.Clear();
-                for (int i = 0; i < 10; i++) view.Add(10 + i);
+                for (int i = 0; i < 10; i++)
+                {
+                    view.Add(10 + i);
+                }
 
                 view.View(3, 4).Reverse();
                 check();
@@ -2030,19 +2076,29 @@ namespace C5UnitTests.linkedlists.plain
             {
                 list.Clear();
                 view = null;
-                foreach (int i in new int[] { 2, 4, 8, 13, 6, 1, 2, 7 }) list.Add(i);
+                foreach (int i in new int[] { 2, 4, 8, 13, 6, 1, 2, 7 })
+                {
+                    list.Add(i);
+                }
 
                 view = (LinkedList<int>)list.View(list.Count - 2, 2);
                 while (true)
                 {
                     //Console.WriteLine("View: {0}:  {1} --> {2}", view.Count, view.First, view.Last);
                     if ((view.Last - view.First) % 2 == 1)
+                    {
                         view.Insert(1, 666);
+                    }
+
                     check();
                     if (view.Offset == 0)
+                    {
                         break;
+                    }
                     else
+                    {
                         view.Slide(-1, 2);
+                    }
                 }
                 //foreach (int cell in list) Console.Write(" " + cell);
                 //Assert.IsTrue(list.Check());
@@ -2060,20 +2116,25 @@ namespace C5UnitTests.linkedlists.plain
         [TestFixture]
         public class MulipleViews
         {
-            IList<int> list;
-            IList<int>[][] views;
+            private IList<int> list;
+            private IList<int>[][] views;
             [SetUp]
             public void Init()
             {
                 list = new LinkedList<int>();
                 for (int i = 0; i < 6; i++)
+                {
                     list.Add(i);
+                }
+
                 views = new IList<int>[7][];
                 for (int i = 0; i < 7; i++)
                 {
                     views[i] = new IList<int>[7 - i];
                     for (int j = 0; j < 7 - i; j++)
+                    {
                         views[i][j] = list.View(i, j);
+                    }
                 }
             }
             [TearDown]
@@ -2089,11 +2150,13 @@ namespace C5UnitTests.linkedlists.plain
                 list.Insert(3, 777);
                 Assert.IsTrue(list.Check(), "list check after insert");
                 for (int i = 0; i < 7; i++)
+                {
                     for (int j = 0; j < 7 - i; j++)
                     {
                         Assert.AreEqual(i < 3 || (i == 3 && j == 0) ? i : i + 1, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
                         Assert.AreEqual(i < 3 && i + j > 3 ? j + 1 : j, views[i][j].Count, "view[" + i + "][" + j + "] count");
                     }
+                }
             }
             [Test]
             public void RemoveAt()
@@ -2102,11 +2165,13 @@ namespace C5UnitTests.linkedlists.plain
                 list.RemoveAt(3);
                 Assert.IsTrue(list.Check(), "list check after remove");
                 for (int i = 0; i < 7; i++)
+                {
                     for (int j = 0; j < 7 - i; j++)
                     {
                         Assert.AreEqual(i <= 3 ? i : i - 1, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
                         Assert.AreEqual(i <= 3 && i + j > 3 ? j - 1 : j, views[i][j].Count, "view[" + i + "][" + j + "] count");
                     }
+                }
             }
 
             [Test]
@@ -2116,11 +2181,13 @@ namespace C5UnitTests.linkedlists.plain
                 list.RemoveInterval(3, 2);
                 Assert.IsTrue(list.Check(), "list check after remove");
                 for (int i = 0; i < 7; i++)
+                {
                     for (int j = 0; j < 7 - i; j++)
                     {
                         Assert.AreEqual(i <= 3 ? i : i <= 5 ? 3 : i - 2, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
                         Assert.AreEqual(j == 0 ? 0 : i <= 3 && i + j > 4 ? j - 2 : i > 4 || i + j <= 3 ? j : j - 1, views[i][j].Count, "view[" + i + "][" + j + "] count");
                     }
+                }
             }
 
 
@@ -2131,11 +2198,13 @@ namespace C5UnitTests.linkedlists.plain
                 list.InsertLast(777);
                 Assert.IsTrue(list.Check(), "list check after insert");
                 for (int i = 0; i < 7; i++)
+                {
                     for (int j = 0; j < 7 - i; j++)
                     {
                         Assert.AreEqual(i, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
                         Assert.AreEqual(j, views[i][j].Count, "view[" + i + "][" + j + "] count");
                     }
+                }
             }
             [Test]
             public void RemoveAtEnd()
@@ -2144,11 +2213,13 @@ namespace C5UnitTests.linkedlists.plain
                 list.RemoveAt(5);
                 Assert.IsTrue(list.Check(), "list check after remove");
                 for (int i = 0; i < 7; i++)
+                {
                     for (int j = 0; j < 7 - i; j++)
                     {
                         Assert.AreEqual(i <= 5 ? i : i - 1, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
                         Assert.AreEqual(i <= 5 && i + j > 5 ? j - 1 : j, views[i][j].Count, "view[" + i + "][" + j + "] count");
                     }
+                }
             }
             [Test]
             public void InsertAtStart()
@@ -2157,11 +2228,13 @@ namespace C5UnitTests.linkedlists.plain
                 list.Insert(0, 777);
                 Assert.IsTrue(list.Check(), "list check after insert");
                 for (int i = 0; i < 7; i++)
+                {
                     for (int j = 0; j < 7 - i; j++)
                     {
                         Assert.AreEqual(i == 0 && j == 0 ? 0 : i + 1, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
                         Assert.AreEqual(j, views[i][j].Count, "view[" + i + "][" + j + "] count");
                     }
+                }
             }
             [Test]
             public void RemoveAtStart()
@@ -2170,11 +2243,13 @@ namespace C5UnitTests.linkedlists.plain
                 list.RemoveAt(0);
                 Assert.IsTrue(list.Check(), "list check after remove");
                 for (int i = 0; i < 7; i++)
+                {
                     for (int j = 0; j < 7 - i; j++)
                     {
                         Assert.AreEqual(i == 0 ? i : i - 1, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
                         Assert.AreEqual(i == 0 && j > 0 ? j - 1 : j, views[i][j].Count, "view[" + i + "][" + j + "] count");
                     }
+                }
             }
             [Test]
             public void Clear()
@@ -2183,20 +2258,38 @@ namespace C5UnitTests.linkedlists.plain
                 views[2][3].Clear();
                 Assert.IsTrue(list.Check(), "list check after clear");
                 for (int i = 0; i < 7; i++)
+                {
                     for (int j = 0; j < 7 - i; j++)
                     {
                         Assert.AreEqual(i < 2 ? i : i < 6 ? 2 : i - 3, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
                         Assert.AreEqual(s(i, j), views[i][j].Count, "view[" + i + "][" + j + "] count");
                     }
+                }
             }
 
             private int s(int i, int j)
             {
-                if (j == 0) return 0;
+                if (j == 0)
+                {
+                    return 0;
+                }
+
                 int k = i + j - 1; //end
-                if (i > 4 || k <= 1) return j;
-                if (i >= 2) return k > 4 ? k - 4 : 0;
-                if (i <= 2) return k >= 4 ? j - 3 : 2 - i;
+                if (i > 4 || k <= 1)
+                {
+                    return j;
+                }
+
+                if (i >= 2)
+                {
+                    return k > 4 ? k - 4 : 0;
+                }
+
+                if (i <= 2)
+                {
+                    return k >= 4 ? j - 3 : 2 - i;
+                }
+
                 return -1;
             }
             [Test]
@@ -2208,11 +2301,13 @@ namespace C5UnitTests.linkedlists.plain
                 list.InsertAll(3, list2);
                 Assert.IsTrue(list.Check(), "list check after insertAll");
                 for (int i = 0; i < 7; i++)
+                {
                     for (int j = 0; j < 7 - i; j++)
                     {
                         Assert.AreEqual(i < 3 || (i == 3 && j == 0) ? i : i + 5, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
                         Assert.AreEqual(i < 3 && i + j > 3 ? j + 5 : j, views[i][j].Count, "view[" + i + "][" + j + "] count");
                     }
+                }
             }
 
             [Test]
@@ -2224,11 +2319,13 @@ namespace C5UnitTests.linkedlists.plain
                 list.View(1, 2).AddAll(list2);
                 Assert.IsTrue(list.Check(), "list check after AddAll");
                 for (int i = 0; i < 7; i++)
+                {
                     for (int j = 0; j < 7 - i; j++)
                     {
                         Assert.AreEqual(i < 3 || (i == 3 && j == 0) ? i : i + 5, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
                         Assert.AreEqual(i < 3 && i + j > 3 ? j + 5 : j, views[i][j].Count, "view[" + i + "][" + j + "] count");
                     }
+                }
             }
 
             [Test]
@@ -2241,7 +2338,11 @@ namespace C5UnitTests.linkedlists.plain
                     for (int j = 0; j < 7 - i; j++)
                     {
                         list = new LinkedList<int>();
-                        for (int k = 0; k < 6; k++) list.Add(k);
+                        for (int k = 0; k < 6; k++)
+                        {
+                            list.Add(k);
+                        }
+
                         _ = (LinkedList<int>)list.View(i, j);
                         list.RemoveAll(list2);
                         Assert.IsTrue(list.Check(), "list check after RemoveAll, i=" + i + ", j=" + j);
@@ -2406,6 +2507,7 @@ namespace C5UnitTests.linkedlists.plain
             private void checkDisposed(bool reverse, int start, int count)
             {
                 for (int i = 0; i < 7; i++)
+                {
                     for (int j = 0; j < 7 - i; j++)
                     {
                         int k;
@@ -2421,9 +2523,13 @@ namespace C5UnitTests.linkedlists.plain
                             }
                             Assert.AreEqual(j, views[i][j].Count, "view[" + i + "][" + j + "] size");
                             if (reverse && ((j > 0 && start <= i && start + count >= i + j) || (j == 0 && start < i && start + count > i)))
+                            {
                                 Assert.AreEqual(start + (start + count - i - j), views[i][j].Offset, "view[" + i + "][" + j + "] offset (mirrored)");
+                            }
                             else
+                            {
                                 Assert.AreEqual(i, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
+                            }
                         }
                         else
                         {
@@ -2435,6 +2541,7 @@ namespace C5UnitTests.linkedlists.plain
                             catch (ViewDisposedException) { }
                         }
                     }
+                }
             }
 
             [Test]
@@ -2475,14 +2582,17 @@ namespace C5UnitTests.linkedlists.plain
         [TestFixture]
         public class Validity
         {
-            IList<int> list;
-            IList<int> view;
+            private IList<int> list;
+            private IList<int> view;
             [SetUp]
             public void Init()
             {
                 list = new LinkedList<int>();
                 for (int i = 0; i < 6; i++)
+                {
                     list.Add(i);
+                }
+
                 view = list.View(2, 3);
                 view.Dispose();
             }

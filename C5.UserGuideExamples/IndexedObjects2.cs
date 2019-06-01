@@ -13,9 +13,9 @@ using System;
 
 namespace C5.UserGuideExamples
 {
-    static class IndexedObjects2Program
+    internal static class IndexedObjects2Program
     {
-        static void Main()
+        private static void Main()
         {
             // Create some PersonIndexed2 objects:
             new PersonIndexedObjects2("Niels", 19470206);

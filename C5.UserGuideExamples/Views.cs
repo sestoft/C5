@@ -10,7 +10,7 @@ using System;
 
 namespace C5.UserGuideExamples
 {
-    class Views
+    internal class Views
     {
         public static void Main()
         {

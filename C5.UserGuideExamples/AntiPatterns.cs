@@ -10,7 +10,7 @@ using System;
 
 namespace C5.UserGuideExamples
 {
-    class AntiPatterns
+    internal class AntiPatterns
     {
         public static void Main()
         {

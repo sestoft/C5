@@ -10,7 +10,7 @@ using System;
 
 namespace C5.UserGuideExamples
 {
-    class DecreaseIncreaseKey
+    internal class DecreaseIncreaseKey
     {
         public static void Main()
         {
@@ -34,7 +34,7 @@ namespace C5.UserGuideExamples
         }
     }
 
-    struct Prio<D> : IComparable<Prio<D>> where D : class
+    internal struct Prio<D> : IComparable<Prio<D>> where D : class
     {
         public D Data { get; }
         public int Priority { get; }

@@ -14,9 +14,9 @@ using SCG = System.Collections.Generic;
 
 namespace C5.UserGuideExamples
 {
-    class Anagrams
+    internal class Anagrams
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var ss = args.Length == 2 ? ReadFileWords(args[0], int.Parse(args[1])) : args;
 
@@ -48,7 +48,7 @@ namespace C5.UserGuideExamples
         }
 
         // Read words at most n words from a file
-        static SCG.IEnumerable<string> ReadFileWords(string filename, int n)
+        private static SCG.IEnumerable<string> ReadFileWords(string filename, int n)
         {
             var delimiter = new Regex("[^a-zæøåA-ZÆØÅ0-9-]+");
 
@@ -80,7 +80,7 @@ namespace C5.UserGuideExamples
         // characters.  So an anagram class is represented as HashBag<char>
         // which permits fast equality comparison -- we shall use them as
         // elements of hash sets or keys in hash maps.
-        static TreeBag<char> AnagramClass(string s)
+        private static TreeBag<char> AnagramClass(string s)
         {
             var anagram = new TreeBag<char>();
 
@@ -94,7 +94,7 @@ namespace C5.UserGuideExamples
 
         // Given a sequence of strings, return only the first member of each
         // anagram class.
-        static SCG.IEnumerable<string> FirstAnagramOnly(SCG.IEnumerable<string> ss)
+        private static SCG.IEnumerable<string> FirstAnagramOnly(SCG.IEnumerable<string> ss)
         {
             var tbh = UnsequencedCollectionEqualityComparer<TreeBag<char>, char>.Default;
             var anagrams = new HashSet<TreeBag<char>>(tbh);
@@ -124,9 +124,9 @@ namespace C5.UserGuideExamples
         // be because many bags get the same hash code, so that there are
         // many collisions.  But exactly how the unsequenced equalityComparer works is
         // not clear ... or is it because unsequenced equality is slow?
-        static SCG.IEnumerable<SCG.IEnumerable<string>> AnagramClasses(SCG.IEnumerable<string> ss, bool unsequenced = true)
+        private static SCG.IEnumerable<SCG.IEnumerable<string>> AnagramClasses(SCG.IEnumerable<string> ss, bool unsequenced = true)
         {
-            var classes = unsequenced 
+            var classes = unsequenced
                 ? new HashDictionary<TreeBag<char>, TreeSet<string>>(UnsequencedCollectionEqualityComparer<TreeBag<char>, char>.Default)
                 : new HashDictionary<TreeBag<char>, TreeSet<string>>(SequencedCollectionEqualityComparer<TreeBag<char>, char>.Default);
 

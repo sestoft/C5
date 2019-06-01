@@ -43,9 +43,9 @@ using SCG = System.Collections.Generic;
 
 namespace C5.UserGuideExamples
 {
-    static class LockstepCollections
+    internal static class LockstepCollections
     {
-        static void Main()
+        private static void Main()
         {
             var nameColl = new HashSet<PersonLockstepCollections>(new PersonLockstepCollections.NameEqualityComparer());
             var dateColl = new TreeSet<PersonLockstepCollections>(new PersonLockstepCollections.DateComparer());
@@ -74,7 +74,7 @@ namespace C5.UserGuideExamples
             Console.WriteLine($"nameColl = {nameColl}");
         }
 
-        static void MakeLockstep<T>(params ICollection<T>[] colls)
+        private static void MakeLockstep<T>(params ICollection<T>[] colls)
         {
             // These will be captured in the event handler delegates below
             var N = colls.Length;

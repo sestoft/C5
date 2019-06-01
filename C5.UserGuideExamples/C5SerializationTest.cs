@@ -6,15 +6,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
-using System.IO;
 
 namespace C5.UserGuideExamples
 {
-    static class C5SerializationTest
+    internal static class C5SerializationTest
     {
-        static void Main()
+        private static void Main()
         {
             // The following appear to serialize/deserialize just fine
             var arrayList = new ArrayList<int> { 1, 2, 3, 4 };

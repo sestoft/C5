@@ -16,15 +16,15 @@ namespace C5
     public class WrappedArray<T> : IList<T>, SCG.IList<T>
     {
         [Serializable]
-        class InnerList : ArrayList<T>
+        private class InnerList : ArrayList<T>
         {
             internal InnerList(T[] array) { this.array = array; size = array.Length; }
         }
 
-        readonly ArrayList<T> innerlist;
+        private readonly ArrayList<T> innerlist;
 
         //TODO: remember a ref to the wrapped array in WrappedArray to save a little on indexing?
-        readonly WrappedArray<T>? underlying;
+        private readonly WrappedArray<T>? underlying;
 
         /// <summary>
         /// 
@@ -33,7 +33,7 @@ namespace C5
         public WrappedArray(T[] wrappedarray) { innerlist = new InnerList(wrappedarray); }
 
         //for views
-        WrappedArray(ArrayList<T> arraylist, WrappedArray<T> underlying) { innerlist = arraylist; this.underlying = underlying; }
+        private WrappedArray(ArrayList<T> arraylist, WrappedArray<T> underlying) { innerlist = arraylist; this.underlying = underlying; }
 
         #region IList<T> Members
 
@@ -748,7 +748,7 @@ namespace C5
         /// <param name="formatProvider"></param>
         /// <returns></returns>
         public bool Show(StringBuilder stringbuilder, ref int rest, IFormatProvider? formatProvider)
-        { return innerlist.Show(stringbuilder, ref  rest, formatProvider); }
+        { return innerlist.Show(stringbuilder, ref rest, formatProvider); }
 
         #endregion
 
@@ -810,9 +810,13 @@ namespace C5
         public void Dispose()
         {
             if (underlying == null)
+            {
                 throw new FixedSizeCollectionException();
+            }
             else
+            {
                 innerlist.Dispose();
+            }
         }
 
         #endregion
@@ -847,10 +851,14 @@ namespace C5
         void System.Collections.ICollection.CopyTo(Array arr, int index)
         {
             if (index < 0 || index + Count > arr.Length)
+            {
                 throw new ArgumentOutOfRangeException();
+            }
 
             foreach (T item in this)
+            {
                 arr.SetValue(item, index++);
+            }
         }
 
         #endregion

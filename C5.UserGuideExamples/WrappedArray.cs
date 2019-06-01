@@ -11,7 +11,7 @@ using SCG = System.Collections.Generic;
 
 namespace C5.UserGuideExamples
 {
-    class WrappedArray
+    internal class WrappedArray
     {
         public static void Main()
         {

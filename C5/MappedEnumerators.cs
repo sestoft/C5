@@ -6,9 +6,9 @@ using SCG = System.Collections.Generic;
 namespace C5
 {
     [Serializable]
-    abstract class MappedDirectedCollectionValue<T, V> : DirectedCollectionValueBase<V>, IDirectedCollectionValue<V>
+    internal abstract class MappedDirectedCollectionValue<T, V> : DirectedCollectionValueBase<V>, IDirectedCollectionValue<V>
     {
-        IDirectedCollectionValue<T> directedcollectionvalue;
+        private IDirectedCollectionValue<T> directedcollectionvalue;
 
         abstract public V Map(T item);
 
@@ -38,7 +38,9 @@ namespace C5
         public override SCG.IEnumerator<V> GetEnumerator()
         {
             foreach (T item in directedcollectionvalue)
+            {
                 yield return Map(item);
+            }
         }
 
         public override EnumerationDirection Direction
@@ -55,9 +57,9 @@ namespace C5
     }
 
     [Serializable]
-    abstract class MappedCollectionValue<T, V> : CollectionValueBase<V>, ICollectionValue<V>
+    internal abstract class MappedCollectionValue<T, V> : CollectionValueBase<V>, ICollectionValue<V>
     {
-        readonly ICollectionValue<T> collectionvalue;
+        private readonly ICollectionValue<T> collectionvalue;
 
         abstract public V Map(T item);
 
@@ -77,28 +79,30 @@ namespace C5
         public override SCG.IEnumerator<V> GetEnumerator()
         {
             foreach (T item in collectionvalue)
+            {
                 yield return Map(item);
+            }
         }
     }
 
     [Serializable]
-    class MultiplicityOne<K> : MappedCollectionValue<K, KeyValuePair<K, int>>
+    internal class MultiplicityOne<K> : MappedCollectionValue<K, KeyValuePair<K, int>>
     {
         public MultiplicityOne(ICollectionValue<K> coll) : base(coll) { }
         public override KeyValuePair<K, int> Map(K k) { return new KeyValuePair<K, int>(k, 1); }
     }
 
     [Serializable]
-    class DropMultiplicity<K> : MappedCollectionValue<KeyValuePair<K, int>, K>
+    internal class DropMultiplicity<K> : MappedCollectionValue<KeyValuePair<K, int>, K>
     {
         public DropMultiplicity(ICollectionValue<KeyValuePair<K, int>> coll) : base(coll) { }
         public override K Map(KeyValuePair<K, int> kvp) { return kvp.Key; }
     }
 
     [Serializable]
-    abstract class MappedDirectedEnumerable<T, V> : EnumerableBase<V>, IDirectedEnumerable<V>
+    internal abstract class MappedDirectedEnumerable<T, V> : EnumerableBase<V>, IDirectedEnumerable<V>
     {
-        IDirectedEnumerable<T> directedenumerable;
+        private IDirectedEnumerable<T> directedenumerable;
 
         abstract public V Map(T item);
 
@@ -120,7 +124,9 @@ namespace C5
         public override SCG.IEnumerator<V> GetEnumerator()
         {
             foreach (T item in directedenumerable)
+            {
                 yield return Map(item);
+            }
         }
 
         public EnumerationDirection Direction

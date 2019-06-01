@@ -65,19 +65,19 @@ namespace C5.UserGuideExamples
     /// <typeparam name="V"></typeparam>
     /// <typeparam name="E"></typeparam>
     /// <typeparam name="W"></typeparam>
-    interface IGraphVertex<V, E, W> where W : IComparable<W>
+    internal interface IGraphVertex<V, E, W> where W : IComparable<W>
     {
         V Value { get; }
         IGraph<V, E, W> Graph { get; }
         ICollectionValue<KeyValuePair<V, E>> Adjacent { get; }
     }
 
-    class Vertex<V>
+    internal class Vertex<V>
     {
         //V v;
     }
 
-    interface IGraph<V, E, W> where W : IComparable<W>
+    internal interface IGraph<V, E, W> where W : IComparable<W>
     {
         /// <summary>
         /// 
@@ -302,7 +302,7 @@ namespace C5.UserGuideExamples
     /// </summary>
     /// <typeparam name="V">The type of a vertex.</typeparam>
     /// <typeparam name="E">The type of data associated with edges.</typeparam>
-    struct Edge<V, E>
+    internal struct Edge<V, E>
     {
         private static readonly SCG.IEqualityComparer<V> vequalityComparer = EqualityComparer<V>.Default;
         public V Start { get; }
@@ -391,7 +391,7 @@ namespace C5.UserGuideExamples
     /// </summary>
     /// <typeparam name="E"></typeparam>
     /// <typeparam name="W"></typeparam>
-    interface IWeight<E, W> where W : IComparable<W>
+    internal interface IWeight<E, W> where W : IComparable<W>
     {
         /// <summary>
         /// Compute the weight value corresponding to specific edge data.
@@ -423,7 +423,7 @@ namespace C5.UserGuideExamples
     /// <param name="edge"></param>
     /// <param name="extra"></param>
     /// <returns></returns>
-    delegate bool EdgeAction<V, E, U>(Edge<V, E> edge, U extra);
+    internal delegate bool EdgeAction<V, E, U>(Edge<V, E> edge, U extra);
 
 
     /*
@@ -451,7 +451,7 @@ namespace C5.UserGuideExamples
     /// <typeparam name="V"></typeparam>
     /// <typeparam name="E"></typeparam>
     /// <typeparam name="W"></typeparam>
-    class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
+    internal class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
     {
         private readonly HashDictionary<V, HashDictionary<V, E>> _graph;
 
@@ -564,7 +564,7 @@ namespace C5.UserGuideExamples
             return new GuardedCollectionValue<KeyValuePair<V, E>>(_graph[vertex]);
         }
 
-        class EdgesValue : CollectionValueBase<Edge<V, E>>
+        private class EdgesValue : CollectionValueBase<Edge<V, E>>
         {
             private readonly HashGraph<V, E, W> _graph;
 
@@ -750,7 +750,9 @@ namespace C5.UserGuideExamples
                     //component.graph[start] = graph[start].Clone();
                     HashDictionary<V, E> edgeset = component._graph[start] = new HashDictionary<V, E>();
                     foreach (KeyValuePair<V, E> adjacent in _graph[start])
+                    {
                         edgeset[adjacent.Key] = adjacent.Value;
+                    }
                 }
                 retval.Add(new KeyValuePair<V, IGraph<V, E, W>>(v, component));
             }
@@ -826,7 +828,7 @@ namespace C5.UserGuideExamples
             }
         }
 
-        delegate void Visitor(V v, V parent, bool atRoot);
+        private delegate void Visitor(V v, V parent, bool atRoot);
 
         //TODO: allow actions to be null
         [UsedBy("testDFS")]
@@ -852,7 +854,9 @@ namespace C5.UserGuideExamples
                         else
                         {
                             if (!atRoot && !parent.Equals(end))
+                            {
                                 onnotfollowed(e);
+                            }
                         }
                     }
                 }
@@ -889,7 +893,10 @@ namespace C5.UserGuideExamples
                     currentdist = fringe.DeleteMin(out h);
                     Edge<V, E> e = bestedge[h];
                     if (!act(e, currentdist))
+                    {
                         break;
+                    }
+
                     bestedge.Remove(h);
                     current = e.End;
                 }
@@ -1164,7 +1171,7 @@ namespace C5.UserGuideExamples
         /// The purpose of this struct is to be able to create and add new,
         /// synthetic vertices to a graph. 
         /// </summary>
-        struct Vplus : IEquatable<Vplus>
+        private struct Vplus : IEquatable<Vplus>
         {
             private static readonly SCG.IEqualityComparer<V> _vequalityComparer = EqualityComparer<V>.Default;
 
@@ -1319,7 +1326,7 @@ namespace C5.UserGuideExamples
     /// A weight on a graph that assigns the weight 1 to every edge.
     /// </summary>
     /// <typeparam name="E">(Ignored) type of edgedata</typeparam>
-    class CountWeight<E> : IWeight<E, int>
+    internal class CountWeight<E> : IWeight<E, int>
     {
         public int Weight(E edgedata) { return 1; }
 
@@ -1329,7 +1336,7 @@ namespace C5.UserGuideExamples
     /// <summary>
     /// A weight on an IGraph&lt;V,int&gt; that uses the value of the edgedata as the weight value.
     /// </summary>
-    class IntWeight : IWeight<int, int>
+    internal class IntWeight : IWeight<int, int>
     {
         public int Weight(int edgedata) { return edgedata; }
 
@@ -1340,7 +1347,7 @@ namespace C5.UserGuideExamples
     /// <summary>
     /// A weight on an IGraph&lt;V,double&gt; that uses the value of the edgedata as the weight value.
     /// </summary>
-    class DoubleWeight : IWeight<double, double>
+    internal class DoubleWeight : IWeight<double, double>
     {
         public double Weight(double edgedata) { return edgedata; }
 
@@ -1351,9 +1358,9 @@ namespace C5.UserGuideExamples
     /// <summary>
     /// Attribute used for marking which examples use a particular graph method
     /// </summary>
-    class UsedByAttribute : Attribute
+    internal class UsedByAttribute : Attribute
     {
-        readonly string[] tests;
+        private readonly string[] tests;
         internal UsedByAttribute(params string[] tests) { this.tests = tests; }
 
         public override string ToString()
@@ -1362,7 +1369,10 @@ namespace C5.UserGuideExamples
             for (int i = 0; i < tests.Length; i++)
             {
                 if (i > 0)
+                {
                     sb.Append(", ");
+                }
+
                 sb.Append(tests[i]);
             }
             return sb.ToString();
@@ -1372,9 +1382,9 @@ namespace C5.UserGuideExamples
     /// <summary>
     /// Attribute for marking example methods with a description
     /// </summary>
-    class ExampleDescriptionAttribute : Attribute
+    internal class ExampleDescriptionAttribute : Attribute
     {
-        readonly string text;
+        private readonly string text;
         internal ExampleDescriptionAttribute(string text) { this.text = text; }
         public override string ToString() { return text; }
     }
@@ -1382,9 +1392,9 @@ namespace C5.UserGuideExamples
     /// <summary>
     /// A selection of test cases
     /// </summary>
-    class Graph
+    internal class Graph
     {
-        static SCG.IEnumerable<Edge<int, int>> Grid(int n)
+        private static SCG.IEnumerable<Edge<int, int>> Grid(int n)
         {
             Random ran = new Random(1717);
             for (int i = 1; i <= n; i++)
@@ -1397,7 +1407,7 @@ namespace C5.UserGuideExamples
             }
         }
 
-        static SCG.IEnumerable<Edge<string, int>> Snake(int n)
+        private static SCG.IEnumerable<Edge<string, int>> Snake(int n)
         {
             for (int i = 1; i <= n; i++)
             {
@@ -1413,7 +1423,7 @@ namespace C5.UserGuideExamples
         /// <param name="treeCount">Number of trees</param>
         /// <param name="height">Height of trees</param>
         /// <returns></returns>
-        static SCG.IEnumerable<Edge<string, int>> Forest(int treeCount, int height)
+        private static SCG.IEnumerable<Edge<string, int>> Forest(int treeCount, int height)
         {
             for (int i = 0; i < treeCount; i++)
             {
@@ -1452,7 +1462,7 @@ namespace C5.UserGuideExamples
         /// will have edges for the spokes and between neighboring perimeter vetices.</param>
         /// <param name="n">The number of perimeter vertices, must be at least 3.</param>
         /// <returns>An enumerable with the edges</returns>
-        static SCG.IEnumerable<Edge<string, double>> Wheel(bool complete, int n)
+        private static SCG.IEnumerable<Edge<string, double>> Wheel(bool complete, int n)
         {
             if (n < 3)
             {
@@ -1624,7 +1634,9 @@ namespace C5.UserGuideExamples
             HashGraph<string, double, double> g = new HashGraph<string, double, double>(new DoubleWeight(), Wheel(true, 20));
 
             foreach (string s in g.ApproximateTSP2())
+            {
                 Console.WriteLine("# " + s);
+            }
             //g.Print(Console.Out);
             /*
               Console.WriteLine("========= MST =========");
@@ -1687,7 +1699,10 @@ namespace C5.UserGuideExamples
         {
             HashGraph<string, double, double> g = new HashGraph<string, double, double>(new DoubleWeight(), Wheel(true, 6));
             foreach (string s in g.EulerTour())
+            {
                 Console.Write(s + " ");
+            }
+
             Console.WriteLine();
         }
 
@@ -1742,40 +1757,53 @@ namespace C5.UserGuideExamples
             {
                 int i = index[v];
                 if (i == 0 && outgoingFromRoot > 1)
+                {
                     Console.WriteLine("Articulation point: {0} ({1}>1 outgoing DFS edges from start)",
                         v, outgoingFromRoot);
+                }
             }
             void onfollow(Edge<string, int> e) { }
             void onfollowed(Edge<string, int> e)
             {
                 int startind = index[e.Start], endind = index[e.End];
                 if (startind == 0)
+                {
                     outgoingFromRoot++;
+                }
                 else
                 {
                     int leastIndexReachable = leastIndexReachableFrom[endind];
                     if (leastIndexReachable >= startind)
+                    {
                         Console.WriteLine("Articulation point: {0} (least index reachable via {3} is {1} >= this index {2})",
                             e.Start, leastIndexReachable, startind, e);
+                    }
+
                     if (leastIndexReachableFrom[startind] > leastIndexReachable)
+                    {
                         leastIndexReachableFrom[startind] = leastIndexReachable;
+                    }
                 }
             }
             void onnotfollowed(Edge<string, int> e)
             {
                 int startind = index[e.Start], endind = index[e.End];
                 if (leastIndexReachableFrom[startind] > endind)
+                {
                     leastIndexReachableFrom[startind] = endind;
+                }
             }
 
             string root = "C";
             g.DepthFirstSearch(root, beforevertex, aftervertex, onfollow, onfollowed, onnotfollowed);
             Console.WriteLine("Edges:");
             foreach (Edge<string, int> e in g.Edges())
+            {
                 Console.WriteLine("/ {0}", e);
+            }
         }
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             if (args.Length != 1)
             {
@@ -1799,7 +1827,9 @@ namespace C5.UserGuideExamples
                     System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
 
                 if (mi == null)
+                {
                     Console.WriteLine("No such testmethod, {0}", testMethodName);
+                }
                 else
                 {
                     object[] attrs = mi.GetCustomAttributes(typeof(ExampleDescriptionAttribute), false);

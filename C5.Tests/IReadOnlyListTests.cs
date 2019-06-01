@@ -4,7 +4,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace C5.NET45.Tests
+namespace C5.Tests
 {
     [TestFixture]
     public class IReadOnlyListTests

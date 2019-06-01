@@ -10,7 +10,7 @@ using System;
 
 namespace C5.UserGuideExamples
 {
-    class SortedIterationPatterns
+    internal class SortedIterationPatterns
     {
         public static void Main(string[] args)
         {
@@ -201,7 +201,7 @@ namespace C5.UserGuideExamples
         {
             var x1HasSucc = Successor(coll, x1, out T x1Succ);
             var x2HasSucc = Successor(coll, x2, out T x2Succ);
-            IDirectedEnumerable<T> range = x1HasSucc 
+            IDirectedEnumerable<T> range = x1HasSucc
                 ? (x2HasSucc ? coll.RangeFromTo(x1Succ, x2Succ) : coll.RangeFrom(x1Succ))
                 : new ArrayList<T>();
 

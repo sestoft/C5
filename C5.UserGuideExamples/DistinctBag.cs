@@ -30,9 +30,9 @@ using SCG = System.Collections.Generic;
 
 namespace C5.UserGuideExamples
 {
-    class DistinctBagProgram
+    internal class DistinctBagProgram
     {
-        static void Main()
+        private static void Main()
         {
             var nameColl = new DistinctHashBag<PersonDistinctBag>(new PersonDistinctBag.NameEqualityComparer());
             var p1 = new PersonDistinctBag("Peter", 19620625);
