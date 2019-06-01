@@ -17,7 +17,7 @@ namespace C5
         ///
         /// </summary>
         /// <value></value>
-        public override EventTypeEnum ListenableEvents => EventTypeEnum.Basic;
+        public override EventType ListenableEvents => EventType.Basic;
 
         #endregion
 
@@ -1246,7 +1246,7 @@ namespace C5
 
         private void RaiseForAddAll(T[] addedItems, int numAdded)
         {
-            if ((ActiveEvents & EventTypeEnum.Added) != 0)
+            if ((ActiveEvents & EventType.Added) != 0)
             {
                 for (int i = 0; i < numAdded; i += 1)
                 {

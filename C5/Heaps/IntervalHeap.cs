@@ -19,7 +19,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public override EventTypeEnum ListenableEvents => EventTypeEnum.Basic;
+        public override EventType ListenableEvents => EventType.Basic;
 
         #endregion
 
@@ -471,7 +471,7 @@ namespace C5
 
             if (size != oldsize)
             {
-                if ((ActiveEvents & EventTypeEnum.Added) != 0)
+                if ((ActiveEvents & EventType.Added) != 0)
                 {
                     foreach (T item in items)
                     {

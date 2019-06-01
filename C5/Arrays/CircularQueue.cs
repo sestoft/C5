@@ -37,7 +37,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public override EventTypeEnum ListenableEvents => EventTypeEnum.Basic;
+        public override EventType ListenableEvents => EventType.Basic;
 
         #endregion
 
