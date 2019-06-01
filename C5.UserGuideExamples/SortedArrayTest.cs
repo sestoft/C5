@@ -13,7 +13,7 @@ using System;
 
 namespace C5.UserGuideExamples
 {
-    class SortedArrayTest
+    internal class SortedArrayTest
     {
         public static void Main()
         {

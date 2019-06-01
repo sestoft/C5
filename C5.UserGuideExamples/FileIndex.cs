@@ -13,9 +13,9 @@ using System.Text.RegularExpressions;
 
 namespace C5.UserGuideExamples
 {
-    class FileIndex
+    internal class FileIndex
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             if (args.Length != 1)
             {
@@ -28,7 +28,7 @@ namespace C5.UserGuideExamples
             }
         }
 
-        static IDictionary<string, TreeSet<int>> IndexFile(string filename)
+        private static IDictionary<string, TreeSet<int>> IndexFile(string filename)
         {
             var index = new TreeDictionary<string, TreeSet<int>>();
             var delimiter = new Regex("[^a-zA-Z0-9]+");
@@ -55,7 +55,7 @@ namespace C5.UserGuideExamples
             return index;
         }
 
-        static void PrintIndex(IDictionary<string, TreeSet<int>> index)
+        private static void PrintIndex(IDictionary<string, TreeSet<int>> index)
         {
             foreach (var word in index.Keys)
             {

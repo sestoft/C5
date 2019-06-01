@@ -27,7 +27,7 @@ namespace C5
         /// <param name="comparer">The external comparer</param>
         public TreeDictionary(SCG.IComparer<K> comparer) : this(comparer, new ComparerZeroHashCodeEqualityComparer<K>(comparer)) { }
 
-        TreeDictionary(SCG.IComparer<K> comparer, SCG.IEqualityComparer<K> equalityComparer)
+        private TreeDictionary(SCG.IComparer<K> comparer, SCG.IEqualityComparer<K> equalityComparer)
             : base(comparer, equalityComparer)
         {
             pairs = sortedpairs = new TreeSet<KeyValuePair<K, V>>(new KeyValuePairComparer<K, V>(comparer));

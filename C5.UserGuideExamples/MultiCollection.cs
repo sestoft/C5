@@ -9,7 +9,7 @@ using SCG = System.Collections.Generic;
 
 namespace C5.UserGuideExamples
 {
-    class BasicCollectionValue<T> : CollectionValueBase<T>, ICollectionValue<T>
+    internal class BasicCollectionValue<T> : CollectionValueBase<T>, ICollectionValue<T>
     {
         private readonly SCG.IEnumerable<T> _enumerable;
         private readonly Func<T> _chooser;
@@ -33,7 +33,7 @@ namespace C5.UserGuideExamples
         public override SCG.IEnumerator<T> GetEnumerator() => _enumerable.GetEnumerator();
     }
 
-    interface IMultiCollection<K, V>
+    internal interface IMultiCollection<K, V>
     {
         SCG.IEqualityComparer<K> KeyEqualityComparer { get; }
         SCG.IEqualityComparer<V> ValueEqualityComparer { get; }
@@ -45,7 +45,7 @@ namespace C5.UserGuideExamples
 
     }
 
-    class BasicMultiCollection<K, V, W, U> : IMultiCollection<K, V>//: IDictionary<K, W>
+    internal class BasicMultiCollection<K, V, W, U> : IMultiCollection<K, V>//: IDictionary<K, W>
         where W : ICollection<V>, new()
         where U : IDictionary<K, W>, new()
     {
@@ -98,11 +98,11 @@ namespace C5.UserGuideExamples
         }
     }
 
-    class WordIndex : BasicMultiCollection<string, int, HashSet<int>, HashDictionary<string, HashSet<int>>>
+    internal class WordIndex : BasicMultiCollection<string, int, HashSet<int>, HashDictionary<string, HashSet<int>>>
     {
     }
 
-    class MultiCollectionProgram
+    internal class MultiCollectionProgram
     {
         public static void Main()
         {

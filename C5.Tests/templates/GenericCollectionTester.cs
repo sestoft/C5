@@ -1,13 +1,12 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
 
+using NUnit.Framework;
 using System;
 using System.Reflection;
-using C5;
-using NUnit.Framework;
 using SCG = System.Collections.Generic;
 
-namespace C5UnitTests.Templates
+namespace C5.Tests.Templates
 {
     public abstract class GenericCollectionTester<U, W>
     {
@@ -19,7 +18,9 @@ namespace C5UnitTests.Templates
             {
                 if (minfo.GetParameters().Length == 0 &&
                      minfo.GetCustomAttributes(typeof(TestAttribute), false).Length > 0)
+                {
                     testMethods.Enqueue(minfo);
+                }
             }
         }
 

@@ -12,7 +12,7 @@ using SCG = System.Collections.Generic;
 
 namespace C5.UserGuideExamples
 {
-    class SortingPermutation
+    internal class SortingPermutation
     {
         public static void Main()
         {
@@ -37,7 +37,7 @@ namespace C5.UserGuideExamples
         }
     }
 
-    class MySort
+    internal class MySort
     {
         // Fast for array lists and similar, but not stable; slow for linked lists
         public static ArrayList<int> GetPermutation1<T>(IList<T> lst)

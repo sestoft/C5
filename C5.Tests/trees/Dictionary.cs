@@ -1,17 +1,14 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
 
-using System;
-using C5;
 using NUnit.Framework;
+using System;
 using SCG = System.Collections.Generic;
 
 
-namespace C5UnitTests.trees.RBDictionary
+namespace C5.Tests.trees.RBDictionary
 {
-    using DictionaryIntToInt = TreeDictionary<int, int>;
-
-    static class Factory
+    internal static class Factory
     {
         public static IDictionary<K, V> New<K, V>() { return new TreeDictionary<K, V>(); }
     }
@@ -22,7 +19,7 @@ namespace C5UnitTests.trees.RBDictionary
     //    [Test]
     //    public void TestSerialize()
     //    {
-    //        C5UnitTests.Templates.Extensible.Serialization.DTester<DictionaryIntToInt>();
+    //        C5.Tests.Templates.Extensible.Serialization.DTester<DictionaryIntToInt>();
     //    }
     //}
 
@@ -30,8 +27,8 @@ namespace C5UnitTests.trees.RBDictionary
     [TestFixture]
     public class Formatting
     {
-        IDictionary<int, int> coll;
-        IFormatProvider rad16;
+        private IDictionary<int, int> coll;
+        private IFormatProvider rad16;
         [SetUp]
         public void Init() { coll = Factory.New<int, int>(); rad16 = new RadixFormatProvider(16); }
         [TearDown]

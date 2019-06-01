@@ -11,7 +11,7 @@ using System;
 
 namespace C5.UserGuideExamples
 {
-    class TreeTraversal
+    internal class TreeTraversal
     {
         public static void Main()
         {
@@ -45,7 +45,7 @@ namespace C5.UserGuideExamples
         }
     }
 
-    class Tree<T>
+    internal class Tree<T>
     {
         private readonly T _val;
         private readonly Tree<T> _t1;

@@ -8,7 +8,7 @@ namespace C5
     /// <summary>
     /// An entry in a dictionary from K to V.
     /// </summary>
-    [Serializable] 
+    [Serializable]
     public struct KeyValuePair<K, V> : IEquatable<KeyValuePair<K, V>>, IShowable
     {
         /// <summary>
@@ -51,7 +51,10 @@ namespace C5
         public override bool Equals(object obj)
         {
             if (!(obj is KeyValuePair<K, V>))
+            {
                 return false;
+            }
+
             KeyValuePair<K, V> other = (KeyValuePair<K, V>)obj;
             return Equals(other);
         }
@@ -100,13 +103,22 @@ namespace C5
         public bool Show(System.Text.StringBuilder stringbuilder, ref int rest, IFormatProvider? formatProvider)
         {
             if (rest < 0)
+            {
                 return false;
+            }
+
             if (!Showing.Show(Key, stringbuilder, ref rest, formatProvider))
+            {
                 return false;
+            }
+
             stringbuilder.Append(" => ");
             rest -= 4;
             if (!Showing.Show(Value, stringbuilder, ref rest, formatProvider))
+            {
                 return false;
+            }
+
             return rest >= 0;
         }
         #endregion
@@ -136,7 +148,7 @@ namespace C5
     [Serializable]
     public class KeyValuePairComparer<K, V> : SCG.IComparer<KeyValuePair<K, V>>
     {
-        readonly SCG.IComparer<K> comparer;
+        private readonly SCG.IComparer<K> comparer;
 
 
         /// <summary>
@@ -170,7 +182,7 @@ namespace C5
     [Serializable]
     public sealed class KeyValuePairEqualityComparer<K, V> : SCG.IEqualityComparer<KeyValuePair<K, V>>
     {
-        readonly SCG.IEqualityComparer<K> keyequalityComparer;
+        private readonly SCG.IEqualityComparer<K> keyequalityComparer;
 
 
         /// <summary>
@@ -223,10 +235,10 @@ namespace C5
         /// The set collection of entries underlying this dictionary implementation
         /// </summary>
         protected ICollection<KeyValuePair<K, V>> pairs;
-        readonly SCG.IEqualityComparer<K> keyequalityComparer;
+        private readonly SCG.IEqualityComparer<K> keyequalityComparer;
 
         #region Events
-        ProxyEventBlock<KeyValuePair<K, V>>? eventBlock;
+        private ProxyEventBlock<KeyValuePair<K, V>>? eventBlock;
 
         /// <summary>
         /// The change event. Will be raised for every change operation on the collection.
@@ -234,7 +246,13 @@ namespace C5
         public override event CollectionChangedHandler<KeyValuePair<K, V>> CollectionChanged
         {
             add { (eventBlock ?? (eventBlock = new ProxyEventBlock<KeyValuePair<K, V>>(this, pairs))).CollectionChanged += value; }
-            remove { if (eventBlock != null) eventBlock.CollectionChanged -= value; }
+            remove
+            {
+                if (eventBlock != null)
+                {
+                    eventBlock.CollectionChanged -= value;
+                }
+            }
         }
 
         /// <summary>
@@ -243,7 +261,13 @@ namespace C5
         public override event CollectionClearedHandler<KeyValuePair<K, V>> CollectionCleared
         {
             add { (eventBlock ?? (eventBlock = new ProxyEventBlock<KeyValuePair<K, V>>(this, pairs))).CollectionCleared += value; }
-            remove { if (eventBlock != null) eventBlock.CollectionCleared -= value; }
+            remove
+            {
+                if (eventBlock != null)
+                {
+                    eventBlock.CollectionCleared -= value;
+                }
+            }
         }
 
         /// <summary>
@@ -252,7 +276,13 @@ namespace C5
         public override event ItemsAddedHandler<KeyValuePair<K, V>> ItemsAdded
         {
             add { (eventBlock ?? (eventBlock = new ProxyEventBlock<KeyValuePair<K, V>>(this, pairs))).ItemsAdded += value; }
-            remove { if (eventBlock != null) eventBlock.ItemsAdded -= value; }
+            remove
+            {
+                if (eventBlock != null)
+                {
+                    eventBlock.ItemsAdded -= value;
+                }
+            }
         }
 
         /// <summary>
@@ -261,7 +291,13 @@ namespace C5
         public override event ItemsRemovedHandler<KeyValuePair<K, V>> ItemsRemoved
         {
             add { (eventBlock ?? (eventBlock = new ProxyEventBlock<KeyValuePair<K, V>>(this, pairs))).ItemsRemoved += value; }
-            remove { if (eventBlock != null) eventBlock.ItemsRemoved -= value; }
+            remove
+            {
+                if (eventBlock != null)
+                {
+                    eventBlock.ItemsRemoved -= value;
+                }
+            }
         }
 
         /// <summary>
@@ -317,7 +353,9 @@ namespace C5
             KeyValuePair<K, V> p = new KeyValuePair<K, V>(key, value);
 
             if (!pairs.Add(p))
+            {
                 throw new DuplicateNotAllowedException("Key being added: '" + key + "'");
+            }
         }
 
         /// <summary>
@@ -335,7 +373,9 @@ namespace C5
             {
                 KeyValuePair<K, V> p = new KeyValuePair<K, V>(pair.Key, pair.Value);
                 if (!pairs.Add(p))
+                {
                     throw new DuplicateNotAllowedException("Key being added: '" + pair.Key + "'");
+                }
             }
         }
 
@@ -399,11 +439,17 @@ namespace C5
         }
 
         [Serializable]
-        class LiftedEnumerable<H> : SCG.IEnumerable<KeyValuePair<K, V>> where H : K
+        private class LiftedEnumerable<H> : SCG.IEnumerable<KeyValuePair<K, V>> where H : K
         {
-            readonly SCG.IEnumerable<H> keys;
+            private readonly SCG.IEnumerable<H> keys;
             public LiftedEnumerable(SCG.IEnumerable<H> keys) { this.keys = keys; }
-            public SCG.IEnumerator<KeyValuePair<K, V>> GetEnumerator() { foreach (H key in keys) yield return new KeyValuePair<K, V>(key); }
+            public SCG.IEnumerator<KeyValuePair<K, V>> GetEnumerator()
+            {
+                foreach (H key in keys)
+                {
+                    yield return new KeyValuePair<K, V>(key);
+                }
+            }
 
             #region IEnumerable Members
 
@@ -495,7 +541,9 @@ namespace C5
             KeyValuePair<K, V> p = new KeyValuePair<K, V>(key, value);
 
             if (!pairs.FindOrAdd(ref p))
+            {
                 return false;
+            }
             else
             {
                 value = p.Value;
@@ -540,7 +588,7 @@ namespace C5
         [Serializable]
         internal class ValuesCollection : CollectionValueBase<V>, ICollectionValue<V>
         {
-            readonly ICollection<KeyValuePair<K, V>> pairs;
+            private readonly ICollection<KeyValuePair<K, V>> pairs;
 
 
             internal ValuesCollection(ICollection<KeyValuePair<K, V>> pairs)
@@ -553,7 +601,9 @@ namespace C5
             {
                 //Updatecheck is performed by the pairs enumerator
                 foreach (KeyValuePair<K, V> p in pairs)
+                {
                     yield return p.Value;
+                }
             }
 
             public override bool IsEmpty { get { return pairs.IsEmpty; } }
@@ -566,7 +616,7 @@ namespace C5
         [Serializable]
         internal class KeysCollection : CollectionValueBase<K>, ICollectionValue<K>
         {
-            readonly ICollection<KeyValuePair<K, V>> pairs;
+            private readonly ICollection<KeyValuePair<K, V>> pairs;
 
 
             internal KeysCollection(ICollection<KeyValuePair<K, V>> pairs)
@@ -577,7 +627,9 @@ namespace C5
             public override SCG.IEnumerator<K> GetEnumerator()
             {
                 foreach (KeyValuePair<K, V> p in pairs)
+                {
                     yield return p.Key;
+                }
             }
 
             public override bool IsEmpty { get { return pairs.IsEmpty; } }
@@ -604,7 +656,7 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        public virtual Func<K, V> Func { get { return delegate(K k) { return this[k]; }; } }
+        public virtual Func<K, V> Func { get { return delegate (K k) { return this[k]; }; } }
 
         /// <summary>
         /// Indexer by key for dictionary. 
@@ -620,9 +672,13 @@ namespace C5
                 KeyValuePair<K, V> p = new KeyValuePair<K, V>(key);
 
                 if (pairs.Find(ref p))
+                {
                     return p.Value;
+                }
                 else
+                {
                     throw new NoSuchItemException("Key '" + key!.ToString() + "' not present in Dictionary");
+                }
             }
             set
             { pairs.UpdateOrAdd(new KeyValuePair<K, V>(key, value)); }
@@ -710,7 +766,7 @@ namespace C5
         /// 
         /// </summary>
         protected ISorted<KeyValuePair<K, V>> sortedpairs;
-        readonly SCG.IComparer<K> keycomparer;
+        private readonly SCG.IComparer<K> keycomparer;
 
         /// <summary>
         /// 
@@ -964,9 +1020,9 @@ namespace C5
 
         #endregion
         [Serializable]
-        class KeyValuePairComparable : IComparable<KeyValuePair<K, V>>
+        private class KeyValuePairComparable : IComparable<KeyValuePair<K, V>>
         {
-            readonly IComparable<K> cutter;
+            private readonly IComparable<K> cutter;
 
             internal KeyValuePairComparable(IComparable<K> cutter) { this.cutter = cutter; }
 
@@ -976,7 +1032,7 @@ namespace C5
         }
 
         [Serializable]
-        class ProjectedDirectedEnumerable : MappedDirectedEnumerable<KeyValuePair<K, V>, K>
+        private class ProjectedDirectedEnumerable : MappedDirectedEnumerable<KeyValuePair<K, V>, K>
         {
             public ProjectedDirectedEnumerable(IDirectedEnumerable<KeyValuePair<K, V>> directedpairs) : base(directedpairs) { }
 
@@ -985,7 +1041,7 @@ namespace C5
         }
 
         [Serializable]
-        class ProjectedDirectedCollectionValue : MappedDirectedCollectionValue<KeyValuePair<K, V>, K>
+        private class ProjectedDirectedCollectionValue : MappedDirectedCollectionValue<KeyValuePair<K, V>, K>
         {
             public ProjectedDirectedCollectionValue(IDirectedCollectionValue<KeyValuePair<K, V>> directedpairs) : base(directedpairs) { }
 
@@ -994,14 +1050,14 @@ namespace C5
         }
 
         [Serializable]
-        class SortedKeysCollection : SequencedBase<K>, ISorted<K>
+        private class SortedKeysCollection : SequencedBase<K>, ISorted<K>
         {
-            readonly ISortedDictionary<K, V> sorteddict;
+            private readonly ISortedDictionary<K, V> sorteddict;
 
             //TODO: eliminate this. Only problem is the Find method because we lack method on dictionary that also 
             //      returns the actual key.
-            readonly ISorted<KeyValuePair<K, V>> sortedpairs;
-            readonly SCG.IComparer<K> comparer;
+            private readonly ISorted<KeyValuePair<K, V>> sortedpairs;
+            private readonly SCG.IComparer<K> comparer;
 
             internal SortedKeysCollection(ISortedDictionary<K, V> sorteddict, ISorted<KeyValuePair<K, V>> sortedpairs, SCG.IComparer<K> comparer, SCG.IEqualityComparer<K> itemequalityComparer)
                 : base(itemequalityComparer)
@@ -1016,7 +1072,9 @@ namespace C5
             public override SCG.IEnumerator<K> GetEnumerator()
             {
                 foreach (KeyValuePair<K, V> p in sorteddict)
+                {
                     yield return p.Key;
+                }
             }
 
             public override bool IsEmpty { get { return sorteddict.IsEmpty; } }
@@ -1113,7 +1171,7 @@ namespace C5
             #region ICollection<K> Members
             public Speed ContainsSpeed { get { return sorteddict.ContainsSpeed; } }
 
-            public bool Contains(K key) { return sorteddict.Contains(key); ;      }
+            public bool Contains(K key) { return sorteddict.Contains(key); ; }
 
             public int ContainsCount(K item) { return sorteddict.Contains(item) ? 1 : 0; }
 
@@ -1140,8 +1198,13 @@ namespace C5
             {
                 //TODO: optimize?
                 foreach (K item in items)
+                {
                     if (!sorteddict.Contains(item))
+                    {
                         return false;
+                    }
+                }
+
                 return true;
             }
 
@@ -1238,7 +1301,7 @@ namespace C5
     }
 
     [Serializable]
-    class SortedArrayDictionary<K, V> : SortedDictionaryBase<K, V>
+    internal class SortedArrayDictionary<K, V> : SortedDictionaryBase<K, V>
     {
         #region Constructors
 

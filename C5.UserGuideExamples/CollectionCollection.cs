@@ -11,7 +11,7 @@ using SCG = System.Collections.Generic;
 
 namespace C5.UserGuideExamples
 {
-    class CollectionCollection
+    internal class CollectionCollection
     {
         private readonly static IList<int> _col1 = new LinkedList<int>();
         private readonly static IList<int> _col2 = new LinkedList<int>();

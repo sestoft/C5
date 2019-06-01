@@ -83,12 +83,16 @@ namespace C5.UserGuideExamples
             }
             double det = dx * thisothery - dy * thisotherx;
             if (det > 0)
+            {
                 res = -1 * res;
+            }
             //else if (det < 0) res = 1 * res;
             else if (det == 0)
             {
                 if (this.xs == other.xs && this.xe == other.xe && this.ys == other.ys && this.ye == other.ye)
+                {
                     res = 0;
+                }
             }
             return res;
         }
@@ -252,7 +256,9 @@ namespace C5.UserGuideExamples
         public bool Place(double x, double y, out T cell)
         {
             if (!built)
+            {
                 throw new InvalidOperationException("PointLocator must be built first");
+            }
 
             KeyValuePair<double, ISorted<Edge<T>>> p = htree.WeakPredecessor(x);
 
@@ -282,7 +288,9 @@ namespace C5.UserGuideExamples
         public void Place(double x, double y, out T upper, out bool hval, out T lower, out bool lval)
         {
             if (!built)
+            {
                 throw new InvalidOperationException("PointLocator must be built first");
+            }
 
             KeyValuePair<double, ISorted<Edge<T>>> p = htree.WeakPredecessor(x);
 
@@ -306,18 +314,22 @@ namespace C5.UserGuideExamples
         {
 
             if (Place(x, y, out T cell))
+            {
                 Console.WriteLine("({0}; {1}): <- {2} ", x, y, cell);
+            }
             else
+            {
                 Console.WriteLine("({0}; {1}): -", x, y);
+            }
         }
     }
 
     /// <summary>
     /// Compare a given point (x,y) to edges: is the point above, at or below
     /// the edge. Assumes edges not vertical. 
-	/// Uses crossproduct to compute the result.
-	/// </summary>
-    class PointComparer<T> : IComparable<Edge<T>>
+    /// Uses crossproduct to compute the result.
+    /// </summary>
+    internal class PointComparer<T> : IComparable<Edge<T>>
     {
         private readonly double x, y;
 
@@ -335,9 +347,14 @@ namespace C5.UserGuideExamples
             double aty = y - a.ys;
             double det = abx * aty - aby * atx;
             if (det > 0)
+            {
                 res = 1;
+            }
             else if (det < 0)
+            {
                 res = -1;
+            }
+
             return res;
         }
 
@@ -371,7 +388,9 @@ namespace C5.UserGuideExamples
             public bool MoveNext()
             {
                 if (level > maxlevel)
+                {
                     throw new InvalidOperationException();
+                }
 
                 if (leftend)
                 {
@@ -390,15 +409,21 @@ namespace C5.UserGuideExamples
                 get
                 {
                     if (level < 0 || level > maxlevel)
+                    {
                         throw new InvalidOperationException();
+                    }
 
                     double y = (level * 37) % maxlevel;
                     _ = leftend ? 1 : maxlevel;
 
                     if (leftend)
+                    {
                         return new Edge<int>(0, y, level, y - 0.5, 0, 0);
+                    }
                     else
+                    {
                         return new Edge<int>(level, y - 0.5, level, y, 0, 0);
+                    }
                 }
             }
 
@@ -449,7 +474,10 @@ namespace C5.UserGuideExamples
             {
                 double xsum = 0;
 
-                foreach (Edge<int> e in ugly) xsum += e.xe;
+                foreach (Edge<int> e in ugly)
+                {
+                    xsum += e.xe;
+                }
 
                 return xsum;
             }
@@ -533,7 +561,9 @@ namespace C5.UserGuideExamples
                     if (++currenti >= maxi)
                     {
                         if (currentj >= maxj)
+                        {
                             return false;
+                        }
 
                         currenti = 0;
                         currenthoriz = false;
@@ -548,7 +578,9 @@ namespace C5.UserGuideExamples
                         currenti = 0;
                         currenthoriz = true;
                         if (++currentj > maxj)
+                        {
                             return false;
+                        }
                     }
 
                     return true;
@@ -576,7 +608,9 @@ namespace C5.UserGuideExamples
                 get
                 {
                     if (currenti >= maxi && currentj >= maxj)
+                    {
                         throw new InvalidOperationException();
+                    }
 
                     double xs = currenti * a11 + currentj * a12;
                     double ys = currenti * a21 + currentj * a22;
@@ -644,7 +678,10 @@ namespace C5.UserGuideExamples
             {
                 double xsum = 0;
 
-                foreach (Edge<string> e in lattice) xsum += e.xe;
+                foreach (Edge<string> e in lattice)
+                {
+                    xsum += e.xe;
+                }
 
                 return xsum;
             }
@@ -709,9 +746,10 @@ namespace C5.UserGuideExamples
                 pointlocator.Test(2.01, 5.01);
             }
         }
-        class T1
+
+        internal class T1
         {
-            static void t1()
+            private static void t1()
             {
                 PointLocator<int> pl = new PointLocator<int>();
                 pl.Add(new Edge<int>(1, 1, 3, 4, 1, -1));
@@ -763,7 +801,7 @@ namespace C5.UserGuideExamples
 
             }
 
-            static void t2()
+            private static void t2()
             {
                 PointLocator<int> pl = new PointLocator<int>();
                 //outer triangle
@@ -877,7 +915,7 @@ namespace C5.UserGuideExamples
                 pl.Place(8, 9, out x); Debug.Assert(x == 0);
             }
 
-            static void t3()
+            private static void t3()
             {
                 PointLocator<int> pl = new PointLocator<int>();
                 pl.Add(new Edge<int>(1, 1, 5, 2, -1, 1));
@@ -959,7 +997,7 @@ namespace C5.UserGuideExamples
                 pl.Place(7, 7, out x); Debug.Assert(x == 0);
             }
 
-            static void t4()
+            private static void t4()
             {
                 PointLocator<int> pl = new PointLocator<int>();
                 pl.Add(new Edge<int>(2, 4, 5, 1, -1, 1));

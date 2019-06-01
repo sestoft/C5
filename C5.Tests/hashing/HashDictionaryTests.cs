@@ -1,12 +1,11 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
 
+using NUnit.Framework;
 using System;
 using System.Linq;
-using C5;
-using NUnit.Framework;
 using SCG = System.Collections.Generic;
-namespace C5UnitTests.hashtable.dictionary
+namespace C5.Tests.hashtable.dictionary
 {
     using DictionaryIntToInt = HashDictionary<int, int>;
 
@@ -17,11 +16,11 @@ namespace C5UnitTests.hashtable.dictionary
         public void TestEvents()
         {
             DictionaryIntToInt factory() { return new DictionaryIntToInt(TenEqualityComparer.Default); }
-            new C5UnitTests.Templates.Events.DictionaryTester<DictionaryIntToInt>().Test(factory);
+            new C5.Tests.Templates.Events.DictionaryTester<DictionaryIntToInt>().Test(factory);
         }
     }
 
-    static class Factory
+    internal static class Factory
     {
         public static IDictionary<K, V> New<K, V>() { return new HashDictionary<K, V>(); }
     }
@@ -29,8 +28,8 @@ namespace C5UnitTests.hashtable.dictionary
     [TestFixture]
     public class Formatting
     {
-        IDictionary<int, int> coll;
-        IFormatProvider rad16;
+        private IDictionary<int, int> coll;
+        private IFormatProvider rad16;
         [SetUp]
         public void Init()
         {
@@ -227,16 +226,25 @@ namespace C5UnitTests.hashtable.dictionary
             HashDictionary<int, int> dict2 = new HashDictionary<int, int>();
 
             for (int i = 0; i < 5; i++)
+            {
                 dict2[16 * i] = 5 * i;
+            }
 
             for (int i = 0; i < 5; i++)
+            {
                 Assert.AreEqual(5 * i, dict2[16 * i]);
+            }
 
             for (int i = 0; i < 5; i++)
+            {
                 dict2[16 * i] = 7 * i + 1;
+            }
 
             for (int i = 0; i < 5; i++)
+            {
                 Assert.AreEqual(7 * i + 1, dict2[16 * i]);
+            }
+
             Assert.IsTrue(dict.Check());
         }
     }

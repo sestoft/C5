@@ -1,12 +1,11 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
 
-using System;
-using C5;
 using NUnit.Framework;
+using System;
 
 
-namespace C5UnitTests.wrappers
+namespace C5.Tests.wrappers
 {
     namespace events
     {
@@ -14,8 +13,8 @@ namespace C5UnitTests.wrappers
         public class IList_
         {
             private ArrayList<int> list;
-            ICollectionValue<int> guarded;
-            CollectionEventList<int> seen;
+            private ICollectionValue<int> guarded;
+            private CollectionEventList<int> seen;
 
             [SetUp]
             public void Init()
@@ -448,32 +447,32 @@ namespace C5UnitTests.wrappers
                 Assert.Throws<UnlistenableEventException>(() => w.ItemRemovedAt += new ItemRemovedAtHandler<int>(w_ItemRemovedAt));
             }
 
-            void w_CollectionChanged(object sender)
+            private void w_CollectionChanged(object sender)
             {
                 throw new NotImplementedException();
             }
 
-            void w_CollectionCleared(object sender, ClearedEventArgs eventArgs)
+            private void w_CollectionCleared(object sender, ClearedEventArgs eventArgs)
             {
                 throw new NotImplementedException();
             }
 
-            void w_ItemAdded(object sender, ItemCountEventArgs<int> eventArgs)
+            private void w_ItemAdded(object sender, ItemCountEventArgs<int> eventArgs)
             {
                 throw new NotImplementedException();
             }
 
-            void w_ItemInserted(object sender, ItemAtEventArgs<int> eventArgs)
+            private void w_ItemInserted(object sender, ItemAtEventArgs<int> eventArgs)
             {
                 throw new NotImplementedException();
             }
 
-            void w_ItemRemoved(object sender, ItemCountEventArgs<int> eventArgs)
+            private void w_ItemRemoved(object sender, ItemCountEventArgs<int> eventArgs)
             {
                 throw new NotImplementedException();
             }
 
-            void w_ItemRemovedAt(object sender, ItemAtEventArgs<int> eventArgs)
+            private void w_ItemRemovedAt(object sender, ItemAtEventArgs<int> eventArgs)
             {
                 throw new NotImplementedException();
             }
@@ -483,8 +482,8 @@ namespace C5UnitTests.wrappers
         public class StackQueue
         {
             private ArrayList<int> list;
-            ICollectionValue<int> guarded;
-            CollectionEventList<int> seen;
+            private ICollectionValue<int> guarded;
+            private CollectionEventList<int> seen;
 
             [SetUp]
             public void Init()

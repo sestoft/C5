@@ -17,7 +17,7 @@ namespace C5
         /// IExtensible.Add(T) always does AddLast(T), fIFO determines 
         /// if T Remove() does RemoveFirst() or RemoveLast()
         /// </summary>
-        bool fIFO = true;
+        private bool fIFO = true;
 
         #region Events
 
@@ -35,30 +35,32 @@ namespace C5
         /// <summary>
         /// Node to the left of first node 
         /// </summary>
-        Node? startsentinel;
+        private Node? startsentinel;
+
         /// <summary>
         /// Node to the right of last node
         /// </summary>
-        Node? endsentinel;
+        private Node? endsentinel;
+
         /// <summary>
         /// Offset of this view in underlying list
         /// </summary>
 
-        int offset;
+        private int offset;
 
         /// <summary>
         /// underlying list of this view (or null for the underlying list)
         /// </summary>
-        LinkedList<T>? underlying;
+        private LinkedList<T>? underlying;
 
         //Note: all views will have the same views list since all view objects are created by MemberwiseClone()
-        WeakViewList<LinkedList<T>>? views;
-        WeakViewList<LinkedList<T>>.Node? myWeakReference;
+        private WeakViewList<LinkedList<T>>? views;
+        private WeakViewList<LinkedList<T>>.Node? myWeakReference;
 
         /// <summary>
         /// Has this list or view not been invalidated by some operation (by someone calling Dispose())
         /// </summary>
-        bool isValid = true;
+        private bool isValid = true;
 
 
 
@@ -66,7 +68,7 @@ namespace C5
 
         #region Util
 
-        bool equals(T i1, T i2) { return itemequalityComparer.Equals(i1, i2); }
+        private bool Equals(T i1, T i2) { return itemequalityComparer.Equals(i1, i2); }
 
         #region Check utilities
         /// <summary>
@@ -77,12 +79,14 @@ namespace C5
         /// </para>
         /// </summary>
         /// <exception cref="InvalidOperationException"> if check fails.</exception>
-        protected override void updatecheck()
+        protected override void UpdateCheck()
         {
-            validitycheck();
-            base.updatecheck();
+            ValidityCheck();
+            base.UpdateCheck();
             if (underlying != null)
+            {
                 underlying.stamp++;
+            }
         }
 
         /// <summary>
@@ -92,10 +96,12 @@ namespace C5
         /// modification of the base collection.
         /// </summary>
         /// <exception cref="InvalidOperationException"> if check fails.</exception>
-        void validitycheck()
+        private void ValidityCheck()
         {
             if (!isValid)
+            {
                 throw new ViewDisposedException();
+            }
         }
 
         /// <summary>
@@ -103,24 +109,29 @@ namespace C5
         /// </summary>
         /// <param name="stamp">The stamp indicating the time.</param>
         /// <exception cref="CollectionModifiedException"> if check fails.</exception>
-        protected override void modifycheck(int stamp)
+        protected override void ModifyCheck(int stamp)
         {
-            validitycheck();
+            ValidityCheck();
             if ((underlying != null ? underlying.stamp : this.stamp) != stamp)
+            {
                 throw new CollectionModifiedException();
+            }
         }
         #endregion
 
         #region Searching
-        bool contains(T item, out Node node)
+        private bool Contains(T item, out Node node)
         {
 
             //TODO: search from both ends? Or search from the end selected by FIFO?
             node = startsentinel!.next!;
             while (node != endsentinel)
             {
-                if (equals(item, node.item))
+                if (Equals(item, node.item))
+                {
                     return true;
+                }
+
                 node = node.next!;
             }
 
@@ -135,13 +146,15 @@ namespace C5
         /// <param name="index">If node was found, the value will be the number of links followed higher than 
         /// the value on input. If item was not found, the value on output is undefined.</param>
         /// <returns>True if node was found.</returns>
-        bool find(T item, ref Node node, ref int index)
+        private bool Find(T item, ref Node node, ref int index)
         {
             while (node != endsentinel)
             {
                 //if (item.Equals(node.item))
                 if (itemequalityComparer.Equals(item, node!.item))
+                {
                     return true;
+                }
 
                 index++;
                 node = node.next!;
@@ -150,13 +163,15 @@ namespace C5
             return false;
         }
 
-        bool dnif(T item, ref Node node, ref int index)
+        private bool DnIf(T item, ref Node node, ref int index)
         {
             while (node != startsentinel)
             {
                 //if (item.Equals(node.item))
                 if (itemequalityComparer.Equals(item, node!.item))
+                {
                     return true;
+                }
 
                 index--;
                 node = node.prev!;
@@ -175,16 +190,20 @@ namespace C5
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
-        Node get(int pos)
+        private Node Get(int pos)
         {
             if (pos < 0 || pos >= size)
+            {
                 throw new IndexOutOfRangeException();
+            }
             else if (pos < size / 2)
             {              // Closer to front
                 Node node = startsentinel!;
 
                 for (int i = 0; i <= pos; i++)
+                {
                     node = node.next!;
+                }
 
                 return node!;
             }
@@ -193,7 +212,9 @@ namespace C5
                 Node node = endsentinel!;
 
                 for (int i = size; i > pos; i--)
+                {
                     node = node.prev!;
+                }
 
                 return node;
             }
@@ -209,7 +230,7 @@ namespace C5
         /// <param name="positions"></param>
         /// <param name="nearest"></param>
         /// <returns></returns>
-        int dist(int pos, out int nearest, int[] positions)
+        private int Dist(int pos, out int nearest, int[] positions)
         {
             nearest = -1;
             int bestdist = int.MaxValue;
@@ -230,16 +251,25 @@ namespace C5
         /// <param name="positions"></param>
         /// <param name="nodes"></param>
         /// <returns></returns>
-        Node get(int pos, int[] positions, Node[] nodes)
+        private Node Get(int pos, int[] positions, Node[] nodes)
         {
-            int delta = dist(pos, out int nearest, positions);
+            int delta = Dist(pos, out int nearest, positions);
             Node node = nodes[nearest];
             if (delta > 0)
+            {
                 for (int i = 0; i < delta; i++)
+                {
                     node = node.prev!;
+                }
+            }
             else
+            {
                 for (int i = 0; i > delta; i--)
+                {
                     node = node.next!;
+                }
+            }
+
             return node;
         }
 
@@ -252,20 +282,20 @@ namespace C5
         /// <param name="n2"></param>
         /// <param name="positions"></param>
         /// <param name="nodes"></param>
-        void getPair(int p1, int p2, out Node n1, out Node n2, int[] positions, Node[] nodes)
+        private void GetPair(int p1, int p2, out Node n1, out Node n2, int[] positions, Node[] nodes)
         {
-            int delta1 = dist(p1, out int nearest1, positions), d1 = delta1 < 0 ? -delta1 : delta1;
-            int delta2 = dist(p2, out int nearest2, positions), d2 = delta2 < 0 ? -delta2 : delta2;
+            int delta1 = Dist(p1, out int nearest1, positions), d1 = delta1 < 0 ? -delta1 : delta1;
+            int delta2 = Dist(p2, out int nearest2, positions), d2 = delta2 < 0 ? -delta2 : delta2;
 
             if (d1 < d2)
             {
-                n1 = get(p1, positions, nodes);
-                n2 = get(p2, new int[] { positions[nearest2], p1 }, new Node[] { nodes[nearest2], n1 });
+                n1 = Get(p1, positions, nodes);
+                n2 = Get(p2, new int[] { positions[nearest2], p1 }, new Node[] { nodes[nearest2], n1 });
             }
             else
             {
-                n2 = get(p2, positions, nodes);
-                n1 = get(p1, new int[] { positions[nearest1], p2 }, new Node[] { nodes[nearest1], n2 });
+                n2 = Get(p2, positions, nodes);
+                n1 = Get(p1, new int[] { positions[nearest1], p2 }, new Node[] { nodes[nearest1], n2 });
             }
         }
         #endregion
@@ -279,29 +309,34 @@ namespace C5
         /// <param name="succ"></param>
         /// <param name="item"></param>
         /// <returns></returns>
-        Node insert(int index, Node succ, T item)
+        private Node Insert(int index, Node succ, T item)
         {
             Node newnode = new Node(item, succ.prev, succ);
             succ.prev!.next = newnode;
             succ.prev = newnode;
             size++;
             if (underlying != null)
+            {
                 underlying.size++;
-            fixViewsAfterInsert(succ, newnode.prev!, 1, Offset + index);
+            }
+
+            FixViewsAfterInsert(succ, newnode.prev!, 1, Offset + index);
             return newnode;
         }
 
         #endregion
 
         #region Removal
-        T remove(Node node, int index)
+        private T Remove(Node node, int index)
         {
-            fixViewsBeforeSingleRemove(node, Offset + index);
+            FixViewsBeforeSingleRemove(node, Offset + index);
             node.prev!.next = node.next;
             node.next!.prev = node.prev;
             size--;
             if (underlying != null)
+            {
                 underlying.size--;
+            }
 
             return node.item;
         }
@@ -317,97 +352,7 @@ namespace C5
         /// <param name="pred">The predecessor of the inserted nodes</param>
         /// <param name="succ">The successor of the added nodes</param>
         /// <param name="realInsertionIndex"></param>
-        void fixViewsAfterInsert(Node succ, Node pred, int added, int realInsertionIndex)
-        {
-            if (views != null)
-                foreach (LinkedList<T> view in views)
-                {
-                    if (view != this)
-                    {
-
-                        if (view.Offset == realInsertionIndex && view.size > 0)
-                            view.startsentinel = succ.prev;
-                        if (view.Offset + view.size == realInsertionIndex)
-                            view.endsentinel = pred.next!;
-                        if (view.Offset < realInsertionIndex && view.Offset + view.size > realInsertionIndex)
-                            view.size += added;
-                        if (view.Offset > realInsertionIndex || (view.Offset == realInsertionIndex && view.size > 0))
-                            view.offset += added;
-
-                    }
-                }
-        }
-
-        void fixViewsBeforeSingleRemove(Node node, int realRemovalIndex)
-        {
-            if (views != null)
-                foreach (LinkedList<T> view in views)
-                {
-                    if (view != this)
-                    {
-
-                        if (view.offset - 1 == realRemovalIndex)
-                            view.startsentinel = node.prev;
-                        if (view.offset + view.size == realRemovalIndex)
-                            view.endsentinel = node.next!;
-                        if (view.offset <= realRemovalIndex && view.offset + view.size > realRemovalIndex)
-                            view.size--;
-                        if (view.offset > realRemovalIndex)
-                            view.offset--;
-                    }
-                }
-        }
-
-
-        void fixViewsBeforeRemove(int start, int count, Node first, Node last)
-        {
-            int clearend = start + count - 1;
-            if (views != null)
-                foreach (LinkedList<T> view in views)
-                {
-                    if (view == this)
-                        continue;
-                    int viewoffset = view.Offset, viewend = viewoffset + view.size - 1;
-                    //sentinels
-                    if (start < viewoffset && viewoffset - 1 <= clearend)
-                        view.startsentinel = first.prev;
-                    if (start <= viewend + 1 && viewend < clearend)
-                        view.endsentinel = last.next!;
-                    //offsets and sizes
-                    if (start < viewoffset)
-                    {
-                        if (clearend < viewoffset)
-                            view.offset = viewoffset - count;
-                        else
-                        {
-                            view.offset = start;
-                            view.size = clearend < viewend ? viewend - clearend : 0;
-                        }
-                    }
-                    else if (start <= viewend)
-                        view.size = clearend <= viewend ? view.size - count : start - viewoffset;
-                }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="otherView"></param>
-        /// <returns>The position of View(otherOffset, otherSize) wrt. this view</returns>
-        MutualViewPosition viewPosition(LinkedList<T> otherView)
-        {
-
-            int end = offset + size, otherOffset = otherView.offset, otherSize = otherView.size, otherEnd = otherOffset + otherSize;
-            if (otherOffset >= end || otherEnd <= offset)
-                return MutualViewPosition.NonOverlapping;
-            if (size == 0 || (otherOffset <= offset && end <= otherEnd))
-                return MutualViewPosition.Contains;
-            if (otherSize == 0 || (offset <= otherOffset && otherEnd <= end))
-                return MutualViewPosition.ContainedIn;
-            return MutualViewPosition.Overlapping;
-        }
-
-        void disposeOverlappingViews(bool reverse)
+        private void FixViewsAfterInsert(Node succ, Node pred, int added, int realInsertionIndex)
         {
             if (views != null)
             {
@@ -415,13 +360,153 @@ namespace C5
                 {
                     if (view != this)
                     {
-                        switch (viewPosition(view))
+
+                        if (view.Offset == realInsertionIndex && view.size > 0)
+                        {
+                            view.startsentinel = succ.prev;
+                        }
+
+                        if (view.Offset + view.size == realInsertionIndex)
+                        {
+                            view.endsentinel = pred.next!;
+                        }
+
+                        if (view.Offset < realInsertionIndex && view.Offset + view.size > realInsertionIndex)
+                        {
+                            view.size += added;
+                        }
+
+                        if (view.Offset > realInsertionIndex || (view.Offset == realInsertionIndex && view.size > 0))
+                        {
+                            view.offset += added;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void FixViewsBeforeSingleRemove(Node node, int realRemovalIndex)
+        {
+            if (views != null)
+            {
+                foreach (LinkedList<T> view in views)
+                {
+                    if (view != this)
+                    {
+
+                        if (view.offset - 1 == realRemovalIndex)
+                        {
+                            view.startsentinel = node.prev;
+                        }
+
+                        if (view.offset + view.size == realRemovalIndex)
+                        {
+                            view.endsentinel = node.next!;
+                        }
+
+                        if (view.offset <= realRemovalIndex && view.offset + view.size > realRemovalIndex)
+                        {
+                            view.size--;
+                        }
+
+                        if (view.offset > realRemovalIndex)
+                        {
+                            view.offset--;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void FixViewsBeforeRemove(int start, int count, Node first, Node last)
+        {
+            int clearend = start + count - 1;
+            if (views != null)
+            {
+                foreach (LinkedList<T> view in views)
+                {
+                    if (view == this)
+                    {
+                        continue;
+                    }
+
+                    int viewoffset = view.Offset, viewend = viewoffset + view.size - 1;
+                    //sentinels
+                    if (start < viewoffset && viewoffset - 1 <= clearend)
+                    {
+                        view.startsentinel = first.prev;
+                    }
+
+                    if (start <= viewend + 1 && viewend < clearend)
+                    {
+                        view.endsentinel = last.next!;
+                    }
+                    //offsets and sizes
+                    if (start < viewoffset)
+                    {
+                        if (clearend < viewoffset)
+                        {
+                            view.offset = viewoffset - count;
+                        }
+                        else
+                        {
+                            view.offset = start;
+                            view.size = clearend < viewend ? viewend - clearend : 0;
+                        }
+                    }
+                    else if (start <= viewend)
+                    {
+                        view.size = clearend <= viewend ? view.size - count : start - viewoffset;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="otherView"></param>
+        /// <returns>The position of View(otherOffset, otherSize) wrt. this view</returns>
+        private MutualViewPosition ViewPosition(LinkedList<T> otherView)
+        {
+
+            int end = offset + size, otherOffset = otherView.offset, otherSize = otherView.size, otherEnd = otherOffset + otherSize;
+            if (otherOffset >= end || otherEnd <= offset)
+            {
+                return MutualViewPosition.NonOverlapping;
+            }
+
+            if (size == 0 || (otherOffset <= offset && end <= otherEnd))
+            {
+                return MutualViewPosition.Contains;
+            }
+
+            if (otherSize == 0 || (offset <= otherOffset && otherEnd <= end))
+            {
+                return MutualViewPosition.ContainedIn;
+            }
+
+            return MutualViewPosition.Overlapping;
+        }
+
+        private void DisposeOverlappingViews(bool reverse)
+        {
+            if (views != null)
+            {
+                foreach (LinkedList<T> view in views)
+                {
+                    if (view != this)
+                    {
+                        switch (ViewPosition(view))
                         {
                             case MutualViewPosition.ContainedIn:
                                 if (reverse)
                                 { }
                                 else
+                                {
                                     view.Dispose();
+                                }
+
                                 break;
                             case MutualViewPosition.Overlapping:
                                 view.Dispose();
@@ -470,7 +555,7 @@ namespace C5
         /// An individual cell in the linked list
         /// </summary>
         [Serializable]
-        class Node
+        private class Node
         {
             public Node? prev;
 
@@ -505,10 +590,11 @@ namespace C5
 
         #region Position, PositionComparer and ViewHandler nested types
         [Serializable]
-        class PositionComparer : SCG.IComparer<Position>
+        private class PositionComparer : SCG.IComparer<Position>
         {
-            static PositionComparer _default;
-            PositionComparer() { }
+            private static PositionComparer _default;
+
+            private PositionComparer() { }
             public static PositionComparer Default { get { return _default ?? (_default = new PositionComparer()); } }
             public int Compare(Position a, Position b)
             {
@@ -516,10 +602,11 @@ namespace C5
                 return a.Index.CompareTo(b.Index);
             }
         }
+
         /// <summary>
         /// During RemoveAll, we need to cache the original endpoint indices of views
         /// </summary>
-        struct Position
+        private struct Position
         {
             public readonly LinkedList<T>? View;
             public bool Left;
@@ -540,18 +627,20 @@ namespace C5
         /// <summary>
         /// Handle the update of (other) views during a multi-remove operation.
         /// </summary>
-        struct ViewHandler
+        private struct ViewHandler
         {
-            readonly ArrayList<Position>? leftEnds;
-            readonly ArrayList<Position>? rightEnds;
-            int leftEndIndex, rightEndIndex, leftEndIndex2, rightEndIndex2;
+            private readonly ArrayList<Position>? leftEnds;
+            private readonly ArrayList<Position>? rightEnds;
+            private int leftEndIndex, rightEndIndex, leftEndIndex2, rightEndIndex2;
             internal readonly int viewCount;
             internal ViewHandler(LinkedList<T> list)
             {
                 leftEndIndex = rightEndIndex = leftEndIndex2 = rightEndIndex2 = viewCount = 0;
                 leftEnds = rightEnds = null;
                 if (list.views != null)
+                {
                     foreach (LinkedList<T> v in list.views)
+                    {
                         if (v != list)
                         {
                             if (leftEnds == null || rightEnds == null)
@@ -562,8 +651,14 @@ namespace C5
                             leftEnds.Add(new Position(v, true));
                             rightEnds.Add(new Position(v, false));
                         }
+                    }
+                }
+
                 if (leftEnds == null || rightEnds == null)
+                {
                     return;
+                }
+
                 viewCount = leftEnds.Count;
                 leftEnds.Sort(PositionComparer.Default);
                 rightEnds.Sort(PositionComparer.Default);
@@ -574,7 +669,7 @@ namespace C5
             /// </summary>
             /// <param name="removed"></param>
             /// <param name="realindex"></param>
-            internal void skipEndpoints(int removed, int realindex)
+            internal void SkipEndpoints(int removed, int realindex)
             {
                 if (viewCount > 0)
                 {
@@ -596,12 +691,17 @@ namespace C5
                 if (viewCount > 0)
                 {
                     while (leftEndIndex2 < viewCount && (_ = leftEnds![leftEndIndex2]).Index <= realindex)
+                    {
                         leftEndIndex2++;
+                    }
+
                     while (rightEndIndex2 < viewCount && (_ = rightEnds![rightEndIndex2]).Index < realindex - 1)
+                    {
                         rightEndIndex2++;
+                    }
                 }
             }
-            internal void updateViewSizesAndCounts(int removed, int realindex)
+            internal void UpdateViewSizesAndCounts(int removed, int realindex)
             {
                 if (viewCount > 0)
                 {
@@ -621,7 +721,7 @@ namespace C5
                     }
                 }
             }
-            internal void updateSentinels(int realindex, Node newstart, Node newend)
+            internal void UpdateSentinels(int realindex, Node newstart, Node newend)
             {
                 if (viewCount > 0)
                 {
@@ -647,14 +747,13 @@ namespace C5
         #region Range nested class
 
         [Serializable]
-        class Range : DirectedCollectionValueBase<T>, IDirectedCollectionValue<T>
+        private class Range : DirectedCollectionValueBase<T>, IDirectedCollectionValue<T>
         {
             // int start;
-            readonly int count, rangestamp;
-            readonly Node? startnode, endnode;
-            readonly LinkedList<T> list;
-
-            bool forwards;
+            private readonly int count, rangestamp;
+            private readonly Node? startnode, endnode;
+            private readonly LinkedList<T> list;
+            private bool forwards;
 
             internal Range(LinkedList<T> list, int start, int count, bool forwards)
             {
@@ -665,23 +764,27 @@ namespace C5
                 this.forwards = forwards;
                 if (count > 0)
                 {
-                    startnode = list.get(start);
-                    endnode = list.get(start + count - 1);
+                    startnode = list.Get(start);
+                    endnode = list.Get(start + count - 1);
                 }
             }
 
-            public override bool IsEmpty { get { list.modifycheck(rangestamp); return count == 0; } }
+            public override bool IsEmpty { get { list.ModifyCheck(rangestamp); return count == 0; } }
 
-            public override int Count { get { list.modifycheck(rangestamp); return count; } }
+            public override int Count { get { list.ModifyCheck(rangestamp); return count; } }
 
 
-            public override Speed CountSpeed { get { list.modifycheck(rangestamp); return Speed.Constant; } }
+            public override Speed CountSpeed { get { list.ModifyCheck(rangestamp); return Speed.Constant; } }
 
 
             public override T Choose()
             {
-                list.modifycheck(rangestamp);
-                if (count > 0) return startnode!.item;
+                list.ModifyCheck(rangestamp);
+                if (count > 0)
+                {
+                    return startnode!.item;
+                }
+
                 throw new NoSuchItemException();
             }
 
@@ -689,9 +792,11 @@ namespace C5
             {
                 int togo = count;
 
-                list.modifycheck(rangestamp);
+                list.ModifyCheck(rangestamp);
                 if (togo == 0)
+                {
                     yield break;
+                }
 
                 Node cursor = (forwards ? startnode : endnode)!;
 
@@ -699,7 +804,7 @@ namespace C5
                 while (--togo > 0)
                 {
                     cursor = (forwards ? cursor.next : cursor.prev)!;
-                    list.modifycheck(rangestamp);
+                    list.ModifyCheck(rangestamp);
                     yield return cursor.item;
                 }
             }
@@ -707,7 +812,7 @@ namespace C5
 
             public override IDirectedCollectionValue<T> Backwards()
             {
-                list.modifycheck(rangestamp);
+                list.ModifyCheck(rangestamp);
 
                 Range b = (Range)MemberwiseClone();
 
@@ -740,7 +845,7 @@ namespace C5
             Dispose(false);
         }
 
-        void Dispose(bool disposingUnderlying)
+        private void Dispose(bool disposingUnderlying)
         {
             if (isValid)
             {
@@ -748,7 +853,10 @@ namespace C5
                 {
                     isValid = false;
                     if (!disposingUnderlying && views != null)
+                    {
                         views.Remove(myWeakReference!);
+                    }
+
                     endsentinel = null;
                     startsentinel = null;
                     underlying = null;
@@ -761,8 +869,12 @@ namespace C5
                     //endsentinel = null;
                     //startsentinel = null;
                     if (views != null)
+                    {
                         foreach (LinkedList<T> view in views)
+                        {
                             view.Dispose(true);
+                        }
+                    }
                     //views = null;
                     Clear();
                 }
@@ -781,9 +893,12 @@ namespace C5
         {
             get
             {
-                validitycheck();
+                ValidityCheck();
                 if (size == 0)
+                {
                     throw new NoSuchItemException();
+                }
+
                 return startsentinel!.next!.item;
             }
         }
@@ -797,9 +912,12 @@ namespace C5
         {
             get
             {
-                validitycheck();
+                ValidityCheck();
                 if (size == 0)
+                {
                     throw new NoSuchItemException();
+                }
+
                 return endsentinel!.prev!.item;
             }
         }
@@ -812,8 +930,8 @@ namespace C5
         /// start of the list, false if it removes from the end. THe default for a new linked list is true.</value>
         public virtual bool FIFO
         {
-            get { validitycheck(); return fIFO; }
-            set { updatecheck(); fIFO = value; }
+            get { ValidityCheck(); return fIFO; }
+            set { UpdateCheck(); fIFO = value; }
         }
 
         /// <summary>
@@ -821,7 +939,7 @@ namespace C5
         /// </summary>
         public virtual bool IsFixedSize
         {
-            get { validitycheck(); return false; }
+            get { ValidityCheck(); return false; }
         }
 
         /// <summary>
@@ -833,16 +951,16 @@ namespace C5
         /// <param name="index">The index of the item to fetch or store.</param>
         public virtual T this[int index]
         {
-            get { validitycheck(); return get(index).item; }
+            get { ValidityCheck(); return Get(index).item; }
             set
             {
-                updatecheck();
-                Node n = get(index);
+                UpdateCheck();
+                Node n = Get(index);
                 //
                 T item = n.item;
 
                 n.item = value;
-                (underlying ?? this).raiseForSetThis(index, value, item);
+                (underlying ?? this).RaiseForSetThis(index, value, item);
             }
         }
 
@@ -860,10 +978,12 @@ namespace C5
         /// <param name="item">The item to insert.</param>
         public virtual void Insert(int i, T item)
         {
-            updatecheck();
-            insert(i, (i == size ? endsentinel : get(i))!, item);
+            UpdateCheck();
+            Insert(i, (i == size ? endsentinel : Get(i))!, item);
             if (ActiveEvents != EventTypeEnum.None)
-                (underlying ?? this).raiseForInsert(i + Offset, item);
+            {
+                (underlying ?? this).RaiseForInsert(i + Offset, item);
+            }
         }
 
         /// <summary>
@@ -883,9 +1003,11 @@ namespace C5
         /// <param name="item"></param>
         public void Insert(IList<T> pointer, T item)
         {
-            updatecheck();
+            UpdateCheck();
             if ((pointer == null) || ((pointer.Underlying ?? pointer) != (underlying ?? this)))
+            {
                 throw new IncompatibleViewException();
+            }
 #warning INEFFICIENT
             //TODO: make this efficient (the whole point of the method:
             //Do NOT use Insert, but insert the node at pointer.endsentinel, checking
@@ -906,12 +1028,12 @@ namespace C5
             InsertAll(i, items, true);
         }
 
-        void InsertAll(int i, SCG.IEnumerable<T> items, bool insertion)
+        private void InsertAll(int i, SCG.IEnumerable<T> items, bool insertion)
         {
-            updatecheck();
+            UpdateCheck();
             Node succ, node, pred;
             int count = 0;
-            succ = (i == size ? endsentinel : get(i))!;
+            succ = (i == size ? endsentinel : Get(i))!;
             pred = node = succ.prev!;
 
             foreach (T item in items)
@@ -922,34 +1044,47 @@ namespace C5
                 node = tmp;
             }
             if (count == 0)
+            {
                 return;
+            }
+
             succ.prev = node;
             node.next = succ;
             size += count;
             if (underlying != null)
+            {
                 underlying.size += count;
+            }
+
             if (count > 0)
             {
-                fixViewsAfterInsert(succ, pred, count, offset + i);
-                raiseForInsertAll(pred, i, count, insertion);
+                FixViewsAfterInsert(succ, pred, count, offset + i);
+                RaiseForInsertAll(pred, i, count, insertion);
             }
         }
 
-        private void raiseForInsertAll(Node node, int i, int added, bool insertion)
+        private void RaiseForInsertAll(Node node, int i, int added, bool insertion)
         {
             if (ActiveEvents != 0)
             {
                 int index = Offset + i;
                 if ((ActiveEvents & (EventTypeEnum.Added | EventTypeEnum.Inserted)) != 0)
+                {
                     for (int j = index; j < index + added; j++)
                     {
 #warning must we check stamps here?
                         node = node.next!;
                         T item = node!.item;
-                        if (insertion) raiseItemInserted(item, j);
-                        raiseItemsAdded(item, 1);
+                        if (insertion)
+                        {
+                            RaiseItemInserted(item, j);
+                        }
+
+                        RaiseItemsAdded(item, 1);
                     }
-                raiseCollectionChanged();
+                }
+
+                RaiseCollectionChanged();
             }
         }
 
@@ -959,10 +1094,12 @@ namespace C5
         /// <param name="item">The item to insert.</param>
         public virtual void InsertFirst(T item)
         {
-            updatecheck();
-            insert(0, startsentinel!.next!, item);
+            UpdateCheck();
+            Insert(0, startsentinel!.next!, item);
             if (ActiveEvents != EventTypeEnum.None)
-                (underlying ?? this).raiseForInsert(0 + Offset, item);
+            {
+                (underlying ?? this).RaiseForInsert(0 + Offset, item);
+            }
         }
 
         /// <summary>
@@ -971,10 +1108,12 @@ namespace C5
         /// <param name="item">The item to insert.</param>
         public virtual void InsertLast(T item)
         {
-            updatecheck();
-            insert(size, endsentinel!, item);
+            UpdateCheck();
+            Insert(size, endsentinel!, item);
             if (ActiveEvents != EventTypeEnum.None)
-                (underlying ?? this).raiseForInsert(size - 1 + Offset, item);
+            {
+                (underlying ?? this).RaiseForInsert(size - 1 + Offset, item);
+            }
         }
 
         /// <summary>
@@ -985,10 +1124,10 @@ namespace C5
         /// <returns>The new list.</returns>
         public IList<V> Map<V>(Func<T, V> mapper)
         {
-            validitycheck();
+            ValidityCheck();
 
             LinkedList<V> retval = new LinkedList<V>();
-            return map<V>(mapper, retval);
+            return Map<V>(mapper, retval);
         }
 
         /// <summary>
@@ -1001,16 +1140,19 @@ namespace C5
         /// <returns>The new list.</returns>
         public IList<V> Map<V>(Func<T, V> mapper, SCG.IEqualityComparer<V> equalityComparer)
         {
-            validitycheck();
+            ValidityCheck();
 
             LinkedList<V> retval = new LinkedList<V>(equalityComparer);
-            return map<V>(mapper, retval);
+            return Map<V>(mapper, retval);
         }
 
-        private IList<V> map<V>(Func<T, V> mapper, LinkedList<V> retval)
+        private IList<V> Map<V>(Func<T, V> mapper, LinkedList<V> retval)
         {
             if (size == 0)
+            {
                 return retval;
+            }
+
             int stamp = this.stamp;
             Node cursor = startsentinel!.next!;
             LinkedList<V>.Node mcursor = retval.startsentinel!;
@@ -1019,7 +1161,7 @@ namespace C5
             while (cursor != endsentinel)
             {
                 V v = mapper(cursor!.item);
-                modifycheck(stamp);
+                ModifyCheck(stamp);
                 mcursor.next = new LinkedList<V>.Node(v, mcursor, null);
                 cursor = cursor.next!;
                 mcursor = mcursor.next;
@@ -1041,12 +1183,15 @@ namespace C5
         /// <returns>The removed item.</returns>
         public virtual T Remove()
         {
-            updatecheck();
+            UpdateCheck();
             if (size == 0)
+            {
                 throw new NoSuchItemException("List is empty");
-            T item = fIFO ? remove(startsentinel!.next!, 0) : remove(endsentinel!.prev!, size - 1);
+            }
 
-            (underlying ?? this).raiseForRemove(item);
+            T item = fIFO ? Remove(startsentinel!.next!, 0) : Remove(endsentinel!.prev!, size - 1);
+
+            (underlying ?? this).RaiseForRemove(item);
             return item;
         }
 
@@ -1057,14 +1202,19 @@ namespace C5
         /// <returns>The removed item.</returns>
         public virtual T RemoveFirst()
         {
-            updatecheck();
+            UpdateCheck();
             if (size == 0)
+            {
                 throw new NoSuchItemException("List is empty");
+            }
 
-            T item = remove(startsentinel!.next!, 0);
+            T item = Remove(startsentinel!.next!, 0);
 
             if (ActiveEvents != EventTypeEnum.None)
-                (underlying ?? this).raiseForRemoveAt(Offset, item);
+            {
+                (underlying ?? this).RaiseForRemoveAt(Offset, item);
+            }
+
             return item;
         }
 
@@ -1075,14 +1225,19 @@ namespace C5
         /// <returns>The removed item.</returns>
         public virtual T RemoveLast()
         {
-            updatecheck();
+            UpdateCheck();
             if (size == 0)
+            {
                 throw new NoSuchItemException("List is empty");
+            }
 
-            T item = remove(endsentinel!.prev!, size - 1);
+            T item = Remove(endsentinel!.prev!, size - 1);
 
             if (ActiveEvents != EventTypeEnum.None)
-                (underlying ?? this).raiseForRemoveAt(size + Offset, item);
+            {
+                (underlying ?? this).RaiseForRemoveAt(size + Offset, item);
+            }
+
             return item;
         }
 
@@ -1096,15 +1251,18 @@ namespace C5
         /// <returns>The new list view.</returns>
         public virtual IList<T>? View(int start, int count)
         {
-            checkRange(start, count);
-            validitycheck();
+            CheckRange(start, count);
+            ValidityCheck();
             if (views == null)
+            {
                 views = new WeakViewList<LinkedList<T>>();
+            }
+
             LinkedList<T> retval = (LinkedList<T>)MemberwiseClone();
             retval.underlying = underlying ?? (this);
             retval.offset = offset + start;
             retval.size = count;
-            getPair(start - 1, start + count, out retval.startsentinel, out retval.endsentinel,
+            GetPair(start - 1, start + count, out retval.startsentinel, out retval.endsentinel,
                 new int[] { -1, size }, new Node[] { startsentinel!, endsentinel! });
             //retval.startsentinel = start == 0 ? startsentinel : get(start - 1);
             //retval.endsentinel = start + count == size ? endsentinel : get(start + count);
@@ -1125,8 +1283,10 @@ namespace C5
 
             int index = 0;
             Node n = startsentinel!.next!;
-            if (!find(item, ref n, ref index))
+            if (!Find(item, ref n, ref index))
+            {
                 return null;
+            }
             //TODO: optimize with getpair!
             return View(index, 1);
         }
@@ -1142,8 +1302,11 @@ namespace C5
 
             int index = size - 1;
             Node n = endsentinel!.prev!;
-            if (!dnif(item, ref n, ref index))
+            if (!DnIf(item, ref n, ref index))
+            {
                 return null;
+            }
+
             return View(index, 1);
         }
 
@@ -1151,7 +1314,7 @@ namespace C5
         /// Null if this list is not a view.
         /// </summary>
         /// <value>Underlying list for view.</value>
-        public virtual IList<T>? Underlying { get { validitycheck(); return underlying; } }
+        public virtual IList<T>? Underlying { get { ValidityCheck(); return underlying; } }
 
         /// <summary>
         /// 
@@ -1166,7 +1329,7 @@ namespace C5
         {
             get
             {
-                validitycheck();
+                ValidityCheck();
 
                 return (int)offset;
             }
@@ -1183,7 +1346,10 @@ namespace C5
         public IList<T> Slide(int offset)
         {
             if (!TrySlide(offset, size))
+            {
                 throw new ArgumentOutOfRangeException();
+            }
+
             return this;
         }
 
@@ -1200,7 +1366,10 @@ namespace C5
         public IList<T> Slide(int offset, int size)
         {
             if (!TrySlide(offset, size))
+            {
                 throw new ArgumentOutOfRangeException();
+            }
+
             return this;
         }
 
@@ -1219,14 +1388,19 @@ namespace C5
         /// <returns></returns>
         public virtual bool TrySlide(int offset, int size)
         {
-            updatecheck();
+            UpdateCheck();
             if (underlying == null)
+            {
                 throw new NotAViewException("List not a view");
+            }
 
             if (offset + this.offset < 0 || offset + this.offset + size > underlying.size)
+            {
                 return false;
+            }
+
             int oldoffset = (int)(this.offset);
-            getPair(offset - 1, offset + size, out startsentinel, out endsentinel,
+            GetPair(offset - 1, offset + size, out startsentinel, out endsentinel,
                     new int[] { -oldoffset - 1, -1, this.size, underlying.size - oldoffset },
                     new Node[] { underlying.startsentinel!, startsentinel!, endsentinel!, underlying.endsentinel! });
 
@@ -1247,9 +1421,15 @@ namespace C5
         public virtual IList<T>? Span(IList<T> otherView)
         {
             if ((otherView == null) || ((otherView.Underlying ?? otherView) != (underlying ?? this)))
+            {
                 throw new IncompatibleViewException();
+            }
+
             if (otherView.Offset + otherView.Count - Offset < 0)
+            {
                 return null;
+            }
+
             return (underlying ?? this).View(Offset, otherView.Offset + otherView.Count - Offset);
         }
 
@@ -1265,9 +1445,11 @@ namespace C5
         /// </summary>
         public virtual void Reverse()
         {
-            updatecheck();
+            UpdateCheck();
             if (size == 0)
+            {
                 return;
+            }
 
             Position[]? positions = null;
             int poslow = 0, poshigh = 0;
@@ -1278,7 +1460,7 @@ namespace C5
                 {
                     if (view != this)
                     {
-                        switch (viewPosition(view))
+                        switch (ViewPosition(view))
                         {
                             case MutualViewPosition.ContainedIn:
                                 (_positions ?? (_positions = new CircularQueue<Position>())).Enqueue(new Position(view, true));
@@ -1301,22 +1483,27 @@ namespace C5
                 }
             }
 
-            Node a = get(0), b = get(size - 1);
+            Node a = Get(0), b = Get(size - 1);
             for (int i = 0; i < size / 2; i++)
             {
                 T swap;
                 swap = a.item; a.item = b.item; b.item = swap;
 
                 if (positions != null)
-                    mirrorViewSentinelsForReverse(positions, ref poslow, ref poshigh, a, b, i);
+                {
+                    MirrorViewSentinelsForReverse(positions, ref poslow, ref poshigh, a, b, i);
+                }
+
                 a = a.next!; b = b.prev!;
             }
             if (positions != null && size % 2 != 0)
-                mirrorViewSentinelsForReverse(positions, ref poslow, ref poshigh, a, b, size / 2);
-            (underlying ?? this).raiseCollectionChanged();
+            {
+                MirrorViewSentinelsForReverse(positions, ref poslow, ref poshigh, a, b, size / 2);
+            } 
+            (underlying ?? this).RaiseCollectionChanged();
         }
 
-        private void mirrorViewSentinelsForReverse(Position[] positions, ref int poslow, ref int poshigh, Node a, Node b, int i)
+        private void MirrorViewSentinelsForReverse(Position[] positions, ref int poslow, ref int poshigh, Node a, Node b, int i)
         {
 
             int aindex = offset + i, bindex = offset + size - 1 - i;
@@ -1327,7 +1514,9 @@ namespace C5
                 //TODO: Note: in the case og hashed linked list, if this.offset == null, but pos.View.offset!=null
                 //we may at this point compute this.offset and non-null values of aindex and bindex
                 if (pos.Left)
+                {
                     pos.View!.endsentinel = b.next!;
+                }
                 else
                 {
                     pos.View!.startsentinel = b.prev;
@@ -1339,7 +1528,9 @@ namespace C5
             while (poslow < poshigh && (pos = positions[poshigh]).Index == bindex)
             {
                 if (pos.Left)
+                {
                     pos.View!.endsentinel = a.next!;
+                }
                 else
                 {
                     pos.View!.startsentinel = a.prev;
@@ -1364,9 +1555,11 @@ namespace C5
         /// <returns>True if the list is sorted, else false.</returns>
         public virtual bool IsSorted(SCG.IComparer<T> c)
         {
-            validitycheck();
+            ValidityCheck();
             if (size <= 1)
+            {
                 return true;
+            }
 
             Node node = startsentinel!.next!;
             T prevItem = node!.item;
@@ -1375,7 +1568,9 @@ namespace C5
             while (node != endsentinel)
             {
                 if (c.Compare(prevItem, node!.item) > 0)
+                {
                     return false;
+                }
                 else
                 {
                     prevItem = node.item;
@@ -1403,10 +1598,13 @@ namespace C5
         /// <param name="c">The comparer defining the sorting order.</param>
         public virtual void Sort(SCG.IComparer<T> c)
         {
-            updatecheck();
+            UpdateCheck();
             if (size == 0)
+            {
                 return;
-            disposeOverlappingViews(false);
+            }
+
+            DisposeOverlappingViews(false);
 
             // Build a linked list of non-empty runs.
             // The prev field in first node of a run points to next run's first node
@@ -1429,7 +1627,9 @@ namespace C5
                 runTail!.prev = node!;	// Link it into the chain of runs
                 runTail = node!;
                 if (c.Compare(endsentinel.prev.item, prevNode.item) <= 0)
-                    endsentinel.prev = prevNode;	// Update last pointer to point to largest
+                {
+                    endsentinel.prev = prevNode;   // Update last pointer to point to largest
+                }
 
                 prevNode = node!;		// Start a new run
             }
@@ -1443,19 +1643,25 @@ namespace C5
                 while (run != null && run.prev != null)
                 { // At least two runs, merge
                     Node nextRun = run.prev.prev!;
-                    Node newrun = mergeRuns(run, run.prev, c);
+                    Node newrun = MergeRuns(run, run.prev, c);
 
                     if (newRunTail != null)
+                    {
                         newRunTail.prev = newrun;
+                    }
                     else
+                    {
                         startsentinel.next = newrun;
+                    }
 
                     newRunTail = newrun;
                     run = nextRun;
                 }
 
                 if (run != null) // Add the last run, if any
+                {
                     newRunTail!.prev = run;
+                }
             }
 
             endsentinel.prev.next = endsentinel;
@@ -1464,10 +1670,10 @@ namespace C5
             //assert invariant();
             //assert isSorted();
 
-            (underlying ?? this).raiseCollectionChanged();
+            (underlying ?? this).RaiseCollectionChanged();
         }
 
-        private static Node mergeRuns(Node run1, Node run2, SCG.IComparer<T> c)
+        private static Node MergeRuns(Node run1, Node run2, SCG.IComparer<T> c)
         {
             //assert run1 != null && run2 != null;
             Node prev;
@@ -1561,10 +1767,13 @@ namespace C5
         /// <param name="rnd">The random source.</param>
         public virtual void Shuffle(Random rnd)
         {
-            updatecheck();
+            UpdateCheck();
             if (size == 0)
+            {
                 return;
-            disposeOverlappingViews(false);
+            }
+
+            DisposeOverlappingViews(false);
             ArrayList<T> a = new ArrayList<T>();
             a.AddAll(this);
             a.Shuffle(rnd);
@@ -1576,7 +1785,7 @@ namespace C5
 
                 cursor = cursor.next!;
             }
-            (underlying ?? this).raiseCollectionChanged();
+            (underlying ?? this).RaiseCollectionChanged();
         }
 
         #endregion
@@ -1593,8 +1802,8 @@ namespace C5
         {
             get
             {
-                validitycheck();
-                checkRange(start, count);
+                ValidityCheck();
+                CheckRange(start, count);
                 return new Range(this, start, count, true);
             }
         }
@@ -1606,15 +1815,19 @@ namespace C5
         /// <returns>Index of item from start.</returns>
         public virtual int IndexOf(T item)
         {
-            validitycheck();
+            ValidityCheck();
             Node node;
 
             node = startsentinel!.next!;
             int index = 0;
-            if (find(item, ref node, ref index))
+            if (Find(item, ref node, ref index))
+            {
                 return index;
+            }
             else
+            {
                 return ~size;
+            }
         }
 
         /// <summary>
@@ -1625,15 +1838,19 @@ namespace C5
         public virtual int LastIndexOf(T item)
         {
 
-            validitycheck();
+            ValidityCheck();
 
             Node node = endsentinel!.prev!;
             int index = size - 1;
 
-            if (dnif(item, ref node, ref index))
+            if (DnIf(item, ref node, ref index))
+            {
                 return index;
+            }
             else
+            {
                 return ~size;
+            }
         }
 
         /// <summary>
@@ -1645,11 +1862,14 @@ namespace C5
         /// <returns>The removed item.</returns>
         public virtual T RemoveAt(int i)
         {
-            updatecheck();
-            T retval = remove(get(i), i);
+            UpdateCheck();
+            T retval = Remove(Get(i), i);
 
             if (ActiveEvents != EventTypeEnum.None)
-                (underlying ?? this).raiseForRemoveAt(Offset + i, retval);
+            {
+                (underlying ?? this).RaiseForRemoveAt(Offset + i, retval);
+            }
+
             return retval;
         }
 
@@ -1663,31 +1883,37 @@ namespace C5
         {
 
             //Note: this is really almost equaivalent to Clear on a view
-            updatecheck();
-            checkRange(start, count);
+            UpdateCheck();
+            CheckRange(start, count);
             if (count == 0)
+            {
                 return;
+            }
 
             //for small count: optimize
             //use an optimal get(int i, int j, ref Node ni, ref Node nj)?
-            Node a = get(start), b = get(start + count - 1);
-            fixViewsBeforeRemove(start, count, a, b);
+            Node a = Get(start), b = Get(start + count - 1);
+            FixViewsBeforeRemove(start, count, a, b);
             a.prev!.next = b.next;
             b.next!.prev = a.prev;
             if (underlying != null)
+            {
                 underlying.size -= count;
+            }
 
             size -= count;
             if (ActiveEvents != EventTypeEnum.None)
-                (underlying ?? this).raiseForRemoveInterval(start + Offset, count);
+            {
+                (underlying ?? this).RaiseForRemoveInterval(start + Offset, count);
+            }
         }
 
-        void raiseForRemoveInterval(int start, int count)
+        private void RaiseForRemoveInterval(int start, int count)
         {
             if (ActiveEvents != 0)
             {
-                raiseCollectionCleared(size == 0, count, start);
-                raiseCollectionChanged();
+                RaiseCollectionCleared(size == 0, count, start);
+                RaiseCollectionChanged();
             }
         }
         #endregion
@@ -1698,14 +1924,14 @@ namespace C5
         /// 
         /// </summary>
         /// <returns></returns>
-        public override int GetSequencedHashCode() { validitycheck(); return base.GetSequencedHashCode(); }
+        public override int GetSequencedHashCode() { ValidityCheck(); return base.GetSequencedHashCode(); }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="that"></param>
         /// <returns></returns>
-        public override bool SequencedEquals(ISequenced<T> that) { validitycheck(); return base.SequencedEquals(that); }
+        public override bool SequencedEquals(ISequenced<T> that) { ValidityCheck(); return base.SequencedEquals(that); }
 
         #endregion
 
@@ -1751,7 +1977,7 @@ namespace C5
         /// </summary>
         /// <returns></returns>
         public override int GetUnsequencedHashCode()
-        { validitycheck(); return base.GetUnsequencedHashCode(); }
+        { ValidityCheck(); return base.GetUnsequencedHashCode(); }
 
         /// <summary>
         /// 
@@ -1759,7 +1985,7 @@ namespace C5
         /// <param name="that"></param>
         /// <returns></returns>
         public override bool UnsequencedEquals(ICollection<T> that)
-        { validitycheck(); return base.UnsequencedEquals(that); }
+        { ValidityCheck(); return base.UnsequencedEquals(that); }
 
         /// <summary>
         /// Check if this collection contains (an item equivalent to according to the
@@ -1769,8 +1995,8 @@ namespace C5
         /// <returns>True if the items is in this collection.</returns>
         public virtual bool Contains(T item)
         {
-            validitycheck();
-            return contains(item, out _);
+            ValidityCheck();
+            return Contains(item, out _);
         }
 
         /// <summary>
@@ -1782,8 +2008,8 @@ namespace C5
         /// <returns>True if the items is in this collection.</returns>
         public virtual bool Find(ref T item)
         {
-            validitycheck();
-            if (contains(item, out Node node)) { item = node.item; return true; }
+            ValidityCheck();
+            if (Contains(item, out Node node)) { item = node.item; return true; }
             return false;
         }
 
@@ -1804,14 +2030,14 @@ namespace C5
         /// <returns></returns>
         public virtual bool Update(T item, out T olditem)
         {
-            updatecheck();
+            UpdateCheck();
 
-            if (contains(item, out Node node))
+            if (Contains(item, out Node node))
             {
                 olditem = node.item;
                 node.item = item;
 
-                (underlying ?? this).raiseForUpdate(item, olditem);
+                (underlying ?? this).RaiseForUpdate(item, olditem);
                 return true;
             }
 
@@ -1828,10 +2054,12 @@ namespace C5
         /// <returns>True if the item was found (hence not added).</returns>
         public virtual bool FindOrAdd(ref T item)
         {
-            updatecheck();
+            UpdateCheck();
 
             if (Find(ref item))
+            {
                 return true;
+            }
 
             Add(item);
             return false;
@@ -1854,10 +2082,13 @@ namespace C5
         /// <returns></returns>
         public virtual bool UpdateOrAdd(T item, out T olditem)
         {
-            updatecheck();
+            UpdateCheck();
 
             if (Update(item, out olditem))
+            {
                 return true;
+            }
+
             Add(item);
             olditem = default;
             return false;
@@ -1871,15 +2102,18 @@ namespace C5
         /// <returns>True if the item was found (and removed).</returns>
         public virtual bool Remove(T item)
         {
-            updatecheck();
+            UpdateCheck();
             int i = 0;
             Node node;
 
             node = (fIFO ? startsentinel!.next : endsentinel!.prev)!;
-            if (!(fIFO ? find(item, ref node!, ref i) : dnif(item, ref node!, ref i)))
+            if (!(fIFO ? Find(item, ref node!, ref i) : DnIf(item, ref node!, ref i)))
+            {
                 return false;
-            T removeditem = remove(node, i);
-            (underlying ?? this).raiseForRemove(removeditem);
+            }
+
+            T removeditem = Remove(node, i);
+            (underlying ?? this).RaiseForRemove(removeditem);
             return true;
         }
 
@@ -1893,19 +2127,19 @@ namespace C5
         /// <returns>True if the item was found (and removed).</returns>
         public virtual bool Remove(T item, out T removeditem)
         {
-            updatecheck();
+            UpdateCheck();
             int i = 0;
             Node node;
 
             node = (fIFO ? startsentinel!.next : endsentinel!.prev)!;
-            if (!(fIFO ? find(item, ref node, ref i) : dnif(item, ref node, ref i)))
+            if (!(fIFO ? Find(item, ref node, ref i) : DnIf(item, ref node, ref i)))
             {
                 removeditem = default;
                 return false;
             }
             removeditem = node.item;
-            remove(node, i);
-            (underlying ?? this).raiseForRemove(removeditem);
+            Remove(node, i);
+            (underlying ?? this).RaiseForRemove(removeditem);
             return true;
         }
 
@@ -1922,9 +2156,12 @@ namespace C5
         /// <param name="items">The items to remove.</param>
         public virtual void RemoveAll(SCG.IEnumerable<T> items)
         {
-            updatecheck();
+            UpdateCheck();
             if (size == 0)
+            {
                 return;
+            }
+
             RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
             bool mustFire = raiseHandler.MustFire;
 
@@ -1941,27 +2178,33 @@ namespace C5
                     node = node.next!;
                     index++;
                 }
-                viewHandler.skipEndpoints(removed, myoffset + index);
+                viewHandler.SkipEndpoints(removed, myoffset + index);
                 //Remove a stretch of nodes
                 Node localend = node.prev!; //Latest node not to be removed
                 while (node != endsentinel && toremove.Remove(node.item))
                 {
                     if (mustFire)
+                    {
                         raiseHandler.Remove(node.item);
+                    }
+
                     removed++;
                     node = node.next!;
                     index++;
-                    viewHandler.updateViewSizesAndCounts(removed, myoffset + index);
+                    viewHandler.UpdateViewSizesAndCounts(removed, myoffset + index);
                 }
-                viewHandler.updateSentinels(myoffset + index, localend!, node);
+                viewHandler.UpdateSentinels(myoffset + index, localend!, node);
                 localend.next = node;
                 node.prev = localend;
             }
             index = underlying != null ? underlying.size + 1 - myoffset : size + 1 - myoffset;
-            viewHandler.updateViewSizesAndCounts(removed, myoffset + index);
+            viewHandler.UpdateViewSizesAndCounts(removed, myoffset + index);
             size -= removed;
             if (underlying != null)
+            {
                 underlying.size -= removed;
+            }
+
             raiseHandler.Raise();
         }
 
@@ -2022,26 +2265,34 @@ namespace C5
         /// </summary>
         public virtual void Clear()
         {
-            updatecheck();
+            UpdateCheck();
             if (size == 0)
+            {
                 return;
+            }
+
             int oldsize = size;
 
-            clear();
-            (underlying ?? this).raiseForRemoveInterval(Offset, oldsize);
+            ClearInner();
+            (underlying ?? this).RaiseForRemoveInterval(Offset, oldsize);
         }
 
-        void clear()
+        private void ClearInner()
         {
             if (size == 0)
+            {
                 return;
+            }
 
-            fixViewsBeforeRemove(Offset, size, startsentinel!.next!, endsentinel!.prev!);
+            FixViewsBeforeRemove(Offset, size, startsentinel!.next!, endsentinel!.prev!);
 
             endsentinel.prev = startsentinel;
             startsentinel.next = endsentinel;
             if (underlying != null)
+            {
                 underlying.size -= size;
+            }
+
             size = 0;
         }
 
@@ -2057,9 +2308,12 @@ namespace C5
         /// <param name="items">The items to retain.</param>
         public virtual void RetainAll(SCG.IEnumerable<T> items)
         {
-            updatecheck();
+            UpdateCheck();
             if (size == 0)
+            {
                 return;
+            }
+
             RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
             bool mustFire = raiseHandler.MustFire;
 
@@ -2076,27 +2330,32 @@ namespace C5
                     node = node.next!;
                     index++;
                 }
-                viewHandler.skipEndpoints(removed, myoffset + index);
+                viewHandler.SkipEndpoints(removed, myoffset + index);
                 //Remove a stretch of nodes
                 Node localend = node!.prev!; //Latest node not to be removed
                 while (node != endsentinel && !toretain.Contains(node.item))
                 {
                     if (mustFire)
+                    {
                         raiseHandler.Remove(node.item);
+                    }
+
                     removed++;
                     node = node.next!;
                     index++;
-                    viewHandler.updateViewSizesAndCounts(removed, myoffset + index);
+                    viewHandler.UpdateViewSizesAndCounts(removed, myoffset + index);
                 }
-                viewHandler.updateSentinels(myoffset + index, localend!, node);
+                viewHandler.UpdateSentinels(myoffset + index, localend!, node);
                 localend.next = node;
                 node.prev = localend;
             }
             index = underlying != null ? underlying.size + 1 - myoffset : size + 1 - myoffset;
-            viewHandler.updateViewSizesAndCounts(removed, myoffset + index);
+            viewHandler.UpdateViewSizesAndCounts(removed, myoffset + index);
             size -= removed;
             if (underlying != null)
+            {
                 underlying.size -= removed;
+            }
 
             raiseHandler.Raise();
         }
@@ -2162,12 +2421,15 @@ namespace C5
         /// <returns>True if all values in <code>items</code>is in this collection.</returns>
         public virtual bool ContainsAll(SCG.IEnumerable<T> items)
         {
-            validitycheck();
+            ValidityCheck();
 
             HashBag<T> tocheck = new HashBag<T>(itemequalityComparer);
             tocheck.AddAll(items);
             if (tocheck.Count > size)
+            {
                 return false;
+            }
+
             Node node = startsentinel!.next!;
             while (node != endsentinel)
             {
@@ -2186,7 +2448,7 @@ namespace C5
         /// <returns>The new list.</returns>
         public IList<T> FindAll(Func<T, bool> filter)
         {
-            validitycheck();
+            ValidityCheck();
             int stamp = this.stamp;
             LinkedList<T> retval = new LinkedList<T>();
             Node cursor = startsentinel!.next!;
@@ -2195,7 +2457,7 @@ namespace C5
             while (cursor != endsentinel)
             {
                 bool found = filter(cursor!.item);
-                modifycheck(stamp);
+                ModifyCheck(stamp);
                 if (found)
                 {
                     mcursor.next = new Node(cursor.item, mcursor, null);
@@ -2221,13 +2483,16 @@ namespace C5
         public virtual int ContainsCount(T item)
         {
 
-            validitycheck();
+            ValidityCheck();
             int retval = 0;
             Node node = startsentinel!.next!;
             while (node != endsentinel)
             {
                 if (itemequalityComparer.Equals(node!.item, item))
+                {
                     retval++;
+                }
+
                 node = node.next!;
             }
             return retval;
@@ -2268,9 +2533,12 @@ namespace C5
         public virtual void RemoveAllCopies(T item)
         {
 
-            updatecheck();
+            UpdateCheck();
             if (size == 0)
+            {
                 return;
+            }
+
             RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
             bool mustFire = raiseHandler.MustFire;
             ViewHandler viewHandler = new ViewHandler(this);
@@ -2285,27 +2553,33 @@ namespace C5
                     node = node.next!;
                     index++;
                 }
-                viewHandler.skipEndpoints(removed, myoffset + index);
+                viewHandler.SkipEndpoints(removed, myoffset + index);
                 //Remove a stretch of nodes
                 Node localend = node.prev!; //Latest node not to be removed
                 while (node != endsentinel && itemequalityComparer.Equals(node!.item, item))
                 {
                     if (mustFire)
+                    {
                         raiseHandler.Remove(node.item);
+                    }
+
                     removed++;
                     node = node.next!;
                     index++;
-                    viewHandler.updateViewSizesAndCounts(removed, myoffset + index);
+                    viewHandler.UpdateViewSizesAndCounts(removed, myoffset + index);
                 }
-                viewHandler.updateSentinels(myoffset + index, localend!, node!);
+                viewHandler.UpdateSentinels(myoffset + index, localend!, node!);
                 localend.next = node;
                 node.prev = localend;
             }
             index = underlying != null ? underlying.size + 1 - myoffset : size + 1 - myoffset;
-            viewHandler.updateViewSizesAndCounts(removed, myoffset + index);
+            viewHandler.UpdateViewSizesAndCounts(removed, myoffset + index);
             size -= removed;
             if (underlying != null)
+            {
                 underlying.size -= removed;
+            }
+
             raiseHandler.Raise();
         }
 
@@ -2317,7 +2591,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value>The number of items in this collection</value>
-        public override int Count { get { validitycheck(); return size; } }
+        public override int Count { get { ValidityCheck(); return size; } }
 
         /// <summary>
         /// Choose some item of this collection. 
@@ -2332,7 +2606,7 @@ namespace C5
         /// </summary>
         /// <param name="filter">The T->bool filter delegate defining the condition</param>
         /// <returns>The filtered enumerable</returns>
-        public override SCG.IEnumerable<T> Filter(Func<T, bool> filter) { validitycheck(); return base.Filter(filter); }
+        public override SCG.IEnumerable<T> Filter(Func<T, bool> filter) { ValidityCheck(); return base.Filter(filter); }
 
         #endregion
 
@@ -2343,13 +2617,13 @@ namespace C5
         /// <returns>The enumerator</returns>
         public override SCG.IEnumerator<T> GetEnumerator()
         {
-            validitycheck();
+            ValidityCheck();
             Node cursor = startsentinel!.next!;
             int enumeratorstamp = underlying != null ? underlying.stamp : this.stamp;
 
             while (cursor != endsentinel)
             {
-                modifycheck(enumeratorstamp);
+                ModifyCheck(enumeratorstamp);
                 yield return cursor!.item;
                 cursor = cursor.next!;
             }
@@ -2365,10 +2639,10 @@ namespace C5
         /// <returns>True.</returns>
         public virtual bool Add(T item)
         {
-            updatecheck();
+            UpdateCheck();
 
-            insert(size, endsentinel!, item);
-            (underlying ?? this).raiseForAdd(item);
+            Insert(size, endsentinel!, item);
+            (underlying ?? this).RaiseForAdd(item);
             return true;
 
         }
@@ -2459,12 +2733,18 @@ namespace C5
 
         #region Diagnostic
 
-        private bool checkViews()
+        private bool CheckViews()
         {
             if (underlying != null)
+            {
                 throw new InternalException("checkViews() called on a view");
+            }
+
             if (views == null)
+            {
                 return true;
+            }
+
             bool retval = true;
 
             Node[] nodes = new Node[size + 2];
@@ -2619,7 +2899,7 @@ namespace C5
                 retval = false;
             }
 
-            retval = checkViews() && retval;
+            retval = CheckViews() && retval;
 
 
             return retval;
@@ -2658,10 +2938,14 @@ namespace C5
         void System.Collections.ICollection.CopyTo(Array arr, int index)
         {
             if (index < 0 || index + Count > arr.Length)
+            {
                 throw new ArgumentOutOfRangeException();
+            }
 
             foreach (T item in this)
+            {
                 arr.SetValue(item, index++);
+            }
         }
 
         #endregion

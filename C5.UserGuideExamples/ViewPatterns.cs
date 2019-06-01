@@ -11,7 +11,7 @@ using SCG = System.Collections.Generic;
 
 namespace C5.UserGuideExamples
 {
-    class ViewPatterns
+    internal class ViewPatterns
     {
         public static void Main()
         {
@@ -310,7 +310,10 @@ namespace C5.UserGuideExamples
                 while (view.TrySlide(0, 1))
                 {
                     if (p(view.First))
+                    {
                         return view.Offset;
+                    }
+
                     view.Slide(+1, 0);
                 }
             }

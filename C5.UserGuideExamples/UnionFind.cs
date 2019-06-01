@@ -29,7 +29,7 @@ using System;
 
 namespace C5.UserGuideExamples
 {
-    class UnionFind
+    internal class UnionFind
     {
         public static void Main()
         {

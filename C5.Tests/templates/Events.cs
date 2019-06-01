@@ -1,12 +1,11 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
 
-using System;
-using C5;
 using NUnit.Framework;
+using System;
 using SCG = System.Collections.Generic;
 
-namespace C5UnitTests.Templates.Events
+namespace C5.Tests.Templates.Events
 {
     public abstract class CollectionValueTester<TCollection, TItem> : GenericCollectionTester<TCollection, EventTypeEnum>
       where TCollection : ICollectionValue<TItem>
@@ -33,7 +32,10 @@ namespace C5UnitTests.Templates.Events
                 //    specs.Enqueue(listenTo);
                 //specs.Enqueue(EventTypeEnum.Added | EventTypeEnum.Removed);
                 for (int spec = 0; spec <= (int)EventTypeEnum.Basic; spec++)
+                {
                     specs.Enqueue((EventTypeEnum)spec);
+                }
+
                 return specs;
             }
         }
@@ -47,7 +49,10 @@ namespace C5UnitTests.Templates.Events
                 //specs.Enqueue(EventTypeEnum.Added | EventTypeEnum.Removed);
 
                 for (int spec = 0; spec <= (int)EventTypeEnum.All; spec++)
+                {
                     specs.Enqueue((EventTypeEnum)spec);
+                }
+
                 return specs;
             }
         }
@@ -151,7 +156,7 @@ namespace C5UnitTests.Templates.Events
             seen.Check(new CollectionEvent<int>[] { });
             val = 67;
             collection.FindOrAdd(ref val);
-            seen.Check(new CollectionEvent<int>[] { 
+            seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(67, 1), collection),
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection)
         });
@@ -170,7 +175,7 @@ namespace C5UnitTests.Templates.Events
         });
             val = 67;
             collection.UpdateOrAdd(val);
-            seen.Check(new CollectionEvent<int>[] { 
+            seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(67, 1), collection),
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection)
         });
@@ -182,7 +187,7 @@ namespace C5UnitTests.Templates.Events
         });
             // val = 67;
             collection.UpdateOrAdd(81, out _);
-            seen.Check(new CollectionEvent<int>[] { 
+            seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(81, 1), collection),
           new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection)
         });
@@ -321,12 +326,12 @@ namespace C5UnitTests.Templates.Events
             collection.DeleteMax();
             seen.Check(new CollectionEvent<int>[] {
         new CollectionEvent<int>(EventTypeEnum.Removed, new ItemCountEventArgs<int>(56, 1), collection),
-        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection), 
+        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection),
       });
             collection.DeleteMin();
             seen.Check(new CollectionEvent<int>[] {
-        new CollectionEvent<int>(EventTypeEnum.Removed, new ItemCountEventArgs<int>(12, 1), collection), 
-        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection), 
+        new CollectionEvent<int>(EventTypeEnum.Removed, new ItemCountEventArgs<int>(12, 1), collection),
+        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection),
       });
         }
 
@@ -362,7 +367,10 @@ namespace C5UnitTests.Templates.Events
         public void RemoveRange()
         {
             for (int i = 0; i < 20; i++)
+            {
                 collection.Add(i * 10 + 5);
+            }
+
             listen();
             collection.RemoveRangeFrom(173);
             //TODO: fix order to remove in:
@@ -745,43 +753,43 @@ namespace C5UnitTests.Templates.Events
             listen();
             collection.Add(34);
             seen.Check(new CollectionEvent<int>[] {
-        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(34, 1), collection), 
-        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection), 
+        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(34, 1), collection),
+        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection),
       });
             collection.Add(56);
             seen.Check(new CollectionEvent<int>[] {
-        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(56, 1), collection), 
-        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection), 
+        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(56, 1), collection),
+        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection),
       });
             collection.AddAll(new int[] { });
             seen.Check(new CollectionEvent<int>[] {
       });
             collection.Add(34);
             seen.Check(new CollectionEvent<int>[] {
-        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(34, 1), collection), 
-        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection), 
+        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(34, 1), collection),
+        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection),
       });
             collection.Add(12);
             seen.Check(new CollectionEvent<int>[] {
-        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(12, 1), collection), 
-        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection), 
+        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(12, 1), collection),
+        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection),
       });
             collection.DeleteMax();
             seen.Check(new CollectionEvent<int>[] {
         new CollectionEvent<int>(EventTypeEnum.Removed, new ItemCountEventArgs<int>(56, 1), collection),
-        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection), 
+        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection),
       });
             collection.DeleteMin();
             seen.Check(new CollectionEvent<int>[] {
-        new CollectionEvent<int>(EventTypeEnum.Removed, new ItemCountEventArgs<int>(12, 1), collection), 
-        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection), 
+        new CollectionEvent<int>(EventTypeEnum.Removed, new ItemCountEventArgs<int>(12, 1), collection),
+        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection),
       });
             collection.AddAll(new int[] { 4, 5, 6, 2 });
             seen.Check(new CollectionEvent<int>[] {
-        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(4, 1), collection), 
-        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(5, 1), collection), 
-        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(6, 1), collection), 
-        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(2, 1), collection), 
+        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(4, 1), collection),
+        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(5, 1), collection),
+        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(6, 1), collection),
+        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(2, 1), collection),
         new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection)
       });
         }
@@ -792,46 +800,46 @@ namespace C5UnitTests.Templates.Events
             IPriorityQueueHandle<int> handle = null;
             collection.Add(34);
             seen.Check(new CollectionEvent<int>[] {
-        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(34, 1), collection), 
-        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection), 
+        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(34, 1), collection),
+        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection),
       });
             collection.Add(56);
             seen.Check(new CollectionEvent<int>[] {
-        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(56, 1), collection), 
-        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection), 
+        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(56, 1), collection),
+        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection),
       });
             collection.Add(ref handle, 34);
             seen.Check(new CollectionEvent<int>[] {
-        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(34, 1), collection), 
-        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection), 
+        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(34, 1), collection),
+        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection),
       });
             collection.Add(12);
             seen.Check(new CollectionEvent<int>[] {
-        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(12, 1), collection), 
-        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection), 
+        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(12, 1), collection),
+        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection),
       });
             collection.DeleteMax(out _);
             seen.Check(new CollectionEvent<int>[] {
         new CollectionEvent<int>(EventTypeEnum.Removed, new ItemCountEventArgs<int>(56, 1), collection),
-        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection), 
+        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection),
       });
             collection.DeleteMin(out _);
             seen.Check(new CollectionEvent<int>[] {
-        new CollectionEvent<int>(EventTypeEnum.Removed, new ItemCountEventArgs<int>(12, 1), collection), 
-        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection), 
+        new CollectionEvent<int>(EventTypeEnum.Removed, new ItemCountEventArgs<int>(12, 1), collection),
+        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection),
       });
 
             collection.Replace(handle, 117);
             seen.Check(new CollectionEvent<int>[] {
-        new CollectionEvent<int>(EventTypeEnum.Removed, new ItemCountEventArgs<int>(34, 1), collection), 
-        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(117, 1), collection), 
-        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection), 
+        new CollectionEvent<int>(EventTypeEnum.Removed, new ItemCountEventArgs<int>(34, 1), collection),
+        new CollectionEvent<int>(EventTypeEnum.Added, new ItemCountEventArgs<int>(117, 1), collection),
+        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection),
       });
 
             collection.Delete(handle);
             seen.Check(new CollectionEvent<int>[] {
-        new CollectionEvent<int>(EventTypeEnum.Removed, new ItemCountEventArgs<int>(117, 1), collection), 
-        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection), 
+        new CollectionEvent<int>(EventTypeEnum.Removed, new ItemCountEventArgs<int>(117, 1), collection),
+        new CollectionEvent<int>(EventTypeEnum.Changed, new EventArgs(), collection),
       });
         }
     }

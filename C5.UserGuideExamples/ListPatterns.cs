@@ -6,12 +6,12 @@
 // Compile with
 //   csc /r:netstandard.dll /r:C5.dll ListPatterns.cs
 
-using System;
 using C5;
+using System;
 
 namespace ListPatterns
 {
-    class ListPatterns
+    internal class ListPatterns
     {
         public static void Main()
         {

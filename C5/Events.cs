@@ -58,115 +58,146 @@ namespace C5
     {
         internal EventTypeEnum events;
 
-        event CollectionChangedHandler<T> collectionChanged;
+        private event CollectionChangedHandler<T> CollectionChangedInner;
         internal event CollectionChangedHandler<T> CollectionChanged
         {
             add
             {
-                collectionChanged += value;
+                CollectionChangedInner += value;
                 events |= EventTypeEnum.Changed;
             }
             remove
             {
-                collectionChanged -= value;
-                if (collectionChanged == null)
+                CollectionChangedInner -= value;
+                if (CollectionChangedInner == null)
+                {
                     events &= ~EventTypeEnum.Changed;
+                }
             }
         }
-        internal void raiseCollectionChanged(object sender)
-        { collectionChanged?.Invoke(sender); }
+        internal void RaiseCollectionChanged(object sender)
+        {
+            CollectionChangedInner?.Invoke(sender);
+        }
 
-        event CollectionClearedHandler<T> collectionCleared;
+        private event CollectionClearedHandler<T> CollectionClearedInner;
         internal event CollectionClearedHandler<T> CollectionCleared
         {
             add
             {
-                collectionCleared += value;
+                CollectionClearedInner += value;
                 events |= EventTypeEnum.Cleared;
             }
             remove
             {
-                collectionCleared -= value;
-                if (collectionCleared == null)
+                CollectionClearedInner -= value;
+                if (CollectionClearedInner == null)
+                {
                     events &= ~EventTypeEnum.Cleared;
+                }
             }
         }
-        internal void raiseCollectionCleared(object sender, bool full, int count)
-        { collectionCleared?.Invoke(sender, new ClearedEventArgs(full, count)); }
-        internal void raiseCollectionCleared(object sender, bool full, int count, int? start)
-        { collectionCleared?.Invoke(sender, new ClearedRangeEventArgs(full, count, start)); }
 
-        event ItemsAddedHandler<T> itemsAdded;
+        internal void RaiseCollectionCleared(object sender, bool full, int count)
+        {
+            CollectionClearedInner?.Invoke(sender, new ClearedEventArgs(full, count));
+        }
+
+        internal void RaiseCollectionCleared(object sender, bool full, int count, int? start)
+        {
+            CollectionClearedInner?.Invoke(sender, new ClearedRangeEventArgs(full, count, start));
+        }
+
+        private event ItemsAddedHandler<T> ItemsAddedInner;
         internal event ItemsAddedHandler<T> ItemsAdded
         {
             add
             {
-                itemsAdded += value;
+                ItemsAddedInner += value;
                 events |= EventTypeEnum.Added;
             }
             remove
             {
-                itemsAdded -= value;
-                if (itemsAdded == null)
+                ItemsAddedInner -= value;
+                if (ItemsAddedInner == null)
+                {
                     events &= ~EventTypeEnum.Added;
+                }
             }
         }
-        internal void raiseItemsAdded(object sender, T item, int count)
-        { itemsAdded?.Invoke(sender, new ItemCountEventArgs<T>(item, count)); }
+        internal void RaiseItemsAdded(object sender, T item, int count)
+        {
+            ItemsAddedInner?.Invoke(sender, new ItemCountEventArgs<T>(item, count));
+        }
 
-        event ItemsRemovedHandler<T> itemsRemoved;
+        private event ItemsRemovedHandler<T> ItemsRemovedInner;
         internal event ItemsRemovedHandler<T> ItemsRemoved
         {
             add
             {
-                itemsRemoved += value;
+                ItemsRemovedInner += value;
                 events |= EventTypeEnum.Removed;
             }
             remove
             {
-                itemsRemoved -= value;
-                if (itemsRemoved == null)
+                ItemsRemovedInner -= value;
+                if (ItemsRemovedInner == null)
+                {
                     events &= ~EventTypeEnum.Removed;
+                }
             }
         }
-        internal void raiseItemsRemoved(object sender, T item, int count)
-        { itemsRemoved?.Invoke(sender, new ItemCountEventArgs<T>(item, count)); }
 
-        event ItemInsertedHandler<T> itemInserted;
+        internal void RaiseItemsRemoved(object sender, T item, int count)
+        {
+            ItemsRemovedInner?.Invoke(sender, new ItemCountEventArgs<T>(item, count));
+        }
+
+        private event ItemInsertedHandler<T> ItemInsertedInner;
         internal event ItemInsertedHandler<T> ItemInserted
         {
             add
             {
-                itemInserted += value;
+                ItemInsertedInner += value;
                 events |= EventTypeEnum.Inserted;
             }
             remove
             {
-                itemInserted -= value;
-                if (itemInserted == null)
+                ItemInsertedInner -= value;
+                if (ItemInsertedInner == null)
+                {
                     events &= ~EventTypeEnum.Inserted;
+                }
             }
         }
-        internal void raiseItemInserted(object sender, T item, int index)
-        { itemInserted?.Invoke(sender, new ItemAtEventArgs<T>(item, index)); }
 
-        event ItemRemovedAtHandler<T> itemRemovedAt;
+        internal void RaiseItemInserted(object sender, T item, int index)
+        {
+            ItemInsertedInner?.Invoke(sender, new ItemAtEventArgs<T>(item, index));
+        }
+
+        private event ItemRemovedAtHandler<T> ItemRemovedAtInner;
         internal event ItemRemovedAtHandler<T> ItemRemovedAt
         {
             add
             {
-                itemRemovedAt += value;
+                ItemRemovedAtInner += value;
                 events |= EventTypeEnum.RemovedAt;
             }
             remove
             {
-                itemRemovedAt -= value;
-                if (itemRemovedAt == null)
+                ItemRemovedAtInner -= value;
+                if (ItemRemovedAtInner == null)
+                {
                     events &= ~EventTypeEnum.RemovedAt;
+                }
             }
         }
-        internal void raiseItemRemovedAt(object sender, T item, int index)
-        { itemRemovedAt?.Invoke(sender, new ItemAtEventArgs<T>(item, index)); }
+
+        internal void RaiseItemRemovedAt(object sender, T item, int index)
+        {
+            ItemRemovedAtInner?.Invoke(sender, new ItemAtEventArgs<T>(item, index));
+        }
     }
 
     /// <summary>
@@ -177,140 +208,176 @@ namespace C5
     [Serializable]
     internal sealed class ProxyEventBlock<T>
     {
-        readonly ICollectionValue<T> proxy, real;
+        private readonly ICollectionValue<T> proxy, real;
 
         internal ProxyEventBlock(ICollectionValue<T> proxy, ICollectionValue<T> real)
         { this.proxy = proxy; this.real = real; }
 
-        event CollectionChangedHandler<T> collectionChanged;
-        CollectionChangedHandler<T>? collectionChangedProxy = null;
+        private event CollectionChangedHandler<T> CollectionChangedInner;
+
+        private CollectionChangedHandler<T>? collectionChangedProxy = null;
         internal event CollectionChangedHandler<T> CollectionChanged
         {
             add
             {
-                if (collectionChanged == null)
+                if (CollectionChangedInner == null)
                 {
                     if (collectionChangedProxy == null)
-                        collectionChangedProxy = delegate(object sender) { collectionChanged(proxy); };
+                    {
+                        collectionChangedProxy = delegate (object sender) { CollectionChangedInner(proxy); };
+                    }
+
                     real.CollectionChanged += collectionChangedProxy;
                 }
-                collectionChanged += value;
+                CollectionChangedInner += value;
             }
             remove
             {
-                collectionChanged -= value;
-                if (collectionChanged == null)
+                CollectionChangedInner -= value;
+                if (CollectionChangedInner == null)
+                {
                     real.CollectionChanged -= collectionChangedProxy;
+                }
             }
         }
 
-        event CollectionClearedHandler<T> collectionCleared;
-        CollectionClearedHandler<T>? collectionClearedProxy = null;
+        private event CollectionClearedHandler<T> CollectionClearedInner;
+
+        private CollectionClearedHandler<T>? collectionClearedProxy = null;
         internal event CollectionClearedHandler<T> CollectionCleared
         {
             add
             {
-                if (collectionCleared == null)
+                if (CollectionClearedInner == null)
                 {
                     if (collectionClearedProxy == null)
-                        collectionClearedProxy = delegate(object sender, ClearedEventArgs e) { collectionCleared(proxy, e); };
+                    {
+                        collectionClearedProxy = delegate (object sender, ClearedEventArgs e) { CollectionClearedInner(proxy, e); };
+                    }
+
                     real.CollectionCleared += collectionClearedProxy;
                 }
-                collectionCleared += value;
+                CollectionClearedInner += value;
             }
             remove
             {
-                collectionCleared -= value;
-                if (collectionCleared == null)
+                CollectionClearedInner -= value;
+                if (CollectionClearedInner == null)
+                {
                     real.CollectionCleared -= collectionClearedProxy;
+                }
             }
         }
 
-        event ItemsAddedHandler<T> itemsAdded;
-        ItemsAddedHandler<T>? itemsAddedProxy = null;
+        private event ItemsAddedHandler<T> ItemsAddedInner;
+
+        private ItemsAddedHandler<T>? itemsAddedProxy = null;
         internal event ItemsAddedHandler<T> ItemsAdded
         {
             add
             {
-                if (itemsAdded == null)
+                if (ItemsAddedInner == null)
                 {
                     if (itemsAddedProxy == null)
-                        itemsAddedProxy = delegate(object sender, ItemCountEventArgs<T> e) { itemsAdded(proxy, e); };
+                    {
+                        itemsAddedProxy = delegate (object sender, ItemCountEventArgs<T> e) { ItemsAddedInner(proxy, e); };
+                    }
+
                     real.ItemsAdded += itemsAddedProxy;
                 }
-                itemsAdded += value;
+                ItemsAddedInner += value;
             }
             remove
             {
-                itemsAdded -= value;
-                if (itemsAdded == null)
+                ItemsAddedInner -= value;
+                if (ItemsAddedInner == null)
+                {
                     real.ItemsAdded -= itemsAddedProxy;
+                }
             }
         }
 
-        event ItemInsertedHandler<T> itemInserted;
-        ItemInsertedHandler<T>? itemInsertedProxy = null;
+        private event ItemInsertedHandler<T> ItemInsertedInner;
+
+        private ItemInsertedHandler<T>? itemInsertedProxy = null;
         internal event ItemInsertedHandler<T> ItemInserted
         {
             add
             {
-                if (itemInserted == null)
+                if (ItemInsertedInner == null)
                 {
                     if (itemInsertedProxy == null)
-                        itemInsertedProxy = delegate(object sender, ItemAtEventArgs<T> e) { itemInserted(proxy, e); };
+                    {
+                        itemInsertedProxy = delegate (object sender, ItemAtEventArgs<T> e) { ItemInsertedInner(proxy, e); };
+                    }
+
                     real.ItemInserted += itemInsertedProxy;
                 }
-                itemInserted += value;
+                ItemInsertedInner += value;
             }
             remove
             {
-                itemInserted -= value;
-                if (itemInserted == null)
+                ItemInsertedInner -= value;
+                if (ItemInsertedInner == null)
+                {
                     real.ItemInserted -= itemInsertedProxy;
+                }
             }
         }
 
-        event ItemsRemovedHandler<T>? itemsRemoved = null;
-        ItemsRemovedHandler<T>? itemsRemovedProxy = null;
+        private event ItemsRemovedHandler<T>? ItemsRemovedInner = null;
+
+        private ItemsRemovedHandler<T>? itemsRemovedProxy = null;
         internal event ItemsRemovedHandler<T> ItemsRemoved
         {
             add
             {
-                if (itemsRemoved == null)
+                if (ItemsRemovedInner == null)
                 {
                     if (itemsRemovedProxy == null)
-                        itemsRemovedProxy = delegate(object sender, ItemCountEventArgs<T> e) { itemsRemoved?.Invoke(proxy, e); };
+                    {
+                        itemsRemovedProxy = delegate (object sender, ItemCountEventArgs<T> e) { ItemsRemovedInner?.Invoke(proxy, e); };
+                    }
+
                     real.ItemsRemoved += itemsRemovedProxy;
                 }
-                itemsRemoved += value;
+                ItemsRemovedInner += value;
             }
             remove
             {
-                itemsRemoved -= value;
-                if (itemsRemoved == null)
+                ItemsRemovedInner -= value;
+                if (ItemsRemovedInner == null)
+                {
                     real.ItemsRemoved -= itemsRemovedProxy;
+                }
             }
         }
 
-        event ItemRemovedAtHandler<T> itemRemovedAt;
-        ItemRemovedAtHandler<T>? itemRemovedAtProxy = null;
+        private event ItemRemovedAtHandler<T> ItemRemovedAtInner;
+
+        private ItemRemovedAtHandler<T>? itemRemovedAtProxy = null;
         internal event ItemRemovedAtHandler<T> ItemRemovedAt
         {
             add
             {
-                if (itemRemovedAt == null)
+                if (ItemRemovedAtInner == null)
                 {
                     if (itemRemovedAtProxy == null)
-                        itemRemovedAtProxy = delegate(object sender, ItemAtEventArgs<T> e) { itemRemovedAt(proxy, e); };
+                    {
+                        itemRemovedAtProxy = delegate (object sender, ItemAtEventArgs<T> e) { ItemRemovedAtInner(proxy, e); };
+                    }
+
                     real.ItemRemovedAt += itemRemovedAtProxy;
                 }
-                itemRemovedAt += value;
+                ItemRemovedAtInner += value;
             }
             remove
             {
-                itemRemovedAt -= value;
-                if (itemRemovedAt == null)
+                ItemRemovedAtInner -= value;
+                if (ItemRemovedAtInner == null)
+                {
                     real.ItemRemovedAt -= itemRemovedAtProxy;
+                }
             }
         }
     }

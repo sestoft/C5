@@ -12,9 +12,9 @@ using SCG = System.Collections.Generic;
 
 namespace C5.UserGuideExamples
 {
-    class BipartiteMatchingProgram
+    internal class BipartiteMatchingProgram
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var bmi = new BipartiteMatching<int, char>(GenerateGraph(args));
             var res = new HashDictionary<int, char>();
@@ -33,7 +33,7 @@ namespace C5.UserGuideExamples
             }
         }
 
-        static SCG.IEnumerable<(int, char)> GenerateGraph(string[] words)
+        private static SCG.IEnumerable<(int, char)> GenerateGraph(string[] words)
         {
             var i = 0;
             foreach (var s in words)
@@ -59,7 +59,7 @@ namespace C5.UserGuideExamples
             private readonly LeftNode[] _leftNodes;
             private readonly RightNode[] _rightNodes;
 
-            class LeftNode
+            private class LeftNode
             {
                 public TLeftLabel Label { get; }
                 public RightNode Match { get; set; }
@@ -76,7 +76,8 @@ namespace C5.UserGuideExamples
                     return $@"""{Label}"" -> '{Match}'";
                 }
             }
-            class RightNode
+
+            private class RightNode
             {
                 public TRightLabel Label { get; }
                 public LeftNode Match { get; set; }
@@ -200,7 +201,7 @@ namespace C5.UserGuideExamples
                 }
             }
 
-            void Search(LeftNode l, LeftNode origin)
+            private void Search(LeftNode l, LeftNode origin)
             {
                 foreach (RightNode r in l.Edges)
                 {

@@ -2,7 +2,6 @@
 // See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
 
 using System;
-using SCG = System.Collections.Generic;
 namespace C5
 {
     /// <summary>
@@ -77,7 +76,9 @@ namespace C5
         public override int Next(int max)
         {
             if (max < 0)
+            {
                 throw new ArgumentException("max must be non-negative");
+            }
 
             return (int)(Cmwc() / 4294967296.0 * max);
         }
@@ -93,7 +94,9 @@ namespace C5
         public override int Next(int min, int max)
         {
             if (min > max)
+            {
                 throw new ArgumentException("min must be less than or equal to max");
+            }
 
             return min + (int)(Cmwc() / 4294967296.0 * (max - min));
         }
@@ -105,7 +108,9 @@ namespace C5
         public override void NextBytes(byte[] buffer)
         {
             for (int i = 0, length = buffer.Length; i < length; i++)
+            {
                 buffer[i] = (byte)Cmwc();
+            }
         }
 
 
@@ -126,7 +131,9 @@ namespace C5
         public C5Random(long seed)
         {
             if (seed == 0)
+            {
                 throw new ArgumentException("Seed must be non-zero");
+            }
 
             uint j = (uint)(seed & 0xFFFFFFFF);
 
@@ -150,7 +157,10 @@ namespace C5
         public C5Random(uint[] Q)
         {
             if (Q.Length != 16)
+            {
                 throw new ArgumentException("Q must have length 16, was " + Q.Length);
+            }
+
             Array.Copy(Q, this.Q, 16);
         }
     }

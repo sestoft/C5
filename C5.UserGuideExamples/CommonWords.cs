@@ -13,9 +13,9 @@ using System.Text.RegularExpressions;
 
 namespace C5.UserGuideExamples
 {
-    class CommonWords
+    internal class CommonWords
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             if (args.Length != 2)
             {
@@ -27,7 +27,7 @@ namespace C5.UserGuideExamples
             }
         }
 
-        static void PrintMostCommon(int maxWords, string filename)
+        private static void PrintMostCommon(int maxWords, string filename)
         {
             var wordbag = new HashBag<string>();
             var delimiter = new Regex("[^a-zA-Z0-9]+");

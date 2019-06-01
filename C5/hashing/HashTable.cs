@@ -72,13 +72,12 @@ namespace C5
         private int bitsc;
         private readonly int origbits;
         private int lastchosen;
-        Bucket?[] table;
-        readonly double fillfactor = 0.66;
-
-        int resizethreshhold;
+        private Bucket?[] table;
+        private readonly double fillfactor = 0.66;
+        private int resizethreshhold;
 
         private static readonly Random Random = new Random();
-        uint _randomhashfactor;
+        private uint _randomhashfactor;
 
         #endregion
 
@@ -94,7 +93,7 @@ namespace C5
 
         #region Bucket nested class(es)
         [Serializable]
-        class Bucket
+        private class Bucket
         {
             internal T item;
 
@@ -114,21 +113,19 @@ namespace C5
 
         #region Basic Util
 
-        bool equals(T i1, T i2) { return itemequalityComparer.Equals(i1, i2); }
+        private bool Equals(T i1, T i2) { return itemequalityComparer.Equals(i1, i2); }
 
-        int gethashcode(T item) { return itemequalityComparer.GetHashCode(item); }
+        private int GetHashCode(T item) { return itemequalityComparer.GetHashCode(item); }
 
-
-        int hv2i(int hashval)
+        private int Hv2i(int hashval)
         {
             return (int)(((uint)hashval * _randomhashfactor) >> bitsc);
         }
 
-
-        void expand()
+        private void Expand()
         {
             Logger.Log(string.Format(string.Format("Expand to {0} bits", bits + 1)));
-            resize(bits + 1);
+            Resize(bits + 1);
         }
 
         /*
@@ -142,7 +139,7 @@ namespace C5
         } */
 
 
-        void resize(int bits)
+        private void Resize(int bits)
         {
             Logger.Log(string.Format(string.Format("Resize to {0} bits", bits)));
             this.bits = bits;
@@ -157,7 +154,7 @@ namespace C5
 
                 while (b != null)
                 {
-                    int j = hv2i(b.hashval);
+                    int j = Hv2i(b.hashval);
 
                     newtable[j] = new Bucket(b.item, b.hashval, newtable[j]);
                     b = b.overflow;
@@ -178,11 +175,11 @@ namespace C5
         /// <param name="update">If true, update table entry if item found.</param>
         /// <param name="raise">If true raise events</param>
         /// <returns>True if found</returns>
-        private bool searchoradd(ref T item, bool add, bool update, bool raise)
+        private bool SearchOrAdd(ref T item, bool add, bool update, bool raise)
         {
 
-            int hashval = gethashcode(item);
-            int i = hv2i(hashval);
+            int hashval = GetHashCode(item);
+            int i = Hv2i(hashval);
             Bucket? b = table[i];
             Bucket? bold = null;
 
@@ -191,14 +188,16 @@ namespace C5
                 while (b != null)
                 {
                     T olditem = b.item;
-                    if (equals(olditem, item))
+                    if (Equals(olditem, item))
                     {
                         if (update)
                         {
                             b.item = item;
                         }
                         if (raise && update)
-                            raiseForUpdate(item, olditem);
+                        {
+                            RaiseForUpdate(item, olditem);
+                        }
                         // bug20071112:
                         item = olditem;
                         return true;
@@ -208,41 +207,61 @@ namespace C5
                     b = b.overflow;
                 }
 
-                if (!add) goto notfound;
+                if (!add)
+                {
+                    goto notfound;
+                }
 
                 bold!.overflow = new Bucket(item, hashval, null);
             }
             else
             {
-                if (!add) goto notfound;
+                if (!add)
+                {
+                    goto notfound;
+                }
 
                 table[i] = new Bucket(item, hashval, null);
             }
             size++;
             if (size > resizethreshhold)
-                expand();
+            {
+                Expand();
+            }
+
         notfound:
             if (raise && add)
-                raiseForAdd(item);
+            {
+                RaiseForAdd(item);
+            }
+
             if (update)
+            {
                 item = default;
+            }
+
             return false;
         }
 
 
-        private bool remove(ref T item)
+        private bool Remove(ref T item)
         {
 
             if (size == 0)
+            {
                 return false;
-            int hashval = gethashcode(item);
-            int index = hv2i(hashval);
+            }
+
+            int hashval = GetHashCode(item);
+            int index = Hv2i(hashval);
             Bucket? b = table[index], bold;
 
             if (b == null)
+            {
                 return false;
+            }
 
-            if (equals(item, b.item))
+            if (Equals(item, b.item))
             {
                 //ref
                 item = b.item;
@@ -252,14 +271,16 @@ namespace C5
             {
                 bold = b;
                 b = b.overflow;
-                while (b != null && !equals(item, b.item))
+                while (b != null && !Equals(item, b.item))
                 {
                     bold = b;
                     b = b.overflow;
                 }
 
                 if (b == null)
+                {
                     return false;
+                }
 
                 //ref
                 item = b.item;
@@ -271,7 +292,7 @@ namespace C5
         }
 
 
-        private void clear()
+        private void ClearInner()
         {
             bits = origbits;
             bitsc = 32 - bits;
@@ -322,13 +343,22 @@ namespace C5
             _randomhashfactor = (Debug.UseDeterministicHashing) ? 1529784659 : (2 * (uint)Random.Next() + 1) * 1529784659;
 
             if (fill < 0.1 || fill > 0.9)
+            {
                 throw new ArgumentException("Fill outside valid range [0.1, 0.9]");
+            }
+
             if (capacity <= 0)
+            {
                 throw new ArgumentException("Capacity must be non-negative");
+            }
             //this.itemequalityComparer = itemequalityComparer;
             origbits = 4;
-            while (capacity - 1 >> origbits > 0) origbits++;
-            clear();
+            while (capacity - 1 >> origbits > 0)
+            {
+                origbits++;
+            }
+
+            ClearInner();
         }
 
 
@@ -348,7 +378,7 @@ namespace C5
         /// </summary>
         /// <param name="item">The item to look for</param>
         /// <returns>True if set contains item</returns>
-        public virtual bool Contains(T item) { return searchoradd(ref item, false, false, false); }
+        public virtual bool Contains(T item) { return SearchOrAdd(ref item, false, false, false); }
 
 
         /// <summary>
@@ -358,7 +388,7 @@ namespace C5
         /// <param name="item">On entry, the item to look for.
         /// On exit the item found, if any</param>
         /// <returns>True if set contains item</returns>
-        public virtual bool Find(ref T item) { return searchoradd(ref item, false, false, false); }
+        public virtual bool Find(ref T item) { return SearchOrAdd(ref item, false, false, false); }
 
 
         /// <summary>
@@ -368,7 +398,7 @@ namespace C5
         /// <param name="item">The item object to update with</param>
         /// <returns>True if item was found (and updated)</returns>
         public virtual bool Update(T item)
-        { updatecheck(); return searchoradd(ref item, false, true, true); }
+        { UpdateCheck(); return SearchOrAdd(ref item, false, true, true); }
 
         /// <summary>
         /// Check if an item (collection equal to a given one) is in the set and
@@ -378,7 +408,7 @@ namespace C5
         /// <param name="olditem"></param>
         /// <returns>True if item was found (and updated)</returns>
         public virtual bool Update(T item, out T olditem)
-        { updatecheck(); olditem = item; return searchoradd(ref olditem, false, true, true); }
+        { UpdateCheck(); olditem = item; return SearchOrAdd(ref olditem, false, true, true); }
 
 
         /// <summary>
@@ -390,7 +420,7 @@ namespace C5
         /// On exit the actual object found, if any.</param>
         /// <returns>True if item was found</returns>
         public virtual bool FindOrAdd(ref T item)
-        { updatecheck(); return searchoradd(ref item, true, false, true); }
+        { UpdateCheck(); return SearchOrAdd(ref item, true, false, true); }
 
 
         /// <summary>
@@ -401,7 +431,7 @@ namespace C5
         /// <param name="item">The item to look for and update or add</param>
         /// <returns>True if item was updated</returns>
         public virtual bool UpdateOrAdd(T item)
-        { updatecheck(); return searchoradd(ref item, true, true, true); }
+        { UpdateCheck(); return SearchOrAdd(ref item, true, true, true); }
 
 
         /// <summary>
@@ -413,7 +443,7 @@ namespace C5
         /// <param name="olditem"></param>
         /// <returns>True if item was updated</returns>
         public virtual bool UpdateOrAdd(T item, out T olditem)
-        { updatecheck(); olditem = item; return searchoradd(ref olditem, true, true, true); }
+        { UpdateCheck(); olditem = item; return SearchOrAdd(ref olditem, true, true, true); }
 
 
         /// <summary>
@@ -423,14 +453,16 @@ namespace C5
         /// <returns>True if item was (found and) removed </returns>
         public virtual bool Remove(T item)
         {
-            updatecheck();
-            if (remove(ref item))
+            UpdateCheck();
+            if (Remove(ref item))
             {
-                raiseForRemove(item);
+                RaiseForRemove(item);
                 return true;
             }
             else
+            {
                 return false;
+            }
         }
 
 
@@ -442,15 +474,17 @@ namespace C5
         /// <returns>True if item was found.</returns>
         public virtual bool Remove(T item, out T removeditem)
         {
-            updatecheck();
+            UpdateCheck();
             removeditem = item;
-            if (remove(ref removeditem))
+            if (Remove(ref removeditem))
             {
-                raiseForRemove(removeditem);
+                RaiseForRemove(removeditem);
                 return true;
             }
             else
+            {
                 return false;
+            }
         }
 
 
@@ -460,14 +494,22 @@ namespace C5
         /// <param name="items">The items to remove.</param>
         public virtual void RemoveAll(SCG.IEnumerable<T> items)
         {
-            updatecheck();
+            UpdateCheck();
             RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(this);
             bool raise = raiseHandler.MustFire;
             T jtem;
             foreach (var item in items)
-            { jtem = item; if (remove(ref jtem) && raise) raiseHandler.Remove(jtem); }
+            {
+                jtem = item; if (Remove(ref jtem) && raise)
+                {
+                    raiseHandler.Remove(jtem);
+                }
+            }
 
-            if (raise) raiseHandler.Raise();
+            if (raise)
+            {
+                raiseHandler.Raise();
+            }
         }
 
         /// <summary>
@@ -475,13 +517,13 @@ namespace C5
         /// </summary>
         public virtual void Clear()
         {
-            updatecheck();
+            UpdateCheck();
             int oldsize = size;
-            clear();
+            ClearInner();
             if (ActiveEvents != 0 && oldsize > 0)
             {
-                raiseCollectionCleared(true, oldsize);
-                raiseCollectionChanged();
+                RaiseCollectionCleared(true, oldsize);
+                RaiseCollectionChanged();
             }
         }
 
@@ -492,29 +534,37 @@ namespace C5
         /// <param name="items">The items to retain</param>
         public virtual void RetainAll(SCG.IEnumerable<T> items)
         {
-            updatecheck();
+            UpdateCheck();
 
             HashSet<T> aux = new HashSet<T>(EqualityComparer);
 
             //This only works for sets:
             foreach (var item in items)
+            {
                 if (Contains(item))
                 {
                     T jtem = item;
 
-                    aux.searchoradd(ref jtem, true, false, false);
+                    aux.SearchOrAdd(ref jtem, true, false, false);
                 }
+            }
 
             if (size == aux.size)
+            {
                 return;
+            }
 
             CircularQueue<T>? wasRemoved = null;
             if ((ActiveEvents & EventTypeEnum.Removed) != 0)
             {
                 wasRemoved = new CircularQueue<T>();
                 foreach (T item in this)
+                {
                     if (!aux.Contains(item))
+                    {
                         wasRemoved.Enqueue(item);
+                    }
+                }
             }
 
             table = aux.table;
@@ -528,9 +578,13 @@ namespace C5
             _randomhashfactor = aux._randomhashfactor;
 
             if ((ActiveEvents & EventTypeEnum.Removed) != 0)
-                raiseForRemoveAll(wasRemoved);
+            {
+                RaiseForRemoveAll(wasRemoved);
+            }
             else if ((ActiveEvents & EventTypeEnum.Changed) != 0)
-                raiseCollectionChanged();
+            {
+                RaiseCollectionChanged();
+            }
         }
 
         /// <summary>
@@ -542,8 +596,13 @@ namespace C5
         public virtual bool ContainsAll(SCG.IEnumerable<T> items)
         {
             foreach (var item in items)
+            {
                 if (!Contains(item))
+                {
                     return false;
+                }
+            }
+
             return true;
         }
 
@@ -614,8 +673,11 @@ namespace C5
         {
             int len = table.Length;
             if (size == 0)
+            {
                 throw new NoSuchItemException();
-            do { if (++lastchosen >= len) lastchosen = 0; } while (table[lastchosen] == null);
+            }
+
+            do { if (++lastchosen >= len) { lastchosen = 0; } } while (table[lastchosen] == null);
 
             return (table[lastchosen])!.item;
         }
@@ -635,13 +697,18 @@ namespace C5
             while (true)
             {
                 if (mystamp != stamp)
+                {
                     throw new CollectionModifiedException();
+                }
 
                 if (b == null || b.overflow == null)
                 {
                     do
                     {
-                        if (++index >= len) yield break;
+                        if (++index >= len)
+                        {
+                            yield break;
+                        }
                     } while (table[index] == null);
 
                     b = table[index];
@@ -678,8 +745,8 @@ namespace C5
         /// <returns>True if item was added (i.e. not found)</returns>
         public virtual bool Add(T item)
         {
-            updatecheck();
-            return !searchoradd(ref item, true, false, true);
+            UpdateCheck();
+            return !SearchOrAdd(ref item, true, false, true);
         }
 
         /// <summary>
@@ -700,7 +767,7 @@ namespace C5
         /// <param name="items">The items to add</param>
         public virtual void AddAll(SCG.IEnumerable<T> items)
         {
-            updatecheck();
+            UpdateCheck();
             bool wasChanged = false;
             bool raiseAdded = (ActiveEvents & EventTypeEnum.Added) != 0;
             CircularQueue<T>? wasAdded = raiseAdded ? new CircularQueue<T>() : null;
@@ -708,20 +775,31 @@ namespace C5
             {
                 T jtem = item;
 
-                if (!searchoradd(ref jtem, true, false, false))
+                if (!SearchOrAdd(ref jtem, true, false, false))
                 {
                     wasChanged = true;
                     if (raiseAdded)
+                    {
                         wasAdded?.Enqueue(item);
+                    }
                 }
             }
             //TODO: implement a RaiseForAddAll() method
             if (raiseAdded & wasChanged)
+            {
                 if (wasAdded != null)
-                  foreach (T item in wasAdded)
-                    raiseItemsAdded(item, 1);
+                {
+                    foreach (T item in wasAdded)
+                    {
+                        RaiseItemsAdded(item, 1);
+                    }
+                }
+            }
+
             if (((ActiveEvents & EventTypeEnum.Changed) != 0 && wasChanged))
-                raiseCollectionChanged();
+            {
+                RaiseCollectionChanged();
+            }
         }
 
 
@@ -765,7 +843,7 @@ namespace C5
                 Bucket? b = table[i];
                 while (b != null)
                 {
-                    if (i != hv2i(b.hashval))
+                    if (i != Hv2i(b.hashval))
                     {
                         Logger.Log(string.Format("Bad cell item={0}, hashval={1}, index={2}, level={3}", b.item, b.hashval, i, level));
                         retval = false;
@@ -805,9 +883,13 @@ namespace C5
                     b = b.overflow;
                 }
                 if (res.Contains(count))
+                {
                     res[count]++;
+                }
                 else
+                {
                     res[count] = 1;
+                }
             }
 
             return res;

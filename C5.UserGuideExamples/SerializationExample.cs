@@ -12,7 +12,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace C5.UserGuideExamples
 {
-    class SerializationExample
+    internal class SerializationExample
     {
         private static readonly BinaryFormatter _formatter = new BinaryFormatter();
 

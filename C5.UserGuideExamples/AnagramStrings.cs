@@ -21,9 +21,9 @@ using SCG = System.Collections.Generic;
 
 namespace C5.UserGuideExamples
 {
-    class AnagramStrings
+    internal class AnagramStrings
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var ss = args.Length == 1 ? ReadFileWords(args[0]) : args;
 
@@ -46,7 +46,7 @@ namespace C5.UserGuideExamples
         }
 
         // Read words from a file
-        static SCG.IEnumerable<string> ReadFileWords(string filename)
+        private static SCG.IEnumerable<string> ReadFileWords(string filename)
         {
             var delimiter = new Regex("[^a-zæøåA-ZÆØÅ0-9-]+");
             using (var reader = File.OpenText(filename))
@@ -65,14 +65,14 @@ namespace C5.UserGuideExamples
         }
 
         // From an anagram point of view, a word is just a bag of characters.
-        static CharBag AnagramClass(string s)
+        private static CharBag AnagramClass(string s)
         {
             return new CharBag(s);
         }
 
         // Given a sequence of strings, return all non-trivial anagram classes   
 
-        static SCG.IEnumerable<SCG.IEnumerable<string>> AnagramClasses(SCG.IEnumerable<string> ss)
+        private static SCG.IEnumerable<SCG.IEnumerable<string>> AnagramClasses(SCG.IEnumerable<string> ss)
         {
             var classes = new TreeDictionary<CharBag, HashSet<string>>();
             foreach (string s in ss)
@@ -98,7 +98,7 @@ namespace C5.UserGuideExamples
     // characters, with multiplicity.  Since natural language words are
     // short, the bags are small, so this is vastly better than
     // representing character bags using HashBag<char> or TreeBag<char>
-    class CharBag : IComparable<CharBag>
+    internal class CharBag : IComparable<CharBag>
     {
         private readonly string _contents; // The bag's characters, sorted, with multiplicity
 
