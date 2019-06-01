@@ -930,18 +930,25 @@ namespace C5
         /// </summary>
         private struct Position
         {
-            public readonly HashedLinkedList<T>? View;
-            public bool Left;
-            public readonly Node Endpoint;
+            public HashedLinkedList<T>? View { get; }
+
+            public bool Left { get; private set; }
+
+            public Node Endpoint { get; }
 
             public Position(HashedLinkedList<T> view, bool left)
             {
                 View = view;
                 Left = left;
                 Endpoint = (left ? view.startsentinel!.next : view.endsentinel!.prev)!;
-
             }
-            public Position(Node node) { this.Endpoint = node; View = null; Left = false; }
+
+            public Position(Node node)
+            {
+                Endpoint = node;
+                View = null;
+                Left = false;
+            }
 
         }
 

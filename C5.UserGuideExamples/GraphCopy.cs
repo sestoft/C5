@@ -31,7 +31,7 @@ namespace C5.UserGuideExamples
                 var newstart = CopyGraph1(a);
                 Console.WriteLine($"Copy has same structure: {Isomorphic1(newstart, a)}");
                 Console.WriteLine($"newstart = {newstart}");
-                foreach (var node1 in newstart.children)
+                foreach (var node1 in newstart.Children)
                 {
                     Console.WriteLine(node1);
                 }
@@ -61,9 +61,9 @@ namespace C5.UserGuideExamples
             {
                 copy = new Node<T>(old);
                 iso[old] = copy;
-                for (var i = 0; i < copy.children.Length; i++)
+                for (var i = 0; i < copy.Children.Length; i++)
                 {
-                    copy.children[i] = CopyNode0(iso, old.children[i]);
+                    copy.Children[i] = CopyNode0(iso, old.Children[i]);
                 }
             }
             return copy;
@@ -82,15 +82,15 @@ namespace C5.UserGuideExamples
             {
                 var node = work.Pop();
                 var copy = iso[node];
-                for (var i = 0; i < node.children.Length; i++)
+                for (var i = 0; i < node.Children.Length; i++)
                 {
-                    var child = node.children[i];
+                    var child = node.Children[i];
                     if (!iso.Find(ref child, out var childCopy))
                     {
                         iso[child] = childCopy = new Node<T>(child);
                         work.Push(child);
                     }
-                    copy.children[i] = childCopy;
+                    copy.Children[i] = childCopy;
                 }
             }
             return iso[start];
@@ -110,16 +110,16 @@ namespace C5.UserGuideExamples
             {
                 return ReferenceEquals(node, rght);
             }
-            else if (left.children.Length != rght.children.Length)
+            else if (left.Children.Length != rght.Children.Length)
             {
                 return false;
             }
             else
             {
                 iso[left] = rght;
-                for (var i = 0; i < left.children.Length; i++)
+                for (var i = 0; i < left.Children.Length; i++)
                 {
-                    if (!NodeEquals0(iso, left.children[i], rght.children[i]))
+                    if (!NodeEquals0(iso, left.Children[i], rght.Children[i]))
                     {
                         return false;
                     }
@@ -146,16 +146,16 @@ namespace C5.UserGuideExamples
             {
                 var left = work.Pop();
                 var rght = iso[left];
-                if (left.children.Length != rght.children.Length)
+                if (left.Children.Length != rght.Children.Length)
                 {
                     return false;
                 }
                 else
                 {
-                    for (int i = 0; i < left.children.Length; i++)
+                    for (int i = 0; i < left.Children.Length; i++)
                     {
-                        var lchild = left.children[i];
-                        var rchild = rght.children[i];
+                        var lchild = left.Children[i];
+                        var rchild = rght.Children[i];
                         if (iso.Find(ref lchild, out var node))
                         {
                             if (!ReferenceEquals(node, rchild))
@@ -177,26 +177,27 @@ namespace C5.UserGuideExamples
 
     public class Node<T>
     {
-        public readonly T id;
-        public readonly Node<T>[] children;
+        public T Id { get; }
+        public Node<T>[] Children { get; }
 
         public Node(T id, params Node<T>[] children)
         {
-            this.id = id; this.children = children;
+            Id = id;
+            Children = children;
         }
 
-        public Node(Node<T> node) : this(node.id, new Node<T>[node.children.Length])
+        public Node(Node<T> node) : this(node.Id, new Node<T>[node.Children.Length])
         {
         }
 
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append(id).Append("[ ");
+            sb.Append(Id).Append("[ ");
 
-            foreach (var child in children)
+            foreach (var child in Children)
             {
-                sb.Append(child.id).Append(" ");
+                sb.Append(child.Id).Append(" ");
             }
 
             sb.Append("]");
@@ -205,8 +206,8 @@ namespace C5.UserGuideExamples
 
         public Node<T> this[int i]
         {
-            set { children[i] = value; }
-            get { return children[i]; }
+            set { Children[i] = value; }
+            get { return Children[i]; }
         }
     }
 }

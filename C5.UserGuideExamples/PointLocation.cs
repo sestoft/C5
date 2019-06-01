@@ -18,67 +18,75 @@ namespace C5.UserGuideExamples
     /// </summary>
     public struct Edge<T> : IComparable<Edge<T>>
     {
-        public readonly double xs, ys, xe, ye;
+        public double Xs { get; }
 
-        public readonly T right, left;
+        public double Ys { get; }
+
+        public double Xe { get; }
+
+        public double Ye { get; }
+
+        public T Right { get; }
+
+        public T Left { get; }
 
         public Edge(double xs, double ys, double xe, double ye, T right, T left)
         {
             if (xs < xe)
             {
-                this.xs = xs;
-                this.ys = ys;
-                this.xe = xe;
-                this.ye = ye;
-                this.right = right;
-                this.left = left;
+                Xs = xs;
+                Ys = ys;
+                Xe = xe;
+                Ye = ye;
+                Right = right;
+                Left = left;
             }
             else
             {
-                this.xs = xe;
-                this.ys = ye;
-                this.xe = xs;
-                this.ye = ys;
-                this.right = left;
-                this.left = right;
+                Xs = xe;
+                Ys = ye;
+                Xe = xs;
+                Ye = ys;
+                Right = left;
+                Left = right;
             }
         }
 
         public T Cell(bool upper)
         {
-            return upper ? left : right;
+            return upper ? Left : Right;
         }
 
         public override string ToString()
         {
-            return string.Format("[({0:G5};{1:G5})->({2:G5};{3:G5})/R:{4} L:{5}]", xs, ys, xe, ye, right, left);
+            return string.Format("[({0:G5};{1:G5})->({2:G5};{3:G5})/R:{4} L:{5}]", Xs, Ys, Xe, Ye, Right, Left);
         }
 
         public int CompareTo(Edge<T> other)
         {
             double dx, dy, thisotherx, thisothery;
             int res = 1;
-            if (other.xs < this.xs)
+            if (other.Xs < this.Xs)
             {
-                dx = other.xe - other.xs;
-                dy = other.ye - other.ys;
-                thisotherx = this.xs - other.xs;
-                thisothery = this.ys - other.ys;
+                dx = other.Xe - other.Xs;
+                dy = other.Ye - other.Ys;
+                thisotherx = this.Xs - other.Xs;
+                thisothery = this.Ys - other.Ys;
                 res = -1;
             }
             else
             {
-                dx = this.xe - this.xs;
-                dy = this.ye - this.ys;
-                if (this.ys == other.ys && this.xs == other.xs)
+                dx = this.Xe - this.Xs;
+                dy = this.Ye - this.Ys;
+                if (this.Ys == other.Ys && this.Xs == other.Xs)
                 {
-                    thisotherx = other.xe - this.xs;
-                    thisothery = other.ye - this.ys;
+                    thisotherx = other.Xe - this.Xs;
+                    thisothery = other.Ye - this.Ys;
                 }
                 else
                 {
-                    thisotherx = other.xs - this.xs;
-                    thisothery = other.ys - this.ys;
+                    thisotherx = other.Xs - this.Xs;
+                    thisothery = other.Ys - this.Ys;
                 }
             }
             double det = dx * thisothery - dy * thisotherx;
@@ -89,7 +97,7 @@ namespace C5.UserGuideExamples
             //else if (det < 0) res = 1 * res;
             else if (det == 0)
             {
-                if (this.xs == other.xs && this.xe == other.xe && this.ys == other.ys && this.ye == other.ye)
+                if (this.Xs == other.Xs && this.Xe == other.Xe && this.Ys == other.Ys && this.Ye == other.Ye)
                 {
                     res = 0;
                 }
@@ -159,25 +167,25 @@ namespace C5.UserGuideExamples
 
         private void add(Edge<T> edge)
         {
-            if (edge.xs == edge.xe)
+            if (edge.Xs == edge.Xe)
             {
                 return;
             }
 
-            if (!endpoints.Contains(edge.xs))
+            if (!endpoints.Contains(edge.Xs))
             {
-                endpoints.Add(edge.xs, new KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>(new LinkedList<Edge<T>>(), new LinkedList<Edge<T>>()));
+                endpoints.Add(edge.Xs, new KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>(new LinkedList<Edge<T>>(), new LinkedList<Edge<T>>()));
             }
 
             KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>> kv;
-            kv = endpoints[edge.xs];
+            kv = endpoints[edge.Xs];
             kv.Key.Add(edge);
-            if (!endpoints.Contains(edge.xe))
+            if (!endpoints.Contains(edge.Xe))
             {
-                endpoints.Add(edge.xe, new KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>(new LinkedList<Edge<T>>(), new LinkedList<Edge<T>>()));
+                endpoints.Add(edge.Xe, new KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>(new LinkedList<Edge<T>>(), new LinkedList<Edge<T>>()));
             }
 
-            kv = endpoints[edge.xe];
+            kv = endpoints[edge.Xe];
             kv.Value.Add(edge);
         }
 
@@ -341,10 +349,10 @@ namespace C5.UserGuideExamples
         public int CompareTo(Edge<T> a)
         {
             int res = 0;
-            double abx = a.xe - a.xs;
-            double aby = a.ye - a.ys;
-            double atx = x - a.xs;
-            double aty = y - a.ys;
+            double abx = a.Xe - a.Xs;
+            double aby = a.Ye - a.Ys;
+            double atx = x - a.Xs;
+            double aty = y - a.Ys;
             double det = abx * aty - aby * atx;
             if (det > 0)
             {
@@ -476,7 +484,7 @@ namespace C5.UserGuideExamples
 
                 foreach (Edge<int> e in ugly)
                 {
-                    xsum += e.xe;
+                    xsum += e.Xe;
                 }
 
                 return xsum;
@@ -680,7 +688,7 @@ namespace C5.UserGuideExamples
 
                 foreach (Edge<string> e in lattice)
                 {
-                    xsum += e.xe;
+                    xsum += e.Xe;
                 }
 
                 return xsum;

@@ -555,7 +555,7 @@ namespace C5
         {
             public int Compare(Position a, Position b)
             {
-                return a.index.CompareTo(b.index);
+                return a.Index.CompareTo(b.Index);
             }
         }
 
@@ -564,14 +564,21 @@ namespace C5
         /// </summary>
         private struct Position
         {
-            public readonly HashedArrayList<T>? view;
-            public readonly int index;
+            public HashedArrayList<T>? View { get; }
+
+            public int Index { get; }
+
             public Position(HashedArrayList<T> view, bool left)
             {
-                this.view = view;
-                index = left ? view.offsetField : view.offsetField + view.size - 1;
+                View = view;
+                Index = left ? view.offsetField : view.offsetField + view.size - 1;
             }
-            public Position(int index) { this.index = index; view = null; }
+
+            public Position(int index)
+            {
+                Index = index;
+                View = null;
+            }
         }
 
         /// <summary>
@@ -623,16 +630,16 @@ namespace C5
                 if (viewCount > 0)
                 {
                     Position endpoint;
-                    while (leftEndIndex < viewCount && (endpoint = leftEnds![leftEndIndex]).index <= realindex)
+                    while (leftEndIndex < viewCount && (endpoint = leftEnds![leftEndIndex]).Index <= realindex)
                     {
-                        HashedArrayList<T> view = endpoint.view!;
+                        HashedArrayList<T> view = endpoint.View!;
                         view.offsetField -= removed;
                         view.size += removed;
                         leftEndIndex++;
                     }
-                    while (rightEndIndex < viewCount && (endpoint = rightEnds![rightEndIndex]).index < realindex)
+                    while (rightEndIndex < viewCount && (endpoint = rightEnds![rightEndIndex]).Index < realindex)
                     {
-                        endpoint.view!.size -= removed;
+                        endpoint.View!.size -= removed;
                         rightEndIndex++;
                     }
                 }
@@ -642,16 +649,16 @@ namespace C5
                 if (viewCount > 0)
                 {
                     Position endpoint;
-                    while (leftEndIndex < viewCount && (endpoint = leftEnds![leftEndIndex]).index <= realindex)
+                    while (leftEndIndex < viewCount && (endpoint = leftEnds![leftEndIndex]).Index <= realindex)
                     {
-                        HashedArrayList<T> view = endpoint.view!;
+                        HashedArrayList<T> view = endpoint.View!;
                         view!.offsetField = view.Offset - removed;
                         view.size += removed;
                         leftEndIndex++;
                     }
-                    while (rightEndIndex < viewCount && (endpoint = rightEnds![rightEndIndex]).index < realindex)
+                    while (rightEndIndex < viewCount && (endpoint = rightEnds![rightEndIndex]).Index < realindex)
                     {
-                        endpoint.view!.size -= removed;
+                        endpoint.View!.size -= removed;
                         rightEndIndex++;
                     }
                 }

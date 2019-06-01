@@ -7,6 +7,7 @@
 - Strong name removed.
 - Memory safe optimizer removed as they are no longer needed for Unity development.
 - `Rec<T1, T2, ...>` type removed as was an exact copy of `ValueTuple<T1, T2, ...>`.
+- Breaking change: All `public readonly` are now properties.
 
 ## Release 2.5 of 2017-07-07
 

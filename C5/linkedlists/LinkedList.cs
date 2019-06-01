@@ -608,10 +608,12 @@ namespace C5
         /// </summary>
         private struct Position
         {
-            public readonly LinkedList<T>? View;
-            public bool Left;
+            public LinkedList<T>? View { get; }
 
-            public readonly int Index;
+            public bool Left { get; private set; }
+
+            public int Index { get; }
+
             public Position(LinkedList<T> view, bool left)
             {
                 View = view;
@@ -620,7 +622,12 @@ namespace C5
                 Index = left ? view.Offset : view.Offset + view.size - 1;
             }
 
-            public Position(int index) { this.Index = index; View = null; Left = false; }
+            public Position(int index)
+            {
+                Index = index;
+                View = null;
+                Left = false;
+            }
         }
 
         //TODO: merge the two implementations using Position values as arguments
@@ -1499,7 +1506,7 @@ namespace C5
             if (positions != null && size % 2 != 0)
             {
                 MirrorViewSentinelsForReverse(positions, ref poslow, ref poshigh, a, b, size / 2);
-            } 
+            }
             (underlying ?? this).RaiseCollectionChanged();
         }
 
