@@ -46,7 +46,7 @@ namespace C5.Tests.arrays.hashed
         internal class TenEqualityComparer : SCG.IEqualityComparer<int>
         {
             private TenEqualityComparer() { }
-            public static TenEqualityComparer Default { get { return new TenEqualityComparer(); } }
+            public static TenEqualityComparer Default => new TenEqualityComparer();
             public int GetHashCode(int item) { return (item / 10).GetHashCode(); }
             public bool Equals(int item1, int item2) { return item1 / 10 == item2 / 10; }
         }

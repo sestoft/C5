@@ -37,7 +37,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public override EventTypeEnum ListenableEvents { get { return EventTypeEnum.Basic; } }
+        public override EventTypeEnum ListenableEvents => EventTypeEnum.Basic;
 
         #endregion
 
@@ -95,7 +95,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public virtual bool AllowsDuplicates { get { return true; } }
+        public virtual bool AllowsDuplicates => true;
 
         /// <summary>
         /// Get the i'th item in the queue. The front of the queue is at index 0.

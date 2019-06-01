@@ -19,7 +19,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public override EventTypeEnum ListenableEvents { get { return EventTypeEnum.Basic; } }
+        public override EventTypeEnum ListenableEvents => EventTypeEnum.Basic;
 
         #endregion
 
@@ -321,7 +321,7 @@ namespace C5
         /// The comparer object supplied at creation time for this collection
         /// </summary>
         /// <value>The comparer</value>
-        public SCG.IComparer<T> Comparer { get { return comparer; } }
+        public SCG.IComparer<T> Comparer => comparer;
 
         #endregion
 
@@ -332,26 +332,26 @@ namespace C5
         /// <code>ReadOnlyCollectionException</code>
         /// </summary>
         /// <value>True if this collection is read-only.</value>
-        public bool IsReadOnly { get { return false; } }
+        public bool IsReadOnly => false;
 
         /// <summary>
         /// 
         /// </summary>
         /// <value>True since this collection has bag semantics</value>
-        public bool AllowsDuplicates { get { return true; } }
+        public bool AllowsDuplicates => true;
 
         /// <summary>
         /// Value is null since this collection has no equality concept for its items. 
         /// </summary>
         /// <value></value>
-        public virtual SCG.IEqualityComparer<T> EqualityComparer { get { return itemequalityComparer; } }
+        public virtual SCG.IEqualityComparer<T> EqualityComparer => itemequalityComparer;
 
         /// <summary>
         /// By convention this is true for any collection with set semantics.
         /// </summary>
         /// <value>True if only one representative of a group of equal items 
         /// is kept in the collection together with the total count.</value>
-        public virtual bool DuplicatesByCounting { get { return false; } }
+        public virtual bool DuplicatesByCounting => false;
 
 
 
@@ -491,13 +491,13 @@ namespace C5
         /// 
         /// </summary>
         /// <value>True if this collection is empty.</value>
-        public override bool IsEmpty { get { return size == 0; } }
+        public override bool IsEmpty => size == 0;
 
         /// <summary>
         /// 
         /// </summary>
         /// <value>The size of this collection</value>
-        public override int Count { get { return size; } }
+        public override int Count => size;
 
 
         /// <summary>
@@ -507,7 +507,7 @@ namespace C5
         /// </summary>
         /// <value>A characterization of the speed of the 
         /// <code>Count</code> property in this collection.</value>
-        public override Speed CountSpeed { get { return Speed.Constant; } }
+        public override Speed CountSpeed => Speed.Constant;
 
         /// <summary>
         /// Choose some item of this collection. 
@@ -682,10 +682,7 @@ namespace C5
 
                 return isfirst ? heap[cell].first : heap[cell].last;
             }
-            set
-            {
-                Replace(handle, value);
-            }
+            set => Replace(handle, value);
         }
 
 

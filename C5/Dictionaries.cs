@@ -303,24 +303,12 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        public override EventTypeEnum ListenableEvents
-        {
-            get
-            {
-                return EventTypeEnum.Basic;
-            }
-        }
+        public override EventTypeEnum ListenableEvents => EventTypeEnum.Basic;
 
         /// <summary>
         /// 
         /// </summary>
-        public override EventTypeEnum ActiveEvents
-        {
-            get
-            {
-                return pairs.ActiveEvents;
-            }
-        }
+        public override EventTypeEnum ActiveEvents => pairs.ActiveEvents;
 
         #endregion
 
@@ -339,7 +327,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public virtual SCG.IEqualityComparer<K> EqualityComparer { get { return keyequalityComparer; } }
+        public virtual SCG.IEqualityComparer<K> EqualityComparer => keyequalityComparer;
 
 
         /// <summary>
@@ -424,7 +412,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public virtual Speed ContainsSpeed { get { return pairs.ContainsSpeed; } }
+        public virtual Speed ContainsSpeed => pairs.ContainsSpeed;
 
         /// <summary>
         /// Check if there is an entry with a specified key
@@ -606,11 +594,11 @@ namespace C5
                 }
             }
 
-            public override bool IsEmpty { get { return pairs.IsEmpty; } }
+            public override bool IsEmpty => pairs.IsEmpty;
 
-            public override int Count { get { return pairs.Count; } }
+            public override int Count => pairs.Count;
 
-            public override Speed CountSpeed { get { return Speed.Constant; } }
+            public override Speed CountSpeed => Speed.Constant;
         }
 
         [Serializable]
@@ -632,11 +620,11 @@ namespace C5
                 }
             }
 
-            public override bool IsEmpty { get { return pairs.IsEmpty; } }
+            public override bool IsEmpty => pairs.IsEmpty;
 
-            public override int Count { get { return pairs.Count; } }
+            public override int Count => pairs.Count;
 
-            public override Speed CountSpeed { get { return pairs.CountSpeed; } }
+            public override Speed CountSpeed => pairs.CountSpeed;
         }
         #endregion
 
@@ -644,19 +632,19 @@ namespace C5
         /// 
         /// </summary>
         /// <value>A collection containing all the keys of the dictionary</value>
-        public virtual ICollectionValue<K> Keys { get { return new KeysCollection(pairs); } }
+        public virtual ICollectionValue<K> Keys => new KeysCollection(pairs);
 
 
         /// <summary>
         /// 
         /// </summary>
         /// <value>A collection containing all the values of the dictionary</value>
-        public virtual ICollectionValue<V> Values { get { return new ValuesCollection(pairs); } }
+        public virtual ICollectionValue<V> Values => new ValuesCollection(pairs);
 
         /// <summary>
         /// 
         /// </summary>
-        public virtual Func<K, V> Func { get { return delegate (K k) { return this[k]; }; } }
+        public virtual Func<K, V> Func => delegate (K k) { return this[k]; };
 
         /// <summary>
         /// Indexer by key for dictionary. 
@@ -680,8 +668,7 @@ namespace C5
                     throw new NoSuchItemException("Key '" + key!.ToString() + "' not present in Dictionary");
                 }
             }
-            set
-            { pairs.UpdateOrAdd(new KeyValuePair<K, V>(key, value)); }
+            set => pairs.UpdateOrAdd(new KeyValuePair<K, V>(key, value));
         }
 
 
@@ -689,7 +676,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value>True if dictionary is read  only</value>
-        public virtual bool IsReadOnly { get { return pairs.IsReadOnly; } }
+        public virtual bool IsReadOnly => pairs.IsReadOnly;
 
 
         /// <summary>
@@ -706,20 +693,20 @@ namespace C5
         /// 
         /// </summary>
         /// <value>True if this collection is empty.</value>
-        public override bool IsEmpty { get { return pairs.IsEmpty; } }
+        public override bool IsEmpty => pairs.IsEmpty;
 
 
         /// <summary>
         /// 
         /// </summary>
         /// <value>The number of entries in the dictionary</value>
-        public override int Count { get { return pairs.Count; } }
+        public override int Count => pairs.Count;
 
         /// <summary>
         /// 
         /// </summary>
         /// <value>The number of entries in the dictionary</value>
-        public override Speed CountSpeed { get { return pairs.CountSpeed; } }
+        public override Speed CountSpeed => pairs.CountSpeed;
 
         /// <summary>
         /// Choose some entry in this Dictionary. 
@@ -783,13 +770,13 @@ namespace C5
         /// The key comparer used by this dictionary.
         /// </summary>
         /// <value></value>
-        public SCG.IComparer<K> Comparer { get { return keycomparer; } }
+        public SCG.IComparer<K> Comparer => keycomparer;
 
         /// <summary>
         /// 
         /// </summary>
         /// <value></value>
-        public new ISorted<K>? Keys { get { return new SortedKeysCollection(this, sortedpairs, keycomparer, EqualityComparer); } }
+        public new ISorted<K>? Keys => new SortedKeysCollection(this, sortedpairs, keycomparer, EqualityComparer);
 
         /// <summary>
         /// Find the entry in the dictionary whose key is the
@@ -1077,11 +1064,11 @@ namespace C5
                 }
             }
 
-            public override bool IsEmpty { get { return sorteddict.IsEmpty; } }
+            public override bool IsEmpty => sorteddict.IsEmpty;
 
-            public override int Count { get { return sorteddict.Count; } }
+            public override int Count => sorteddict.Count;
 
-            public override Speed CountSpeed { get { return sorteddict.CountSpeed; } }
+            public override Speed CountSpeed => sorteddict.CountSpeed;
 
             #region ISorted<K> Members
 
@@ -1093,7 +1080,7 @@ namespace C5
 
             public K DeleteMax() { throw new ReadOnlyCollectionException(); }
 
-            public SCG.IComparer<K> Comparer { get { return comparer; } }
+            public SCG.IComparer<K> Comparer => comparer;
 
             public bool TryPredecessor(K item, out K res)
             {
@@ -1169,7 +1156,7 @@ namespace C5
             #endregion
 
             #region ICollection<K> Members
-            public Speed ContainsSpeed { get { return sorteddict.ContainsSpeed; } }
+            public Speed ContainsSpeed => sorteddict.ContainsSpeed;
 
             public bool Contains(K key) { return sorteddict.Contains(key); ; }
 
@@ -1241,11 +1228,11 @@ namespace C5
             #endregion
 
             #region IExtensible<K> Members
-            public override bool IsReadOnly { get { return true; } }
+            public override bool IsReadOnly => true;
 
-            public bool AllowsDuplicates { get { return false; } }
+            public bool AllowsDuplicates => false;
 
-            public bool DuplicatesByCounting { get { return true; } }
+            public bool DuplicatesByCounting => true;
 
             public bool Add(K item) { throw new ReadOnlyCollectionException(); }
 

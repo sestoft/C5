@@ -116,7 +116,10 @@ namespace C5.UserGuideExamples
             }
         }
 
-        public override string ToString() => $"{{{string.Join(",", this)}}}";
+        public override string ToString()
+        {
+            return $"{{{string.Join(",", this)}}}";
+        }
     }
 
     internal class Sets

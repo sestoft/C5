@@ -51,7 +51,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public override EventTypeEnum ListenableEvents { get { return EventTypeEnum.Basic; } }
+        public override EventTypeEnum ListenableEvents => EventTypeEnum.Basic;
 
         #endregion
         #region Util
@@ -380,10 +380,7 @@ namespace C5
 
             #region IEnumerator Members
 
-            object System.Collections.IEnumerator.Current
-            {
-                get { return Current!; }
-            }
+            object System.Collections.IEnumerator.Current => Current!;
 
             bool System.Collections.IEnumerator.MoveNext()
             {
@@ -508,10 +505,7 @@ namespace C5
 
             #region IEnumerator Members
 
-            object System.Collections.IEnumerator.Current
-            {
-                get { return Current!; }
-            }
+            object System.Collections.IEnumerator.Current => Current!;
 
             bool System.Collections.IEnumerator.MoveNext()
             {
@@ -1112,14 +1106,14 @@ namespace C5
 
         /// <summary></summary>
         /// <value>False since this tree has set semantics.</value>
-        public bool AllowsDuplicates { get { return false; } }
+        public bool AllowsDuplicates => false;
 
         /// <summary>
         /// By convention this is true for any collection with set semantics.
         /// </summary>
         /// <value>True if only one representative of a group of equal items 
         /// is kept in the collection together with the total count.</value>
-        public virtual bool DuplicatesByCounting { get { return true; } }
+        public virtual bool DuplicatesByCounting => true;
 
         #endregion
 
@@ -1132,7 +1126,7 @@ namespace C5
         /// relevant).
         /// </summary>
         /// <value>Speed.Log</value>
-        public Speed ContainsSpeed { get { return Speed.Log; } }
+        public Speed ContainsSpeed => Speed.Log;
 
         /// <summary>
         /// Check if this collection contains (an item equivalent to according to the
@@ -2190,13 +2184,13 @@ namespace C5
         /// </summary>
         /// <value>The i'th item of this list.</value>
         /// <param name="i">the index to lookup</param>
-        public T this[int i] { get { return FindNode(i).item; } }
+        public T this[int i] => FindNode(i).item;
 
         /// <summary>
         /// 
         /// </summary>
         /// <value></value>
-        public virtual Speed IndexingSpeed { get { return Speed.Log; } }
+        public virtual Speed IndexingSpeed => Speed.Log;
 
 
         //TODO: return -upper instead of -1 in case of not found
@@ -2373,7 +2367,7 @@ namespace C5
                 throw new ViewDisposedException("Snapshot has been disposed");
             }
 
-            if (start < 0 || count < 0 || start + count > this.size)
+            if (start < 0 || count < 0 || start + count > size)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -2437,16 +2431,16 @@ namespace C5
                     throw new NotSupportedException("Indexing not supported for snapshots");
                 }
 
-                this.start = start; this.length = count; this.forwards = forwards;
-                this.tree = tree; this.stamp = tree.stamp;
+                this.start = start; length = count; this.forwards = forwards;
+                this.tree = tree; stamp = tree.stamp;
             }
 
-            public override bool IsEmpty { get { return length == 0; } }
+            public override bool IsEmpty => length == 0;
 
-            public override int Count { get { return length; } }
+            public override int Count => length;
 
 
-            public override Speed CountSpeed { get { return Speed.Constant; } }
+            public override Speed CountSpeed => Speed.Constant;
 
 
             public override T Choose()
@@ -2595,13 +2589,7 @@ namespace C5
             { return Backwards(); }
 
 
-            public override EnumerationDirection Direction
-            {
-                get
-                {
-                    return forwards ? EnumerationDirection.Forwards : EnumerationDirection.Backwards;
-                }
-            }
+            public override EnumerationDirection Direction => forwards ? EnumerationDirection.Forwards : EnumerationDirection.Backwards;
         }
         #endregion
 
@@ -2625,7 +2613,7 @@ namespace C5
         /// The comparer object supplied at creation time for this collection
         /// </summary>
         /// <value>The comparer</value>
-        public SCG.IComparer<T> Comparer { get { return comparer!; } }
+        public SCG.IComparer<T> Comparer => comparer!;
 
 
         /// <summary>
@@ -3486,10 +3474,7 @@ namespace C5
         #endregion
 
         #region IPersistent<T> Members
-        private int MaxSnapId
-        {
-            get { return snapList == null ? -1 : FindLastLiveSnapShot(); }
-        }
+        private int MaxSnapId => snapList == null ? -1 : FindLastLiveSnapShot();
 
         private int FindLastLiveSnapShot()
         {
@@ -3894,10 +3879,7 @@ namespace C5
 
                 #region IEnumerator Members
 
-                object System.Collections.IEnumerator.Current
-                {
-                    get { return Current!; }
-                }
+                object System.Collections.IEnumerator.Current => Current!;
 
                 bool System.Collections.IEnumerator.MoveNext()
                 {
@@ -3928,7 +3910,7 @@ namespace C5
             public override SCG.IEnumerator<T> GetEnumerator() { return new Enumerator(this); }
 
 
-            public override EnumerationDirection Direction { get { return direction; } }
+            public override EnumerationDirection Direction => direction;
 
 
             #endregion
@@ -3964,12 +3946,12 @@ namespace C5
             IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards() { return Backwards(); }
 
 
-            public override bool IsEmpty { get { return size == 0; } }
+            public override bool IsEmpty => size == 0;
 
-            public override int Count { get { return size; } }
+            public override int Count => size;
 
             //TODO: check that this is correct
-            public override Speed CountSpeed { get { return Speed.Constant; } }
+            public override Speed CountSpeed => Speed.Constant;
 
         }
 

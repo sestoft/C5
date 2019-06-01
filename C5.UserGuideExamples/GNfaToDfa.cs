@@ -133,7 +133,10 @@ namespace C5.UserGuideExamples
             Trans.Add(tr.Key, tr.Value);
         }
 
-        public override string ToString() => $"NFA start={Start} exit={Exit}";
+        public override string ToString()
+        {
+            return $"NFA start={Start} exit={Exit}";
+        }
 
         // Construct the transition relation of a composite-state DFA from
         // an NFA with start state s0 and transition relation trans (a
@@ -345,7 +348,10 @@ namespace C5.UserGuideExamples
             Target = target;
         }
 
-        public override string ToString() => $"-{Lab}-> {Target}";
+        public override string ToString()
+        {
+            return $"-{Lab}-> {Target}";
+        }
     }
 
     // Class Dfa, deterministic finite automata --------------------------
@@ -369,7 +375,10 @@ namespace C5.UserGuideExamples
             Trans = trans;
         }
 
-        public override string ToString() => $"DFA start={Start}{Environment.NewLine}accept={Accept}";
+        public override string ToString()
+        {
+            return $"DFA start={Start}{Environment.NewLine}accept={Accept}";
+        }
 
         // Write an input file for the dot program.  You can find dot at
         // http://www.research.att.com/sw/tools/graphviz/
@@ -419,7 +428,7 @@ namespace C5.UserGuideExamples
 
     internal abstract class RegexBase
     {
-        abstract public Nfa MkNfa(Nfa.NameSource names);
+        public abstract Nfa MkNfa(Nfa.NameSource names);
     }
 
     internal class Eps : RegexBase

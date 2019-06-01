@@ -66,27 +66,27 @@ namespace C5.UserGuideExamples
         {
             double dx, dy, thisotherx, thisothery;
             int res = 1;
-            if (other.Xs < this.Xs)
+            if (other.Xs < Xs)
             {
                 dx = other.Xe - other.Xs;
                 dy = other.Ye - other.Ys;
-                thisotherx = this.Xs - other.Xs;
-                thisothery = this.Ys - other.Ys;
+                thisotherx = Xs - other.Xs;
+                thisothery = Ys - other.Ys;
                 res = -1;
             }
             else
             {
-                dx = this.Xe - this.Xs;
-                dy = this.Ye - this.Ys;
-                if (this.Ys == other.Ys && this.Xs == other.Xs)
+                dx = Xe - Xs;
+                dy = Ye - Ys;
+                if (Ys == other.Ys && Xs == other.Xs)
                 {
-                    thisotherx = other.Xe - this.Xs;
-                    thisothery = other.Ye - this.Ys;
+                    thisotherx = other.Xe - Xs;
+                    thisothery = other.Ye - Ys;
                 }
                 else
                 {
-                    thisotherx = other.Xs - this.Xs;
-                    thisothery = other.Ys - this.Ys;
+                    thisotherx = other.Xs - Xs;
+                    thisothery = other.Ys - Ys;
                 }
             }
             double det = dx * thisothery - dy * thisotherx;
@@ -97,7 +97,7 @@ namespace C5.UserGuideExamples
             //else if (det < 0) res = 1 * res;
             else if (det == 0)
             {
-                if (this.Xs == other.Xs && this.Xe == other.Xe && this.Ys == other.Ys && this.Ye == other.Ye)
+                if (Xs == other.Xs && Xe == other.Xe && Ys == other.Ys && Ye == other.Ye)
                 {
                     res = 0;
                 }
@@ -449,10 +449,7 @@ namespace C5.UserGuideExamples
 
             #region IEnumerator Members
 
-            object System.Collections.IEnumerator.Current
-            {
-                get { throw new NotImplementedException(); }
-            }
+            object System.Collections.IEnumerator.Current => throw new NotImplementedException();
 
             void System.Collections.IEnumerator.Reset()
             {
@@ -643,10 +640,7 @@ namespace C5.UserGuideExamples
 
             #region IEnumerator Members
 
-            object System.Collections.IEnumerator.Current
-            {
-                get { throw new NotImplementedException(); }
-            }
+            object System.Collections.IEnumerator.Current => throw new NotImplementedException();
 
             bool System.Collections.IEnumerator.MoveNext()
             {

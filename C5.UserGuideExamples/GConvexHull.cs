@@ -102,11 +102,20 @@ namespace C5.UserGuideExamples
             Y = y;
         }
 
-        public override string ToString() => $"({X}, {Y})";
+        public override string ToString()
+        {
+            return $"({X}, {Y})";
+        }
 
-        public static Point Random(int w, int h) => new Point(rnd.Next(w), rnd.Next(h));
+        public static Point Random(int w, int h)
+        {
+            return new Point(rnd.Next(w), rnd.Next(h));
+        }
 
-        public bool Equals(Point p2) => X == p2.X && Y == p2.Y;
+        public bool Equals(Point p2)
+        {
+            return X == p2.X && Y == p2.Y;
+        }
 
         public int CompareTo(Point p2)
         {
