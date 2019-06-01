@@ -13,7 +13,7 @@ namespace C5
     public class HashBag<T> : CollectionBase<T>, ICollection<T>
     {
         #region Fields
-        HashSet<KeyValuePair<T, int>> dict;
+        private HashSet<KeyValuePair<T, int>> dict;
         #endregion
 
         #region Events
@@ -116,7 +116,8 @@ namespace C5
         /// <returns>True if item was found (and updated)</returns>
         public virtual bool Update(T item)
         {
-            return Update(item, out _); }
+            return Update(item, out _);
+        }
 
 
         /// <summary>
@@ -129,7 +130,7 @@ namespace C5
         {
             KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, 0);
 
-            updatecheck();
+            UpdateCheck();
 
             //Note: we cannot just do dict.Update: we have to lookup the count before we 
             //know what to update with. There is of course a way around if we use the 
@@ -141,7 +142,10 @@ namespace C5
                 p.Key = item;
                 dict.Update(p);
                 if (ActiveEvents != 0)
-                    raiseForUpdate(item, olditem, p.Value);
+                {
+                    RaiseForUpdate(item, olditem, p.Value);
+                }
+
                 return true;
             }
 
@@ -160,9 +164,11 @@ namespace C5
         /// <returns>True if item was found</returns>
         public virtual bool FindOrAdd(ref T item)
         {
-            updatecheck();
+            UpdateCheck();
             if (Find(ref item))
+            {
                 return true;
+            }
 
             Add(item);
             return false;
@@ -178,9 +184,11 @@ namespace C5
         /// <returns>True if item was updated</returns>
         public virtual bool UpdateOrAdd(T item)
         {
-            updatecheck();
+            UpdateCheck();
             if (Update(item))
+            {
                 return true;
+            }
 
             Add(item);
             return false;
@@ -194,9 +202,11 @@ namespace C5
         /// <returns></returns>
         public virtual bool UpdateOrAdd(T item, out T olditem)
         {
-            updatecheck();
+            UpdateCheck();
             if (Update(item, out olditem))
+            {
                 return true;
+            }
 
             Add(item);
             return false;
@@ -211,19 +221,24 @@ namespace C5
         {
             KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, 0);
 
-            updatecheck();
+            UpdateCheck();
             if (dict.Find(ref p))
             {
                 size--;
                 if (p.Value == 1)
+                {
                     dict.Remove(p);
+                }
                 else
                 {
                     p.Value--;
                     dict.Update(p);
                 }
                 if (ActiveEvents != 0)
-                    raiseForRemove(p.Key);
+                {
+                    RaiseForRemove(p.Key);
+                }
+
                 return true;
             }
 
@@ -239,21 +254,25 @@ namespace C5
         /// <returns>True if item was found.</returns>
         public virtual bool Remove(T item, out T removeditem)
         {
-            updatecheck();
+            UpdateCheck();
             KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, 0);
             if (dict.Find(ref p))
             {
                 removeditem = p.Key;
                 size--;
                 if (p.Value == 1)
+                {
                     dict.Remove(p);
+                }
                 else
                 {
                     p.Value--;
                     dict.Update(p);
                 }
                 if (ActiveEvents != 0)
-                    raiseForRemove(removeditem);
+                {
+                    RaiseForRemove(removeditem);
+                }
 
                 return true;
             }
@@ -269,7 +288,7 @@ namespace C5
         public virtual void RemoveAll(SCG.IEnumerable<T> items)
         {
 #warning Improve if items is a counting bag
-            updatecheck();
+            UpdateCheck();
             bool mustRaise = (ActiveEvents & (EventTypeEnum.Changed | EventTypeEnum.Removed)) != 0;
             RaiseForRemoveAllHandler? raiseHandler = mustRaise ? new RaiseForRemoveAllHandler(this) : null;
             foreach (T item in items)
@@ -279,18 +298,24 @@ namespace C5
                 {
                     size--;
                     if (p.Value == 1)
+                    {
                         dict.Remove(p);
+                    }
                     else
                     {
                         p.Value--;
                         dict.Update(p);
                     }
                     if (mustRaise)
+                    {
                         raiseHandler?.Remove(p.Key);
+                    }
                 }
             }
             if (mustRaise)
+            {
                 raiseHandler?.Raise();
+            }
         }
 
         /// <summary>
@@ -298,16 +323,24 @@ namespace C5
         /// </summary>
         public virtual void Clear()
         {
-            updatecheck();
+            UpdateCheck();
             if (size == 0)
+            {
                 return;
+            }
+
             dict.Clear();
             int oldsize = size;
             size = 0;
             if ((ActiveEvents & EventTypeEnum.Cleared) != 0)
-                raiseCollectionCleared(true, oldsize);
+            {
+                RaiseCollectionCleared(true, oldsize);
+            }
+
             if ((ActiveEvents & EventTypeEnum.Changed) != 0)
-                raiseCollectionChanged();
+            {
+                RaiseCollectionChanged();
+            }
         }
 
 
@@ -318,7 +351,7 @@ namespace C5
         /// <param name="items">The items to retain</param>
         public virtual void RetainAll(SCG.IEnumerable<T> items)
         {
-            updatecheck();
+            UpdateCheck();
 
             HashBag<T> res = new HashBag<T>(itemequalityComparer);
 
@@ -347,7 +380,9 @@ namespace C5
             }
 
             if (size == res.size)
+            {
                 return;
+            }
 
             CircularQueue<T>? wasRemoved = null;
             if ((ActiveEvents & EventTypeEnum.Removed) != 0)
@@ -357,18 +392,26 @@ namespace C5
                 {
                     int removed = p.Value - res.ContainsCount(p.Key);
                     if (removed > 0)
+                    {
 #warning We could send bag events here easily using a CircularQueue of (should?)
                         for (int i = 0; i < removed; i++)
+                        {
                             wasRemoved.Enqueue(p.Key);
+                        }
+                    }
                 }
             }
             dict = res.dict;
             size = res.size;
 
             if ((ActiveEvents & EventTypeEnum.Removed) != 0)
-                raiseForRemoveAll(wasRemoved);
+            {
+                RaiseForRemoveAll(wasRemoved);
+            }
             else if ((ActiveEvents & EventTypeEnum.Changed) != 0)
-                raiseCollectionChanged();
+            {
+                RaiseCollectionChanged();
+            }
         }
 
         /// <summary>
@@ -382,10 +425,16 @@ namespace C5
             HashBag<T> res = new HashBag<T>(itemequalityComparer);
 
             foreach (T item in items)
+            {
                 if (res.ContainsCount(item) < ContainsCount(item))
+                {
                     res.Add(item);
+                }
                 else
+                {
                     return false;
+                }
+            }
 
             return true;
         }
@@ -401,8 +450,12 @@ namespace C5
             int ind = 0;
 
             foreach (KeyValuePair<T, int> p in dict)
+            {
                 for (int i = 0; i < p.Value; i++)
+                {
                     res[ind++] = p.Key;
+                }
+            }
 
             return res;
         }
@@ -418,7 +471,9 @@ namespace C5
             KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, 0);
 
             if (dict.Find(ref p))
+            {
                 return p.Value;
+            }
 
             return 0;
         }
@@ -444,7 +499,7 @@ namespace C5
         /// <param name="item">The item to remove</param>
         public virtual void RemoveAllCopies(T item)
         {
-            updatecheck();
+            UpdateCheck();
 
             KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, 0);
 
@@ -453,9 +508,14 @@ namespace C5
                 size -= p.Value;
                 dict.Remove(p);
                 if ((ActiveEvents & EventTypeEnum.Removed) != 0)
-                    raiseItemsRemoved(p.Key, p.Value);
+                {
+                    RaiseItemsRemoved(p.Key, p.Value);
+                }
+
                 if ((ActiveEvents & EventTypeEnum.Changed) != 0)
-                    raiseCollectionChanged();
+                {
+                    RaiseCollectionChanged();
+                }
             }
         }
 
@@ -474,11 +534,17 @@ namespace C5
         public override void CopyTo(T[] array, int index)
         {
             if (index < 0 || index + Count > array.Length)
+            {
                 throw new ArgumentOutOfRangeException();
+            }
 
             foreach (KeyValuePair<T, int> p in dict)
+            {
                 for (int j = 0; j < p.Value; j++)
+                {
                     array[index++] = p.Key;
+                }
+            }
         }
 
         #endregion
@@ -505,10 +571,13 @@ namespace C5
         /// <returns>Always true</returns>
         public virtual bool Add(T item)
         {
-            updatecheck();
-            add(ref item);
+            UpdateCheck();
+            Add(ref item);
             if (ActiveEvents != 0)
-                raiseForAdd(item);
+            {
+                RaiseForAdd(item);
+            }
+
             return true;
         }
 
@@ -521,7 +590,7 @@ namespace C5
             Add(item);
         }
 
-        private void add(ref T item)
+        private void Add(ref T item)
         {
             KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, 1);
             if (dict.Find(ref p))
@@ -531,7 +600,10 @@ namespace C5
                 item = p.Key;
             }
             else
+            {
                 dict.Add(p);
+            }
+
             size++;
         }
 
@@ -542,7 +614,7 @@ namespace C5
         /// <param name="items">The items to add</param>
         public virtual void AddAll(SCG.IEnumerable<T> items)
         {
-            updatecheck();
+            UpdateCheck();
 #warning We could easily raise bag events
             bool mustRaiseAdded = (ActiveEvents & EventTypeEnum.Added) != 0;
             CircularQueue<T>? wasAdded = mustRaiseAdded ? new CircularQueue<T>() : null;
@@ -550,19 +622,33 @@ namespace C5
             foreach (T item in items)
             {
                 T jtem = item;
-                add(ref jtem);
+                Add(ref jtem);
                 wasChanged = true;
                 if (mustRaiseAdded)
+                {
                     wasAdded?.Enqueue(jtem);
+                }
             }
             if (!wasChanged)
+            {
                 return;
+            }
+
             if (mustRaiseAdded)
+            {
                 if (wasAdded != null)
-                  foreach (T item in wasAdded)
-                    raiseItemsAdded(item, 1);
+                {
+                    foreach (T item in wasAdded)
+                    {
+                        RaiseItemsAdded(item, 1);
+                    }
+                }
+            }
+
             if ((ActiveEvents & EventTypeEnum.Changed) != 0)
-                raiseCollectionChanged();
+            {
+                RaiseCollectionChanged();
+            }
         }
 
         #endregion
@@ -595,7 +681,9 @@ namespace C5
                 while (left > 0)
                 {
                     if (mystamp != stamp)
+                    {
                         throw new CollectionModifiedException();
+                    }
 
                     left--;
                     yield return p.Key;
@@ -615,7 +703,9 @@ namespace C5
             int count = 0;
 
             foreach (KeyValuePair<T, int> p in dict)
+            {
                 count += p.Value;
+            }
 
             if (count != size)
             {

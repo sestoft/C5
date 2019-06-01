@@ -92,7 +92,7 @@ namespace C5.UserGuideExamples
 
     */
 
-    class Nfa
+    internal class Nfa
     {
         public int Start { get; }
 
@@ -143,7 +143,7 @@ namespace C5.UserGuideExamples
         // (a set of ints) to a dictionary mapping a label (a string) to a
         // composite state (a set of ints).
 
-        static IDictionary<HashSet<int>, IDictionary<string, HashSet<int>>> CompositeDfaTrans(int s0, IDictionary<int, ArrayList<Transition>> trans)
+        private static IDictionary<HashSet<int>, IDictionary<string, HashSet<int>>> CompositeDfaTrans(int s0, IDictionary<int, ArrayList<Transition>> trans)
         {
             var S0 = EpsilonClose(new HashSet<int> { s0 }, trans);
             var worklist = new CircularQueue<HashSet<int>>();
@@ -199,7 +199,7 @@ namespace C5.UserGuideExamples
         }
 
         // Compute epsilon-closure of state set S in transition relation trans.  
-        static HashSet<int> EpsilonClose(HashSet<int> set, IDictionary<int, ArrayList<Transition>> trans)
+        private static HashSet<int> EpsilonClose(HashSet<int> set, IDictionary<int, ArrayList<Transition>> trans)
         {
             // The worklist initially contains all S members
             var worklist = new CircularQueue<int>();
@@ -223,7 +223,7 @@ namespace C5.UserGuideExamples
         }
 
         // Compute a renamer, which is a dictionary mapping set of int to int
-        static IDictionary<HashSet<int>, int> MkRenamer(ICollectionValue<HashSet<int>> states)
+        private static IDictionary<HashSet<int>, int> MkRenamer(ICollectionValue<HashSet<int>> states)
         {
             var renamer = new HashDictionary<HashSet<int>, int>();
             var count = 0;
@@ -242,7 +242,7 @@ namespace C5.UserGuideExamples
         // result is a dictionary mapping from int to a dictionary mapping
         // from string to int.
 
-        static IDictionary<int, IDictionary<string, int>> Rename(IDictionary<HashSet<int>, int> renamer, IDictionary<HashSet<int>, IDictionary<string, HashSet<int>>> trans)
+        private static IDictionary<int, IDictionary<string, int>> Rename(IDictionary<HashSet<int>, int> renamer, IDictionary<HashSet<int>, IDictionary<string, HashSet<int>>> trans)
         {
             var newtrans = new HashDictionary<int, IDictionary<string, int>>();
             foreach (var entry in trans)
@@ -259,7 +259,7 @@ namespace C5.UserGuideExamples
             return newtrans;
         }
 
-        static HashSet<int> AcceptStates(ICollectionValue<HashSet<int>> states, IDictionary<HashSet<int>, int> renamer, int exit)
+        private static HashSet<int> AcceptStates(ICollectionValue<HashSet<int>> states, IDictionary<HashSet<int>, int> renamer, int exit)
         {
             var acceptStates = new HashSet<int>();
 
@@ -355,7 +355,7 @@ namespace C5.UserGuideExamples
        dictionary mapping state number (int) to a dictionary mapping label
        (a non-null string) to a target state (an int).
     */
-    class Dfa
+    internal class Dfa
     {
         public int Start { get; }
         public HashSet<int> Accept { get; }
@@ -417,12 +417,12 @@ namespace C5.UserGuideExamples
     //    r ::= A | r1 r2 | (r1|r2) | r*
     //
 
-    abstract class RegexBase
+    internal abstract class RegexBase
     {
         abstract public Nfa MkNfa(Nfa.NameSource names);
     }
 
-    class Eps : RegexBase
+    internal class Eps : RegexBase
     {
         // The resulting nfa0 has form s0s -eps-> s0e
 
@@ -436,7 +436,7 @@ namespace C5.UserGuideExamples
         }
     }
 
-    class Sym : RegexBase
+    internal class Sym : RegexBase
     {
         private readonly string _sym;
 
@@ -456,7 +456,7 @@ namespace C5.UserGuideExamples
         }
     }
 
-    class Seq : RegexBase
+    internal class Seq : RegexBase
     {
         private readonly RegexBase _r1;
         private readonly RegexBase _r2;
@@ -492,7 +492,7 @@ namespace C5.UserGuideExamples
         }
     }
 
-    class Alt : RegexBase
+    internal class Alt : RegexBase
     {
         private readonly RegexBase _r1;
         private readonly RegexBase _r2;
@@ -534,9 +534,9 @@ namespace C5.UserGuideExamples
         }
     }
 
-    class Star : RegexBase
+    internal class Star : RegexBase
     {
-        readonly RegexBase _r;
+        private readonly RegexBase _r;
 
         public Star(RegexBase r)
         {
@@ -566,7 +566,7 @@ namespace C5.UserGuideExamples
     }
 
     // Trying the RE->NFA->DFA translation on three regular expressions
-    class GNfaToDfa
+    internal class GNfaToDfa
     {
         public static void Main()
         {

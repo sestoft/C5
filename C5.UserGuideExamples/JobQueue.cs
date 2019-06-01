@@ -10,7 +10,7 @@ using System;
 
 namespace C5.UserGuideExamples
 {
-    class JobQueueProgram
+    internal class JobQueueProgram
     {
         public static void Main()
         {
@@ -19,20 +19,20 @@ namespace C5.UserGuideExamples
             // One user submits three jobs at time=27
             var rid1 = jq.Submit(new Ip("62.150.83.11"), 27);
             _ = jq.Submit(new Ip("62.150.83.11"), 27);
-            
+
             // One user submits three jobs at time=27
             var rid3 = jq.Submit(new Ip("62.150.83.11"), 27);
-            
+
             // One job is executed
             jq.ExecuteOne();
-            
+
             // Another user submits two jobs at time=55
             _ = jq.Submit(new Ip("130.225.17.5"), 55);
             _ = jq.Submit(new Ip("130.225.17.5"), 55);
-            
+
             // One more job is executed
             jq.ExecuteOne();
-            
+
             // The first user tries to cancel his first and last job
             jq.Cancel(rid1);
             jq.Cancel(rid3);
@@ -43,7 +43,7 @@ namespace C5.UserGuideExamples
         }
     }
 
-    class JobQueue
+    internal class JobQueue
     {
         private readonly IPriorityQueue<Job> _jobQueue;
         private readonly IDictionary<Rid, IPriorityQueueHandle<Job>> _jobs;
@@ -99,7 +99,7 @@ namespace C5.UserGuideExamples
         }
     }
 
-    class Job : IComparable<Job>
+    internal class Job : IComparable<Job>
     {
         public readonly Rid _rid;
         public readonly Ip _ip;
@@ -123,7 +123,7 @@ namespace C5.UserGuideExamples
         }
     }
 
-    class Rid
+    internal class Rid
     {
         private readonly int _ridNumber;
         private static int _nextRid = 1;
@@ -139,7 +139,7 @@ namespace C5.UserGuideExamples
         }
     }
 
-    class Ip
+    internal class Ip
     {
         public readonly string _ipString;
 

@@ -23,7 +23,7 @@ namespace C5
 
         #region Fields
 
-        readonly SCG.IComparer<T> _comparer;
+        private readonly SCG.IComparer<T> _comparer;
 
         #endregion
 
@@ -50,25 +50,27 @@ namespace C5
                 }
 
                 if (comparer > 0)
-                { 
-                    top = middle; 
+                {
+                    top = middle;
                 }
                 else
                 {
                     bottom = middle + 1;
                 }
 
-                middle = bottom + ((top - bottom) / 2); 
+                middle = bottom + ((top - bottom) / 2);
             }
 
             return false;
         }
 
-        private int indexOf(T item)
+        private int IndexOfInner(T item)
         {
 
             if (BinarySearch(item, out int ind))
+            {
                 return ind;
+            }
 
             return ~ind;
         }
@@ -248,7 +250,10 @@ namespace C5
 
                 if (f(a))
                 {
-                    if (j == rescap) res.expand(rescap = 2 * rescap, j);
+                    if (j == rescap)
+                    {
+                        res.Expand(rescap = 2 * rescap, j);
+                    }
 
                     res.array[j++] = a;
                 }
@@ -280,7 +285,9 @@ namespace C5
                 for (int i = 1; i < size; i++)
                 {
                     if (c.Compare(oldv, newv = res.array[i] = m(array[i])) >= 0)
+                    {
                         throw new ArgumentException("mapper not monotonic");
+                    }
 
                     oldv = newv;
                 }
@@ -327,7 +334,10 @@ namespace C5
         public bool TrySuccessor(T item, out T res)
         {
             if (BinarySearch(item, out int hi))
+            {
                 hi++;
+            }
+
             if (hi >= size)
             {
                 res = default;
@@ -352,7 +362,9 @@ namespace C5
         {
 
             if (!BinarySearch(item, out int lo))
+            {
                 lo--;
+            }
 
             if (lo < 0)
             {
@@ -404,7 +416,9 @@ namespace C5
 
             BinarySearch(item, out int lo);
             if (lo == 0)
+            {
                 throw new NoSuchItemException();
+            }
 
             return array[lo - 1];
         }
@@ -421,10 +435,15 @@ namespace C5
         public T Successor(T item)
         {
 
-            if (BinarySearch(item, out int hi)) hi++;
+            if (BinarySearch(item, out int hi))
+            {
+                hi++;
+            }
 
             if (hi >= size)
+            {
                 throw new NoSuchItemException();
+            }
 
             return array[hi];
         }
@@ -441,10 +460,15 @@ namespace C5
         public T WeakPredecessor(T item)
         {
 
-            if (!BinarySearch(item, out int lo)) lo--;
+            if (!BinarySearch(item, out int lo))
+            {
+                lo--;
+            }
 
             if (lo < 0)
+            {
                 throw new NoSuchItemException();
+            }
 
             return array[lo];
         }
@@ -463,7 +487,9 @@ namespace C5
 
             BinarySearch(item, out int hi);
             if (hi >= size)
+            {
                 throw new NoSuchItemException();
+            }
 
             return array[hi];
         }
@@ -503,7 +529,9 @@ namespace C5
             while (top > bot)
             {
                 if ((comp = c.CompareTo(array[mid])) == 0)
+                {
                     break;
+                }
 
                 if (comp < 0)
                 { rbest = top = mid; }
@@ -590,9 +618,9 @@ namespace C5
         {
             //Unless items have <=1 elements we would expect it to be
             //too expensive to do repeated inserts, thus:
-            updatecheck();
+            UpdateCheck();
 
-            int j = 0, i = 0, c, itemcount = countItems(items), numAdded = 0;
+            int j = 0, i = 0, c, itemcount = CountItems(items), numAdded = 0;
             SortedArray<T> res = new SortedArray<T>(size + itemcount, _comparer);
             T lastitem = default;
             T[] addedItems = new T[itemcount];
@@ -603,22 +631,29 @@ namespace C5
                 {
                     lastitem = res.array[j++] = array[i++];
                     if (c == 0)
+                    {
                         goto next;
+                    }
                 }
 
                 if (j > 0 && _comparer.Compare(lastitem, item) >= 0)
+                {
                     throw new ArgumentException("Argument not sorted");
+                }
 
                 addedItems[numAdded++] = lastitem = res.array[j++] = item;
             next:
                 c = -1;
             }
 
-            while (i < size) res.array[j++] = array[i++];
+            while (i < size)
+            {
+                res.array[j++] = array[i++];
+            }
 
             size = j;
             array = res.array;
-            raiseForAddAll(addedItems, numAdded);
+            RaiseForAddAll(addedItems, numAdded);
         }
 
 
@@ -631,7 +666,9 @@ namespace C5
 
             BinarySearch(low, out int lowind);
             if (lowind == size)
+            {
                 return;
+            }
 
             T[] removed = new T[size - lowind];
             Array.Copy(array, lowind, removed, 0, removed.Length);
@@ -640,7 +677,7 @@ namespace C5
             Array.Clear(array, lowind, size - lowind);
             size = lowind;
 
-            raiseForRemoveRange(removed);
+            RaiseForRemoveRange(removed);
         }
 
 
@@ -655,7 +692,9 @@ namespace C5
             BinarySearch(low, out int lowind);
             BinarySearch(hi, out int highind);
             if (highind <= lowind)
+            {
                 return;
+            }
 
             T[] removed = new T[highind - lowind];
             Array.Copy(array, lowind, removed, 0, removed.Length);
@@ -665,7 +704,7 @@ namespace C5
             Array.Clear(array, size - highind + lowind, highind - lowind);
             size -= highind - lowind;
 
-            raiseForRemoveRange(removed);
+            RaiseForRemoveRange(removed);
         }
 
 
@@ -678,7 +717,9 @@ namespace C5
 
             BinarySearch(hi, out int highind);
             if (highind == 0)
+            {
                 return;
+            }
 
             T[] removed = new T[highind];
             Array.Copy(array, 0, removed, 0, removed.Length);
@@ -687,16 +728,20 @@ namespace C5
             Array.Clear(array, size - highind, highind);
             size -= highind;
 
-            raiseForRemoveRange(removed);
+            RaiseForRemoveRange(removed);
         }
 
-        private void raiseForRemoveRange(T[] removed)
+        private void RaiseForRemoveRange(T[] removed)
         {
             foreach (T item in removed)
-                raiseItemsRemoved(item, 1);
+            {
+                RaiseItemsRemoved(item, 1);
+            }
 
             if (removed.Length > 0)
-                raiseCollectionChanged();
+            {
+                RaiseCollectionChanged();
+            }
         }
 
         #endregion
@@ -718,8 +763,8 @@ namespace C5
             base.Clear();
             if (oldCount > 0)
             {
-                raiseCollectionCleared(true, oldCount);
-                raiseCollectionChanged();
+                RaiseCollectionCleared(true, oldCount);
+                RaiseCollectionChanged();
             }
         }
 
@@ -765,7 +810,7 @@ namespace C5
         /// <returns>True if the item was added (hence not found).</returns>
         public bool FindOrAdd(ref T item)
         {
-            updatecheck();
+            UpdateCheck();
 
 
             if (BinarySearch(item, out int ind))
@@ -774,12 +819,15 @@ namespace C5
                 return true;
             }
 
-            if (size == array.Length) expand();
+            if (size == array.Length)
+            {
+                Expand();
+            }
 
             Array.Copy(array, ind, array, ind + 1, size - ind);
             array[ind] = item;
             size++;
-            raiseForAdd(item);
+            RaiseForAdd(item);
             return false;
         }
 
@@ -795,7 +843,8 @@ namespace C5
         /// <returns>True if the item was found and hence updated.</returns>
         public bool Update(T item)
         {
-            return Update(item, out _); }
+            return Update(item, out _);
+        }
 
         /// <summary>
         /// 
@@ -805,14 +854,14 @@ namespace C5
         /// <returns></returns>
         public bool Update(T item, out T olditem)
         {
-            updatecheck();
+            UpdateCheck();
 
 
             if (BinarySearch(item, out int ind))
             {
                 olditem = array[ind];
                 array[ind] = item;
-                raiseForUpdate(item, olditem);
+                RaiseForUpdate(item, olditem);
                 return true;
             }
 
@@ -830,7 +879,8 @@ namespace C5
         /// <returns>True if the item was found and updated (hence not added).</returns>
         public bool UpdateOrAdd(T item)
         {
-            return UpdateOrAdd(item, out _); }
+            return UpdateOrAdd(item, out _);
+        }
 
         /// <summary>
         /// 
@@ -840,24 +890,27 @@ namespace C5
         /// <returns></returns>
         public bool UpdateOrAdd(T item, out T olditem)
         {
-            updatecheck();
+            UpdateCheck();
 
 
             if (BinarySearch(item, out int ind))
             {
                 olditem = array[ind];
                 array[ind] = item;
-                raiseForUpdate(item, olditem);
+                RaiseForUpdate(item, olditem);
                 return true;
             }
 
-            if (size == array.Length) expand();
+            if (size == array.Length)
+            {
+                Expand();
+            }
 
             Array.Copy(array, ind, array, ind + 1, size - ind);
             array[ind] = item;
             size++;
             olditem = default;
-            raiseForAdd(item);
+            RaiseForAdd(item);
             return false;
         }
 
@@ -871,13 +924,13 @@ namespace C5
         public bool Remove(T item)
         {
 
-            updatecheck();
+            UpdateCheck();
             if (BinarySearch(item, out int ind))
             {
                 T removeditem = array[ind];
                 Array.Copy(array, ind + 1, array, ind, size - ind - 1);
                 array[--size] = default;
-                raiseForRemove(removeditem);
+                RaiseForRemove(removeditem);
                 return true;
             }
 
@@ -898,13 +951,13 @@ namespace C5
         public bool Remove(T item, out T removeditem)
         {
 
-            updatecheck();
+            UpdateCheck();
             if (BinarySearch(item, out int ind))
             {
                 removeditem = array[ind];
                 Array.Copy(array, ind + 1, array, ind, size - ind - 1);
                 array[--size] = default;
-                raiseForRemove(removeditem);
+                RaiseForRemove(removeditem);
                 return true;
             }
 
@@ -921,7 +974,7 @@ namespace C5
         {
             //This is O(m*logn) with n bits extra storage
             //(Not better to collect the m items and sort them)
-            updatecheck();
+            UpdateCheck();
 
             RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(this);
             bool mustFire = raiseHandler.MustFire;
@@ -930,19 +983,31 @@ namespace C5
             int j = 0;
 
             foreach (T item in items)
+            {
                 if (BinarySearch(item, out int ind))
+                {
                     toremove[ind >> 5] |= 1 << (ind & 31);
+                }
+            }
 
             for (int i = 0; i < size; i++)
+            {
                 if ((toremove[i >> 5] & (1 << (i & 31))) == 0)
+                {
                     array[j++] = array[i];
+                }
                 else if (mustFire)
+                {
                     raiseHandler.Remove(array[i]);
+                }
+            }
 
             Array.Clear(array, j, size - j);
             size = j;
             if (mustFire)
+            {
                 raiseHandler.Raise();
+            }
         }
 
         /// <summary>
@@ -953,7 +1018,7 @@ namespace C5
         {
             //This is O(m*logn) with n bits extra storage
             //(Not better to collect the m items and sort them)
-            updatecheck();
+            UpdateCheck();
 
             RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(this);
             bool mustFire = raiseHandler.MustFire;
@@ -962,19 +1027,31 @@ namespace C5
             int j = 0;
 
             foreach (T item in items)
+            {
                 if (BinarySearch(item, out int ind))
+                {
                     toretain[ind >> 5] |= 1 << (ind & 31);
+                }
+            }
 
             for (int i = 0; i < size; i++)
+            {
                 if ((toretain[i >> 5] & (1 << (i & 31))) != 0)
+                {
                     array[j++] = array[i];
+                }
                 else if (mustFire)
+                {
                     raiseHandler.Remove(array[i]);
+                }
+            }
 
             Array.Clear(array, j, size - j);
             size = j;
             if (mustFire)
+            {
                 raiseHandler.Raise();
+            }
         }
 
         /// <summary>
@@ -987,8 +1064,12 @@ namespace C5
         {
 
             foreach (T item in items)
+            {
                 if (!BinarySearch(item, out int tmp))
+                {
                     return false;
+                }
+            }
 
             return true;
         }
@@ -1086,13 +1167,16 @@ namespace C5
         /// <returns>True if item was added.</returns>
         public bool Add(T item)
         {
-            updatecheck();
+            UpdateCheck();
 
 
-            if (BinarySearch(item, out int ind)) return false;
+            if (BinarySearch(item, out int ind))
+            {
+                return false;
+            }
 
             InsertProtected(ind, item);
-            raiseForAdd(item);
+            RaiseForAdd(item);
             return true;
         }
 
@@ -1115,14 +1199,17 @@ namespace C5
         /// <param name="items">The items to add</param>
         public void AddAll(SCG.IEnumerable<T> items)
         {
-            int toadd = countItems(items), newsize = array.Length;
+            int toadd = CountItems(items), newsize = array.Length;
 
             while (newsize < size + toadd) { newsize *= 2; }
 
             T[] newarr = new T[newsize];
 
             toadd = 0;
-            foreach (T item in items) newarr[size + toadd++] = item;
+            foreach (T item in items)
+            {
+                newarr[size + toadd++] = item;
+            }
 
             Sorting.IntroSort<T>(newarr, size, toadd, _comparer);
 
@@ -1135,28 +1222,42 @@ namespace C5
             for (int k = size, klimit = size + toadd; k < klimit; k++)
             {
                 while (i < size && _comparer.Compare(array[i], newarr[k]) <= 0)
+                {
                     lastitem = newarr[j++] = array[i++];
+                }
 
                 if (j == 0 || _comparer.Compare(lastitem, newarr[k]) < 0)
+                {
                     addedItems[numAdded++] = lastitem = newarr[j++] = newarr[k];
+                }
             }
 
-            while (i < size) newarr[j++] = array[i++];
+            while (i < size)
+            {
+                newarr[j++] = array[i++];
+            }
 
             Array.Clear(newarr, j, size + toadd - j);
             size = j;
             array = newarr;
 
-            raiseForAddAll(addedItems, numAdded);
+            RaiseForAddAll(addedItems, numAdded);
         }
 
-        private void raiseForAddAll(T[] addedItems, int numAdded)
+        private void RaiseForAddAll(T[] addedItems, int numAdded)
         {
             if ((ActiveEvents & EventTypeEnum.Added) != 0)
+            {
                 for (int i = 0; i < numAdded; i += 1)
-                    raiseItemsAdded(addedItems[i], 1);
+                {
+                    RaiseItemsAdded(addedItems[i], 1);
+                }
+            }
+
             if (numAdded > 0)
-                raiseCollectionChanged();
+            {
+                RaiseCollectionChanged();
+            }
         }
 
         #endregion
@@ -1170,7 +1271,9 @@ namespace C5
         public T FindMin()
         {
             if (size == 0)
+            {
                 throw new NoSuchItemException();
+            }
 
             return array[0];
         }
@@ -1181,16 +1284,18 @@ namespace C5
         /// <returns>The removed item.</returns>
         public T DeleteMin()
         {
-            updatecheck();
+            UpdateCheck();
             if (size == 0)
+            {
                 throw new NoSuchItemException();
+            }
 
             T retval = array[0];
 
             size--;
             Array.Copy(array, 1, array, 0, size);
             array[size] = default;
-            raiseForRemove(retval);
+            RaiseForRemove(retval);
             return retval;
         }
 
@@ -1202,7 +1307,9 @@ namespace C5
         public T FindMax()
         {
             if (size == 0)
+            {
                 throw new NoSuchItemException();
+            }
 
             return array[size - 1];
         }
@@ -1214,15 +1321,17 @@ namespace C5
         /// <returns>The removed item.</returns>
         public T DeleteMax()
         {
-            updatecheck();
+            UpdateCheck();
             if (size == 0)
+            {
                 throw new NoSuchItemException();
+            }
 
             T retval = array[size - 1];
 
             size--;
             array[size] = default;
-            raiseForRemove(retval);
+            RaiseForRemove(retval);
             return retval;
         }
 
@@ -1247,7 +1356,9 @@ namespace C5
             get
             {
                 if (i < 0 || i >= size)
+                {
                     throw new IndexOutOfRangeException();
+                }
 
                 return array[i];
             }
@@ -1264,7 +1375,7 @@ namespace C5
         /// </summary>
         /// <param name="item">Item to search for.</param>
         /// <returns>Index of item from start.</returns>
-        public int IndexOf(T item) { return indexOf(item); }
+        public int IndexOf(T item) { return IndexOfInner(item); }
 
 
         /// <summary>
@@ -1272,7 +1383,7 @@ namespace C5
         /// </summary>
         /// <param name="item">Item to search for.</param>
         /// <returns>Index of of item from the end.</returns>
-        public int LastIndexOf(T item) { return indexOf(item); }
+        public int LastIndexOf(T item) { return IndexOfInner(item); }
 
 
         /// <summary>
@@ -1285,16 +1396,18 @@ namespace C5
         public T RemoveAt(int i)
         {
             if (i < 0 || i >= size)
+            {
                 throw new IndexOutOfRangeException("Index out of range for sequenced collectionvalue");
+            }
 
-            updatecheck();
+            UpdateCheck();
 
             T retval = array[i];
 
             size--;
             Array.Copy(array, i + 1, array, i, size - i);
             array[size] = default;
-            raiseForRemoveAt(i, retval);
+            RaiseForRemoveAt(i, retval);
             return retval;
         }
 
@@ -1306,20 +1419,20 @@ namespace C5
         /// <param name="count">The number of items to remove.</param>
         public void RemoveInterval(int start, int count)
         {
-            updatecheck();
-            checkRange(start, count);
+            UpdateCheck();
+            CheckRange(start, count);
             Array.Copy(array, start + count, array, start, size - start - count);
             size -= count;
             Array.Clear(array, size, count);
-            raiseForRemoveInterval(count);
+            RaiseForRemoveInterval(count);
         }
 
-        private void raiseForRemoveInterval(int count)
+        private void RaiseForRemoveInterval(int count)
         {
             if (ActiveEvents != 0 && count > 0)
             {
-                raiseCollectionCleared(size == 0, count);
-                raiseCollectionChanged();
+                RaiseCollectionCleared(size == 0, count);
+                RaiseCollectionChanged();
             }
         }
 

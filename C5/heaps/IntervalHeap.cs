@@ -24,7 +24,7 @@ namespace C5
         #endregion
 
         #region Fields
-        struct Interval
+        private struct Interval
         {
             internal T first, last; internal Handle? firsthandle, lasthandle;
 
@@ -32,105 +32,131 @@ namespace C5
             public override string ToString() { return string.Format("[{0}; {1}]", first, last); }
         }
 
-        int stamp;
-        readonly SCG.IComparer<T> comparer;
-        readonly SCG.IEqualityComparer<T> itemequalityComparer;
-
-        Interval[] heap;
-
-        int size;
+        private int stamp;
+        private readonly SCG.IComparer<T> comparer;
+        private readonly SCG.IEqualityComparer<T> itemequalityComparer;
+        private Interval[] heap;
+        private int size;
         #endregion
 
         #region Util
         // heapifyMin and heapifyMax and their auxiliaries
 
-        private void swapFirstWithLast(int cell1, int cell2) {
-          T first = heap[cell1].first;
-          Handle firsthandle = heap[cell1].firsthandle!;
-          updateFirst(cell1, heap[cell2].last, heap[cell2].lasthandle);
-          updateLast(cell2, first, firsthandle);
+        private void SwapFirstWithLast(int cell1, int cell2)
+        {
+            T first = heap[cell1].first;
+            Handle firsthandle = heap[cell1].firsthandle!;
+            UpdateFirst(cell1, heap[cell2].last, heap[cell2].lasthandle);
+            UpdateLast(cell2, first, firsthandle);
         }
 
-        private void swapLastWithLast(int cell1, int cell2) {
-          T last = heap[cell2].last;
-          Handle lasthandle = heap[cell2].lasthandle!;
-          updateLast(cell2, heap[cell1].last, heap[cell1].lasthandle!);
-          updateLast(cell1, last, lasthandle);
+        private void SwapLastWithLast(int cell1, int cell2)
+        {
+            T last = heap[cell2].last;
+            Handle lasthandle = heap[cell2].lasthandle!;
+            UpdateLast(cell2, heap[cell1].last, heap[cell1].lasthandle!);
+            UpdateLast(cell1, last, lasthandle);
         }
 
-        private void swapFirstWithFirst(int cell1, int cell2) {
-          T first = heap[cell2].first;
-          Handle firsthandle = heap[cell2].firsthandle!;
-          updateFirst(cell2, heap[cell1].first, heap[cell1].firsthandle);
-          updateFirst(cell1, first, firsthandle);
+        private void SwapFirstWithFirst(int cell1, int cell2)
+        {
+            T first = heap[cell2].first;
+            Handle firsthandle = heap[cell2].firsthandle!;
+            UpdateFirst(cell2, heap[cell1].first, heap[cell1].firsthandle);
+            UpdateFirst(cell1, first, firsthandle);
         }
 
-        bool heapifyMin(int cell) {
-          bool swappedroot = false;
-          // If first > last, swap them
-          if (2 * cell + 1 < size && comparer.Compare(heap[cell].first, heap[cell].last) > 0) {
-            swappedroot = true;
-            swapFirstWithLast(cell, cell);
-          }
-
-          int currentmin = cell, l = 2 * cell + 1, r = l + 1;
-          if (2 * l < size && comparer.Compare(heap[l].first, heap[currentmin].first) < 0) 
-            currentmin = l;
-          if (2 * r < size && comparer.Compare(heap[r].first, heap[currentmin].first) < 0) 
-            currentmin = r; 
-
-          if (currentmin != cell) {
-            // cell has at least one daughter, and it contains the min
-            swapFirstWithFirst(currentmin, cell);
-            heapifyMin(currentmin);
-          }
-          return swappedroot;
-        }
-
-
-        bool heapifyMax(int cell) {
-          bool swappedroot = false;
-          if (2 * cell + 1 < size && comparer.Compare(heap[cell].last, heap[cell].first) < 0) {
-            swappedroot = true;
-            swapFirstWithLast(cell, cell);
-          }
-
-          int currentmax = cell, l = 2 * cell + 1, r = l + 1;
-          bool firstmax = false;  // currentmax's first field holds max
-          if (2 * l + 1 < size) {  // both l.first and l.last exist
-            if (comparer.Compare(heap[l].last, heap[currentmax].last) > 0)
-              currentmax = l;
-          }
-          else if (2 * l + 1 == size) {  // only l.first exists
-            if (comparer.Compare(heap[l].first, heap[currentmax].last) > 0) {
-              currentmax = l;
-              firstmax = true;
+        private bool HeapifyMin(int cell)
+        {
+            bool swappedroot = false;
+            // If first > last, swap them
+            if (2 * cell + 1 < size && comparer.Compare(heap[cell].first, heap[cell].last) > 0)
+            {
+                swappedroot = true;
+                SwapFirstWithLast(cell, cell);
             }
-          }
 
-          if (2 * r + 1 < size) {  // both r.first and r.last exist
-            if (comparer.Compare(heap[r].last, heap[currentmax].last) > 0)
-              currentmax = r;
-          }
-          else if (2 * r + 1 == size) {  // only r.first exists
-            if (comparer.Compare(heap[r].first, heap[currentmax].last) > 0) {
-              currentmax = r;
-              firstmax = true;
+            int currentmin = cell, l = 2 * cell + 1, r = l + 1;
+            if (2 * l < size && comparer.Compare(heap[l].first, heap[currentmin].first) < 0)
+            {
+                currentmin = l;
             }
-          }
 
-          if (currentmax != cell) {
-            // The cell has at least one daughter, and it contains the max
-            if (firstmax)
-              swapFirstWithLast(currentmax, cell);
-            else
-              swapLastWithLast(currentmax, cell);
-            heapifyMax(currentmax);
-          }
-          return swappedroot;
+            if (2 * r < size && comparer.Compare(heap[r].first, heap[currentmin].first) < 0)
+            {
+                currentmin = r;
+            }
+
+            if (currentmin != cell)
+            {
+                // cell has at least one daughter, and it contains the min
+                SwapFirstWithFirst(currentmin, cell);
+                HeapifyMin(currentmin);
+            }
+            return swappedroot;
         }
 
-        void bubbleUpMin(int i)
+        private bool HeapifyMax(int cell)
+        {
+            bool swappedroot = false;
+            if (2 * cell + 1 < size && comparer.Compare(heap[cell].last, heap[cell].first) < 0)
+            {
+                swappedroot = true;
+                SwapFirstWithLast(cell, cell);
+            }
+
+            int currentmax = cell, l = 2 * cell + 1, r = l + 1;
+            bool firstmax = false;  // currentmax's first field holds max
+            if (2 * l + 1 < size)
+            {  // both l.first and l.last exist
+                if (comparer.Compare(heap[l].last, heap[currentmax].last) > 0)
+                {
+                    currentmax = l;
+                }
+            }
+            else if (2 * l + 1 == size)
+            {  // only l.first exists
+                if (comparer.Compare(heap[l].first, heap[currentmax].last) > 0)
+                {
+                    currentmax = l;
+                    firstmax = true;
+                }
+            }
+
+            if (2 * r + 1 < size)
+            {  // both r.first and r.last exist
+                if (comparer.Compare(heap[r].last, heap[currentmax].last) > 0)
+                {
+                    currentmax = r;
+                }
+            }
+            else if (2 * r + 1 == size)
+            {  // only r.first exists
+                if (comparer.Compare(heap[r].first, heap[currentmax].last) > 0)
+                {
+                    currentmax = r;
+                    firstmax = true;
+                }
+            }
+
+            if (currentmax != cell)
+            {
+                // The cell has at least one daughter, and it contains the max
+                if (firstmax)
+                {
+                    SwapFirstWithLast(currentmax, cell);
+                }
+                else
+                {
+                    SwapLastWithLast(currentmax, cell);
+                }
+
+                HeapifyMax(currentmax);
+            }
+            return swappedroot;
+        }
+
+        private void BubbleUpMin(int i)
         {
             if (i > 0)
             {
@@ -143,19 +169,20 @@ namespace C5
                     int p;
                     if (comparer.Compare(iv, min = heap[p = (i + 1) / 2 - 1].first) < 0)
                     {
-                        updateFirst(i, min, heap[p].firsthandle);
+                        UpdateFirst(i, min, heap[p].firsthandle);
                         i = p;
                     }
                     else
+                    {
                         break;
+                    }
                 }
 
-                updateFirst(i, iv, minhandle);
+                UpdateFirst(i, iv, minhandle);
             }
         }
 
-
-        void bubbleUpMax(int i)
+        private void BubbleUpMax(int i)
         {
             if (i > 0)
             {
@@ -168,14 +195,16 @@ namespace C5
                     int p;
                     if (comparer.Compare(iv, max = heap[p = (i + 1) / 2 - 1].last) > 0)
                     {
-                        updateLast(i, max, heap[p].lasthandle);
+                        UpdateLast(i, max, heap[p].lasthandle);
                         i = p;
                     }
                     else
+                    {
                         break;
+                    }
                 }
 
-                updateLast(i, iv, maxhandle);
+                UpdateLast(i, iv, maxhandle);
 
             }
         }
@@ -211,12 +240,16 @@ namespace C5
         /// <param name="capacity">The initial capacity</param>
         public IntervalHeap(int capacity, SCG.IComparer<T> comparer) : this(capacity, comparer, new ComparerZeroHashCodeEqualityComparer<T>(comparer)) { }
 
-        IntervalHeap(int capacity, SCG.IComparer<T> comparer, SCG.IEqualityComparer<T> itemequalityComparer)
+        private IntervalHeap(int capacity, SCG.IComparer<T> comparer, SCG.IEqualityComparer<T> itemequalityComparer)
         {
             this.comparer = comparer ?? throw new NullReferenceException("Item comparer cannot be null");
             this.itemequalityComparer = itemequalityComparer ?? throw new NullReferenceException("Item equality comparer cannot be null");
             int length = 1;
-            while (length < capacity) length <<= 1;
+            while (length < capacity)
+            {
+                length <<= 1;
+            }
+
             heap = new Interval[length];
         }
 
@@ -232,7 +265,9 @@ namespace C5
         public T FindMin()
         {
             if (size == 0)
+            {
                 throw new NoSuchItemException();
+            }
 
             return heap[0].first;
         }
@@ -257,11 +292,17 @@ namespace C5
         public T FindMax()
         {
             if (size == 0)
+            {
                 throw new NoSuchItemException("Heap is empty");
+            }
             else if (size == 1)
+            {
                 return heap[0].first;
+            }
             else
+            {
                 return heap[0].last;
+            }
         }
 
 
@@ -322,21 +363,21 @@ namespace C5
         public bool Add(T item)
         {
             stamp++;
-            if (add(null, item))
+            if (Add(null, item))
             {
-                raiseItemsAdded(item, 1);
-                raiseCollectionChanged();
+                RaiseItemsAdded(item, 1);
+                RaiseCollectionChanged();
                 return true;
             }
             return false;
         }
 
-        private bool add(Handle? itemhandle, T item)
+        private bool Add(Handle? itemhandle, T item)
         {
             if (size == 0)
             {
                 size = 1;
-                updateFirst(0, item, itemhandle);
+                UpdateFirst(0, item, itemhandle);
                 return true;
             }
 
@@ -355,16 +396,18 @@ namespace C5
 
                 if (comparer.Compare(item, tmp) > 0)
                 {
-                    updateFirst(i, tmp, heap[p].lasthandle);
-                    updateLast(p, item, itemhandle);
-                    bubbleUpMax(p);
+                    UpdateFirst(i, tmp, heap[p].lasthandle);
+                    UpdateLast(p, item, itemhandle);
+                    BubbleUpMax(p);
                 }
                 else
                 {
-                    updateFirst(i, item, itemhandle);
+                    UpdateFirst(i, item, itemhandle);
 
                     if (comparer.Compare(item, heap[p].first) < 0)
-                        bubbleUpMin(i);
+                    {
+                        BubbleUpMin(i);
+                    }
                 }
             }
             else
@@ -374,14 +417,14 @@ namespace C5
 
                 if (comparer.Compare(item, other) < 0)
                 {
-                    updateLast(i, other, heap[i].firsthandle);
-                    updateFirst(i, item, itemhandle);
-                    bubbleUpMin(i);
+                    UpdateLast(i, other, heap[i].firsthandle);
+                    UpdateFirst(i, item, itemhandle);
+                    BubbleUpMin(i);
                 }
                 else
                 {
-                    updateLast(i, item, itemhandle);
-                    bubbleUpMax(i);
+                    UpdateLast(i, item, itemhandle);
+                    BubbleUpMax(i);
                 }
             }
             size++;
@@ -389,19 +432,25 @@ namespace C5
             return true;
         }
 
-        private void updateLast(int cell, T item, Handle? handle)
+        private void UpdateLast(int cell, T item, Handle? handle)
         {
             heap[cell].last = item;
             if (handle != null)
+            {
                 handle.index = 2 * cell + 1;
+            }
+
             heap[cell].lasthandle = handle;
         }
 
-        private void updateFirst(int cell, T item, Handle? handle)
+        private void UpdateFirst(int cell, T item, Handle? handle)
         {
             heap[cell].first = item;
             if (handle != null)
+            {
                 handle.index = 2 * cell;
+            }
+
             heap[cell].firsthandle = handle;
         }
 
@@ -416,13 +465,21 @@ namespace C5
             stamp++;
             int oldsize = size;
             foreach (T item in items)
-                add(null, item);
+            {
+                Add(null, item);
+            }
+
             if (size != oldsize)
             {
                 if ((ActiveEvents & EventTypeEnum.Added) != 0)
+                {
                     foreach (T item in items)
-                        raiseItemsAdded(item, 1);
-                raiseCollectionChanged();
+                    {
+                        RaiseItemsAdded(item, 1);
+                    }
+                }
+
+                RaiseCollectionChanged();
             }
         }
 
@@ -460,7 +517,10 @@ namespace C5
         public override T Choose()
         {
             if (size == 0)
+            {
                 throw new NoSuchItemException("Collection is empty");
+            }
+
             return heap[0].first;
         }
 
@@ -476,7 +536,11 @@ namespace C5
             int mystamp = stamp;
             for (int i = 0; i < size; i++)
             {
-                if (mystamp != stamp) throw new CollectionModifiedException();
+                if (mystamp != stamp)
+                {
+                    throw new CollectionModifiedException();
+                }
+
                 yield return i % 2 == 0 ? heap[i >> 1].first : heap[i >> 1].last;
             }
             yield break;
@@ -487,11 +551,11 @@ namespace C5
 
         #region Diagnostics
 
-      // Check invariants: 
-      // * first <= last in a cell if both are valid
-      // * a parent interval (cell) contains both its daughter intervals (cells)
-      // * a handle, if non-null, points to the cell it is associated with
-        private bool check(int i, T min, T max)
+        // Check invariants: 
+        // * first <= last in a cell if both are valid
+        // * a parent interval (cell) contains both its daughter intervals (cells)
+        // * a handle, if non-null, points to the cell it is associated with
+        private bool Check(int i, T min, T max)
         {
             bool retval = true;
             Interval interval = heap[i];
@@ -551,10 +615,14 @@ namespace C5
                 int l = 2 * i + 1, r = l + 1;
 
                 if (2 * l < size)
-                    retval = retval && check(l, first, last);
+                {
+                    retval = retval && Check(l, first, last);
+                }
 
                 if (2 * r < size)
-                    retval = retval && check(r, first, last);
+                {
+                    retval = retval && Check(r, first, last);
+                }
             }
 
             return retval;
@@ -569,12 +637,16 @@ namespace C5
         public bool Check()
         {
             if (size == 0)
+            {
                 return true;
+            }
 
             if (size == 1)
+            {
                 return heap[0].first != null;
+            }
 
-            return check(0, heap[0].first, heap[0].last);
+            return Check(0, heap[0].first, heap[0].last);
         }
 
         #endregion
@@ -582,7 +654,7 @@ namespace C5
         #region IPriorityQueue<T> Members
 
         [Serializable]
-        class Handle : IPriorityQueueHandle<T>
+        private class Handle : IPriorityQueueHandle<T>
         {
             /// <summary>
             /// To save space, the index is 2*cell for heap[cell].first, and 2*cell+1 for heap[cell].last
@@ -606,7 +678,7 @@ namespace C5
         {
             get
             {
-                checkHandle(handle, out int cell, out bool isfirst);
+                CheckHandle(handle, out int cell, out bool isfirst);
 
                 return isfirst ? heap[cell].first : heap[cell].last;
             }
@@ -668,14 +740,19 @@ namespace C5
             stamp++;
             Handle myhandle = (Handle)handle;
             if (myhandle == null)
+            {
                 handle = myhandle = new Handle();
+            }
             else
                 if (myhandle.index != -1)
-                    throw new InvalidPriorityQueueHandleException("Handle not valid for reuse");
-            if (add(myhandle, item))
             {
-                raiseItemsAdded(item, 1);
-                raiseCollectionChanged();
+                throw new InvalidPriorityQueueHandleException("Handle not valid for reuse");
+            }
+
+            if (Add(myhandle, item))
+            {
+                RaiseItemsAdded(item, 1);
+                RaiseCollectionChanged();
                 return true;
             }
             return false;
@@ -690,7 +767,7 @@ namespace C5
         public T Delete(IPriorityQueueHandle<T> handle)
         {
             stamp++;
-            Handle myhandle = checkHandle(handle, out int cell, out bool isfirst);
+            Handle myhandle = CheckHandle(handle, out int cell, out bool isfirst);
 
             T retval;
             myhandle.index = -1;
@@ -703,7 +780,7 @@ namespace C5
                     retval = heap[cell].first;
                     if (size % 2 == 0)
                     {
-                        updateFirst(cell, heap[cell].last, heap[cell].lasthandle);
+                        UpdateFirst(cell, heap[cell].last, heap[cell].lasthandle);
                         heap[cell].last = default;
                         heap[cell].lasthandle = null;
                     }
@@ -727,22 +804,26 @@ namespace C5
 
                 if (size % 2 == 0)
                 {
-                    updateFirst(cell, heap[lastcell].last, heap[lastcell].lasthandle);
+                    UpdateFirst(cell, heap[lastcell].last, heap[lastcell].lasthandle);
                     heap[lastcell].last = default;
                     heap[lastcell].lasthandle = null;
                 }
                 else
                 {
-                    updateFirst(cell, heap[lastcell].first, heap[lastcell].firsthandle);
+                    UpdateFirst(cell, heap[lastcell].first, heap[lastcell].firsthandle);
                     heap[lastcell].first = default;
                     heap[lastcell].firsthandle = null;
                 }
 
                 size--;
-                if (heapifyMin(cell))
-                    bubbleUpMax(cell);
+                if (HeapifyMin(cell))
+                {
+                    BubbleUpMax(cell);
+                }
                 else
-                    bubbleUpMin(cell);
+                {
+                    BubbleUpMin(cell);
+                }
             }
             else
             {
@@ -750,31 +831,35 @@ namespace C5
 
                 if (size % 2 == 0)
                 {
-                    updateLast(cell, heap[lastcell].last, heap[lastcell].lasthandle);
+                    UpdateLast(cell, heap[lastcell].last, heap[lastcell].lasthandle);
                     heap[lastcell].last = default;
                     heap[lastcell].lasthandle = null;
                 }
                 else
                 {
-                    updateLast(cell, heap[lastcell].first, heap[lastcell].firsthandle);
+                    UpdateLast(cell, heap[lastcell].first, heap[lastcell].firsthandle);
                     heap[lastcell].first = default;
                     heap[lastcell].firsthandle = null;
                 }
 
                 size--;
-                if (heapifyMax(cell))
-                    bubbleUpMin(cell);
+                if (HeapifyMax(cell))
+                {
+                    BubbleUpMin(cell);
+                }
                 else
-                    bubbleUpMax(cell);
+                {
+                    BubbleUpMax(cell);
+                }
             }
 
-            raiseItemsRemoved(retval, 1);
-            raiseCollectionChanged();
+            RaiseItemsRemoved(retval, 1);
+            RaiseCollectionChanged();
 
             return retval;
         }
 
-        private Handle checkHandle(IPriorityQueueHandle<T> handle, out int cell, out bool isfirst)
+        private Handle CheckHandle(IPriorityQueueHandle<T> handle, out int cell, out bool isfirst)
         {
             Handle myhandle = (Handle)handle;
             int toremove = myhandle.index;
@@ -782,10 +867,15 @@ namespace C5
             isfirst = toremove % 2 == 0;
             {
                 if (toremove == -1 || toremove >= size)
+                {
                     throw new InvalidPriorityQueueHandleException("Invalid handle, index out of range");
+                }
+
                 Handle actualhandle = (isfirst ? heap[cell].firsthandle : heap[cell].lasthandle)!;
                 if (actualhandle != myhandle)
+                {
                     throw new InvalidPriorityQueueHandleException("Invalid handle, doesn't match queue");
+                }
             }
             return myhandle;
         }
@@ -801,9 +891,11 @@ namespace C5
         public T Replace(IPriorityQueueHandle<T> handle, T item)
         {
             stamp++;
-            checkHandle(handle, out int cell, out bool isfirst);
+            CheckHandle(handle, out int cell, out bool isfirst);
             if (size == 0)
+            {
                 throw new NoSuchItemException();
+            }
 
             T retval;
 
@@ -820,31 +912,41 @@ namespace C5
                     if (comparer.Compare(item, heap[p].last) > 0)
                     {
                         Handle thehandle = heap[cell].firsthandle!;
-                        updateFirst(cell, heap[p].last, heap[p].lasthandle);
-                        updateLast(p, item, thehandle);
-                        bubbleUpMax(p);
+                        UpdateFirst(cell, heap[p].last, heap[p].lasthandle);
+                        UpdateLast(p, item, thehandle);
+                        BubbleUpMax(p);
                     }
                     else
-                        bubbleUpMin(cell);
+                    {
+                        BubbleUpMin(cell);
+                    }
                 }
-                else if (heapifyMin(cell))
-                    bubbleUpMax(cell);
+                else if (HeapifyMin(cell))
+                {
+                    BubbleUpMax(cell);
+                }
                 else
-                    bubbleUpMin(cell);
+                {
+                    BubbleUpMin(cell);
+                }
             }
             else
             {
                 retval = heap[cell].last;
                 heap[cell].last = item;
-                if (heapifyMax(cell))
-                    bubbleUpMin(cell);
+                if (HeapifyMax(cell))
+                {
+                    BubbleUpMin(cell);
+                }
                 else
-                    bubbleUpMax(cell);
+                {
+                    BubbleUpMax(cell);
+                }
             }
 
-            raiseItemsRemoved(retval, 1);
-            raiseItemsAdded(item, 1);
-            raiseCollectionChanged();
+            RaiseItemsRemoved(retval, 1);
+            RaiseItemsAdded(item, 1);
+            RaiseCollectionChanged();
 
             return retval;
         }
@@ -857,7 +959,10 @@ namespace C5
         public T FindMin(out IPriorityQueueHandle<T> handle)
         {
             if (size == 0)
+            {
                 throw new NoSuchItemException();
+            }
+
             handle = heap[0].firsthandle!;
 
             return heap[0].first;
@@ -871,7 +976,9 @@ namespace C5
         public T FindMax(out IPriorityQueueHandle<T> handle)
         {
             if (size == 0)
+            {
                 throw new NoSuchItemException();
+            }
             else if (size == 1)
             {
                 handle = heap[0].firsthandle!;
@@ -893,13 +1000,17 @@ namespace C5
         {
             stamp++;
             if (size == 0)
+            {
                 throw new NoSuchItemException();
+            }
 
             T retval = heap[0].first;
             Handle myhandle = heap[0].firsthandle!;
             handle = myhandle;
             if (myhandle != null)
+            {
                 myhandle.index = -1;
+            }
 
             if (size == 1)
             {
@@ -913,23 +1024,23 @@ namespace C5
 
                 if (size % 2 == 0)
                 {
-                    updateFirst(0, heap[lastcell].last, heap[lastcell].lasthandle);
+                    UpdateFirst(0, heap[lastcell].last, heap[lastcell].lasthandle);
                     heap[lastcell].last = default;
                     heap[lastcell].lasthandle = null;
                 }
                 else
                 {
-                    updateFirst(0, heap[lastcell].first, heap[lastcell].firsthandle);
+                    UpdateFirst(0, heap[lastcell].first, heap[lastcell].firsthandle);
                     heap[lastcell].first = default;
                     heap[lastcell].firsthandle = null;
                 }
 
                 size--;
-                heapifyMin(0);
+                HeapifyMin(0);
             }
 
-            raiseItemsRemoved(retval, 1);
-            raiseCollectionChanged();
+            RaiseItemsRemoved(retval, 1);
+            RaiseCollectionChanged();
             return retval;
 
         }
@@ -943,7 +1054,9 @@ namespace C5
         {
             stamp++;
             if (size == 0)
+            {
                 throw new NoSuchItemException();
+            }
 
             T retval;
             Handle myhandle;
@@ -954,7 +1067,10 @@ namespace C5
                 retval = heap[0].first;
                 myhandle = heap[0].firsthandle!;
                 if (myhandle != null)
+                {
                     myhandle.index = -1;
+                }
+
                 heap[0].first = default;
                 heap[0].firsthandle = null;
             }
@@ -963,28 +1079,30 @@ namespace C5
                 retval = heap[0].last;
                 myhandle = heap[0].lasthandle!;
                 if (myhandle != null)
+                {
                     myhandle.index = -1;
+                }
 
                 int lastcell = (size - 1) / 2;
 
                 if (size % 2 == 0)
                 {
-                    updateLast(0, heap[lastcell].last, heap[lastcell].lasthandle);
+                    UpdateLast(0, heap[lastcell].last, heap[lastcell].lasthandle);
                     heap[lastcell].last = default;
                     heap[lastcell].lasthandle = null;
                 }
                 else
                 {
-                    updateLast(0, heap[lastcell].first, heap[lastcell].firsthandle);
+                    UpdateLast(0, heap[lastcell].first, heap[lastcell].firsthandle);
                     heap[lastcell].first = default;
                     heap[lastcell].firsthandle = null;
                 }
 
                 size--;
-                heapifyMax(0);
+                HeapifyMax(0);
             }
-            raiseItemsRemoved(retval, 1);
-            raiseCollectionChanged();
+            RaiseItemsRemoved(retval, 1);
+            RaiseCollectionChanged();
             handle = myhandle!;
             return retval;
         }

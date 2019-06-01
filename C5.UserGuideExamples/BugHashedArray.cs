@@ -10,7 +10,7 @@ using System;
 
 namespace C5.UserGuideExamples
 {
-    class BugHashedArray
+    internal class BugHashedArray
     {
         public static void Main()
         {

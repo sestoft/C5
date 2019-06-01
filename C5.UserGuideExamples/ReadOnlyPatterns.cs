@@ -9,7 +9,7 @@
 #pragma warning disable IDE0060
 namespace C5.UserGuideExamples
 {
-    class ReadOnlyPatterns
+    internal class ReadOnlyPatterns
     {
         public static void Main(string[] args)
         {
@@ -21,61 +21,61 @@ namespace C5.UserGuideExamples
         }
 
         // Read-only access to a hash-based collection
-        static void GuardHashSet<T>()
+        private static void GuardHashSet<T>()
         {
             ICollection<T> coll = new HashSet<T>();
             DoWork(new GuardedCollection<T>(coll));
         }
 
-        static void DoWork<T>(ICollection<T> gcoll)
+        private static void DoWork<T>(ICollection<T> gcoll)
         {
             // Use gcoll ... 
         }
 
         // Read-only access to an indexed sorted collection
-        static void GuardTreeSet<T>()
+        private static void GuardTreeSet<T>()
         {
             IIndexedSorted<T> coll = new TreeSet<T>();
             DoWork(new GuardedIndexedSorted<T>(coll));
         }
 
-        static void DoWork<T>(IIndexedSorted<T> gcoll)
+        private static void DoWork<T>(IIndexedSorted<T> gcoll)
         {
             // Use gcoll ...
         }
 
         // Read-only access to a list
-        static void GuardList<T>()
+        private static void GuardList<T>()
         {
             IList<T> coll = new ArrayList<T>();
             DoWork(new GuardedList<T>(coll));
         }
 
-        static void DoWork<T>(IList<T> gcoll)
+        private static void DoWork<T>(IList<T> gcoll)
         {
             // Use gcoll ...
         }
 
         // Read-only access to a dictionary
-        static void GuardHashDictionary<K, V>()
+        private static void GuardHashDictionary<K, V>()
         {
             IDictionary<K, V> dict = new HashDictionary<K, V>();
             DoWork(new GuardedDictionary<K, V>(dict));
         }
 
-        static void DoWork<K, V>(IDictionary<K, V> gdict)
+        private static void DoWork<K, V>(IDictionary<K, V> gdict)
         {
             // Use gdict ...
         }
 
         // Read-only access to a sorted dictionary
-        static void GuardSortedDictionary<K, V>()
+        private static void GuardSortedDictionary<K, V>()
         {
             ISortedDictionary<K, V> dict = new TreeDictionary<K, V>();
             DoWork(new GuardedSortedDictionary<K, V>(dict));
         }
 
-        static void DoWork<K, V>(ISortedDictionary<K, V> gdict)
+        private static void DoWork<K, V>(ISortedDictionary<K, V> gdict)
         {
             // Use gdict ...
         }

@@ -21,12 +21,14 @@ namespace C5
         else size = array.Length + back - front + 1;
 
         */
-        int front, back;
+        private int front, back;
+
         /// <summary>
         /// The internal container array is doubled when necessary, but never shrinked.
         /// </summary>
-        T[] array;
-        bool forwards = true, original = true;
+        private T[] array;
+        private bool forwards = true;
+        private bool original = true;
         #endregion
 
         #region Events
@@ -40,13 +42,15 @@ namespace C5
         #endregion
 
         #region Util
-        void expand()
+        private void Expand()
         {
             int newlength = 2 * array.Length;
             T[] newarray = new T[newlength];
 
             if (front <= back)
+            {
                 Array.Copy(array, front, newarray, 0, size);
+            }
             else
             {
                 int half = array.Length - front;
@@ -76,7 +80,11 @@ namespace C5
             : base(EqualityComparer<T>.Default)
         {
             int newlength = 8;
-            while (newlength < capacity) newlength *= 2;
+            while (newlength < capacity)
+            {
+                newlength *= 2;
+            }
+
             array = new T[newlength];
         }
 
@@ -99,7 +107,10 @@ namespace C5
             get
             {
                 if (i < 0 || i >= size)
+                {
                     throw new IndexOutOfRangeException();
+                }
+
                 i += front;
                 //Bug fix by Steve Wallace 2006/02/10
                 return array[i >= array.Length ? i - array.Length : i];
@@ -114,15 +125,28 @@ namespace C5
         public virtual void Enqueue(T item)
         {
             if (!original)
+            {
                 throw new ReadOnlyCollectionException();
+            }
+
             stamp++;
-            if (size == array.Length - 1) expand();
+            if (size == array.Length - 1)
+            {
+                Expand();
+            }
+
             size++;
             int oldback = back++;
-            if (back == array.Length) back = 0;
+            if (back == array.Length)
+            {
+                back = 0;
+            }
+
             array[oldback] = item;
             if (ActiveEvents != 0)
-                raiseForAdd(item);
+            {
+                RaiseForAdd(item);
+            }
         }
 
         /// <summary>
@@ -132,18 +156,31 @@ namespace C5
         public virtual T Dequeue()
         {
             if (!original)
+            {
                 throw new ReadOnlyCollectionException("Object is a non-updatable clone");
+            }
+
             stamp++;
             if (size == 0)
+            {
                 throw new NoSuchItemException();
+            }
+
             size--;
             int oldfront = front++;
-            if (front == array.Length) front = 0;
+            if (front == array.Length)
+            {
+                front = 0;
+            }
+
             T retval = array[oldfront];
             // array[oldfront] = default;
             // We can't use default as it would be null -> we just store garbage
             if (ActiveEvents != 0)
-                raiseForRemove(retval);
+            {
+                RaiseForRemove(retval);
+            }
+
             return retval;
         }
 
@@ -154,15 +191,28 @@ namespace C5
         public void Push(T item) //== Enqueue
         {
             if (!original)
+            {
                 throw new ReadOnlyCollectionException();
+            }
+
             stamp++;
-            if (size == array.Length - 1) expand();
+            if (size == array.Length - 1)
+            {
+                Expand();
+            }
+
             size++;
             int oldback = back++;
-            if (back == array.Length) back = 0;
+            if (back == array.Length)
+            {
+                back = 0;
+            }
+
             array[oldback] = item;
             if (ActiveEvents != 0)
-                raiseForAdd(item);
+            {
+                RaiseForAdd(item);
+            }
         }
 
         /// <summary>
@@ -172,18 +222,31 @@ namespace C5
         public T Pop()
         {
             if (!original)
+            {
                 throw new ReadOnlyCollectionException("Object is a non-updatable clone");
+            }
+
             stamp++;
             if (size == 0)
+            {
                 throw new NoSuchItemException();
+            }
+
             size--;
             back--;
-            if (back == -1) back = array.Length - 1;
+            if (back == -1)
+            {
+                back = array.Length - 1;
+            }
+
             T retval = array[back];
             //array[back] = default;
             //We can't use default -> just store garbage
             if (ActiveEvents != 0)
-                raiseForRemove(retval);
+            {
+                RaiseForRemove(retval);
+            }
+
             return retval;
         }
         #endregion
@@ -207,7 +270,10 @@ namespace C5
         public override T Choose()
         {
             if (size == 0)
+            {
                 throw new NoSuchItemException();
+            }
+
             return array[front];
         }
 
@@ -229,7 +295,10 @@ namespace C5
                 while (position < end)
                 {
                     if (stamp != this.stamp)
+                    {
                         throw new CollectionModifiedException();
+                    }
+
                     yield return array[position++];
                 }
                 if (front > back)
@@ -238,7 +307,10 @@ namespace C5
                     while (position < back)
                     {
                         if (stamp != this.stamp)
+                        {
                             throw new CollectionModifiedException();
+                        }
+
                         yield return array[position++];
                     }
                 }
@@ -250,7 +322,10 @@ namespace C5
                 while (position >= end)
                 {
                     if (stamp != this.stamp)
+                    {
                         throw new CollectionModifiedException();
+                    }
+
                     yield return array[position--];
                 }
                 if (front > back)
@@ -259,7 +334,10 @@ namespace C5
                     while (position >= front)
                     {
                         if (stamp != this.stamp)
+                        {
                             throw new CollectionModifiedException();
+                        }
+
                         yield return array[position--];
                     }
                 }

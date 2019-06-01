@@ -22,17 +22,24 @@ namespace C5
         /// </summary>
         /// <param name="items">The enumerable to count</param>
         /// <returns>The size of the enumerable</returns>
-        protected static int countItems(SCG.IEnumerable<T> items)
+        protected static int CountItems(SCG.IEnumerable<T> items)
         {
-           // ICollectionValue<T> jtems = items as ICollectionValue<T>;
+            // ICollectionValue<T> jtems = items as ICollectionValue<T>;
 
             if (items is ICollectionValue<T> jtems)
+            {
                 return jtems.Count;
+            }
 
             int count = 0;
 
             using (SCG.IEnumerator<T> e = items.GetEnumerator())
-                while (e.MoveNext()) count++;
+            {
+                while (e.MoveNext())
+                {
+                    count++;
+                }
+            }
 
             return count;
         }
@@ -55,7 +62,7 @@ namespace C5
     public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionValue<T>, IShowable
     {
         #region Event handling
-        EventBlock<T>? eventBlock;
+        private EventBlock<T>? eventBlock;
         /// <summary>
         /// 
         /// </summary>
@@ -68,10 +75,12 @@ namespace C5
         /// <value></value>
         public virtual EventTypeEnum ActiveEvents { get { return eventBlock == null ? 0 : eventBlock.events; } }
 
-        private void checkWillListen(EventTypeEnum eventType)
+        private void CheckWillListen(EventTypeEnum eventType)
         {
             if ((ListenableEvents & eventType) == 0)
+            {
                 throw new UnlistenableEventException();
+            }
         }
 
         /// <summary>
@@ -79,64 +88,88 @@ namespace C5
         /// </summary>
         public virtual event CollectionChangedHandler<T> CollectionChanged
         {
-            add { checkWillListen(EventTypeEnum.Changed); (eventBlock ?? (eventBlock = new EventBlock<T>())).CollectionChanged += value; }
+            add { CheckWillListen(EventTypeEnum.Changed); (eventBlock ?? (eventBlock = new EventBlock<T>())).CollectionChanged += value; }
             remove
             {
-                checkWillListen(EventTypeEnum.Changed);
+                CheckWillListen(EventTypeEnum.Changed);
                 if (eventBlock != null)
                 {
                     eventBlock.CollectionChanged -= value;
-                    if (eventBlock.events == 0) eventBlock = null;
+                    if (eventBlock.events == 0)
+                    {
+                        eventBlock = null;
+                    }
                 }
             }
         }
         /// <summary>
         /// Fire the CollectionChanged event
         /// </summary>
-        protected virtual void raiseCollectionChanged()
-        { if (eventBlock != null) eventBlock.raiseCollectionChanged(this); }
+        protected virtual void RaiseCollectionChanged()
+        {
+            if (eventBlock != null)
+            {
+                eventBlock.RaiseCollectionChanged(this);
+            }
+        }
 
         /// <summary>
         /// The clear event. Will be raised for every Clear operation on the collection.
         /// </summary>
         public virtual event CollectionClearedHandler<T> CollectionCleared
         {
-            add { checkWillListen(EventTypeEnum.Cleared); (eventBlock ?? (eventBlock = new EventBlock<T>())).CollectionCleared += value; }
+            add { CheckWillListen(EventTypeEnum.Cleared); (eventBlock ?? (eventBlock = new EventBlock<T>())).CollectionCleared += value; }
             remove
             {
-                checkWillListen(EventTypeEnum.Cleared);
+                CheckWillListen(EventTypeEnum.Cleared);
                 if (eventBlock != null)
                 {
                     eventBlock.CollectionCleared -= value;
-                    if (eventBlock.events == 0) eventBlock = null;
+                    if (eventBlock.events == 0)
+                    {
+                        eventBlock = null;
+                    }
                 }
             }
         }
         /// <summary>
         /// Fire the CollectionCleared event
         /// </summary>
-        protected virtual void raiseCollectionCleared(bool full, int count)
-        { if (eventBlock != null) eventBlock.raiseCollectionCleared(this, full, count); }
+        protected virtual void RaiseCollectionCleared(bool full, int count)
+        {
+            if (eventBlock != null)
+            {
+                eventBlock.RaiseCollectionCleared(this, full, count);
+            }
+        }
 
         /// <summary>
         /// Fire the CollectionCleared event
         /// </summary>
-        protected virtual void raiseCollectionCleared(bool full, int count, int? offset)
-        { if (eventBlock != null) eventBlock.raiseCollectionCleared(this, full, count, offset); }
+        protected virtual void RaiseCollectionCleared(bool full, int count, int? offset)
+        {
+            if (eventBlock != null)
+            {
+                eventBlock.RaiseCollectionCleared(this, full, count, offset);
+            }
+        }
 
         /// <summary>
         /// The item added  event. Will be raised for every individual addition to the collection.
         /// </summary>
         public virtual event ItemsAddedHandler<T> ItemsAdded
         {
-            add { checkWillListen(EventTypeEnum.Added); (eventBlock ?? (eventBlock = new EventBlock<T>())).ItemsAdded += value; }
+            add { CheckWillListen(EventTypeEnum.Added); (eventBlock ?? (eventBlock = new EventBlock<T>())).ItemsAdded += value; }
             remove
             {
-                checkWillListen(EventTypeEnum.Added);
+                CheckWillListen(EventTypeEnum.Added);
                 if (eventBlock != null)
                 {
                     eventBlock.ItemsAdded -= value;
-                    if (eventBlock.events == 0) eventBlock = null;
+                    if (eventBlock.events == 0)
+                    {
+                        eventBlock = null;
+                    }
                 }
             }
         }
@@ -145,46 +178,63 @@ namespace C5
         /// </summary>
         /// <param name="item">The item that was added</param>
         /// <param name="count"></param>
-        protected virtual void raiseItemsAdded(T item, int count)
-        { if (eventBlock != null) eventBlock.raiseItemsAdded(this, item, count); }
+        protected virtual void RaiseItemsAdded(T item, int count)
+        {
+            if (eventBlock != null)
+            {
+                eventBlock.RaiseItemsAdded(this, item, count);
+            }
+        }
 
         /// <summary>
         /// The item removed event. Will be raised for every individual removal from the collection.
         /// </summary>
         public virtual event ItemsRemovedHandler<T> ItemsRemoved
         {
-            add { checkWillListen(EventTypeEnum.Removed); (eventBlock ?? (eventBlock = new EventBlock<T>())).ItemsRemoved += value; }
+            add { CheckWillListen(EventTypeEnum.Removed); (eventBlock ?? (eventBlock = new EventBlock<T>())).ItemsRemoved += value; }
             remove
             {
-                checkWillListen(EventTypeEnum.Removed);
+                CheckWillListen(EventTypeEnum.Removed);
                 if (eventBlock != null)
                 {
                     eventBlock.ItemsRemoved -= value;
-                    if (eventBlock.events == 0) eventBlock = null;
+                    if (eventBlock.events == 0)
+                    {
+                        eventBlock = null;
+                    }
                 }
             }
         }
+
         /// <summary>
         /// Fire the ItemsRemoved event
         /// </summary>
         /// <param name="item">The item that was removed</param>
         /// <param name="count"></param>
-        protected virtual void raiseItemsRemoved(T item, int count)
-        { if (eventBlock != null) eventBlock.raiseItemsRemoved(this, item, count); }
+        protected virtual void RaiseItemsRemoved(T item, int count)
+        {
+            if (eventBlock != null)
+            {
+                eventBlock.RaiseItemsRemoved(this, item, count);
+            }
+        }
 
         /// <summary>
         /// The item added  event. Will be raised for every individual addition to the collection.
         /// </summary>
         public virtual event ItemInsertedHandler<T> ItemInserted
         {
-            add { checkWillListen(EventTypeEnum.Inserted); (eventBlock ?? (eventBlock = new EventBlock<T>())).ItemInserted += value; }
+            add { CheckWillListen(EventTypeEnum.Inserted); (eventBlock ?? (eventBlock = new EventBlock<T>())).ItemInserted += value; }
             remove
             {
-                checkWillListen(EventTypeEnum.Inserted);
+                CheckWillListen(EventTypeEnum.Inserted);
                 if (eventBlock != null)
                 {
                     eventBlock.ItemInserted -= value;
-                    if (eventBlock.events == 0) eventBlock = null;
+                    if (eventBlock.events == 0)
+                    {
+                        eventBlock = null;
+                    }
                 }
             }
         }
@@ -193,22 +243,30 @@ namespace C5
         /// </summary>
         /// <param name="item">The item that was added</param>
         /// <param name="index"></param>
-        protected virtual void raiseItemInserted(T item, int index)
-        { if (eventBlock != null) eventBlock.raiseItemInserted(this, item, index); }
+        protected virtual void RaiseItemInserted(T item, int index)
+        {
+            if (eventBlock != null)
+            {
+                eventBlock.RaiseItemInserted(this, item, index);
+            }
+        }
 
         /// <summary>
         /// The item removed event. Will be raised for every individual removal from the collection.
         /// </summary>
         public virtual event ItemRemovedAtHandler<T> ItemRemovedAt
         {
-            add { checkWillListen(EventTypeEnum.RemovedAt); (eventBlock ?? (eventBlock = new EventBlock<T>())).ItemRemovedAt += value; }
+            add { CheckWillListen(EventTypeEnum.RemovedAt); (eventBlock ?? (eventBlock = new EventBlock<T>())).ItemRemovedAt += value; }
             remove
             {
-                checkWillListen(EventTypeEnum.RemovedAt);
+                CheckWillListen(EventTypeEnum.RemovedAt);
                 if (eventBlock != null)
                 {
                     eventBlock.ItemRemovedAt -= value;
-                    if (eventBlock.events == 0) eventBlock = null;
+                    if (eventBlock.events == 0)
+                    {
+                        eventBlock = null;
+                    }
                 }
             }
         }
@@ -217,8 +275,13 @@ namespace C5
         /// </summary>
         /// <param name="item">The item that was removed</param>
         /// <param name="index"></param>
-        protected virtual void raiseItemRemovedAt(T item, int index)
-        { if (eventBlock != null) eventBlock.raiseItemRemovedAt(this, item, index); }
+        protected virtual void RaiseItemRemovedAt(T item, int index)
+        {
+            if (eventBlock != null)
+            {
+                eventBlock.RaiseItemRemovedAt(this, item, index);
+            }
+        }
 
         #region Event support for IList
         /// <summary>
@@ -227,15 +290,15 @@ namespace C5
         /// <param name="index"></param>
         /// <param name="value"></param>
         /// <param name="item"></param>
-        protected virtual void raiseForSetThis(int index, T value, T item)
+        protected virtual void RaiseForSetThis(int index, T value, T item)
         {
             if (ActiveEvents != 0)
             {
-                raiseItemsRemoved(item, 1);
-                raiseItemRemovedAt(item, index);
-                raiseItemsAdded(value, 1);
-                raiseItemInserted(value, index);
-                raiseCollectionChanged();
+                RaiseItemsRemoved(item, 1);
+                RaiseItemRemovedAt(item, index);
+                RaiseItemsAdded(value, 1);
+                RaiseItemInserted(value, index);
+                RaiseCollectionChanged();
             }
         }
         /// <summary>
@@ -243,13 +306,13 @@ namespace C5
         /// </summary>
         /// <param name="i"></param>
         /// <param name="item"></param>
-        protected virtual void raiseForInsert(int i, T item)
+        protected virtual void RaiseForInsert(int i, T item)
         {
             if (ActiveEvents != 0)
             {
-                raiseItemInserted(item, i);
-                raiseItemsAdded(item, 1);
-                raiseCollectionChanged();
+                RaiseItemInserted(item, i);
+                RaiseItemsAdded(item, 1);
+                RaiseCollectionChanged();
             }
         }
 
@@ -257,12 +320,12 @@ namespace C5
         /// 
         /// </summary>
         /// <param name="item"></param>
-        protected void raiseForRemove(T item)
+        protected void RaiseForRemove(T item)
         {
             if (ActiveEvents != 0)
             {
-                raiseItemsRemoved(item, 1);
-                raiseCollectionChanged();
+                RaiseItemsRemoved(item, 1);
+                RaiseCollectionChanged();
             }
         }
 
@@ -271,12 +334,12 @@ namespace C5
         /// </summary>
         /// <param name="item"></param>
         /// <param name="count"></param>
-        protected void raiseForRemove(T item, int count)
+        protected void RaiseForRemove(T item, int count)
         {
             if (ActiveEvents != 0)
             {
-                raiseItemsRemoved(item, count);
-                raiseCollectionChanged();
+                RaiseItemsRemoved(item, count);
+                RaiseCollectionChanged();
             }
         }
 
@@ -285,13 +348,13 @@ namespace C5
         /// </summary>
         /// <param name="index"></param>
         /// <param name="item"></param>
-        protected void raiseForRemoveAt(int index, T item)
+        protected void RaiseForRemoveAt(int index, T item)
         {
             if (ActiveEvents != 0)
             {
-                raiseItemRemovedAt(item, index);
-                raiseItemsRemoved(item, 1);
-                raiseCollectionChanged();
+                RaiseItemRemovedAt(item, index);
+                RaiseItemsRemoved(item, 1);
+                RaiseCollectionChanged();
             }
         }
 
@@ -303,13 +366,13 @@ namespace C5
         /// </summary>
         /// <param name="newitem"></param>
         /// <param name="olditem"></param>
-        protected virtual void raiseForUpdate(T newitem, T olditem)
+        protected virtual void RaiseForUpdate(T newitem, T olditem)
         {
             if (ActiveEvents != 0)
             {
-                raiseItemsRemoved(olditem, 1);
-                raiseItemsAdded(newitem, 1);
-                raiseCollectionChanged();
+                RaiseItemsRemoved(olditem, 1);
+                RaiseItemsAdded(newitem, 1);
+                RaiseCollectionChanged();
             }
         }
         /// <summary>
@@ -318,39 +381,48 @@ namespace C5
         /// <param name="newitem"></param>
         /// <param name="olditem"></param>
         /// <param name="count"></param>
-        protected virtual void raiseForUpdate(T newitem, T olditem, int count)
+        protected virtual void RaiseForUpdate(T newitem, T olditem, int count)
         {
             if (ActiveEvents != 0)
             {
-                raiseItemsRemoved(olditem, count);
-                raiseItemsAdded(newitem, count);
-                raiseCollectionChanged();
+                RaiseItemsRemoved(olditem, count);
+                RaiseItemsAdded(newitem, count);
+                RaiseCollectionChanged();
             }
         }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="item"></param>
-        protected virtual void raiseForAdd(T item)
+        protected virtual void RaiseForAdd(T item)
         {
             if (ActiveEvents != 0)
             {
-                raiseItemsAdded(item, 1);
-                raiseCollectionChanged();
+                RaiseItemsAdded(item, 1);
+                RaiseCollectionChanged();
             }
         }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="wasRemoved"></param>
-        protected virtual void raiseForRemoveAll(ICollectionValue<T>? wasRemoved)
+        protected virtual void RaiseForRemoveAll(ICollectionValue<T>? wasRemoved)
         {
             if ((ActiveEvents & EventTypeEnum.Removed) != 0)
+            {
                 if (wasRemoved != null)
-                  foreach (T item in wasRemoved)
-                    raiseItemsRemoved(item, 1);
+                {
+                    foreach (T item in wasRemoved)
+                    {
+                        RaiseItemsRemoved(item, 1);
+                    }
+                }
+            }
+
             if (wasRemoved != null && wasRemoved.Count > 0)
-                raiseCollectionChanged();
+            {
+                RaiseCollectionChanged();
+            }
         }
 
         /// <summary>
@@ -359,9 +431,9 @@ namespace C5
         [Serializable]
         protected class RaiseForRemoveAllHandler
         {
-            readonly CollectionValueBase<T> collection;
-            CircularQueue<T>? wasRemoved = null;
-            bool wasChanged = false;
+            private readonly CollectionValueBase<T> collection;
+            private CircularQueue<T>? wasRemoved = null;
+            private bool wasChanged = false;
 
             /// <summary>
             /// 
@@ -374,7 +446,7 @@ namespace C5
                 MustFire = (collection.ActiveEvents & (EventTypeEnum.Removed | EventTypeEnum.Changed)) != 0;
             }
 
-            readonly bool mustFireRemoved;
+            private readonly bool mustFireRemoved;
             /// <summary>
             /// 
             /// </summary>
@@ -389,11 +461,16 @@ namespace C5
                 if (mustFireRemoved)
                 {
                     if (wasRemoved == null)
+                    {
                         wasRemoved = new CircularQueue<T>();
+                    }
+
                     wasRemoved.Enqueue(item);
                 }
                 if (!wasChanged)
+                {
                     wasChanged = true;
+                }
             }
 
             /// <summary>
@@ -402,10 +479,17 @@ namespace C5
             public void Raise()
             {
                 if (wasRemoved != null)
+                {
                     foreach (T item in wasRemoved)
-                        collection.raiseItemsRemoved(item, 1);
+                    {
+                        collection.RaiseItemsRemoved(item, 1);
+                    }
+                }
+
                 if (wasChanged)
-                    collection.raiseCollectionChanged();
+                {
+                    collection.RaiseCollectionChanged();
+                }
             }
         }
         #endregion
@@ -445,9 +529,14 @@ namespace C5
         public virtual void CopyTo(T[] array, int index)
         {
             if (index < 0 || index + Count > array.Length)
+            {
                 throw new ArgumentOutOfRangeException();
+            }
 
-            foreach (T item in this) array[index++] = item;
+            foreach (T item in this)
+            {
+                array[index++] = item;
+            }
         }
 
         /// <summary>
@@ -460,7 +549,10 @@ namespace C5
             T[] res = new T[Count];
             int i = 0;
 
-            foreach (T item in this) res[i++] = item;
+            foreach (T item in this)
+            {
+                res[i++] = item;
+            }
 
             return res;
         }
@@ -472,7 +564,9 @@ namespace C5
         public virtual void Apply(Action<T> action)
         {
             foreach (T item in this)
+            {
                 action(item);
+            }
         }
 
 
@@ -487,8 +581,12 @@ namespace C5
         public virtual bool Exists(Func<T, bool> predicate)
         {
             foreach (T item in this)
+            {
                 if (predicate(item))
+                {
                     return true;
+                }
+            }
 
             return false;
         }
@@ -504,11 +602,14 @@ namespace C5
         public virtual bool Find(Func<T, bool> predicate, out T item)
         {
             foreach (T jtem in this)
+            {
                 if (predicate(jtem))
                 {
                     item = jtem;
                     return true;
                 }
+            }
+
             item = default;
             return false;
         }
@@ -523,8 +624,12 @@ namespace C5
         public virtual bool All(Func<T, bool> predicate)
         {
             foreach (T item in this)
+            {
                 if (!predicate(item))
+                {
                     return false;
+                }
+            }
 
             return true;
         }
@@ -540,8 +645,12 @@ namespace C5
         public virtual SCG.IEnumerable<T> Filter(Func<T, bool> predicate)
         {
             foreach (T item in this)
+            {
                 if (predicate(item))
+                {
                     yield return item;
+                }
+            }
         }
 
         /// <summary>
@@ -631,11 +740,14 @@ namespace C5
         public virtual bool FindLast(Func<T, bool> predicate, out T item)
         {
             foreach (T jtem in Backwards())
+            {
                 if (predicate(jtem))
                 {
                     item = jtem;
                     return true;
                 }
+            }
+
             item = default;
             return false;
         }
@@ -668,8 +780,7 @@ namespace C5
         /// The item equalityComparer of the collection
         /// </summary>
         protected readonly SCG.IEqualityComparer<T> itemequalityComparer;
-
-        int iUnSequencedHashCode, iUnSequencedHashCodeStamp = -1;
+        private int iUnSequencedHashCode, iUnSequencedHashCodeStamp = -1;
 
         #endregion
 
@@ -691,10 +802,12 @@ namespace C5
         ///  if the range does not fit within collection size.</exception>
         /// <param name="start">start of range</param>
         /// <param name="count">size of range</param>
-        protected void checkRange(int start, int count)
+        protected void CheckRange(int start, int count)
         {
             if (start < 0 || count < 0 || start + count > size)
+            {
                 throw new ArgumentOutOfRangeException();
+            }
         }
 
 
@@ -754,20 +867,28 @@ namespace C5
         public static bool StaticEquals(ICollection<T> collection1, ICollection<T> collection2, SCG.IEqualityComparer<T> itemequalityComparer)
         {
             if (object.ReferenceEquals(collection1, collection2))
+            {
                 return true;
+            }
 
             // bug20070227:
             if (collection1 == null || collection2 == null)
+            {
                 return false;
+            }
 
             if (collection1.Count != collection2.Count)
+            {
                 return false;
+            }
 
             //This way we might run through both enumerations twice, but
             //probably not (if the hash codes are good)
             //TODO: check equal equalityComparers, at least here!
             if (collection1.GetUnsequencedHashCode() != collection2.GetUnsequencedHashCode())
+            {
                 return false;
+            }
 
             //TODO: move this to the sorted implementation classes? 
             //Really depends on speed of InstanceOfType: we could save a cast
@@ -779,7 +900,9 @@ namespace C5
                     {
                         dat.MoveNext();
                         if (!itemequalityComparer.Equals(dit.Current, dat.Current))
+                        {
                             return false;
+                        }
                     }
                     return true;
                 }
@@ -787,16 +910,34 @@ namespace C5
 
             if (!collection1.AllowsDuplicates && (collection2.AllowsDuplicates || collection2.ContainsSpeed >= collection1.ContainsSpeed))
             {
-                foreach (T x in collection1) if (!collection2.Contains(x)) return false;
+                foreach (T x in collection1)
+                {
+                    if (!collection2.Contains(x))
+                    {
+                        return false;
+                    }
+                }
             }
             else if (!collection2.AllowsDuplicates)
             {
-                foreach (T x in collection2) if (!collection1.Contains(x)) return false;
+                foreach (T x in collection2)
+                {
+                    if (!collection1.Contains(x))
+                    {
+                        return false;
+                    }
+                }
             }
             // Now tit.AllowsDuplicates && tat.AllowsDuplicates
             else if (collection1.DuplicatesByCounting && collection2.DuplicatesByCounting)
             {
-                foreach (T item in collection2) if (collection1.ContainsCount(item) != collection2.ContainsCount(item)) return false;
+                foreach (T item in collection2)
+                {
+                    if (collection1.ContainsCount(item) != collection2.ContainsCount(item))
+                    {
+                        return false;
+                    }
+                }
             }
             else
             {
@@ -807,15 +948,21 @@ namespace C5
                 {
                     int count = 1;
                     if (dict.FindOrAdd(item, ref count))
+                    {
                         dict[item] = count + 1;
+                    }
                 }
                 foreach (T item in collection1)
                 {
                     var i = item;
                     if (dict.Find(ref i, out int count) && count > 0)
+                    {
                         dict[item] = count - 1;
+                    }
                     else
+                    {
                         return false;
+                    }
                 }
                 return true;
             }
@@ -832,7 +979,9 @@ namespace C5
         public virtual int GetUnsequencedHashCode()
         {
             if (iUnSequencedHashCodeStamp == stamp)
+            {
                 return iUnSequencedHashCode;
+            }
 
             iUnSequencedHashCode = ComputeHashCode(this, itemequalityComparer);
             iUnSequencedHashCodeStamp = stamp;
@@ -858,10 +1007,12 @@ namespace C5
         /// <exception cref="CollectionModifiedException"> if this collection has been updated 
         /// since a target time</exception>
         /// <param name="thestamp">The stamp identifying the target time</param>
-        protected virtual void modifycheck(int thestamp)
+        protected virtual void ModifyCheck(int thestamp)
         {
             if (this.stamp != thestamp)
+            {
                 throw new CollectionModifiedException();
+            }
         }
 
 
@@ -869,10 +1020,12 @@ namespace C5
         /// Check if it is valid to perform update operations, and if so increment stamp.
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException">If collection is read-only</exception>
-        protected virtual void updatecheck()
+        protected virtual void UpdateCheck()
         {
             if (isReadOnlyBase)
+            {
                 throw new ReadOnlyCollectionException();
+            }
 
             stamp++;
         }
@@ -970,11 +1123,14 @@ namespace C5
         public virtual bool FindLast(Func<T, bool> predicate, out T item)
         {
             foreach (T jtem in Backwards())
+            {
                 if (predicate(jtem))
                 {
                     item = jtem;
                     return true;
                 }
+            }
+
             item = default;
             return false;
         }
@@ -988,7 +1144,7 @@ namespace C5
     {
         #region Fields
 
-        int iSequencedHashCode, iSequencedHashCodeStamp = -1;
+        private int iSequencedHashCode, iSequencedHashCodeStamp = -1;
 
         #endregion
 
@@ -1001,7 +1157,7 @@ namespace C5
         #region Util
 
         //TODO: make random for release
-        const int HASHFACTOR = 31;
+        private const int HASHFACTOR = 31;
 
         /// <summary>
         /// Compute the unsequenced hash code of a collection
@@ -1020,7 +1176,9 @@ namespace C5
             int iIndexedHashCode = 0;
 
             foreach (T item in items)
+            {
                 iIndexedHashCode = iIndexedHashCode * HASHFACTOR + itemequalityComparer.GetHashCode(item);
+            }
 
             return iIndexedHashCode;
         }
@@ -1037,15 +1195,21 @@ namespace C5
         public static bool StaticEquals(ISequenced<T> collection1, ISequenced<T> collection2, SCG.IEqualityComparer<T> itemequalityComparer)
         {
             if (object.ReferenceEquals(collection1, collection2))
+            {
                 return true;
+            }
 
             if (collection1.Count != collection2.Count)
+            {
                 return false;
+            }
 
             //This way we might run through both enumerations twice, but
             //probably not (if the hash codes are good)
             if (collection1.GetSequencedHashCode() != collection2.GetSequencedHashCode())
+            {
                 return false;
+            }
 
             using (SCG.IEnumerator<T> dat = collection2.GetEnumerator(), dit = collection1.GetEnumerator())
             {
@@ -1053,7 +1217,9 @@ namespace C5
                 {
                     dat.MoveNext();
                     if (!itemequalityComparer.Equals(dit.Current, dat.Current))
+                    {
                         return false;
+                    }
                 }
             }
 
@@ -1069,7 +1235,9 @@ namespace C5
         public virtual int GetSequencedHashCode()
         {
             if (iSequencedHashCodeStamp == stamp)
+            {
                 return iSequencedHashCode;
+            }
 
             iSequencedHashCode = ComputeHashCode((ISequenced<T>)this, itemequalityComparer);
             iSequencedHashCodeStamp = stamp;
@@ -1115,7 +1283,10 @@ namespace C5
             foreach (T item in this)
             {
                 if (predicate(item))
+                {
                     return index;
+                }
+
                 index++;
             }
             return -1;
@@ -1133,7 +1304,10 @@ namespace C5
             foreach (T item in Backwards())
             {
                 if (predicate(item))
+                {
                     return index;
+                }
+
                 index--;
             }
             return -1;
@@ -1165,9 +1339,9 @@ namespace C5
         /// <summary>
         /// Double the size of the internal array.
         /// </summary>
-        protected virtual void expand()
+        protected virtual void Expand()
         {
-            expand(checked(2 * array.Length), size);
+            Expand(checked(2 * array.Length), size);
         }
 
 
@@ -1177,14 +1351,16 @@ namespace C5
         /// <param name="newcapacity">The new size of the internal array - 
         /// will be rounded upwards to a power of 2.</param>
         /// <param name="newsize">The (new) size of the (base) collection.</param>
-        protected virtual void expand(int newcapacity, int newsize)
+        protected virtual void Expand(int newcapacity, int newsize)
         {
             System.Diagnostics.Debug.Assert(newcapacity >= newsize);
 
             int newlength = array.Length;
 
             while (newlength < newcapacity)
+            {
                 newlength = checked(newlength * 2);
+            }
 
             T[] newarray = new T[newlength];
 
@@ -1202,10 +1378,14 @@ namespace C5
         protected virtual void InsertProtected(int i, T item)
         {
             if (size == array.Length)
-                expand();
+            {
+                Expand();
+            }
 
             if (i < size)
+            {
                 Array.Copy(array, i, array, i + 1, size - i);
+            }
 
             array[i] = item;
             size++;
@@ -1225,7 +1405,11 @@ namespace C5
             : base(itemequalityComparer)
         {
             int newlength = 8;
-            while (newlength < capacity) newlength *= 2;
+            while (newlength < capacity)
+            {
+                newlength *= 2;
+            }
+
             array = new T[newlength];
         }
 
@@ -1244,7 +1428,7 @@ namespace C5
         {
             get
             {
-                checkRange(start, count);
+                CheckRange(start, count);
                 return new Range(this, start, count, true);
             }
         }
@@ -1257,7 +1441,7 @@ namespace C5
         /// </summary>
         public virtual void Clear()
         {
-            updatecheck();
+            UpdateCheck();
             array = new T[8];
             size = 0;
         }
@@ -1321,7 +1505,7 @@ namespace C5
         /// </summary>
         /// <exception cref="NoSuchItemException">if collection is empty.</exception>
         /// <returns></returns>
-        public override T Choose() { if (size > 0) return array[size - 1]; throw new NoSuchItemException(); }
+        public override T Choose() { if (size > 0) { return array[size - 1]; } throw new NoSuchItemException(); }
 
         #region IEnumerable<T> Members
         /// <summary>
@@ -1334,7 +1518,7 @@ namespace C5
 
             for (int i = thestart; i < theend; i++)
             {
-                modifycheck(thestamp);
+                ModifyCheck(thestamp);
                 yield return array[i];
             }
         }
@@ -1351,7 +1535,7 @@ namespace C5
             private readonly int count;
             private int delta;
             private readonly int stamp;
-            readonly ArrayBase<T> thebase;
+            private readonly ArrayBase<T> thebase;
 
 
             internal Range(ArrayBase<T> thebase, int start, int count, bool forwards)
@@ -1366,7 +1550,7 @@ namespace C5
             /// </summary>
             /// <exception cref="CollectionModifiedException">if underlying collection has been modified.</exception>
             /// <value>True if this collection is empty.</value>
-            public override bool IsEmpty { get { thebase.modifycheck(stamp); return count == 0; } }
+            public override bool IsEmpty { get { thebase.ModifyCheck(stamp); return count == 0; } }
 
 
             /// <summary>
@@ -1374,7 +1558,7 @@ namespace C5
             /// </summary>
             /// <exception cref="CollectionModifiedException">if underlying collection has been modified.</exception>
             /// <value>The number of items in the range</value>
-            public override int Count { get { thebase.modifycheck(stamp); return count; } }
+            public override int Count { get { thebase.ModifyCheck(stamp); return count; } }
 
             /// <summary>
             /// The value is symbolic indicating the type of asymptotic complexity
@@ -1384,7 +1568,7 @@ namespace C5
             /// <value>A characterization of the speed of the 
             /// <exception cref="CollectionModifiedException">if underlying collection has been modified.</exception>
             /// <code>Count</code> property in this collection.</value>
-            public override Speed CountSpeed { get { thebase.modifycheck(stamp); return Speed.Constant; } }
+            public override Speed CountSpeed { get { thebase.ModifyCheck(stamp); return Speed.Constant; } }
 
             /// <summary>
             /// Choose some item of this collection. 
@@ -1394,9 +1578,12 @@ namespace C5
             /// <returns></returns>
             public override T Choose()
             {
-                thebase.modifycheck(stamp);
+                thebase.ModifyCheck(stamp);
                 if (count == 0)
+                {
                     throw new NoSuchItemException();
+                }
+
                 return thebase.array[start];
             }
 
@@ -1410,7 +1597,7 @@ namespace C5
             {
                 for (int i = 0; i < count; i++)
                 {
-                    thebase.modifycheck(stamp);
+                    thebase.ModifyCheck(stamp);
                     yield return thebase.array[start + delta * i];
                 }
             }
@@ -1424,7 +1611,7 @@ namespace C5
             /// <returns>The mirrored collection.</returns>
             public override IDirectedCollectionValue<T> Backwards()
             {
-                thebase.modifycheck(stamp);
+                thebase.ModifyCheck(stamp);
 
                 Range res = (Range)MemberwiseClone();
 
@@ -1449,7 +1636,7 @@ namespace C5
             {
                 get
                 {
-                    thebase.modifycheck(stamp);
+                    thebase.ModifyCheck(stamp);
                     return delta > 0 ? EnumerationDirection.Forwards : EnumerationDirection.Backwards;
                 }
             }

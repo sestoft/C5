@@ -11,7 +11,7 @@ using SCG = System.Collections.Generic;
 
 namespace C5.UserGuideExamples
 {
-    class ComparerPatterns
+    internal class ComparerPatterns
     {
         public static void Main()
         {
@@ -36,18 +36,18 @@ namespace C5.UserGuideExamples
             Console.WriteLine(rev.Compare("B", "A") < 0);
         }
 
-        static SCG.IComparer<(string, int)> Lexico() => ComparerFactory<(string, int)>.CreateComparer((item1, item2) =>
+        private static SCG.IComparer<(string, int)> Lexico() => ComparerFactory<(string, int)>.CreateComparer((item1, item2) =>
         {
             var major = item1.Item1.CompareTo(item2.Item1);
             return major != 0 ? major : item1.Item2.CompareTo(item2.Item2);
         });
 
-        static SCG.IComparer<(string, int)> Lexico2() => ComparerFactory<(string, int)>.CreateComparer((item1, item2) =>
+        private static SCG.IComparer<(string, int)> Lexico2() => ComparerFactory<(string, int)>.CreateComparer((item1, item2) =>
         {
             var major = item1.Item1.CompareTo(item2.Item1);
             return major != 0 ? major : item1.Item2.CompareTo(item2.Item2);
         });
 
-        static SCG.IComparer<T> ReverseComparer<T>(SCG.IComparer<T> cmp) => ComparerFactory<T>.CreateComparer((item1, item2) => cmp.Compare(item2, item1));
+        private static SCG.IComparer<T> ReverseComparer<T>(SCG.IComparer<T> cmp) => ComparerFactory<T>.CreateComparer((item1, item2) => cmp.Compare(item2, item1));
     }
 }

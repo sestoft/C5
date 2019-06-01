@@ -122,9 +122,9 @@ namespace C5.UserGuideExamples
     }
 
     // ------------------------------------------------------------
-    class GConvexHull
+    internal class GConvexHull
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             if (args.Length == 1)
             {

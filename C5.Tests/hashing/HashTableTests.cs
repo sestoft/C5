@@ -1,11 +1,10 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
 
-using System;
-using C5;
 using NUnit.Framework;
+using System;
 using SCG = System.Collections.Generic;
-namespace C5UnitTests.hashtable.set
+namespace C5.Tests.hashtable.set
 {
     using CollectionOfInt = HashSet<int>;
 
@@ -16,18 +15,18 @@ namespace C5UnitTests.hashtable.set
         public void TestEvents()
         {
             CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new C5UnitTests.Templates.Events.CollectionTester<CollectionOfInt>().Test(factory);
+            new C5.Tests.Templates.Events.CollectionTester<CollectionOfInt>().Test(factory);
         }
 
         //[Test]
         //public void Extensible()
         //{
-        //    C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
+        //    C5.Tests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
+        //    C5.Tests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
         //}
     }
 
-    static class Factory
+    internal static class Factory
     {
         public static ICollection<T> New<T>() { return new HashSet<T>(); }
     }
@@ -188,8 +187,8 @@ namespace C5UnitTests.hashtable.set
         [TestFixture]
         public class Formatting
         {
-            ICollection<int> coll;
-            IFormatProvider rad16;
+            private ICollection<int> coll;
+            private IFormatProvider rad16;
 
             [SetUp]
             public void Init()
@@ -283,7 +282,7 @@ namespace C5UnitTests.hashtable.set
         public class FindPredicate
         {
             private HashSet<int> list;
-            Func<int, bool> pred;
+            private Func<int, bool> pred;
 
             [SetUp]
             public void Init()
@@ -338,8 +337,7 @@ namespace C5UnitTests.hashtable.set
         public class ArrayTest
         {
             private HashSet<int> hashset;
-
-            int[] a;
+            private int[] a;
 
 
             [SetUp]
@@ -349,7 +347,9 @@ namespace C5UnitTests.hashtable.set
                 hashset = new HashSet<int>();
                 a = new int[10];
                 for (int i = 0; i < 10; i++)
+                {
                     a[i] = 1000 + i;
+                }
             }
 
 
@@ -364,11 +364,17 @@ namespace C5UnitTests.hashtable.set
             private string aeq(int[] a, params int[] b)
             {
                 if (a.Length != b.Length)
+                {
                     return "Lengths differ: " + a.Length + " != " + b.Length;
+                }
 
                 for (int i = 0; i < a.Length; i++)
+                {
                     if (a[i] != b[i])
+                    {
                         return string.Format("{0}'th elements differ: {1} != {2}", i, a[i], b[i]);
+                    }
+                }
 
                 return "Alles klar";
             }
@@ -441,7 +447,7 @@ namespace C5UnitTests.hashtable.set
         [TestFixture]
         public class Collision
         {
-            HashSet<int> hashset;
+            private HashSet<int> hashset;
 
 
             [SetUp]
@@ -662,7 +668,9 @@ namespace C5UnitTests.hashtable.set
                 Assert.IsTrue(setOne.Check(), "setOne check fails");
 
                 for (int i = LARGE_ARRAY_MID; i < LARGE_ARRAY_SIZE; i++)
+                {
                     Assert.IsTrue(setOne.Contains(_largeArrayOne[i]), "missing " + i);
+                }
             }
 
             [Test]
@@ -736,7 +744,9 @@ namespace C5UnitTests.hashtable.set
             {
                 lst = new HashSet<KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
                 for (int i = 0; i < 10; i++)
+                {
                     lst.Add(new KeyValuePair<int, int>(i, i + 30));
+                }
             }
 
 

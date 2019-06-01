@@ -1,10 +1,9 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
 
-using System;
-using C5;
 using NUnit.Framework;
-namespace C5UnitTests.arrays.circularqueue
+using System;
+namespace C5.Tests.arrays.circularqueue
 {
     using CollectionOfInt = CircularQueue<int>;
 
@@ -15,16 +14,16 @@ namespace C5UnitTests.arrays.circularqueue
         public void TestEvents()
         {
             CollectionOfInt factory() { return new CollectionOfInt(); }
-            new C5UnitTests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory);
-            new C5UnitTests.Templates.Events.StackTester<CollectionOfInt>().Test(factory);
+            new C5.Tests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory);
+            new C5.Tests.Templates.Events.StackTester<CollectionOfInt>().Test(factory);
         }
 
         //[Test]
         //public void Extensible()
         //{
         //  TODO: Test Circular Queue for Clone(?) and Serializable 
-        //  C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //  C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
+        //  C5.Tests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
+        //  C5.Tests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
         //}
     }
 
@@ -50,8 +49,8 @@ namespace C5UnitTests.arrays.circularqueue
     [TestFixture]
     public class Formatting
     {
-        CircularQueue<int> coll;
-        IFormatProvider rad16;
+        private CircularQueue<int> coll;
+        private IFormatProvider rad16;
         [SetUp]
         public void Init() { coll = new CircularQueue<int>(); rad16 = new RadixFormatProvider(16); }
         [TearDown]
@@ -61,7 +60,10 @@ namespace C5UnitTests.arrays.circularqueue
         {
             Assert.AreEqual("{  }", coll.ToString());
             foreach (int i in new int[] { -4, 28, 129, 65530 })
+            {
                 coll.Enqueue(i);
+            }
+
             Assert.AreEqual("{ -4, 28, 129, 65530 }", coll.ToString());
             Assert.AreEqual("{ -4, 1C, 81, FFFA }", coll.ToString(null, rad16));
             Assert.AreEqual("{ -4, 28, 129... }", coll.ToString("L14", null));
@@ -80,7 +82,7 @@ namespace C5UnitTests.arrays.circularqueue
             queue = new CircularQueue<int>();
         }
 
-        void loadup1()
+        private void loadup1()
         {
             queue.Enqueue(11);
             queue.Enqueue(12);
@@ -91,7 +93,7 @@ namespace C5UnitTests.arrays.circularqueue
             queue.Enqueue(15);
         }
 
-        void loadup2()
+        private void loadup2()
         {
             loadup1();
             for (int i = 0; i < 4; i++)
@@ -101,7 +103,7 @@ namespace C5UnitTests.arrays.circularqueue
             }
         }
 
-        void loadup3()
+        private void loadup3()
         {
             for (int i = 0; i < 18; i++)
             {

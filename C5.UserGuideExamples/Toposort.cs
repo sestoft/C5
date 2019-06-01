@@ -11,7 +11,7 @@ using SDD = System.Diagnostics.Debug;
 
 namespace C5.UserGuideExamples
 {
-    class Toposort
+    internal class Toposort
     {
         public static void Main()
         {
@@ -134,7 +134,7 @@ namespace C5.UserGuideExamples
             return sorted;
         }
 
-        static MyNode<T> PendingChild<T>(IList<MyNode<T>> sorted, MyNode<T> node)
+        private static MyNode<T> PendingChild<T>(IList<MyNode<T>> sorted, MyNode<T> node)
         {
             foreach (var child in node.Children)
             {
@@ -148,7 +148,7 @@ namespace C5.UserGuideExamples
         }
     }
 
-    class MyNode<T>
+    internal class MyNode<T>
     {
         public T Id { get; }
 

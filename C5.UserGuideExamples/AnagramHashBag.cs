@@ -14,9 +14,9 @@ using SCG = System.Collections.Generic;
 
 namespace C5.UserGuideExamples
 {
-    class AnagramHashBag
+    internal class AnagramHashBag
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var ss = args.Length == 2 ? ReadFileWords(args[0], int.Parse(args[1])) : args;
 
@@ -48,7 +48,7 @@ namespace C5.UserGuideExamples
         }
 
         // Read words at most n words from a file
-        static SCG.IEnumerable<string> ReadFileWords(string filename, int n)
+        private static SCG.IEnumerable<string> ReadFileWords(string filename, int n)
         {
             var delimiter = new Regex("[^a-zæøåA-ZÆØÅ0-9-]+");
 
@@ -75,7 +75,7 @@ namespace C5.UserGuideExamples
         // characters.  So an anagram class is represented as HashBag<char>
         // which permits fast equality comparison -- we shall use them as
         // elements of hash sets or keys in hash maps.
-        static HashBag<char> AnagramClass(string s)
+        private static HashBag<char> AnagramClass(string s)
         {
             var anagram = new HashBag<char>();
 
@@ -89,7 +89,7 @@ namespace C5.UserGuideExamples
 
         // Given a sequence of strings, return only the first member of each
         // anagram class.
-        static SCG.IEnumerable<string> FirstAnagramOnly(SCG.IEnumerable<string> ss)
+        private static SCG.IEnumerable<string> FirstAnagramOnly(SCG.IEnumerable<string> ss)
         {
             var anagrams = new HashSet<HashBag<char>>();
 
@@ -119,7 +119,7 @@ namespace C5.UserGuideExamples
         // 347 165 words 24 428 classes 146.0 sec includes swapping
 
         // The maximal memory consumption is less than 180 MB.
-        static SCG.IEnumerable<SCG.IEnumerable<string>> AnagramClasses(SCG.IEnumerable<string> ss)
+        private static SCG.IEnumerable<SCG.IEnumerable<string>> AnagramClasses(SCG.IEnumerable<string> ss)
         {
             var classes = new HashDictionary<HashBag<char>, TreeSet<string>>();
 

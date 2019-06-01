@@ -12,7 +12,7 @@ using SCG = System.Collections.Generic;
 
 namespace C5.UserGuideExamples
 {
-    class KeywordRecognition
+    internal class KeywordRecognition
     {
         // Array of 77 keywords:
         private static readonly string[] _keywordArray =
@@ -38,7 +38,7 @@ namespace C5.UserGuideExamples
 
         private static readonly SCG.IDictionary<string, bool> _keywords4;
 
-        class SC : SCG.IComparer<string>
+        private class SC : SCG.IComparer<string>
         {
             public int Compare(string a, string b)
             {
@@ -46,7 +46,7 @@ namespace C5.UserGuideExamples
             }
         }
 
-        class SH : SCG.IEqualityComparer<string>
+        private class SH : SCG.IEqualityComparer<string>
         {
             public int GetHashCode(string item)
             {

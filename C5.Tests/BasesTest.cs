@@ -1,24 +1,23 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
 
-using System;
-using C5;
 using NUnit.Framework;
+using System;
 using SCG = System.Collections.Generic;
 
 
-namespace C5UnitTests.support
+namespace C5.Tests.support
 {
     namespace bases
     {
         [TestFixture]
         public class ArrayBaseTest
         {
-            class ABT : ArrayBase<string>
+            private class ABT : ArrayBase<string>
             {
                 public ABT() : base(8, C5.EqualityComparer<string>.Default) { }
 
-                public override string Choose() { if (size > 0) return array[0]; throw new NoSuchItemException(); }
+                public override string Choose() { if (size > 0) { return array[0]; } throw new NoSuchItemException(); }
 
                 public string this[int i] { get { return array[i]; } set { array[i] = value; } }
 
@@ -48,9 +47,9 @@ namespace C5UnitTests.support
         [TestFixture]
         public class Comparers
         {
-            class dbl : IComparable<dbl>
+            private class dbl : IComparable<dbl>
             {
-                readonly double d;
+                private readonly double d;
 
                 public dbl(double din) { d = din; }
 
@@ -436,9 +435,9 @@ namespace C5UnitTests.support
                 Assert.AreEqual(CHC.sequencedhashcode(1, 2, 3), h.GetHashCode(s));
             }
 
-            interface IFoo<T> : C5.ICollection<T> { void Bamse();      }
+            private interface IFoo<T> : C5.ICollection<T> { void Bamse(); }
 
-            class Foo<T> : C5.HashSet<T>, IFoo<T>
+            private class Foo<T> : C5.HashSet<T>, IFoo<T>
             {
                 internal Foo() : base() { }
                 public void Bamse() { }
@@ -453,9 +452,9 @@ namespace C5UnitTests.support
             }
 
             //Nongeneric types implementing collection types:
-            interface IBaz : ISequenced<int> { void Bamse(); }
+            private interface IBaz : ISequenced<int> { void Bamse(); }
 
-            class Baz : LinkedList<int>, IBaz
+            private class Baz : LinkedList<int>, IBaz
             {
                 internal Baz() : base() { }
                 public void Bamse() { }
@@ -471,12 +470,12 @@ namespace C5UnitTests.support
                 Assert.AreEqual(CHC.sequencedhashcode(1, 2, 3), h.GetHashCode(s));
             }
 
-            interface IBar : C5.ICollection<int>
+            private interface IBar : C5.ICollection<int>
             {
                 void Bamse();
             }
 
-            class Bar : C5.HashSet<int>, IBar
+            private class Bar : C5.HashSet<int>, IBar
             {
                 internal Bar() : base() { }
                 public void Bamse() { }

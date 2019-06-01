@@ -1,13 +1,12 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
 
-using System;
-using C5;
 using NUnit.Framework;
+using System;
 using SCG = System.Collections.Generic;
 
 
-namespace C5UnitTests.trees.TreeBag
+namespace C5.Tests.trees.TreeBag
 {
     using CollectionOfInt = TreeBag<int>;
 
@@ -64,18 +63,18 @@ namespace C5UnitTests.trees.TreeBag
         public void TestEvents()
         {
             CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new C5UnitTests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory);
+            new C5.Tests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory);
         }
 
         //[Test]
         //public void Extensible()
         //{
-        //    C5UnitTests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5UnitTests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
+        //    C5.Tests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
+        //    C5.Tests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
         //}
     }
 
-    static class Factory
+    internal static class Factory
     {
         public static ICollection<T> New<T>() { return new TreeBag<T>(); }
     }
@@ -84,8 +83,8 @@ namespace C5UnitTests.trees.TreeBag
     [TestFixture]
     public class Formatting
     {
-        ICollection<int> coll;
-        IFormatProvider rad16;
+        private ICollection<int> coll;
+        private IFormatProvider rad16;
         [SetUp]
         public void Init() { coll = Factory.New<int>(); rad16 = new RadixFormatProvider(16); }
         [TearDown]
@@ -113,7 +112,9 @@ namespace C5UnitTests.trees.TreeBag
         {
             lst = new TreeBag<KeyValuePair<int, int>>(new KeyValuePairComparer<int, int>(new IC()));
             for (int i = 0; i < 10; i++)
+            {
                 lst.Add(new KeyValuePair<int, int>(i, i + 30));
+            }
         }
 
 
@@ -354,7 +355,9 @@ namespace C5UnitTests.trees.TreeBag
         {
             bag = new TreeBag<string>(new SC());
             foreach (string s in new string[] { "A", "B", "A", "A", "B", "C", "D", "B" })
+            {
                 bag.Add(s);
+            }
 
             bagenum = bag.GetEnumerator();
         }
@@ -449,7 +452,10 @@ namespace C5UnitTests.trees.TreeBag
         {
             SCG.IEnumerator<int> e = tree.RangeFromTo(5, 17).GetEnumerator();
 
-            while (e.MoveNext()) ;
+            while (e.MoveNext())
+            {
+                ;
+            }
 
             Assert.Throws<InvalidOperationException>(() => { int i = e.Current; });
         }
@@ -466,7 +472,10 @@ namespace C5UnitTests.trees.TreeBag
             Assert.IsTrue(IC.eq(tree, new int[] { 1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 8, 8, 9, 10, 10, 12, 14, 16 }));
             tree.RemoveRangeFrom(1);
             Assert.IsTrue(IC.eq(tree));
-            foreach (int i in all) tree.Add(i);
+            foreach (int i in all)
+            {
+                tree.Add(i);
+            }
 
             tree.RemoveRangeTo(10);
             Assert.IsTrue(IC.eq(tree, new int[] { 10, 10, 12, 14, 16, 18, 20 }));
@@ -474,7 +483,10 @@ namespace C5UnitTests.trees.TreeBag
             Assert.IsTrue(IC.eq(tree, new int[] { 10, 10, 12, 14, 16, 18, 20 }));
             tree.RemoveRangeTo(21);
             Assert.IsTrue(IC.eq(tree));
-            foreach (int i in all) tree.Add(i);
+            foreach (int i in all)
+            {
+                tree.Add(i);
+            }
 
             tree.RemoveRangeFromTo(4, 8);
             Assert.IsTrue(IC.eq(tree, 1, 2, 2, 3, 8, 8, 9, 10, 10, 12, 14, 16, 18, 20));
@@ -707,7 +719,7 @@ namespace C5UnitTests.trees.TreeBag
     public class FindPredicate
     {
         private TreeBag<int> list;
-        Func<int, bool> pred;
+        private Func<int, bool> pred;
 
         [SetUp]
         public void Init()
@@ -959,7 +971,7 @@ namespace C5UnitTests.trees.TreeBag
 
             Assert.AreEqual(list.UniqueItems().Count, list.UniqueCount);
             Assert.AreEqual(list.ItemMultiplicities().Count, list.UniqueCount);
-        
+
         }
     }
 
@@ -968,8 +980,7 @@ namespace C5UnitTests.trees.TreeBag
     public class ArrayTest
     {
         private TreeBag<int> tree;
-
-        int[] a;
+        private int[] a;
 
 
         [SetUp]
@@ -978,7 +989,9 @@ namespace C5UnitTests.trees.TreeBag
             tree = new TreeBag<int>(new IC());
             a = new int[10];
             for (int i = 0; i < 10; i++)
+            {
                 a[i] = 1000 + i;
+            }
         }
 
 
@@ -989,11 +1002,17 @@ namespace C5UnitTests.trees.TreeBag
         private string aeq(int[] a, params int[] b)
         {
             if (a.Length != b.Length)
+            {
                 return "Lengths differ: " + a.Length + " != " + b.Length;
+            }
 
             for (int i = 0; i < a.Length; i++)
+            {
                 if (a[i] != b[i])
+                {
                     return string.Format("{0}'th elements differ: {1} != {2}", i, a[i], b[i]);
+                }
+            }
 
             return "Alles klar";
         }
@@ -1202,7 +1221,11 @@ namespace C5UnitTests.trees.TreeBag
             //2+1b
             Assert.IsTrue(tree.Remove(15));
             Assert.IsTrue(tree.Remove(15));
-            for (int i = 0; i < 5; i++) tree.Add(17 + i);
+            for (int i = 0; i < 5; i++)
+            {
+                tree.Add(17 + i);
+            }
+
             Assert.IsTrue(tree.Remove(23));
             Assert.IsTrue(tree.Check("Normal test 1"), "Bad tree");
 
@@ -1212,7 +1235,9 @@ namespace C5UnitTests.trees.TreeBag
 
             //2+1c
             for (int i = 0; i < 10; i++)
+            {
                 tree.Add(50 - 2 * i);
+            }
 
             Assert.IsTrue(tree.Remove(42));
             Assert.IsTrue(tree.Remove(38));
@@ -1221,7 +1246,9 @@ namespace C5UnitTests.trees.TreeBag
 
             //
             for (int i = 0; i < 48; i++)
+            {
                 tree.Remove(i);
+            }
 
             //Almost empty tree:*
             Assert.IsFalse(tree.Remove(26));
@@ -1257,9 +1284,14 @@ namespace C5UnitTests.trees.TreeBag
         private void loadup()
         {
             for (int i = 0; i < 20; i++)
+            {
                 tree.Add(2 * i);
+            }
+
             for (int i = 0; i < 10; i++)
+            {
                 tree.Add(4 * i);
+            }
         }
 
         [Test]
@@ -1607,7 +1639,10 @@ namespace C5UnitTests.trees.TreeBag
             {
                 tree = new TreeBag<int>(new IC());
                 for (int i = 0; i < 10; i++)
+                {
                     tree.Add(i);
+                }
+
                 tree.Add(3);
                 tree.Add(7);
                 e = tree.GetEnumerator();
@@ -1670,7 +1705,9 @@ namespace C5UnitTests.trees.TreeBag
             {
                 tree = new TreeBag<int>(new IC());
                 for (int i = 0; i < 10; i++)
+                {
                     tree.Add(i);
+                }
 
                 e = tree.RangeFromTo(3, 7).GetEnumerator();
             }
@@ -1734,11 +1771,16 @@ namespace C5UnitTests.trees.TreeBag
                 ic = new IC();
                 tree = new TreeBag<int>(ic);
                 for (int i = 0; i <= 20; i++)
+                {
                     tree.Add(2 * i + 1);
+                }
+
                 tree.Add(13);
                 snap = (TreeBag<int>)tree.Snapshot();
                 for (int i = 0; i <= 10; i++)
+                {
                     tree.Remove(4 * i + 1);
+                }
             }
 
 
@@ -1912,7 +1954,9 @@ namespace C5UnitTests.trees.TreeBag
                 ic = new IC();
                 tree = new TreeBag<int>(ic);
                 for (int i = 0; i < 10; i++)
+                {
                     tree.Add(2 * i + 1);
+                }
             }
 
 
@@ -2073,7 +2117,9 @@ namespace C5UnitTests.trees.TreeBag
 
                 //2+1c
                 for (int i = 0; i < 10; i++)
+                {
                     tree.Add(50 - 2 * i);
+                }
 
                 Assert.IsTrue(tree.Remove(42));
                 Assert.IsTrue(tree.Remove(38));
@@ -2094,7 +2140,9 @@ namespace C5UnitTests.trees.TreeBag
                 Assert.IsTrue(tree.Remove(22));
                 Assert.IsTrue(tree.Remove(24));
                 for (int i = 0; i < 48; i++)
+                {
                     tree.Remove(i);
+                }
 
                 //Almost empty tree:
                 Assert.IsFalse(tree.Remove(26));
@@ -2198,7 +2246,7 @@ namespace C5UnitTests.trees.TreeBag
             private SCG.IComparer<int> ic;
 
 
-            
+
             /* private bool eq(SCG.IEnumerable<int> me, int[] that)
             {
                 int i = 0, maxind = that.Length - 1;
@@ -2317,9 +2365,7 @@ namespace C5UnitTests.trees.TreeBag
             public bool Equals(int that) { return c == that * that * that; }
         }
 
-
-
-        class Interval : IComparable<int>
+        internal class Interval : IComparable<int>
         {
             private readonly int b, t;
 
@@ -2383,7 +2429,11 @@ namespace C5UnitTests.trees.TreeBag
 
                 Simple simple2 = new Simple();
 
-                for (int i = 0; i < 10; i++) tree.Add(i);
+                for (int i = 0; i < 10; i++)
+                {
+                    tree.Add(i);
+                }
+
                 tree.Add(2);
 
                 tree.Apply(new Action<int>(simple2.apply));
@@ -2398,19 +2448,28 @@ namespace C5UnitTests.trees.TreeBag
                 Assert.IsTrue(tree.All(new Func<int, bool>(never)));
                 Assert.IsTrue(tree.All(new Func<int, bool>(even)));
                 Assert.IsTrue(tree.All(new Func<int, bool>(always)));
-                for (int i = 0; i < 10; i++) tree.Add(i);
+                for (int i = 0; i < 10; i++)
+                {
+                    tree.Add(i);
+                }
 
                 Assert.IsFalse(tree.All(new Func<int, bool>(never)));
                 Assert.IsFalse(tree.All(new Func<int, bool>(even)));
                 Assert.IsTrue(tree.All(new Func<int, bool>(always)));
                 tree.Clear();
-                for (int i = 0; i < 10; i++) tree.Add(i * 2);
+                for (int i = 0; i < 10; i++)
+                {
+                    tree.Add(i * 2);
+                }
 
                 Assert.IsFalse(tree.All(new Func<int, bool>(never)));
                 Assert.IsTrue(tree.All(new Func<int, bool>(even)));
                 Assert.IsTrue(tree.All(new Func<int, bool>(always)));
                 tree.Clear();
-                for (int i = 0; i < 10; i++) tree.Add(i * 2 + 1);
+                for (int i = 0; i < 10; i++)
+                {
+                    tree.Add(i * 2 + 1);
+                }
 
                 Assert.IsFalse(tree.All(new Func<int, bool>(never)));
                 Assert.IsFalse(tree.All(new Func<int, bool>(even)));
@@ -2424,19 +2483,28 @@ namespace C5UnitTests.trees.TreeBag
                 Assert.IsFalse(tree.Exists(new Func<int, bool>(never)));
                 Assert.IsFalse(tree.Exists(new Func<int, bool>(even)));
                 Assert.IsFalse(tree.Exists(new Func<int, bool>(always)));
-                for (int i = 0; i < 10; i++) tree.Add(i);
+                for (int i = 0; i < 10; i++)
+                {
+                    tree.Add(i);
+                }
 
                 Assert.IsFalse(tree.Exists(new Func<int, bool>(never)));
                 Assert.IsTrue(tree.Exists(new Func<int, bool>(even)));
                 Assert.IsTrue(tree.Exists(new Func<int, bool>(always)));
                 tree.Clear();
-                for (int i = 0; i < 10; i++) tree.Add(i * 2);
+                for (int i = 0; i < 10; i++)
+                {
+                    tree.Add(i * 2);
+                }
 
                 Assert.IsFalse(tree.Exists(new Func<int, bool>(never)));
                 Assert.IsTrue(tree.Exists(new Func<int, bool>(even)));
                 Assert.IsTrue(tree.Exists(new Func<int, bool>(always)));
                 tree.Clear();
-                for (int i = 0; i < 10; i++) tree.Add(i * 2 + 1);
+                for (int i = 0; i < 10; i++)
+                {
+                    tree.Add(i * 2 + 1);
+                }
 
                 Assert.IsFalse(tree.Exists(new Func<int, bool>(never)));
                 Assert.IsFalse(tree.Exists(new Func<int, bool>(even)));
@@ -2449,7 +2517,10 @@ namespace C5UnitTests.trees.TreeBag
             {
                 Assert.AreEqual(0, tree.FindAll(new Func<int, bool>(never)).Count);
                 for (int i = 0; i < 10; i++)
+                {
                     tree.Add(i);
+                }
+
                 tree.Add(2);
 
                 Assert.AreEqual(0, tree.FindAll(new Func<int, bool>(never)).Count);
@@ -2464,7 +2535,10 @@ namespace C5UnitTests.trees.TreeBag
             {
                 Assert.AreEqual(0, tree.Map(new Func<int, string>(themap), new SC()).Count);
                 for (int i = 0; i < 14; i++)
+                {
                     tree.Add(i * i * i);
+                }
+
                 tree.Add(1);
 
                 IIndexedSorted<string> res = tree.Map(new Func<int, string>(themap), new SC());
@@ -2502,7 +2576,10 @@ namespace C5UnitTests.trees.TreeBag
             public void Cut()
             {
                 for (int i = 0; i < 10; i++)
+                {
                     tree.Add(i);
+                }
+
                 tree.Add(3);
 
 
@@ -2521,8 +2598,9 @@ namespace C5UnitTests.trees.TreeBag
             public void CutInt()
             {
                 for (int i = 0; i < 10; i++)
+                {
                     tree.Add(2 * i);
-
+                }
 
                 Assert.IsFalse(tree.Cut(new IC(3), out int low, out bool lval, out int high, out bool hval));
                 Assert.IsTrue(lval && hval);
@@ -2539,8 +2617,9 @@ namespace C5UnitTests.trees.TreeBag
             public void CutInterval()
             {
                 for (int i = 0; i < 10; i++)
+                {
                     tree.Add(2 * i);
-
+                }
 
                 Assert.IsTrue(tree.Cut(new Interval(5, 9), out int lo, out bool lv, out int hi, out bool hv));
                 Assert.IsTrue(lv && hv);
@@ -2551,7 +2630,9 @@ namespace C5UnitTests.trees.TreeBag
                 Assert.AreEqual(12, hi);
                 Assert.AreEqual(4, lo);
                 for (int i = 0; i < 100; i++)
+                {
                     tree.Add(2 * i);
+                }
 
                 tree.Cut(new Interval(77, 105), out lo, out lv, out hi, out hv);
                 Assert.IsTrue(lv && hv);
@@ -2572,7 +2653,10 @@ namespace C5UnitTests.trees.TreeBag
             public void UpperCut()
             {
                 for (int i = 0; i < 10; i++)
+                {
                     tree.Add(i);
+                }
+
                 Assert.IsFalse(tree.Cut(new CubeRoot(1000), out int l, out bool lv, out _, out bool hv));
                 Assert.IsTrue(lv && !hv);
                 Assert.AreEqual(9, l);
@@ -2597,8 +2681,7 @@ namespace C5UnitTests.trees.TreeBag
         {
             private int sqr(int i) { return i * i; }
 
-
-            TreeBag<int> tree;
+            private TreeBag<int> tree;
 
 
             [SetUp]
@@ -2617,7 +2700,10 @@ namespace C5UnitTests.trees.TreeBag
             [Test]
             public void SomeEmpty()
             {
-                for (int i = 4; i < 9; i++) tree.Add(i);
+                for (int i = 4; i < 9; i++)
+                {
+                    tree.Add(i);
+                }
 
                 tree.AddAll(new FunEnumerable(0, new Func<int, int>(sqr)));
                 Assert.AreEqual(5, tree.Count);
@@ -2641,7 +2727,11 @@ namespace C5UnitTests.trees.TreeBag
             [Test]
             public void SomeSome()
             {
-                for (int i = 5; i < 9; i++) tree.Add(i);
+                for (int i = 5; i < 9; i++)
+                {
+                    tree.Add(i);
+                }
+
                 tree.Add(1);
 
                 tree.AddAll(new FunEnumerable(4, new Func<int, int>(sqr)));
@@ -2667,8 +2757,7 @@ namespace C5UnitTests.trees.TreeBag
 
             private int bad(int i) { return i * (5 - i); }
 
-
-            TreeBag<int> tree;
+            private TreeBag<int> tree;
 
 
             [SetUp]
@@ -2687,7 +2776,10 @@ namespace C5UnitTests.trees.TreeBag
             [Test]
             public void SomeEmpty()
             {
-                for (int i = 4; i < 9; i++) tree.Add(i);
+                for (int i = 4; i < 9; i++)
+                {
+                    tree.Add(i);
+                }
 
                 tree.AddSorted(new FunEnumerable(0, new Func<int, int>(sqr)));
                 Assert.AreEqual(5, tree.Count);
@@ -2724,7 +2816,11 @@ namespace C5UnitTests.trees.TreeBag
             [Test]
             public void SomeSome()
             {
-                for (int i = 5; i < 9; i++) tree.Add(i);
+                for (int i = 5; i < 9; i++)
+                {
+                    tree.Add(i);
+                }
+
                 tree.Add(1);
 
                 tree.AddSorted(new FunEnumerable(4, new Func<int, int>(sqr)));
@@ -2751,7 +2847,7 @@ namespace C5UnitTests.trees.TreeBag
         [TestFixture]
         public class Rest
         {
-            TreeBag<int> tree, tree2;
+            private TreeBag<int> tree, tree2;
 
 
             [SetUp]
@@ -2760,11 +2856,16 @@ namespace C5UnitTests.trees.TreeBag
                 tree = new TreeBag<int>(new IC());
                 tree2 = new TreeBag<int>(new IC());
                 for (int i = 0; i < 10; i++)
+                {
                     tree.Add(i);
+                }
+
                 tree.Add(4);
 
                 for (int i = 0; i < 10; i++)
+                {
                     tree2.Add(2 * i);
+                }
             }
 
 
@@ -2787,7 +2888,10 @@ namespace C5UnitTests.trees.TreeBag
                 Assert.AreEqual(7, tree.Count);
                 Assert.IsTrue(tree.Check());
                 Assert.IsTrue(IC.eq(tree, 0, 1, 2, 3, 5, 7, 9));
-                for (int i = 0; i < 10; i++) tree2.Add(i);
+                for (int i = 0; i < 10; i++)
+                {
+                    tree2.Add(i);
+                }
 
                 tree.RemoveAll(tree2.RangeFromTo(-1, 10));
                 Assert.AreEqual(0, tree.Count);
@@ -2827,13 +2931,19 @@ namespace C5UnitTests.trees.TreeBag
                 Assert.AreEqual(0, tree.Count);
                 Assert.IsTrue(tree.Check());
                 Assert.IsTrue(IC.eq(tree));
-                for (int i = 0; i < 10; i++) tree.Add(i);
+                for (int i = 0; i < 10; i++)
+                {
+                    tree.Add(i);
+                }
 
                 tree.RetainAll(tree2.RangeFromTo(5, 5));
                 Assert.AreEqual(0, tree.Count);
                 Assert.IsTrue(tree.Check());
                 Assert.IsTrue(IC.eq(tree));
-                for (int i = 0; i < 10; i++) tree.Add(i);
+                for (int i = 0; i < 10; i++)
+                {
+                    tree.Add(i);
+                }
 
                 tree.RetainAll(tree2.RangeFromTo(15, 25));
                 Assert.AreEqual(0, tree.Count);

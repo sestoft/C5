@@ -10,7 +10,7 @@ using System;
 
 namespace C5.UserGuideExamples
 {
-    class Initializers
+    internal class Initializers
     {
         public static void Main()
         {

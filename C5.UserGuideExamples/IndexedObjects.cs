@@ -19,9 +19,9 @@ using System.Text;
 
 namespace C5.UserGuideExamples
 {
-    static class IndexedObjectsProgram
+    internal static class IndexedObjectsProgram
     {
-        static void Main()
+        private static void Main()
         {
             var persons = new Indexed<PersonIndexedObjects>(
                 new IndexMaker<PersonIndexedObjects, string>("name", delegate (PersonIndexedObjects p) { return p.Name; }),
@@ -63,7 +63,7 @@ namespace C5.UserGuideExamples
             Console.WriteLine(persons);
         }
 
-        private static readonly string[] _months = 
+        private static readonly string[] _months =
         {
             "Jan",
             "Feb",

@@ -14,7 +14,7 @@ namespace C5
     {
         #region Fields
 
-        readonly IEnumerator<T> enumerator;
+        private readonly IEnumerator<T> enumerator;
 
         #endregion
 
@@ -85,7 +85,7 @@ namespace C5
     {
         #region Fields
 
-        readonly System.Collections.Generic.IEnumerable<T> enumerable;
+        private readonly System.Collections.Generic.IEnumerable<T> enumerable;
 
         #endregion
 
@@ -134,7 +134,7 @@ namespace C5
     {
         #region Fields
 
-        readonly IDirectedEnumerable<T> directedenumerable;
+        private readonly IDirectedEnumerable<T> directedenumerable;
 
         #endregion
 
@@ -193,14 +193,20 @@ namespace C5
         /// <value></value>
         public virtual EventTypeEnum ActiveEvents { get { return collectionvalue.ActiveEvents; } }
 
-        ProxyEventBlock<T>? eventBlock;
+        private ProxyEventBlock<T>? eventBlock;
         /// <summary>
         /// The change event. Will be raised for every change operation on the collection.
         /// </summary>
         public event CollectionChangedHandler<T> CollectionChanged
         {
             add { (eventBlock ?? (eventBlock = new ProxyEventBlock<T>(this, collectionvalue))).CollectionChanged += value; }
-            remove { if (eventBlock != null) eventBlock.CollectionChanged -= value; }
+            remove
+            {
+                if (eventBlock != null)
+                {
+                    eventBlock.CollectionChanged -= value;
+                }
+            }
         }
 
         /// <summary>
@@ -209,7 +215,13 @@ namespace C5
         public event CollectionClearedHandler<T> CollectionCleared
         {
             add { (eventBlock ?? (eventBlock = new ProxyEventBlock<T>(this, collectionvalue))).CollectionCleared += value; }
-            remove { if (eventBlock != null) eventBlock.CollectionCleared -= value; }
+            remove
+            {
+                if (eventBlock != null)
+                {
+                    eventBlock.CollectionCleared -= value;
+                }
+            }
         }
 
         /// <summary>
@@ -218,7 +230,13 @@ namespace C5
         public event ItemsAddedHandler<T> ItemsAdded
         {
             add { (eventBlock ?? (eventBlock = new ProxyEventBlock<T>(this, collectionvalue))).ItemsAdded += value; }
-            remove { if (eventBlock != null) eventBlock.ItemsAdded -= value; }
+            remove
+            {
+                if (eventBlock != null)
+                {
+                    eventBlock.ItemsAdded -= value;
+                }
+            }
         }
 
         /// <summary>
@@ -227,7 +245,13 @@ namespace C5
         public event ItemInsertedHandler<T> ItemInserted
         {
             add { (eventBlock ?? (eventBlock = new ProxyEventBlock<T>(this, collectionvalue))).ItemInserted += value; }
-            remove { if (eventBlock != null) eventBlock.ItemInserted -= value; }
+            remove
+            {
+                if (eventBlock != null)
+                {
+                    eventBlock.ItemInserted -= value;
+                }
+            }
         }
 
         /// <summary>
@@ -236,7 +260,13 @@ namespace C5
         public event ItemsRemovedHandler<T> ItemsRemoved
         {
             add { (eventBlock ?? (eventBlock = new ProxyEventBlock<T>(this, collectionvalue))).ItemsRemoved += value; }
-            remove { if (eventBlock != null) eventBlock.ItemsRemoved -= value; }
+            remove
+            {
+                if (eventBlock != null)
+                {
+                    eventBlock.ItemsRemoved -= value;
+                }
+            }
         }
 
         /// <summary>
@@ -245,13 +275,19 @@ namespace C5
         public event ItemRemovedAtHandler<T> ItemRemovedAt
         {
             add { (eventBlock ?? (eventBlock = new ProxyEventBlock<T>(this, collectionvalue))).ItemRemovedAt += value; }
-            remove { if (eventBlock != null) eventBlock.ItemRemovedAt -= value; }
+            remove
+            {
+                if (eventBlock != null)
+                {
+                    eventBlock.ItemRemovedAt -= value;
+                }
+            }
         }
         #endregion
 
         #region Fields
 
-        readonly ICollectionValue<T> collectionvalue;
+        private readonly ICollectionValue<T> collectionvalue;
 
         #endregion
 
@@ -396,7 +432,7 @@ namespace C5
     {
         #region Fields
 
-        readonly IDirectedCollectionValue<T> directedcollection;
+        private readonly IDirectedCollectionValue<T> directedcollection;
 
         #endregion
 
@@ -461,7 +497,7 @@ namespace C5
     {
         #region Fields
 
-        readonly ICollection<T> collection;
+        private readonly ICollection<T> collection;
 
         #endregion
 
@@ -714,7 +750,7 @@ namespace C5
     {
         #region Fields
 
-        readonly ISequenced<T> sequenced;
+        private readonly ISequenced<T> sequenced;
 
         #endregion
 
@@ -738,12 +774,18 @@ namespace C5
         public int FindIndex(Func<T, bool> predicate)
         {
             if (sequenced is IIndexed<T> indexed)
+            {
                 return indexed.FindIndex(predicate);
+            }
+
             int index = 0;
             foreach (T item in this)
             {
                 if (predicate(item))
+                {
                     return index;
+                }
+
                 index++;
             }
             return -1;
@@ -759,12 +801,18 @@ namespace C5
         public int FindLastIndex(Func<T, bool> predicate)
         {
             if (sequenced is IIndexed<T> indexed)
+            {
                 return indexed.FindLastIndex(predicate);
+            }
+
             int index = Count - 1;
             foreach (T item in Backwards())
             {
                 if (predicate(item))
+                {
                     return index;
+                }
+
                 index--;
             }
             return -1;
@@ -838,7 +886,7 @@ namespace C5
     {
         #region Fields
 
-        readonly ISorted<T> sorted;
+        private readonly ISorted<T> sorted;
 
         #endregion
 
@@ -1071,7 +1119,7 @@ namespace C5
     {
         #region Fields
 
-        readonly IIndexedSorted<T> indexedsorted;
+        private readonly IIndexedSorted<T> indexedsorted;
 
         #endregion
 
@@ -1246,9 +1294,9 @@ namespace C5
     {
         #region Fields
 
-        readonly IList<T> innerlist;
-        readonly GuardedList<T>? underlying;
-        readonly bool slidableView = false;
+        private readonly IList<T> innerlist;
+        private readonly GuardedList<T>? underlying;
+        private readonly bool slidableView = false;
 
         #endregion
 
@@ -1266,10 +1314,12 @@ namespace C5
             // If wrapping a list view, make innerlist = the view, and make 
             // underlying = a guarded version of the view's underlying list
             if (list.Underlying != null)
+            {
                 underlying = new GuardedList<T>(list.Underlying, null, false);
+            }
         }
 
-        GuardedList(IList<T> list, GuardedList<T>? underlying, bool slidableView)
+        private GuardedList(IList<T> list, GuardedList<T>? underlying, bool slidableView)
             : base(list)
         {
             this.innerlist = list; this.underlying = underlying; this.slidableView = slidableView;
@@ -1325,7 +1375,10 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public virtual Speed IndexingSpeed { get { return innerlist.IndexingSpeed; } }
+        public virtual Speed IndexingSpeed
+        {
+            get { return innerlist.IndexingSpeed; }
+        }
 
         /// <summary>
         /// </summary>
@@ -1333,7 +1386,9 @@ namespace C5
         /// <param name="index"></param>
         /// <param name="item"></param>
         public void Insert(int index, T item)
-        { throw new ReadOnlyCollectionException(); }
+        {
+            throw new ReadOnlyCollectionException();
+        }
 
         /// <summary>
         /// </summary>
@@ -1341,21 +1396,27 @@ namespace C5
         /// <param name="pointer"></param>
         /// <param name="item"></param>
         public void Insert(IList<T> pointer, T item)
-        { throw new ReadOnlyCollectionException(); }
+        {
+            throw new ReadOnlyCollectionException();
+        }
 
         /// <summary>
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="item"></param>
         public void InsertFirst(T item)
-        { throw new ReadOnlyCollectionException("List is read only"); }
+        {
+            throw new ReadOnlyCollectionException("List is read only");
+        }
 
         /// <summary>
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="item"></param>
         public void InsertLast(T item)
-        { throw new ReadOnlyCollectionException("List is read only"); }
+        {
+            throw new ReadOnlyCollectionException("List is read only");
+        }
 
         /// <summary>
         /// </summary>
@@ -1363,7 +1424,9 @@ namespace C5
         /// <param name="item"></param>
         /// <param name="target"></param>
         public void InsertBefore(T item, T target)
-        { throw new ReadOnlyCollectionException("List is read only"); }
+        {
+            throw new ReadOnlyCollectionException("List is read only");
+        }
 
 
         /// <summary>
@@ -1372,7 +1435,9 @@ namespace C5
         /// <param name="item"></param>
         /// <param name="target"></param>
         public void InsertAfter(T item, T target)
-        { throw new ReadOnlyCollectionException("List is read only"); }
+        {
+            throw new ReadOnlyCollectionException("List is read only");
+        }
 
 
         /// <summary>
@@ -1495,7 +1560,9 @@ namespace C5
                 return this;
             }
             else
+            {
                 throw new ReadOnlyCollectionException("List is read only");
+            }
         }
 
 
@@ -1512,7 +1579,9 @@ namespace C5
                 return this;
             }
             else
+            {
                 throw new ReadOnlyCollectionException("List is read only");
+            }
         }
 
 
@@ -1525,9 +1594,13 @@ namespace C5
         public bool TrySlide(int offset)
         {
             if (slidableView)
+            {
                 return innerlist.TrySlide(offset);
+            }
             else
+            {
                 throw new ReadOnlyCollectionException("List is read only");
+            }
         }
 
         /// <summary>
@@ -1540,9 +1613,13 @@ namespace C5
         public bool TrySlide(int offset, int size)
         {
             if (slidableView)
+            {
                 return innerlist.TrySlide(offset, size);
+            }
             else
+            {
                 throw new ReadOnlyCollectionException("List is read only");
+            }
         }
 
         /// <summary>
@@ -1553,10 +1630,16 @@ namespace C5
         public IList<T>? Span(IList<T> otherView)
         {
             if (!(otherView is GuardedList<T> otherGuardedList))
+            {
                 throw new IncompatibleViewException();
+            }
+
             IList<T>? span = innerlist.Span(otherGuardedList.innerlist);
             if (span == null)
+            {
                 return null;
+            }
+
             return new GuardedList<T>(span, underlying ?? otherGuardedList.underlying ?? this, true);
         }
 
@@ -1751,10 +1834,14 @@ namespace C5
         void System.Collections.ICollection.CopyTo(Array arr, int index)
         {
             if (index < 0 || index + Count > arr.Length)
+            {
                 throw new ArgumentOutOfRangeException();
+            }
 
             foreach (T item in this)
+            {
                 arr.SetValue(item, index++);
+            }
         }
 
         #endregion
@@ -1814,7 +1901,7 @@ namespace C5
     {
         #region Fields
 
-        readonly IQueue<T> queue;
+        private readonly IQueue<T> queue;
 
         #endregion
 
@@ -1871,7 +1958,7 @@ namespace C5
     {
         #region Fields
 
-        readonly IDictionary<K, V> dict;
+        private readonly IDictionary<K, V> dict;
 
         #endregion
 
@@ -1925,7 +2012,7 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        public virtual Func<K, V> Func { get { return delegate(K k) { return this[k]; }; } }
+        public virtual Func<K, V> Func { get { return delegate (K k) { return this[k]; }; } }
 
         /// <summary>
         /// </summary>
@@ -2070,7 +2157,7 @@ namespace C5
     {
         #region Fields
 
-        readonly ISortedDictionary<K, V> sorteddict;
+        private readonly ISortedDictionary<K, V> sorteddict;
 
         #endregion
 

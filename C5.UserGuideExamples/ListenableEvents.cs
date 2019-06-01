@@ -10,7 +10,7 @@ using System;
 
 namespace C5.UserGuideExamples
 {
-    class ListenableEvents
+    internal class ListenableEvents
     {
         public static void Main()
         {

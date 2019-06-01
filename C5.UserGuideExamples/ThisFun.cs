@@ -11,7 +11,7 @@ using System;
 
 namespace C5.UserGuideExamples
 {
-    class ThisFun
+    internal class ThisFun
     {
         public static void Main()
         {
@@ -23,7 +23,7 @@ namespace C5.UserGuideExamples
         }
     }
 
-    class FooBar
+    internal class FooBar
     {
         public double this[int x]
         {

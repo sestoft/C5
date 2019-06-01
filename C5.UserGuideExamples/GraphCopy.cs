@@ -11,7 +11,7 @@ using System.Text;
 
 namespace C5.UserGuideExamples
 {
-    class GraphCopy
+    internal class GraphCopy
     {
         public static void Main(string[] args)
         {

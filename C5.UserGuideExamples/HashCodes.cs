@@ -12,7 +12,7 @@ using SCG = System.Collections.Generic;
 
 namespace C5.UserGuideExamples
 {
-    class HashCodes
+    internal class HashCodes
     {
         public static void Main(string[] args)
         {

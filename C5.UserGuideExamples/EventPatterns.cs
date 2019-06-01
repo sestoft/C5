@@ -11,7 +11,7 @@ using System;
 //#pragma warning disable IDE0059 // Value assigned to symbol is never used
 namespace C5.UserGuideExamples
 {
-    class EventPatterns
+    internal class EventPatterns
     {
         public static void Main()
         {
@@ -172,7 +172,7 @@ namespace C5.UserGuideExamples
     }
 
     // Example class where objects may be equal yet display differently
-    class Teacher : IEquatable<Teacher>
+    internal class Teacher : IEquatable<Teacher>
     {
         public string Name { get; }
         public string Subject { get; }

@@ -119,7 +119,7 @@ namespace C5.UserGuideExamples
         public override string ToString() => $"{{{string.Join(",", this)}}}";
     }
 
-    class Sets
+    internal class Sets
     {
         public static void Main(string[] args)
         {
@@ -148,7 +148,7 @@ namespace C5.UserGuideExamples
         // then TT is {{2,3}, {1,3}, {1,2}, {3}, {2}, {1}, {}}.
 
         // Both the argument and the result is a MySet<MySet<int>>
-        static Set<Set<T>> IntersectionClose<T>(Set<Set<T>> ss)
+        private static Set<Set<T>> IntersectionClose<T>(Set<Set<T>> ss)
         {
             IQueue<Set<T>> worklist = new CircularQueue<Set<T>>();
 

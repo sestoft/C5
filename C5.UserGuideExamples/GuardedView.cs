@@ -10,7 +10,7 @@ using System;
 
 namespace C5.UserGuideExamples
 {
-    class GuardedView
+    internal class GuardedView
     {
         public static void Main()
         {
