@@ -25,7 +25,7 @@ namespace C5.Tests
     internal class TenEqualityComparer : SCG.IEqualityComparer<int>, SCG.IComparer<int>
     {
         private TenEqualityComparer() { }
-        public static TenEqualityComparer Default { get { return new TenEqualityComparer(); } }
+        public static TenEqualityComparer Default => new TenEqualityComparer();
         public int GetHashCode(int item) { return (item / 10).GetHashCode(); }
         public bool Equals(int item1, int item2) { return item1 / 10 == item2 / 10; }
         public int Compare(int a, int b) { return (a / 10).CompareTo(b / 10); }
@@ -50,8 +50,8 @@ namespace C5.Tests
 
         public int i
         {
-            get { return _i; }
-            set { _i = value; }
+            get => _i;
+            set => _i = value;
         }
 
 
@@ -175,11 +175,11 @@ namespace C5.Tests
             throw exception;
         }
 
-        public override bool IsEmpty { get { return false; } }
+        public override bool IsEmpty => false;
 
-        public override int Count { get { return contents.Length + 1; } }
+        public override int Count => contents.Length + 1;
 
-        public override Speed CountSpeed { get { return Speed.Constant; } }
+        public override Speed CountSpeed => Speed.Constant;
 
         public override T Choose() { throw exception; }
     }
@@ -306,9 +306,9 @@ namespace C5.Tests
 
         public CollectionEvent(EventTypeEnum act, EventArgs args, object sender)
         {
-            this.Act = act;
-            this.Args = args;
-            this.Sender = sender;
+            Act = act;
+            Args = args;
+            Sender = sender;
         }
 
         public bool Equals(CollectionEvent<T> otherEvent, SCG.IEqualityComparer<T> itemequalityComparer)
@@ -378,7 +378,7 @@ namespace C5.Tests
 
     public class CHC
     {
-        static public int unsequencedhashcode(params int[] a)
+        public static int unsequencedhashcode(params int[] a)
         {
             int h = 0;
             foreach (int i in a)
@@ -387,7 +387,7 @@ namespace C5.Tests
             }
             return h;
         }
-        static public int sequencedhashcode(params int[] a)
+        public static int sequencedhashcode(params int[] a)
         {
             int h = 0;
             foreach (int i in a) { h = h * 31 + i; }

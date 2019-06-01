@@ -16,7 +16,11 @@ namespace C5.UserGuideExamples
         public static void Main()
         {
             var t = MakeTree(1, 15);
-            void action(int val) => Console.Write("{0} ", val);
+            void action(int val)
+            {
+                Console.Write("{0} ", val);
+            }
+
             Console.WriteLine("Depth-first:");
             Tree<int>.DepthFirst(t, action);
             Console.WriteLine("\nBreadth-first:");

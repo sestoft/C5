@@ -67,13 +67,13 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public virtual EventTypeEnum ListenableEvents { get { return 0; } }
+        public virtual EventTypeEnum ListenableEvents => 0;
 
         /// <summary>
         /// A flag bitmap of the events currently subscribed to by this collection.
         /// </summary>
         /// <value></value>
-        public virtual EventTypeEnum ActiveEvents { get { return eventBlock == null ? 0 : eventBlock.events; } }
+        public virtual EventTypeEnum ActiveEvents => eventBlock == null ? 0 : eventBlock.events;
 
         private void CheckWillListen(EventTypeEnum eventType)
         {
@@ -665,7 +665,7 @@ namespace C5
         /// Create an enumerator for this collection.
         /// </summary>
         /// <returns>The enumerator</returns>
-        public override abstract SCG.IEnumerator<T> GetEnumerator();
+        public abstract override SCG.IEnumerator<T> GetEnumerator();
 
         #region IShowable Members
 
@@ -719,7 +719,7 @@ namespace C5
         /// <code>Forwards</code> if same, else <code>Backwards</code>
         /// </summary>
         /// <value>The enumeration direction relative to the original collection.</value>
-        public virtual EnumerationDirection Direction { get { return EnumerationDirection.Forwards; } }
+        public virtual EnumerationDirection Direction => EnumerationDirection.Forwards;
 
         /// <summary>
         /// 
@@ -727,7 +727,7 @@ namespace C5
         /// <returns></returns>
         public abstract IDirectedCollectionValue<T> Backwards();
 
-        IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards() { return this.Backwards(); }
+        IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards() { return Backwards(); }
 
         /// <summary>
         /// Check if there exists an item  that satisfies a
@@ -1009,7 +1009,7 @@ namespace C5
         /// <param name="thestamp">The stamp identifying the target time</param>
         protected virtual void ModifyCheck(int thestamp)
         {
-            if (this.stamp != thestamp)
+            if (stamp != thestamp)
             {
                 throw new CollectionModifiedException();
             }
@@ -1038,7 +1038,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value>True if this collection is read only</value>
-        public virtual bool IsReadOnly { get { return isReadOnlyBase; } }
+        public virtual bool IsReadOnly => isReadOnlyBase;
 
         #endregion
 
@@ -1047,7 +1047,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value>The size of this collection</value>
-        public override int Count { get { return size; } }
+        public override int Count => size;
 
         /// <summary>
         /// The value is symbolic indicating the type of asymptotic complexity
@@ -1056,7 +1056,7 @@ namespace C5
         /// </summary>
         /// <value>A characterization of the speed of the 
         /// <code>Count</code> property in this collection.</value>
-        public override Speed CountSpeed { get { return Speed.Constant; } }
+        public override Speed CountSpeed => Speed.Constant;
 
 
         #endregion
@@ -1067,13 +1067,13 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public virtual SCG.IEqualityComparer<T> EqualityComparer { get { return itemequalityComparer; } }
+        public virtual SCG.IEqualityComparer<T> EqualityComparer => itemequalityComparer;
 
         /// <summary>
         /// 
         /// </summary>
         /// <value>True if this collection is empty</value>
-        public override bool IsEmpty { get { return size == 0; } }
+        public override bool IsEmpty => size == 0;
 
         #endregion
 
@@ -1082,7 +1082,7 @@ namespace C5
         /// Create an enumerator for this collection.
         /// </summary>
         /// <returns>The enumerator</returns>
-        public override abstract SCG.IEnumerator<T> GetEnumerator();
+        public abstract override SCG.IEnumerator<T> GetEnumerator();
         #endregion
     }
 
@@ -1102,7 +1102,7 @@ namespace C5
         /// <code>Forwards</code> if same, else <code>Backwards</code>
         /// </summary>
         /// <value>The enumeration direction relative to the original collection.</value>
-        public virtual EnumerationDirection Direction { get { return EnumerationDirection.Forwards; } }
+        public virtual EnumerationDirection Direction => EnumerationDirection.Forwards;
 
         /// <summary>
         /// 
@@ -1110,7 +1110,7 @@ namespace C5
         /// <returns></returns>
         public abstract IDirectedCollectionValue<T> Backwards();
 
-        IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards() { return this.Backwards(); }
+        IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards() { return Backwards(); }
 
         /// <summary>
         /// Check if there exists an item  that satisfies a
@@ -1263,13 +1263,13 @@ namespace C5
         /// Create an enumerator for this collection.
         /// </summary>
         /// <returns>The enumerator</returns>
-        public override abstract SCG.IEnumerator<T> GetEnumerator();
+        public abstract override SCG.IEnumerator<T> GetEnumerator();
 
         /// <summary>
         /// <code>Forwards</code> if same, else <code>Backwards</code>
         /// </summary>
         /// <value>The enumeration direction relative to the original collection.</value>
-        public override EnumerationDirection Direction { get { return EnumerationDirection.Forwards; } }
+        public override EnumerationDirection Direction => EnumerationDirection.Forwards;
 
         /// <summary>
         /// Check if there exists an item  that satisfies a

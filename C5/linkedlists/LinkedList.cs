@@ -25,7 +25,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public override EventTypeEnum ListenableEvents { get { return underlying == null ? EventTypeEnum.All : EventTypeEnum.None; } }
+        public override EventTypeEnum ListenableEvents => underlying == null ? EventTypeEnum.All : EventTypeEnum.None;
 
         #endregion
 
@@ -595,7 +595,7 @@ namespace C5
             private static PositionComparer _default;
 
             private PositionComparer() { }
-            public static PositionComparer Default { get { return _default ?? (_default = new PositionComparer()); } }
+            public static PositionComparer Default => _default ?? (_default = new PositionComparer());
             public int Compare(Position a, Position b)
             {
 
@@ -620,7 +620,7 @@ namespace C5
                 Index = left ? view.Offset : view.Offset + view.size - 1;
             }
 
-            public Position(int index) { this.Index = index; View = null; Left = false; }
+            public Position(int index) { Index = index; View = null; Left = false; }
         }
 
         //TODO: merge the two implementations using Position values as arguments
@@ -758,7 +758,7 @@ namespace C5
             internal Range(LinkedList<T> list, int start, int count, bool forwards)
             {
                 this.list = list;
-                this.rangestamp = list.underlying != null ? list.underlying.stamp : list.stamp;
+                rangestamp = list.underlying != null ? list.underlying.stamp : list.stamp;
                 // this.start = start;
                 this.count = count;
                 this.forwards = forwards;
@@ -824,11 +824,7 @@ namespace C5
             IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards() { return Backwards(); }
 
 
-            public override EnumerationDirection Direction
-            {
-                get
-                { return forwards ? EnumerationDirection.Forwards : EnumerationDirection.Backwards; }
-            }
+            public override EnumerationDirection Direction => forwards ? EnumerationDirection.Forwards : EnumerationDirection.Backwards;
         }
 
 
@@ -968,7 +964,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public virtual Speed IndexingSpeed { get { return Speed.Linear; } }
+        public virtual Speed IndexingSpeed => Speed.Linear;
 
         /// <summary>
         /// Insert an item at a specific index location in this list. 
@@ -1320,7 +1316,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public virtual bool IsValid { get { return isValid; } }
+        public virtual bool IsValid => isValid;
 
         /// <summary>
         /// </summary>
@@ -1499,7 +1495,7 @@ namespace C5
             if (positions != null && size % 2 != 0)
             {
                 MirrorViewSentinelsForReverse(positions, ref poslow, ref poshigh, a, b, size / 2);
-            } 
+            }
             (underlying ?? this).RaiseCollectionChanged();
         }
 
@@ -1963,14 +1959,7 @@ namespace C5
         /// relevant).
         /// </summary>
         /// <value>Speed.Linear</value>
-        public virtual Speed ContainsSpeed
-        {
-            get
-            {
-
-                return Speed.Linear;
-            }
-        }
+        public virtual Speed ContainsSpeed => Speed.Linear;
 
         /// <summary>
         /// Performs a check for view validity before calling base.GetUnsequencedHashCode()
@@ -2619,7 +2608,7 @@ namespace C5
         {
             ValidityCheck();
             Node cursor = startsentinel!.next!;
-            int enumeratorstamp = underlying != null ? underlying.stamp : this.stamp;
+            int enumeratorstamp = underlying != null ? underlying.stamp : stamp;
 
             while (cursor != endsentinel)
             {
@@ -2651,28 +2640,14 @@ namespace C5
         /// 
         /// </summary>
         /// <value>True since this collection has bag semantics.</value>
-        public virtual bool AllowsDuplicates
-        {
-            get
-            {
-
-                return true;
-            }
-        }
+        public virtual bool AllowsDuplicates => true;
 
         /// <summary>
         /// By convention this is true for any collection with set semantics.
         /// </summary>
         /// <value>True if only one representative of a group of equal items 
         /// is kept in the collection together with the total count.</value>
-        public virtual bool DuplicatesByCounting
-        {
-            get
-            {
-
-                return false;
-            }
-        }
+        public virtual bool DuplicatesByCounting => false;
 
         /// <summary>
         /// Add the elements from another collection with a more specialized item type 
@@ -2922,18 +2897,10 @@ namespace C5
 
         #region System.Collections.ICollection Members
 
-        bool System.Collections.ICollection.IsSynchronized
-        {
-            get { return false; }
-        }
+        bool System.Collections.ICollection.IsSynchronized => false;
 
         [Obsolete]
-        object System.Collections.ICollection.SyncRoot
-        {
-            // Presumably safe to use the startsentinel (of type Node, always != null) as SyncRoot
-            // since the class Node is private.
-            get { return (underlying != null ? ((System.Collections.ICollection)underlying).SyncRoot : startsentinel)!; }
-        }
+        object System.Collections.ICollection.SyncRoot => (underlying != null ? ((System.Collections.ICollection)underlying).SyncRoot : startsentinel)!;
 
         void System.Collections.ICollection.CopyTo(Array arr, int index)
         {
@@ -2954,8 +2921,8 @@ namespace C5
 
         Object System.Collections.IList.this[int index]
         {
-            get { return this[index]!; }
-            set { this[index] = (T)value; }
+            get => this[index]!;
+            set => this[index] = (T)value;
         }
 
         int System.Collections.IList.Add(Object o)

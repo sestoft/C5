@@ -13,9 +13,9 @@ namespace C5.UserGuideExamples
 {
     internal class CollectionCollection
     {
-        private readonly static IList<int> _col1 = new LinkedList<int>();
-        private readonly static IList<int> _col2 = new LinkedList<int>();
-        private readonly static IList<int> _col3 = new LinkedList<int>();
+        private static readonly IList<int> _col1 = new LinkedList<int>();
+        private static readonly IList<int> _col2 = new LinkedList<int>();
+        private static readonly IList<int> _col3 = new LinkedList<int>();
 
         public static void Main()
         {
