@@ -187,42 +187,42 @@ namespace C5.Tests
     public class CollectionEventList<T>
     {
         private readonly ArrayList<CollectionEvent<T>> happened;
-        private EventTypeEnum listenTo;
+        private EventType listenTo;
         private readonly SCG.IEqualityComparer<T> itemequalityComparer;
         public CollectionEventList(SCG.IEqualityComparer<T> itemequalityComparer)
         {
             happened = new ArrayList<CollectionEvent<T>>();
             this.itemequalityComparer = itemequalityComparer;
         }
-        public void Listen(ICollectionValue<T> list, EventTypeEnum listenTo)
+        public void Listen(ICollectionValue<T> list, EventType listenTo)
         {
             this.listenTo = listenTo;
-            if ((listenTo & EventTypeEnum.Changed) != 0)
+            if ((listenTo & EventType.Changed) != 0)
             {
                 list.CollectionChanged += new CollectionChangedHandler<T>(changed);
             }
 
-            if ((listenTo & EventTypeEnum.Cleared) != 0)
+            if ((listenTo & EventType.Cleared) != 0)
             {
                 list.CollectionCleared += new CollectionClearedHandler<T>(cleared);
             }
 
-            if ((listenTo & EventTypeEnum.Removed) != 0)
+            if ((listenTo & EventType.Removed) != 0)
             {
                 list.ItemsRemoved += new ItemsRemovedHandler<T>(removed);
             }
 
-            if ((listenTo & EventTypeEnum.Added) != 0)
+            if ((listenTo & EventType.Added) != 0)
             {
                 list.ItemsAdded += new ItemsAddedHandler<T>(added);
             }
 
-            if ((listenTo & EventTypeEnum.Inserted) != 0)
+            if ((listenTo & EventType.Inserted) != 0)
             {
                 list.ItemInserted += new ItemInsertedHandler<T>(inserted);
             }
 
-            if ((listenTo & EventTypeEnum.RemovedAt) != 0)
+            if ((listenTo & EventType.RemovedAt) != 0)
             {
                 list.ItemRemovedAt += new ItemRemovedAtHandler<T>(removedAt);
             }
@@ -269,44 +269,44 @@ namespace C5.Tests
 
         private void changed(object sender)
         {
-            happened.Add(new CollectionEvent<T>(EventTypeEnum.Changed, new EventArgs(), sender));
+            happened.Add(new CollectionEvent<T>(EventType.Changed, new EventArgs(), sender));
         }
 
         private void cleared(object sender, ClearedEventArgs eventArgs)
         {
-            happened.Add(new CollectionEvent<T>(EventTypeEnum.Cleared, eventArgs, sender));
+            happened.Add(new CollectionEvent<T>(EventType.Cleared, eventArgs, sender));
         }
 
         private void added(object sender, ItemCountEventArgs<T> eventArgs)
         {
-            happened.Add(new CollectionEvent<T>(EventTypeEnum.Added, eventArgs, sender));
+            happened.Add(new CollectionEvent<T>(EventType.Added, eventArgs, sender));
         }
 
         private void removed(object sender, ItemCountEventArgs<T> eventArgs)
         {
-            happened.Add(new CollectionEvent<T>(EventTypeEnum.Removed, eventArgs, sender));
+            happened.Add(new CollectionEvent<T>(EventType.Removed, eventArgs, sender));
         }
 
         private void inserted(object sender, ItemAtEventArgs<T> eventArgs)
         {
-            happened.Add(new CollectionEvent<T>(EventTypeEnum.Inserted, eventArgs, sender));
+            happened.Add(new CollectionEvent<T>(EventType.Inserted, eventArgs, sender));
         }
 
         private void removedAt(object sender, ItemAtEventArgs<T> eventArgs)
         {
-            happened.Add(new CollectionEvent<T>(EventTypeEnum.RemovedAt, eventArgs, sender));
+            happened.Add(new CollectionEvent<T>(EventType.RemovedAt, eventArgs, sender));
         }
     }
 
     public sealed class CollectionEvent<T>
     {
-        public EventTypeEnum Act { get; }
+        public EventType Act { get; }
 
         public EventArgs Args { get; }
 
         public object Sender { get; }
 
-        public CollectionEvent(EventTypeEnum act, EventArgs args, object sender)
+        public CollectionEvent(EventType act, EventArgs args, object sender)
         {
             Act = act;
             Args = args;
@@ -322,11 +322,11 @@ namespace C5.Tests
 
             switch (Act)
             {
-                case EventTypeEnum.None:
+                case EventType.None:
                     break;
-                case EventTypeEnum.Changed:
+                case EventType.Changed:
                     return true;
-                case EventTypeEnum.Cleared:
+                case EventType.Cleared:
                     if (Args is ClearedRangeEventArgs)
                     {
                         ClearedRangeEventArgs a = Args as ClearedRangeEventArgs;
@@ -347,22 +347,22 @@ namespace C5.Tests
                         ClearedEventArgs a = Args as ClearedEventArgs, o = otherEvent.Args as ClearedEventArgs;
                         return a.Full == o.Full && a.Count == o.Count;
                     }
-                case EventTypeEnum.Added:
+                case EventType.Added:
                     {
                         ItemCountEventArgs<T> a = Args as ItemCountEventArgs<T>, o = otherEvent.Args as ItemCountEventArgs<T>;
                         return itemequalityComparer.Equals(a.Item, o.Item) && a.Count == o.Count;
                     }
-                case EventTypeEnum.Removed:
+                case EventType.Removed:
                     {
                         ItemCountEventArgs<T> a = Args as ItemCountEventArgs<T>, o = otherEvent.Args as ItemCountEventArgs<T>;
                         return itemequalityComparer.Equals(a.Item, o.Item) && a.Count == o.Count;
                     }
-                case EventTypeEnum.Inserted:
+                case EventType.Inserted:
                     {
                         ItemAtEventArgs<T> a = Args as ItemAtEventArgs<T>, o = otherEvent.Args as ItemAtEventArgs<T>;
                         return a.Index == o.Index && itemequalityComparer.Equals(a.Item, o.Item);
                     }
-                case EventTypeEnum.RemovedAt:
+                case EventType.RemovedAt:
                     {
                         ItemAtEventArgs<T> a = Args as ItemAtEventArgs<T>, o = otherEvent.Args as ItemAtEventArgs<T>;
                         return a.Index == o.Index && itemequalityComparer.Equals(a.Item, o.Item);

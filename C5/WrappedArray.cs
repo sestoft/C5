@@ -578,13 +578,13 @@ namespace C5
         /// No listeners may be installed
         /// </summary>
         /// <value>0</value>
-        public virtual EventTypeEnum ListenableEvents => 0;
+        public virtual EventType ListenableEvents => 0;
 
         /// <summary>
         /// No listeners ever installed
         /// </summary>
         /// <value>0</value>
-        public virtual EventTypeEnum ActiveEvents => 0;
+        public virtual EventType ActiveEvents => 0;
 
         /// <summary>
         /// 
