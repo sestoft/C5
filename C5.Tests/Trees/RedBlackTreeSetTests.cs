@@ -1,8 +1,10 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
 
+using C5.Tests.Templates.Set;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using SCG = System.Collections.Generic;
 
 namespace C5.Tests.trees.TreeSet
@@ -133,7 +135,7 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void UpdateOrAdd2()
         {
-            ICollection<String> coll = new TreeSet<String>();
+            ICollection<string> coll = new TreeSet<String>();
             // s1 and s2 are distinct objects but contain the same text:
             String s1 = "abc", s2 = ("def" + s1).Substring(3);
             Assert.IsFalse(coll.UpdateOrAdd(s1, out string old));
@@ -3038,5 +3040,15 @@ namespace C5.Tests.trees.TreeSet
             }
         }
 
+    }
+
+    public class SCG_ISet : SCG_ISetBase
+    {
+        public override ISet<string> CreateSet(IEqualityComparer<string> equalityComparer, params string[] values)
+        {
+            var set = new TreeSet<string>(SCG.Comparer<string>.Default, equalityComparer);
+            set.UnionWith(values);
+            return set;
+        }
     }
 }
