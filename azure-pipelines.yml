@@ -9,48 +9,53 @@ variables:
 
 steps:
 - task: DotNetCoreCLI@2
+  displayName: Build
   inputs:
     command: build
     arguments: /P:SourceLinkCreate=false --configuration $(buildConfiguration)
-  displayName: Build
 
 - task: DotNetCoreCLI@2
+  displayName: Test
   inputs:
     command: test
     projects: "**/*Tests/*.csproj"
     arguments: '/P:SourceLinkCreate=false --configuration $(buildConfiguration) --collect "Code coverage"'
-  displayName: Test
 
 - task: CopyFiles@2
+  displayName: 'Copy files'
   inputs:
     sourceFolder: $(Build.SourcesDirectory)/C5/bin/$(buildConfiguration)
     contents: '*.nupkg'
     targetFolder: $(Build.ArtifactStagingDirectory)
     flattenFolders: true
-  displayName: 'Copy files'
 
 - task: NodeTool@0
+  displayName: 'Install Node.js'
+  enabled: false
   inputs:
     versionSpec: '10.x'
-  displayName: 'Install Node.js'
   
-- script: |
-    CALL npm install -g doxygen
-    CALL npm install -g graphviz
-    SET DOXYGEN_OUTPUT_DIRECTORY=$(Build.SourcesDirectory)
-    CALL doxygen --download
-    CALL doxygen --docs --configPath="$(Build.SourcesDirectory)/Doxyfile"
-  workingDirectory: $(Build.SourcesDirectory)
+- task: CmdLine@2
   displayName: 'Generate documentation'
-  failOnStderr: true
+  enabled: false # currently unstable
+  inputs:
+    script: |
+      CALL npm install -g doxygen
+      CALL npm install -g graphviz
+      SET DOXYGEN_OUTPUT_DIRECTORY=$(Build.SourcesDirectory)
+      CALL doxygen --download
+      CALL doxygen --docs --configPath="$(Build.SourcesDirectory)/Doxyfile"
+    workingDirectory: $(Build.SourcesDirectory)
+    failOnStderr: true
 
 - task: ArchiveFiles@2
+  displayName: 'Archive documentation'
+  enabled: false # not needed when previous task disabled
   inputs:
     rootFolderOrFile: '$(Build.SourcesDirectory)/C5.Docs/html' 
     includeRootFolder: false 
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/c5docs.zip' 
-  displayName: 'Archive documentation'
     
 - task: PublishPipelineArtifact@1
   inputs:
