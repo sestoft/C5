@@ -52,5 +52,8 @@ steps:
     archiveFile: '$(Build.ArtifactStagingDirectory)/c5docs.zip' 
   displayName: 'Archive documentation'
     
-- task: PublishBuildArtifacts@1
+- task: PublishPipelineArtifact@1
   displayName: Publish Build Artifacts
+  inputs:
+    targetPath: $(Build.ArtifactStagingDirectory)
+    artifactName: drop
