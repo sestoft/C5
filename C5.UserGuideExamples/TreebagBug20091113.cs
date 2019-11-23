@@ -7,91 +7,90 @@
 //   csc /r:netstandard.dll /r:C5.dll TreebagBug20091113.cs 
 
 using System;
-using System.Text;
-using C5;
-using SCG = System.Collections.Generic;
 
-namespace Try
+namespace C5.UserGuideExamples
 {
-  class MyTest
-  {
-    public static void Main(String[] args)
+    class TreebagBug20091113
     {
-      var list = new TreeBag<long>();
-      // Sequence generated in FindNodeRandomTest
-      list.Add(553284);
-      list.Add(817435);
-      list.Remove(817435);
-      list.Add(155203);
-      list.Add(316201);
-      list.Remove(316201);
-      list.Add(145375);
-      list.Remove(155203);
-      list.Add(155203);
-      list.Add(150788);
-      list.Remove(145375);
-      list.Add(316201);
-      list.Add(263469);
-      list.Add(263469);
-      list.Add(441406);
-      list.Add(553284);
-      list.Remove(553284);
-      list.Add(553284);
-      list.Remove(150788);
-      list.Add(769005);
-      list.Add(263469);
-      list.Remove(316201);
-      list.Add(553284);
-      list.Remove(769005);
-      list.Add(316201);
-      list.Remove(263469);
-      list.Add(817435);
-      list.Add(553284);
-      list.Remove(316201);
-      list.Add(150788);
+        public static void Main()
+        {
+            // Sequence generated in FindNodeRandomTest
+            var list = new TreeBag<long>
+            {
+                553284,
+                817435
+            };
+            list.Remove(817435);
+            list.Add(155203);
+            list.Add(316201);
+            list.Remove(316201);
+            list.Add(145375);
+            list.Remove(155203);
+            list.Add(155203);
+            list.Add(150788);
+            list.Remove(145375);
+            list.Add(316201);
+            list.Add(263469);
+            list.Add(263469);
+            list.Add(441406);
+            list.Add(553284);
+            list.Remove(553284);
+            list.Add(553284);
+            list.Remove(150788);
+            list.Add(769005);
+            list.Add(263469);
+            list.Remove(316201);
+            list.Add(553284);
+            list.Remove(769005);
+            list.Add(316201);
+            list.Remove(263469);
+            list.Add(817435);
+            list.Add(553284);
+            list.Remove(316201);
+            list.Add(150788);
 
-//        list.Add(0.553284f);
-//        list.Add(0.8174357f);
-//        list.Remove(0.8174357f);
-//        list.Add(0.1552035f);
-//        list.Add(0.3162012f);
-//        list.Remove(0.3162012f);
-//        list.Add(0.1453752f);
-//        list.Remove(0.1552035f);
-//        list.Add(0.1552035f);
-//        list.Add(0.1507881f);
-//        list.Remove(0.1453752f);
-//        list.Add(0.3162012f);
-//        list.Add(0.2634694f);
-//        list.Add(0.2634694f);
-//        list.Add(0.4414065f);
-//        list.Add(0.553284f);
-//        list.Remove(0.553284f);
-//        list.Add(0.553284f);
-//        list.Remove(0.1507881f);
-//        list.Add(0.7690055f);
-//        list.Add(0.2634694f);
-//        list.Remove(0.3162012f);
-//        list.Add(0.553284f);
-//        list.Remove(0.7690055f);
-//        list.Add(0.3162012f);
-//        list.Remove(0.2634694f);
-//        list.Add(0.8174357f);
-//        list.Add(0.553284f);
-//        list.Remove(0.3162012f);
-//        list.Add(0.1507881f);
+            //        list.Add(0.553284f);
+            //        list.Add(0.8174357f);
+            //        list.Remove(0.8174357f);
+            //        list.Add(0.1552035f);
+            //        list.Add(0.3162012f);
+            //        list.Remove(0.3162012f);
+            //        list.Add(0.1453752f);
+            //        list.Remove(0.1552035f);
+            //        list.Add(0.1552035f);
+            //        list.Add(0.1507881f);
+            //        list.Remove(0.1453752f);
+            //        list.Add(0.3162012f);
+            //        list.Add(0.2634694f);
+            //        list.Add(0.2634694f);
+            //        list.Add(0.4414065f);
+            //        list.Add(0.553284f);
+            //        list.Remove(0.553284f);
+            //        list.Add(0.553284f);
+            //        list.Remove(0.1507881f);
+            //        list.Add(0.7690055f);
+            //        list.Add(0.2634694f);
+            //        list.Remove(0.3162012f);
+            //        list.Add(0.553284f);
+            //        list.Remove(0.7690055f);
+            //        list.Add(0.3162012f);
+            //        list.Remove(0.2634694f);
+            //        list.Add(0.8174357f);
+            //        list.Add(0.553284f);
+            //        list.Remove(0.3162012f);
+            //        list.Add(0.1507881f);
 
 
-      Console.WriteLine(list);
-      Console.WriteLine(list.Count > 3);
-       Console.WriteLine(list[0]);
-       Console.WriteLine(list[1]);
-       Console.WriteLine(list[2]);  // Throws!
-//        Console.WriteLine(list[0,1]);
-//        Console.WriteLine(list[1,1]);
-//        Console.WriteLine(list[2,1]);    // Worse: Throws too!
+            Console.WriteLine(list);
+            Console.WriteLine(list.Count > 3);
+            Console.WriteLine(list[0]);
+            Console.WriteLine(list[1]);
+            Console.WriteLine(list[2]);  // Throws!
+                                         //        Console.WriteLine(list[0,1]);
+                                         //        Console.WriteLine(list[1,1]);
+                                         //        Console.WriteLine(list[2,1]);    // Worse: Throws too!
+        }
     }
-  }
 }
 
 /* 
