@@ -1863,12 +1863,12 @@ namespace C5
             }
 
 #warning improve (mainly for bag) by using a Node iterator instead of ItemMultiplicities()
-            CircularQueue<KeyValuePair<T, int>>? wasRemoved = null;
+            CircularQueue<System.Collections.Generic.KeyValuePair<T, int>>? wasRemoved = null;
             if ((ActiveEvents & EventType.Removed) != 0)
             {
-                wasRemoved = new CircularQueue<KeyValuePair<T, int>>();
-                SCG.IEnumerator<KeyValuePair<T, int>> ie = ItemMultiplicities().GetEnumerator();
-                foreach (KeyValuePair<T, int> p in t.ItemMultiplicities())
+                wasRemoved = new CircularQueue<System.Collections.Generic.KeyValuePair<T, int>>();
+                SCG.IEnumerator<System.Collections.Generic.KeyValuePair<T, int>> ie = ItemMultiplicities().GetEnumerator();
+                foreach (System.Collections.Generic.KeyValuePair<T, int> p in t.ItemMultiplicities())
                 {
                     //We know p.Key is in this!
                     while (ie.MoveNext())
@@ -1895,7 +1895,7 @@ namespace C5
             blackdepth = t.blackdepth;
             if (wasRemoved != null)
             {
-                foreach (KeyValuePair<T, int> p in wasRemoved)
+                foreach (System.Collections.Generic.KeyValuePair<T, int> p in wasRemoved)
                 {
                     RaiseItemsRemoved(p.Key, p.Value);
                 }
@@ -2114,7 +2114,7 @@ namespace C5
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual ICollectionValue<KeyValuePair<T, int>> ItemMultiplicities()
+        public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
         {
             if (!isValid)
             {

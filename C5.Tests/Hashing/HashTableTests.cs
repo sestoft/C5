@@ -144,7 +144,7 @@ namespace C5.Tests.hashtable.set
                 hashset.Add(18);
                 hashset.Add(17);
                 hashset.Add(33);
-                Assert.IsTrue(IC.seteq(hashset, 1, 5, 8, 10, 16, 17, 18, 33));
+                Assert.IsTrue(IC.SetEq(hashset, 1, 5, 8, 10, 16, 17, 18, 33));
             }
 
             [Test]
@@ -266,11 +266,11 @@ namespace C5.Tests.hashtable.set
                 HashSet<int> hashset2 = new HashSet<int>();
 
                 hashset2.AddAll(hashset);
-                Assert.IsTrue(IC.seteq(hashset2, 3, 4, 5));
+                Assert.IsTrue(IC.SetEq(hashset2, 3, 4, 5));
                 hashset.Add(9);
                 hashset.AddAll(hashset2);
-                Assert.IsTrue(IC.seteq(hashset2, 3, 4, 5));
-                Assert.IsTrue(IC.seteq(hashset, 3, 4, 5, 9));
+                Assert.IsTrue(IC.SetEq(hashset2, 3, 4, 5));
+                Assert.IsTrue(IC.SetEq(hashset, 3, 4, 5, 9));
             }
 
 
@@ -325,11 +325,11 @@ namespace C5.Tests.hashtable.set
             [Test]
             public void Test()
             {
-                Assert.IsTrue(IC.seteq(list.UniqueItems()));
-                Assert.IsTrue(IC.seteq(list.ItemMultiplicities()));
+                Assert.IsTrue(IC.SetEq(list.UniqueItems()));
+                Assert.IsTrue(IC.SetEq(list.ItemMultiplicities()));
                 list.AddAll(new int[] { 7, 9, 7 });
-                Assert.IsTrue(IC.seteq(list.UniqueItems(), 7, 9));
-                Assert.IsTrue(IC.seteq(list.ItemMultiplicities(), 7, 1, 9, 1));
+                Assert.IsTrue(IC.SetEq(list.UniqueItems(), 7, 9));
+                Assert.IsTrue(IC.SetEq(list.ItemMultiplicities(), 7, 1, 9, 1));
             }
         }
 
@@ -570,7 +570,7 @@ namespace C5.Tests.hashtable.set
                     a[i] = 3 * i + 1;
                 }
 
-                Assert.IsTrue(IC.seteq(hashset, a));
+                Assert.IsTrue(IC.SetEq(hashset, a));
             }
 
 
@@ -603,7 +603,7 @@ namespace C5.Tests.hashtable.set
                 Assert.AreEqual(1, hashset.ContainsCount(7));
                 hashset.Add(5); hashset.Add(8); hashset.Add(5);
                 hashset.RemoveAllCopies(8);
-                Assert.IsTrue(IC.eq(hashset, 7, 5));
+                Assert.IsTrue(IC.Eq(hashset, 7, 5));
             }
 
 
@@ -634,12 +634,12 @@ namespace C5.Tests.hashtable.set
                 hashset.Add(4); hashset.Add(5); hashset.Add(6);
                 list2.Add(5); list2.Add(4); list2.Add(7);
                 hashset.RetainAll(list2);
-                Assert.IsTrue(IC.seteq(hashset, 4, 5));
+                Assert.IsTrue(IC.SetEq(hashset, 4, 5));
                 hashset.Add(6);
                 list2.Clear();
                 list2.Add(7); list2.Add(8); list2.Add(9);
                 hashset.RetainAll(list2);
-                Assert.IsTrue(IC.seteq(hashset));
+                Assert.IsTrue(IC.SetEq(hashset));
             }
 
             //Bug in RetainAll reported by Chris Fesler
@@ -681,16 +681,16 @@ namespace C5.Tests.hashtable.set
                 hashset.Add(4); hashset.Add(5); hashset.Add(6);
                 list2.Add(5); list2.Add(7); list2.Add(4);
                 hashset.RemoveAll(list2);
-                Assert.IsTrue(IC.eq(hashset, 6));
+                Assert.IsTrue(IC.Eq(hashset, 6));
                 hashset.Add(5); hashset.Add(4);
                 list2.Clear();
                 list2.Add(6); list2.Add(5);
                 hashset.RemoveAll(list2);
-                Assert.IsTrue(IC.eq(hashset, 4));
+                Assert.IsTrue(IC.Eq(hashset, 4));
                 list2.Clear();
                 list2.Add(7); list2.Add(8); list2.Add(9);
                 hashset.RemoveAll(list2);
-                Assert.IsTrue(IC.eq(hashset, 4));
+                Assert.IsTrue(IC.Eq(hashset, 4));
             }
 
 
@@ -700,19 +700,19 @@ namespace C5.Tests.hashtable.set
                 hashset.Add(4); hashset.Add(4); hashset.Add(5); hashset.Add(4); hashset.Add(6);
                 Assert.IsFalse(hashset.Remove(2));
                 Assert.IsTrue(hashset.Remove(4));
-                Assert.IsTrue(IC.seteq(hashset, 5, 6));
+                Assert.IsTrue(IC.SetEq(hashset, 5, 6));
                 hashset.Add(7);
                 hashset.Add(21); hashset.Add(37); hashset.Add(53); hashset.Add(69); hashset.Add(85);
                 Assert.IsTrue(hashset.Remove(5));
-                Assert.IsTrue(IC.seteq(hashset, 6, 7, 21, 37, 53, 69, 85));
+                Assert.IsTrue(IC.SetEq(hashset, 6, 7, 21, 37, 53, 69, 85));
                 Assert.IsFalse(hashset.Remove(165));
-                Assert.IsTrue(IC.seteq(hashset, 6, 7, 21, 37, 53, 69, 85));
+                Assert.IsTrue(IC.SetEq(hashset, 6, 7, 21, 37, 53, 69, 85));
                 Assert.IsTrue(hashset.Remove(53));
-                Assert.IsTrue(IC.seteq(hashset, 6, 7, 21, 37, 69, 85));
+                Assert.IsTrue(IC.SetEq(hashset, 6, 7, 21, 37, 69, 85));
                 Assert.IsTrue(hashset.Remove(37));
-                Assert.IsTrue(IC.seteq(hashset, 6, 7, 21, 69, 85));
+                Assert.IsTrue(IC.SetEq(hashset, 6, 7, 21, 69, 85));
                 Assert.IsTrue(hashset.Remove(85));
-                Assert.IsTrue(IC.seteq(hashset, 6, 7, 21, 69));
+                Assert.IsTrue(IC.SetEq(hashset, 6, 7, 21, 69));
             }
 
 
@@ -736,16 +736,16 @@ namespace C5.Tests.hashtable.set
         [TestFixture]
         public class Combined
         {
-            private ICollection<KeyValuePair<int, int>> lst;
+            private ICollection<System.Collections.Generic.KeyValuePair<int, int>> lst;
 
 
             [SetUp]
             public void Init()
             {
-                lst = new HashSet<KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
+                lst = new HashSet<System.Collections.Generic.KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
                 for (int i = 0; i < 10; i++)
                 {
-                    lst.Add(new KeyValuePair<int, int>(i, i + 30));
+                    lst.Add(new System.Collections.Generic.KeyValuePair<int, int>(i, i + 30));
                 }
             }
 
@@ -757,12 +757,12 @@ namespace C5.Tests.hashtable.set
             [Test]
             public void Find()
             {
-                KeyValuePair<int, int> p = new KeyValuePair<int, int>(3, 78);
+                System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
 
                 Assert.IsTrue(lst.Find(ref p));
                 Assert.AreEqual(3, p.Key);
                 Assert.AreEqual(33, p.Value);
-                p = new KeyValuePair<int, int>(13, 78);
+                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
                 Assert.IsFalse(lst.Find(ref p));
             }
 
@@ -770,15 +770,15 @@ namespace C5.Tests.hashtable.set
             [Test]
             public void FindOrAdd()
             {
-                KeyValuePair<int, int> p = new KeyValuePair<int, int>(3, 78);
-                KeyValuePair<int, int> q = new KeyValuePair<int, int>();
+                var p = new SCG.KeyValuePair<int, int>(3, 78);
+                var q = new SCG.KeyValuePair<int, int>();
 
                 Assert.IsTrue(lst.FindOrAdd(ref p));
                 Assert.AreEqual(3, p.Key);
                 Assert.AreEqual(33, p.Value);
-                p = new KeyValuePair<int, int>(13, 79);
+                p = new SCG.KeyValuePair<int, int>(13, 79);
                 Assert.IsFalse(lst.FindOrAdd(ref p));
-                q.Key = 13;
+                q = new SCG.KeyValuePair<int, int>(13, q.Value);
                 Assert.IsTrue(lst.Find(ref q));
                 Assert.AreEqual(13, q.Key);
                 Assert.AreEqual(79, q.Value);
@@ -788,15 +788,15 @@ namespace C5.Tests.hashtable.set
             [Test]
             public void Update()
             {
-                KeyValuePair<int, int> p = new KeyValuePair<int, int>(3, 78);
-                KeyValuePair<int, int> q = new KeyValuePair<int, int>();
+                var p = new SCG.KeyValuePair<int, int>(3, 78);
+                var q = new SCG.KeyValuePair<int, int>();
 
                 Assert.IsTrue(lst.Update(p));
-                q.Key = 3;
+                q = new SCG.KeyValuePair<int, int>(3, q.Value);
                 Assert.IsTrue(lst.Find(ref q));
                 Assert.AreEqual(3, q.Key);
                 Assert.AreEqual(78, q.Value);
-                p = new KeyValuePair<int, int>(13, 78);
+                p = new SCG.KeyValuePair<int, int>(13, 78);
                 Assert.IsFalse(lst.Update(p));
             }
 
@@ -804,17 +804,17 @@ namespace C5.Tests.hashtable.set
             [Test]
             public void UpdateOrAdd1()
             {
-                KeyValuePair<int, int> p = new KeyValuePair<int, int>(3, 78);
-                KeyValuePair<int, int> q = new KeyValuePair<int, int>();
+                var p = new SCG.KeyValuePair<int, int>(3, 78);
+                var q = new SCG.KeyValuePair<int, int>();
 
                 Assert.IsTrue(lst.UpdateOrAdd(p));
-                q.Key = 3;
+                q = new SCG.KeyValuePair<int, int>(3, q.Value);
                 Assert.IsTrue(lst.Find(ref q));
                 Assert.AreEqual(3, q.Key);
                 Assert.AreEqual(78, q.Value);
-                p = new KeyValuePair<int, int>(13, 79);
+                p = new SCG.KeyValuePair<int, int>(13, 79);
                 Assert.IsFalse(lst.UpdateOrAdd(p));
-                q.Key = 13;
+                q = new SCG.KeyValuePair<int, int>(13, q.Value);
                 Assert.IsTrue(lst.Find(ref q));
                 Assert.AreEqual(13, q.Key);
                 Assert.AreEqual(79, q.Value);
@@ -823,26 +823,26 @@ namespace C5.Tests.hashtable.set
             [Test]
             public void UpdateOrAdd2()
             {
-                ICollection<String> coll = new HashSet<String>();
+                ICollection<string> coll = new HashSet<string>();
                 // s1 and s2 are distinct objects but contain the same text:
-                String s1 = "abc", s2 = ("def" + s1).Substring(3);
+                string s1 = "abc", s2 = ("def" + s1).Substring(3);
                 Assert.IsFalse(coll.UpdateOrAdd(s1, out string old));
                 Assert.AreEqual(null, old);
                 Assert.IsTrue(coll.UpdateOrAdd(s2, out old));
-                Assert.IsTrue(Object.ReferenceEquals(s1, old));
-                Assert.IsFalse(Object.ReferenceEquals(s2, old));
+                Assert.IsTrue(object.ReferenceEquals(s1, old));
+                Assert.IsFalse(object.ReferenceEquals(s2, old));
             }
 
             [Test]
             public void RemoveWithReturn()
             {
-                KeyValuePair<int, int> p = new KeyValuePair<int, int>(3, 78);
-                //KeyValuePair<int,int> q = new KeyValuePair<int,int>();
+                System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+                //System.Collections.Generic.KeyValuePair<int,int> q = new System.Collections.Generic.KeyValuePair<int,int>();
 
                 Assert.IsTrue(lst.Remove(p, out p));
                 Assert.AreEqual(3, p.Key);
                 Assert.AreEqual(33, p.Value);
-                p = new KeyValuePair<int, int>(13, 78);
+                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
                 Assert.IsFalse(lst.Remove(p, out _));
             }
         }
@@ -889,16 +889,16 @@ namespace C5.Tests.hashtable.set
             [Test]
             public void HashVal()
             {
-                Assert.AreEqual(CHC.unsequencedhashcode(), dit.GetUnsequencedHashCode());
+                Assert.AreEqual(CHC.UnsequencedHashCode(), dit.GetUnsequencedHashCode());
                 dit.Add(3);
-                Assert.AreEqual(CHC.unsequencedhashcode(3), dit.GetUnsequencedHashCode());
+                Assert.AreEqual(CHC.UnsequencedHashCode(3), dit.GetUnsequencedHashCode());
                 dit.Add(7);
-                Assert.AreEqual(CHC.unsequencedhashcode(3, 7), dit.GetUnsequencedHashCode());
-                Assert.AreEqual(CHC.unsequencedhashcode(), dut.GetUnsequencedHashCode());
+                Assert.AreEqual(CHC.UnsequencedHashCode(3, 7), dit.GetUnsequencedHashCode());
+                Assert.AreEqual(CHC.UnsequencedHashCode(), dut.GetUnsequencedHashCode());
                 dut.Add(3);
-                Assert.AreEqual(CHC.unsequencedhashcode(3), dut.GetUnsequencedHashCode());
+                Assert.AreEqual(CHC.UnsequencedHashCode(3), dut.GetUnsequencedHashCode());
                 dut.Add(7);
-                Assert.AreEqual(CHC.unsequencedhashcode(7, 3), dut.GetUnsequencedHashCode());
+                Assert.AreEqual(CHC.UnsequencedHashCode(7, 3), dut.GetUnsequencedHashCode());
             }
 
 

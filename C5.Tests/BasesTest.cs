@@ -415,7 +415,7 @@ namespace C5.Tests.support
             {
                 SCG.IEqualityComparer<LinkedList<int>> h = C5.EqualityComparer<LinkedList<int>>.Default;
                 LinkedList<int> s = new LinkedList<int>() { 1, 2, 3 };
-                Assert.AreEqual(CHC.sequencedhashcode(1, 2, 3), h.GetHashCode(s));
+                Assert.AreEqual(CHC.SequencedHashCode(1, 2, 3), h.GetHashCode(s));
             }
 
             [Test]
@@ -423,7 +423,7 @@ namespace C5.Tests.support
             {
                 SCG.IEqualityComparer<C5.HashSet<int>> h = C5.EqualityComparer<C5.HashSet<int>>.Default;
                 C5.HashSet<int> s = new C5.HashSet<int>() { 1, 2, 3 };
-                Assert.AreEqual(CHC.unsequencedhashcode(1, 2, 3), h.GetHashCode(s));
+                Assert.AreEqual(CHC.UnsequencedHashCode(1, 2, 3), h.GetHashCode(s));
             }
 
             //generic types implementing collection interfaces
@@ -432,7 +432,7 @@ namespace C5.Tests.support
             {
                 SCG.IEqualityComparer<C5.IList<int>> h = C5.EqualityComparer<C5.IList<int>>.Default;
                 C5.IList<int> s = new LinkedList<int>() { 1, 2, 3 };
-                Assert.AreEqual(CHC.sequencedhashcode(1, 2, 3), h.GetHashCode(s));
+                Assert.AreEqual(CHC.SequencedHashCode(1, 2, 3), h.GetHashCode(s));
             }
 
             private interface IFoo<T> : C5.ICollection<T> { void Bamse(); }
@@ -448,7 +448,7 @@ namespace C5.Tests.support
             {
                 SCG.IEqualityComparer<IFoo<int>> h = C5.EqualityComparer<IFoo<int>>.Default;
                 IFoo<int> s = new Foo<int>() { 1, 2, 3 };
-                Assert.AreEqual(CHC.unsequencedhashcode(1, 2, 3), h.GetHashCode(s));
+                Assert.AreEqual(CHC.UnsequencedHashCode(1, 2, 3), h.GetHashCode(s));
             }
 
             //Nongeneric types implementing collection types:
@@ -467,7 +467,7 @@ namespace C5.Tests.support
             {
                 SCG.IEqualityComparer<IBaz> h = C5.EqualityComparer<IBaz>.Default;
                 IBaz s = new Baz() { 1, 2, 3 };
-                Assert.AreEqual(CHC.sequencedhashcode(1, 2, 3), h.GetHashCode(s));
+                Assert.AreEqual(CHC.SequencedHashCode(1, 2, 3), h.GetHashCode(s));
             }
 
             private interface IBar : C5.ICollection<int>
@@ -509,7 +509,7 @@ namespace C5.Tests.support
             {
                 SCG.IEqualityComparer<IBar> h = C5.EqualityComparer<IBar>.Default;
                 IBar s = new Bar() { 1, 2, 3 };
-                Assert.AreEqual(CHC.unsequencedhashcode(1, 2, 3), h.GetHashCode(s));
+                Assert.AreEqual(CHC.UnsequencedHashCode(1, 2, 3), h.GetHashCode(s));
             }
 
             [Test]

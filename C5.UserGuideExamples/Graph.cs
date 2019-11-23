@@ -69,7 +69,7 @@ namespace C5.UserGuideExamples
     {
         V Value { get; }
         IGraph<V, E, W> Graph { get; }
-        ICollectionValue<KeyValuePair<V, E>> Adjacent { get; }
+        ICollectionValue<System.Collections.Generic.KeyValuePair<V, E>> Adjacent { get; }
     }
 
     internal class Vertex<V>
@@ -110,7 +110,7 @@ namespace C5.UserGuideExamples
         /// </summary>
         /// <param name="vertex"></param>
         /// <returns></returns>
-        ICollectionValue<KeyValuePair<V, E>> Adjacent(V vertex);
+        ICollectionValue<System.Collections.Generic.KeyValuePair<V, E>> Adjacent(V vertex);
 
         /// <summary>
         /// The collection of all edges in the graph. The return value is a snapshot
@@ -185,7 +185,7 @@ namespace C5.UserGuideExamples
         /// </summary>
         /// <returns>A collection of (vertex,component) pairs, where the first part of the
         /// pair is some vertex in the component.</returns>
-        ICollectionValue<KeyValuePair<V, IGraph<V, E, W>>> Components();
+        ICollectionValue<System.Collections.Generic.KeyValuePair<V, IGraph<V, E, W>>> Components();
 
         /// <summary>
         /// Traverse the connected component containing the <code>start</code> vertex, 
@@ -559,9 +559,9 @@ namespace C5.UserGuideExamples
             return new GuardedCollectionValue<V>(_graph.Keys);
         }
 
-        public ICollectionValue<KeyValuePair<V, E>> Adjacent(V vertex)
+        public ICollectionValue<System.Collections.Generic.KeyValuePair<V, E>> Adjacent(V vertex)
         {
-            return new GuardedCollectionValue<KeyValuePair<V, E>>(_graph[vertex]);
+            return new GuardedCollectionValue<System.Collections.Generic.KeyValuePair<V, E>>(_graph[vertex]);
         }
 
         private class EdgesValue : CollectionValueBase<Edge<V, E>>
@@ -730,9 +730,9 @@ namespace C5.UserGuideExamples
             }
         }
 
-        public ICollectionValue<KeyValuePair<V, IGraph<V, E, W>>> Components()
+        public ICollectionValue<System.Collections.Generic.KeyValuePair<V, IGraph<V, E, W>>> Components()
         {
-            ArrayList<KeyValuePair<V, IGraph<V, E, W>>> retval = new ArrayList<KeyValuePair<V, IGraph<V, E, W>>>();
+            ArrayList<System.Collections.Generic.KeyValuePair<V, IGraph<V, E, W>>> retval = new ArrayList<System.Collections.Generic.KeyValuePair<V, IGraph<V, E, W>>>();
             HashGraph<V, E, W> component;
             ArrayList<V> vertices = null;
             void edgeaction(Edge<V, E> e)
@@ -753,12 +753,12 @@ namespace C5.UserGuideExamples
                 {
                     //component.graph[start] = graph[start].Clone();
                     HashDictionary<V, E> edgeset = component._graph[start] = new HashDictionary<V, E>();
-                    foreach (KeyValuePair<V, E> adjacent in _graph[start])
+                    foreach (System.Collections.Generic.KeyValuePair<V, E> adjacent in _graph[start])
                     {
                         edgeset[adjacent.Key] = adjacent.Value;
                     }
                 }
-                retval.Add(new KeyValuePair<V, IGraph<V, E, W>>(v, component));
+                retval.Add(new System.Collections.Generic.KeyValuePair<V, IGraph<V, E, W>>(v, component));
             }
             TraverseVertices(false, edgeaction, beforecomponent, aftercomponent);
             return retval;
@@ -794,7 +794,7 @@ namespace C5.UserGuideExamples
 
                 if (_graph.Find(ref v, out HashDictionary<V, E> adjacent))
                 {
-                    foreach (KeyValuePair<V, E> p in adjacent)
+                    foreach (System.Collections.Generic.KeyValuePair<V, E> p in adjacent)
                     {
                         var end = p.Key;
                         if (!seen.FindOrAdd(ref end))
@@ -845,7 +845,7 @@ namespace C5.UserGuideExamples
                 before(v);
                 if (_graph.Find(ref v, out HashDictionary<V, E> adjacent))
                 {
-                    foreach (KeyValuePair<V, E> p in adjacent)
+                    foreach (System.Collections.Generic.KeyValuePair<V, E> p in adjacent)
                     {
                         V end = p.Key;
                         Edge<V, E> e = new Edge<V, E>(v, end, p.Value);
@@ -906,7 +906,7 @@ namespace C5.UserGuideExamples
                 }
                 if (_graph.Find(ref current, out HashDictionary<V, E> adjacentnodes))
                 {
-                    foreach (KeyValuePair<V, E> adjacent in adjacentnodes)
+                    foreach (System.Collections.Generic.KeyValuePair<V, E> adjacent in adjacentnodes)
                     {
                         V end = adjacent.Key;
                         E edgedata = adjacent.Value;
@@ -1041,7 +1041,7 @@ namespace C5.UserGuideExamples
                 else
                 {
                     bool first = true;
-                    foreach (KeyValuePair<V, E> p in clone._graph[current])
+                    foreach (System.Collections.Generic.KeyValuePair<V, E> p in clone._graph[current])
                     {
                         W thisweight = Weight.Weight(p.Value);
                         if (first || bestweight.CompareTo(thisweight) > 0)
@@ -1313,10 +1313,10 @@ namespace C5.UserGuideExamples
         public void Print(System.IO.TextWriter output)
         {
             output.WriteLine("Graph has {0} vertices, {1} edges, {2} components", _graph.Count, EdgeCount, ComponentCount);
-            foreach (KeyValuePair<V, HashDictionary<V, E>> p in _graph)
+            foreach (SCG.KeyValuePair<V, HashDictionary<V, E>> p in _graph)
             {
                 output.Write(" {0} ->  ", p.Key);
-                foreach (KeyValuePair<V, E> p2 in p.Value)
+                foreach (SCG.KeyValuePair<V, E> p2 in p.Value)
                 {
                     output.Write("{1} (data {2}), ", p.Key, p2.Key, p2.Value);
                 }
@@ -1527,7 +1527,7 @@ namespace C5.UserGuideExamples
             IGraph<string, int, int> g = new HashGraph<string, int, int>(new CountWeight<int>(), Forest(2, 2));
             Console.WriteLine("Forest has: Vertices: {0}, Edges: {1}, Components: {2}", g.VertexCount, g.EdgeCount, g.ComponentCount);
             //g.Print(Console.Out);
-            foreach (KeyValuePair<string, IGraph<string, int, int>> comp in g.Components())
+            foreach (System.Collections.Generic.KeyValuePair<string, IGraph<string, int, int>> comp in g.Components())
             {
                 Console.WriteLine("Component of {0}:", comp.Key);
                 comp.Value.Print(Console.Out);

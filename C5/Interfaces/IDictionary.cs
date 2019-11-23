@@ -7,7 +7,7 @@ namespace C5
     /// A dictionary with keys of type K and values of type V. Equivalent to a
     /// finite partial map from K to V.
     /// </summary>
-    public interface IDictionary<K, V> : ICollectionValue<KeyValuePair<K, V>>
+    public interface IDictionary<K, V> : ICollectionValue<System.Collections.Generic.KeyValuePair<K, V>>
     {
         /// <summary>
         /// The key equalityComparer.
@@ -65,7 +65,7 @@ namespace C5
         /// <exception cref="DuplicateNotAllowedException"> 
         /// If the input contains duplicate keys or a key already present in this dictionary.</exception>
         /// <param name="entries"></param>
-        void AddAll<U, W>(IEnumerable<KeyValuePair<U, W>> entries)
+        void AddAll<U, W>(IEnumerable<System.Collections.Generic.KeyValuePair<U, W>> entries)
             where U : K
             where W : V
         ;

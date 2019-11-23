@@ -2769,7 +2769,7 @@ namespace C5
                 if (dict.Remove(item, out node))
                   newdict.Add(item, node);
               }
-              foreach (KeyValuePair<T, Node> pair in dict)
+              foreach (System.Collections.Generic.KeyValuePair<T, Node> pair in dict)
               {
                 Node n = pair.Value;
                 fixViewsBeforeSingleRemove(n, 117);
@@ -2942,7 +2942,7 @@ namespace C5
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual ICollectionValue<KeyValuePair<T, int>> ItemMultiplicities()
+        public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
         {
             return new MultiplicityOne<T>(this);
 

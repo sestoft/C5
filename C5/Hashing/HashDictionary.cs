@@ -28,7 +28,7 @@ namespace C5
         public HashDictionary(SCG.IEqualityComparer<K> keyequalityComparer)
             : base(keyequalityComparer)
         {
-            pairs = new HashSet<KeyValuePair<K, V>>(new KeyValuePairEqualityComparer<K, V>(keyequalityComparer));
+            pairs = new HashSet<System.Collections.Generic.KeyValuePair<K, V>>(new KeyValuePairEqualityComparer<K, V>(keyequalityComparer));
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace C5
         public HashDictionary(int capacity, double fill, SCG.IEqualityComparer<K> keyequalityComparer)
             : base(keyequalityComparer)
         {
-            pairs = new HashSet<KeyValuePair<K, V>>(capacity, fill, new KeyValuePairEqualityComparer<K, V>(keyequalityComparer));
+            pairs = new HashSet<System.Collections.Generic.KeyValuePair<K, V>>(capacity, fill, new KeyValuePairEqualityComparer<K, V>(keyequalityComparer));
         }
     }
 }

@@ -98,7 +98,7 @@ namespace C5
         /// 
         /// </summary>
         /// <returns></returns>
-        ICollectionValue<KeyValuePair<T, int>> ItemMultiplicities();
+        ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities();
 
         /// <summary>
         /// Check whether this collection contains all the values in another collection.

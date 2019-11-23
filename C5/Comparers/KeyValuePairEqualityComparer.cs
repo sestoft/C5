@@ -8,7 +8,7 @@ namespace C5
     /// Operations only look at keys and uses an externally defined equalityComparer for that.
     /// </summary>
     [Serializable]
-    public sealed class KeyValuePairEqualityComparer<K, V> : IEqualityComparer<KeyValuePair<K, V>>
+    public sealed class KeyValuePairEqualityComparer<K, V> : IEqualityComparer<System.Collections.Generic.KeyValuePair<K, V>>
     {
         private readonly System.Collections.Generic.IEqualityComparer<K> keyequalityComparer;
 
@@ -34,7 +34,7 @@ namespace C5
         /// </summary>
         /// <param name="entry">The entry</param>
         /// <returns>The hash code of the key</returns>
-        public int GetHashCode(KeyValuePair<K, V> entry) { return keyequalityComparer.GetHashCode(entry.Key); }
+        public int GetHashCode(System.Collections.Generic.KeyValuePair<K, V> entry) { return keyequalityComparer.GetHashCode(entry.Key); }
 
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace C5
         /// <param name="entry1">First entry</param>
         /// <param name="entry2">Second entry</param>
         /// <returns>True if keys are equal</returns>
-        public bool Equals(KeyValuePair<K, V> entry1, KeyValuePair<K, V> entry2)
+        public bool Equals(System.Collections.Generic.KeyValuePair<K, V> entry1, System.Collections.Generic.KeyValuePair<K, V> entry2)
         {
             return keyequalityComparer.Equals(entry1.Key, entry2.Key);
         }

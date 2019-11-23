@@ -43,7 +43,7 @@ namespace C5
         /// The underlying field of the FIFO property
         /// </summary>
         private bool fIFO = false;
-        private readonly HashSet<KeyValuePair<T, int>> itemIndex;
+        private readonly HashSet<System.Collections.Generic.KeyValuePair<T, int>> itemIndex;
         #endregion
         #region Events
 
@@ -299,7 +299,7 @@ namespace C5
         /// <returns>The index of first occurrence</returns>
         private int IndexOfInner(T item)
         {
-            KeyValuePair<T, int> p = new KeyValuePair<T, int>(item);
+            System.Collections.Generic.KeyValuePair<T, int> p = new System.Collections.Generic.KeyValuePair<T, int>(item, default);
             if (itemIndex.Find(ref p) && p.Value >= offsetField && p.Value < offsetField + size)
             {
                 return p.Value - offsetField;
@@ -329,7 +329,7 @@ namespace C5
         /// <param name="item">Item to insert</param>
         protected override void InsertProtected(int i, T item)
         {
-            KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, offsetField + i);
+            System.Collections.Generic.KeyValuePair<T, int> p = new System.Collections.Generic.KeyValuePair<T, int>(item, offsetField + i);
             if (itemIndex.FindOrAdd(ref p))
             {
                 throw new DuplicateNotAllowedException("Item already in indexed list: " + item);
@@ -377,7 +377,7 @@ namespace C5
             }
 
             array[UnderlyingSize] = default;
-            itemIndex.Remove(new KeyValuePair<T, int>(retval));
+            itemIndex.Remove(new System.Collections.Generic.KeyValuePair<T, int>(retval, default));
             ReIndex(i);
             return retval;
         }
@@ -391,7 +391,7 @@ namespace C5
         {
             for (int j = start; j < end; j++)
             {
-                itemIndex.UpdateOrAdd(new KeyValuePair<T, int>(array[j], j));
+                itemIndex.UpdateOrAdd(new System.Collections.Generic.KeyValuePair<T, int>(array[j], j));
             }
         }
         #endregion
@@ -695,7 +695,7 @@ namespace C5
         public HashedArrayList(int capacity, SCG.IEqualityComparer<T> itemequalityComparer)
             : base(capacity, itemequalityComparer)
         {
-            itemIndex = new HashSet<KeyValuePair<T, int>>(new KeyValuePairEqualityComparer<T, int>(itemequalityComparer));
+            itemIndex = new HashSet<System.Collections.Generic.KeyValuePair<T, int>>(new KeyValuePairEqualityComparer<T, int>(itemequalityComparer));
         }
 
         #endregion
@@ -793,7 +793,7 @@ namespace C5
                 index += offsetField;
                 T item = array[index];
 
-                KeyValuePair<T, int> p = new KeyValuePair<T, int>(value, index);
+                System.Collections.Generic.KeyValuePair<T, int> p = new System.Collections.Generic.KeyValuePair<T, int>(value, index);
                 if (itemequalityComparer.Equals(value, item))
                 {
                     array[index] = value;
@@ -801,7 +801,7 @@ namespace C5
                 }
                 else if (!itemIndex.FindOrAdd(ref p))
                 {
-                    itemIndex.Remove(new KeyValuePair<T, int>(item));
+                    itemIndex.Remove(new System.Collections.Generic.KeyValuePair<T, int>(item, default));
                     array[index] = value;
                 }
                 else
@@ -905,7 +905,7 @@ namespace C5
 
                 foreach (T item in items)
                 {
-                    KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, i);
+                    System.Collections.Generic.KeyValuePair<T, int> p = new System.Collections.Generic.KeyValuePair<T, int>(item, i);
                     if (itemIndex.FindOrAdd(ref p))
                     {
                         throw new DuplicateNotAllowedException("Item already in indexed list");
@@ -1057,7 +1057,7 @@ namespace C5
                 {
                     V mappeditem = mapper(array[offsetField + i]);
                     ModifyCheck(stamp);
-                    KeyValuePair<V, int> p = new KeyValuePair<V, int>(mappeditem, i);
+                    System.Collections.Generic.KeyValuePair<V, int> p = new System.Collections.Generic.KeyValuePair<V, int>(mappeditem, i);
                     if (res.itemIndex.FindOrAdd(ref p))
                     {
                         throw new ArgumentException("Mapped item already in indexed list");
@@ -1479,10 +1479,10 @@ namespace C5
             CheckRange(start, count);
             start += offsetField;
             FixViewsBeforeRemove(start, count);
-            KeyValuePair<T, int> p = new KeyValuePair<T, int>();
+            var p = new SCG.KeyValuePair<T, int>();
             for (int i = start, end = start + count; i < end; i++)
             {
-                p.Key = array[i];
+                p = new SCG.KeyValuePair<T, int>(array[i], p.Value);
                 itemIndex.Remove(p);
             }
             Array.Copy(array, start + count, array, start, UnderlyingSize - start - count);
@@ -1588,7 +1588,7 @@ namespace C5
             {
                 olditem = array[offsetField + i];
                 array[offsetField + i] = item;
-                itemIndex.Update(new KeyValuePair<T, int>(item, offsetField + i));
+                itemIndex.Update(new System.Collections.Generic.KeyValuePair<T, int>(item, offsetField + i));
                 (underlying ?? this).RaiseForUpdate(item, olditem);
                 return true;
             }
@@ -1735,7 +1735,7 @@ namespace C5
             int j = offsetField;
             int removed = 0;
             int i = offsetField, end = offsetField + size;
-            KeyValuePair<T, int> p = new KeyValuePair<T, int>();
+            var p = new SCG.KeyValuePair<T, int>();
             while (i < end)
             {
                 T item;
@@ -1744,8 +1744,7 @@ namespace C5
                 {
                     if (j < i)
                     {
-                        p.Key = item;
-                        p.Value = j;
+                        p = new SCG.KeyValuePair<T, int>(item, j);
                         itemIndex.Update(p);
                     }
                     //if (j<i)
@@ -1756,7 +1755,7 @@ namespace C5
                 //Remove a stretch of nodes
                 while (i < end && toremove.Remove(item = array[i]))
                 {
-                    p.Key = item;
+                    p = new SCG.KeyValuePair<T, int>(item, p.Value);
                     itemIndex.Remove(p);
                     if (mustFire)
                     {
@@ -1800,7 +1799,7 @@ namespace C5
             int j = offsetField;
             int removed = 0;
             int i = offsetField, end = offsetField + size;
-            KeyValuePair<T, int> p = new KeyValuePair<T, int>();
+            System.Collections.Generic.KeyValuePair<T, int> p = new System.Collections.Generic.KeyValuePair<T, int>();
             while (i < end)
             {
                 T item;
@@ -1897,7 +1896,7 @@ namespace C5
             int j = offsetField;
             int removed = 0;
             int i = offsetField, end = offsetField + size;
-            KeyValuePair<T, int> p = new KeyValuePair<T, int>();
+            System.Collections.Generic.KeyValuePair<T, int> p = new SCG.KeyValuePair<T, int>();
             while (i < end)
             {
                 T item;
@@ -1906,8 +1905,7 @@ namespace C5
                 {
                     if (j < i)
                     {
-                        p.Key = item;
-                        p.Value = j;
+                        p = new SCG.KeyValuePair<T, int>(item, j);
                         itemIndex.Update(p);
                     }
                     //if (j<i)
@@ -1918,7 +1916,7 @@ namespace C5
                 //Remove a stretch of nodes
                 while (i < end && !toretain.Contains(item = array[i]))
                 {
-                    p.Key = item;
+                    p = new SCG.KeyValuePair<T, int>(item, p.Value);
                     itemIndex.Remove(p);
                     if (mustFire)
                     {
@@ -1959,7 +1957,7 @@ namespace C5
             int j = offsetField;
             int removed = 0;
             int i = offsetField, end = offsetField + size;
-            KeyValuePair<T, int> p = new KeyValuePair<T, int>();
+            System.Collections.Generic.KeyValuePair<T, int> p = new System.Collections.Generic.KeyValuePair<T, int>();
             while (i < end)
             {
                 T item;
@@ -2054,7 +2052,7 @@ namespace C5
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual ICollectionValue<KeyValuePair<T, int>> ItemMultiplicities()
+        public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
         {
             return new MultiplicityOne<T>(this);
 
@@ -2144,7 +2142,7 @@ namespace C5
 
             for (int i = 0; i < UnderlyingSize; i++)
             {
-                KeyValuePair<T, int> p = new KeyValuePair<T, int>(array[i]);
+                var p = new SCG.KeyValuePair<T, int>(array[i], default);
 
                 if (!itemIndex.Find(ref p))
                 {
@@ -2186,7 +2184,7 @@ namespace C5
         public virtual bool Add(T item)
         {
             UpdateCheck();
-            KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, size + offsetField);
+            System.Collections.Generic.KeyValuePair<T, int> p = new System.Collections.Generic.KeyValuePair<T, int>(item, size + offsetField);
             if (itemIndex.FindOrAdd(ref p))
             {
                 return false;
@@ -2227,7 +2225,7 @@ namespace C5
             {
                 foreach (T item in items)
                 {
-                    KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, i);
+                    System.Collections.Generic.KeyValuePair<T, int> p = new System.Collections.Generic.KeyValuePair<T, int>(item, i);
                     if (itemIndex.FindOrAdd(ref p))
                     {
                         continue;

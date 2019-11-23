@@ -13,7 +13,7 @@ namespace C5
     public class HashBag<T> : CollectionBase<T>, ICollection<T>
     {
         #region Fields
-        private HashSet<KeyValuePair<T, int>> dict;
+        private HashSet<System.Collections.Generic.KeyValuePair<T, int>> dict;
         #endregion
 
         #region Events
@@ -39,7 +39,7 @@ namespace C5
         public HashBag(SCG.IEqualityComparer<T> itemequalityComparer)
             : base(itemequalityComparer)
         {
-            dict = new HashSet<KeyValuePair<T, int>>(new KeyValuePairEqualityComparer<T, int>(itemequalityComparer));
+            dict = new HashSet<System.Collections.Generic.KeyValuePair<T, int>>(new KeyValuePairEqualityComparer<T, int>(itemequalityComparer));
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace C5
         public HashBag(int capacity, SCG.IEqualityComparer<T> itemequalityComparer)
             : base(itemequalityComparer)
         {
-            dict = new HashSet<KeyValuePair<T, int>>(capacity, new KeyValuePairEqualityComparer<T, int>(itemequalityComparer));
+            dict = new HashSet<System.Collections.Generic.KeyValuePair<T, int>>(capacity, new KeyValuePairEqualityComparer<T, int>(itemequalityComparer));
         }
 
 
@@ -63,7 +63,7 @@ namespace C5
         public HashBag(int capacity, double fill, SCG.IEqualityComparer<T> itemequalityComparer)
             : base(itemequalityComparer)
         {
-            dict = new HashSet<KeyValuePair<T, int>>(capacity, fill, new KeyValuePairEqualityComparer<T, int>(itemequalityComparer));
+            dict = new HashSet<System.Collections.Generic.KeyValuePair<T, int>>(capacity, fill, new KeyValuePairEqualityComparer<T, int>(itemequalityComparer));
         }
 
         #endregion
@@ -83,7 +83,7 @@ namespace C5
         /// <returns>True if bag contains item</returns>
         public virtual bool Contains(T item)
         {
-            return dict.Contains(new KeyValuePair<T, int>(item, 0));
+            return dict.Contains(new System.Collections.Generic.KeyValuePair<T, int>(item, 0));
         }
 
 
@@ -96,7 +96,7 @@ namespace C5
         /// <returns>True if bag contains item</returns>
         public virtual bool Find(ref T item)
         {
-            KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, 0);
+            System.Collections.Generic.KeyValuePair<T, int> p = new System.Collections.Generic.KeyValuePair<T, int>(item, 0);
 
             if (dict.Find(ref p))
             {
@@ -128,7 +128,7 @@ namespace C5
         /// <returns></returns>
         public virtual bool Update(T item, out T olditem)
         {
-            KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, 0);
+            SCG.KeyValuePair<T, int> p = new SCG.KeyValuePair<T, int>(item, 0);
 
             UpdateCheck();
 
@@ -139,7 +139,7 @@ namespace C5
             if (dict.Find(ref p))
             {
                 olditem = p.Key;
-                p.Key = item;
+                p = new SCG.KeyValuePair<T, int>(item, p.Value);
                 dict.Update(p);
                 if (ActiveEvents != 0)
                 {
@@ -219,7 +219,7 @@ namespace C5
         /// <returns>True if item was (found and) removed </returns>
         public virtual bool Remove(T item)
         {
-            KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, 0);
+            var p = new SCG.KeyValuePair<T, int>(item, 0);
 
             UpdateCheck();
             if (dict.Find(ref p))
@@ -231,7 +231,7 @@ namespace C5
                 }
                 else
                 {
-                    p.Value--;
+                    p = new SCG.KeyValuePair<T, int>(p.Key, p.Value - 1);
                     dict.Update(p);
                 }
                 if (ActiveEvents != 0)
@@ -255,7 +255,7 @@ namespace C5
         public virtual bool Remove(T item, out T removeditem)
         {
             UpdateCheck();
-            KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, 0);
+            SCG.KeyValuePair<T, int> p = new SCG.KeyValuePair<T, int>(item, 0);
             if (dict.Find(ref p))
             {
                 removeditem = p.Key;
@@ -266,7 +266,7 @@ namespace C5
                 }
                 else
                 {
-                    p.Value--;
+                    p = new SCG.KeyValuePair<T, int>(p.Key, p.Value - 1);
                     dict.Update(p);
                 }
                 if (ActiveEvents != 0)
@@ -293,7 +293,7 @@ namespace C5
             RaiseForRemoveAllHandler? raiseHandler = mustRaise ? new RaiseForRemoveAllHandler(this) : null;
             foreach (T item in items)
             {
-                KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, 0);
+                SCG.KeyValuePair<T, int> p = new SCG.KeyValuePair<T, int>(item, 0);
                 if (dict.Find(ref p))
                 {
                     size--;
@@ -303,7 +303,7 @@ namespace C5
                     }
                     else
                     {
-                        p.Value--;
+                        p = new SCG.KeyValuePair<T, int>(p.Key, p.Value - 1);
                         dict.Update(p);
                     }
                     if (mustRaise)
@@ -357,22 +357,22 @@ namespace C5
 
             foreach (T item in items)
             {
-                KeyValuePair<T, int> p = new KeyValuePair<T, int>(item);
+                SCG.KeyValuePair<T, int> p = new SCG.KeyValuePair<T, int>(item, default);
                 if (dict.Find(ref p))
                 {
-                    KeyValuePair<T, int> q = p;
+                    SCG.KeyValuePair<T, int> q = p;
                     if (res.dict.Find(ref q))
                     {
                         if (q.Value < p.Value)
                         {
-                            q.Value++;
+                            q = new SCG.KeyValuePair<T, int>(q.Key, q.Value + 1);
                             res.dict.Update(q);
                             res.size++;
                         }
                     }
                     else
                     {
-                        q.Value = 1;
+                        q = new SCG.KeyValuePair<T, int>(q.Key, 1);
                         res.dict.Add(q);
                         res.size++;
                     }
@@ -388,7 +388,7 @@ namespace C5
             if ((ActiveEvents & EventType.Removed) != 0)
             {
                 wasRemoved = new CircularQueue<T>();
-                foreach (KeyValuePair<T, int> p in dict)
+                foreach (SCG.KeyValuePair<T, int> p in dict)
                 {
                     int removed = p.Value - res.ContainsCount(p.Key);
                     if (removed > 0)
@@ -449,7 +449,7 @@ namespace C5
             T[] res = new T[size];
             int ind = 0;
 
-            foreach (KeyValuePair<T, int> p in dict)
+            foreach (System.Collections.Generic.KeyValuePair<T, int> p in dict)
             {
                 for (int i = 0; i < p.Value; i++)
                 {
@@ -468,7 +468,7 @@ namespace C5
         /// <returns>The count</returns>
         public virtual int ContainsCount(T item)
         {
-            KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, 0);
+            System.Collections.Generic.KeyValuePair<T, int> p = new System.Collections.Generic.KeyValuePair<T, int>(item, 0);
 
             if (dict.Find(ref p))
             {
@@ -488,9 +488,9 @@ namespace C5
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual ICollectionValue<KeyValuePair<T, int>> ItemMultiplicities()
+        public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
         {
-            return new GuardedCollectionValue<KeyValuePair<T, int>>(dict);
+            return new GuardedCollectionValue<System.Collections.Generic.KeyValuePair<T, int>>(dict);
         }
 
         /// <summary>
@@ -501,7 +501,7 @@ namespace C5
         {
             UpdateCheck();
 
-            KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, 0);
+            System.Collections.Generic.KeyValuePair<T, int> p = new System.Collections.Generic.KeyValuePair<T, int>(item, 0);
 
             if (dict.Find(ref p))
             {
@@ -538,7 +538,7 @@ namespace C5
                 throw new ArgumentOutOfRangeException();
             }
 
-            foreach (KeyValuePair<T, int> p in dict)
+            foreach (System.Collections.Generic.KeyValuePair<T, int> p in dict)
             {
                 for (int j = 0; j < p.Value; j++)
                 {
@@ -592,10 +592,10 @@ namespace C5
 
         private void Add(ref T item)
         {
-            KeyValuePair<T, int> p = new KeyValuePair<T, int>(item, 1);
+            var p = new SCG.KeyValuePair<T, int>(item, 1);
             if (dict.Find(ref p))
             {
-                p.Value++;
+                p = new SCG.KeyValuePair<T, int>(item, p.Value + 1);
                 dict.Update(p);
                 item = p.Key;
             }
@@ -675,7 +675,7 @@ namespace C5
             int left;
             int mystamp = stamp;
 
-            foreach (KeyValuePair<T, int> p in dict)
+            foreach (System.Collections.Generic.KeyValuePair<T, int> p in dict)
             {
                 left = p.Value;
                 while (left > 0)
@@ -702,7 +702,7 @@ namespace C5
             bool retval = dict.Check();
             int count = 0;
 
-            foreach (KeyValuePair<T, int> p in dict)
+            foreach (System.Collections.Generic.KeyValuePair<T, int> p in dict)
             {
                 count += p.Value;
             }

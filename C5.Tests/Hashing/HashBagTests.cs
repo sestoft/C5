@@ -63,16 +63,16 @@ namespace C5.Tests.hashtable.bag
     [TestFixture]
     public class Combined
     {
-        private ICollection<KeyValuePair<int, int>> lst;
+        private ICollection<System.Collections.Generic.KeyValuePair<int, int>> lst;
 
 
         [SetUp]
         public void Init()
         {
-            lst = new HashBag<KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
+            lst = new HashBag<System.Collections.Generic.KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
             for (int i = 0; i < 10; i++)
             {
-                lst.Add(new KeyValuePair<int, int>(i, i + 30));
+                lst.Add(new System.Collections.Generic.KeyValuePair<int, int>(i, i + 30));
             }
         }
 
@@ -84,12 +84,12 @@ namespace C5.Tests.hashtable.bag
         [Test]
         public void Find()
         {
-            KeyValuePair<int, int> p = new KeyValuePair<int, int>(3, 78);
+            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
 
             Assert.IsTrue(lst.Find(ref p));
             Assert.AreEqual(3, p.Key);
             Assert.AreEqual(33, p.Value);
-            p = new KeyValuePair<int, int>(13, 78);
+            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
             Assert.IsFalse(lst.Find(ref p));
         }
 
@@ -97,15 +97,15 @@ namespace C5.Tests.hashtable.bag
         [Test]
         public void FindOrAdd()
         {
-            KeyValuePair<int, int> p = new KeyValuePair<int, int>(3, 78);
-            KeyValuePair<int, int> q = new KeyValuePair<int, int>();
+            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+            System.Collections.Generic.KeyValuePair<int, int> q = new System.Collections.Generic.KeyValuePair<int, int>();
 
             Assert.IsTrue(lst.FindOrAdd(ref p));
             Assert.AreEqual(3, p.Key);
             Assert.AreEqual(33, p.Value);
-            p = new KeyValuePair<int, int>(13, 79);
+            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
             Assert.IsFalse(lst.FindOrAdd(ref p));
-            q.Key = 13;
+            q = new System.Collections.Generic.KeyValuePair<int, int>(13, q.Value);
             Assert.IsTrue(lst.Find(ref q));
             Assert.AreEqual(13, q.Key);
             Assert.AreEqual(79, q.Value);
@@ -115,15 +115,15 @@ namespace C5.Tests.hashtable.bag
         [Test]
         public void Update()
         {
-            KeyValuePair<int, int> p = new KeyValuePair<int, int>(3, 78);
-            KeyValuePair<int, int> q = new KeyValuePair<int, int>();
+            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+            System.Collections.Generic.KeyValuePair<int, int> q = new System.Collections.Generic.KeyValuePair<int, int>();
 
             Assert.IsTrue(lst.Update(p));
-            q.Key = 3;
+            q = new System.Collections.Generic.KeyValuePair<int, int>(3, q.Value);
             Assert.IsTrue(lst.Find(ref q));
             Assert.AreEqual(3, q.Key);
             Assert.AreEqual(78, q.Value);
-            p = new KeyValuePair<int, int>(13, 78);
+            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
             Assert.IsFalse(lst.Update(p));
         }
 
@@ -131,17 +131,17 @@ namespace C5.Tests.hashtable.bag
         [Test]
         public void UpdateOrAdd1()
         {
-            KeyValuePair<int, int> p = new KeyValuePair<int, int>(3, 78);
-            KeyValuePair<int, int> q = new KeyValuePair<int, int>();
+            var p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+            var q = new System.Collections.Generic.KeyValuePair<int, int>();
 
             Assert.IsTrue(lst.UpdateOrAdd(p));
-            q.Key = 3;
+            q = new System.Collections.Generic.KeyValuePair<int, int>(3, q.Value);
             Assert.IsTrue(lst.Find(ref q));
             Assert.AreEqual(3, q.Key);
             Assert.AreEqual(78, q.Value);
-            p = new KeyValuePair<int, int>(13, 79);
+            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
             Assert.IsFalse(lst.UpdateOrAdd(p));
-            q.Key = 13;
+            q = new System.Collections.Generic.KeyValuePair<int, int>(13, q.Value);
             Assert.IsTrue(lst.Find(ref q));
             Assert.AreEqual(13, q.Key);
             Assert.AreEqual(79, q.Value);
@@ -163,13 +163,13 @@ namespace C5.Tests.hashtable.bag
         [Test]
         public void RemoveWithReturn()
         {
-            KeyValuePair<int, int> p = new KeyValuePair<int, int>(3, 78);
-            //KeyValuePair<int, int> q = new KeyValuePair<int, int>();
+            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+            //System.Collections.Generic.KeyValuePair<int, int> q = new System.Collections.Generic.KeyValuePair<int, int>();
 
             Assert.IsTrue(lst.Remove(p, out p));
             Assert.AreEqual(3, p.Key);
             Assert.AreEqual(33, p.Value);
-            p = new KeyValuePair<int, int>(13, 78);
+            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
             Assert.IsFalse(lst.Remove(p, out _));
         }
     }
@@ -252,11 +252,11 @@ namespace C5.Tests.hashtable.bag
             HashBag<int> hashbag2 = new HashBag<int>();
 
             hashbag2.AddAll(hashbag);
-            Assert.IsTrue(IC.seteq(hashbag2, 3, 4, 4, 4, 5));
+            Assert.IsTrue(IC.SetEq(hashbag2, 3, 4, 4, 4, 5));
             hashbag.Add(9);
             hashbag.AddAll(hashbag2);
-            Assert.IsTrue(IC.seteq(hashbag2, 3, 4, 4, 4, 5));
-            Assert.IsTrue(IC.seteq(hashbag, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 9));
+            Assert.IsTrue(IC.SetEq(hashbag2, 3, 4, 4, 4, 5));
+            Assert.IsTrue(IC.SetEq(hashbag, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 9));
         }
 
 
@@ -289,7 +289,7 @@ namespace C5.Tests.hashtable.bag
             Assert.AreEqual(1, hashbag.ContainsCount(7));
             hashbag.Add(5); hashbag.Add(8); hashbag.Add(5);
             hashbag.RemoveAllCopies(8);
-            Assert.IsTrue(IC.eq(hashbag, 7, 5, 5));
+            Assert.IsTrue(IC.Eq(hashbag, 7, 5, 5));
         }
 
 
@@ -324,12 +324,12 @@ namespace C5.Tests.hashtable.bag
             hashbag.Add(4); hashbag.Add(5); hashbag.Add(4); hashbag.Add(6); hashbag.Add(4);
             list2.Add(5); list2.Add(4); list2.Add(7); list2.Add(4);
             hashbag.RetainAll(list2);
-            Assert.IsTrue(IC.seteq(hashbag, 4, 4, 5));
+            Assert.IsTrue(IC.SetEq(hashbag, 4, 4, 5));
             hashbag.Add(6);
             list2.Clear();
             list2.Add(7); list2.Add(8); list2.Add(9);
             hashbag.RetainAll(list2);
-            Assert.IsTrue(IC.eq(hashbag));
+            Assert.IsTrue(IC.Eq(hashbag));
         }
 
 
@@ -341,16 +341,16 @@ namespace C5.Tests.hashtable.bag
             hashbag.Add(4); hashbag.Add(5); hashbag.Add(6); hashbag.Add(4); hashbag.Add(5);
             list2.Add(5); list2.Add(4); list2.Add(7); list2.Add(4);
             hashbag.RemoveAll(list2);
-            Assert.IsTrue(IC.seteq(hashbag, 5, 6));
+            Assert.IsTrue(IC.SetEq(hashbag, 5, 6));
             hashbag.Add(5); hashbag.Add(4);
             list2.Clear();
             list2.Add(6); list2.Add(5);
             hashbag.RemoveAll(list2);
-            Assert.IsTrue(IC.seteq(hashbag, 4, 5));
+            Assert.IsTrue(IC.SetEq(hashbag, 4, 5));
             list2.Clear();
             list2.Add(7); list2.Add(8); list2.Add(9);
             hashbag.RemoveAll(list2);
-            Assert.IsTrue(IC.seteq(hashbag, 4, 5));
+            Assert.IsTrue(IC.SetEq(hashbag, 4, 5));
         }
 
 
@@ -360,20 +360,20 @@ namespace C5.Tests.hashtable.bag
             hashbag.Add(4); hashbag.Add(4); hashbag.Add(5); hashbag.Add(4); hashbag.Add(6);
             Assert.IsFalse(hashbag.Remove(2));
             Assert.IsTrue(hashbag.Remove(4));
-            Assert.IsTrue(IC.seteq(hashbag, 4, 4, 5, 6));
+            Assert.IsTrue(IC.SetEq(hashbag, 4, 4, 5, 6));
             hashbag.Add(7);
             hashbag.Add(21); hashbag.Add(37); hashbag.Add(53); hashbag.Add(69); hashbag.Add(53); hashbag.Add(85);
             Assert.IsTrue(hashbag.Remove(5));
-            Assert.IsTrue(IC.seteq(hashbag, 4, 4, 6, 7, 21, 37, 53, 53, 69, 85));
+            Assert.IsTrue(IC.SetEq(hashbag, 4, 4, 6, 7, 21, 37, 53, 53, 69, 85));
             Assert.IsFalse(hashbag.Remove(165));
             Assert.IsTrue(hashbag.Check());
-            Assert.IsTrue(IC.seteq(hashbag, 4, 4, 6, 7, 21, 37, 53, 53, 69, 85));
+            Assert.IsTrue(IC.SetEq(hashbag, 4, 4, 6, 7, 21, 37, 53, 53, 69, 85));
             Assert.IsTrue(hashbag.Remove(53));
-            Assert.IsTrue(IC.seteq(hashbag, 4, 4, 6, 7, 21, 37, 53, 69, 85));
+            Assert.IsTrue(IC.SetEq(hashbag, 4, 4, 6, 7, 21, 37, 53, 69, 85));
             Assert.IsTrue(hashbag.Remove(37));
-            Assert.IsTrue(IC.seteq(hashbag, 4, 4, 6, 7, 21, 53, 69, 85));
+            Assert.IsTrue(IC.SetEq(hashbag, 4, 4, 6, 7, 21, 53, 69, 85));
             Assert.IsTrue(hashbag.Remove(85));
-            Assert.IsTrue(IC.seteq(hashbag, 4, 4, 6, 7, 21, 53, 69));
+            Assert.IsTrue(IC.SetEq(hashbag, 4, 4, 6, 7, 21, 53, 69));
         }
 
 
@@ -433,11 +433,11 @@ namespace C5.Tests.hashtable.bag
         [Test]
         public void Test()
         {
-            Assert.IsTrue(IC.seteq(list.UniqueItems()));
-            Assert.IsTrue(IC.seteq(list.ItemMultiplicities()));
+            Assert.IsTrue(IC.SetEq(list.UniqueItems()));
+            Assert.IsTrue(IC.SetEq(list.ItemMultiplicities()));
             list.AddAll(new int[] { 7, 9, 7 });
-            Assert.IsTrue(IC.seteq(list.UniqueItems(), 7, 9));
-            Assert.IsTrue(IC.seteq(list.ItemMultiplicities(), 7, 2, 9, 1));
+            Assert.IsTrue(IC.SetEq(list.UniqueItems(), 7, 9));
+            Assert.IsTrue(IC.SetEq(list.ItemMultiplicities(), 7, 2, 9, 1));
         }
     }
 

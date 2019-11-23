@@ -8,7 +8,7 @@ namespace C5
     /// Entry comparisons only look at keys and uses an externally defined comparer for that.
     /// </summary>
     [Serializable]
-    public class KeyValuePairComparer<K, V> : IComparer<KeyValuePair<K, V>>
+    public class KeyValuePairComparer<K, V> : IComparer<System.Collections.Generic.KeyValuePair<K, V>>
     {
         private readonly System.Collections.Generic.IComparer<K> comparer;
 
@@ -29,7 +29,7 @@ namespace C5
         /// <param name="entry1">First entry</param>
         /// <param name="entry2">Second entry</param>
         /// <returns>The result of comparing the keys</returns>
-        public int Compare(KeyValuePair<K, V> entry1, KeyValuePair<K, V> entry2)
+        public int Compare(System.Collections.Generic.KeyValuePair<K, V> entry1, System.Collections.Generic.KeyValuePair<K, V> entry2)
         {
             return comparer.Compare(entry1.Key, entry2.Key);
         }

@@ -49,10 +49,10 @@ namespace C5.Tests.hashtable.dictionary
         {
             Assert.AreEqual("{  }", coll.ToString());
             coll.Add(23, 67); coll.Add(45, 89);
-            Assert.AreEqual("{ 45 => 89, 23 => 67 }", coll.ToString());
-            Assert.AreEqual("{ 2D => 59, 17 => 43 }", coll.ToString(null, rad16));
-            Assert.AreEqual("{ 45 => 89, ... }", coll.ToString("L14", null));
-            Assert.AreEqual("{ 2D => 59, ... }", coll.ToString("L14", rad16));
+            Assert.AreEqual("{ [45, 89], [23, 67] }", coll.ToString());
+            Assert.AreEqual("{ [2D, 59], [17, 43] }", coll.ToString(null, rad16));
+            Assert.AreEqual("{ [45, 89], ... }", coll.ToString("L14", null));
+            Assert.AreEqual("{ [2D, 59], ... }", coll.ToString("L14", rad16));
         }
     }
 
@@ -85,7 +85,7 @@ namespace C5.Tests.hashtable.dictionary
         public void Choose()
         {
             dict.Add("ER", "FOO");
-            Assert.AreEqual(new KeyValuePair<string, string>("ER", "FOO"), dict.Choose());
+            Assert.AreEqual(new System.Collections.Generic.KeyValuePair<string, string>("ER", "FOO"), dict.Choose());
         }
 
         [Test]

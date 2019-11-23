@@ -3,9 +3,9 @@ using System;
 namespace C5
 {
     [Serializable]
-    internal class MultiplicityOne<K> : MappedCollectionValue<K, KeyValuePair<K, int>>
+    internal class MultiplicityOne<K> : MappedCollectionValue<K, System.Collections.Generic.KeyValuePair<K, int>>
     {
         public MultiplicityOne(ICollectionValue<K> coll) : base(coll) { }
-        public override KeyValuePair<K, int> Map(K k) { return new KeyValuePair<K, int>(k, 1); }
+        public override System.Collections.Generic.KeyValuePair<K, int> Map(K k) { return new System.Collections.Generic.KeyValuePair<K, int>(k, 1); }
     }
 }

@@ -30,7 +30,7 @@ namespace C5
         private TreeDictionary(SCG.IComparer<K> comparer, SCG.IEqualityComparer<K> equalityComparer)
             : base(comparer, equalityComparer)
         {
-            pairs = sortedpairs = new TreeSet<KeyValuePair<K, V>>(new KeyValuePairComparer<K, V>(comparer));
+            pairs = sortedpairs = new TreeSet<System.Collections.Generic.KeyValuePair<K, V>>(new KeyValuePairComparer<K, V>(comparer));
         }
 
         #endregion
@@ -40,11 +40,11 @@ namespace C5
         /// Make a snapshot of the current state of this dictionary
         /// </summary>
         /// <returns>The snapshot</returns>
-        public SCG.IEnumerable<KeyValuePair<K, V>> Snapshot()
+        public SCG.IEnumerable<System.Collections.Generic.KeyValuePair<K, V>> Snapshot()
         {
             TreeDictionary<K, V> res = (TreeDictionary<K, V>)MemberwiseClone();
 
-            res.pairs = (TreeSet<KeyValuePair<K, V>>)((TreeSet<KeyValuePair<K, V>>)sortedpairs).Snapshot();
+            res.pairs = (TreeSet<System.Collections.Generic.KeyValuePair<K, V>>)((TreeSet<System.Collections.Generic.KeyValuePair<K, V>>)sortedpairs).Snapshot();
             return res;
         }
     }

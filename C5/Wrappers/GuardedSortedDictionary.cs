@@ -49,7 +49,7 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The predecessor, if any</param>
         /// <returns>True if key has a predecessor</returns>
-        public bool TryPredecessor(K key, out KeyValuePair<K, V> res)
+        public bool TryPredecessor(K key, out System.Collections.Generic.KeyValuePair<K, V> res)
         {
             return sorteddict.TryPredecessor(key, out res);
         }
@@ -61,7 +61,7 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The successor, if any</param>
         /// <returns>True if the key has a successor</returns>
-        public bool TrySuccessor(K key, out KeyValuePair<K, V> res)
+        public bool TrySuccessor(K key, out System.Collections.Generic.KeyValuePair<K, V> res)
         {
             return sorteddict.TrySuccessor(key, out res);
         }
@@ -73,7 +73,7 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The predecessor, if any</param>
         /// <returns>True if key has a weak predecessor</returns>
-        public bool TryWeakPredecessor(K key, out KeyValuePair<K, V> res)
+        public bool TryWeakPredecessor(K key, out System.Collections.Generic.KeyValuePair<K, V> res)
         {
             return sorteddict.TryWeakPredecessor(key, out res);
         }
@@ -85,7 +85,7 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The weak successor, if any</param>
         /// <returns>True if the key has a weak successor</returns>
-        public bool TryWeakSuccessor(K key, out KeyValuePair<K, V> res)
+        public bool TryWeakSuccessor(K key, out System.Collections.Generic.KeyValuePair<K, V> res)
         {
             return sorteddict.TryWeakSuccessor(key, out res);
         }
@@ -97,7 +97,7 @@ namespace C5
         /// <exception cref="NoSuchItemException"> if no such entry exists </exception>    
         /// <param name="key">The key</param>
         /// <returns>The entry</returns>
-        public KeyValuePair<K, V> Predecessor(K key)
+        public System.Collections.Generic.KeyValuePair<K, V> Predecessor(K key)
         { return sorteddict.Predecessor(key); }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace C5
         /// <exception cref="NoSuchItemException"> if no such entry exists </exception>    
         /// <param name="key">The key</param>
         /// <returns>The entry</returns>
-        public KeyValuePair<K, V> Successor(K key)
+        public System.Collections.Generic.KeyValuePair<K, V> Successor(K key)
         { return sorteddict.Successor(key); }
 
 
@@ -118,7 +118,7 @@ namespace C5
         /// <exception cref="NoSuchItemException"> if no such entry exists </exception>    
         /// <param name="key">The key</param>
         /// <returns>The entry</returns>
-        public KeyValuePair<K, V> WeakPredecessor(K key)
+        public System.Collections.Generic.KeyValuePair<K, V> WeakPredecessor(K key)
         { return sorteddict.WeakPredecessor(key); }
 
 
@@ -129,14 +129,14 @@ namespace C5
         /// <exception cref="NoSuchItemException"> if no such entry exists </exception>    
         /// <param name="key">The key</param>
         /// <returns>The entry</returns>
-        public KeyValuePair<K, V> WeakSuccessor(K key)
+        public System.Collections.Generic.KeyValuePair<K, V> WeakSuccessor(K key)
         { return sorteddict.WeakSuccessor(key); }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public KeyValuePair<K, V> FindMin()
+        public System.Collections.Generic.KeyValuePair<K, V> FindMin()
         {
             return sorteddict.FindMin();
         }
@@ -146,14 +146,14 @@ namespace C5
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <returns></returns>
-        public KeyValuePair<K, V> DeleteMin()
+        public System.Collections.Generic.KeyValuePair<K, V> DeleteMin()
         { throw new ReadOnlyCollectionException(); }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public KeyValuePair<K, V> FindMax()
+        public System.Collections.Generic.KeyValuePair<K, V> FindMax()
         {
             return sorteddict.FindMax();
         }
@@ -163,7 +163,7 @@ namespace C5
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <returns></returns>
-        public KeyValuePair<K, V> DeleteMax()
+        public System.Collections.Generic.KeyValuePair<K, V> DeleteMax()
         { throw new ReadOnlyCollectionException(); }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace C5
         /// <param name="highEntry"></param>
         /// <param name="highIsValid"></param>
         /// <returns></returns>
-        public bool Cut(IComparable<K> c, out KeyValuePair<K, V> lowEntry, out bool lowIsValid, out KeyValuePair<K, V> highEntry, out bool highIsValid)
+        public bool Cut(IComparable<K> c, out System.Collections.Generic.KeyValuePair<K, V> lowEntry, out bool lowIsValid, out System.Collections.Generic.KeyValuePair<K, V> highEntry, out bool highIsValid)
         {
             return sorteddict.Cut(c, out lowEntry, out lowIsValid, out highEntry, out highIsValid); ;
         }
@@ -185,9 +185,9 @@ namespace C5
         /// </summary>
         /// <param name="bot"></param>
         /// <returns></returns>
-        public IDirectedEnumerable<KeyValuePair<K, V>> RangeFrom(K bot)
+        public IDirectedEnumerable<System.Collections.Generic.KeyValuePair<K, V>> RangeFrom(K bot)
         {
-            return new GuardedDirectedEnumerable<KeyValuePair<K, V>>(sorteddict.RangeFrom(bot));
+            return new GuardedDirectedEnumerable<System.Collections.Generic.KeyValuePair<K, V>>(sorteddict.RangeFrom(bot));
         }
 
         /// <summary>
@@ -196,9 +196,9 @@ namespace C5
         /// <param name="bot"></param>
         /// <param name="top"></param>
         /// <returns></returns>
-        public IDirectedEnumerable<KeyValuePair<K, V>> RangeFromTo(K bot, K top)
+        public IDirectedEnumerable<System.Collections.Generic.KeyValuePair<K, V>> RangeFromTo(K bot, K top)
         {
-            return new GuardedDirectedEnumerable<KeyValuePair<K, V>>(sorteddict.RangeFromTo(bot, top));
+            return new GuardedDirectedEnumerable<System.Collections.Generic.KeyValuePair<K, V>>(sorteddict.RangeFromTo(bot, top));
         }
 
         /// <summary>
@@ -206,18 +206,18 @@ namespace C5
         /// </summary>
         /// <param name="top"></param>
         /// <returns></returns>
-        public IDirectedEnumerable<KeyValuePair<K, V>> RangeTo(K top)
+        public IDirectedEnumerable<System.Collections.Generic.KeyValuePair<K, V>> RangeTo(K top)
         {
-            return new GuardedDirectedEnumerable<KeyValuePair<K, V>>(sorteddict.RangeTo(top));
+            return new GuardedDirectedEnumerable<System.Collections.Generic.KeyValuePair<K, V>>(sorteddict.RangeTo(top));
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public IDirectedCollectionValue<KeyValuePair<K, V>> RangeAll()
+        public IDirectedCollectionValue<System.Collections.Generic.KeyValuePair<K, V>> RangeAll()
         {
-            return new GuardedDirectedCollectionValue<KeyValuePair<K, V>>(sorteddict.RangeAll());
+            return new GuardedDirectedCollectionValue<System.Collections.Generic.KeyValuePair<K, V>>(sorteddict.RangeAll());
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace C5
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="items"></param>
-        public void AddSorted(System.Collections.Generic.IEnumerable<KeyValuePair<K, V>> items)
+        public void AddSorted(System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<K, V>> items)
         { throw new ReadOnlyCollectionException(); }
 
         /// <summary>

@@ -1976,12 +1976,12 @@ namespace C5
             }
 
 #warning improve (mainly for bag) by using a Node iterator instead of ItemMultiplicities()
-            CircularQueue<KeyValuePair<T, int>>? wasRemoved = null;
+            CircularQueue<System.Collections.Generic.KeyValuePair<T, int>>? wasRemoved = null;
             if ((ActiveEvents & EventType.Removed) != 0)
             {
-                wasRemoved = new CircularQueue<KeyValuePair<T, int>>();
-                SCG.IEnumerator<KeyValuePair<T, int>> ie = ItemMultiplicities().GetEnumerator();
-                foreach (KeyValuePair<T, int> p in t.ItemMultiplicities())
+                wasRemoved = new CircularQueue<System.Collections.Generic.KeyValuePair<T, int>>();
+                SCG.IEnumerator<System.Collections.Generic.KeyValuePair<T, int>> ie = ItemMultiplicities().GetEnumerator();
+                foreach (System.Collections.Generic.KeyValuePair<T, int> p in t.ItemMultiplicities())
                 {
                     //We know p.Key is in this!
                     while (ie.MoveNext())
@@ -1992,7 +1992,7 @@ namespace C5
                             int removed = ie.Current.Value - p.Value;
                             if (removed > 0)
                             {
-                                wasRemoved.Enqueue(new KeyValuePair<T, int>(p.Key, removed));
+                                wasRemoved.Enqueue(new System.Collections.Generic.KeyValuePair<T, int>(p.Key, removed));
                             }
 
                             break;
@@ -2015,7 +2015,7 @@ namespace C5
             blackdepth = t.blackdepth;
             if (wasRemoved != null)
             {
-                foreach (KeyValuePair<T, int> p in wasRemoved)
+                foreach (System.Collections.Generic.KeyValuePair<T, int> p in wasRemoved)
                 {
                     RaiseItemsRemoved(p.Key, p.Value);
                 }
@@ -2268,19 +2268,19 @@ namespace C5
 
         //TODO: make work with snapshots
         [Serializable]
-        private class Multiplicities : CollectionValueBase<KeyValuePair<T, int>>, ICollectionValue<KeyValuePair<T, int>>
+        private class Multiplicities : CollectionValueBase<System.Collections.Generic.KeyValuePair<T, int>>, ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>>
         {
             private readonly TreeBag<T> treebag;
             private readonly int origstamp;
             internal Multiplicities(TreeBag<T> treebag) { this.treebag = treebag; origstamp = treebag.stamp; }
-            public override KeyValuePair<T, int> Choose() { return new KeyValuePair<T, int>(treebag.root!.item, treebag.root.items); }
+            public override System.Collections.Generic.KeyValuePair<T, int> Choose() { return new System.Collections.Generic.KeyValuePair<T, int>(treebag.root!.item, treebag.root.items); }
 
-            public override SCG.IEnumerator<KeyValuePair<T, int>> GetEnumerator()
+            public override SCG.IEnumerator<System.Collections.Generic.KeyValuePair<T, int>> GetEnumerator()
             {
                 return GetEnumerator(treebag.root!, origstamp); //TODO: NBNBNB
             }
 
-            private SCG.IEnumerator<KeyValuePair<T, int>> GetEnumerator(Node node, int origstamp)
+            private SCG.IEnumerator<System.Collections.Generic.KeyValuePair<T, int>> GetEnumerator(Node node, int origstamp)
             {
                 if (node == null)
                 {
@@ -2289,7 +2289,7 @@ namespace C5
 
                 if (node.left != null)
                 {
-                    SCG.IEnumerator<KeyValuePair<T, int>> child = GetEnumerator(node.left, origstamp);
+                    SCG.IEnumerator<System.Collections.Generic.KeyValuePair<T, int>> child = GetEnumerator(node.left, origstamp);
 
                     while (child.MoveNext())
                     {
@@ -2297,10 +2297,10 @@ namespace C5
                         yield return child.Current;
                     }
                 }
-                yield return new KeyValuePair<T, int>(node.item, node.items);
+                yield return new System.Collections.Generic.KeyValuePair<T, int>(node.item, node.items);
                 if (node.right != null)
                 {
-                    SCG.IEnumerator<KeyValuePair<T, int>> child = GetEnumerator(node.right, origstamp);
+                    SCG.IEnumerator<System.Collections.Generic.KeyValuePair<T, int>> child = GetEnumerator(node.right, origstamp);
 
                     while (child.MoveNext())
                     {
@@ -2311,7 +2311,7 @@ namespace C5
             }
 
             public override bool IsEmpty => treebag.IsEmpty;
-            public override int Count { get { int i = 0; foreach (KeyValuePair<T, int> p in this) { i++; } return i; } } //TODO: make better
+            public override int Count { get { int i = 0; foreach (System.Collections.Generic.KeyValuePair<T, int> p in this) { i++; } return i; } } //TODO: make better
             public override Speed CountSpeed => Speed.Linear;  //TODO: make better
         }
 
@@ -2336,7 +2336,7 @@ namespace C5
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual ICollectionValue<KeyValuePair<T, int>> ItemMultiplicities()
+        public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
         {
             if (!isValid)
             {

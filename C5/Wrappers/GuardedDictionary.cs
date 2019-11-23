@@ -8,7 +8,7 @@ namespace C5
     /// <i>Suitable for wrapping a HashDictionary. <see cref="T:C5.HashDictionary`2"/></i>
     /// </summary>
     [Serializable]
-    public class GuardedDictionary<K, V> : GuardedCollectionValue<KeyValuePair<K, V>>, IDictionary<K, V>
+    public class GuardedDictionary<K, V> : GuardedCollectionValue<System.Collections.Generic.KeyValuePair<K, V>>, IDictionary<K, V>
     {
         #region Fields
 
@@ -80,7 +80,7 @@ namespace C5
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="items"></param>
-        public void AddAll<L, W>(System.Collections.Generic.IEnumerable<KeyValuePair<L, W>> items)
+        public void AddAll<L, W>(System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<L, W>> items)
             where L : K
             where W : V
         { throw new ReadOnlyCollectionException(); }

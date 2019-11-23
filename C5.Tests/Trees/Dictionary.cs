@@ -13,35 +13,27 @@ namespace C5.Tests.trees.RBDictionary
         public static IDictionary<K, V> New<K, V>() { return new TreeDictionary<K, V>(); }
     }
 
-    //[TestFixture]
-    //public class GenericTesters
-    //{
-    //    [Test]
-    //    public void TestSerialize()
-    //    {
-    //        C5.Tests.Templates.Extensible.Serialization.DTester<DictionaryIntToInt>();
-    //    }
-    //}
-
-
     [TestFixture]
     public class Formatting
     {
         private IDictionary<int, int> coll;
         private IFormatProvider rad16;
+        
         [SetUp]
         public void Init() { coll = Factory.New<int, int>(); rad16 = new RadixFormatProvider(16); }
+        
         [TearDown]
         public void Dispose() { coll = null; rad16 = null; }
+        
         [Test]
         public void Format()
         {
             Assert.AreEqual("[  ]", coll.ToString());
             coll.Add(23, 67); coll.Add(45, 89);
-            Assert.AreEqual("[ 23 => 67, 45 => 89 ]", coll.ToString());
-            Assert.AreEqual("[ 17 => 43, 2D => 59 ]", coll.ToString(null, rad16));
-            Assert.AreEqual("[ 23 => 67, ... ]", coll.ToString("L14", null));
-            Assert.AreEqual("[ 17 => 43, ... ]", coll.ToString("L14", rad16));
+            Assert.AreEqual("[ [23, 67], [45, 89] ]", coll.ToString());
+            Assert.AreEqual("[ [17, 43], [2D, 59] ]", coll.ToString(null, rad16));
+            Assert.AreEqual("[ [23, 67], ... ]", coll.ToString("L14", null));
+            Assert.AreEqual("[ [17, 43], ... ]", coll.ToString("L14", rad16));
         }
     }
 
@@ -68,7 +60,7 @@ namespace C5.Tests.trees.RBDictionary
         public void Choose()
         {
             dict.Add("YES", "NO");
-            Assert.AreEqual(new KeyValuePair<string, string>("YES", "NO"), dict.Choose());
+            Assert.AreEqual(new System.Collections.Generic.KeyValuePair<string, string>("YES", "NO"), dict.Choose());
         }
 
         [Test]
@@ -99,7 +91,7 @@ namespace C5.Tests.trees.RBDictionary
             dict.Add("A", "1");
             dict.Add("C", "2");
             dict.Add("E", "3");
-            Assert.IsTrue(dict.TryPredecessor("B", out KeyValuePair<string, string> res));
+            Assert.IsTrue(dict.TryPredecessor("B", out System.Collections.Generic.KeyValuePair<string, string> res));
             Assert.AreEqual("1", res.Value);
             Assert.IsTrue(dict.TryPredecessor("C", out res));
             Assert.AreEqual("1", res.Value);
@@ -235,7 +227,7 @@ namespace C5.Tests.trees.RBDictionary
         [Test]
         public void Pred2()
         {
-            Assert.IsTrue(dict.TryPredecessor("B", out KeyValuePair<string, string> res));
+            Assert.IsTrue(dict.TryPredecessor("B", out System.Collections.Generic.KeyValuePair<string, string> res));
             Assert.AreEqual("1", res.Value);
             Assert.IsTrue(dict.TryPredecessor("C", out res));
             Assert.AreEqual("1", res.Value);
@@ -320,7 +312,7 @@ namespace C5.Tests.trees.RBDictionary
     {
         private TreeDictionary<string, string> dict;
 
-        private SCG.IEnumerator<KeyValuePair<string, string>> dictenum;
+        private SCG.IEnumerator<System.Collections.Generic.KeyValuePair<string, string>> dictenum;
 
 
         [SetUp]
@@ -429,11 +421,11 @@ namespace C5.Tests.trees.RBDictionary
         public void NormalUse()
         {
             Assert.IsTrue(dictenum.MoveNext());
-            Assert.AreEqual(dictenum.Current, new KeyValuePair<string, string>("R", "C"));
+            Assert.AreEqual(dictenum.Current, new System.Collections.Generic.KeyValuePair<string, string>("R", "C"));
             Assert.IsTrue(dictenum.MoveNext());
-            Assert.AreEqual(dictenum.Current, new KeyValuePair<string, string>("S", "A"));
+            Assert.AreEqual(dictenum.Current, new System.Collections.Generic.KeyValuePair<string, string>("S", "A"));
             Assert.IsTrue(dictenum.MoveNext());
-            Assert.AreEqual(dictenum.Current, new KeyValuePair<string, string>("T", "B"));
+            Assert.AreEqual(dictenum.Current, new System.Collections.Generic.KeyValuePair<string, string>("T", "B"));
             Assert.IsFalse(dictenum.MoveNext());
         }
     }

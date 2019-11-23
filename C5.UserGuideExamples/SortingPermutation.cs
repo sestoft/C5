@@ -60,7 +60,7 @@ namespace C5.UserGuideExamples
             where T : IComparable<T>
         {
             var i = 0;
-            var zipList = lst.Map(x => new KeyValuePair<T, int>(x, i++));
+            var zipList = lst.Map(x => new System.Collections.Generic.KeyValuePair<T, int>(x, i++));
             zipList.Sort(new KeyValuePairKeyComparer<T>());
             var res = new ArrayList<int>(lst.Count);
 
@@ -72,10 +72,10 @@ namespace C5.UserGuideExamples
             return res;
         }
 
-        private class KeyValuePairKeyComparer<T> : SCG.IComparer<KeyValuePair<T, int>>
+        private class KeyValuePairKeyComparer<T> : SCG.IComparer<System.Collections.Generic.KeyValuePair<T, int>>
             where T : IComparable<T>
         {
-            public int Compare(KeyValuePair<T, int> p1, KeyValuePair<T, int> p2)
+            public int Compare(System.Collections.Generic.KeyValuePair<T, int> p1, System.Collections.Generic.KeyValuePair<T, int> p2)
             {
                 return p1.Key.CompareTo(p2.Key);
             }
