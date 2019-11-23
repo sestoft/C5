@@ -9,23 +9,23 @@ namespace C5
     /// 
     /// </summary>
     [Serializable]
-    public abstract class DictionaryBase<K, V> : CollectionValueBase<KeyValuePair<K, V>>, IDictionary<K, V>
+    public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collections.Generic.KeyValuePair<K, V>>, IDictionary<K, V>
     {
         /// <summary>
         /// The set collection of entries underlying this dictionary implementation
         /// </summary>
-        protected ICollection<KeyValuePair<K, V>> pairs;
+        protected ICollection<System.Collections.Generic.KeyValuePair<K, V>> pairs;
         private readonly System.Collections.Generic.IEqualityComparer<K> keyequalityComparer;
 
         #region Events
-        private ProxyEventBlock<KeyValuePair<K, V>>? eventBlock;
+        private ProxyEventBlock<System.Collections.Generic.KeyValuePair<K, V>>? eventBlock;
 
         /// <summary>
         /// The change event. Will be raised for every change operation on the collection.
         /// </summary>
-        public override event CollectionChangedHandler<KeyValuePair<K, V>> CollectionChanged
+        public override event CollectionChangedHandler<System.Collections.Generic.KeyValuePair<K, V>> CollectionChanged
         {
-            add { (eventBlock ?? (eventBlock = new ProxyEventBlock<KeyValuePair<K, V>>(this, pairs))).CollectionChanged += value; }
+            add { (eventBlock ?? (eventBlock = new ProxyEventBlock<System.Collections.Generic.KeyValuePair<K, V>>(this, pairs))).CollectionChanged += value; }
             remove
             {
                 if (eventBlock != null)
@@ -38,9 +38,9 @@ namespace C5
         /// <summary>
         /// The change event. Will be raised for every change operation on the collection.
         /// </summary>
-        public override event CollectionClearedHandler<KeyValuePair<K, V>> CollectionCleared
+        public override event CollectionClearedHandler<System.Collections.Generic.KeyValuePair<K, V>> CollectionCleared
         {
-            add { (eventBlock ?? (eventBlock = new ProxyEventBlock<KeyValuePair<K, V>>(this, pairs))).CollectionCleared += value; }
+            add { (eventBlock ?? (eventBlock = new ProxyEventBlock<System.Collections.Generic.KeyValuePair<K, V>>(this, pairs))).CollectionCleared += value; }
             remove
             {
                 if (eventBlock != null)
@@ -53,9 +53,9 @@ namespace C5
         /// <summary>
         /// The item added  event. Will be raised for every individual addition to the collection.
         /// </summary>
-        public override event ItemsAddedHandler<KeyValuePair<K, V>> ItemsAdded
+        public override event ItemsAddedHandler<System.Collections.Generic.KeyValuePair<K, V>> ItemsAdded
         {
-            add { (eventBlock ?? (eventBlock = new ProxyEventBlock<KeyValuePair<K, V>>(this, pairs))).ItemsAdded += value; }
+            add { (eventBlock ?? (eventBlock = new ProxyEventBlock<System.Collections.Generic.KeyValuePair<K, V>>(this, pairs))).ItemsAdded += value; }
             remove
             {
                 if (eventBlock != null)
@@ -68,9 +68,9 @@ namespace C5
         /// <summary>
         /// The item added  event. Will be raised for every individual removal from the collection.
         /// </summary>
-        public override event ItemsRemovedHandler<KeyValuePair<K, V>> ItemsRemoved
+        public override event ItemsRemovedHandler<System.Collections.Generic.KeyValuePair<K, V>> ItemsRemoved
         {
-            add { (eventBlock ?? (eventBlock = new ProxyEventBlock<KeyValuePair<K, V>>(this, pairs))).ItemsRemoved += value; }
+            add { (eventBlock ?? (eventBlock = new ProxyEventBlock<System.Collections.Generic.KeyValuePair<K, V>>(this, pairs))).ItemsRemoved += value; }
             remove
             {
                 if (eventBlock != null)
@@ -118,7 +118,7 @@ namespace C5
         /// <param name="value">Value to add</param>
         public virtual void Add(K key, V value)
         {
-            KeyValuePair<K, V> p = new KeyValuePair<K, V>(key, value);
+            System.Collections.Generic.KeyValuePair<K, V> p = new System.Collections.Generic.KeyValuePair<K, V>(key, value);
 
             if (!pairs.Add(p))
             {
@@ -133,13 +133,13 @@ namespace C5
         /// <exception cref="DuplicateNotAllowedException"> 
         /// If the input contains duplicate keys or a key already present in this dictionary.</exception>
         /// <param name="entries"></param>
-        public virtual void AddAll<L, W>(System.Collections.Generic.IEnumerable<KeyValuePair<L, W>> entries)
+        public virtual void AddAll<L, W>(System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<L, W>> entries)
             where L : K
             where W : V
         {
-            foreach (KeyValuePair<L, W> pair in entries)
+            foreach (System.Collections.Generic.KeyValuePair<L, W> pair in entries)
             {
-                KeyValuePair<K, V> p = new KeyValuePair<K, V>(pair.Key, pair.Value);
+                System.Collections.Generic.KeyValuePair<K, V> p = new System.Collections.Generic.KeyValuePair<K, V>(pair.Key, pair.Value);
                 if (!pairs.Add(p))
                 {
                     throw new DuplicateNotAllowedException("Key being added: '" + pair.Key + "'");
@@ -154,7 +154,7 @@ namespace C5
         /// <returns>True if an entry was found (and removed)</returns>
         public virtual bool Remove(K key)
         {
-            KeyValuePair<K, V> p = new KeyValuePair<K, V>(key);
+            System.Collections.Generic.KeyValuePair<K, V> p = new System.Collections.Generic.KeyValuePair<K, V>(key, default);
 
             return pairs.Remove(p);
         }
@@ -168,7 +168,7 @@ namespace C5
         /// <returns>True if an entry was found (and removed)</returns>
         public virtual bool Remove(K key, out V value)
         {
-            KeyValuePair<K, V> p = new KeyValuePair<K, V>(key);
+            System.Collections.Generic.KeyValuePair<K, V> p = new System.Collections.Generic.KeyValuePair<K, V>(key, default);
 
             if (pairs.Remove(p, out p))
             {
@@ -201,21 +201,21 @@ namespace C5
         /// <returns>True if key was found</returns>
         public virtual bool Contains(K key)
         {
-            KeyValuePair<K, V> p = new KeyValuePair<K, V>(key);
+            System.Collections.Generic.KeyValuePair<K, V> p = new System.Collections.Generic.KeyValuePair<K, V>(key, default);
 
             return pairs.Contains(p);
         }
 
         [Serializable]
-        private class LiftedEnumerable<H> : IEnumerable<KeyValuePair<K, V>> where H : K
+        private class LiftedEnumerable<H> : IEnumerable<System.Collections.Generic.KeyValuePair<K, V>> where H : K
         {
             private readonly System.Collections.Generic.IEnumerable<H> keys;
             public LiftedEnumerable(System.Collections.Generic.IEnumerable<H> keys) { this.keys = keys; }
-            public System.Collections.Generic.IEnumerator<KeyValuePair<K, V>> GetEnumerator()
+            public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<K, V>> GetEnumerator()
             {
                 foreach (H key in keys)
                 {
-                    yield return new KeyValuePair<K, V>(key);
+                    yield return new System.Collections.Generic.KeyValuePair<K, V>(key, default);
                 }
             }
 
@@ -248,7 +248,7 @@ namespace C5
         /// <returns>True if key was found</returns>
         public virtual bool Find(ref K key, out V value)
         {
-            KeyValuePair<K, V> p = new KeyValuePair<K, V>(key);
+            System.Collections.Generic.KeyValuePair<K, V> p = new System.Collections.Generic.KeyValuePair<K, V>(key, default);
 
             if (pairs.Find(ref p))
             {
@@ -273,7 +273,7 @@ namespace C5
         /// <returns>True if key was found</returns>
         public virtual bool Update(K key, V value)
         {
-            KeyValuePair<K, V> p = new KeyValuePair<K, V>(key, value);
+            System.Collections.Generic.KeyValuePair<K, V> p = new System.Collections.Generic.KeyValuePair<K, V>(key, value);
 
             return pairs.Update(p);
         }
@@ -288,7 +288,7 @@ namespace C5
         /// <returns></returns>
         public virtual bool Update(K key, V value, out V oldvalue)
         {
-            KeyValuePair<K, V> p = new KeyValuePair<K, V>(key, value);
+            System.Collections.Generic.KeyValuePair<K, V> p = new System.Collections.Generic.KeyValuePair<K, V>(key, value);
 
             bool retval = pairs.Update(p, out p);
             oldvalue = p.Value;
@@ -306,7 +306,7 @@ namespace C5
         /// <returns>True if key was found</returns>
         public virtual bool FindOrAdd(K key, ref V value)
         {
-            KeyValuePair<K, V> p = new KeyValuePair<K, V>(key, value);
+            System.Collections.Generic.KeyValuePair<K, V> p = new System.Collections.Generic.KeyValuePair<K, V>(key, value);
 
             if (!pairs.FindOrAdd(ref p))
             {
@@ -330,7 +330,7 @@ namespace C5
         /// <returns>True if entry was updated.</returns>
         public virtual bool UpdateOrAdd(K key, V value)
         {
-            return pairs.UpdateOrAdd(new KeyValuePair<K, V>(key, value));
+            return pairs.UpdateOrAdd(new System.Collections.Generic.KeyValuePair<K, V>(key, value));
         }
 
 
@@ -344,7 +344,7 @@ namespace C5
         /// <returns></returns>
         public virtual bool UpdateOrAdd(K key, V value, out V oldvalue)
         {
-            KeyValuePair<K, V> p = new KeyValuePair<K, V>(key, value);
+            System.Collections.Generic.KeyValuePair<K, V> p = new System.Collections.Generic.KeyValuePair<K, V>(key, value);
             bool retval = pairs.UpdateOrAdd(p, out p);
             oldvalue = p.Value;
             return retval;
@@ -356,10 +356,10 @@ namespace C5
         [Serializable]
         internal class ValuesCollection : CollectionValueBase<V>, ICollectionValue<V>
         {
-            private readonly ICollection<KeyValuePair<K, V>> pairs;
+            private readonly ICollection<System.Collections.Generic.KeyValuePair<K, V>> pairs;
 
 
-            internal ValuesCollection(ICollection<KeyValuePair<K, V>> pairs)
+            internal ValuesCollection(ICollection<System.Collections.Generic.KeyValuePair<K, V>> pairs)
             { this.pairs = pairs; }
 
 
@@ -368,7 +368,7 @@ namespace C5
             public override System.Collections.Generic.IEnumerator<V> GetEnumerator()
             {
                 //Updatecheck is performed by the pairs enumerator
-                foreach (KeyValuePair<K, V> p in pairs)
+                foreach (System.Collections.Generic.KeyValuePair<K, V> p in pairs)
                 {
                     yield return p.Value;
                 }
@@ -384,17 +384,17 @@ namespace C5
         [Serializable]
         internal class KeysCollection : CollectionValueBase<K>, ICollectionValue<K>
         {
-            private readonly ICollection<KeyValuePair<K, V>> pairs;
+            private readonly ICollection<System.Collections.Generic.KeyValuePair<K, V>> pairs;
 
 
-            internal KeysCollection(ICollection<KeyValuePair<K, V>> pairs)
+            internal KeysCollection(ICollection<System.Collections.Generic.KeyValuePair<K, V>> pairs)
             { this.pairs = pairs; }
 
             public override K Choose() { return pairs.Choose().Key; }
 
             public override System.Collections.Generic.IEnumerator<K> GetEnumerator()
             {
-                foreach (KeyValuePair<K, V> p in pairs)
+                foreach (System.Collections.Generic.KeyValuePair<K, V> p in pairs)
                 {
                     yield return p.Key;
                 }
@@ -437,7 +437,7 @@ namespace C5
         {
             get
             {
-                KeyValuePair<K, V> p = new KeyValuePair<K, V>(key);
+                System.Collections.Generic.KeyValuePair<K, V> p = new System.Collections.Generic.KeyValuePair<K, V>(key, default);
 
                 if (pairs.Find(ref p))
                 {
@@ -448,7 +448,7 @@ namespace C5
                     throw new NoSuchItemException("Key '" + key!.ToString() + "' not present in Dictionary");
                 }
             }
-            set => pairs.UpdateOrAdd(new KeyValuePair<K, V>(key, value));
+            set => pairs.UpdateOrAdd(new System.Collections.Generic.KeyValuePair<K, V>(key, value));
         }
 
 
@@ -467,7 +467,7 @@ namespace C5
 
         #endregion
 
-        #region ICollectionValue<KeyValuePair<K,V>> Members
+        #region ICollectionValue<System.Collections.Generic.KeyValuePair<K,V>> Members
 
         /// <summary>
         /// 
@@ -493,13 +493,13 @@ namespace C5
         /// </summary>
         /// <exception cref="NoSuchItemException">if collection is empty.</exception>
         /// <returns></returns>
-        public override KeyValuePair<K, V> Choose() { return pairs.Choose(); }
+        public override System.Collections.Generic.KeyValuePair<K, V> Choose() { return pairs.Choose(); }
 
         /// <summary>
         /// Create an enumerator for the collection of entries of the dictionary
         /// </summary>
         /// <returns>The enumerator</returns>
-        public override System.Collections.Generic.IEnumerator<KeyValuePair<K, V>> GetEnumerator()
+        public override System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<K, V>> GetEnumerator()
         {
             return pairs.GetEnumerator(); ;
         }

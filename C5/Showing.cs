@@ -128,7 +128,7 @@ namespace C5
 
             if (showMultiplicities)
             {
-                foreach (KeyValuePair<T, int> p in coll!.ItemMultiplicities())
+                foreach (System.Collections.Generic.KeyValuePair<T, int> p in coll!.ItemMultiplicities())
                 {
                     complete = false;
                     if (rest <= 0)
@@ -209,7 +209,7 @@ namespace C5
             bool first = true;
             bool complete = true;
 
-            foreach (KeyValuePair<K, V> p in dictionary)
+            foreach (System.Collections.Generic.KeyValuePair<K, V> p in dictionary)
             {
                 complete = false;
                 if (rest <= 0)

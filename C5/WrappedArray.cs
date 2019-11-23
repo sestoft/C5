@@ -423,7 +423,7 @@ namespace C5
         /// 
         /// </summary>
         /// <returns></returns>
-        public ICollectionValue<KeyValuePair<T, int>> ItemMultiplicities() { return innerlist.ItemMultiplicities(); }
+        public ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities() { return innerlist.ItemMultiplicities(); }
 
         /// <summary>
         /// 

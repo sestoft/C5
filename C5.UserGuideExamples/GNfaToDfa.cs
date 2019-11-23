@@ -126,7 +126,7 @@ namespace C5.UserGuideExamples
             s1Trans.Add(new Transition(lab, s2));
         }
 
-        public void AddTrans(KeyValuePair<int, ArrayList<Transition>> tr)
+        public void AddTrans(System.Collections.Generic.KeyValuePair<int, ArrayList<Transition>> tr)
         {
             // Assumption: if tr is in trans, it maps to an empty list (end state)
             Trans.Remove(tr.Key);

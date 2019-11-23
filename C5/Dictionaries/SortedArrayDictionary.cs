@@ -23,7 +23,7 @@ namespace C5
         public SortedArrayDictionary(System.Collections.Generic.IComparer<K> comparer, System.Collections.Generic.IEqualityComparer<K> equalityComparer)
             : base(comparer, equalityComparer)
         {
-            pairs = sortedpairs = new SortedArray<KeyValuePair<K, V>>(new KeyValuePairComparer<K, V>(comparer));
+            pairs = sortedpairs = new SortedArray<System.Collections.Generic.KeyValuePair<K, V>>(new KeyValuePairComparer<K, V>(comparer));
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace C5
         public SortedArrayDictionary(int capacity, System.Collections.Generic.IComparer<K> comparer, System.Collections.Generic.IEqualityComparer<K> equalityComparer)
             : base(comparer, equalityComparer)
         {
-            pairs = sortedpairs = new SortedArray<KeyValuePair<K, V>>(capacity, new KeyValuePairComparer<K, V>(comparer));
+            pairs = sortedpairs = new SortedArray<System.Collections.Generic.KeyValuePair<K, V>>(capacity, new KeyValuePairComparer<K, V>(comparer));
         }
         #endregion
     }

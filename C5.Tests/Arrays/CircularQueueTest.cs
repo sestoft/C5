@@ -122,7 +122,7 @@ namespace C5.Tests.arrays.circularqueue
         {
             Assert.IsTrue(queue.Check());
             loadup3();
-            Assert.IsTrue(IC.eq(queue, 14, 15, 16, 17));
+            Assert.IsTrue(IC.Eq(queue, 14, 15, 16, 17));
         }
 
         [Test]
@@ -131,7 +131,7 @@ namespace C5.Tests.arrays.circularqueue
             loadup1();
             Assert.IsTrue(queue.Check());
             Assert.AreEqual(5, queue.Count);
-            Assert.IsTrue(IC.eq(queue, 12, 13, 103, 14, 15));
+            Assert.IsTrue(IC.Eq(queue, 12, 13, 103, 14, 15));
             Assert.AreEqual(12, queue.Choose());
         }
 
@@ -170,7 +170,7 @@ namespace C5.Tests.arrays.circularqueue
             loadup2();
             Assert.IsTrue(queue.Check());
             Assert.AreEqual(5, queue.Count);
-            Assert.IsTrue(IC.eq(queue, 15, 1000, 1001, 1002, 1003));
+            Assert.IsTrue(IC.Eq(queue, 15, 1000, 1001, 1002, 1003));
             Assert.AreEqual(15, queue.Choose());
         }
 

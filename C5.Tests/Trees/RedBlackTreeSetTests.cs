@@ -57,16 +57,16 @@ namespace C5.Tests.trees.TreeSet
     [TestFixture]
     public class Combined
     {
-        private IIndexedSorted<KeyValuePair<int, int>> lst;
+        private IIndexedSorted<System.Collections.Generic.KeyValuePair<int, int>> lst;
 
 
         [SetUp]
         public void Init()
         {
-            lst = new TreeSet<KeyValuePair<int, int>>(new KeyValuePairComparer<int, int>(new IC()));
+            lst = new TreeSet<System.Collections.Generic.KeyValuePair<int, int>>(new KeyValuePairComparer<int, int>(new IC()));
             for (int i = 0; i < 10; i++)
             {
-                lst.Add(new KeyValuePair<int, int>(i, i + 30));
+                lst.Add(new System.Collections.Generic.KeyValuePair<int, int>(i, i + 30));
             }
         }
 
@@ -78,12 +78,12 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void Find()
         {
-            KeyValuePair<int, int> p = new KeyValuePair<int, int>(3, 78);
+            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
 
             Assert.IsTrue(lst.Find(ref p));
             Assert.AreEqual(3, p.Key);
             Assert.AreEqual(33, p.Value);
-            p = new KeyValuePair<int, int>(13, 78);
+            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
             Assert.IsFalse(lst.Find(ref p));
         }
 
@@ -91,12 +91,12 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void FindOrAdd()
         {
-            KeyValuePair<int, int> p = new KeyValuePair<int, int>(3, 78);
+            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
 
             Assert.IsTrue(lst.FindOrAdd(ref p));
             Assert.AreEqual(3, p.Key);
             Assert.AreEqual(33, p.Value);
-            p = new KeyValuePair<int, int>(13, 79);
+            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
             Assert.IsFalse(lst.FindOrAdd(ref p));
             Assert.AreEqual(13, lst[10].Key);
             Assert.AreEqual(79, lst[10].Value);
@@ -106,12 +106,12 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void Update()
         {
-            KeyValuePair<int, int> p = new KeyValuePair<int, int>(3, 78);
+            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
 
             Assert.IsTrue(lst.Update(p));
             Assert.AreEqual(3, lst[3].Key);
             Assert.AreEqual(78, lst[3].Value);
-            p = new KeyValuePair<int, int>(13, 78);
+            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
             Assert.IsFalse(lst.Update(p));
         }
 
@@ -119,12 +119,12 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void UpdateOrAdd1()
         {
-            KeyValuePair<int, int> p = new KeyValuePair<int, int>(3, 78);
+            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
 
             Assert.IsTrue(lst.UpdateOrAdd(p));
             Assert.AreEqual(3, lst[3].Key);
             Assert.AreEqual(78, lst[3].Value);
-            p = new KeyValuePair<int, int>(13, 79);
+            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
             Assert.IsFalse(lst.UpdateOrAdd(p));
             Assert.AreEqual(13, lst[10].Key);
             Assert.AreEqual(79, lst[10].Value);
@@ -146,14 +146,14 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void RemoveWithReturn()
         {
-            KeyValuePair<int, int> p = new KeyValuePair<int, int>(3, 78);
+            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
 
             Assert.IsTrue(lst.Remove(p, out p));
             Assert.AreEqual(3, p.Key);
             Assert.AreEqual(33, p.Value);
             Assert.AreEqual(4, lst[3].Key);
             Assert.AreEqual(34, lst[3].Value);
-            p = new KeyValuePair<int, int>(13, 78);
+            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
             Assert.IsFalse(lst.Remove(p, out _));
         }
     }
@@ -222,35 +222,35 @@ namespace C5.Tests.trees.TreeSet
             int[] all = new int[] { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 };
 
             tree.RemoveRangeFrom(18);
-            Assert.IsTrue(IC.eq(tree, new int[] { 2, 4, 6, 8, 10, 12, 14, 16 }));
+            Assert.IsTrue(IC.Eq(tree, new int[] { 2, 4, 6, 8, 10, 12, 14, 16 }));
             tree.RemoveRangeFrom(28);
-            Assert.IsTrue(IC.eq(tree, new int[] { 2, 4, 6, 8, 10, 12, 14, 16 }));
+            Assert.IsTrue(IC.Eq(tree, new int[] { 2, 4, 6, 8, 10, 12, 14, 16 }));
             tree.RemoveRangeFrom(2);
-            Assert.IsTrue(IC.eq(tree));
+            Assert.IsTrue(IC.Eq(tree));
             foreach (int i in all)
             {
                 tree.Add(i);
             }
 
             tree.RemoveRangeTo(10);
-            Assert.IsTrue(IC.eq(tree, new int[] { 10, 12, 14, 16, 18, 20 }));
+            Assert.IsTrue(IC.Eq(tree, new int[] { 10, 12, 14, 16, 18, 20 }));
             tree.RemoveRangeTo(2);
-            Assert.IsTrue(IC.eq(tree, new int[] { 10, 12, 14, 16, 18, 20 }));
+            Assert.IsTrue(IC.Eq(tree, new int[] { 10, 12, 14, 16, 18, 20 }));
             tree.RemoveRangeTo(21);
-            Assert.IsTrue(IC.eq(tree));
+            Assert.IsTrue(IC.Eq(tree));
             foreach (int i in all)
             {
                 tree.Add(i);
             }
 
             tree.RemoveRangeFromTo(4, 8);
-            Assert.IsTrue(IC.eq(tree, 2, 8, 10, 12, 14, 16, 18, 20));
+            Assert.IsTrue(IC.Eq(tree, 2, 8, 10, 12, 14, 16, 18, 20));
             tree.RemoveRangeFromTo(14, 28);
-            Assert.IsTrue(IC.eq(tree, 2, 8, 10, 12));
+            Assert.IsTrue(IC.Eq(tree, 2, 8, 10, 12));
             tree.RemoveRangeFromTo(0, 9);
-            Assert.IsTrue(IC.eq(tree, 10, 12));
+            Assert.IsTrue(IC.Eq(tree, 10, 12));
             tree.RemoveRangeFromTo(0, 81);
-            Assert.IsTrue(IC.eq(tree));
+            Assert.IsTrue(IC.Eq(tree));
         }
 
         [Test]
@@ -258,31 +258,31 @@ namespace C5.Tests.trees.TreeSet
         {
             int[] all = new int[] { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 };
 
-            Assert.IsTrue(IC.eq(tree, all));
-            Assert.IsTrue(IC.eq(tree.RangeAll(), all));
+            Assert.IsTrue(IC.Eq(tree, all));
+            Assert.IsTrue(IC.Eq(tree.RangeAll(), all));
             Assert.AreEqual(10, tree.RangeAll().Count);
-            Assert.IsTrue(IC.eq(tree.RangeFrom(11), new int[] { 12, 14, 16, 18, 20 }));
+            Assert.IsTrue(IC.Eq(tree.RangeFrom(11), new int[] { 12, 14, 16, 18, 20 }));
             Assert.AreEqual(5, tree.RangeFrom(11).Count);
-            Assert.IsTrue(IC.eq(tree.RangeFrom(12), new int[] { 12, 14, 16, 18, 20 }));
-            Assert.IsTrue(IC.eq(tree.RangeFrom(2), all));
-            Assert.IsTrue(IC.eq(tree.RangeFrom(1), all));
-            Assert.IsTrue(IC.eq(tree.RangeFrom(21), new int[] { }));
-            Assert.IsTrue(IC.eq(tree.RangeFrom(20), new int[] { 20 }));
-            Assert.IsTrue(IC.eq(tree.RangeTo(8), new int[] { 2, 4, 6 }));
-            Assert.IsTrue(IC.eq(tree.RangeTo(7), new int[] { 2, 4, 6 }));
+            Assert.IsTrue(IC.Eq(tree.RangeFrom(12), new int[] { 12, 14, 16, 18, 20 }));
+            Assert.IsTrue(IC.Eq(tree.RangeFrom(2), all));
+            Assert.IsTrue(IC.Eq(tree.RangeFrom(1), all));
+            Assert.IsTrue(IC.Eq(tree.RangeFrom(21), new int[] { }));
+            Assert.IsTrue(IC.Eq(tree.RangeFrom(20), new int[] { 20 }));
+            Assert.IsTrue(IC.Eq(tree.RangeTo(8), new int[] { 2, 4, 6 }));
+            Assert.IsTrue(IC.Eq(tree.RangeTo(7), new int[] { 2, 4, 6 }));
             Assert.AreEqual(3, tree.RangeTo(7).Count);
-            Assert.IsTrue(IC.eq(tree.RangeTo(2), new int[] { }));
-            Assert.IsTrue(IC.eq(tree.RangeTo(1), new int[] { }));
-            Assert.IsTrue(IC.eq(tree.RangeTo(3), new int[] { 2 }));
-            Assert.IsTrue(IC.eq(tree.RangeTo(20), new int[] { 2, 4, 6, 8, 10, 12, 14, 16, 18 }));
-            Assert.IsTrue(IC.eq(tree.RangeTo(21), all));
-            Assert.IsTrue(IC.eq(tree.RangeFromTo(7, 12), new int[] { 8, 10 }));
-            Assert.IsTrue(IC.eq(tree.RangeFromTo(6, 11), new int[] { 6, 8, 10 }));
-            Assert.IsTrue(IC.eq(tree.RangeFromTo(1, 12), new int[] { 2, 4, 6, 8, 10 }));
+            Assert.IsTrue(IC.Eq(tree.RangeTo(2), new int[] { }));
+            Assert.IsTrue(IC.Eq(tree.RangeTo(1), new int[] { }));
+            Assert.IsTrue(IC.Eq(tree.RangeTo(3), new int[] { 2 }));
+            Assert.IsTrue(IC.Eq(tree.RangeTo(20), new int[] { 2, 4, 6, 8, 10, 12, 14, 16, 18 }));
+            Assert.IsTrue(IC.Eq(tree.RangeTo(21), all));
+            Assert.IsTrue(IC.Eq(tree.RangeFromTo(7, 12), new int[] { 8, 10 }));
+            Assert.IsTrue(IC.Eq(tree.RangeFromTo(6, 11), new int[] { 6, 8, 10 }));
+            Assert.IsTrue(IC.Eq(tree.RangeFromTo(1, 12), new int[] { 2, 4, 6, 8, 10 }));
             Assert.AreEqual(5, tree.RangeFromTo(1, 12).Count);
-            Assert.IsTrue(IC.eq(tree.RangeFromTo(2, 12), new int[] { 2, 4, 6, 8, 10 }));
-            Assert.IsTrue(IC.eq(tree.RangeFromTo(6, 21), new int[] { 6, 8, 10, 12, 14, 16, 18, 20 }));
-            Assert.IsTrue(IC.eq(tree.RangeFromTo(6, 20), new int[] { 6, 8, 10, 12, 14, 16, 18 }));
+            Assert.IsTrue(IC.Eq(tree.RangeFromTo(2, 12), new int[] { 2, 4, 6, 8, 10 }));
+            Assert.IsTrue(IC.Eq(tree.RangeFromTo(6, 21), new int[] { 6, 8, 10, 12, 14, 16, 18, 20 }));
+            Assert.IsTrue(IC.Eq(tree.RangeFromTo(6, 20), new int[] { 6, 8, 10, 12, 14, 16, 18 }));
         }
 
 
@@ -292,27 +292,27 @@ namespace C5.Tests.trees.TreeSet
             int[] all = new int[] { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 };
             int[] lla = new int[] { 20, 18, 16, 14, 12, 10, 8, 6, 4, 2 };
 
-            Assert.IsTrue(IC.eq(tree, all));
-            Assert.IsTrue(IC.eq(tree.RangeAll().Backwards(), lla));
-            Assert.IsTrue(IC.eq(tree.RangeFrom(11).Backwards(), new int[] { 20, 18, 16, 14, 12 }));
-            Assert.IsTrue(IC.eq(tree.RangeFrom(12).Backwards(), new int[] { 20, 18, 16, 14, 12 }));
-            Assert.IsTrue(IC.eq(tree.RangeFrom(2).Backwards(), lla));
-            Assert.IsTrue(IC.eq(tree.RangeFrom(1).Backwards(), lla));
-            Assert.IsTrue(IC.eq(tree.RangeFrom(21).Backwards(), new int[] { }));
-            Assert.IsTrue(IC.eq(tree.RangeFrom(20).Backwards(), new int[] { 20 }));
-            Assert.IsTrue(IC.eq(tree.RangeTo(8).Backwards(), new int[] { 6, 4, 2 }));
-            Assert.IsTrue(IC.eq(tree.RangeTo(7).Backwards(), new int[] { 6, 4, 2 }));
-            Assert.IsTrue(IC.eq(tree.RangeTo(2).Backwards(), new int[] { }));
-            Assert.IsTrue(IC.eq(tree.RangeTo(1).Backwards(), new int[] { }));
-            Assert.IsTrue(IC.eq(tree.RangeTo(3).Backwards(), new int[] { 2 }));
-            Assert.IsTrue(IC.eq(tree.RangeTo(20).Backwards(), new int[] { 18, 16, 14, 12, 10, 8, 6, 4, 2 }));
-            Assert.IsTrue(IC.eq(tree.RangeTo(21).Backwards(), lla));
-            Assert.IsTrue(IC.eq(tree.RangeFromTo(7, 12).Backwards(), new int[] { 10, 8 }));
-            Assert.IsTrue(IC.eq(tree.RangeFromTo(6, 11).Backwards(), new int[] { 10, 8, 6 }));
-            Assert.IsTrue(IC.eq(tree.RangeFromTo(1, 12).Backwards(), new int[] { 10, 8, 6, 4, 2 }));
-            Assert.IsTrue(IC.eq(tree.RangeFromTo(2, 12).Backwards(), new int[] { 10, 8, 6, 4, 2 }));
-            Assert.IsTrue(IC.eq(tree.RangeFromTo(6, 21).Backwards(), new int[] { 20, 18, 16, 14, 12, 10, 8, 6 }));
-            Assert.IsTrue(IC.eq(tree.RangeFromTo(6, 20).Backwards(), new int[] { 18, 16, 14, 12, 10, 8, 6 }));
+            Assert.IsTrue(IC.Eq(tree, all));
+            Assert.IsTrue(IC.Eq(tree.RangeAll().Backwards(), lla));
+            Assert.IsTrue(IC.Eq(tree.RangeFrom(11).Backwards(), new int[] { 20, 18, 16, 14, 12 }));
+            Assert.IsTrue(IC.Eq(tree.RangeFrom(12).Backwards(), new int[] { 20, 18, 16, 14, 12 }));
+            Assert.IsTrue(IC.Eq(tree.RangeFrom(2).Backwards(), lla));
+            Assert.IsTrue(IC.Eq(tree.RangeFrom(1).Backwards(), lla));
+            Assert.IsTrue(IC.Eq(tree.RangeFrom(21).Backwards(), new int[] { }));
+            Assert.IsTrue(IC.Eq(tree.RangeFrom(20).Backwards(), new int[] { 20 }));
+            Assert.IsTrue(IC.Eq(tree.RangeTo(8).Backwards(), new int[] { 6, 4, 2 }));
+            Assert.IsTrue(IC.Eq(tree.RangeTo(7).Backwards(), new int[] { 6, 4, 2 }));
+            Assert.IsTrue(IC.Eq(tree.RangeTo(2).Backwards(), new int[] { }));
+            Assert.IsTrue(IC.Eq(tree.RangeTo(1).Backwards(), new int[] { }));
+            Assert.IsTrue(IC.Eq(tree.RangeTo(3).Backwards(), new int[] { 2 }));
+            Assert.IsTrue(IC.Eq(tree.RangeTo(20).Backwards(), new int[] { 18, 16, 14, 12, 10, 8, 6, 4, 2 }));
+            Assert.IsTrue(IC.Eq(tree.RangeTo(21).Backwards(), lla));
+            Assert.IsTrue(IC.Eq(tree.RangeFromTo(7, 12).Backwards(), new int[] { 10, 8 }));
+            Assert.IsTrue(IC.Eq(tree.RangeFromTo(6, 11).Backwards(), new int[] { 10, 8, 6 }));
+            Assert.IsTrue(IC.Eq(tree.RangeFromTo(1, 12).Backwards(), new int[] { 10, 8, 6, 4, 2 }));
+            Assert.IsTrue(IC.Eq(tree.RangeFromTo(2, 12).Backwards(), new int[] { 10, 8, 6, 4, 2 }));
+            Assert.IsTrue(IC.Eq(tree.RangeFromTo(6, 21).Backwards(), new int[] { 20, 18, 16, 14, 12, 10, 8, 6 }));
+            Assert.IsTrue(IC.Eq(tree.RangeFromTo(6, 20).Backwards(), new int[] { 18, 16, 14, 12, 10, 8, 6 }));
         }
 
         [Test]
@@ -466,13 +466,13 @@ namespace C5.Tests.trees.TreeSet
     [TestFixture]
     public class FindOrAdd
     {
-        private TreeSet<KeyValuePair<int, string>> bag;
+        private TreeSet<System.Collections.Generic.KeyValuePair<int, string>> bag;
 
 
         [SetUp]
         public void Init()
         {
-            bag = new TreeSet<KeyValuePair<int, string>>(new KeyValuePairComparer<int, string>(new IC()));
+            bag = new TreeSet<System.Collections.Generic.KeyValuePair<int, string>>(new KeyValuePairComparer<int, string>(new IC()));
         }
 
 
@@ -486,13 +486,12 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void Test()
         {
-            KeyValuePair<int, string> p = new KeyValuePair<int, string>(3, "tre");
+            var p = new SCG.KeyValuePair<int, string>(3, "tre");
 
             Assert.IsFalse(bag.FindOrAdd(ref p));
-            p.Value = "drei";
+            p = new SCG.KeyValuePair<int, string>(p.Key, "drei");
             Assert.IsTrue(bag.FindOrAdd(ref p));
-            Assert.AreEqual("tre", p.Value);
-            p.Value = "three";
+            p = new SCG.KeyValuePair<int, string>(p.Key, "three");
             Assert.AreEqual(1, bag.ContainsCount(p));
             Assert.AreEqual("tre", bag[0].Value);
         }
@@ -571,11 +570,11 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void Test()
         {
-            Assert.IsTrue(IC.seteq(list.UniqueItems()));
-            Assert.IsTrue(IC.seteq(list.ItemMultiplicities()));
+            Assert.IsTrue(IC.SetEq(list.UniqueItems()));
+            Assert.IsTrue(IC.SetEq(list.ItemMultiplicities()));
             list.AddAll(new int[] { 7, 9, 7 });
-            Assert.IsTrue(IC.seteq(list.UniqueItems(), 7, 9));
-            Assert.IsTrue(IC.seteq(list.ItemMultiplicities(), 7, 1, 9, 1));
+            Assert.IsTrue(IC.SetEq(list.UniqueItems(), 7, 9));
+            Assert.IsTrue(IC.SetEq(list.ItemMultiplicities(), 7, 1, 9, 1));
         }
     }
 
@@ -1437,7 +1436,7 @@ namespace C5.Tests.trees.TreeSet
             [Test]
             public void InternalEnum()
             {
-                Assert.IsTrue(IC.eq(snap.FindAll(new Func<int, bool>(twomodeleven)), 13, 35));
+                Assert.IsTrue(IC.Eq(snap.FindAll(new Func<int, bool>(twomodeleven)), 13, 35));
             }
 
 
@@ -1467,9 +1466,9 @@ namespace C5.Tests.trees.TreeSet
             [Test]
             public void Range()
             {
-                Assert.IsTrue(IC.eq(snap.RangeFromTo(5, 16), 5, 7, 9, 11, 13, 15));
-                Assert.IsTrue(IC.eq(snap.RangeFromTo(5, 17), 5, 7, 9, 11, 13, 15));
-                Assert.IsTrue(IC.eq(snap.RangeFromTo(6, 16), 7, 9, 11, 13, 15));
+                Assert.IsTrue(IC.Eq(snap.RangeFromTo(5, 16), 5, 7, 9, 11, 13, 15));
+                Assert.IsTrue(IC.Eq(snap.RangeFromTo(5, 17), 5, 7, 9, 11, 13, 15));
+                Assert.IsTrue(IC.Eq(snap.RangeFromTo(6, 16), 7, 9, 11, 13, 15));
                 //Assert.AreEqual(snap.RangeFromTo(6, 16).Count, 5);
             }
 
@@ -1661,7 +1660,7 @@ namespace C5.Tests.trees.TreeSet
                     Assert.AreEqual(1 + 2 * i++, j);
                     tree.Add(21 - j);
                     Assert.IsTrue(snap.Check("M"), "Bad snap!");
-                    Assert.IsTrue(IC.eq(snap, orig), "Snap was changed!");
+                    Assert.IsTrue(IC.Eq(snap, orig), "Snap was changed!");
                     Assert.IsTrue(tree.Check("Tree"), "Bad tree!");
                 }
             }
@@ -1674,11 +1673,11 @@ namespace C5.Tests.trees.TreeSet
                 TreeSet<int> snap = (TreeSet<int>)tree.Snapshot();
 
                 Assert.IsTrue(snap.Check("Snap"), "Bad snap!");
-                Assert.IsTrue(IC.eq(snap, orig), "Snap was changed!");
+                Assert.IsTrue(IC.Eq(snap, orig), "Snap was changed!");
                 tree.Remove(19);
                 Assert.IsTrue(snap.Check("Snap"), "Bad snap!");
                 Assert.IsTrue(tree.Check("Tree"), "Bad tree!");
-                Assert.IsTrue(IC.eq(snap, orig), "Snap was changed!");
+                Assert.IsTrue(IC.Eq(snap, orig), "Snap was changed!");
             }
 
 
@@ -1697,13 +1696,13 @@ namespace C5.Tests.trees.TreeSet
 
                 Assert.IsFalse(tree.Remove(-20));
                 Assert.IsTrue(snap.Check("Snap"), "Bad snap!");
-                Assert.IsTrue(IC.eq(snap, orig), "Snap was changed!");
+                Assert.IsTrue(IC.Eq(snap, orig), "Snap was changed!");
 
                 //No demote case, with move_item
                 Assert.IsTrue(tree.Remove(20));
                 Assert.IsTrue(tree.Check("T1"));
                 Assert.IsTrue(snap.Check("Snap"), "Bad snap!");
-                Assert.IsTrue(IC.eq(snap, orig), "Snap was changed!");
+                Assert.IsTrue(IC.Eq(snap, orig), "Snap was changed!");
                 Assert.IsFalse(tree.Remove(20));
 
                 //plain case 2
@@ -1711,25 +1710,25 @@ namespace C5.Tests.trees.TreeSet
                 Assert.IsTrue(tree.Remove(14));
                 Assert.IsTrue(tree.Check("Normal test 1"), "Bad tree");
                 Assert.IsTrue(snap.Check("Snap"), "Bad snap!");
-                Assert.IsTrue(IC.eq(snap, orig), "Snap was changed!");
+                Assert.IsTrue(IC.Eq(snap, orig), "Snap was changed!");
 
                 //case 1b
                 Assert.IsTrue(tree.Remove(25));
                 Assert.IsTrue(tree.Check("Normal test 1"), "Bad tree");
                 Assert.IsTrue(snap.Check("Snap"), "Bad snap!");
-                Assert.IsTrue(IC.eq(snap, orig), "Snap was changed!");
+                Assert.IsTrue(IC.Eq(snap, orig), "Snap was changed!");
 
                 //case 1c
                 Assert.IsTrue(tree.Remove(29));
                 Assert.IsTrue(tree.Check("Normal test 1"), "Bad tree");
                 Assert.IsTrue(snap.Check("Snap"), "Bad snap!");
-                Assert.IsTrue(IC.eq(snap, orig), "Snap was changed!");
+                Assert.IsTrue(IC.Eq(snap, orig), "Snap was changed!");
 
                 //1a (terminating)
                 Assert.IsTrue(tree.Remove(10));
                 Assert.IsTrue(tree.Check("Normal test 1"), "Bad tree");
                 Assert.IsTrue(snap.Check("Snap"), "Bad snap!");
-                Assert.IsTrue(IC.eq(snap, orig), "Snap was changed!");
+                Assert.IsTrue(IC.Eq(snap, orig), "Snap was changed!");
 
                 //2+1b
                 Assert.IsTrue(tree.Remove(12));
@@ -1737,7 +1736,7 @@ namespace C5.Tests.trees.TreeSet
                 Assert.IsTrue(tree.Remove(11));
                 Assert.IsTrue(tree.Check("Normal test 1"), "Bad tree");
                 Assert.IsTrue(snap.Check("Snap"), "Bad snap!");
-                Assert.IsTrue(IC.eq(snap, orig), "Snap was changed!");
+                Assert.IsTrue(IC.Eq(snap, orig), "Snap was changed!");
 
                 //1a+1b
                 Assert.IsTrue(tree.Remove(18));
@@ -1745,7 +1744,7 @@ namespace C5.Tests.trees.TreeSet
                 Assert.IsTrue(tree.Remove(15));
                 Assert.IsTrue(tree.Check("Normal test 1"), "Bad tree");
                 Assert.IsTrue(snap.Check("Snap"), "Bad snap!");
-                Assert.IsTrue(IC.eq(snap, orig), "Snap was changed!");
+                Assert.IsTrue(IC.Eq(snap, orig), "Snap was changed!");
 
                 //2+1c
                 for (int i = 0; i < 10; i++)
@@ -1759,7 +1758,7 @@ namespace C5.Tests.trees.TreeSet
                 Assert.IsTrue(tree.Remove(40));
                 Assert.IsTrue(tree.Check("Normal test 1"), "Bad tree");
                 Assert.IsTrue(snap.Check("Snap"), "Bad snap!");
-                Assert.IsTrue(IC.eq(snap, orig), "Snap was changed!");
+                Assert.IsTrue(IC.Eq(snap, orig), "Snap was changed!");
 
                 //
                 Assert.IsTrue(tree.Remove(16));
@@ -1781,13 +1780,13 @@ namespace C5.Tests.trees.TreeSet
                 Assert.IsTrue(tree.Remove(48));
                 Assert.IsTrue(tree.Check("Normal test 1"), "Bad tree");
                 Assert.IsTrue(snap.Check("Snap"), "Bad snap!");
-                Assert.IsTrue(IC.eq(snap, orig), "Snap was changed!");
+                Assert.IsTrue(IC.Eq(snap, orig), "Snap was changed!");
 
                 //Empty tree:
                 Assert.IsFalse(tree.Remove(26));
                 Assert.IsTrue(tree.Check("Normal test 1"), "Bad tree");
                 Assert.IsTrue(snap.Check("Snap"), "Bad snap!");
-                Assert.IsTrue(IC.eq(snap, orig), "Snap was changed!");
+                Assert.IsTrue(IC.Eq(snap, orig), "Snap was changed!");
             }
 
 
@@ -1798,35 +1797,35 @@ namespace C5.Tests.trees.TreeSet
                 TreeSet<int> snap = (TreeSet<int>)tree.Snapshot();
 
                 Assert.IsTrue(snap.Check("M"), "Bad snap!");
-                Assert.IsTrue(IC.eq(snap, orig), "Snap was changed!");
+                Assert.IsTrue(IC.Eq(snap, orig), "Snap was changed!");
                 Assert.IsTrue(tree.Check("Tree"), "Bad tree!");
                 tree.Add(10);
                 Assert.IsTrue(snap.Check("M"), "Bad snap!");
-                Assert.IsTrue(IC.eq(snap, orig), "Snap was changed!");
+                Assert.IsTrue(IC.Eq(snap, orig), "Snap was changed!");
                 Assert.IsTrue(tree.Check("Tree"), "Bad tree!");
                 tree.Add(16);
                 Assert.IsTrue(snap.Check("M"), "Bad snap!");
-                Assert.IsTrue(IC.eq(snap, orig), "Snap was changed!");
+                Assert.IsTrue(IC.Eq(snap, orig), "Snap was changed!");
                 Assert.IsTrue(tree.Check("Tree"), "Bad tree!");
 
                 //Promote+zigzig
                 tree.Add(40);
                 Assert.IsTrue(snap.Check("M"), "Bad snap!");
                 Assert.IsTrue(tree.Check("Tree"), "Bad tree!");
-                Assert.IsTrue(IC.eq(snap, orig), "Snap was changed!");
+                Assert.IsTrue(IC.Eq(snap, orig), "Snap was changed!");
                 for (int i = 1; i < 4; i++)
                 {
                     tree.Add(40 - 2 * i);
                 }
 
                 Assert.IsTrue(snap.Check("M"), "Bad snap!");
-                Assert.IsTrue(IC.eq(snap, orig), "Snap was changed!");
+                Assert.IsTrue(IC.Eq(snap, orig), "Snap was changed!");
                 Assert.IsTrue(tree.Check("Tree"), "Bad tree!");
 
                 //Zigzag:
                 tree.Add(32);
                 Assert.IsTrue(snap.Check("M"), "Bad snap!");
-                Assert.IsTrue(IC.eq(snap, orig), "Snap was changed!");
+                Assert.IsTrue(IC.Eq(snap, orig), "Snap was changed!");
                 Assert.IsTrue(tree.Check("Tree"), "Bad tree!");
             }
 
@@ -1840,7 +1839,7 @@ namespace C5.Tests.trees.TreeSet
                 tree.Clear();
                 Assert.IsTrue(snap.Check("Snap"), "Bad snap!");
                 Assert.IsTrue(tree.Check("Tree"), "Bad tree!");
-                Assert.IsTrue(IC.eq(snap, orig), "Snap was changed!");
+                Assert.IsTrue(IC.Eq(snap, orig), "Snap was changed!");
                 Assert.AreEqual(0, tree.Count);
             }
 
@@ -1917,9 +1916,9 @@ namespace C5.Tests.trees.TreeSet
                 int[] snap7 = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 17, 19 };
                 int[] snap3 = new int[] { 0, 1, 2, 3, 4, 5, 7, 9, 11, 13, 15, 17, 19 };
 
-                Assert.IsTrue(IC.eq(snaps[3], snap3), "Snap 3 was changed!");
-                Assert.IsTrue(IC.eq(snaps[7], snap7), "Snap 7 was changed!");
-                Assert.IsTrue(IC.eq(tree, res));
+                Assert.IsTrue(IC.Eq(snaps[3], snap3), "Snap 3 was changed!");
+                Assert.IsTrue(IC.Eq(snaps[7], snap7), "Snap 7 was changed!");
+                Assert.IsTrue(IC.Eq(tree, res));
                 Assert.IsTrue(tree.Check("B"));
                 Assert.IsTrue(snaps[3].Check("B"));
                 Assert.IsTrue(snaps[7].Check("B"));
@@ -1952,8 +1951,8 @@ namespace C5.Tests.trees.TreeSet
                 int[] snap7 = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 17, 19 };
                 int[] snap3 = new int[] { 0, 1, 2, 3, 4, 5, 7, 9, 11, 13, 15, 17, 19 };
 
-                Assert.IsTrue(IC.eq(snaps[3], snap3), "Snap 3 was changed!");
-                Assert.IsTrue(IC.eq(snaps[7], snap7), "Snap 7 was changed!");
+                Assert.IsTrue(IC.Eq(snaps[3], snap3), "Snap 3 was changed!");
+                Assert.IsTrue(IC.Eq(snaps[7], snap7), "Snap 7 was changed!");
                 Assert.IsTrue(snaps[3].Check("B"));
                 Assert.IsTrue(snaps[7].Check("B"));
             }
@@ -2342,7 +2341,7 @@ namespace C5.Tests.trees.TreeSet
                 tree.AddAll(new FunEnumerable(4, new Func<int, int>(sqr)));
                 Assert.AreEqual(8, tree.Count);
                 Assert.IsTrue(tree.Check());
-                Assert.IsTrue(IC.eq(tree, 0, 1, 4, 5, 6, 7, 8, 9));
+                Assert.IsTrue(IC.Eq(tree, 0, 1, 4, 5, 6, 7, 8, 9));
             }
 
 
@@ -2417,7 +2416,7 @@ namespace C5.Tests.trees.TreeSet
                 tree.AddSorted(new FunEnumerable(4, new Func<int, int>(sqr)));
                 Assert.AreEqual(8, tree.Count);
                 Assert.IsTrue(tree.Check());
-                Assert.IsTrue(IC.eq(tree, 0, 1, 4, 5, 6, 7, 8, 9));
+                Assert.IsTrue(IC.Eq(tree, 0, 1, 4, 5, 6, 7, 8, 9));
             }
 
             [Test]
@@ -2461,19 +2460,19 @@ namespace C5.Tests.trees.TreeSet
                 tree.RemoveAll(tree2.RangeFromTo(3, 7));
                 Assert.AreEqual(8, tree.Count);
                 Assert.IsTrue(tree.Check());
-                Assert.IsTrue(IC.eq(tree, 0, 1, 2, 3, 5, 7, 8, 9));
+                Assert.IsTrue(IC.Eq(tree, 0, 1, 2, 3, 5, 7, 8, 9));
                 tree.RemoveAll(tree2.RangeFromTo(3, 7));
                 Assert.AreEqual(8, tree.Count);
                 Assert.IsTrue(tree.Check());
-                Assert.IsTrue(IC.eq(tree, 0, 1, 2, 3, 5, 7, 8, 9));
+                Assert.IsTrue(IC.Eq(tree, 0, 1, 2, 3, 5, 7, 8, 9));
                 tree.RemoveAll(tree2.RangeFromTo(13, 17));
                 Assert.AreEqual(8, tree.Count);
                 Assert.IsTrue(tree.Check());
-                Assert.IsTrue(IC.eq(tree, 0, 1, 2, 3, 5, 7, 8, 9));
+                Assert.IsTrue(IC.Eq(tree, 0, 1, 2, 3, 5, 7, 8, 9));
                 tree.RemoveAll(tree2.RangeFromTo(3, 17));
                 Assert.AreEqual(7, tree.Count);
                 Assert.IsTrue(tree.Check());
-                Assert.IsTrue(IC.eq(tree, 0, 1, 2, 3, 5, 7, 9));
+                Assert.IsTrue(IC.Eq(tree, 0, 1, 2, 3, 5, 7, 9));
                 for (int i = 0; i < 10; i++)
                 {
                     tree2.Add(i);
@@ -2482,7 +2481,7 @@ namespace C5.Tests.trees.TreeSet
                 tree.RemoveAll(tree2.RangeFromTo(-1, 10));
                 Assert.AreEqual(0, tree.Count);
                 Assert.IsTrue(tree.Check());
-                Assert.IsTrue(IC.eq(tree));
+                Assert.IsTrue(IC.Eq(tree));
             }
 
 
@@ -2492,19 +2491,19 @@ namespace C5.Tests.trees.TreeSet
                 tree.RetainAll(tree2.RangeFromTo(3, 17));
                 Assert.AreEqual(3, tree.Count);
                 Assert.IsTrue(tree.Check());
-                Assert.IsTrue(IC.eq(tree, 4, 6, 8));
+                Assert.IsTrue(IC.Eq(tree, 4, 6, 8));
                 tree.RetainAll(tree2.RangeFromTo(1, 17));
                 Assert.AreEqual(3, tree.Count);
                 Assert.IsTrue(tree.Check());
-                Assert.IsTrue(IC.eq(tree, 4, 6, 8));
+                Assert.IsTrue(IC.Eq(tree, 4, 6, 8));
                 tree.RetainAll(tree2.RangeFromTo(3, 5));
                 Assert.AreEqual(1, tree.Count);
                 Assert.IsTrue(tree.Check());
-                Assert.IsTrue(IC.eq(tree, 4));
+                Assert.IsTrue(IC.Eq(tree, 4));
                 tree.RetainAll(tree2.RangeFromTo(7, 17));
                 Assert.AreEqual(0, tree.Count);
                 Assert.IsTrue(tree.Check());
-                Assert.IsTrue(IC.eq(tree));
+                Assert.IsTrue(IC.Eq(tree));
                 for (int i = 0; i < 10; i++)
                 {
                     tree.Add(i);
@@ -2513,7 +2512,7 @@ namespace C5.Tests.trees.TreeSet
                 tree.RetainAll(tree2.RangeFromTo(5, 5));
                 Assert.AreEqual(0, tree.Count);
                 Assert.IsTrue(tree.Check());
-                Assert.IsTrue(IC.eq(tree));
+                Assert.IsTrue(IC.Eq(tree));
                 for (int i = 0; i < 10; i++)
                 {
                     tree.Add(i);
@@ -2522,7 +2521,7 @@ namespace C5.Tests.trees.TreeSet
                 tree.RetainAll(tree2.RangeFromTo(15, 25));
                 Assert.AreEqual(0, tree.Count);
                 Assert.IsTrue(tree.Check());
-                Assert.IsTrue(IC.eq(tree));
+                Assert.IsTrue(IC.Eq(tree));
             }
 
 
@@ -2546,15 +2545,15 @@ namespace C5.Tests.trees.TreeSet
                 tree.RemoveInterval(3, 4);
                 Assert.IsTrue(tree.Check());
                 Assert.AreEqual(6, tree.Count);
-                Assert.IsTrue(IC.eq(tree, 0, 1, 2, 7, 8, 9));
+                Assert.IsTrue(IC.Eq(tree, 0, 1, 2, 7, 8, 9));
                 tree.RemoveInterval(2, 3);
                 Assert.IsTrue(tree.Check());
                 Assert.AreEqual(3, tree.Count);
-                Assert.IsTrue(IC.eq(tree, 0, 1, 9));
+                Assert.IsTrue(IC.Eq(tree, 0, 1, 9));
                 tree.RemoveInterval(0, 3);
                 Assert.IsTrue(tree.Check());
                 Assert.AreEqual(0, tree.Count);
-                Assert.IsTrue(IC.eq(tree));
+                Assert.IsTrue(IC.Eq(tree));
             }
 
 
@@ -2583,9 +2582,9 @@ namespace C5.Tests.trees.TreeSet
             public void GetRange()
             {
                 SCG.IEnumerable<int> e = tree[3, 3];
-                Assert.IsTrue(IC.eq(e, 3, 4, 5));
+                Assert.IsTrue(IC.Eq(e, 3, 4, 5));
                 e = tree[3, 0];
-                Assert.IsTrue(IC.eq(e));
+                Assert.IsTrue(IC.Eq(e));
             }
 
             [Test]
@@ -2881,16 +2880,16 @@ namespace C5.Tests.trees.TreeSet
             [Test]
             public void HashVal()
             {
-                Assert.AreEqual(CHC.sequencedhashcode(), dit.GetSequencedHashCode());
+                Assert.AreEqual(CHC.SequencedHashCode(), dit.GetSequencedHashCode());
                 dit.Add(3);
-                Assert.AreEqual(CHC.sequencedhashcode(3), dit.GetSequencedHashCode());
+                Assert.AreEqual(CHC.SequencedHashCode(3), dit.GetSequencedHashCode());
                 dit.Add(7);
-                Assert.AreEqual(CHC.sequencedhashcode(3, 7), dit.GetSequencedHashCode());
-                Assert.AreEqual(CHC.sequencedhashcode(), dut.GetSequencedHashCode());
+                Assert.AreEqual(CHC.SequencedHashCode(3, 7), dit.GetSequencedHashCode());
+                Assert.AreEqual(CHC.SequencedHashCode(), dut.GetSequencedHashCode());
                 dut.Add(3);
-                Assert.AreEqual(CHC.sequencedhashcode(3), dut.GetSequencedHashCode());
+                Assert.AreEqual(CHC.SequencedHashCode(3), dut.GetSequencedHashCode());
                 dut.Add(7);
-                Assert.AreEqual(CHC.sequencedhashcode(7, 3), dut.GetSequencedHashCode());
+                Assert.AreEqual(CHC.SequencedHashCode(7, 3), dut.GetSequencedHashCode());
             }
 
 
@@ -2978,16 +2977,16 @@ namespace C5.Tests.trees.TreeSet
             [Test]
             public void HashVal()
             {
-                Assert.AreEqual(CHC.unsequencedhashcode(), dit.GetUnsequencedHashCode());
+                Assert.AreEqual(CHC.UnsequencedHashCode(), dit.GetUnsequencedHashCode());
                 dit.Add(3);
-                Assert.AreEqual(CHC.unsequencedhashcode(3), dit.GetUnsequencedHashCode());
+                Assert.AreEqual(CHC.UnsequencedHashCode(3), dit.GetUnsequencedHashCode());
                 dit.Add(7);
-                Assert.AreEqual(CHC.unsequencedhashcode(3, 7), dit.GetUnsequencedHashCode());
-                Assert.AreEqual(CHC.unsequencedhashcode(), dut.GetUnsequencedHashCode());
+                Assert.AreEqual(CHC.UnsequencedHashCode(3, 7), dit.GetUnsequencedHashCode());
+                Assert.AreEqual(CHC.UnsequencedHashCode(), dut.GetUnsequencedHashCode());
                 dut.Add(3);
-                Assert.AreEqual(CHC.unsequencedhashcode(3), dut.GetUnsequencedHashCode());
+                Assert.AreEqual(CHC.UnsequencedHashCode(3), dut.GetUnsequencedHashCode());
                 dut.Add(7);
-                Assert.AreEqual(CHC.unsequencedhashcode(7, 3), dut.GetUnsequencedHashCode());
+                Assert.AreEqual(CHC.UnsequencedHashCode(7, 3), dut.GetUnsequencedHashCode());
             }
 
 

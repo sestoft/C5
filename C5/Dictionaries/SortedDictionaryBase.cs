@@ -18,7 +18,7 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        protected ISorted<KeyValuePair<K, V>> sortedpairs;
+        protected ISorted<SCG.KeyValuePair<K, V>> sortedpairs;
         private readonly SCG.IComparer<K> keycomparer;
 
         /// <summary>
@@ -51,9 +51,9 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The predecessor, if any</param>
         /// <returns>True if key has a predecessor</returns>
-        public bool TryPredecessor(K key, out KeyValuePair<K, V> res)
+        public bool TryPredecessor(K key, out SCG.KeyValuePair<K, V> res)
         {
-            return sortedpairs.TryPredecessor(new KeyValuePair<K, V>(key), out res);
+            return sortedpairs.TryPredecessor(new SCG.KeyValuePair<K, V>(key, default), out res);
         }
 
         /// <summary>
@@ -63,9 +63,9 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The successor, if any</param>
         /// <returns>True if the key has a successor</returns>
-        public bool TrySuccessor(K key, out KeyValuePair<K, V> res)
+        public bool TrySuccessor(K key, out SCG.KeyValuePair<K, V> res)
         {
-            return sortedpairs.TrySuccessor(new KeyValuePair<K, V>(key), out res);
+            return sortedpairs.TrySuccessor(new SCG.KeyValuePair<K, V>(key, default), out res);
         }
 
         /// <summary>
@@ -75,9 +75,9 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The predecessor, if any</param>
         /// <returns>True if key has a weak predecessor</returns>
-        public bool TryWeakPredecessor(K key, out KeyValuePair<K, V> res)
+        public bool TryWeakPredecessor(K key, out SCG.KeyValuePair<K, V> res)
         {
-            return sortedpairs.TryWeakPredecessor(new KeyValuePair<K, V>(key), out res);
+            return sortedpairs.TryWeakPredecessor(new SCG.KeyValuePair<K, V>(key, default), out res);
         }
 
         /// <summary>
@@ -87,9 +87,9 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The weak successor, if any</param>
         /// <returns>True if the key has a weak successor</returns>
-        public bool TryWeakSuccessor(K key, out KeyValuePair<K, V> res)
+        public bool TryWeakSuccessor(K key, out SCG.KeyValuePair<K, V> res)
         {
-            return sortedpairs.TryWeakSuccessor(new KeyValuePair<K, V>(key), out res);
+            return sortedpairs.TryWeakSuccessor(new SCG.KeyValuePair<K, V>(key, default), out res);
         }
 
         /// <summary>
@@ -99,9 +99,9 @@ namespace C5
         /// <exception cref="NoSuchItemException"></exception>
         /// <param name="key">The key</param>
         /// <returns>The entry</returns>
-        public KeyValuePair<K, V> Predecessor(K key)
+        public SCG.KeyValuePair<K, V> Predecessor(K key)
         {
-            return sortedpairs.Predecessor(new KeyValuePair<K, V>(key));
+            return sortedpairs.Predecessor(new SCG.KeyValuePair<K, V>(key, default));
         }
 
         /// <summary>
@@ -111,9 +111,9 @@ namespace C5
         /// <exception cref="NoSuchItemException"></exception>
         /// <param name="key">The key</param>
         /// <returns>The entry</returns>
-        public KeyValuePair<K, V> Successor(K key)
+        public SCG.KeyValuePair<K, V> Successor(K key)
         {
-            return sortedpairs.Successor(new KeyValuePair<K, V>(key));
+            return sortedpairs.Successor(new SCG.KeyValuePair<K, V>(key, default));
         }
 
         /// <summary>
@@ -123,9 +123,9 @@ namespace C5
         /// <exception cref="NoSuchItemException"></exception>
         /// <param name="key">The key</param>
         /// <returns>The entry</returns>
-        public KeyValuePair<K, V> WeakPredecessor(K key)
+        public SCG.KeyValuePair<K, V> WeakPredecessor(K key)
         {
-            return sortedpairs.WeakPredecessor(new KeyValuePair<K, V>(key));
+            return sortedpairs.WeakPredecessor(new SCG.KeyValuePair<K, V>(key, default));
         }
 
         /// <summary>
@@ -135,9 +135,9 @@ namespace C5
         /// <exception cref="NoSuchItemException"></exception>
         /// <param name="key">The key</param>
         /// <returns>The entry</returns>
-        public KeyValuePair<K, V> WeakSuccessor(K key)
+        public SCG.KeyValuePair<K, V> WeakSuccessor(K key)
         {
-            return sortedpairs.WeakSuccessor(new KeyValuePair<K, V>(key));
+            return sortedpairs.WeakSuccessor(new SCG.KeyValuePair<K, V>(key, default));
         }
 
         #endregion
@@ -148,7 +148,7 @@ namespace C5
         /// 
         /// </summary>
         /// <returns></returns>
-        public KeyValuePair<K, V> FindMin()
+        public SCG.KeyValuePair<K, V> FindMin()
         {
             return sortedpairs.FindMin();
         }
@@ -157,7 +157,7 @@ namespace C5
         /// 
         /// </summary>
         /// <returns></returns>
-        public KeyValuePair<K, V> DeleteMin()
+        public SCG.KeyValuePair<K, V> DeleteMin()
         {
             return sortedpairs.DeleteMin();
         }
@@ -166,7 +166,7 @@ namespace C5
         /// 
         /// </summary>
         /// <returns></returns>
-        public KeyValuePair<K, V> FindMax()
+        public SCG.KeyValuePair<K, V> FindMax()
         {
             return sortedpairs.FindMax();
         }
@@ -175,7 +175,7 @@ namespace C5
         /// 
         /// </summary>
         /// <returns></returns>
-        public KeyValuePair<K, V> DeleteMax()
+        public SCG.KeyValuePair<K, V> DeleteMax()
         {
             return sortedpairs.DeleteMax();
         }
@@ -189,7 +189,7 @@ namespace C5
         /// <param name="highEntry"></param>
         /// <param name="highIsValid"></param>
         /// <returns></returns>
-        public bool Cut(IComparable<K> cutter, out KeyValuePair<K, V> lowEntry, out bool lowIsValid, out KeyValuePair<K, V> highEntry, out bool highIsValid)
+        public bool Cut(IComparable<K> cutter, out SCG.KeyValuePair<K, V> lowEntry, out bool lowIsValid, out SCG.KeyValuePair<K, V> highEntry, out bool highIsValid)
         {
             return sortedpairs.Cut(new KeyValuePairComparable(cutter), out lowEntry, out lowIsValid, out highEntry, out highIsValid);
         }
@@ -199,9 +199,9 @@ namespace C5
         /// </summary>
         /// <param name="bot"></param>
         /// <returns></returns>
-        public IDirectedEnumerable<KeyValuePair<K, V>> RangeFrom(K bot)
+        public IDirectedEnumerable<SCG.KeyValuePair<K, V>> RangeFrom(K bot)
         {
-            return sortedpairs.RangeFrom(new KeyValuePair<K, V>(bot));
+            return sortedpairs.RangeFrom(new SCG.KeyValuePair<K, V>(bot, default));
         }
 
         /// <summary>
@@ -210,9 +210,9 @@ namespace C5
         /// <param name="bot"></param>
         /// <param name="top"></param>
         /// <returns></returns>
-        public IDirectedEnumerable<KeyValuePair<K, V>> RangeFromTo(K bot, K top)
+        public IDirectedEnumerable<SCG.KeyValuePair<K, V>> RangeFromTo(K bot, K top)
         {
-            return sortedpairs.RangeFromTo(new KeyValuePair<K, V>(bot), new KeyValuePair<K, V>(top));
+            return sortedpairs.RangeFromTo(new SCG.KeyValuePair<K, V>(bot, default), new SCG.KeyValuePair<K, V>(top, default));
         }
 
         /// <summary>
@@ -220,16 +220,16 @@ namespace C5
         /// </summary>
         /// <param name="top"></param>
         /// <returns></returns>
-        public IDirectedEnumerable<KeyValuePair<K, V>> RangeTo(K top)
+        public IDirectedEnumerable<SCG.KeyValuePair<K, V>> RangeTo(K top)
         {
-            return sortedpairs.RangeTo(new KeyValuePair<K, V>(top));
+            return sortedpairs.RangeTo(new SCG.KeyValuePair<K, V>(top, default));
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public IDirectedCollectionValue<KeyValuePair<K, V>> RangeAll()
+        public IDirectedCollectionValue<SCG.KeyValuePair<K, V>> RangeAll()
         {
             return sortedpairs.RangeAll();
         }
@@ -238,7 +238,7 @@ namespace C5
         /// 
         /// </summary>
         /// <param name="items"></param>
-        public void AddSorted(SCG.IEnumerable<KeyValuePair<K, V>> items)
+        public void AddSorted(SCG.IEnumerable<SCG.KeyValuePair<K, V>> items)
         {
             sortedpairs.AddSorted(items);
         }
@@ -249,7 +249,7 @@ namespace C5
         /// <param name="lowKey"></param>
         public void RemoveRangeFrom(K lowKey)
         {
-            sortedpairs.RemoveRangeFrom(new KeyValuePair<K, V>(lowKey));
+            sortedpairs.RemoveRangeFrom(new SCG.KeyValuePair<K, V>(lowKey, default));
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace C5
         /// <param name="highKey"></param>
         public void RemoveRangeFromTo(K lowKey, K highKey)
         {
-            sortedpairs.RemoveRangeFromTo(new KeyValuePair<K, V>(lowKey), new KeyValuePair<K, V>(highKey));
+            sortedpairs.RemoveRangeFromTo(new SCG.KeyValuePair<K, V>(lowKey, default), new SCG.KeyValuePair<K, V>(highKey, default));
         }
 
         /// <summary>
@@ -268,37 +268,37 @@ namespace C5
         /// <param name="highKey"></param>
         public void RemoveRangeTo(K highKey)
         {
-            sortedpairs.RemoveRangeTo(new KeyValuePair<K, V>(highKey));
+            sortedpairs.RemoveRangeTo(new SCG.KeyValuePair<K, V>(highKey, default));
         }
 
         #endregion
         [Serializable]
-        private class KeyValuePairComparable : IComparable<KeyValuePair<K, V>>
+        private class KeyValuePairComparable : IComparable<SCG.KeyValuePair<K, V>>
         {
             private readonly IComparable<K> cutter;
 
             internal KeyValuePairComparable(IComparable<K> cutter) { this.cutter = cutter; }
 
-            public int CompareTo(KeyValuePair<K, V> other) { return cutter.CompareTo(other.Key); }
+            public int CompareTo(SCG.KeyValuePair<K, V> other) { return cutter.CompareTo(other.Key); }
 
-            public bool Equals(KeyValuePair<K, V> other) { return cutter.Equals(other.Key); }
+            public bool Equals(SCG.KeyValuePair<K, V> other) { return cutter.Equals(other.Key); }
         }
 
         [Serializable]
-        private class ProjectedDirectedEnumerable : MappedDirectedEnumerable<KeyValuePair<K, V>, K>
+        private class ProjectedDirectedEnumerable : MappedDirectedEnumerable<SCG.KeyValuePair<K, V>, K>
         {
-            public ProjectedDirectedEnumerable(IDirectedEnumerable<KeyValuePair<K, V>> directedpairs) : base(directedpairs) { }
+            public ProjectedDirectedEnumerable(IDirectedEnumerable<SCG.KeyValuePair<K, V>> directedpairs) : base(directedpairs) { }
 
-            public override K Map(KeyValuePair<K, V> pair) { return pair.Key; }
+            public override K Map(SCG.KeyValuePair<K, V> pair) { return pair.Key; }
 
         }
 
         [Serializable]
-        private class ProjectedDirectedCollectionValue : MappedDirectedCollectionValue<KeyValuePair<K, V>, K>
+        private class ProjectedDirectedCollectionValue : MappedDirectedCollectionValue<SCG.KeyValuePair<K, V>, K>
         {
-            public ProjectedDirectedCollectionValue(IDirectedCollectionValue<KeyValuePair<K, V>> directedpairs) : base(directedpairs) { }
+            public ProjectedDirectedCollectionValue(IDirectedCollectionValue<SCG.KeyValuePair<K, V>> directedpairs) : base(directedpairs) { }
 
-            public override K Map(KeyValuePair<K, V> pair) { return pair.Key; }
+            public override K Map(SCG.KeyValuePair<K, V> pair) { return pair.Key; }
 
         }
 
@@ -309,10 +309,10 @@ namespace C5
 
             //TODO: eliminate this. Only problem is the Find method because we lack method on dictionary that also 
             //      returns the actual key.
-            private readonly ISorted<KeyValuePair<K, V>> sortedpairs;
+            private readonly ISorted<SCG.KeyValuePair<K, V>> sortedpairs;
             private readonly SCG.IComparer<K> comparer;
 
-            internal SortedKeysCollection(ISortedDictionary<K, V> sorteddict, ISorted<KeyValuePair<K, V>> sortedpairs, SCG.IComparer<K> comparer, SCG.IEqualityComparer<K> itemequalityComparer)
+            internal SortedKeysCollection(ISortedDictionary<K, V> sorteddict, ISorted<SCG.KeyValuePair<K, V>> sortedpairs, SCG.IComparer<K> comparer, SCG.IEqualityComparer<K> itemequalityComparer)
                 : base(itemequalityComparer)
             {
                 this.sorteddict = sorteddict;
@@ -324,7 +324,7 @@ namespace C5
 
             public override SCG.IEnumerator<K> GetEnumerator()
             {
-                foreach (KeyValuePair<K, V> p in sorteddict)
+                foreach (SCG.KeyValuePair<K, V> p in sorteddict)
                 {
                     yield return p.Key;
                 }
@@ -350,28 +350,28 @@ namespace C5
 
             public bool TryPredecessor(K item, out K res)
             {
-                bool success = sorteddict.TryPredecessor(item, out KeyValuePair<K, V> pRes);
+                bool success = sorteddict.TryPredecessor(item, out SCG.KeyValuePair<K, V> pRes);
                 res = pRes.Key;
                 return success;
             }
 
             public bool TrySuccessor(K item, out K res)
             {
-                bool success = sorteddict.TrySuccessor(item, out KeyValuePair<K, V> pRes);
+                bool success = sorteddict.TrySuccessor(item, out SCG.KeyValuePair<K, V> pRes);
                 res = pRes.Key;
                 return success;
             }
 
             public bool TryWeakPredecessor(K item, out K res)
             {
-                bool success = sorteddict.TryWeakPredecessor(item, out KeyValuePair<K, V> pRes);
+                bool success = sorteddict.TryWeakPredecessor(item, out SCG.KeyValuePair<K, V> pRes);
                 res = pRes.Key;
                 return success;
             }
 
             public bool TryWeakSuccessor(K item, out K res)
             {
-                bool success = sorteddict.TryWeakSuccessor(item, out KeyValuePair<K, V> pRes);
+                bool success = sorteddict.TryWeakSuccessor(item, out SCG.KeyValuePair<K, V> pRes);
                 res = pRes.Key;
                 return success;
             }
@@ -386,7 +386,7 @@ namespace C5
 
             public bool Cut(IComparable<K> c, out K low, out bool lowIsValid, out K high, out bool highIsValid)
             {
-                bool retval = sorteddict.Cut(c, out KeyValuePair<K, V> lowpair, out lowIsValid, out KeyValuePair<K, V> highpair, out highIsValid);
+                bool retval = sorteddict.Cut(c, out SCG.KeyValuePair<K, V> lowpair, out lowIsValid, out SCG.KeyValuePair<K, V> highpair, out highIsValid);
                 low = lowpair.Key;
                 high = highpair.Key;
                 return retval;
@@ -441,7 +441,7 @@ namespace C5
             /// 
             /// </summary>
             /// <returns></returns>
-            public virtual ICollectionValue<KeyValuePair<K, int>> ItemMultiplicities()
+            public virtual ICollectionValue<SCG.KeyValuePair<K, int>> ItemMultiplicities()
             {
                 return new MultiplicityOne<K>(this);
             }
@@ -463,7 +463,7 @@ namespace C5
 
             public bool Find(ref K item)
             {
-                KeyValuePair<K, V> p = new KeyValuePair<K, V>(item);
+                SCG.KeyValuePair<K, V> p = new SCG.KeyValuePair<K, V>(item, default);
                 bool retval = sortedpairs.Find(ref p);
                 item = p.Key;
                 return retval;
@@ -504,7 +504,7 @@ namespace C5
 
             void SCG.ICollection<K>.Add(K item) { throw new ReadOnlyCollectionException(); }
 
-            public void AddAll(System.Collections.Generic.IEnumerable<K> items) { throw new ReadOnlyCollectionException(); }
+            public void AddAll(SCG.IEnumerable<K> items) { throw new ReadOnlyCollectionException(); }
 
             public bool Check() { return sorteddict.Check(); }
 
@@ -536,6 +536,5 @@ namespace C5
         {
             return Showing.ShowDictionary<K, V>(this, stringbuilder, ref rest, formatProvider);
         }
-
     }
 }

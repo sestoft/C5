@@ -98,7 +98,7 @@ namespace MultiDictionary2_MultiDictionary1
             get
             {
                 int count = 0;
-                foreach (KeyValuePair<K, ICollection<V>> entry in this)
+                foreach (System.Collections.Generic.KeyValuePair<K, ICollection<V>> entry in this)
                     if (entry.Value != null)
                         count += entry.Value.Count;
                 return count;
@@ -173,7 +173,7 @@ namespace MultiDictionary2_MultiDictionary1
         // Inherited from base class HashDictionary<K,ICollection<V>>:
 
         // Add(K k, ICollection<V> values) 
-        // AddAll(IEnumerable<KeyValuePair<K,ICollection<V>>> kvs) 
+        // AddAll(IEnumerable<System.Collections.Generic.KeyValuePair<K,ICollection<V>>> kvs) 
         // Clear
         // Clone
         // Find(ref k k, out ICollection<V> values)
@@ -225,7 +225,7 @@ namespace MultiDictionary2_MultiDictionary2
         public MultiHashDictionary()
         {
             ItemsAdded +=
-              delegate (object sender, ItemCountEventArgs<KeyValuePair<K, ICollection<V>>> args)
+              delegate (object sender, ItemCountEventArgs<System.Collections.Generic.KeyValuePair<K, ICollection<V>>> args)
               {
                   ICollection<V> values = args.Item.Value;
                   if (values != null)
@@ -237,7 +237,7 @@ namespace MultiDictionary2_MultiDictionary2
                   }
               };
             ItemsRemoved +=
-              delegate (object sender, ItemCountEventArgs<KeyValuePair<K, ICollection<V>>> args)
+              delegate (object sender, ItemCountEventArgs<System.Collections.Generic.KeyValuePair<K, ICollection<V>>> args)
               {
                   ICollection<V> values = args.Item.Value;
                   if (values != null)
@@ -364,7 +364,7 @@ namespace MultiDictionary2_MultiDictionary3
         public MultiHashDictionary()
         {
             ItemsAdded +=
-              delegate (object sender, ItemCountEventArgs<KeyValuePair<K, W>> args)
+              (object sender, ItemCountEventArgs<SCG.KeyValuePair<K, W>> args) =>
               {
                   ICollection<V> values = args.Item.Value;
                   if (values != null)
@@ -376,7 +376,7 @@ namespace MultiDictionary2_MultiDictionary3
                   }
               };
             ItemsRemoved +=
-              delegate (object sender, ItemCountEventArgs<KeyValuePair<K, W>> args)
+              (object sender, ItemCountEventArgs<SCG.KeyValuePair<K, W>> args) =>
               {
                   ICollection<V> values = args.Item.Value;
                   if (values != null)

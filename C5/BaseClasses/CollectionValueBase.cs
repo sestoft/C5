@@ -653,6 +653,5 @@ namespace C5
         {
             return ToString(null, null);
         }
-
     }
 }

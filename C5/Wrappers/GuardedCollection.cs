@@ -85,7 +85,7 @@ namespace C5
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual ICollectionValue<KeyValuePair<T, int>> ItemMultiplicities() { return new GuardedCollectionValue<KeyValuePair<T, int>>(collection.ItemMultiplicities()); }
+        public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities() { return new GuardedCollectionValue<System.Collections.Generic.KeyValuePair<T, int>>(collection.ItemMultiplicities()); }
 
         /// <summary>
         /// Check if all items in the argument is in the wrapped collection

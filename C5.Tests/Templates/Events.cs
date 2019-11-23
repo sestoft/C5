@@ -844,7 +844,7 @@ namespace C5.Tests.Templates.Events
         }
     }
 
-    public class DictionaryTester<U> : CollectionValueTester<U, KeyValuePair<int, int>> where U : IDictionary<int, int>
+    public class DictionaryTester<U> : CollectionValueTester<U, System.Collections.Generic.KeyValuePair<int, int>> where U : IDictionary<int, int>
     {
         public override SCG.IEnumerable<EventType> GetSpecs()
         {
@@ -862,15 +862,15 @@ namespace C5.Tests.Templates.Events
         public void AddAndREmove()
         {
             listen();
-            seen.Check(new CollectionEvent<KeyValuePair<int, int>>[0]);
+            seen.Check(new CollectionEvent<System.Collections.Generic.KeyValuePair<int, int>>[0]);
             collection.Add(23, 45);
-            seen.Check(new CollectionEvent<KeyValuePair<int, int>>[] {
-          new CollectionEvent<KeyValuePair<int,int>>(EventType.Added, new ItemCountEventArgs<KeyValuePair<int,int>>(new KeyValuePair<int,int>(23,45), 1), collection),
-          new CollectionEvent<KeyValuePair<int,int>>(EventType.Changed, new EventArgs(), collection)});
+            seen.Check(new CollectionEvent<System.Collections.Generic.KeyValuePair<int, int>>[] {
+          new CollectionEvent<System.Collections.Generic.KeyValuePair<int,int>>(EventType.Added, new ItemCountEventArgs<System.Collections.Generic.KeyValuePair<int,int>>(new System.Collections.Generic.KeyValuePair<int,int>(23,45), 1), collection),
+          new CollectionEvent<System.Collections.Generic.KeyValuePair<int,int>>(EventType.Changed, new EventArgs(), collection)});
             collection.Remove(25);
-            seen.Check(new CollectionEvent<KeyValuePair<int, int>>[] {
-          new CollectionEvent<KeyValuePair<int,int>>(EventType.Removed, new ItemCountEventArgs<KeyValuePair<int,int>>(new KeyValuePair<int,int>(23,45), 1), collection),
-          new CollectionEvent<KeyValuePair<int,int>>(EventType.Changed, new EventArgs(), collection)});
+            seen.Check(new CollectionEvent<System.Collections.Generic.KeyValuePair<int, int>>[] {
+          new CollectionEvent<System.Collections.Generic.KeyValuePair<int,int>>(EventType.Removed, new ItemCountEventArgs<System.Collections.Generic.KeyValuePair<int,int>>(new System.Collections.Generic.KeyValuePair<int,int>(23,45), 1), collection),
+          new CollectionEvent<System.Collections.Generic.KeyValuePair<int,int>>(EventType.Changed, new EventArgs(), collection)});
         }
 
 

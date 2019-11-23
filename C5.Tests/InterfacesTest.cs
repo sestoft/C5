@@ -379,7 +379,7 @@ namespace C5.Tests.interfaces
             Assert.AreEqual(0, dict.Count);
             Assert.IsTrue(dict.IsEmpty);
             Assert.IsFalse(dict.IsReadOnly);
-            KeyValuePair<string, string>[] arr = { };
+            System.Collections.Generic.KeyValuePair<string, string>[] arr = { };
             dict.CopyTo(arr, 0);
             dict["R"] = "A";
             dict["S"] = "B";

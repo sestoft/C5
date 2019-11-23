@@ -19,7 +19,7 @@ namespace C5
         /// </summary>
         /// <exception cref="NoSuchItemException"> if the collection is empty.</exception>
         /// <returns>The least item.</returns>
-        KeyValuePair<K, V> FindMin();
+        System.Collections.Generic.KeyValuePair<K, V> FindMin();
 
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace C5
         /// </summary>
         /// <exception cref="NoSuchItemException"> if the collection is empty.</exception>
         /// <returns>The removed item.</returns>
-        KeyValuePair<K, V> DeleteMin();
+        System.Collections.Generic.KeyValuePair<K, V> DeleteMin();
 
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace C5
         /// </summary>
         /// <exception cref="NoSuchItemException"> if the collection is empty.</exception>
         /// <returns>The largest item.</returns>
-        KeyValuePair<K, V> FindMax();
+        System.Collections.Generic.KeyValuePair<K, V> FindMax();
 
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace C5
         /// </summary>
         /// <exception cref="NoSuchItemException"> if the collection is empty.</exception>
         /// <returns>The removed item.</returns>
-        KeyValuePair<K, V> DeleteMax();
+        System.Collections.Generic.KeyValuePair<K, V> DeleteMax();
 
         /// <summary>
         /// The key comparer used by this dictionary.
@@ -58,7 +58,7 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The predecessor, if any</param>
         /// <returns>True if key has a predecessor</returns>
-        bool TryPredecessor(K key, out KeyValuePair<K, V> res);
+        bool TryPredecessor(K key, out System.Collections.Generic.KeyValuePair<K, V> res);
 
         /// <summary>
         /// Find the entry in the dictionary whose key is the
@@ -67,7 +67,7 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The successor, if any</param>
         /// <returns>True if the key has a successor</returns>
-        bool TrySuccessor(K key, out KeyValuePair<K, V> res);
+        bool TrySuccessor(K key, out System.Collections.Generic.KeyValuePair<K, V> res);
 
         /// <summary>
         /// Find the entry in the dictionary whose key is the
@@ -76,7 +76,7 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The predecessor, if any</param>
         /// <returns>True if key has a weak predecessor</returns>
-        bool TryWeakPredecessor(K key, out KeyValuePair<K, V> res);
+        bool TryWeakPredecessor(K key, out System.Collections.Generic.KeyValuePair<K, V> res);
 
         /// <summary>
         /// Find the entry in the dictionary whose key is the
@@ -85,7 +85,7 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The weak successor, if any</param>
         /// <returns>True if the key has a weak successor</returns>
-        bool TryWeakSuccessor(K key, out KeyValuePair<K, V> res);
+        bool TryWeakSuccessor(K key, out System.Collections.Generic.KeyValuePair<K, V> res);
 
         /// <summary>
         /// Find the entry with the largest key less than a given key.
@@ -93,7 +93,7 @@ namespace C5
         /// <exception cref="NoSuchItemException"> if there is no such entry. </exception>
         /// <param name="key">The key to compare to</param>
         /// <returns>The entry</returns>
-        KeyValuePair<K, V> Predecessor(K key);
+        System.Collections.Generic.KeyValuePair<K, V> Predecessor(K key);
 
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace C5
         /// <exception cref="NoSuchItemException"> if there is no such entry. </exception>
         /// <param name="key">The key to compare to</param>
         /// <returns>The entry</returns>
-        KeyValuePair<K, V> Successor(K key);
+        System.Collections.Generic.KeyValuePair<K, V> Successor(K key);
 
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace C5
         /// <exception cref="NoSuchItemException"> if there is no such entry. </exception>
         /// <param name="key">The key to compare to</param>
         /// <returns>The entry</returns>
-        KeyValuePair<K, V> WeakPredecessor(K key);
+        System.Collections.Generic.KeyValuePair<K, V> WeakPredecessor(K key);
 
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace C5
         /// <exception cref="NoSuchItemException"> if there is no such entry. </exception>
         /// <param name="key">The key to compare to</param>
         /// <returns>The entry</returns>
-        KeyValuePair<K, V> WeakSuccessor(K key);
+        System.Collections.Generic.KeyValuePair<K, V> WeakSuccessor(K key);
 
         /// <summary>
         /// Given a "cut" function from the items of the sorted collection to <code>int</code>
@@ -159,7 +159,7 @@ namespace C5
         /// on this collection.</param>
         /// <returns>True if the cut function is zero somewhere
         /// on this collection.</returns>
-        bool Cut(IComparable<K> cutFunction, out KeyValuePair<K, V> lowEntry, out bool lowIsValid, out KeyValuePair<K, V> highEntry, out bool highIsValid);
+        bool Cut(IComparable<K> cutFunction, out System.Collections.Generic.KeyValuePair<K, V> lowEntry, out bool lowIsValid, out System.Collections.Generic.KeyValuePair<K, V> highEntry, out bool highIsValid);
 
         /// <summary>
         /// Query this sorted collection for items greater than or equal to a supplied value.
@@ -169,7 +169,7 @@ namespace C5
         /// </summary>
         /// <param name="bot">The lower bound (inclusive).</param>
         /// <returns>The result directed collection.</returns>
-        IDirectedEnumerable<KeyValuePair<K, V>> RangeFrom(K bot);
+        IDirectedEnumerable<System.Collections.Generic.KeyValuePair<K, V>> RangeFrom(K bot);
 
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace C5
         /// <param name="lowerBound">The lower bound (inclusive).</param>
         /// <param name="upperBound">The upper bound (exclusive).</param>
         /// <returns>The result directed collection.</returns>
-        IDirectedEnumerable<KeyValuePair<K, V>> RangeFromTo(K lowerBound, K upperBound);
+        IDirectedEnumerable<System.Collections.Generic.KeyValuePair<K, V>> RangeFromTo(K lowerBound, K upperBound);
 
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace C5
         /// </summary>
         /// <param name="top">The upper bound (exclusive).</param>
         /// <returns>The result directed collection.</returns>
-        IDirectedEnumerable<KeyValuePair<K, V>> RangeTo(K top);
+        IDirectedEnumerable<System.Collections.Generic.KeyValuePair<K, V>> RangeTo(K top);
 
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace C5
         /// invalidate the view so that further operations on the view throws InvalidView exceptions.</para>
         /// </summary>
         /// <returns>The result directed collection.</returns>
-        IDirectedCollectionValue<KeyValuePair<K, V>> RangeAll();
+        IDirectedCollectionValue<System.Collections.Generic.KeyValuePair<K, V>> RangeAll();
 
 
         //TODO: remove now that we assume that we can check the sorting order?
@@ -213,7 +213,7 @@ namespace C5
         /// <exception cref="ArgumentException"> if the enumerated items turns out
         /// not to be in increasing order.</exception>
         /// <param name="items">The collection to add.</param>
-        void AddSorted(IEnumerable<KeyValuePair<K, V>> items);
+        void AddSorted(IEnumerable<System.Collections.Generic.KeyValuePair<K, V>> items);
 
 
         /// <summary>

@@ -41,36 +41,28 @@ namespace C5.Tests
 
         public int Compare(IC a, IC b)
         {
-            return a._i > b._i ? 1 : a._i < b._i ? -1 : 0;
+            return a.I > b.I ? 1 : a.I < b.I ? -1 : 0;
         }
 
-
-        private int _i;
-
-
-        public int i
-        {
-            get => _i;
-            set => _i = value;
-        }
+        public int I { get; set; }
 
 
         public IC() { }
 
 
-        public IC(int i) { _i = i; }
+        public IC(int i) { I = i; }
 
 
-        public int CompareTo(int that) { return _i > that ? 1 : _i < that ? -1 : 0; }
+        public int CompareTo(int that) { return I > that ? 1 : I < that ? -1 : 0; }
 
-        public bool Equals(int that) { return _i == that; }
-
-
-        public int CompareTo(IC that) { return _i > that._i ? 1 : _i < that._i ? -1 : 0; }
-        public bool Equals(IC that) { return _i == that._i; }
+        public bool Equals(int that) { return I == that; }
 
 
-        public static bool eq(SCG.IEnumerable<int> me, params int[] that)
+        public int CompareTo(IC that) { return I > that.I ? 1 : I < that.I ? -1 : 0; }
+        public bool Equals(IC that) { return I == that.I; }
+
+
+        public static bool Eq(SCG.IEnumerable<int> me, params int[] that)
         {
             int i = 0, maxind = that.Length - 1;
 
@@ -84,7 +76,7 @@ namespace C5.Tests
 
             return i == maxind + 1;
         }
-        public static bool seteq(ICollectionValue<int> me, params int[] that)
+        public static bool SetEq(ICollectionValue<int> me, params int[] that)
         {
             int[] me2 = me.ToArray();
 
@@ -102,14 +94,14 @@ namespace C5.Tests
 
             return i == maxind + 1;
         }
-        public static bool seteq(ICollectionValue<KeyValuePair<int, int>> me, params int[] that)
+        public static bool SetEq(ICollectionValue<SCG.KeyValuePair<int, int>> me, params int[] that)
         {
-            ArrayList<KeyValuePair<int, int>> first = new ArrayList<KeyValuePair<int, int>>();
+            var first = new ArrayList<SCG.KeyValuePair<int, int>>();
             first.AddAll(me);
-            ArrayList<KeyValuePair<int, int>> other = new ArrayList<KeyValuePair<int, int>>();
+            var other = new ArrayList<SCG.KeyValuePair<int, int>>();
             for (int i = 0; i < that.Length; i += 2)
             {
-                other.Add(new KeyValuePair<int, int>(that[i], that[i + 1]));
+                other.Add(new SCG.KeyValuePair<int, int>(that[i], that[i + 1]));
             }
             return other.UnsequencedEquals(first);
         }
@@ -380,7 +372,7 @@ namespace C5.Tests
 
     public class CHC
     {
-        public static int unsequencedhashcode(params int[] a)
+        public static int UnsequencedHashCode(params int[] a)
         {
             int h = 0;
             foreach (int i in a)
@@ -389,7 +381,7 @@ namespace C5.Tests
             }
             return h;
         }
-        public static int sequencedhashcode(params int[] a)
+        public static int SequencedHashCode(params int[] a)
         {
             int h = 0;
             foreach (int i in a) { h = h * 31 + i; }
@@ -449,8 +441,7 @@ namespace C5.Tests
         'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
         'U', 'V', 'W', 'X', 'Y', 'Z' };
 
-        public string Format(string formatString,
-            object argToBeFormatted, IFormatProvider provider)
+        public string Format(string format, object arg, IFormatProvider formatProvider)
         {
             /*switch (Type.GetTypeCode(argToBeFormatted.GetType()))
             {
@@ -494,18 +485,25 @@ namespace C5.Tests
             int intToBeFormatted;
             try
             {
-                intToBeFormatted = (int)argToBeFormatted;
+                intToBeFormatted = (int)arg;
             }
             catch (Exception)
             {
-                if (argToBeFormatted is IFormattable)
+                if (arg is IFormattable)
                 {
-                    return ((IFormattable)argToBeFormatted).
-                        ToString(formatString, provider);
+                    return ((IFormattable)arg).
+                        ToString(format, formatProvider);
+                }
+                else if (IsKeyValuePair(arg))
+                {
+                    var (key, value) = GetKeyValuePair(arg);
+                    var formattedKey = Format(format, key, formatProvider);
+                    var formattedValue = Format(format, value, formatProvider);
+                    return $"[{formattedKey}, {formattedValue}]";
                 }
                 else
                 {
-                    return argToBeFormatted.ToString();
+                    return arg.ToString();
                 }
             }
             return formatInt(intToBeFormatted);
@@ -549,6 +547,31 @@ namespace C5.Tests
             return new string(outDigits,
                 outDigits.Length - digitIndex, digitIndex);
         }
-    }
 
+        // SCG.KeyValuePair is not showable, so we hack it now.
+        private bool IsKeyValuePair(object arg)
+        {
+            if (arg != null)
+            {
+                var type = arg.GetType();
+                if (type.IsGenericType)
+                {
+                    var baseType = type.GetGenericTypeDefinition();
+
+                    return baseType == typeof(SCG.KeyValuePair<,>);
+                }
+            }
+            return false;
+        }
+
+        private (object key, object value) GetKeyValuePair(object arg)
+        {
+            var type = arg.GetType();
+
+            var key = type.GetProperty("Key").GetValue(arg, null);
+            var value = type.GetProperty("Value").GetValue(arg, null);
+
+            return (key, value);
+        }
+    }
 }
