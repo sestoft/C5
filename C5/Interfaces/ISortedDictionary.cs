@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using SCG = System.Collections.Generic;
 
 namespace C5
 {
@@ -12,14 +12,14 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        new ISorted<K>? Keys { get; }
+        new ISorted<K> Keys { get; }
 
         /// <summary>
         /// Find the current least item of this sorted collection.
         /// </summary>
         /// <exception cref="NoSuchItemException"> if the collection is empty.</exception>
         /// <returns>The least item.</returns>
-        System.Collections.Generic.KeyValuePair<K, V> FindMin();
+        SCG.KeyValuePair<K, V> FindMin();
 
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace C5
         /// </summary>
         /// <exception cref="NoSuchItemException"> if the collection is empty.</exception>
         /// <returns>The removed item.</returns>
-        System.Collections.Generic.KeyValuePair<K, V> DeleteMin();
+        SCG.KeyValuePair<K, V> DeleteMin();
 
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace C5
         /// </summary>
         /// <exception cref="NoSuchItemException"> if the collection is empty.</exception>
         /// <returns>The largest item.</returns>
-        System.Collections.Generic.KeyValuePair<K, V> FindMax();
+        SCG.KeyValuePair<K, V> FindMax();
 
 
         /// <summary>
@@ -43,13 +43,13 @@ namespace C5
         /// </summary>
         /// <exception cref="NoSuchItemException"> if the collection is empty.</exception>
         /// <returns>The removed item.</returns>
-        System.Collections.Generic.KeyValuePair<K, V> DeleteMax();
+        SCG.KeyValuePair<K, V> DeleteMax();
 
         /// <summary>
         /// The key comparer used by this dictionary.
         /// </summary>
         /// <value></value>
-        System.Collections.Generic.IComparer<K> Comparer { get; }
+        SCG.IComparer<K> Comparer { get; }
 
         /// <summary>
         /// Find the entry in the dictionary whose key is the
@@ -58,7 +58,7 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The predecessor, if any</param>
         /// <returns>True if key has a predecessor</returns>
-        bool TryPredecessor(K key, out System.Collections.Generic.KeyValuePair<K, V> res);
+        bool TryPredecessor(K key, out SCG.KeyValuePair<K, V> res);
 
         /// <summary>
         /// Find the entry in the dictionary whose key is the
@@ -67,7 +67,7 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The successor, if any</param>
         /// <returns>True if the key has a successor</returns>
-        bool TrySuccessor(K key, out System.Collections.Generic.KeyValuePair<K, V> res);
+        bool TrySuccessor(K key, out SCG.KeyValuePair<K, V> res);
 
         /// <summary>
         /// Find the entry in the dictionary whose key is the
@@ -76,7 +76,7 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The predecessor, if any</param>
         /// <returns>True if key has a weak predecessor</returns>
-        bool TryWeakPredecessor(K key, out System.Collections.Generic.KeyValuePair<K, V> res);
+        bool TryWeakPredecessor(K key, out SCG.KeyValuePair<K, V> res);
 
         /// <summary>
         /// Find the entry in the dictionary whose key is the
@@ -85,7 +85,7 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The weak successor, if any</param>
         /// <returns>True if the key has a weak successor</returns>
-        bool TryWeakSuccessor(K key, out System.Collections.Generic.KeyValuePair<K, V> res);
+        bool TryWeakSuccessor(K key, out SCG.KeyValuePair<K, V> res);
 
         /// <summary>
         /// Find the entry with the largest key less than a given key.
@@ -93,8 +93,7 @@ namespace C5
         /// <exception cref="NoSuchItemException"> if there is no such entry. </exception>
         /// <param name="key">The key to compare to</param>
         /// <returns>The entry</returns>
-        System.Collections.Generic.KeyValuePair<K, V> Predecessor(K key);
-
+        SCG.KeyValuePair<K, V> Predecessor(K key);
 
         /// <summary>
         /// Find the entry with the least key greater than a given key.
@@ -102,8 +101,7 @@ namespace C5
         /// <exception cref="NoSuchItemException"> if there is no such entry. </exception>
         /// <param name="key">The key to compare to</param>
         /// <returns>The entry</returns>
-        System.Collections.Generic.KeyValuePair<K, V> Successor(K key);
-
+        SCG.KeyValuePair<K, V> Successor(K key);
 
         /// <summary>
         /// Find the entry with the largest key less than or equal to a given key.
@@ -111,8 +109,7 @@ namespace C5
         /// <exception cref="NoSuchItemException"> if there is no such entry. </exception>
         /// <param name="key">The key to compare to</param>
         /// <returns>The entry</returns>
-        System.Collections.Generic.KeyValuePair<K, V> WeakPredecessor(K key);
-
+        SCG.KeyValuePair<K, V> WeakPredecessor(K key);
 
         /// <summary>
         /// Find the entry with the least key greater than or equal to a given key.
@@ -120,7 +117,7 @@ namespace C5
         /// <exception cref="NoSuchItemException"> if there is no such entry. </exception>
         /// <param name="key">The key to compare to</param>
         /// <returns>The entry</returns>
-        System.Collections.Generic.KeyValuePair<K, V> WeakSuccessor(K key);
+        SCG.KeyValuePair<K, V> WeakSuccessor(K key);
 
         /// <summary>
         /// Given a "cut" function from the items of the sorted collection to <code>int</code>
@@ -159,7 +156,7 @@ namespace C5
         /// on this collection.</param>
         /// <returns>True if the cut function is zero somewhere
         /// on this collection.</returns>
-        bool Cut(IComparable<K> cutFunction, out System.Collections.Generic.KeyValuePair<K, V> lowEntry, out bool lowIsValid, out System.Collections.Generic.KeyValuePair<K, V> highEntry, out bool highIsValid);
+        bool Cut(IComparable<K> cutFunction, out SCG.KeyValuePair<K, V> lowEntry, out bool lowIsValid, out System.Collections.Generic.KeyValuePair<K, V> highEntry, out bool highIsValid);
 
         /// <summary>
         /// Query this sorted collection for items greater than or equal to a supplied value.
@@ -169,8 +166,7 @@ namespace C5
         /// </summary>
         /// <param name="bot">The lower bound (inclusive).</param>
         /// <returns>The result directed collection.</returns>
-        IDirectedEnumerable<System.Collections.Generic.KeyValuePair<K, V>> RangeFrom(K bot);
-
+        IDirectedEnumerable<SCG.KeyValuePair<K, V>> RangeFrom(K bot);
 
         /// <summary>
         /// Query this sorted collection for items between two supplied values.
@@ -181,8 +177,7 @@ namespace C5
         /// <param name="lowerBound">The lower bound (inclusive).</param>
         /// <param name="upperBound">The upper bound (exclusive).</param>
         /// <returns>The result directed collection.</returns>
-        IDirectedEnumerable<System.Collections.Generic.KeyValuePair<K, V>> RangeFromTo(K lowerBound, K upperBound);
-
+        IDirectedEnumerable<SCG.KeyValuePair<K, V>> RangeFromTo(K lowerBound, K upperBound);
 
         /// <summary>
         /// Query this sorted collection for items less than a supplied value.
@@ -192,8 +187,7 @@ namespace C5
         /// </summary>
         /// <param name="top">The upper bound (exclusive).</param>
         /// <returns>The result directed collection.</returns>
-        IDirectedEnumerable<System.Collections.Generic.KeyValuePair<K, V>> RangeTo(K top);
-
+        IDirectedEnumerable<SCG.KeyValuePair<K, V>> RangeTo(K top);
 
         /// <summary>
         /// Create a directed collection with the same items as this collection.
@@ -202,8 +196,7 @@ namespace C5
         /// invalidate the view so that further operations on the view throws InvalidView exceptions.</para>
         /// </summary>
         /// <returns>The result directed collection.</returns>
-        IDirectedCollectionValue<System.Collections.Generic.KeyValuePair<K, V>> RangeAll();
-
+        IDirectedCollectionValue<SCG.KeyValuePair<K, V>> RangeAll();
 
         //TODO: remove now that we assume that we can check the sorting order?
         /// <summary>
@@ -213,8 +206,7 @@ namespace C5
         /// <exception cref="ArgumentException"> if the enumerated items turns out
         /// not to be in increasing order.</exception>
         /// <param name="items">The collection to add.</param>
-        void AddSorted(IEnumerable<System.Collections.Generic.KeyValuePair<K, V>> items);
-
+        void AddSorted(SCG.IEnumerable<SCG.KeyValuePair<K, V>> items);
 
         /// <summary>
         /// Remove all items of this collection above or at a supplied threshold.
@@ -222,14 +214,12 @@ namespace C5
         /// <param name="low">The lower threshold (inclusive).</param>
         void RemoveRangeFrom(K low);
 
-
         /// <summary>
         /// Remove all items of this collection between two supplied thresholds.
         /// </summary>
         /// <param name="low">The lower threshold (inclusive).</param>
         /// <param name="hi">The upper threshold (exclusive).</param>
         void RemoveRangeFromTo(K low, K hi);
-
 
         /// <summary>
         /// Remove all items of this collection below a supplied threshold.

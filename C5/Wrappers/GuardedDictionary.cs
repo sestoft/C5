@@ -1,4 +1,5 @@
 using System;
+using SCG = System.Collections.Generic;
 
 namespace C5
 {
@@ -8,7 +9,7 @@ namespace C5
     /// <i>Suitable for wrapping a HashDictionary. <see cref="T:C5.HashDictionary`2"/></i>
     /// </summary>
     [Serializable]
-    public class GuardedDictionary<K, V> : GuardedCollectionValue<System.Collections.Generic.KeyValuePair<K, V>>, IDictionary<K, V>
+    public class GuardedDictionary<K, V> : GuardedCollectionValue<SCG.KeyValuePair<K, V>>, IDictionary<K, V>
     {
         #region Fields
 
@@ -32,7 +33,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public System.Collections.Generic.IEqualityComparer<K> EqualityComparer => dict.EqualityComparer;
+        public SCG.IEqualityComparer<K> EqualityComparer => dict.EqualityComparer;
 
         /// <summary>
         /// </summary>
@@ -51,48 +52,42 @@ namespace C5
         /// <value>True</value>
         public bool IsReadOnly => true;
 
-
-        //TODO: guard with a read-only wrapper? Probably so!
         /// <summary> </summary>
         /// <value>The collection of keys of the wrapped dictionary</value>
-        public ICollectionValue<K> Keys => dict.Keys;
+        public ICollectionValue<K> Keys => new GuardedCollectionValue<K>(dict.Keys);
 
 
         /// <summary> </summary>
         /// <value>The collection of values of the wrapped dictionary</value>
-        public ICollectionValue<V> Values => dict.Values;
+        public ICollectionValue<V> Values => new GuardedCollectionValue<V>(dict.Values);
 
         /// <summary>
         /// 
         /// </summary>
-        public virtual Func<K, V> Func => delegate (K k) { return this[k]; };
+        public virtual Func<K, V> Func => k => this[k];
 
         /// <summary>
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="key"></param>
         /// <param name="val"></param>
-        public void Add(K key, V val)
-        { throw new ReadOnlyCollectionException(); }
+        public void Add(K key, V val) => throw new ReadOnlyCollectionException();
 
         /// <summary>
         /// 
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="items"></param>
-        public void AddAll<L, W>(System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<L, W>> items)
+        public void AddAll<L, W>(SCG.IEnumerable<SCG.KeyValuePair<L, W>> items)
             where L : K
-            where W : V
-        { throw new ReadOnlyCollectionException(); }
+            where W : V => throw new ReadOnlyCollectionException();
 
         /// <summary>
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="key"></param>
         /// <returns></returns>
-        public bool Remove(K key)
-        { throw new ReadOnlyCollectionException(); }
-
+        public bool Remove(K key) => throw new ReadOnlyCollectionException();
 
         /// <summary>
         /// </summary>
@@ -100,15 +95,12 @@ namespace C5
         /// <param name="key"></param>
         /// <param name="val"></param>
         /// <returns></returns>
-        public bool Remove(K key, out V val)
-        { throw new ReadOnlyCollectionException(); }
-
+        public bool Remove(K key, out V val) => throw new ReadOnlyCollectionException();
 
         /// <summary>
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
-        public void Clear()
-        { throw new ReadOnlyCollectionException(); }
+        public void Clear() => throw new ReadOnlyCollectionException();
 
         /// <summary>
         /// 
@@ -121,14 +113,14 @@ namespace C5
         /// </summary>
         /// <param name="key">The key</param>
         /// <returns>True if it does</returns>
-        public bool Contains(K key) { return dict.Contains(key); }
+        public bool Contains(K key) => dict.Contains(key);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="keys"></param>
         /// <returns></returns>
-        public bool ContainsAll<H>(System.Collections.Generic.IEnumerable<H> keys) where H : K { return dict.ContainsAll(keys); }
+        public bool ContainsAll<H>(SCG.IEnumerable<H> keys) where H : K  => dict.ContainsAll(keys);
 
         /// <summary>
         /// Search for a key in the wrapped dictionary, reporting the value if found
@@ -136,7 +128,7 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="val">On exit: the value if found</param>
         /// <returns>True if found</returns>
-        public bool Find(ref K key, out V val) { return dict.Find(ref key, out val); }
+        public bool Find(ref K key, out V val) => dict.Find(ref key, out val);
 
         /// <summary>
         /// </summary>
@@ -144,39 +136,7 @@ namespace C5
         /// <param name="key"></param>
         /// <param name="val"></param>
         /// <returns></returns>
-        public bool Update(K key, V val)
-        { throw new ReadOnlyCollectionException(); }
-
-
-        /// <summary>
-        /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
-        /// <param name="key"></param>
-        /// <param name="val"></param>
-        /// <param name="oldval"></param>
-        /// <returns></returns>
-        public bool Update(K key, V val, out V oldval)
-        { throw new ReadOnlyCollectionException(); }
-
-
-        /// <summary>
-        /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
-        /// <param name="key"></param>
-        /// <param name="val"></param>
-        /// <returns></returns>
-        public bool FindOrAdd(K key, ref V val)
-        { throw new ReadOnlyCollectionException(); }
-
-
-        /// <summary>
-        /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
-        /// <param name="key"></param>
-        /// <param name="val"></param>
-        /// <returns></returns>
-        public bool UpdateOrAdd(K key, V val)
-        { throw new ReadOnlyCollectionException(); }
+        public bool Update(K key, V val) => throw new ReadOnlyCollectionException();
 
         /// <summary>
         /// </summary>
@@ -185,8 +145,32 @@ namespace C5
         /// <param name="val"></param>
         /// <param name="oldval"></param>
         /// <returns></returns>
-        public bool UpdateOrAdd(K key, V val, out V oldval)
-        { throw new ReadOnlyCollectionException(); }
+        public bool Update(K key, V val, out V oldval) => throw new ReadOnlyCollectionException();
+
+        /// <summary>
+        /// </summary>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
+        /// <param name="key"></param>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        public bool FindOrAdd(K key, ref V val) => throw new ReadOnlyCollectionException();
+
+        /// <summary>
+        /// </summary>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
+        /// <param name="key"></param>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        public bool UpdateOrAdd(K key, V val) => throw new ReadOnlyCollectionException();
+
+        /// <summary>
+        /// </summary>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
+        /// <param name="key"></param>
+        /// <param name="val"></param>
+        /// <param name="oldval"></param>
+        /// <returns></returns>
+        public bool UpdateOrAdd(K key, V val, out V oldval) => throw new ReadOnlyCollectionException();
 
 
         /// <summary>

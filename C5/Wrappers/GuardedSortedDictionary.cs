@@ -1,4 +1,5 @@
 using System;
+using SCG = System.Collections.Generic;
 
 namespace C5
 {
@@ -24,7 +25,9 @@ namespace C5
         /// <param name="sorteddict">the dictionary</param>
         public GuardedSortedDictionary(ISortedDictionary<K, V> sorteddict)
             : base(sorteddict)
-        { this.sorteddict = sorteddict; }
+        {
+            this.sorteddict = sorteddict;
+        }
 
         #endregion
 
@@ -34,13 +37,11 @@ namespace C5
         /// The key comparer used by this dictionary.
         /// </summary>
         /// <value></value>
-        public System.Collections.Generic.IComparer<K> Comparer => sorteddict.Comparer;
+        public SCG.IComparer<K> Comparer => sorteddict.Comparer;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <value></value>
-        public new ISorted<K>? Keys => null;
+        /// <summary> </summary>
+        /// <value>The collection of keys of the wrapped dictionary</value>
+        public new ISorted<K> Keys => new GuardedSorted<K>(sorteddict.Keys);
 
         /// <summary>
         /// Find the entry in the dictionary whose key is the
@@ -49,10 +50,7 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The predecessor, if any</param>
         /// <returns>True if key has a predecessor</returns>
-        public bool TryPredecessor(K key, out System.Collections.Generic.KeyValuePair<K, V> res)
-        {
-            return sorteddict.TryPredecessor(key, out res);
-        }
+        public bool TryPredecessor(K key, out SCG.KeyValuePair<K, V> res) => sorteddict.TryPredecessor(key, out res);
 
         /// <summary>
         /// Find the entry in the dictionary whose key is the
@@ -61,10 +59,7 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The successor, if any</param>
         /// <returns>True if the key has a successor</returns>
-        public bool TrySuccessor(K key, out System.Collections.Generic.KeyValuePair<K, V> res)
-        {
-            return sorteddict.TrySuccessor(key, out res);
-        }
+        public bool TrySuccessor(K key, out SCG.KeyValuePair<K, V> res) => sorteddict.TrySuccessor(key, out res);
 
         /// <summary>
         /// Find the entry in the dictionary whose key is the
@@ -73,10 +68,7 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The predecessor, if any</param>
         /// <returns>True if key has a weak predecessor</returns>
-        public bool TryWeakPredecessor(K key, out System.Collections.Generic.KeyValuePair<K, V> res)
-        {
-            return sorteddict.TryWeakPredecessor(key, out res);
-        }
+        public bool TryWeakPredecessor(K key, out SCG.KeyValuePair<K, V> res) => sorteddict.TryWeakPredecessor(key, out res);
 
         /// <summary>
         /// Find the entry in the dictionary whose key is the
@@ -85,10 +77,7 @@ namespace C5
         /// <param name="key">The key</param>
         /// <param name="res">The weak successor, if any</param>
         /// <returns>True if the key has a weak successor</returns>
-        public bool TryWeakSuccessor(K key, out System.Collections.Generic.KeyValuePair<K, V> res)
-        {
-            return sorteddict.TryWeakSuccessor(key, out res);
-        }
+        public bool TryWeakSuccessor(K key, out SCG.KeyValuePair<K, V> res) => sorteddict.TryWeakSuccessor(key, out res);
 
         /// <summary>
         /// Get the entry in the wrapped dictionary whose key is the
@@ -97,8 +86,7 @@ namespace C5
         /// <exception cref="NoSuchItemException"> if no such entry exists </exception>    
         /// <param name="key">The key</param>
         /// <returns>The entry</returns>
-        public System.Collections.Generic.KeyValuePair<K, V> Predecessor(K key)
-        { return sorteddict.Predecessor(key); }
+        public SCG.KeyValuePair<K, V> Predecessor(K key) => sorteddict.Predecessor(key);
 
         /// <summary>
         /// Get the entry in the wrapped dictionary whose key is the
@@ -107,9 +95,7 @@ namespace C5
         /// <exception cref="NoSuchItemException"> if no such entry exists </exception>    
         /// <param name="key">The key</param>
         /// <returns>The entry</returns>
-        public System.Collections.Generic.KeyValuePair<K, V> Successor(K key)
-        { return sorteddict.Successor(key); }
-
+        public SCG.KeyValuePair<K, V> Successor(K key) => sorteddict.Successor(key);
 
         /// <summary>
         /// Get the entry in the wrapped dictionary whose key is the
@@ -118,9 +104,7 @@ namespace C5
         /// <exception cref="NoSuchItemException"> if no such entry exists </exception>    
         /// <param name="key">The key</param>
         /// <returns>The entry</returns>
-        public System.Collections.Generic.KeyValuePair<K, V> WeakPredecessor(K key)
-        { return sorteddict.WeakPredecessor(key); }
-
+        public SCG.KeyValuePair<K, V> WeakPredecessor(K key) => sorteddict.WeakPredecessor(key);
 
         /// <summary>
         /// Get the entry in the wrapped dictionary whose key is the
@@ -129,42 +113,33 @@ namespace C5
         /// <exception cref="NoSuchItemException"> if no such entry exists </exception>    
         /// <param name="key">The key</param>
         /// <returns>The entry</returns>
-        public System.Collections.Generic.KeyValuePair<K, V> WeakSuccessor(K key)
-        { return sorteddict.WeakSuccessor(key); }
+        public SCG.KeyValuePair<K, V> WeakSuccessor(K key) => sorteddict.WeakSuccessor(key);
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public System.Collections.Generic.KeyValuePair<K, V> FindMin()
-        {
-            return sorteddict.FindMin();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
-        /// <returns></returns>
-        public System.Collections.Generic.KeyValuePair<K, V> DeleteMin()
-        { throw new ReadOnlyCollectionException(); }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public System.Collections.Generic.KeyValuePair<K, V> FindMax()
-        {
-            return sorteddict.FindMax();
-        }
+        public SCG.KeyValuePair<K, V> FindMin() => sorteddict.FindMin();
 
         /// <summary>
         /// 
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <returns></returns>
-        public System.Collections.Generic.KeyValuePair<K, V> DeleteMax()
-        { throw new ReadOnlyCollectionException(); }
+        public SCG.KeyValuePair<K, V> DeleteMin() => throw new ReadOnlyCollectionException();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public SCG.KeyValuePair<K, V> FindMax() => sorteddict.FindMax();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
+        /// <returns></returns>
+        public SCG.KeyValuePair<K, V> DeleteMax() => throw new ReadOnlyCollectionException();
 
         /// <summary>
         /// 
@@ -175,7 +150,7 @@ namespace C5
         /// <param name="highEntry"></param>
         /// <param name="highIsValid"></param>
         /// <returns></returns>
-        public bool Cut(IComparable<K> c, out System.Collections.Generic.KeyValuePair<K, V> lowEntry, out bool lowIsValid, out System.Collections.Generic.KeyValuePair<K, V> highEntry, out bool highIsValid)
+        public bool Cut(IComparable<K> c, out SCG.KeyValuePair<K, V> lowEntry, out bool lowIsValid, out SCG.KeyValuePair<K, V> highEntry, out bool highIsValid)
         {
             return sorteddict.Cut(c, out lowEntry, out lowIsValid, out highEntry, out highIsValid); ;
         }
@@ -185,9 +160,9 @@ namespace C5
         /// </summary>
         /// <param name="bot"></param>
         /// <returns></returns>
-        public IDirectedEnumerable<System.Collections.Generic.KeyValuePair<K, V>> RangeFrom(K bot)
+        public IDirectedEnumerable<SCG.KeyValuePair<K, V>> RangeFrom(K bot)
         {
-            return new GuardedDirectedEnumerable<System.Collections.Generic.KeyValuePair<K, V>>(sorteddict.RangeFrom(bot));
+            return new GuardedDirectedEnumerable<SCG.KeyValuePair<K, V>>(sorteddict.RangeFrom(bot));
         }
 
         /// <summary>
@@ -196,9 +171,9 @@ namespace C5
         /// <param name="bot"></param>
         /// <param name="top"></param>
         /// <returns></returns>
-        public IDirectedEnumerable<System.Collections.Generic.KeyValuePair<K, V>> RangeFromTo(K bot, K top)
+        public IDirectedEnumerable<SCG.KeyValuePair<K, V>> RangeFromTo(K bot, K top)
         {
-            return new GuardedDirectedEnumerable<System.Collections.Generic.KeyValuePair<K, V>>(sorteddict.RangeFromTo(bot, top));
+            return new GuardedDirectedEnumerable<SCG.KeyValuePair<K, V>>(sorteddict.RangeFromTo(bot, top));
         }
 
         /// <summary>
@@ -206,18 +181,18 @@ namespace C5
         /// </summary>
         /// <param name="top"></param>
         /// <returns></returns>
-        public IDirectedEnumerable<System.Collections.Generic.KeyValuePair<K, V>> RangeTo(K top)
+        public IDirectedEnumerable<SCG.KeyValuePair<K, V>> RangeTo(K top)
         {
-            return new GuardedDirectedEnumerable<System.Collections.Generic.KeyValuePair<K, V>>(sorteddict.RangeTo(top));
+            return new GuardedDirectedEnumerable<SCG.KeyValuePair<K, V>>(sorteddict.RangeTo(top));
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public IDirectedCollectionValue<System.Collections.Generic.KeyValuePair<K, V>> RangeAll()
+        public IDirectedCollectionValue<SCG.KeyValuePair<K, V>> RangeAll()
         {
-            return new GuardedDirectedCollectionValue<System.Collections.Generic.KeyValuePair<K, V>>(sorteddict.RangeAll());
+            return new GuardedDirectedCollectionValue<SCG.KeyValuePair<K, V>>(sorteddict.RangeAll());
         }
 
         /// <summary>
@@ -225,16 +200,14 @@ namespace C5
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="items"></param>
-        public void AddSorted(System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<K, V>> items)
-        { throw new ReadOnlyCollectionException(); }
+        public void AddSorted(SCG.IEnumerable<SCG.KeyValuePair<K, V>> items) => throw new ReadOnlyCollectionException();
 
         /// <summary>
         /// 
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="low"></param>
-        public void RemoveRangeFrom(K low)
-        { throw new ReadOnlyCollectionException(); }
+        public void RemoveRangeFrom(K low) => throw new ReadOnlyCollectionException();
 
         /// <summary>
         /// 
@@ -242,16 +215,14 @@ namespace C5
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="low"></param>
         /// <param name="hi"></param>
-        public void RemoveRangeFromTo(K low, K hi)
-        { throw new ReadOnlyCollectionException(); }
+        public void RemoveRangeFromTo(K low, K hi) => throw new ReadOnlyCollectionException();
 
         /// <summary>
         /// 
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="hi"></param>
-        public void RemoveRangeTo(K hi)
-        { throw new ReadOnlyCollectionException(); }
+        public void RemoveRangeTo(K hi) => throw new ReadOnlyCollectionException();
 
         #endregion
     }
