@@ -1481,7 +1481,7 @@ namespace C5
         /// </summary>
         /// <param name="item">The value to check for.</param>
         /// <returns>True if the items is in this collection.</returns>
-        public virtual bool Contains(T item)
+        public override bool Contains(T item)
         { ValidityCheck(); return IndexOfInner(item) >= 0; }
 
 
@@ -1611,7 +1611,7 @@ namespace C5
         /// </summary>
         /// <param name="item">The value to remove.</param>
         /// <returns>True if the item was found (and removed).</returns>
-        public virtual bool Remove(T item)
+        public override bool Remove(T item)
         {
             UpdateCheck();
 
@@ -2142,7 +2142,7 @@ namespace C5
         /// </summary>
         /// <param name="item">The item to add.</param>
         /// <returns>True</returns>
-        public virtual bool Add(T item)
+        public override bool Add(T item)
         {
             UpdateCheck();
 

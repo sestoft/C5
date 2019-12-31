@@ -125,7 +125,7 @@ namespace C5
         /// <summary>
         /// Remove all items and reset size of internal array container.
         /// </summary>
-        public virtual void Clear()
+        public override void Clear()
         {
             UpdateCheck();
             array = new T[8];
@@ -238,6 +238,10 @@ namespace C5
             /// <value>True if this collection is empty.</value>
             public override bool IsEmpty { get { thebase.ModifyCheck(stamp); return count == 0; } }
 
+            /// <summary>
+            /// Gets a value indicating whether the <see cref="Range"/> is read-only. Always returns <c>true</c>.
+            /// </summary>
+            public override bool IsReadOnly => true;
 
             /// <summary>
             /// 

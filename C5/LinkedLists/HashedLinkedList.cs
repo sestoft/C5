@@ -1119,6 +1119,8 @@ namespace C5
                 }
             }
 
+            public override bool IsReadOnly => true;
+
             public override bool IsEmpty { get { list.ModifyCheck(rangestamp); return count == 0; } }
 
             public override int Count { get { list.ModifyCheck(rangestamp); return count; } }

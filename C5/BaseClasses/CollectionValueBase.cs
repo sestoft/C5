@@ -653,5 +653,48 @@ namespace C5
         {
             return ToString(null, null);
         }
+
+        #region SCG.ICollection<T> Members
+
+        /// <summary>
+        /// Gets a value indicating whether the <see cref="System.Collections.Generic.ICollection{T}"/> is read-only.
+        /// </summary>
+        public abstract bool IsReadOnly { get; }
+
+        /// <summary>
+        /// Adds an item to the <see cref="System.Collections.Generic.ICollection{T}"/>.
+        /// <para/>
+        /// The default implementation throws a <see cref="ReadOnlyCollectionException"/>. Override to provide an implementation.
+        /// </summary>
+        /// <param name="item">The object to add to the <see cref="System.Collections.Generic.ICollection{T}"/>.</param>
+        public virtual bool Add(T item) => throw new ReadOnlyCollectionException();
+
+        void System.Collections.Generic.ICollection<T>.Add(T item) => this.Add(item);
+
+        /// <summary>
+        /// Removes all items from the <see cref="System.Collections.Generic.ICollection{T}"/>.
+        /// <para/>
+        /// The default implementation throws a <see cref="ReadOnlyCollectionException"/>. Override to provide an implementation.
+        /// </summary>
+        public virtual void Clear() => throw new ReadOnlyCollectionException();
+
+        /// <summary>
+        /// Determines whether the <see cref="System.Collections.Generic.ICollection{T}"/> contains a specific value.
+        /// </summary>
+        /// <param name="item">The object to locate in the <see cref="System.Collections.Generic.ICollection{T}"/>.</param>
+        /// <returns><c>true</c> if item is found in the <see cref="System.Collections.Generic.ICollection{T}"/>; otherwise, <c>false</c>.</returns>
+        public virtual bool Contains(T item) => this.Exists((thisItem) => EqualityComparer<T>.Default.Equals(thisItem, item));
+
+        /// <summary>
+        /// Removes the first occurrence of a specific object from the <see cref="System.Collections.Generic.ICollection{T}"/>.
+        /// <para/>
+        /// The default implementation throws a <see cref="ReadOnlyCollectionException"/>. Override to provide an implementation.
+        /// </summary>
+        /// <param name="item">The object to remove from the <see cref="System.Collections.Generic.ICollection{T}"/>.</param>
+        /// <returns><c>true</c> if item was successfully removed from the <see cref="System.Collections.Generic.ICollection{T}"/>; otherwise, <c>false</c>.
+        /// This method also returns <c>false</c> if item is not found in the original <see cref="System.Collections.Generic.ICollection{T}"/>.</returns>
+        public virtual bool Remove(T item) => throw new ReadOnlyCollectionException();
+
+        #endregion
     }
 }

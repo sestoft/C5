@@ -27,7 +27,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value>True if dictionary is read-only</value>
-        bool IsReadOnly { get; }
+        new bool IsReadOnly { get; }
 
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace C5
         /// <summary>
         /// Remove all entries from the dictionary
         /// </summary>
-        void Clear();
+        new void Clear();
 
 
         /// <summary>

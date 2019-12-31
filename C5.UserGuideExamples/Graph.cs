@@ -573,6 +573,8 @@ namespace C5.UserGuideExamples
                 _graph = g;
             }
 
+            public override bool IsReadOnly => true;
+
             public override bool IsEmpty => _graph.EdgeCount == 0;
 
             public override int Count => _graph.EdgeCount;

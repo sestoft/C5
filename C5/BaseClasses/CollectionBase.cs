@@ -287,7 +287,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value>True if this collection is read only</value>
-        public virtual bool IsReadOnly => isReadOnlyBase;
+        public override bool IsReadOnly => isReadOnlyBase;
 
         #endregion
 

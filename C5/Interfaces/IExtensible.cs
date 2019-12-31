@@ -14,7 +14,7 @@ namespace C5
         /// <code>ReadOnlyCollectionException</code>
         /// </summary>
         /// <value>True if this collection is read-only.</value>
-        bool IsReadOnly { get; }
+        new bool IsReadOnly { get; }
 
         //TODO: wonder where the right position of this is
         /// <summary>
@@ -49,7 +49,7 @@ namespace C5
         /// </summary>
         /// <param name="item">The item to add.</param>
         /// <returns>True if item was added.</returns>
-        bool Add(T item);
+        new bool Add(T item);
 
         /// <summary>
         /// Add the elements from another collection with a more specialized item type 

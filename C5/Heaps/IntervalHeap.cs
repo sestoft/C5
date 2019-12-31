@@ -332,7 +332,7 @@ namespace C5
         /// <code>ReadOnlyCollectionException</code>
         /// </summary>
         /// <value>True if this collection is read-only.</value>
-        public bool IsReadOnly => false;
+        public override bool IsReadOnly => false;
 
         /// <summary>
         /// 

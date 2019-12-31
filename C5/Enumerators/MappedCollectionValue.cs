@@ -22,6 +22,8 @@ namespace C5
 
         public override Speed CountSpeed => collectionValue.CountSpeed;
 
+        public override bool IsReadOnly => collectionValue.IsReadOnly;
+
         public override System.Collections.Generic.IEnumerator<V> GetEnumerator()
         {
             foreach (var item in collectionValue)

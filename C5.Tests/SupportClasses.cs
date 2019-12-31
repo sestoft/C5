@@ -8,13 +8,22 @@ using SCG = System.Collections.Generic;
 
 namespace C5.Tests
 {
-    internal class SC : SCG.IComparer<string>
+    internal class SC : SCG.IComparer<string>, SCG.IEqualityComparer<string>
     {
         public int Compare(string a, string b)
         {
             return a.CompareTo(b);
         }
 
+        public bool Equals(string x, string y)
+        {
+            return StringComparer.Ordinal.Equals(x, y);
+        }
+
+        public int GetHashCode(string obj)
+        {
+            return StringComparer.Ordinal.GetHashCode(obj);
+        }
 
         public void appl(String s)
         {
@@ -166,6 +175,8 @@ namespace C5.Tests
 
             throw exception;
         }
+
+        public override bool IsReadOnly => true;
 
         public override bool IsEmpty => false;
 

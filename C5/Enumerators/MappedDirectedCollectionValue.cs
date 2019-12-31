@@ -26,6 +26,8 @@ namespace C5
 
         public override Speed CountSpeed => directedCollectionValue.CountSpeed;
 
+        public override bool IsReadOnly => directedCollectionValue.IsReadOnly;
+
         public override IDirectedCollectionValue<V> Backwards()
         {
             var ret = (MappedDirectedCollectionValue<T, V>)MemberwiseClone();
