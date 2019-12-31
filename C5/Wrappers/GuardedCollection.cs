@@ -37,7 +37,7 @@ namespace C5
         /// (This is a read-only wrapper)
         /// </summary>
         /// <value>True</value>
-        public virtual bool IsReadOnly => true;
+        public override bool IsReadOnly => true;
 
 
         /// <summary> </summary>
@@ -65,7 +65,7 @@ namespace C5
         /// </summary>
         /// <param name="item">The item</param>
         /// <returns>True if found</returns>
-        public virtual bool Contains(T item) { return collection.Contains(item); }
+        public override bool Contains(T item) => collection.Contains(item);
 
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace C5
         /// </summary>
         /// <param name="item">The item</param>
         /// <returns>The number of copies</returns>
-        public virtual int ContainsCount(T item) { return collection.ContainsCount(item); }
+        public virtual int ContainsCount(T item) => collection.ContainsCount(item);
 
         /// <summary>
         /// 
@@ -153,7 +153,7 @@ namespace C5
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="item"></param>
         /// <returns></returns>
-        public virtual bool Remove(T item)
+        public override bool Remove(T item)
         { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
 
 
@@ -185,7 +185,7 @@ namespace C5
         /// <summary>
         /// </summary>
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
-        public virtual void Clear()
+        public override void Clear()
         { throw new ReadOnlyCollectionException("Collection cannot be modified through this guard object"); }
 
 
@@ -235,7 +235,7 @@ namespace C5
         /// <exception cref="ReadOnlyCollectionException"> since this is a read-only wrapper</exception>
         /// <param name="item"></param>
         /// <returns></returns>
-        public virtual bool Add(T item)
+        public override bool Add(T item)
         { throw new ReadOnlyCollectionException(); }
 
         /// <summary>

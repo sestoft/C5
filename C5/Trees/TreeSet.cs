@@ -2908,6 +2908,8 @@ namespace C5
                 this.tree = tree; stamp = tree.stamp;
             }
 
+            public override bool IsReadOnly => true;
+
             public override bool IsEmpty => length == 0;
 
             public override int Count => length;
@@ -4418,6 +4420,7 @@ namespace C5
 
             IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards() { return Backwards(); }
 
+            public override bool IsReadOnly => true;
 
             public override bool IsEmpty => size == 0;
 

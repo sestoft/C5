@@ -490,4 +490,264 @@ namespace C5.Tests.trees.RBDictionary
             }
         }
     }
+
+    [TestFixture]
+    public class SCGIDictionary
+    {
+        private SCG.IDictionary<string, string> dict;
+
+        [SetUp]
+        public void Init()
+        {
+            dict = new TreeDictionary<string, string>(new SC())
+            {
+                { "A", "1" },
+                { "C", "2" },
+                { "E", "3" }
+            };
+        }
+
+        [TearDown]
+        public void Dispose() { dict = null; }
+
+        [Test]
+        public void Add()
+        {
+            Assert.AreEqual(3, dict.Count);
+            dict.Add("S", "4");
+            Assert.AreEqual(4, dict.Count);
+        }
+
+        [Test]
+        public void ContainsKey()
+        {
+            Assert.IsTrue(dict.ContainsKey("A"));
+            Assert.IsFalse(dict.ContainsKey("Z"));
+        }
+
+        [Test]
+        public void Remove()
+        {
+            Assert.AreEqual(3, dict.Count);
+            Assert.IsTrue(dict.Remove("A"));
+            Assert.AreEqual(2, dict.Count);
+            Assert.IsFalse(dict.Remove("Z"));
+            Assert.AreEqual(2, dict.Count);
+        }
+
+        [Test]
+        public void TryGetValue()
+        {
+            Assert.IsTrue(dict.TryGetValue("C", out string value));
+            Assert.AreEqual("2", value);
+            Assert.IsFalse(dict.TryGetValue("Z", out value));
+            Assert.IsNull(value);
+        }
+
+        [Test]
+        public void GetItem()
+        {
+            Assert.AreEqual("3", dict["E"]);
+            Assert.Throws<NoSuchItemException>(() => { var x = dict["Z"]; });
+        }
+
+        [Test]
+        public void SetItem()
+        {
+            dict["C"] = "9";
+            Assert.AreEqual("9", dict["C"]);
+            dict["Z"] = "5";
+            Assert.AreEqual("5", dict["Z"]);
+        }
+
+        // ICollection<SCG.KeyValuePair<TKey, TValue>>
+        [Test]
+        public void Clear()
+        {
+            dict.Clear();
+            Assert.AreEqual(0, dict.Count);
+        }
+
+        [Test]
+        public void Contains()
+        {
+            Assert.IsTrue(dict.Contains(new SCG.KeyValuePair<string, string>("C", "2")));
+            Assert.IsFalse(dict.Contains(new SCG.KeyValuePair<string, string>("D", "2")));
+            Assert.IsFalse(dict.Contains(new SCG.KeyValuePair<string, string>("C", "6")));
+        }
+
+        [Test]
+        public void CopyTo()
+        {
+            var pairs = new SCG.KeyValuePair<string, string>[dict.Count];
+            dict.CopyTo(pairs, 0);
+            Assert.AreEqual("C", pairs[1].Key);
+            Assert.AreEqual("2", pairs[1].Value);
+            Assert.AreEqual("E", pairs[2].Key);
+            Assert.AreEqual("3", pairs[2].Value);
+        }
+
+        [Test]
+        public void RemovePair()
+        {
+            Assert.AreEqual(3, dict.Count);
+            Assert.IsTrue(dict.Remove(new SCG.KeyValuePair<string, string>("A", "1")));
+            Assert.AreEqual(2, dict.Count);
+            Assert.IsFalse(dict.Remove(new SCG.KeyValuePair<string, string>("Z", "9")));
+            Assert.AreEqual(2, dict.Count);
+        }
+
+        [Test]
+        public void Count()
+        {
+            Assert.AreEqual(3, dict.Count);
+        }
+
+        [Test]
+        public void IsReadOnly()
+        {
+            Assert.AreEqual(false, dict.IsReadOnly);
+        }
+
+        [Test]
+        public void GetEnumerable()
+        {
+            var enumerable = dict.GetEnumerator();
+            Assert.IsTrue(enumerable.MoveNext());
+            Assert.AreEqual(new SCG.KeyValuePair<string, string>("A", "1"), enumerable.Current);
+            Assert.IsTrue(enumerable.MoveNext());
+            Assert.AreEqual(new SCG.KeyValuePair<string, string>("C", "2"), enumerable.Current);
+            Assert.IsTrue(enumerable.MoveNext());
+            Assert.AreEqual(new SCG.KeyValuePair<string, string>("E", "3"), enumerable.Current);
+            Assert.IsFalse(enumerable.MoveNext());
+        }
+
+        [Test]
+        public void Keys_GetEnumerable()
+        {
+            var enumerable = dict.Keys.GetEnumerator();
+            Assert.IsTrue(enumerable.MoveNext());
+            Assert.AreEqual("A", enumerable.Current);
+            Assert.IsTrue(enumerable.MoveNext());
+            Assert.AreEqual("C", enumerable.Current);
+            Assert.IsTrue(enumerable.MoveNext());
+            Assert.AreEqual("E", enumerable.Current);
+            Assert.IsFalse(enumerable.MoveNext());
+        }
+
+        [Test]
+        public void Keys_Count()
+        {
+            Assert.AreEqual(3, dict.Keys.Count);
+            dict.Remove("C");
+            Assert.AreEqual(2, dict.Keys.Count);
+        }
+
+        [Test]
+        public void Keys_IsReadOnly()
+        {
+            Assert.AreEqual(true, dict.Keys.IsReadOnly);
+        }
+
+        [Test]
+        public void Keys_Add()
+        {
+            Assert.Throws<ReadOnlyCollectionException>(() => dict.Keys.Add("Foo"));
+        }
+
+        [Test]
+        public void Keys_Clear()
+        {
+            Assert.Throws<ReadOnlyCollectionException>(() => dict.Keys.Clear());
+        }
+
+        [Test]
+        public void Keys_Contains()
+        {
+            Assert.IsTrue(dict.Keys.Contains("A"));
+            Assert.IsFalse(dict.Keys.Contains("B"));
+        }
+
+        [Test]
+        public void Keys_CopyTo()
+        {
+            var keys = new string[dict.Keys.Count + 2];
+            dict.Keys.CopyTo(keys, 1);
+            Assert.AreEqual(null, keys[0]);
+            Assert.AreEqual("A", keys[1]);
+            Assert.AreEqual("C", keys[2]);
+            Assert.AreEqual("E", keys[3]);
+            Assert.AreEqual(null, keys[4]);
+        }
+
+        [Test]
+        public void Keys_Remove()
+        {
+            Assert.Throws<ReadOnlyCollectionException>(() => dict.Keys.Remove("Foo"));
+        }
+
+        [Test]
+        public void Values_GetEnumerable()
+        {
+            var enumerable = dict.Values.GetEnumerator();
+            Assert.IsTrue(enumerable.MoveNext());
+            Assert.AreEqual("1", enumerable.Current);
+            Assert.IsTrue(enumerable.MoveNext());
+            Assert.AreEqual("2", enumerable.Current);
+            Assert.IsTrue(enumerable.MoveNext());
+            Assert.AreEqual("3", enumerable.Current);
+            Assert.IsFalse(enumerable.MoveNext());
+        }
+
+        [Test]
+        public void Values_Count()
+        {
+            Assert.AreEqual(3, dict.Values.Count);
+            dict.Remove("C");
+            Assert.AreEqual(2, dict.Values.Count);
+        }
+
+        [Test]
+        public void Values_IsReadOnly()
+        {
+            Assert.AreEqual(true, dict.Values.IsReadOnly);
+        }
+
+        [Test]
+        public void Values_Add()
+        {
+            Assert.Throws<ReadOnlyCollectionException>(() => dict.Values.Add("Foo"));
+        }
+
+        [Test]
+        public void Values_Clear()
+        {
+            Assert.Throws<ReadOnlyCollectionException>(() => dict.Values.Clear());
+        }
+
+        [Test]
+        public void Values_Contains()
+        {
+            Assert.IsTrue(dict.Values.Contains("1"));
+            Assert.IsFalse(dict.Values.Contains("9"));
+        }
+
+        [Test]
+        public void Values_CopyTo()
+        {
+            var values = new string[dict.Values.Count + 2];
+            dict.Values.CopyTo(values, 1);
+            Assert.AreEqual(null, values[0]);
+            Assert.AreEqual("1", values[1]);
+            Assert.AreEqual("2", values[2]);
+            Assert.AreEqual("3", values[3]);
+            Assert.AreEqual(null, values[4]);
+        }
+
+        [Test]
+        public void Values_Remove()
+        {
+            Assert.Throws<ReadOnlyCollectionException>(() => dict.Values.Remove("1"));
+        }
+    }
 }

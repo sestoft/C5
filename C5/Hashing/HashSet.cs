@@ -451,7 +451,7 @@ namespace C5
         /// </summary>
         /// <param name="item">The item to remove</param>
         /// <returns>True if item was (found and) removed </returns>
-        public virtual bool Remove(T item)
+        public override bool Remove(T item)
         {
             UpdateCheck();
             if (Remove(ref item))
@@ -515,7 +515,7 @@ namespace C5
         /// <summary>
         /// Remove all items from the set, resetting internal table to initial size.
         /// </summary>
-        public virtual void Clear()
+        public override void Clear()
         {
             UpdateCheck();
             int oldsize = size;
@@ -743,7 +743,7 @@ namespace C5
         /// </summary>
         /// <param name="item">The item to add.</param>
         /// <returns>True if item was added (i.e. not found)</returns>
-        public virtual bool Add(T item)
+        public override bool Add(T item)
         {
             UpdateCheck();
             return !SearchOrAdd(ref item, true, false, true);
@@ -753,10 +753,7 @@ namespace C5
         /// Add an item to this set.
         /// </summary>
         /// <param name="item">The item to add.</param>
-        void SCG.ICollection<T>.Add(T item)
-        {
-            Add(item);
-        }
+        void SCG.ICollection<T>.Add(T item) => Add(item);
 
         /// <summary>
         /// Add the elements from another collection with a more specialized item type 

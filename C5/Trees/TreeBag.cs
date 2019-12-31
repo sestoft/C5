@@ -2310,6 +2310,7 @@ namespace C5
                 }
             }
 
+            public override bool IsReadOnly => treebag.IsReadOnly;
             public override bool IsEmpty => treebag.IsEmpty;
             public override int Count { get { int i = 0; foreach (System.Collections.Generic.KeyValuePair<T, int> p in this) { i++; } return i; } } //TODO: make better
             public override Speed CountSpeed => Speed.Linear;  //TODO: make better
@@ -2700,6 +2701,8 @@ namespace C5
                 this.start = start; length = count; this.forwards = forwards;
                 this.tree = tree; stamp = tree.stamp;
             }
+
+            public override bool IsReadOnly => true;
 
             public override bool IsEmpty => length == 0;
 
@@ -4288,6 +4291,7 @@ namespace C5
 
             IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards() { return Backwards(); }
 
+            public override bool IsReadOnly => true;
 
             public override bool IsEmpty => size == 0;
 

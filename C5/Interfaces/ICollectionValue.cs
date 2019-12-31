@@ -10,8 +10,17 @@ namespace C5
     /// collection. The main usage for this interface is to be the return type of 
     /// query operations on generic collection.
     /// </summary>
-    public interface ICollectionValue<T> : IEnumerable<T>, IShowable
+    public interface ICollectionValue<T> : IEnumerable<T>, IShowable, System.Collections.Generic.ICollection<T>
     {
+        /// <summary>
+        /// Add an item to this collection if possible. If this collection has set
+        /// semantics, the item will be added if not already in the collection. If
+        /// bag semantics, the item will always be added.
+        /// </summary>
+        /// <param name="item">The item to add.</param>
+        /// <returns>True if item was added.</returns>
+        new bool Add(T item);
+
         /// <summary>
         /// A flag bitmap of the events subscribable to by this collection.
         /// </summary>
@@ -63,7 +72,7 @@ namespace C5
         /// <summary>
         /// </summary>
         /// <value>The number of items in this collection</value>
-        int Count { get; }
+        new int Count { get; }
 
         /// <summary>
         /// The value is symbolic indicating the type of asymptotic complexity
@@ -79,7 +88,7 @@ namespace C5
         /// </summary>
         /// <param name="array">The array to copy to</param>
         /// <param name="index">The index at which to copy the first item</param>
-        void CopyTo(T[] array, int index);
+        new void CopyTo(T[] array, int index);
 
         /// <summary>
         /// Create an array with the items of this collection (in the same order as an

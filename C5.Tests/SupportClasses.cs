@@ -176,6 +176,8 @@ namespace C5.Tests
             throw exception;
         }
 
+        public override bool IsReadOnly => true;
+
         public override bool IsEmpty => false;
 
         public override int Count => contents.Length + 1;

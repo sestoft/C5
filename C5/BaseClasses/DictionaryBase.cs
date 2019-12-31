@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using SCG = System.Collections.Generic;
 
 namespace C5
 {
@@ -9,7 +9,7 @@ namespace C5
     /// 
     /// </summary>
     [Serializable]
-    public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collections.Generic.KeyValuePair<K, V>>, IDictionary<K, V>
+    public abstract class DictionaryBase<K, V> : CollectionValueBase<SCG.KeyValuePair<K, V>>, IDictionary<K, V>, SCG.IDictionary<K, V>
     {
         /// <summary>
         /// The set collection of entries underlying this dictionary implementation
@@ -186,7 +186,7 @@ namespace C5
         /// <summary>
         /// Remove all entries from the dictionary
         /// </summary>
-        public virtual void Clear() { pairs.Clear(); }
+        public override void Clear() { pairs.Clear(); }
 
         /// <summary>
         /// 
@@ -207,7 +207,7 @@ namespace C5
         }
 
         [Serializable]
-        private class LiftedEnumerable<H> : IEnumerable<System.Collections.Generic.KeyValuePair<K, V>> where H : K
+        private class LiftedEnumerable<H> : SCG.IEnumerable<SCG.KeyValuePair<K, V>> where H : K
         {
             private readonly System.Collections.Generic.IEnumerable<H> keys;
             public LiftedEnumerable(System.Collections.Generic.IEnumerable<H> keys) { this.keys = keys; }
@@ -379,6 +379,8 @@ namespace C5
             public override int Count => pairs.Count;
 
             public override Speed CountSpeed => Speed.Constant;
+
+            public override bool IsReadOnly => true;
         }
 
         [Serializable]
@@ -405,6 +407,8 @@ namespace C5
             public override int Count => pairs.Count;
 
             public override Speed CountSpeed => pairs.CountSpeed;
+
+            public override bool IsReadOnly => true;
         }
         #endregion
 
@@ -455,8 +459,8 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <value>True if dictionary is read  only</value>
-        public virtual bool IsReadOnly => pairs.IsReadOnly;
+        /// <value>True if dictionary is read only</value>
+        public override bool IsReadOnly => pairs.IsReadOnly;
 
 
         /// <summary>
@@ -517,5 +521,83 @@ namespace C5
         {
             return Showing.ShowDictionary<K, V>(this, stringbuilder, ref rest, formatProvider);
         }
+
+        #region SCG.IDictionary<K, V> Members
+
+        SCG.ICollection<K> SCG.IDictionary<K, V>.Keys => this.Keys;
+
+        SCG.ICollection<V> SCG.IDictionary<K, V>.Values => this.Values;
+
+        int SCG.ICollection<SCG.KeyValuePair<K, V>>.Count => this.Count;
+
+        bool SCG.ICollection<SCG.KeyValuePair<K, V>>.IsReadOnly => this.IsReadOnly;
+
+        V SCG.IDictionary<K, V>.this[K key] { get => this[key]; set => this[key] = value; }
+
+        void SCG.IDictionary<K, V>.Add(K key, V value)
+        {
+            this.Add(key, value);
+        }
+
+        bool SCG.IDictionary<K, V>.ContainsKey(K key)
+        {
+            return this.Contains(key);
+        }
+
+        bool SCG.IDictionary<K, V>.Remove(K key)
+        {
+            return this.Remove(key);
+        }
+
+        bool SCG.IDictionary<K, V>.TryGetValue(K key, out V value)
+        {
+            SCG.KeyValuePair<K, V> p = new SCG.KeyValuePair<K, V>(key, default);
+
+            bool result = pairs.Find(ref p);
+            value = p.Value;
+            return result;
+        }
+
+        void SCG.ICollection<SCG.KeyValuePair<K, V>>.Add(SCG.KeyValuePair<K, V> item)
+        {
+            this.Add(item.Key, item.Value);
+        }
+
+        void SCG.ICollection<SCG.KeyValuePair<K, V>>.Clear()
+        {
+            this.Clear();
+        }
+
+        bool SCG.ICollection<SCG.KeyValuePair<K, V>>.Contains(SCG.KeyValuePair<K, V> item)
+        {
+            foreach (var thisItem in this)
+                if (thisItem.Equals(item))
+                    return true;
+
+            return false;
+        }
+
+        void SCG.ICollection<SCG.KeyValuePair<K, V>>.CopyTo(SCG.KeyValuePair<K, V>[] array, int arrayIndex)
+        {
+            if (arrayIndex < 0 || arrayIndex + Count > array.Length)
+                throw new ArgumentOutOfRangeException(nameof(arrayIndex));
+
+            foreach (var item in this)
+                array[arrayIndex++] = new SCG.KeyValuePair<K, V>(item.Key, item.Value);
+        }
+
+        bool SCG.ICollection<SCG.KeyValuePair<K, V>>.Remove(SCG.KeyValuePair<K, V> item)
+        {
+            return this.Remove(item.Key);
+        }
+
+        SCG.IEnumerator<SCG.KeyValuePair<K, V>> SCG.IEnumerable<SCG.KeyValuePair<K, V>>.GetEnumerator()
+        {
+            foreach (var item in this)
+                yield return new SCG.KeyValuePair<K, V>(item.Key, item.Value);
+        }
+
+        #endregion
+
     }
 }

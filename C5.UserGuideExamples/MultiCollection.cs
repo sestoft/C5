@@ -22,6 +22,8 @@ namespace C5.UserGuideExamples
             Count = c;
         }
 
+        public override bool IsReadOnly => true;
+
         public override int Count { get; }
 
         public override Speed CountSpeed => Speed.Constant;

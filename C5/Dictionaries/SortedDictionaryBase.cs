@@ -424,7 +424,7 @@ namespace C5
             #region ICollection<K> Members
             public Speed ContainsSpeed => sorteddict.ContainsSpeed;
 
-            public bool Contains(K key) { return sorteddict.Contains(key); ; }
+            public override bool Contains(K key) { return sorteddict.Contains(key); }
 
             public int ContainsCount(K item) { return sorteddict.Contains(item) ? 1 : 0; }
 
@@ -479,7 +479,7 @@ namespace C5
 
             public bool UpdateOrAdd(K item, out K olditem) { throw new ReadOnlyCollectionException(); }
 
-            public bool Remove(K item) { throw new ReadOnlyCollectionException(); }
+            public override bool Remove(K item) { throw new ReadOnlyCollectionException(); }
 
             public bool Remove(K item, out K removeditem) { throw new ReadOnlyCollectionException(); }
 
@@ -487,7 +487,7 @@ namespace C5
 
             public void RemoveAll(SCG.IEnumerable<K> items) { throw new ReadOnlyCollectionException(); }
 
-            public void Clear() { throw new ReadOnlyCollectionException(); }
+            public override void Clear() { throw new ReadOnlyCollectionException(); }
 
             public void RetainAll(SCG.IEnumerable<K> items) { throw new ReadOnlyCollectionException(); }
 
@@ -500,7 +500,7 @@ namespace C5
 
             public bool DuplicatesByCounting => true;
 
-            public bool Add(K item) { throw new ReadOnlyCollectionException(); }
+            public override bool Add(K item) { throw new ReadOnlyCollectionException(); }
 
             void SCG.ICollection<K>.Add(K item) { throw new ReadOnlyCollectionException(); }
 

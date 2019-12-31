@@ -81,7 +81,7 @@ namespace C5
         /// </summary>
         /// <param name="item">The item to look for</param>
         /// <returns>True if bag contains item</returns>
-        public virtual bool Contains(T item)
+        public override bool Contains(T item)
         {
             return dict.Contains(new System.Collections.Generic.KeyValuePair<T, int>(item, 0));
         }
@@ -217,7 +217,7 @@ namespace C5
         /// </summary>
         /// <param name="item">The item to remove</param>
         /// <returns>True if item was (found and) removed </returns>
-        public virtual bool Remove(T item)
+        public override bool Remove(T item)
         {
             var p = new SCG.KeyValuePair<T, int>(item, 0);
 
@@ -321,7 +321,7 @@ namespace C5
         /// <summary>
         /// Remove all items from the bag, resetting internal table to initial size.
         /// </summary>
-        public virtual void Clear()
+        public override void Clear()
         {
             UpdateCheck();
             if (size == 0)
@@ -569,7 +569,7 @@ namespace C5
         /// </summary>
         /// <param name="item">The item to add.</param>
         /// <returns>Always true</returns>
-        public virtual bool Add(T item)
+        public override bool Add(T item)
         {
             UpdateCheck();
             Add(ref item);
