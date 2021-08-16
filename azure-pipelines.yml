@@ -7,7 +7,7 @@ pr:
 
 variables:
   buildConfiguration: 'Release'
-  vmImage: 'windows-2019'
+  vmImage: 'windows-latest'
 
 stages:
   - stage: Build
@@ -17,13 +17,6 @@ stages:
         displayName: Build
         pool: $(vmImage)
         steps:
-          - task: UseDotNet@2
-            displayName: Install .NET Core 3
-            inputs:
-              packageType: sdk
-              version: '3.x'
-              includePreviewVersions: true
-
           - task: DotNetCoreCLI@2
             displayName: Build
             inputs:
@@ -45,11 +38,6 @@ stages:
               targetFolder: $(Build.ArtifactStagingDirectory)
               flattenFolders: true
 
-          - task: NodeTool@0
-            displayName: 'Install Node.js'
-            inputs:
-              versionSpec: '10.x'
-
           - script: |
               CALL npm install -g doxygen
               CALL npm install -g graphviz
@@ -58,8 +46,7 @@ stages:
               CALL doxygen --docs --configPath="$(Build.SourcesDirectory)/Doxyfile"
             workingDirectory: $(Build.SourcesDirectory)
             displayName: 'Generate documentation'
-
-            failOnStderr: 'true'
+            failOnStderr: true
 
           - task: ArchiveFiles@2
             displayName: 'Archive documentation'
