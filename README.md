@@ -2,7 +2,7 @@
 
 [![NuGet version (C5)](https://img.shields.io/nuget/v/C5.svg)](https://www.nuget.org/packages/C5/) [![Build Status](https://dev.azure.com/ondfisk/C5/_apis/build/status/C5-CI?branchName=master)](https://dev.azure.com/ondfisk/C5/_build/latest?definitionId=14&branchName=master) ![Azure DevOps tests](https://img.shields.io/azure-devops/tests/ondfisk/C5/14.svg) ![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/ondfisk/C5/14.svg)
 
-The C5 library is a set of generic collection classes (or container classes) for the C# programming language and other generics-enabled languages on later versions the CLI platform, as implemented by Microsoft .NET 4.6.1+, .NET Core 2.0+, and Mono.
+The C5 library is a set of generic collection classes (or container classes) for the C# programming language and other generics-enabled languages on later versions the CLI platform, as implemented by Microsoft .NET Framework 4.6.1+, .NET Core 2.0+, .NET 5.0 and Mono.
 
 The C5 library provides a wide range of classic data structures, rich funcionality, the best possible asymptotic time complexity, documented performance, and a thoroughly tested implementation.
 
@@ -65,7 +65,7 @@ PM> Install-Package C5
 
 C5 is released under the [MIT License](http://opensource.org/licenses/MIT):
 
-Copyright (c) 2003-2019 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
+Copyright (c) 2003-2021 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

@@ -10,7 +10,7 @@ namespace C5
     /// </summary>
     public static class Logger
     {
-        private static Action<string> _log;
+        private static Action<string> _log = (x => { return; });
 
         /// <summary>
         /// Gets or sets the log.
@@ -30,7 +30,7 @@ namespace C5
         /// </value>
         public static Action<string> Log
         {
-            get => _log ?? (x => { return; });
+            get => _log;
             set => _log = value;
         }
     }
