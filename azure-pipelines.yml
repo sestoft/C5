@@ -1,63 +1,90 @@
-# Build ASP.NET Core project using Azure Pipelines
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core?view=vsts
+trigger:
+  - master
+pr:
+  branches:
+    include:
+      - '*'
 
-pool:
-  vmImage: 'windows-latest'
-  
 variables:
   buildConfiguration: 'Release'
+  vmImage: 'windows-2019'
 
-steps:
-- task: DotNetCoreCLI@2
-  displayName: Build
-  inputs:
-    command: build
-    arguments: /P:SourceLinkCreate=false --configuration $(buildConfiguration)
+stages:
+  - stage: Build
+    displayName: Build
+    jobs:
+      - job: Build
+        displayName: Build
+        pool: $(vmImage)
+        steps:
+          - task: UseDotNet@2
+            displayName: Install .NET Core 3
+            inputs:
+              packageType: sdk
+              version: '3.x'
+              includePreviewVersions: true
 
-- task: DotNetCoreCLI@2
-  displayName: Test
-  inputs:
-    command: test
-    projects: "**/*Tests/*.csproj"
-    arguments: '/P:SourceLinkCreate=false --configuration $(buildConfiguration) --collect "Code coverage"'
+          - task: DotNetCoreCLI@2
+            displayName: Build
+            inputs:
+              command: build
+              arguments: /P:SourceLinkCreate=false --configuration $(buildConfiguration)
 
-- task: CopyFiles@2
-  displayName: 'Copy files'
-  inputs:
-    sourceFolder: $(Build.SourcesDirectory)/C5/bin/$(buildConfiguration)
-    contents: '*.nupkg'
-    targetFolder: $(Build.ArtifactStagingDirectory)
-    flattenFolders: true
+          - task: DotNetCoreCLI@2
+            displayName: Test
+            inputs:
+              command: test
+              projects: "**/*Tests/*.csproj"
+              arguments: '/P:SourceLinkCreate=false --configuration $(buildConfiguration) --collect "Code coverage"'
 
-- task: NodeTool@0
-  displayName: 'Install Node.js'
-  enabled: false
-  inputs:
-    versionSpec: '10.x'
-  
-- task: CmdLine@2
-  displayName: 'Generate documentation'
-  enabled: false # currently unstable
-  inputs:
-    script: |
-      CALL npm install -g doxygen
-      CALL npm install -g graphviz
-      SET DOXYGEN_OUTPUT_DIRECTORY=$(Build.SourcesDirectory)
-      CALL doxygen --download
-      CALL doxygen --docs --configPath="$(Build.SourcesDirectory)/Doxyfile"
-    workingDirectory: $(Build.SourcesDirectory)
-    failOnStderr: true
+          - task: CopyFiles@2
+            displayName: 'Copy files'
+            inputs:
+              sourceFolder: $(Build.SourcesDirectory)/C5/bin/$(buildConfiguration)
+              contents: '*.nupkg'
+              targetFolder: $(Build.ArtifactStagingDirectory)
+              flattenFolders: true
 
-- task: ArchiveFiles@2
-  displayName: 'Archive documentation'
-  enabled: false # not needed when previous task disabled
-  inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)/C5.Docs/html' 
-    includeRootFolder: false 
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/c5docs.zip' 
-    
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: $(Build.ArtifactStagingDirectory)
-    artifactName: drop
+          - task: NodeTool@0
+            displayName: 'Install Node.js'
+            inputs:
+              versionSpec: '10.x'
+
+          - script: |
+              CALL npm install -g doxygen
+              CALL npm install -g graphviz
+              SET DOXYGEN_OUTPUT_DIRECTORY=$(Build.SourcesDirectory)
+              CALL doxygen --download
+              CALL doxygen --docs --configPath="$(Build.SourcesDirectory)/Doxyfile"
+            workingDirectory: $(Build.SourcesDirectory)
+            displayName: 'Generate documentation'
+
+            failOnStderr: 'true'
+
+          - task: ArchiveFiles@2
+            displayName: 'Archive documentation'
+            inputs:
+              rootFolderOrFile: '$(Build.SourcesDirectory)/C5.Docs/html'
+              includeRootFolder: false
+              archiveType: 'zip'
+              archiveFile: '$(Build.ArtifactStagingDirectory)/c5docs.zip'
+
+          - task: PublishBuildArtifacts@1
+            displayName: Publish Build Artifacts
+            inputs:
+              artifactName: 'drop'
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+
+  - stage: Release
+    displayName: Release
+    dependsOn: Build
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    jobs:
+      - job: Release
+        steps:
+          - task: AzureRmWebAppDeployment@4
+            displayName: 'Azure App Service Deploy: c5docs'
+            inputs:
+              azureSubscription: '$(AzureServiceConnection)'
+              WebAppName: c5docs
+              packageForLinux: '$(System.DefaultWorkingDirectory)/**/c5docs.zip'
