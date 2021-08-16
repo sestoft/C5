@@ -38,7 +38,7 @@ stages:
             displayName: Publish Code Coverage Report
             inputs:
               codeCoverageTool: Cobertura
-              summaryFileLocation: $(Build.SourcesDirectory)/**/coverage.cobertura.xml
+              summaryFileLocation: $(Agent.TempDirectory)/**/coverage.cobertura.xml
 
           - task: CopyFiles@2
             displayName: Copy files
