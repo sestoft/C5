@@ -6,8 +6,8 @@ pr:
       - '*'
 
 variables:
-  buildConfiguration: 'Release'
-  vmImage: 'windows-latest'
+  buildConfiguration: Release
+  vmImage: windows-2019
   azureSubscription: C5
 
 stages:
@@ -28,11 +28,11 @@ stages:
             displayName: Test
             inputs:
               command: test
-              projects: "**/*Tests/*.csproj"
-              arguments: '/P:SourceLinkCreate=false --configuration $(buildConfiguration) --collect "Code coverage"'
+              projects: '**/*Tests/*.csproj'
+              arguments: /P:SourceLinkCreate=false --configuration $(buildConfiguration) --collect "Code coverage"
 
           - task: CopyFiles@2
-            displayName: 'Copy files'
+            displayName: Copy files
             inputs:
               sourceFolder: $(Build.SourcesDirectory)/C5/bin/$(buildConfiguration)
               contents: '*.nupkg'
@@ -46,22 +46,22 @@ stages:
               CALL doxygen --download
               CALL doxygen --docs --configPath="$(Build.SourcesDirectory)/Doxyfile"
             workingDirectory: $(Build.SourcesDirectory)
-            displayName: 'Generate documentation'
+            displayName: Generate documentation
             failOnStderr: true
 
           - task: ArchiveFiles@2
-            displayName: 'Archive documentation'
+            displayName: Archive documentation
             inputs:
-              rootFolderOrFile: '$(Build.SourcesDirectory)/C5.Docs/html'
+              rootFolderOrFile: $(Build.SourcesDirectory)/C5.Docs/html
               includeRootFolder: false
-              archiveType: 'zip'
-              archiveFile: '$(Build.ArtifactStagingDirectory)/c5docs.zip'
+              archiveType: zip
+              archiveFile: $(Build.ArtifactStagingDirectory)/c5docs.zip
 
           - task: PublishBuildArtifacts@1
             displayName: Publish Build Artifacts
             inputs:
-              artifactName: 'drop'
-              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              artifactName: drop
+              PathtoPublish: $(Build.ArtifactStagingDirectory)
 
   - stage: Release
     displayName: Release
@@ -71,7 +71,7 @@ stages:
       - job: Release
         steps:
           - task: AzureRmWebAppDeployment@4
-            displayName: 'Azure App Service Deploy: c5'
+            displayName: Azure App Service Deploy
             inputs:
               azureSubscription: $(azureSubscription)
               WebAppName: c5
