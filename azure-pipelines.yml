@@ -49,6 +49,8 @@ stages:
               flattenFolders: true
 
           - script: |
+              sudo apt install libclang1-9
+              sudo apt install libclang-cpp9
               npm install -g doxygen
               npm install -g graphviz
               DOXYGEN_OUTPUT_DIRECTORY=$(Build.SourcesDirectory)
