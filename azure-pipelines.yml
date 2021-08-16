@@ -8,6 +8,7 @@ pr:
 variables:
   buildConfiguration: 'Release'
   vmImage: 'windows-latest'
+  azureSubscription: C5
 
 stages:
   - stage: Build
@@ -70,8 +71,8 @@ stages:
       - job: Release
         steps:
           - task: AzureRmWebAppDeployment@4
-            displayName: 'Azure App Service Deploy: c5docs'
+            displayName: 'Azure App Service Deploy: c5'
             inputs:
-              azureSubscription: '$(AzureServiceConnection)'
-              WebAppName: c5docs
-              packageForLinux: '$(System.DefaultWorkingDirectory)/**/c5docs.zip'
+              azureSubscription: $(azureSubscription)
+              WebAppName: c5
+              packageForLinux: $(System.DefaultWorkingDirectory)/**/c5docs.zip
