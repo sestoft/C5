@@ -16,7 +16,8 @@ stages:
     jobs:
       - job: Build
         displayName: Build
-        pool: $(vmImage)
+        pool:
+          vmImage: $(vmImage)
         steps:
           - task: DotNetCoreCLI@2
             displayName: Build
@@ -68,11 +69,17 @@ stages:
     dependsOn: Build
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     jobs:
-      - job: Release
-        steps:
-          - task: AzureRmWebAppDeployment@4
-            displayName: Azure App Service Deploy
-            inputs:
-              azureSubscription: $(azureSubscription)
-              WebAppName: c5
-              packageForLinux: $(System.DefaultWorkingDirectory)/**/c5docs.zip
+      - deployment: Release
+        environment: Production
+        pool:
+          vmImage: $(vmImage)
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: AzureRmWebAppDeployment@4
+                  displayName: Azure App Service Deploy
+                  inputs:
+                    azureSubscription: $(azureSubscription)
+                    WebAppName: c5
+                    packageForLinux: $(System.DefaultWorkingDirectory)/**/c5docs.zip
