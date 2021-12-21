@@ -1,216 +1,210 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 // C5 example: SortedIterationPatterns.cs for pattern chapter
 
-// Compile with 
-//   csc /r:netstandard.dll /r:C5.dll SortedIterationPatterns.cs 
+namespace C5.UserGuideExamples;
 
-using System;
-
-namespace C5.UserGuideExamples
+internal class SortedIterationPatterns
 {
-    internal class SortedIterationPatterns
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
+        ISorted<int> sorted = new TreeSet<int> { 23, 29, 31, 37, 41, 43, 47, 53 };
+        Console.WriteLine(sorted);
+
+        if (args.Length == 1)
         {
-            ISorted<int> sorted = new TreeSet<int> { 23, 29, 31, 37, 41, 43, 47, 53 };
-            Console.WriteLine(sorted);
+            var n = int.Parse(args[0]);
 
-            if (args.Length == 1)
+            if (Predecessor(sorted, n, out int res))
             {
-                var n = int.Parse(args[0]);
-
-                if (Predecessor(sorted, n, out int res))
-                {
-                    Console.WriteLine("{0} has predecessor {1}", n, res);
-                }
-
-                if (WeakPredecessor(sorted, n, out res))
-                {
-                    Console.WriteLine("{0} has weak predecessor {1}", n, res);
-                }
-
-                if (Successor(sorted, n, out res))
-                {
-                    Console.WriteLine("{0} has successor {1}", n, res);
-                }
-
-                if (WeakSuccessor(sorted, n, out res))
-                {
-                    Console.WriteLine("{0} has weak successor {1}", n, res);
-                }
+                Console.WriteLine("{0} has predecessor {1}", n, res);
             }
 
-            IterBeginEnd(sorted);
-            IterBeginEndBackwards(sorted);
-            IterIncExc(sorted, 29, 47);
-            IterIncExcBackwards(sorted, 29, 47);
-            IterIncEnd(sorted, 29);
-            IterBeginExc(sorted, 47);
-            IterIncInc(sorted, 29, 47);
-            IterBeginInc(sorted, 47);
-            IterExcExc(sorted, 29, 47);
-            IterExcEnd(sorted, 29);
-            IterExcInc(sorted, 29, 47);
-        }
-
-        // --- Predecessor and successor patterns --------------------
-
-        // Find weak successor of y in coll, or return false
-
-        public static bool WeakSuccessor<T>(ISorted<T> coll, T y, out T ySucc)
-            where T : IComparable<T>
-        {
-            var hasY = coll.Cut(y, out _, out _, out ySucc, out var hasSucc);
-
-            if (hasY)
+            if (WeakPredecessor(sorted, n, out res))
             {
-                ySucc = y;
+                Console.WriteLine("{0} has weak predecessor {1}", n, res);
             }
 
-            return hasY || hasSucc;
-        }
-
-        // Find weak predecessor of y in coll, or return false
-
-        public static bool WeakPredecessor<T>(ISorted<T> coll, T y, out T yPred)
-            where T : IComparable<T>
-        {
-            var hasY = coll.Cut(y, out yPred, out var hasPred, out _, out _);
-
-            if (hasY)
+            if (Successor(sorted, n, out res))
             {
-                yPred = y;
+                Console.WriteLine("{0} has successor {1}", n, res);
             }
 
-            return hasY || hasPred;
+            if (WeakSuccessor(sorted, n, out res))
+            {
+                Console.WriteLine("{0} has weak successor {1}", n, res);
+            }
         }
 
-        // Find (strict) successor of y in coll, or return false
+        IterBeginEnd(sorted);
+        IterBeginEndBackwards(sorted);
+        IterIncExc(sorted, 29, 47);
+        IterIncExcBackwards(sorted, 29, 47);
+        IterIncEnd(sorted, 29);
+        IterBeginExc(sorted, 47);
+        IterIncInc(sorted, 29, 47);
+        IterBeginInc(sorted, 47);
+        IterExcExc(sorted, 29, 47);
+        IterExcEnd(sorted, 29);
+        IterExcInc(sorted, 29, 47);
+    }
 
-        public static bool Successor<T>(ISorted<T> coll, T y, out T ySucc)
-            where T : IComparable<T>
+    // --- Predecessor and successor patterns --------------------
+
+    // Find weak successor of y in coll, or return false
+
+    public static bool WeakSuccessor<T>(ISorted<T> coll, T y, out T ySucc)
+        where T : IComparable<T>
+    {
+        var hasY = coll.Cut(y, out _, out _, out ySucc, out var hasSucc);
+
+        if (hasY)
         {
-            coll.Cut(y, out _, out _, out ySucc, out var hasSucc);
-
-            return hasSucc;
+            ySucc = y;
         }
 
-        // Find (strict) predecessor of y in coll, or return false
+        return hasY || hasSucc;
+    }
 
-        public static bool Predecessor<T>(ISorted<T> coll, T y, out T yPred)
-            where T : IComparable<T>
+    // Find weak predecessor of y in coll, or return false
+
+    public static bool WeakPredecessor<T>(ISorted<T> coll, T y, out T yPred)
+        where T : IComparable<T>
+    {
+        var hasY = coll.Cut(y, out yPred, out var hasPred, out _, out _);
+
+        if (hasY)
         {
-            coll.Cut(y, out yPred, out var hasPred, out _, out _);
-
-            return hasPred;
+            yPred = y;
         }
 
-        // --- Sorted iteration patterns -----------------------------
+        return hasY || hasPred;
+    }
 
-        // Iterate over all items
-        public static void IterBeginEnd<T>(ISorted<T> coll)
-        {
-            Print(coll);
-        }
+    // Find (strict) successor of y in coll, or return false
 
-        // Iterate over all items, backwards
-        public static void IterBeginEndBackwards<T>(ISorted<T> coll)
-        {
-            var range = coll.Backwards();
+    public static bool Successor<T>(ISorted<T> coll, T y, out T ySucc)
+        where T : IComparable<T>
+    {
+        coll.Cut(y, out _, out _, out ySucc, out var hasSucc);
 
-            Print(range);
-        }
+        return hasSucc;
+    }
 
-        // Iterate over [x1,x2[
-        public static void IterIncExc<T>(ISorted<T> coll, T x1, T x2)
-        {
-            var range = coll.RangeFromTo(x1, x2);
+    // Find (strict) predecessor of y in coll, or return false
 
-            Print(range);
-        }
+    public static bool Predecessor<T>(ISorted<T> coll, T y, out T yPred)
+        where T : IComparable<T>
+    {
+        coll.Cut(y, out yPred, out var hasPred, out _, out _);
 
-        // Iterate over [x1,x2[, backwards
-        public static void IterIncExcBackwards<T>(ISorted<T> coll, T x1, T x2)
-        {
-            var range = coll.RangeFromTo(x1, x2).Backwards();
+        return hasPred;
+    }
 
-            Print(range);
-        }
+    // --- Sorted iteration patterns -----------------------------
 
-        // Iterate over [x1...]
-        public static void IterIncEnd<T>(ISorted<T> coll, T x1)
-        {
-            var range = coll.RangeFrom(x1);
+    // Iterate over all items
+    public static void IterBeginEnd<T>(ISorted<T> coll)
+    {
+        Print(coll);
+    }
 
-            Print(range);
-        }
+    // Iterate over all items, backwards
+    public static void IterBeginEndBackwards<T>(ISorted<T> coll)
+    {
+        var range = coll.Backwards();
 
-        // Iterate over [...x2[
-        public static void IterBeginExc<T>(ISorted<T> coll, T x2)
-        {
-            var range = coll.RangeTo(x2);
+        Print(range);
+    }
 
-            Print(range);
-        }
+    // Iterate over [x1,x2[
+    public static void IterIncExc<T>(ISorted<T> coll, T x1, T x2)
+    {
+        var range = coll.RangeFromTo(x1, x2);
 
-        // Iterate over [x1...x2]
-        public static void IterIncInc<T>(ISorted<T> coll, T x1, T x2)
-            where T : IComparable<T>
-        {
-            var x2HasSucc = Successor(coll, x2, out var x2Succ);
-            IDirectedEnumerable<T> range = x2HasSucc ? coll.RangeFromTo(x1, x2Succ) : coll.RangeFrom(x1);
+        Print(range);
+    }
 
-            Print(range);
-        }
+    // Iterate over [x1,x2[, backwards
+    public static void IterIncExcBackwards<T>(ISorted<T> coll, T x1, T x2)
+    {
+        var range = coll.RangeFromTo(x1, x2).Backwards();
 
-        // Iterate over [...x2]
-        public static void IterBeginInc<T>(ISorted<T> coll, T x2)
-            where T : IComparable<T>
-        {
-            var x2HasSucc = Successor(coll, x2, out var x2Succ);
-            IDirectedEnumerable<T> range = x2HasSucc ? coll.RangeTo(x2Succ) : coll.RangeAll();
+        Print(range);
+    }
 
-            Print(range);
-        }
+    // Iterate over [x1...]
+    public static void IterIncEnd<T>(ISorted<T> coll, T x1)
+    {
+        var range = coll.RangeFrom(x1);
 
-        // Iterate over ]x1...x2[
-        public static void IterExcExc<T>(ISorted<T> coll, T x1, T x2)
-            where T : IComparable<T>
-        {
-            bool x1HasSucc = Successor(coll, x1, out T x1Succ);
-            IDirectedEnumerable<T> range = x1HasSucc ? coll.RangeFromTo(x1Succ, x2) : new ArrayList<T>();
+        Print(range);
+    }
 
-            Print(range);
-        }
+    // Iterate over [...x2[
+    public static void IterBeginExc<T>(ISorted<T> coll, T x2)
+    {
+        var range = coll.RangeTo(x2);
 
-        // Iterate over ]x1...]
-        public static void IterExcEnd<T>(ISorted<T> coll, T x1)
-            where T : IComparable<T>
-        {
-            var x1HasSucc = Successor(coll, x1, out var x1Succ);
-            IDirectedEnumerable<T> range = x1HasSucc ? coll.RangeFrom(x1Succ) : new ArrayList<T>();
+        Print(range);
+    }
 
-            Print(range);
-        }
+    // Iterate over [x1...x2]
+    public static void IterIncInc<T>(ISorted<T> coll, T x1, T x2)
+        where T : IComparable<T>
+    {
+        var x2HasSucc = Successor(coll, x2, out var x2Succ);
+        IDirectedEnumerable<T> range = x2HasSucc ? coll.RangeFromTo(x1, x2Succ) : coll.RangeFrom(x1);
 
-        // Iterate over ]x1...x2]
-        public static void IterExcInc<T>(ISorted<T> coll, T x1, T x2)
-            where T : IComparable<T>
-        {
-            var x1HasSucc = Successor(coll, x1, out T x1Succ);
-            var x2HasSucc = Successor(coll, x2, out T x2Succ);
-            IDirectedEnumerable<T> range = x1HasSucc
-                ? (x2HasSucc ? coll.RangeFromTo(x1Succ, x2Succ) : coll.RangeFrom(x1Succ))
-                : new ArrayList<T>();
+        Print(range);
+    }
 
-            Print(range);
-        }
+    // Iterate over [...x2]
+    public static void IterBeginInc<T>(ISorted<T> coll, T x2)
+        where T : IComparable<T>
+    {
+        var x2HasSucc = Successor(coll, x2, out var x2Succ);
+        IDirectedEnumerable<T> range = x2HasSucc ? coll.RangeTo(x2Succ) : coll.RangeAll();
 
-        private static void Print<T>(IDirectedEnumerable<T> items)
-        {
-            Console.WriteLine(string.Join(", ", items));
-        }
+        Print(range);
+    }
+
+    // Iterate over ]x1...x2[
+    public static void IterExcExc<T>(ISorted<T> coll, T x1, T x2)
+        where T : IComparable<T>
+    {
+        bool x1HasSucc = Successor(coll, x1, out T x1Succ);
+        IDirectedEnumerable<T> range = x1HasSucc ? coll.RangeFromTo(x1Succ, x2) : new ArrayList<T>();
+
+        Print(range);
+    }
+
+    // Iterate over ]x1...]
+    public static void IterExcEnd<T>(ISorted<T> coll, T x1)
+        where T : IComparable<T>
+    {
+        var x1HasSucc = Successor(coll, x1, out var x1Succ);
+        IDirectedEnumerable<T> range = x1HasSucc ? coll.RangeFrom(x1Succ) : new ArrayList<T>();
+
+        Print(range);
+    }
+
+    // Iterate over ]x1...x2]
+    public static void IterExcInc<T>(ISorted<T> coll, T x1, T x2)
+        where T : IComparable<T>
+    {
+        var x1HasSucc = Successor(coll, x1, out T x1Succ);
+        var x2HasSucc = Successor(coll, x2, out T x2Succ);
+        IDirectedEnumerable<T> range = x1HasSucc
+            ? (x2HasSucc ? coll.RangeFromTo(x1Succ, x2Succ) : coll.RangeFrom(x1Succ))
+            : new ArrayList<T>();
+
+        Print(range);
+    }
+
+    private static void Print<T>(IDirectedEnumerable<T> items)
+    {
+        Console.WriteLine(string.Join(", ", items));
     }
 }

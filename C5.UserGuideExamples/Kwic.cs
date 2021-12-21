@@ -1,5 +1,5 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 // C5 example sketch -- not so interesting after all
 // 2004-08
@@ -20,7 +20,7 @@
 // numbers.
 
 // the resulting list may look like this:
-// book 
+// book
 //   this book presents
 //   the book does
 // Microsoft

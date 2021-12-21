@@ -1,5 +1,5 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 namespace C5.Tests.Templates.Extensible
 {
@@ -84,7 +84,7 @@ namespace C5.Tests.Templates.Extensible
     //      Assert.IsTrue(IC.eq(theClone, extensible.ToArray()), "Clone has wrong contents");
     //  }
 
-    //  private static object serializeAndDeserialize(object extensible) 
+    //  private static object serializeAndDeserialize(object extensible)
     //  {
     //    System.Runtime.Serialization.Formatters.Binary.BinaryFormatter formatter =
     //      new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
@@ -133,4 +133,3 @@ namespace C5.Tests.Templates.Extensible
     //}
 
 }
-

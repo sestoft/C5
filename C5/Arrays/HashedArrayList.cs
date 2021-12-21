@@ -1,6 +1,6 @@
 
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using System;
 using SCG = System.Collections.Generic;
@@ -8,8 +8,8 @@ namespace C5
 {
     /// <summary>
     /// A list collection based on a plain dynamic array data structure.
-    /// Expansion of the internal array is performed by doubling on demand. 
-    /// The internal array is only shrinked by the Clear method. 
+    /// Expansion of the internal array is performed by doubling on demand.
+    /// The internal array is only shrinked by the Clear method.
     ///
     /// <i>When the FIFO property is set to false this class works fine as a stack of T.
     /// When the FIFO property is set to true the class will function as a (FIFO) queue
@@ -25,7 +25,7 @@ namespace C5
         /// </summary>
         private bool isValid = true;
 
-        //TODO: wonder if we should save some memory on none-view situations by 
+        //TODO: wonder if we should save some memory on none-view situations by
         //      putting these three fields into a single ref field?
         /// <summary>
         /// The underlying list if we are a view, null else.
@@ -48,14 +48,14 @@ namespace C5
         #region Events
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public override EventType ListenableEvents => underlying == null ? EventType.All : EventType.None;
 
         /*
             /// <summary>
-            /// 
+            ///
             /// </summary>
             /// <value></value>
             public override event CollectionChangedHandler<T> CollectionChanged
@@ -77,7 +77,7 @@ namespace C5
             }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             /// <value></value>
             public override event CollectionClearedHandler<T> CollectionCleared
@@ -99,7 +99,7 @@ namespace C5
             }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             /// <value></value>
             public override event ItemsAddedHandler<T> ItemsAdded
@@ -121,7 +121,7 @@ namespace C5
             }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             /// <value></value>
             public override event ItemInsertedHandler<T> ItemInserted
@@ -143,7 +143,7 @@ namespace C5
             }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             /// <value></value>
             public override event ItemsRemovedHandler<T> ItemsRemoved
@@ -165,7 +165,7 @@ namespace C5
             }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             /// <value></value>
             public override event ItemRemovedAtHandler<T> ItemRemovedAt
@@ -259,7 +259,7 @@ namespace C5
 
         /// <summary>
         /// Check if we are a view that the underlying list has only been updated through us.
-        /// <para>This method should be called from enumerators etc to guard against 
+        /// <para>This method should be called from enumerators etc to guard against
         /// modification of the base collection.</para>
         /// </summary>
         /// <exception cref="ViewDisposedException"> if check fails.</exception>
@@ -399,7 +399,7 @@ namespace C5
         #region fixView utilities
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="added">The actual number of inserted nodes</param>
         /// <param name="realInsertionIndex"></param>
@@ -448,7 +448,7 @@ namespace C5
         }
 
         /// <summary>
-        /// Fix offsets and sizes of other views before removing an interval from this 
+        /// Fix offsets and sizes of other views before removing an interval from this
         /// </summary>
         /// <param name="start">the start of the interval relative to the array/underlying</param>
         /// <param name="count"></param>
@@ -486,7 +486,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="otherOffset"></param>
         /// <param name="otherSize"></param>
@@ -753,7 +753,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public virtual bool IsFixedSize
         {
@@ -812,18 +812,18 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public virtual Speed IndexingSpeed => Speed.Constant;
 
 
         /// <summary>
-        /// Insert an item at a specific index location in this list. 
+        /// Insert an item at a specific index location in this list.
         ///</summary>
         /// <exception cref="IndexOutOfRangeException"> if index is negative or
         /// &gt; the size of the collection. </exception>
-        /// <exception cref="DuplicateNotAllowedException"> 
+        /// <exception cref="DuplicateNotAllowedException">
         /// If the item is already present in the list.</exception>
         /// <param name="index">The index at which to insert.</param>
         /// <param name="item">The item to insert.</param>
@@ -845,12 +845,12 @@ namespace C5
         /// <code>this</code> and the endpoint of <code>pointer</code> must be
         /// a valid insertion point of <code>this</code></para>
         /// </summary>
-        /// <exception cref="IncompatibleViewException">If <code>pointer</code> 
+        /// <exception cref="IncompatibleViewException">If <code>pointer</code>
         /// is not a view on or the same list as <code>this</code></exception>
-        /// <exception cref="IndexOutOfRangeException"><b>??????</b> if the endpoint of 
+        /// <exception cref="IndexOutOfRangeException"><b>??????</b> if the endpoint of
         ///  <code>pointer</code> is not inside <code>this</code></exception>
         /// <exception cref="DuplicateNotAllowedException"> if the list has
-        /// <code>AllowsDuplicates==false</code> and the item is 
+        /// <code>AllowsDuplicates==false</code> and the item is
         /// already in the list.</exception>
         /// <param name="pointer"></param>
         /// <param name="item"></param>
@@ -865,12 +865,12 @@ namespace C5
         }
 
         /// <summary>
-        /// Insert into this list all items from an enumerable collection starting 
+        /// Insert into this list all items from an enumerable collection starting
         /// at a particular index.
         /// </summary>
         /// <exception cref="IndexOutOfRangeException"> if index is negative or
         /// &gt; the size of the collection.</exception>
-        /// <exception cref="DuplicateNotAllowedException"> If <code>items</code> 
+        /// <exception cref="DuplicateNotAllowedException"> If <code>items</code>
         /// contains duplicates or some item already  present in the list.</exception>
         /// <param name="index">Index to start inserting at</param>
         /// <param name="items">Items to insert</param>
@@ -976,7 +976,7 @@ namespace C5
 
         //NOTE: if the filter throws an exception, no result will be returned.
         /// <summary>
-        /// Create a new list consisting of the items of this list satisfying a 
+        /// Create a new list consisting of the items of this list satisfying a
         /// certain predicate.
         /// <para>The new list will be of type HashedArrayList</para>
         /// </summary>
@@ -1128,7 +1128,7 @@ namespace C5
         }
 
         /// <summary>
-        /// Create a list view on this list. 
+        /// Create a list view on this list.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException"> if the start or count is negative
         /// or the range does not fit within list.</exception>
@@ -1173,7 +1173,7 @@ namespace C5
 
 
         /// <summary>
-        /// Create a list view on this list containing the last occurrence of a particular item. 
+        /// Create a list view on this list containing the last occurrence of a particular item.
         /// <para>Returns <code>null</code> if the item is not in this list.</para>
         /// </summary>
         /// <param name="item">The item to find.</param>
@@ -1202,7 +1202,7 @@ namespace C5
         public virtual int Offset => offsetField;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public virtual bool IsValid => isValid;
@@ -1246,7 +1246,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <exception cref="NotAViewException"> if this list is not a view.</exception>
         /// <param name="offset"></param>
@@ -1257,7 +1257,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <exception cref="NotAViewException"> if this list is not a view.</exception>
         /// <param name="offset"></param>
@@ -1285,7 +1285,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// <para>Returns null if <code>otherView</code> is strictly to the left of this view</para>
         /// </summary>
         /// <param name="otherView"></param>
@@ -1332,7 +1332,7 @@ namespace C5
 
         /// <summary>
         /// Check if this list is sorted according to the default sorting order
-        /// for the item type T, as defined by the <see cref="T:C5.Comparer`1"/> class 
+        /// for the item type T, as defined by the <see cref="T:C5.Comparer`1"/> class
         /// </summary>
         /// <exception cref="NotComparableException">if T is not comparable</exception>
         /// <returns>True if the list is sorted, else false.</returns>
@@ -1359,7 +1359,7 @@ namespace C5
 
         /// <summary>
         /// Sort the items of the list according to the default sorting order
-        /// for the item type T, as defined by the Comparer[T] class 
+        /// for the item type T, as defined by the Comparer[T] class
         /// (<see cref="T:C5.Comparer`1"/>).
         /// </summary>
         /// <exception cref="InvalidOperationException">if T is not comparable</exception>
@@ -1389,7 +1389,7 @@ namespace C5
 
 
         /// <summary>
-        /// Randomly shuffle the items of this list. 
+        /// Randomly shuffle the items of this list.
         /// </summary>
         public virtual void Shuffle() { Shuffle(new C5Random()); }
 
@@ -1465,7 +1465,7 @@ namespace C5
         /// Remove all items in an index interval.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">If <code>start</code>
-        /// and <code>count</code> does not describe a valid interval in the list</exception> 
+        /// and <code>count</code> does not describe a valid interval in the list</exception>
         /// <param name="start">The index of the first item to remove.</param>
         /// <param name="count">The number of items to remove.</param>
         public virtual void RemoveInterval(int start, int count)
@@ -1513,14 +1513,14 @@ namespace C5
         public virtual Speed ContainsSpeed => Speed.Constant;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override int GetUnsequencedHashCode()
         { ValidityCheck(); return base.GetUnsequencedHashCode(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="that"></param>
         /// <returns></returns>
@@ -1562,8 +1562,8 @@ namespace C5
 
         /// <summary>
         /// Check if this collection contains an item equivalent according to the
-        /// itemequalityComparer to a particular value. If so, update the item in the collection 
-        /// to with a binary copy of the supplied value. This will only update the first 
+        /// itemequalityComparer to a particular value. If so, update the item in the collection
+        /// to with a binary copy of the supplied value. This will only update the first
         /// mathching item.
         /// </summary>
         /// <param name="item">Value to update.</param>
@@ -1574,7 +1574,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <param name="olditem"></param>
@@ -1619,8 +1619,8 @@ namespace C5
 
         /// <summary>
         /// Check if this collection contains an item equivalent according to the
-        /// itemequalityComparer to a particular value. If so, update the item in the collection 
-        /// to with a binary copy of the supplied value. This will only update the first 
+        /// itemequalityComparer to a particular value. If so, update the item in the collection
+        /// to with a binary copy of the supplied value. This will only update the first
         /// matching item.
         /// </summary>
         /// <param name="item">Value to update.</param>
@@ -1638,7 +1638,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <param name="olditem"></param>
@@ -1657,8 +1657,8 @@ namespace C5
         }
 
         /// <summary>
-        /// Remove a particular item from this list. The item will be searched 
-        /// for from the end of the list if <code>FIFO == false</code> (the default), 
+        /// Remove a particular item from this list. The item will be searched
+        /// for from the end of the list if <code>FIFO == false</code> (the default),
         /// else from the start.
         /// </summary>
         /// <param name="item">The value to remove.</param>
@@ -1682,9 +1682,9 @@ namespace C5
 
         /// <summary>
         /// Remove the first copy of a particular item from this collection if found.
-        /// If an item was removed, report a binary copy of the actual item removed in 
-        /// the argument. The item will be searched 
-        /// for from the end of the list if <code>FIFO == false</code> (the default), 
+        /// If an item was removed, report a binary copy of the actual item removed in
+        /// the argument. The item will be searched
+        /// for from the end of the list if <code>FIFO == false</code> (the default),
         /// else from the start.
         /// </summary>
         /// <param name="item">The value to remove.</param>
@@ -1785,7 +1785,7 @@ namespace C5
 
         /*
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="predicate"></param>
         void RemoveAll(Func<T, bool> predicate)
@@ -1872,7 +1872,7 @@ namespace C5
 
         /// <summary>
         /// Remove all items not in some other collection from this one, taking multiplicities into account.
-        /// Items are retained front first.  
+        /// Items are retained front first.
         /// </summary>
         /// <param name="items">The items to retain.</param>
         public virtual void RetainAll(SCG.IEnumerable<T> items)
@@ -1943,7 +1943,7 @@ namespace C5
 
         /*
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="predicate"></param>
         void RetainAll(Func<T, bool> predicate)
@@ -2039,7 +2039,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public virtual ICollectionValue<T> UniqueItems()
@@ -2049,7 +2049,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
@@ -2164,7 +2164,7 @@ namespace C5
         #region IExtensible<T> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value>True, indicating array list has bag semantics.</value>
         public virtual bool AllowsDuplicates => false;
@@ -2172,7 +2172,7 @@ namespace C5
         /// <summary>
         /// By convention this is true for any collection with set semantics.
         /// </summary>
-        /// <value>True if only one representative of a group of equal items 
+        /// <value>True if only one representative of a group of equal items
         /// is kept in the collection together with the total count.</value>
         public virtual bool DuplicatesByCounting => true;
 
@@ -2281,7 +2281,7 @@ namespace C5
 
         #region ICollectionValue<T> Members
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value>The number of items in this collection</value>
         public override int Count { get { ValidityCheck(); return size; } }
@@ -2303,7 +2303,7 @@ namespace C5
         #region IDisposable Members
 
         /// <summary>
-        /// Invalidate this list. If a view, just invalidate the view. 
+        /// Invalidate this list. If a view, just invalidate the view.
         /// If not a view, invalidate the list and all views on it.
         /// </summary>
         public virtual void Dispose()
@@ -2348,7 +2348,7 @@ namespace C5
         #region ISerializable Members
         /*
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="info"></param>
     /// <param name="context"></param>
@@ -2364,7 +2364,7 @@ namespace C5
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="info"></param>
     /// <param name="context"></param>

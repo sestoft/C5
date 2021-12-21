@@ -1,5 +1,5 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using System;
 using SCG = System.Collections.Generic;
@@ -84,7 +84,7 @@ namespace C5
         #region Events
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public override EventType ListenableEvents => EventType.Basic;
@@ -168,7 +168,7 @@ namespace C5
         }
 
         /// <summary>
-        /// Search for an item equal (according to itemequalityComparer) to the supplied item.  
+        /// Search for an item equal (according to itemequalityComparer) to the supplied item.
         /// </summary>
         /// <param name="item"></param>
         /// <param name="add">If true, add item to table if not found.</param>
@@ -374,7 +374,7 @@ namespace C5
         public virtual Speed ContainsSpeed => Speed.Constant;
 
         /// <summary>
-        /// Check if an item is in the set 
+        /// Check if an item is in the set
         /// </summary>
         /// <param name="item">The item to look for</param>
         /// <returns>True if set contains item</returns>
@@ -589,7 +589,7 @@ namespace C5
 
         /// <summary>
         /// Check if all items in a supplied collection is in this set
-        /// (ignoring multiplicities). 
+        /// (ignoring multiplicities).
         /// </summary>
         /// <param name="items">The items to look for.</param>
         /// <returns>True if all items are found.</returns>
@@ -639,13 +639,13 @@ namespace C5
         public virtual int ContainsCount(T item) { return Contains(item) ? 1 : 0; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public virtual ICollectionValue<T> UniqueItems() { return this; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
@@ -665,7 +665,7 @@ namespace C5
 
 
         /// <summary>
-        /// Choose some item of this collection. 
+        /// Choose some item of this collection.
         /// </summary>
         /// <exception cref="NoSuchItemException">if collection is empty.</exception>
         /// <returns></returns>
@@ -734,7 +734,7 @@ namespace C5
         /// <summary>
         /// By convention this is true for any collection with set semantics.
         /// </summary>
-        /// <value>True if only one representative of a group of equal items 
+        /// <value>True if only one representative of a group of equal items
         /// is kept in the collection together with the total count.</value>
         public virtual bool DuplicatesByCounting => true;
 
@@ -759,7 +759,7 @@ namespace C5
         }
 
         /// <summary>
-        /// Add the elements from another collection with a more specialized item type 
+        /// Add the elements from another collection with a more specialized item type
         /// to this collection. Since this
         /// collection has set semantics, only items not already in the collection
         /// will be added.

@@ -1,5 +1,5 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 // C5 example: LockstepCollections: A group collections lockstep, so
 // that they all contain the same items.  This is done by equipping
@@ -35,126 +35,119 @@
 // to an existing item, it will be added to that collection but
 // possibly not to others.
 
-// Compile with
-//   csc /r:netstandard.dll /r:C5.dll LockstepCollections.cs
+namespace C5.UserGuideExamples;
 
-using System;
-using SCG = System.Collections.Generic;
-
-namespace C5.UserGuideExamples
+internal static class LockstepCollections
 {
-    internal static class LockstepCollections
+    private static void Main()
     {
-        private static void Main()
+        var nameColl = new HashSet<PersonLockstepCollections>(new PersonLockstepCollections.NameEqualityComparer());
+        var dateColl = new TreeSet<PersonLockstepCollections>(new PersonLockstepCollections.DateComparer());
+
+        MakeLockstep(nameColl, dateColl);
+
+        var p1 = new PersonLockstepCollections("Peter", 19620625);
+        var p2 = new PersonLockstepCollections("Carsten", 19640627);
+        var p3 = new PersonLockstepCollections("Carsten", 19640628);
+
+        nameColl.Add(p1);
+        nameColl.Add(p2);
+        dateColl.Add(p3);
+
+        Console.WriteLine($"dateColl = {dateColl}");
+        Console.WriteLine($"nameColl = {nameColl}");
+
+        dateColl.Remove(p1);
+
+        Console.WriteLine($"dateColl = {dateColl}");
+        Console.WriteLine($"nameColl = {nameColl}");
+
+        dateColl.Clear();
+
+        Console.WriteLine($"dateColl = {dateColl}");
+        Console.WriteLine($"nameColl = {nameColl}");
+    }
+
+    private static void MakeLockstep<T>(params ICollection<T>[] colls)
+    {
+        // These will be captured in the event handler delegates below
+        var N = colls.Length;
+        var steps = N;
+        for (var i = 0; i < N; i++)
         {
-            var nameColl = new HashSet<PersonLockstepCollections>(new PersonLockstepCollections.NameEqualityComparer());
-            var dateColl = new TreeSet<PersonLockstepCollections>(new PersonLockstepCollections.DateComparer());
-
-            MakeLockstep(nameColl, dateColl);
-
-            var p1 = new PersonLockstepCollections("Peter", 19620625);
-            var p2 = new PersonLockstepCollections("Carsten", 19640627);
-            var p3 = new PersonLockstepCollections("Carsten", 19640628);
-
-            nameColl.Add(p1);
-            nameColl.Add(p2);
-            dateColl.Add(p3);
-
-            Console.WriteLine($"dateColl = {dateColl}");
-            Console.WriteLine($"nameColl = {nameColl}");
-
-            dateColl.Remove(p1);
-
-            Console.WriteLine($"dateColl = {dateColl}");
-            Console.WriteLine($"nameColl = {nameColl}");
-
-            dateColl.Clear();
-
-            Console.WriteLine($"dateColl = {dateColl}");
-            Console.WriteLine($"nameColl = {nameColl}");
-        }
-
-        private static void MakeLockstep<T>(params ICollection<T>[] colls)
-        {
-            // These will be captured in the event handler delegates below
-            var N = colls.Length;
-            var steps = N;
-            for (var i = 0; i < N; i++)
+            if (!colls[i].IsEmpty)
             {
-                if (!colls[i].IsEmpty)
-                {
-                    throw new ApplicationException("Non-empty collection");
-                }
+                throw new ApplicationException("Non-empty collection");
             }
-            for (var i = 0; i < N; i++)
+        }
+        for (var i = 0; i < N; i++)
+        {
+            ICollection<T> thisColl = colls[i];
+            ICollection<T> nextColl = colls[(i + 1) % N];
+            thisColl.CollectionChanged += _ => steps = N;
+            thisColl.CollectionCleared += (coll, args) =>
             {
-                ICollection<T> thisColl = colls[i];
-                ICollection<T> nextColl = colls[(i + 1) % N];
-                thisColl.CollectionChanged += _ => steps = N;
-                thisColl.CollectionCleared += (coll, args) =>
-                {
                     // For now ignoring that the clearing may be partial
                     if (--steps > 0)
-                    {
-                        nextColl.Clear();
-                    }
-                };
-                thisColl.ItemsAdded += (coll, args) =>
                 {
+                    nextColl.Clear();
+                }
+            };
+            thisColl.ItemsAdded += (coll, args) =>
+            {
                     // For now ignoring the multiplicity
                     if (--steps > 0)
-                    {
-                        T item = args.Item;
-                        nextColl.FindOrAdd(ref item);
-                    }
-                };
-                thisColl.ItemsRemoved += (coll, args) =>
                 {
+                    T item = args.Item;
+                    nextColl.FindOrAdd(ref item);
+                }
+            };
+            thisColl.ItemsRemoved += (coll, args) =>
+            {
                     // For now ignoring the multiplicity
                     if (--steps > 0)
-                    {
-                        nextColl.Remove(args.Item);
-                    }
-                };
-            }
+                {
+                    nextColl.Remove(args.Item);
+                }
+            };
+        }
+    }
+}
+
+public class PersonLockstepCollections
+{
+    public string Name { get; }
+    public int Date { get; }
+
+    public PersonLockstepCollections(string name, int date)
+    {
+        Name = name;
+        Date = date;
+    }
+
+    public class NameEqualityComparer : SCG.IEqualityComparer<PersonLockstepCollections>
+    {
+        public bool Equals(PersonLockstepCollections p1, PersonLockstepCollections p2)
+        {
+            return p1.Name == p2.Name;
+        }
+
+        public int GetHashCode(PersonLockstepCollections p)
+        {
+            return p.Name.GetHashCode();
         }
     }
 
-    public class PersonLockstepCollections
+    public class DateComparer : SCG.IComparer<PersonLockstepCollections>
     {
-        public string Name { get; }
-        public int Date { get; }
-
-        public PersonLockstepCollections(string name, int date)
+        public int Compare(PersonLockstepCollections p1, PersonLockstepCollections p2)
         {
-            Name = name;
-            Date = date;
+            return p1.Date.CompareTo(p2.Date);
         }
+    }
 
-        public class NameEqualityComparer : SCG.IEqualityComparer<PersonLockstepCollections>
-        {
-            public bool Equals(PersonLockstepCollections p1, PersonLockstepCollections p2)
-            {
-                return p1.Name == p2.Name;
-            }
-
-            public int GetHashCode(PersonLockstepCollections p)
-            {
-                return p.Name.GetHashCode();
-            }
-        }
-
-        public class DateComparer : SCG.IComparer<PersonLockstepCollections>
-        {
-            public int Compare(PersonLockstepCollections p1, PersonLockstepCollections p2)
-            {
-                return p1.Date.CompareTo(p2.Date);
-            }
-        }
-
-        public override string ToString()
-        {
-            return $"{Name} ({Date})";
-        }
+    public override string ToString()
+    {
+        return $"{Name} ({Date})";
     }
 }

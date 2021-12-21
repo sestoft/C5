@@ -1,5 +1,5 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using System;
 using SCG = System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace C5
     {
         #region Fields
         /// <summary>
-        /// IExtensible.Add(T) always does AddLast(T), fIFO determines 
+        /// IExtensible.Add(T) always does AddLast(T), fIFO determines
         /// if T Remove() does RemoveFirst() or RemoveLast()
         /// </summary>
         private bool fIFO = true;
@@ -22,7 +22,7 @@ namespace C5
         #region Events
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public override EventType ListenableEvents => underlying == null ? EventType.All : EventType.None;
@@ -33,7 +33,7 @@ namespace C5
         //If size==0: startsentinel.next == endsentinel && endsentinel.prev == startsentinel
         //Else:      startsentinel.next == First && endsentinel.prev == Last)
         /// <summary>
-        /// Node to the left of first node 
+        /// Node to the left of first node
         /// </summary>
         private Node? startsentinel;
 
@@ -68,7 +68,7 @@ namespace C5
         private int taggroups;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         private int Taggroups
@@ -95,9 +95,9 @@ namespace C5
 
         #region Check utilities
         /// <summary>
-        /// Check if it is valid to perform updates and increment stamp of 
+        /// Check if it is valid to perform updates and increment stamp of
         /// underlying if this is a view.
-        /// <para>This method should be called in every public modifying 
+        /// <para>This method should be called in every public modifying
         /// methods before any modifications are performed.
         /// </para>
         /// </summary>
@@ -115,7 +115,7 @@ namespace C5
         /// <summary>
         /// Check if we are a view that the underlying list has only been updated through us.
         /// <br/>
-        /// This method should be called from enumerators etc to guard against 
+        /// This method should be called from enumerators etc to guard against
         /// modification of the base collection.
         /// </summary>
         /// <exception cref="InvalidOperationException"> if check fails.</exception>
@@ -158,7 +158,7 @@ namespace C5
         /// </summary>
         /// <param name="item">The item to look for</param>
         /// <param name="node">On input, the node to start at. If item was found, the node found on output.</param>
-        /// <param name="index">If node was found, the value will be the number of links followed higher than 
+        /// <param name="index">If node was found, the value will be the number of links followed higher than
         /// the value on input. If item was not found, the value on output is undefined.</param>
         /// <returns>True if node was found.</returns>
         private bool Find(T item, ref Node node, ref int index)
@@ -247,7 +247,7 @@ namespace C5
         /// Find the distance from pos to the set given by positions. Return the
         /// signed distance as return value and as an out parameter, the
         /// array index of the nearest position. This is used for up to length 5 of
-        /// positions, and we do not assume it is sorted. 
+        /// positions, and we do not assume it is sorted.
         /// </summary>
         /// <param name="pos"></param>
         /// <param name="positions"></param>
@@ -337,7 +337,7 @@ namespace C5
         }
 
         /// <summary>
-        /// Insert a Node before another one. Unchecked version. 
+        /// Insert a Node before another one. Unchecked version.
         /// </summary>
         /// <param name="succ">The successor to be</param>
         /// <param name="newnode">Node to insert</param>
@@ -405,7 +405,7 @@ namespace C5
 
         #region fixView utilities
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="added">The actual number of inserted nodes</param>
         /// <param name="pred">The predecessor of the inserted nodes</param>
@@ -476,7 +476,7 @@ namespace C5
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="otherView"></param>
         /// <returns>The position of View(otherOffset, otherSize) wrt. this view</returns>
@@ -683,7 +683,7 @@ namespace C5
 
 
         /// <summary>
-        /// Put a tag on a node (already inserted in the list). Split taggroups and renumber as 
+        /// Put a tag on a node (already inserted in the list). Split taggroups and renumber as
         /// necessary.
         /// </summary>
         /// <param name="node">The node to tag</param>
@@ -814,7 +814,7 @@ namespace C5
 
             for (int i = 0, count = taggroup.count; i < count; i++)
             {
-                n.tag = (i - losize) << ofs; //(i-8)<<28 
+                n.tag = (i - losize) << ofs; //(i-8)<<28
                 n = n.next!;
             }
         }
@@ -848,7 +848,7 @@ namespace C5
                 for (int i = 0; i < hisize; i++)
                 {
                     n.taggroup = newtaggroup;
-                    n.tag = (i - losize) << ofs; //(i-8)<<28 
+                    n.tag = (i - losize) << ofs; //(i-8)<<28
                     n = n.next!;
                 }
 
@@ -862,7 +862,7 @@ namespace C5
             taggroup.tag = (tgtag = tgtag >= ntgt - tgtdelta ? ntgt : tgtag + tgtdelta); ofs--;
             for (int i = 0; i < rest; i++)
             {
-                n.tag = (i - hisize) << ofs; //(i-16)<<27 
+                n.tag = (i - hisize) << ofs; //(i-16)<<27
                 n = n.next!;
             }
 
@@ -1025,13 +1025,13 @@ namespace C5
                 }
             }
             /// <summary>
-            /// To be called with n pointing to the right of each node to be removed in a stretch. 
-            /// And at the endsentinel. 
-            /// 
+            /// To be called with n pointing to the right of each node to be removed in a stretch.
+            /// And at the endsentinel.
+            ///
             /// Update offset of a view whose left endpoint (has not already been handled and) is n or precedes n.
             /// I.e. startsentinel precedes n.
             /// Also update the size as a prelude to handling the right endpoint.
-            /// 
+            ///
             /// Update size of a view not already handled and whose right endpoint precedes n.
             /// </summary>
             /// <param name="removed">The number of nodes left of n to be removed</param>
@@ -1058,13 +1058,13 @@ namespace C5
             }
             /// <summary>
             /// To be called with n being the first not-to-be-removed node after a (stretch of) node(s) to be removed.
-            /// 
-            /// It will update the startsentinel of views (that have not been handled before and) 
+            ///
+            /// It will update the startsentinel of views (that have not been handled before and)
             /// whose startsentinel precedes n, i.e. is to be deleted.
-            /// 
+            ///
             /// It will update the endsentinel of views (...) whose endsentinel precedes n, i.e. is to be deleted.
-            /// 
-            /// PROBLEM: DOESNT WORK AS ORIGINALLY ADVERTISED. WE MUST DO THIS BEFORE WE ACTUALLY REMOVE THE NODES. WHEN THE 
+            ///
+            /// PROBLEM: DOESNT WORK AS ORIGINALLY ADVERTISED. WE MUST DO THIS BEFORE WE ACTUALLY REMOVE THE NODES. WHEN THE
             /// NODES HAVE BEEN REMOVED, THE precedes METHOD WILL NOT WORK!
             /// </summary>
             /// <param name="n"></param>
@@ -1184,7 +1184,7 @@ namespace C5
         #region IDisposable Members
 
         /// <summary>
-        /// Invalidate this list. If a view, just invalidate the view. 
+        /// Invalidate this list. If a view, just invalidate the view.
         /// If not a view, invalidate the list and all views on it.
         /// </summary>
         public virtual void Dispose()
@@ -1282,7 +1282,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public virtual bool IsFixedSize
         {
@@ -1324,13 +1324,13 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public virtual Speed IndexingSpeed => Speed.Linear;
 
         /// <summary>
-        /// Insert an item at a specific index location in this list. 
+        /// Insert an item at a specific index location in this list.
         /// <exception cref="IndexOutOfRangeException"/> if i is negative or
         /// &gt; the size of the collection.</summary>
         /// <param name="i">The index at which to insert.</param>
@@ -1351,12 +1351,12 @@ namespace C5
         /// <code>this</code> and the endpoint of <code>pointer</code> must be
         /// a valid insertion point of <code>this</code></para>
         /// </summary>
-        /// <exception cref="IncompatibleViewException">If <code>pointer</code> 
+        /// <exception cref="IncompatibleViewException">If <code>pointer</code>
         /// is not a view on the same list as <code>this</code></exception>
-        /// <exception cref="IndexOutOfRangeException"><b>??????</b> if the endpoint of 
+        /// <exception cref="IndexOutOfRangeException"><b>??????</b> if the endpoint of
         ///  <code>pointer</code> is not inside <code>this</code></exception>
         /// <exception cref="DuplicateNotAllowedException"> if the list has
-        /// <code>AllowsDuplicates==false</code> and the item is 
+        /// <code>AllowsDuplicates==false</code> and the item is
         /// already in the list.</exception>
         /// <param name="pointer"></param>
         /// <param name="item"></param>
@@ -1375,7 +1375,7 @@ namespace C5
         }
 
         /// <summary>
-        /// Insert into this list all items from an enumerable collection starting 
+        /// Insert into this list all items from an enumerable collection starting
         /// at a particular index.
         /// <exception cref="IndexOutOfRangeException"/> if i is negative or
         /// &gt; the size of the collection.
@@ -1636,7 +1636,7 @@ namespace C5
         }
 
         /// <summary>
-        /// Create a list view on this list. 
+        /// Create a list view on this list.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException"> if the start or count is negative</exception>
         /// <exception cref="ArgumentException"> if the range does not fit within list.</exception>
@@ -1667,7 +1667,7 @@ namespace C5
         }
 
         /// <summary>
-        /// Create a list view on this list containing the (first) occurrence of a particular item. 
+        /// Create a list view on this list containing the (first) occurrence of a particular item.
         /// </summary>
         /// <exception cref="ArgumentException"> if the item is not in this list.</exception>
         /// <param name="item">The item to find.</param>
@@ -1691,7 +1691,7 @@ namespace C5
         }
 
         /// <summary>
-        /// Create a list view on this list containing the last occurrence of a particular item. 
+        /// Create a list view on this list containing the last occurrence of a particular item.
         /// <exception cref="ArgumentException"/> if the item is not in this list.
         /// </summary>
         /// <param name="item">The item to find.</param>
@@ -1709,7 +1709,7 @@ namespace C5
         public virtual IList<T>? Underlying { get { Validitycheck(); return underlying; } }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public virtual bool IsValid => isValid;
@@ -1779,14 +1779,14 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="offset"></param>
         /// <returns></returns>
         public virtual bool TrySlide(int offset) { return TrySlide(offset, size); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="offset"></param>
         /// <param name="size"></param>
@@ -1832,7 +1832,7 @@ namespace C5
 
         //TODO: improve the complexity of the implementation
         /// <summary>
-        /// 
+        ///
         /// <para>Returns null if <code>otherView</code> is strictly to the left of this view</para>
         /// </summary>
         /// <param name="otherView"></param>
@@ -1855,10 +1855,10 @@ namespace C5
 
 
         //Question: should we swap items or move nodes around?
-        //The first seems much more efficient unless the items are value types 
+        //The first seems much more efficient unless the items are value types
         //with a large memory footprint.
-        //(Swapping will do count*3/2 T assignments, linking around will do 
-        // 4*count ref assignments; note that ref assignments are more expensive 
+        //(Swapping will do count*3/2 T assignments, linking around will do
+        // 4*count ref assignments; note that ref assignments are more expensive
         //than copying non-ref bits)
         /// <summary>
         /// Reverse the list so the items are in the opposite sequence order.
@@ -1961,7 +1961,7 @@ namespace C5
 
         /// <summary>
         /// Check if this list is sorted according to the default sorting order
-        /// for the item type T, as defined by the <see cref="T:C5.Comparer`1"/> class 
+        /// for the item type T, as defined by the <see cref="T:C5.Comparer`1"/> class
         /// </summary>
         /// <exception cref="NotComparableException">if T is not comparable</exception>
         /// <returns>True if the list is sorted, else false.</returns>
@@ -2002,7 +2002,7 @@ namespace C5
 
         /// <summary>
         /// Sort the items of the list according to the default sorting order
-        /// for the item type T, as defined by the Comparer[T] class. 
+        /// for the item type T, as defined by the Comparer[T] class.
         /// (<see cref="T:C5.Comparer`1"/>).
         /// The sorting is stable.
         /// </summary>
@@ -2204,7 +2204,7 @@ namespace C5
                 run1.prev = prev;
             }
             else if (run2 != null)
-            { // last run1 
+            { // last run1
                 prev.next = run2;
                 run2.prev = prev;
             }
@@ -2213,7 +2213,7 @@ namespace C5
         }
 
         /// <summary>
-        /// Randomly shuffle the items of this list. 
+        /// Randomly shuffle the items of this list.
         /// <para>Will invalidate overlapping views???</para>
         /// </summary>
         public virtual void Shuffle() { Shuffle(new C5Random()); }
@@ -2325,7 +2325,7 @@ namespace C5
 
         /// <summary>
         /// Remove all items in an index interval.
-        /// <exception cref="IndexOutOfRangeException"/>???. 
+        /// <exception cref="IndexOutOfRangeException"/>???.
         /// </summary>
         /// <param name="start">The index of the first item to remove.</param>
         /// <param name="count">The number of items to remove.</param>
@@ -2355,13 +2355,13 @@ namespace C5
         #region ISequenced<T> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override int GetSequencedHashCode() { Validitycheck(); return base.GetSequencedHashCode(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="that"></param>
         /// <returns></returns>
@@ -2407,7 +2407,7 @@ namespace C5
         { Validitycheck(); return base.GetUnsequencedHashCode(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="that"></param>
         /// <returns></returns>
@@ -2442,7 +2442,7 @@ namespace C5
 
         /// <summary>
         /// Check if this collection contains an item equivalent according to the
-        /// itemequalityComparer to a particular value. If so, update the item in the collection 
+        /// itemequalityComparer to a particular value. If so, update the item in the collection
         /// to with a binary copy of the supplied value. Will update a single item.
         /// </summary>
         /// <param name="item">Value to update.</param>
@@ -2450,7 +2450,7 @@ namespace C5
         public virtual bool Update(T item) { return Update(item, out _); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <param name="olditem"></param>
@@ -2503,15 +2503,15 @@ namespace C5
 
         /// <summary>
         /// Check if this collection contains an item equivalent according to the
-        /// itemequalityComparer to a particular value. If so, update the item in the collection 
-        /// to with a binary copy of the supplied value; else add the value to the collection. 
+        /// itemequalityComparer to a particular value. If so, update the item in the collection
+        /// to with a binary copy of the supplied value; else add the value to the collection.
         /// </summary>
         /// <param name="item">Value to add or update.</param>
         /// <returns>True if the item was found and updated (hence not added).</returns>
         public virtual bool UpdateOrAdd(T item) { return UpdateOrAdd(item, out _); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <param name="olditem"></param>
@@ -2545,7 +2545,7 @@ namespace C5
 
         /// <summary>
         /// Remove a particular item from this collection. Since the collection has bag
-        /// semantics only one copy equivalent to the supplied item is removed. 
+        /// semantics only one copy equivalent to the supplied item is removed.
         /// </summary>
         /// <param name="item">The value to remove.</param>
         /// <returns>True if the item was found (and removed).</returns>
@@ -2563,8 +2563,8 @@ namespace C5
         }
 
         /// <summary>
-        /// Remove a particular item from this collection if found (only one copy). 
-        /// If an item was removed, report a binary copy of the actual item removed in 
+        /// Remove a particular item from this collection if found (only one copy).
+        /// If an item was removed, report a binary copy of the actual item removed in
         /// the argument.
         /// </summary>
         /// <param name="item">The value to remove on input.</param>
@@ -2589,9 +2589,9 @@ namespace C5
         /// Remove all items in another collection from this one, taking multiplicities into account.
         /// <para>Always removes from the front of the list.
         /// </para>
-        /// <para>The asymptotic running time complexity of this method is <code>O(n+m+v*log(v))</code>, 
+        /// <para>The asymptotic running time complexity of this method is <code>O(n+m+v*log(v))</code>,
         /// where <code>n</code> is the size of this list, <code>m</code> is the size of the
-        /// <code>items</code> collection and <code>v</code> is the number of views. 
+        /// <code>items</code> collection and <code>v</code> is the number of views.
         /// The method will temporarily allocate memory of size <code>O(m+v)</code>.
         /// </para>
         /// </summary>
@@ -2624,7 +2624,7 @@ namespace C5
 
         /*
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="predicate"></param>
         void RemoveAll(Func<T, bool> predicate)
@@ -2741,10 +2741,10 @@ namespace C5
 
         /// <summary>
         /// Remove all items not in some other collection from this one, taking multiplicities into account.
-        /// <para>The asymptotic running time complexity of this method is <code>O(n+m+v*log(v))</code>, 
+        /// <para>The asymptotic running time complexity of this method is <code>O(n+m+v*log(v))</code>,
         /// where <code>n</code> is the size of this collection, <code>m</code> is the size of the
-        /// <code>items</code> collection and <code>v</code> is the number of views. 
-        /// The method will temporarily allocate memory of size <code>O(m+v)</code>. The stated complexity 
+        /// <code>items</code> collection and <code>v</code> is the number of views.
+        /// The method will temporarily allocate memory of size <code>O(m+v)</code>. The stated complexity
         /// holds under the assumption that the itemequalityComparer of this list is well-behaved.
         /// </para>
         /// </summary>
@@ -2778,7 +2778,7 @@ namespace C5
               }
               dict = newdict;
               size = dict.Count;
-              //For a small number of items to retain it might be faster to 
+              //For a small number of items to retain it might be faster to
               //iterate through the list and splice out the chunks not needed
             }
             else*/
@@ -2818,7 +2818,7 @@ namespace C5
 
         /*
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="predicate"></param>
         void RetainAll(Func<T, bool> predicate)
@@ -2873,7 +2873,7 @@ namespace C5
 
 
         /// <summary>
-        /// Create a new list consisting of the items of this list satisfying a 
+        /// Create a new list consisting of the items of this list satisfying a
         /// certain predicate.
         /// </summary>
         /// <param name="filter">The filter delegate defining the predicate.</param>
@@ -2929,7 +2929,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public virtual ICollectionValue<T> UniqueItems()
@@ -2939,7 +2939,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
@@ -2950,8 +2950,8 @@ namespace C5
 
         /// <summary>
         /// Remove all items equivalent to a given value.
-        /// <para>The asymptotic complexity of this method is <code>O(n+v*log(v))</code>, 
-        /// where <code>n</code> is the size of the collection and <code>v</code> 
+        /// <para>The asymptotic complexity of this method is <code>O(n+v*log(v))</code>,
+        /// where <code>n</code> is the size of the collection and <code>v</code>
         /// is the number of views.
         /// </para>
         /// </summary>
@@ -2967,20 +2967,20 @@ namespace C5
         #region ICollectionValue<T> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value>The number of items in this collection</value>
         public override int Count { get { Validitycheck(); return size; } }
 
         /// <summary>
-        /// Choose some item of this collection. 
+        /// Choose some item of this collection.
         /// </summary>
         /// <exception cref="NoSuchItemException">if collection is empty.</exception>
         /// <returns></returns>
         public override T Choose() { return First; }
 
         /// <summary>
-        /// Create an enumerable, enumerating the items of this collection that satisfies 
+        /// Create an enumerable, enumerating the items of this collection that satisfies
         /// a certain condition.
         /// </summary>
         /// <param name="filter">The T->bool filter delegate defining the condition</param>
@@ -3012,7 +3012,7 @@ namespace C5
 
         #region IExtensible<T> Members
         /// <summary>
-        /// Add an item to this collection if possible. 
+        /// Add an item to this collection if possible.
         /// </summary>
         /// <param name="item">The item to add.</param>
         /// <returns>True.</returns>
@@ -3031,7 +3031,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value>True since this collection has bag semantics.</value>
         public virtual bool AllowsDuplicates => false;
@@ -3039,13 +3039,13 @@ namespace C5
         /// <summary>
         /// By convention this is true for any collection with set semantics.
         /// </summary>
-        /// <value>True if only one representative of a group of equal items 
+        /// <value>True if only one representative of a group of equal items
         /// is kept in the collection together with the total count.</value>
         public virtual bool DuplicatesByCounting => true;
 
         /// <summary>
-        /// Add the elements from another collection with a more specialized item type 
-        /// to this collection. 
+        /// Add the elements from another collection with a more specialized item type
+        /// to this collection.
         /// </summary>
         /// <param name="items">The items to add</param>
         public virtual void AddAll(SCG.IEnumerable<T> items)

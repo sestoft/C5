@@ -1,106 +1,100 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 // C5 TreeBag bug
 
-// Compile with 
-//   csc /r:netstandard.dll /r:C5.dll TreebagBug20091113.cs 
+namespace C5.UserGuideExamples;
 
-using System;
-
-namespace C5.UserGuideExamples
+class TreebagBug20091113
 {
-    class TreebagBug20091113
+    public static void Main()
     {
-        public static void Main()
-        {
-            // Sequence generated in FindNodeRandomTest
-            var list = new TreeBag<long>
+        // Sequence generated in FindNodeRandomTest
+        var list = new TreeBag<long>
             {
                 553284,
                 817435
             };
-            list.Remove(817435);
-            list.Add(155203);
-            list.Add(316201);
-            list.Remove(316201);
-            list.Add(145375);
-            list.Remove(155203);
-            list.Add(155203);
-            list.Add(150788);
-            list.Remove(145375);
-            list.Add(316201);
-            list.Add(263469);
-            list.Add(263469);
-            list.Add(441406);
-            list.Add(553284);
-            list.Remove(553284);
-            list.Add(553284);
-            list.Remove(150788);
-            list.Add(769005);
-            list.Add(263469);
-            list.Remove(316201);
-            list.Add(553284);
-            list.Remove(769005);
-            list.Add(316201);
-            list.Remove(263469);
-            list.Add(817435);
-            list.Add(553284);
-            list.Remove(316201);
-            list.Add(150788);
+        list.Remove(817435);
+        list.Add(155203);
+        list.Add(316201);
+        list.Remove(316201);
+        list.Add(145375);
+        list.Remove(155203);
+        list.Add(155203);
+        list.Add(150788);
+        list.Remove(145375);
+        list.Add(316201);
+        list.Add(263469);
+        list.Add(263469);
+        list.Add(441406);
+        list.Add(553284);
+        list.Remove(553284);
+        list.Add(553284);
+        list.Remove(150788);
+        list.Add(769005);
+        list.Add(263469);
+        list.Remove(316201);
+        list.Add(553284);
+        list.Remove(769005);
+        list.Add(316201);
+        list.Remove(263469);
+        list.Add(817435);
+        list.Add(553284);
+        list.Remove(316201);
+        list.Add(150788);
 
-            //        list.Add(0.553284f);
-            //        list.Add(0.8174357f);
-            //        list.Remove(0.8174357f);
-            //        list.Add(0.1552035f);
-            //        list.Add(0.3162012f);
-            //        list.Remove(0.3162012f);
-            //        list.Add(0.1453752f);
-            //        list.Remove(0.1552035f);
-            //        list.Add(0.1552035f);
-            //        list.Add(0.1507881f);
-            //        list.Remove(0.1453752f);
-            //        list.Add(0.3162012f);
-            //        list.Add(0.2634694f);
-            //        list.Add(0.2634694f);
-            //        list.Add(0.4414065f);
-            //        list.Add(0.553284f);
-            //        list.Remove(0.553284f);
-            //        list.Add(0.553284f);
-            //        list.Remove(0.1507881f);
-            //        list.Add(0.7690055f);
-            //        list.Add(0.2634694f);
-            //        list.Remove(0.3162012f);
-            //        list.Add(0.553284f);
-            //        list.Remove(0.7690055f);
-            //        list.Add(0.3162012f);
-            //        list.Remove(0.2634694f);
-            //        list.Add(0.8174357f);
-            //        list.Add(0.553284f);
-            //        list.Remove(0.3162012f);
-            //        list.Add(0.1507881f);
+        //        list.Add(0.553284f);
+        //        list.Add(0.8174357f);
+        //        list.Remove(0.8174357f);
+        //        list.Add(0.1552035f);
+        //        list.Add(0.3162012f);
+        //        list.Remove(0.3162012f);
+        //        list.Add(0.1453752f);
+        //        list.Remove(0.1552035f);
+        //        list.Add(0.1552035f);
+        //        list.Add(0.1507881f);
+        //        list.Remove(0.1453752f);
+        //        list.Add(0.3162012f);
+        //        list.Add(0.2634694f);
+        //        list.Add(0.2634694f);
+        //        list.Add(0.4414065f);
+        //        list.Add(0.553284f);
+        //        list.Remove(0.553284f);
+        //        list.Add(0.553284f);
+        //        list.Remove(0.1507881f);
+        //        list.Add(0.7690055f);
+        //        list.Add(0.2634694f);
+        //        list.Remove(0.3162012f);
+        //        list.Add(0.553284f);
+        //        list.Remove(0.7690055f);
+        //        list.Add(0.3162012f);
+        //        list.Remove(0.2634694f);
+        //        list.Add(0.8174357f);
+        //        list.Add(0.553284f);
+        //        list.Remove(0.3162012f);
+        //        list.Add(0.1507881f);
 
 
-            Console.WriteLine(list);
-            Console.WriteLine(list.Count > 3);
-            Console.WriteLine(list[0]);
-            Console.WriteLine(list[1]);
-            Console.WriteLine(list[2]);  // Throws!
-                                         //        Console.WriteLine(list[0,1]);
-                                         //        Console.WriteLine(list[1,1]);
-                                         //        Console.WriteLine(list[2,1]);    // Worse: Throws too!
-        }
+        Console.WriteLine(list);
+        Console.WriteLine(list.Count > 3);
+        Console.WriteLine(list[0]);
+        Console.WriteLine(list[1]);
+        Console.WriteLine(list[2]);  // Throws!
+                                     //        Console.WriteLine(list[0,1]);
+                                     //        Console.WriteLine(list[1,1]);
+                                     //        Console.WriteLine(list[2,1]);    // Worse: Throws too!
     }
 }
 
-/* 
+/*
 
 
 >     Assert.IsTrue(list.Count > 3);
 >     Assert.IsNotNull(list[0]);
 >     Assert.IsNotNull(list[1]);
 >     Assert.IsNotNull(list[2]);
-> 
+>
 > throws:
 > System.NullReferenceException : Object reference not set to an instance
 > of an object.
@@ -108,15 +102,15 @@ namespace C5.UserGuideExamples
 > C:\Code\Libs\C5.src\C5\trees\RedBlackTreeBag.cs:line 2544
 > at C5.TreeBag`1.get_Item(Int32 i) in
 > C:\Code\Libs\C5.src\C5\trees\RedBlackTreeBag.cs:line 2577
-> 
-> 
+>
+>
 > Could you please confirm if this is a bug with C5.TreeBag?
 > Much appreciated, thank you.
-> 
+>
 > --
 > Regards,
 > Keith Nelson
-> 
+>
 
 
 
@@ -180,7 +174,7 @@ namespace C5.UserGuideExamples
           list.Add(0.553284f);
           list.Remove(0.3162012f);
           list.Add(0.1507881f);
-          
+
           Assert.IsTrue(list.Count > 3);
           Assert.IsNotNull(list[0]);
           Assert.IsNotNull(list[1]);

@@ -1,5 +1,5 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 // C5 example: A bag collection in which items that compare equal may
 // be distinct objects or values; that is, a collection with
@@ -13,131 +13,123 @@
 // comparison.
 
 // Such a bag-with-actual-duplicates can be used to index objects, for
-// instance Person objects, by name and birthdate.  Several Person 
-// objects may have the same name, or the same birthdate, or even the 
+// instance Person objects, by name and birthdate.  Several Person
+// objects may have the same name, or the same birthdate, or even the
 // same name and birthdate, yet be distinct Person objects.
 
 // How much of this can be implemented on top of CollectionBase<T>?
 
 // What should the meaning of Contains(x) be?
 
-// Compile with
-//   csc /r:netstandard.dll /r:C5.dll DistinctBag.cs
+namespace C5.UserGuideExamples;
 
-using System;
-using System.Text;
-using SCG = System.Collections.Generic;
-
-namespace C5.UserGuideExamples
+internal class DistinctBagProgram
 {
-    internal class DistinctBagProgram
+    private static void Main()
     {
-        private static void Main()
+        var nameColl = new DistinctHashBag<PersonDistinctBag>(new PersonDistinctBag.NameEqualityComparer());
+        var p1 = new PersonDistinctBag("Peter", 19620625);
+        var p2 = new PersonDistinctBag("Carsten", 19640627);
+        var p3 = new PersonDistinctBag("Carsten", 19640628);
+        nameColl.Add(p1);
+        nameColl.Add(p2);
+        nameColl.Add(p3);
+        Console.WriteLine("nameColl = {0}", nameColl);
+    }
+}
+
+public class DistinctHashBag<T> where T : class
+{
+    private readonly HashDictionary<T, HashSet<T>> _dict;
+
+    public DistinctHashBag(SCG.IEqualityComparer<T> eqc)
+    {
+        _dict = new HashDictionary<T, HashSet<T>>(eqc);
+    }
+
+    public DistinctHashBag() : this(EqualityComparer<T>.Default)
+    {
+    }
+
+    public bool Add(T item)
+    {
+        if (!_dict.Contains(item))
         {
-            var nameColl = new DistinctHashBag<PersonDistinctBag>(new PersonDistinctBag.NameEqualityComparer());
-            var p1 = new PersonDistinctBag("Peter", 19620625);
-            var p2 = new PersonDistinctBag("Carsten", 19640627);
-            var p3 = new PersonDistinctBag("Carsten", 19640628);
-            nameColl.Add(p1);
-            nameColl.Add(p2);
-            nameColl.Add(p3);
-            Console.WriteLine("nameColl = {0}", nameColl);
+            _dict.Add(item, new HashSet<T>(EqualityComparer<T>.Default));
+        }
+        return _dict[item].Add(item);
+    }
+
+    public bool Remove(T item)
+    {
+        var result = false;
+        if (_dict.Contains(item))
+        {
+            var set = _dict[item];
+            result = set.Remove(item);
+            if (set.IsEmpty)
+            {
+                _dict.Remove(item);
+            }
+        }
+        return result;
+    }
+
+    public SCG.IEnumerator<T> GetEnumerator()
+    {
+        foreach (var entry in _dict)
+        {
+            foreach (T item in entry.Value)
+            {
+                yield return item;
+            }
         }
     }
 
-    public class DistinctHashBag<T> where T : class
+    public override string ToString()
     {
-        private readonly HashDictionary<T, HashSet<T>> _dict;
-
-        public DistinctHashBag(SCG.IEqualityComparer<T> eqc)
+        var sb = new StringBuilder();
+        foreach (T item in this)
         {
-            _dict = new HashDictionary<T, HashSet<T>>(eqc);
+            sb.Append(item).Append(" ");
         }
+        return sb.ToString();
+    }
+}
 
-        public DistinctHashBag() : this(EqualityComparer<T>.Default)
+public class PersonDistinctBag
+{
+    private string Name { get; }
+    private int Date { get; }
+
+    public PersonDistinctBag(string name, int date)
+    {
+        Name = name;
+        Date = date;
+    }
+
+    public class NameEqualityComparer : SCG.IEqualityComparer<PersonDistinctBag>
+    {
+        public bool Equals(PersonDistinctBag p1, PersonDistinctBag p2)
         {
+            return p1.Name == p2.Name;
         }
-
-        public bool Add(T item)
+        public int GetHashCode(PersonDistinctBag p)
         {
-            if (!_dict.Contains(item))
-            {
-                _dict.Add(item, new HashSet<T>(EqualityComparer<T>.Default));
-            }
-            return _dict[item].Add(item);
-        }
-
-        public bool Remove(T item)
-        {
-            var result = false;
-            if (_dict.Contains(item))
-            {
-                var set = _dict[item];
-                result = set.Remove(item);
-                if (set.IsEmpty)
-                {
-                    _dict.Remove(item);
-                }
-            }
-            return result;
-        }
-
-        public SCG.IEnumerator<T> GetEnumerator()
-        {
-            foreach (var entry in _dict)
-            {
-                foreach (T item in entry.Value)
-                {
-                    yield return item;
-                }
-            }
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            foreach (T item in this)
-            {
-                sb.Append(item).Append(" ");
-            }
-            return sb.ToString();
+            return p.Name.GetHashCode();
         }
     }
 
-    public class PersonDistinctBag
+    public class DateComparer : SCG.IComparer<PersonDistinctBag>
     {
-        private string Name { get; }
-        private int Date { get; }
-
-        public PersonDistinctBag(string name, int date)
+        public int Compare(PersonDistinctBag p1, PersonDistinctBag p2)
         {
-            Name = name;
-            Date = date;
+            return p1.Date.CompareTo(p2.Date);
         }
+    }
 
-        public class NameEqualityComparer : SCG.IEqualityComparer<PersonDistinctBag>
-        {
-            public bool Equals(PersonDistinctBag p1, PersonDistinctBag p2)
-            {
-                return p1.Name == p2.Name;
-            }
-            public int GetHashCode(PersonDistinctBag p)
-            {
-                return p.Name.GetHashCode();
-            }
-        }
-
-        public class DateComparer : SCG.IComparer<PersonDistinctBag>
-        {
-            public int Compare(PersonDistinctBag p1, PersonDistinctBag p2)
-            {
-                return p1.Date.CompareTo(p2.Date);
-            }
-        }
-
-        public override string ToString()
-        {
-            return $"{Name} ({Date})";
-        }
+    public override string ToString()
+    {
+        return $"{Name} ({Date})";
     }
 }

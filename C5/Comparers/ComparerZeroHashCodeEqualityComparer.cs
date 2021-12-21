@@ -1,5 +1,5 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using System;
 using SCG = System.Collections.Generic;
@@ -7,7 +7,7 @@ using SCG = System.Collections.Generic;
 namespace C5
 {
     /// <summary>
-    /// An equalityComparer compatible with a given comparer. All hash codes are 0, 
+    /// An equalityComparer compatible with a given comparer. All hash codes are 0,
     /// meaning that anything based on hash codes will be quite inefficient.
     /// <para><b>Note: this will give a new EqualityComparer each time created!</b></para>
     /// </summary>
@@ -17,7 +17,7 @@ namespace C5
     {
         private readonly SCG.IComparer<T> comparer;
         /// <summary>
-        /// Create a trivial <see cref="T:System.Collections.Generic.IEqualityComparer`1"/> compatible with the 
+        /// Create a trivial <see cref="T:System.Collections.Generic.IEqualityComparer`1"/> compatible with the
         /// <see cref="T:System.Collections.Generic.IComparer`1"/> <code>comparer</code>
         /// </summary>
         /// <param name="comparer"></param>

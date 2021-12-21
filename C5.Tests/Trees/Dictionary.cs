@@ -1,5 +1,5 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using NUnit.Framework;
 using System;
@@ -18,13 +18,13 @@ namespace C5.Tests.trees.RBDictionary
     {
         private IDictionary<int, int> coll;
         private IFormatProvider rad16;
-        
+
         [SetUp]
         public void Init() { coll = Factory.New<int, int>(); rad16 = new RadixFormatProvider(16); }
-        
+
         [TearDown]
         public void Dispose() { coll = null; rad16 = null; }
-        
+
         [Test]
         public void Format()
         {

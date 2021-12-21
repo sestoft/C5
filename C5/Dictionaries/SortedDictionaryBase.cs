@@ -1,5 +1,5 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using System;
 using SCG = System.Collections.Generic;
@@ -8,7 +8,7 @@ namespace C5
     /// <summary>
     /// A base class for implementing a sorted dictionary based on a sorted set collection implementation.
     /// <i>See the source code for <see cref="T:C5.TreeDictionary`2"/> for an example</i>
-    /// 
+    ///
     /// </summary>
     [Serializable]
     public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISortedDictionary<K, V>
@@ -16,13 +16,13 @@ namespace C5
         #region Fields
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected ISorted<SCG.KeyValuePair<K, V>> sortedpairs;
         private readonly SCG.IComparer<K> keycomparer;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="keycomparer"></param>
         /// <param name="keyequalityComparer"></param>
@@ -39,7 +39,7 @@ namespace C5
         public SCG.IComparer<K> Comparer => keycomparer;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public new ISorted<K>? Keys => new SortedKeysCollection(this, sortedpairs, keycomparer, EqualityComparer);
@@ -145,7 +145,7 @@ namespace C5
         #region ISortedDictionary<K,V> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public SCG.KeyValuePair<K, V> FindMin()
@@ -154,7 +154,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public SCG.KeyValuePair<K, V> DeleteMin()
@@ -163,7 +163,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public SCG.KeyValuePair<K, V> FindMax()
@@ -172,7 +172,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public SCG.KeyValuePair<K, V> DeleteMax()
@@ -181,7 +181,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="cutter"></param>
         /// <param name="lowEntry"></param>
@@ -195,7 +195,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="bot"></param>
         /// <returns></returns>
@@ -205,7 +205,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="bot"></param>
         /// <param name="top"></param>
@@ -216,7 +216,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="top"></param>
         /// <returns></returns>
@@ -226,7 +226,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public IDirectedCollectionValue<SCG.KeyValuePair<K, V>> RangeAll()
@@ -235,7 +235,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="items"></param>
         public void AddSorted(SCG.IEnumerable<SCG.KeyValuePair<K, V>> items)
@@ -244,7 +244,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="lowKey"></param>
         public void RemoveRangeFrom(K lowKey)
@@ -253,7 +253,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="lowKey"></param>
         /// <param name="highKey"></param>
@@ -263,7 +263,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="highKey"></param>
         public void RemoveRangeTo(K highKey)
@@ -307,7 +307,7 @@ namespace C5
         {
             private readonly ISortedDictionary<K, V> sorteddict;
 
-            //TODO: eliminate this. Only problem is the Find method because we lack method on dictionary that also 
+            //TODO: eliminate this. Only problem is the Find method because we lack method on dictionary that also
             //      returns the actual key.
             private readonly ISorted<SCG.KeyValuePair<K, V>> sortedpairs;
             private readonly SCG.IComparer<K> comparer;
@@ -429,7 +429,7 @@ namespace C5
             public int ContainsCount(K item) { return sorteddict.Contains(item) ? 1 : 0; }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             /// <returns></returns>
             public virtual ICollectionValue<K> UniqueItems()
@@ -438,7 +438,7 @@ namespace C5
             }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             /// <returns></returns>
             public virtual ICollectionValue<SCG.KeyValuePair<K, int>> ItemMultiplicities()
@@ -526,7 +526,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="stringbuilder"></param>
         /// <param name="rest"></param>

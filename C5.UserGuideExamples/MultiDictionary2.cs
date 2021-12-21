@@ -1,14 +1,7 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 // C5 example: 2006-01-29
-
-// Compile with 
-//   csc /r:netstandard.dll /r:C5.dll MultiDictionary2.cs 
-
-using System;
-using C5;
-using SCG = System.Collections.Generic;
 
 namespace C5.UserGuideExamples
 {
@@ -67,7 +60,7 @@ namespace C5.UserGuideExamples
     }
 }
 
-namespace MultiDictionary2_MultiDictionary1
+namespace C5.MultiDictionary2_MultiDictionary1
 {
     // Here we implement a multivalued dictionary as a hash dictionary
     // from keys to value collections.  The value collections may have set
@@ -80,7 +73,7 @@ namespace MultiDictionary2_MultiDictionary1
     //  non-empty.  Hence for correct semantics, the Contains(k) method
     //  must check that the value collection associated with a key is
     //  non-null and non-empty.
-    //  
+    //
     //  * A value collection may be shared between two or more keys.
     //
 
@@ -91,7 +84,7 @@ namespace MultiDictionary2_MultiDictionary1
 
         // Return total count of values associated with keys.  This basic
         // implementation simply sums over all value collections, and so
-        // is a linear-time operation in the total number of values.  
+        // is a linear-time operation in the total number of values.
 
         public new virtual int Count
         {
@@ -172,15 +165,15 @@ namespace MultiDictionary2_MultiDictionary1
 
         // Inherited from base class HashDictionary<K,ICollection<V>>:
 
-        // Add(K k, ICollection<V> values) 
-        // AddAll(IEnumerable<System.Collections.Generic.KeyValuePair<K,ICollection<V>>> kvs) 
+        // Add(K k, ICollection<V> values)
+        // AddAll(IEnumerable<System.Collections.Generic.KeyValuePair<K,ICollection<V>>> kvs)
         // Clear
         // Clone
         // Find(ref k k, out ICollection<V> values)
         // Find(ref K k, out ICollection<V> values)
-        // FindOrAdd(K k, ref ICollection<V> values) 
-        // Remove(K k) 
-        // Remove(K k, out ICollection<V> values) 
+        // FindOrAdd(K k, ref ICollection<V> values)
+        // Remove(K k)
+        // Remove(K k, out ICollection<V> values)
         // Update(K k, ICollection<V> values)
         // Update(K k, ICollection<V> values, out ICollection<V> oldValues)
         // UpdateOrAdd(K k, ICollection<V> values)
@@ -189,7 +182,7 @@ namespace MultiDictionary2_MultiDictionary1
 }
 
 
-namespace MultiDictionary2_MultiDictionary2
+namespace C5.MultiDictionary2_MultiDictionary2
 {
     // Here we implement a multivalued dictionary as a hash dictionary
     // from keys to value collections.  The value collections may have
@@ -250,7 +243,7 @@ namespace MultiDictionary2_MultiDictionary2
               };
         }
 
-        // Return total count of values associated with keys.  
+        // Return total count of values associated with keys.
 
         public new virtual int Count
         {
@@ -328,7 +321,7 @@ namespace MultiDictionary2_MultiDictionary2
 }
 
 
-namespace MultiDictionary2_MultiDictionary3
+namespace C5.MultiDictionary2_MultiDictionary3
 {
     // Here we implement a multivalued dictionary as a hash dictionary
     // from keys to value collections.  The value collections may have
@@ -389,7 +382,7 @@ namespace MultiDictionary2_MultiDictionary3
               };
         }
 
-        // Return total count of values associated with keys.  
+        // Return total count of values associated with keys.
 
         public new virtual int Count
         {

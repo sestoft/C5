@@ -1,5 +1,5 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using System;
 using System.Collections.Generic;
@@ -33,7 +33,7 @@ namespace C5
 
         /// <summary>
         /// Move wrapped enumerator to next item, or the first item if
-        /// this is the first call to MoveNext. 
+        /// this is the first call to MoveNext.
         /// </summary>
         /// <returns>True if enumerator is valid now</returns>
         public bool MoveNext() { return enumerator.MoveNext(); }
@@ -49,7 +49,7 @@ namespace C5
 
         #region IDisposable Members
 
-        //TODO: consider possible danger of calling through to Dispose. 
+        //TODO: consider possible danger of calling through to Dispose.
         /// <summary>
         /// Dispose wrapped enumerator.
         /// </summary>

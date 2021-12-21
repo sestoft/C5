@@ -1,5 +1,5 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using System;
 using System.Text;
@@ -8,10 +8,10 @@ namespace C5
 {
     // ------------------------------------------------------------
 
-    // Static helper methods for Showing collections 
+    // Static helper methods for Showing collections
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [Serializable]
     public static class Showing
@@ -42,7 +42,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="showable"></param>
         /// <param name="format"></param>
@@ -57,7 +57,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="format"></param>
         /// <returns></returns>
@@ -80,7 +80,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="items"></param>
@@ -191,11 +191,11 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <typeparam name="K"></typeparam>
         /// <typeparam name="V"></typeparam>
-        /// 
+        ///
         /// <param name="dictionary"></param>
         /// <param name="stringbuilder"></param>
         /// <param name="formatProvider"></param>
