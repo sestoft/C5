@@ -10,8 +10,6 @@ namespace C5
     /// </summary>
     public static class Logger
     {
-        private static Action<string> _log = (x => { return; });
-
         /// <summary>
         /// Gets or sets the log.
         /// </summary>
@@ -22,16 +20,12 @@ namespace C5
         /// </example>
         /// <remarks>
         /// If Log is not set it will return a dummy action
-        /// <c>x => { return; })</c>
+        /// <c>_ => {})</c>
         /// eliminating the need for null-reference checks.
         /// </remarks>
         /// <value>
         /// The log.
         /// </value>
-        public static Action<string> Log
-        {
-            get => _log;
-            set => _log = value;
-        }
+        public static Action<string> Log { get; set; } = _ => {};
     }
 }

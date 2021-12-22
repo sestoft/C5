@@ -1,0 +1,75 @@
+---
+name: Main
+
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - "*.md"
+
+  pull_request:
+    branches:
+      - master
+
+  workflow_dispatch:
+
+env:
+  RESOURCE_GROUP_NAME: ondfisk
+  WEBAPP_NAME: c5
+  BUILD_CONFIGURATION: Release
+
+jobs:
+  build:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup
+        uses: actions/setup-dotnet@v1.9.0
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
+
+      - name: Test
+        run: dotnet test -p:CollectCoverage=true -p:CoverletOutput=TestResults/ -p:CoverletOutputFormat=opencover
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: lib
+          path: bin/**/*.nupkg
+
+  documentation:
+    name: Generate Documentation
+    runs-on: ubuntu-latest
+    container:
+      image: corentinaltepe/doxygen
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install GraphViz
+        run: apk update && apk add graphviz font-bitstream-type1 ghostscript-fonts
+
+      - name: Generate Documentation
+        run: doxygen Doxyfile
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: docs
+          path: docs/
+
+  # deploy:
+  #   name: Deploy
+  #   runs-on: ubuntu-latest
+  #   if: ${{ github.ref == 'refs/heads/master' }}
+  #   needs:
+  #     - build
+  #   environment: Production

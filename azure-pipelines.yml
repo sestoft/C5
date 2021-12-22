@@ -1,96 +1,40 @@
-trigger:
-  - master
-pr:
-  branches:
-    include:
-      - '*'
+# Build ASP.NET Core project using Azure Pipelines
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core?view=vsts
+
+pool:
+  vmImage: 'windows-latest'
 
 variables:
-  buildConfiguration: Release
-  vmImage: ubuntu-latest
-  azureSubscription: C5
+  buildConfiguration: 'Release'
 
-stages:
-  - stage: Build
-    displayName: Build
-    jobs:
-      - job: Build
-        displayName: Build
-        pool:
-          vmImage: $(vmImage)
-        steps:
-          - task: DotNetCoreCLI@2
-            displayName: Build
-            inputs:
-              command: build
-              arguments: /P:SourceLinkCreate=false --configuration $(buildConfiguration)
+steps:
+- task: UseDotNet@2
+  inputs:
+    version: '6.0.x'
+    packageType: sdk
 
-          - task: DotNetCoreCLI@2
-            displayName: Test
-            inputs:
-              command: test
-              arguments: '--configuration $(buildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura'
-              publishTestResults: true
-              projects: '**/*Tests/*.csproj'
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    command: build
+    arguments: /P:SourceLinkCreate=false --configuration $(buildConfiguration)
 
+- task: DotNetCoreCLI@2
+  displayName: Test
+  inputs:
+    command: test
+    projects: "**/*Tests/*.csproj"
+    arguments: '/P:SourceLinkCreate=false --configuration $(buildConfiguration) --collect "Code coverage"'
 
-          - task: PublishCodeCoverageResults@1
-            displayName: Publish Code Coverage Report
-            inputs:
-              codeCoverageTool: Cobertura
-              summaryFileLocation: $(Agent.TempDirectory)/**/coverage.cobertura.xml
+- task: CopyFiles@2
+  displayName: 'Copy files'
+  inputs:
+    sourceFolder: $(Build.SourcesDirectory)/C5/bin/$(buildConfiguration)
+    contents: '*.nupkg'
+    targetFolder: $(Build.ArtifactStagingDirectory)
+    flattenFolders: true
 
-          - task: CopyFiles@2
-            displayName: Copy files
-            inputs:
-              sourceFolder: $(Build.SourcesDirectory)/C5/bin/$(buildConfiguration)
-              contents: '*.nupkg'
-              targetFolder: $(Build.ArtifactStagingDirectory)
-              flattenFolders: true
-
-          - script: |
-              sudo apt update
-              sudo apt install libclang1-9
-              sudo apt install libclang-cpp9
-              npm install -g doxygen
-              npm install -g graphviz
-              DOXYGEN_OUTPUT_DIRECTORY=$(Build.SourcesDirectory)
-              doxygen --download
-              doxygen --docs --configPath="$(Build.SourcesDirectory)/Doxyfile"
-            workingDirectory: $(Build.SourcesDirectory)
-            displayName: Generate documentation
-            failOnStderr: true
-
-          - task: ArchiveFiles@2
-            displayName: Archive documentation
-            inputs:
-              rootFolderOrFile: $(Build.SourcesDirectory)/C5.Docs/html
-              includeRootFolder: false
-              archiveType: zip
-              archiveFile: $(Build.ArtifactStagingDirectory)/c5docs.zip
-
-          - task: PublishBuildArtifacts@1
-            displayName: Publish Build Artifacts
-            inputs:
-              artifactName: drop
-              PathtoPublish: $(Build.ArtifactStagingDirectory)
-
-  - stage: Release
-    displayName: Release
-    dependsOn: Build
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-    jobs:
-      - deployment: Release
-        environment: Production
-        pool:
-          vmImage: $(vmImage)
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - task: AzureRmWebAppDeployment@4
-                  displayName: Azure App Service Deploy
-                  inputs:
-                    azureSubscription: $(azureSubscription)
-                    WebAppName: c5
-                    packageForLinux: $(System.DefaultWorkingDirectory)/**/c5docs.zip
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: $(Build.ArtifactStagingDirectory)
+    artifactName: drop
