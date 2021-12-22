@@ -1,22 +1,15 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 // C5 example: Keyword recognition 2004-12-20
 
-// Compile with
-//   csc /r:netstandard.dll /r:C5.dll KeywordRecognition.cs
+namespace C5.UserGuideExamples;
 
-using System;
-using System.Diagnostics;
-using SCG = System.Collections.Generic;
-
-namespace C5.UserGuideExamples
+internal class KeywordRecognition
 {
-    internal class KeywordRecognition
+    // Array of 77 keywords:
+    private static readonly string[] _keywordArray =
     {
-        // Array of 77 keywords:
-        private static readonly string[] _keywordArray =
-        {
             "abstract", "as", "base", "bool", "break", "byte", "case", "catch",
             "char", "checked", "class", "const", "continue", "decimal", "default",
             "delegate", "do", "double", "else", "enum", "event", "explicit",
@@ -30,151 +23,150 @@ namespace C5.UserGuideExamples
             "ushort", "using", "virtual", "void", "volatile", "while"
         };
 
-        private static readonly ICollection<string> _keywords1;
+    private static readonly ICollection<string> _keywords1;
 
-        private static readonly ICollection<string> _keywords2;
+    private static readonly ICollection<string> _keywords2;
 
-        private static readonly ICollection<string> _keywords3;
+    private static readonly ICollection<string> _keywords3;
 
-        private static readonly SCG.IDictionary<string, bool> _keywords4;
+    private static readonly SCG.IDictionary<string, bool> _keywords4;
 
-        private class SC : SCG.IComparer<string>
+    private class SC : SCG.IComparer<string>
+    {
+        public int Compare(string a, string b)
         {
-            public int Compare(string a, string b)
+            return StringComparer.InvariantCulture.Compare(a, b);
+        }
+    }
+
+    private class SH : SCG.IEqualityComparer<string>
+    {
+        public int GetHashCode(string item)
+        {
+            return item.GetHashCode();
+        }
+
+        public bool Equals(string i1, string i2)
+        {
+            return i1 == null ? i2 == null : i1.Equals(i2, StringComparison.InvariantCulture);
+        }
+    }
+
+    static KeywordRecognition()
+    {
+        _keywords1 = new HashSet<string>();
+        _keywords1.AddAll(_keywordArray);
+        _keywords2 = new TreeSet<string>(new SC());
+        _keywords2.AddAll(_keywordArray);
+        _keywords3 = new SortedArray<string>(new SC());
+        _keywords3.AddAll(_keywordArray);
+        _keywords4 = new SCG.Dictionary<string, bool>();
+
+        foreach (var keyword in _keywordArray)
+        {
+            _keywords4.Add(keyword, false);
+        }
+    }
+
+    public static bool IsKeyword1(string s)
+    {
+        return _keywords1.Contains(s);
+    }
+
+    public static bool IsKeyword2(string s)
+    {
+        return _keywords2.Contains(s);
+    }
+
+    public static bool IsKeyword3(string s)
+    {
+        return _keywords3.Contains(s);
+    }
+
+    public static bool IsKeyword4(string s)
+    {
+        return _keywords4.ContainsKey(s);
+    }
+
+    public static bool IsKeyword5(string s)
+    {
+        return Array.BinarySearch(_keywordArray, s) >= 0;
+    }
+
+    public static void Main(string[] args)
+    {
+        if (args.Length != 2)
+        {
+            Console.WriteLine("Usage: KeywordRecognition <iterations> <word>");
+        }
+        else
+        {
+            var count = int.Parse(args[0]);
+            var id = args[1];
+
             {
-                return StringComparer.InvariantCulture.Compare(a, b);
-            }
-        }
+                Console.Write("HashSet.Contains ");
+                var sw = Stopwatch.StartNew();
 
-        private class SH : SCG.IEqualityComparer<string>
-        {
-            public int GetHashCode(string item)
-            {
-                return item.GetHashCode();
-            }
-
-            public bool Equals(string i1, string i2)
-            {
-                return i1 == null ? i2 == null : i1.Equals(i2, StringComparison.InvariantCulture);
-            }
-        }
-
-        static KeywordRecognition()
-        {
-            _keywords1 = new HashSet<string>();
-            _keywords1.AddAll(_keywordArray);
-            _keywords2 = new TreeSet<string>(new SC());
-            _keywords2.AddAll(_keywordArray);
-            _keywords3 = new SortedArray<string>(new SC());
-            _keywords3.AddAll(_keywordArray);
-            _keywords4 = new SCG.Dictionary<string, bool>();
-
-            foreach (var keyword in _keywordArray)
-            {
-                _keywords4.Add(keyword, false);
-            }
-        }
-
-        public static bool IsKeyword1(string s)
-        {
-            return _keywords1.Contains(s);
-        }
-
-        public static bool IsKeyword2(string s)
-        {
-            return _keywords2.Contains(s);
-        }
-
-        public static bool IsKeyword3(string s)
-        {
-            return _keywords3.Contains(s);
-        }
-
-        public static bool IsKeyword4(string s)
-        {
-            return _keywords4.ContainsKey(s);
-        }
-
-        public static bool IsKeyword5(string s)
-        {
-            return Array.BinarySearch(_keywordArray, s) >= 0;
-        }
-
-        public static void Main(string[] args)
-        {
-            if (args.Length != 2)
-            {
-                Console.WriteLine("Usage: KeywordRecognition <iterations> <word>");
-            }
-            else
-            {
-                var count = int.Parse(args[0]);
-                var id = args[1];
-
+                for (var i = 0; i < count; i++)
                 {
-                    Console.Write("HashSet.Contains ");
-                    var sw = Stopwatch.StartNew();
-
-                    for (var i = 0; i < count; i++)
-                    {
-                        IsKeyword1(id);
-                    }
-
-                    sw.Stop();
-                    Console.WriteLine(sw.Elapsed);
+                    IsKeyword1(id);
                 }
 
+                sw.Stop();
+                Console.WriteLine(sw.Elapsed);
+            }
+
+            {
+                Console.Write("TreeSet.Contains ");
+                var sw = Stopwatch.StartNew();
+
+                for (var i = 0; i < count; i++)
                 {
-                    Console.Write("TreeSet.Contains ");
-                    var sw = Stopwatch.StartNew();
-
-                    for (var i = 0; i < count; i++)
-                    {
-                        IsKeyword2(id);
-                    }
-
-                    sw.Stop();
-                    Console.WriteLine(sw.Elapsed);
+                    IsKeyword2(id);
                 }
 
+                sw.Stop();
+                Console.WriteLine(sw.Elapsed);
+            }
+
+            {
+                Console.Write("SortedArray.Contains ");
+                var sw = Stopwatch.StartNew();
+
+                for (var i = 0; i < count; i++)
                 {
-                    Console.Write("SortedArray.Contains ");
-                    var sw = Stopwatch.StartNew();
-
-                    for (var i = 0; i < count; i++)
-                    {
-                        IsKeyword3(id);
-                    }
-
-                    sw.Stop();
-                    Console.WriteLine(sw.Elapsed);
+                    IsKeyword3(id);
                 }
 
+                sw.Stop();
+                Console.WriteLine(sw.Elapsed);
+            }
+
+            {
+                Console.Write("SCG.Dictionary.ContainsKey ");
+                var sw = Stopwatch.StartNew();
+
+                for (var i = 0; i < count; i++)
                 {
-                    Console.Write("SCG.Dictionary.ContainsKey ");
-                    var sw = Stopwatch.StartNew();
-
-                    for (var i = 0; i < count; i++)
-                    {
-                        IsKeyword4(id);
-                    }
-
-                    sw.Stop();
-                    Console.WriteLine(sw.Elapsed);
+                    IsKeyword4(id);
                 }
 
+                sw.Stop();
+                Console.WriteLine(sw.Elapsed);
+            }
+
+            {
+                Console.Write("Array.BinarySearch ");
+                var sw = Stopwatch.StartNew();
+
+                for (var i = 0; i < count; i++)
                 {
-                    Console.Write("Array.BinarySearch ");
-                    var sw = Stopwatch.StartNew();
-
-                    for (var i = 0; i < count; i++)
-                    {
-                        IsKeyword5(id);
-                    }
-
-                    sw.Stop();
-                    Console.WriteLine(sw.Elapsed);
+                    IsKeyword5(id);
                 }
+
+                sw.Stop();
+                Console.WriteLine(sw.Elapsed);
             }
         }
     }

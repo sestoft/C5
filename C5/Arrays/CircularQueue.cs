@@ -1,12 +1,12 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using System;
 using SCG = System.Collections.Generic;
 namespace C5
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [Serializable]
@@ -14,7 +14,7 @@ namespace C5
     {
         #region Fields
         /*
-        Invariant: the itemes in the queue ar the elements from front upwards, 
+        Invariant: the itemes in the queue ar the elements from front upwards,
         possibly wrapping around at the end of array, to back.
 
         if front<=back then size = back - front + 1;
@@ -34,7 +34,7 @@ namespace C5
         #region Events
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public override EventType ListenableEvents => EventType.Basic;
@@ -68,12 +68,12 @@ namespace C5
         #region Constructors
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public CircularQueue() : this(8) { }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="capacity"></param>
         public CircularQueue(int capacity)
@@ -92,7 +92,7 @@ namespace C5
 
         #region IQueue<T> Members
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public virtual bool AllowsDuplicates => true;
@@ -119,7 +119,7 @@ namespace C5
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         public virtual void Enqueue(T item)
@@ -150,7 +150,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public virtual T Dequeue()
@@ -185,7 +185,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         public void Push(T item) //== Enqueue
@@ -216,7 +216,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public T Pop()
@@ -264,7 +264,7 @@ namespace C5
             }*/
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override T Choose()
@@ -282,7 +282,7 @@ namespace C5
         #region IEnumerable<T> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override SCG.IEnumerator<T> GetEnumerator()
@@ -349,7 +349,7 @@ namespace C5
         #region IDirectedCollectionValue<T> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override IDirectedCollectionValue<T> Backwards()
@@ -365,7 +365,7 @@ namespace C5
         #region IDirectedEnumerable<T> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards()
@@ -376,7 +376,7 @@ namespace C5
         #endregion
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public virtual bool Check()

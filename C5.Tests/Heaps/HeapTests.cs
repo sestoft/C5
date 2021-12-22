@@ -1,5 +1,5 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using NUnit.Framework;
 using System;
@@ -255,7 +255,7 @@ namespace C5.Tests.heaps
         }
 
         /// <summary>
-        /// bug20070504.txt by Viet Yen Nguyen 
+        /// bug20070504.txt by Viet Yen Nguyen
         /// </summary>
         [Test]
         public void Replace3()
@@ -675,7 +675,7 @@ namespace C5.Tests.heaps
 
         /// <summary>
         /// Cases related to bug20130208 (Iulian Nitescu &lt;iulian@live.co.uk&gt;)
-        /// and bug20130505 (perpetual, via Github) 
+        /// and bug20130505 (perpetual, via Github)
         /// </summary>
         [Test]
         public void Bug20130208()

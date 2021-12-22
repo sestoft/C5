@@ -1,5 +1,5 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using System;
 using SCG = System.Collections.Generic;
@@ -8,11 +8,11 @@ namespace C5
 {
     /// <summary>
     /// An implementation of Red-Black trees as an indexed, sorted collection with set semantics,
-    /// cf. <a href="litterature.htm#CLRS">CLRS</a>. <see cref="T:C5.TreeBag`1"/> for a version 
-    /// with bag semantics. <see cref="T:C5.TreeDictionary`2"/> for a sorted dictionary 
+    /// cf. <a href="litterature.htm#CLRS">CLRS</a>. <see cref="T:C5.TreeBag`1"/> for a version
+    /// with bag semantics. <see cref="T:C5.TreeDictionary`2"/> for a sorted dictionary
     /// based on this tree implementation.
     /// <i>
-    /// The comparer (sorting order) may be either natural, because the item type is comparable 
+    /// The comparer (sorting order) may be either natural, because the item type is comparable
     /// (generic: <see cref="T:C5.IComparable`1"/> or non-generic: System.IComparable) or it can
     /// be external and supplied by the user in the constructor.</i>
     ///
@@ -48,7 +48,7 @@ namespace C5
         #region Events
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public override EventType ListenableEvents => EventType.Basic;
@@ -58,7 +58,7 @@ namespace C5
 
         /// <summary>
         /// Fetch the left child of n taking node-copying persistence into
-        /// account if relevant. 
+        /// account if relevant.
         /// </summary>
         /// <param name="n"></param>
         /// <returns></returns>
@@ -90,7 +90,7 @@ namespace C5
         }
 
 
-        //This method should be called by methods that use the internal 
+        //This method should be called by methods that use the internal
         //traversal stack, unless certain that there is room enough
         private void StackCheck()
         {
@@ -179,8 +179,8 @@ namespace C5
             }
 
 
-            //If cursor.extra.lastgeneration==maxsnapid, the extra pointer will 
-            //always be used in the old copy of cursor. Therefore, after 
+            //If cursor.extra.lastgeneration==maxsnapid, the extra pointer will
+            //always be used in the old copy of cursor. Therefore, after
             //making the clone, we should update the old copy by restoring
             //the child pointer and setting extra to null.
             //OTOH then we cannot clean up unused Extra objects unless we link
@@ -205,7 +205,7 @@ namespace C5
 
         /// <summary>
         /// Create a red-black tree collection with natural comparer and item equalityComparer.
-        /// We assume that if <code>T</code> is comparable, its default equalityComparer 
+        /// We assume that if <code>T</code> is comparable, its default equalityComparer
         /// will be compatible with the comparer.
         /// </summary>
         /// <exception cref="NotComparableException">If <code>T</code> is not comparable.
@@ -214,9 +214,9 @@ namespace C5
 
 
         /// <summary>
-        /// Create a red-black tree collection with an external comparer. 
-        /// <para>The itemequalityComparer will be a compatible 
-        /// <see cref="T:C5.ComparerZeroHashCodeEqualityComparer`1"/> since the 
+        /// Create a red-black tree collection with an external comparer.
+        /// <para>The itemequalityComparer will be a compatible
+        /// <see cref="T:C5.ComparerZeroHashCodeEqualityComparer`1"/> since the
         /// default equalityComparer for T (<see cref="P:C5.EqualityComparer`1.Default"/>)
         /// is unlikely to be compatible with the external comparer. This makes the
         /// tree inadequate for use as item in a collection of unsequenced or sequenced sets or bags
@@ -244,7 +244,7 @@ namespace C5
 
         /// <summary>
         /// An enumerator for a red-black tree collection. Based on an explicit stack
-        /// of subtrees waiting to be enumerated. Currently only used for the tree set 
+        /// of subtrees waiting to be enumerated. Currently only used for the tree set
         /// enumerators (tree bag enumerators use an iterator block based enumerator).
         /// </summary>
         [Serializable]
@@ -303,7 +303,7 @@ namespace C5
             //yet (the top of the stack holds current item).
             /// <summary>
             /// Move enumerator to next item in tree, or the first item if
-            /// this is the first call to MoveNext. 
+            /// this is the first call to MoveNext.
             /// <exception cref="CollectionModifiedException"/> if underlying tree was modified.
             /// </summary>
             /// <returns>True if enumerator is valid now</returns>
@@ -434,7 +434,7 @@ namespace C5
 
             /// <summary>
             /// Move enumerator to next item in tree, or the first item if
-            /// this is the first call to MoveNext. 
+            /// this is the first call to MoveNext.
             /// <exception cref="CollectionModifiedException"/> if underlying tree was modified.
             /// </summary>
             /// <returns>True if enumerator is valid now</returns>
@@ -557,7 +557,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <exception cref="NoSuchItemException">If tree is empty</exception>
         /// <returns></returns>
@@ -889,7 +889,7 @@ namespace C5
         }
 
         /// <summary>
-        /// Add the elements from another collection with a more specialized item type 
+        /// Add the elements from another collection with a more specialized item type
         /// to this collection. If this
         /// collection has set semantics, only items not already in the collection
         /// will be added.
@@ -945,7 +945,7 @@ namespace C5
 
 
         /// <summary>
-        /// Add all the items from another collection with an enumeration order that 
+        /// Add all the items from another collection with an enumeration order that
         /// is increasing in the items. <para>The idea is that the implementation may use
         /// a faster algorithm to merge the two collections.</para>
         /// <exception cref="ArgumentException"/> if the enumerated items turns out
@@ -1038,7 +1038,7 @@ namespace C5
                 return;
             }
 
-            //To count theCollect 
+            //To count theCollect
             Node head = new Node(), tail = head;
             int z = 1;
             T lastitem = tail.item = e.Current;
@@ -1111,7 +1111,7 @@ namespace C5
         /// <summary>
         /// By convention this is true for any collection with set semantics.
         /// </summary>
-        /// <value>True if only one representative of a group of equal items 
+        /// <value>True if only one representative of a group of equal items
         /// is kept in the collection together with the total count.</value>
         public virtual bool DuplicatesByCounting => true;
 
@@ -1193,7 +1193,7 @@ namespace C5
         /// <summary>
         /// Find or add the item to the tree. If the tree does not contain
         /// an item equivalent to this item add it, else return the existing
-        /// one in the ref argument. 
+        /// one in the ref argument.
         ///
         /// </summary>
         /// <param name="item"></param>
@@ -1225,11 +1225,11 @@ namespace C5
         }
 
 
-        //For dictionary use. 
+        //For dictionary use.
         //If found, the matching entry will be updated with the new item.
         /// <summary>
         /// Check if this collection contains an item equivalent according to the
-        /// itemequalityComparer to a particular value. If so, update the item in the collection 
+        /// itemequalityComparer to a particular value. If so, update the item in the collection
         /// to with a binary copy of the supplied value. If the collection has bag semantics,
         /// this updates all equivalent copies in
         /// the collection.
@@ -1243,7 +1243,7 @@ namespace C5
 
         /// <summary>
         /// Check if this collection contains an item equivalent according to the
-        /// itemequalityComparer to a particular value. If so, update the item in the collection 
+        /// itemequalityComparer to a particular value. If so, update the item in the collection
         /// with a binary copy of the supplied value. If the collection has bag semantics,
         /// this updates all equivalent copies in
         /// the collection.
@@ -1303,8 +1303,8 @@ namespace C5
 
         /// <summary>
         /// Check if this collection contains an item equivalent according to the
-        /// itemequalityComparer to a particular value. If so, update the item in the collection 
-        /// with a binary copy of the supplied value; else add the value to the collection. 
+        /// itemequalityComparer to a particular value. If so, update the item in the collection
+        /// with a binary copy of the supplied value; else add the value to the collection.
         ///
         /// <i>NOTE: the bag implementation is currently wrong! ?????</i>
         /// </summary>
@@ -1316,7 +1316,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <param name="olditem"></param>
@@ -1357,7 +1357,7 @@ namespace C5
 
         /// <summary>
         /// Remove a particular item from this collection. If the collection has bag
-        /// semantics only one copy equivalent to the supplied item is removed. 
+        /// semantics only one copy equivalent to the supplied item is removed.
         /// </summary>
         /// <param name="item">The value to remove.</param>
         /// <returns>True if the item was found (and removed).</returns>
@@ -1386,8 +1386,8 @@ namespace C5
         /// <summary>
         /// Remove a particular item from this collection if found. If the collection
         /// has bag semantics only one copy equivalent to the supplied item is removed,
-        /// which one is implementation dependent. 
-        /// If an item was removed, report a binary copy of the actual item removed in 
+        /// which one is implementation dependent.
+        /// If an item was removed, report a binary copy of the actual item removed in
         /// the argument.
         /// </summary>
         /// <param name="item">The value to remove.</param>
@@ -1417,7 +1417,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item">input: item to remove; output: item actually removed</param>
         /// <param name="wasRemoved"></param>
@@ -1492,7 +1492,7 @@ namespace C5
             Node? newchild = cursor.right ?? cursor.left;
             bool demote_or_rotate = newchild == null && !cursor.red;
 
-            //assert newchild.red 
+            //assert newchild.red
             if (newchild != null)
             {
                 newchild.red = false;
@@ -1565,7 +1565,7 @@ namespace C5
                 }
             }
 
-            //Stage 5: rotate 
+            //Stage 5: rotate
             if (demote_or_rotate)
             {
                 //At start:
@@ -1575,8 +1575,8 @@ namespace C5
                 Node parent = cursor;
 
                 if (childsibling!.red)
-                {//Case 2 and perhaps more. 
-                    //The y.rank == px.rank >= x.rank+2 >=2 so both nephews are != null 
+                {//Case 2 and perhaps more.
+                    //The y.rank == px.rank >= x.rank+2 >=2 so both nephews are != null
                     //(and black). The grandnephews are children of nearnephew
                     Node neargrandnephew, fargrandnephew;
 
@@ -2002,8 +2002,8 @@ namespace C5
         /// <summary>
         /// Create a new indexed sorted collection consisting of the results of
         /// mapping all items of this list.
-        /// <exception cref="ArgumentException"/> if the map is not increasing over 
-        /// the items of this collection (with respect to the two given comparison 
+        /// <exception cref="ArgumentException"/> if the map is not increasing over
+        /// the items of this collection (with respect to the two given comparison
         /// relations).
         /// </summary>
         /// <param name="mapper">The delegate definging the map.</param>
@@ -2095,7 +2095,7 @@ namespace C5
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public virtual ICollectionValue<T> UniqueItems()
@@ -2111,7 +2111,7 @@ namespace C5
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
@@ -2187,7 +2187,7 @@ namespace C5
         public T this[int i] => FindNode(i).item;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public virtual Speed IndexingSpeed => Speed.Log;
@@ -2199,7 +2199,7 @@ namespace C5
         /// </summary>
         /// <param name="item">Item to search for.</param>
         /// <returns>Index of first occurrence from start of the item
-        /// if found, else the two-complement 
+        /// if found, else the two-complement
         /// (always negative) of the index at which the item would be put if it was added.</returns>
         public int IndexOf(T item)
         {
@@ -2257,8 +2257,8 @@ namespace C5
         /// Searches for an item in the tree going backwards from the end.
         /// </summary>
         /// <param name="item">Item to search for.</param>
-        /// <returns>Index of last occurrence from the end of item if found, 
-        /// else the two-complement (always negative) of the index at which 
+        /// <returns>Index of last occurrence from the end of item if found,
+        /// else the two-complement (always negative) of the index at which
         /// the item would be put if it was added.</returns>
         public int LastIndexOf(T item)
         {
@@ -2356,7 +2356,7 @@ namespace C5
 
         /// <summary>
         /// Remove all items in an index interval.
-        /// <exception cref="IndexOutOfRangeException"/>???. 
+        /// <exception cref="IndexOutOfRangeException"/>???.
         /// </summary>
         /// <param name="start">The index of the first item to remove.</param>
         /// <param name="count">The number of items to remove.</param>
@@ -2379,7 +2379,7 @@ namespace C5
                 return;
             }
 
-            //This is terrible for large count. We should split the tree at 
+            //This is terrible for large count. We should split the tree at
             //the endpoints of the range and fuse the parts!
             //We really need good internal destructive split and catenate functions!
             //Alternative for large counts: rebuild tree using maketree()
@@ -3172,7 +3172,7 @@ namespace C5
 
         /// <summary>
         /// Perform a search in the sorted collection for the ranges in which a
-        /// non-increasing (i.e. weakly decreasing) function from the item type to 
+        /// non-increasing (i.e. weakly decreasing) function from the item type to
         /// <code>int</code> is
         /// negative, zero respectively positive. If the supplied cut function is
         /// not non-increasing, the result of this call is undefined.
@@ -3720,7 +3720,7 @@ namespace C5
                 //yet (the top of the stack holds current item).
                 /// <summary>
                 /// Move enumerator to next item in tree, or the first item if
-                /// this is the first call to MoveNext. 
+                /// this is the first call to MoveNext.
                 /// <exception cref="CollectionModifiedException"/> if underlying tree was modified.
                 /// </summary>
                 /// <returns>True if enumerator is valid now</returns>
@@ -4172,4 +4172,3 @@ namespace C5
         #endregion
     }
 }
-

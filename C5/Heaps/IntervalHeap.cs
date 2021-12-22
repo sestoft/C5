@@ -1,5 +1,5 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using System;
 using SCG = System.Collections.Generic;
@@ -16,7 +16,7 @@ namespace C5
         #region Events
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public override EventType ListenableEvents => EventType.Basic;
@@ -335,13 +335,13 @@ namespace C5
         public bool IsReadOnly => false;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value>True since this collection has bag semantics</value>
         public bool AllowsDuplicates => true;
 
         /// <summary>
-        /// Value is null since this collection has no equality concept for its items. 
+        /// Value is null since this collection has no equality concept for its items.
         /// </summary>
         /// <value></value>
         public virtual SCG.IEqualityComparer<T> EqualityComparer => itemequalityComparer;
@@ -349,7 +349,7 @@ namespace C5
         /// <summary>
         /// By convention this is true for any collection with set semantics.
         /// </summary>
-        /// <value>True if only one representative of a group of equal items 
+        /// <value>True if only one representative of a group of equal items
         /// is kept in the collection together with the total count.</value>
         public virtual bool DuplicatesByCounting => false;
 
@@ -456,8 +456,8 @@ namespace C5
 
 
         /// <summary>
-        /// Add the elements from another collection with a more specialized item type 
-        /// to this collection. 
+        /// Add the elements from another collection with a more specialized item type
+        /// to this collection.
         /// </summary>
         /// <param name="items">The items to add</param>
         public void AddAll(SCG.IEnumerable<T> items)
@@ -488,13 +488,13 @@ namespace C5
         #region ICollection<T> members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value>True if this collection is empty.</value>
         public override bool IsEmpty => size == 0;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value>The size of this collection</value>
         public override int Count => size;
@@ -505,12 +505,12 @@ namespace C5
         /// in terms of the size of this collection (worst-case or amortized as
         /// relevant).
         /// </summary>
-        /// <value>A characterization of the speed of the 
+        /// <value>A characterization of the speed of the
         /// <code>Count</code> property in this collection.</value>
         public override Speed CountSpeed => Speed.Constant;
 
         /// <summary>
-        /// Choose some item of this collection. 
+        /// Choose some item of this collection.
         /// </summary>
         /// <exception cref="NoSuchItemException">if collection is empty.</exception>
         /// <returns></returns>
@@ -527,7 +527,7 @@ namespace C5
 
         /// <summary>
         /// Create an enumerator for the collection
-        /// <para>Note: the enumerator does *not* enumerate the items in sorted order, 
+        /// <para>Note: the enumerator does *not* enumerate the items in sorted order,
         /// but in the internal table order.</para>
         /// </summary>
         /// <returns>The enumerator(SIC)</returns>
@@ -551,7 +551,7 @@ namespace C5
 
         #region Diagnostics
 
-        // Check invariants: 
+        // Check invariants:
         // * first <= last in a cell if both are valid
         // * a parent interval (cell) contains both its daughter intervals (cells)
         // * a handle, if non-null, points to the cell it is associated with
@@ -669,7 +669,7 @@ namespace C5
         }
 
         /// <summary>
-        /// Get or set the item corresponding to a handle. 
+        /// Get or set the item corresponding to a handle.
         /// </summary>
         /// <exception cref="InvalidPriorityQueueHandleException">if the handle is invalid for this queue</exception>
         /// <param name="handle">The reference into the heap</param>
@@ -721,14 +721,14 @@ namespace C5
 
 
         /// <summary>
-        /// Add an item to the priority queue, receiving a 
-        /// handle for the item in the queue, 
+        /// Add an item to the priority queue, receiving a
+        /// handle for the item in the queue,
         /// or reusing an already existing handle.
         /// </summary>
-        /// <param name="handle">On output: a handle for the added item. 
-        /// On input: null for allocating a new handle, an invalid handle for reuse. 
-        /// A handle for reuse must be compatible with this priority queue, 
-        /// by being created by a priority queue of the same runtime type, but not 
+        /// <param name="handle">On output: a handle for the added item.
+        /// On input: null for allocating a new handle, an invalid handle for reuse.
+        /// A handle for reuse must be compatible with this priority queue,
+        /// by being created by a priority queue of the same runtime type, but not
         /// necessarily the same priority queue object.</param>
         /// <param name="item">The item to add.</param>
         /// <returns>True since item will always be added unless the call throws an exception.</returns>
@@ -879,7 +879,7 @@ namespace C5
 
 
         /// <summary>
-        /// Replace an item with a handle in a priority queue with a new item. 
+        /// Replace an item with a handle in a priority queue with a new item.
         /// Typically used for changing the priority of some queued object.
         /// </summary>
         /// <param name="handle">The handle for the old item</param>

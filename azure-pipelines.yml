@@ -3,11 +3,16 @@
 
 pool:
   vmImage: 'windows-latest'
-  
+
 variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: UseDotNet@2
+  inputs:
+    version: '6.0.x'
+    packageType: sdk
+
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
@@ -29,34 +34,6 @@ steps:
     targetFolder: $(Build.ArtifactStagingDirectory)
     flattenFolders: true
 
-- task: NodeTool@0
-  displayName: 'Install Node.js'
-  enabled: false
-  inputs:
-    versionSpec: '10.x'
-  
-- task: CmdLine@2
-  displayName: 'Generate documentation'
-  enabled: false # currently unstable
-  inputs:
-    script: |
-      CALL npm install -g doxygen
-      CALL npm install -g graphviz
-      SET DOXYGEN_OUTPUT_DIRECTORY=$(Build.SourcesDirectory)
-      CALL doxygen --download
-      CALL doxygen --docs --configPath="$(Build.SourcesDirectory)/Doxyfile"
-    workingDirectory: $(Build.SourcesDirectory)
-    failOnStderr: true
-
-- task: ArchiveFiles@2
-  displayName: 'Archive documentation'
-  enabled: false # not needed when previous task disabled
-  inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)/C5.Docs/html' 
-    includeRootFolder: false 
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/c5docs.zip' 
-    
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: $(Build.ArtifactStagingDirectory)

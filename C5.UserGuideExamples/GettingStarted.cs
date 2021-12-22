@@ -1,21 +1,15 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 // C5 example: GettingStarted 2005-01-18
 
-// Compile with
-//   csc /r:netstandard.dll /r:C5.dll GettingStarted.cs
+namespace C5.UserGuideExamples;
 
-using C5;
-using System;
-
-namespace GettingStarted
+internal class GettingStarted
 {
-    internal class GettingStarted
+    public static void Main()
     {
-        public static void Main()
-        {
-            var names = new ArrayList<string>
+        var names = new ArrayList<string>
             {
                 "Hoover",
                 "Roosevelt",
@@ -24,23 +18,22 @@ namespace GettingStarted
                 "Kennedy"
             };
 
-            // Print list:
-            Console.WriteLine(names);
+        // Print list:
+        Console.WriteLine(names);
 
-            // Print item 1 ("Roosevelt") in the list:
-            Console.WriteLine(names[1]);
+        // Print item 1 ("Roosevelt") in the list:
+        Console.WriteLine(names[1]);
 
-            // Create a list view comprising post-WW2 presidents:
-            var postWWII = names.View(2, 3);
+        // Create a list view comprising post-WW2 presidents:
+        var postWWII = names.View(2, 3);
 
-            // Print item 2 ("Kennedy") in the view:
-            Console.WriteLine(postWWII[2]);
+        // Print item 2 ("Kennedy") in the view:
+        Console.WriteLine(postWWII[2]);
 
-            // Enumerate and print the list view in reverse chronological order:
-            foreach (var name in postWWII.Backwards())
-            {
-                Console.WriteLine(name);
-            }
+        // Enumerate and print the list view in reverse chronological order:
+        foreach (var name in postWWII.Backwards())
+        {
+            Console.WriteLine(name);
         }
     }
 }

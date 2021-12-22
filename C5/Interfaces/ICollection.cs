@@ -1,18 +1,18 @@
-using System.Collections.Generic;
+using SCG = System.Collections.Generic;
 
 namespace C5
 {
     /// <summary>
     /// The simplest interface of a main stream generic collection
-    /// with lookup, insertion and removal operations. 
+    /// with lookup, insertion and removal operations.
     /// </summary>
-    public interface ICollection<T> : IExtensible<T>, System.Collections.Generic.ICollection<T>
+    public interface ICollection<T> : IExtensible<T>, SCG.ICollection<T>
     {
         //This is somewhat similar to the RandomAccess marker itf in java
         /// <summary>
         /// The value is symbolic indicating the type of asymptotic complexity
         /// in terms of the size of this collection (worst-case or amortized as
-        /// relevant). 
+        /// relevant).
         /// <para>See <see cref="T:C5.Speed"/> for the set of symbols.</para>
         /// </summary>
         /// <value>A characterization of the speed of lookup operations
@@ -48,12 +48,12 @@ namespace C5
         new void CopyTo(T[] array, int index);
 
         /// <summary>
-        /// The unordered collection hashcode is defined as the sum of 
+        /// The unordered collection hashcode is defined as the sum of
         /// <code>h(hashcode(item))</code> over the items
-        /// of the collection, where the function <code>h</code> is a function from 
-        /// int to int of the form <code> t -> (a0*t+b0)^(a1*t+b1)^(a2*t+b2)</code>, where 
-        /// the ax and bx are the same for all collection classes. 
-        /// <para>The current implementation uses fixed values for the ax and bx, 
+        /// of the collection, where the function <code>h</code> is a function from
+        /// int to int of the form <code> t -> (a0*t+b0)^(a1*t+b1)^(a2*t+b2)</code>, where
+        /// the ax and bx are the same for all collection classes.
+        /// <para>The current implementation uses fixed values for the ax and bx,
         /// specified as constants in the code.</para>
         /// </summary>
         /// <returns>The unordered hashcode of this collection.</returns>
@@ -89,13 +89,13 @@ namespace C5
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         ICollectionValue<T> UniqueItems();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities();
@@ -108,7 +108,7 @@ namespace C5
         /// </summary>
         /// <param name="items">The </param>
         /// <returns>True if all values in <code>items</code>is in this collection.</returns>
-        bool ContainsAll(IEnumerable<T> items);
+        bool ContainsAll(SCG.IEnumerable<T> items);
 
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace C5
 
         /// <summary>
         /// Check if this collection contains an item equivalent according to the
-        /// itemequalityComparer to a particular value. If so, update the item in the collection 
+        /// itemequalityComparer to a particular value. If so, update the item in the collection
         /// with a (binary copy of) the supplied value. If the collection has bag semantics,
         /// it depends on the value of DuplicatesByCounting if this updates all equivalent copies in
         /// the collection or just one.
@@ -145,7 +145,7 @@ namespace C5
 
         /// <summary>
         /// Check if this collection contains an item equivalent according to the
-        /// itemequalityComparer to a particular value. If so, update the item in the collection 
+        /// itemequalityComparer to a particular value. If so, update the item in the collection
         /// with a (binary copy of) the supplied value. If the collection has bag semantics,
         /// it depends on the value of DuplicatesByCounting if this updates all equivalent copies in
         /// the collection or just one.
@@ -158,8 +158,8 @@ namespace C5
 
         /// <summary>
         /// Check if this collection contains an item equivalent according to the
-        /// itemequalityComparer to a particular value. If so, update the item in the collection 
-        /// to with a binary copy of the supplied value; else add the value to the collection. 
+        /// itemequalityComparer to a particular value. If so, update the item in the collection
+        /// to with a binary copy of the supplied value; else add the value to the collection.
         /// </summary>
         /// <param name="item">Value to add or update.</param>
         /// <returns>True if the item was found and updated (hence not added).</returns>
@@ -168,8 +168,8 @@ namespace C5
 
         /// <summary>
         /// Check if this collection contains an item equivalent according to the
-        /// itemequalityComparer to a particular value. If so, update the item in the collection 
-        /// to with a binary copy of the supplied value; else add the value to the collection. 
+        /// itemequalityComparer to a particular value. If so, update the item in the collection
+        /// to with a binary copy of the supplied value; else add the value to the collection.
         /// </summary>
         /// <param name="item">Value to add or update.</param>
         /// <param name="olditem">On output the olditem, if found.</param>
@@ -178,7 +178,7 @@ namespace C5
 
         /// <summary>
         /// Remove a particular item from this collection. If the collection has bag
-        /// semantics only one copy equivalent to the supplied item is removed. 
+        /// semantics only one copy equivalent to the supplied item is removed.
         /// </summary>
         /// <param name="item">The value to remove.</param>
         /// <returns>True if the item was found (and removed).</returns>
@@ -188,8 +188,8 @@ namespace C5
         /// <summary>
         /// Remove a particular item from this collection if found. If the collection
         /// has bag semantics only one copy equivalent to the supplied item is removed,
-        /// which one is implementation dependent. 
-        /// If an item was removed, report a binary copy of the actual item removed in 
+        /// which one is implementation dependent.
+        /// If an item was removed, report a binary copy of the actual item removed in
         /// the argument.
         /// </summary>
         /// <param name="item">The value to remove.</param>
@@ -210,7 +210,7 @@ namespace C5
         /// has bag semantics, take multiplicities into account.
         /// </summary>
         /// <param name="items">The items to remove.</param>
-        void RemoveAll(IEnumerable<T> items);
+        void RemoveAll(SCG.IEnumerable<T> items);
 
         //void RemoveAll(Func<T, bool> predicate);
 
@@ -225,7 +225,7 @@ namespace C5
         /// has bag semantics, take multiplicities into account.
         /// </summary>
         /// <param name="items">The items to retain.</param>
-        void RetainAll(IEnumerable<T> items);
+        void RetainAll(SCG.IEnumerable<T> items);
 
         //void RetainAll(Func<T, bool> predicate);
         //IDictionary<T> UniqueItems()

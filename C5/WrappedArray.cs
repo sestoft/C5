@@ -1,5 +1,5 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using System;
 using System.Text;
@@ -7,7 +7,7 @@ using SCG = System.Collections.Generic;
 namespace C5
 {
     /// <summary>
-    /// An advanced interface to operations on an array. The array is viewed as an 
+    /// An advanced interface to operations on an array. The array is viewed as an
     /// <see cref="T:C5.IList`1"/> of fixed size, and so all operations that would change the
     /// size of the array will be invalid (and throw <see cref="T:C5.FixedSizeCollectionException"/>
     /// </summary>
@@ -27,7 +27,7 @@ namespace C5
         private readonly WrappedArray<T>? underlying;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="wrappedarray"></param>
         public WrappedArray(T[] wrappedarray) { innerlist = new InnerList(wrappedarray); }
@@ -38,19 +38,19 @@ namespace C5
         #region IList<T> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public T First => innerlist.First;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public T Last => innerlist.Last;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -61,14 +61,14 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
         public IList<T> FindAll(Func<T, bool> filter) { return innerlist.FindAll(filter); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <typeparam name="V"></typeparam>
         /// <param name="mapper"></param>
@@ -76,7 +76,7 @@ namespace C5
         public IList<V> Map<V>(Func<T, V> mapper) { return innerlist.Map<V>(mapper); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <typeparam name="V"></typeparam>
         /// <param name="mapper"></param>
@@ -95,12 +95,12 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public virtual bool IsFixedSize => true;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="index"></param>
         /// <param name="item"></param>
@@ -110,7 +110,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="pointer"></param>
         /// <param name="item"></param>
@@ -120,7 +120,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         public void InsertFirst(T item)
@@ -129,7 +129,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         public void InsertLast(T item)
@@ -138,7 +138,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="i"></param>
         /// <param name="items"></param>
@@ -148,7 +148,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public T Remove()
@@ -157,7 +157,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public T RemoveFirst()
@@ -166,7 +166,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public T RemoveLast()
@@ -175,7 +175,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="start"></param>
         /// <param name="count"></param>
@@ -186,7 +186,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
@@ -196,7 +196,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
@@ -206,32 +206,32 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public IList<T>? Underlying => underlying;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public int Offset => innerlist.Offset;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public bool IsValid => innerlist.IsValid;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="offset"></param>
         /// <returns></returns>
         public IList<T> Slide(int offset) { return innerlist.Slide(offset); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="offset"></param>
         /// <param name="size"></param>
@@ -239,14 +239,14 @@ namespace C5
         public IList<T> Slide(int offset, int size) { return innerlist.Slide(offset, size); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="offset"></param>
         /// <returns></returns>
         public bool TrySlide(int offset) { return innerlist.TrySlide(offset); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="offset"></param>
         /// <param name="size"></param>
@@ -254,48 +254,48 @@ namespace C5
         public bool TrySlide(int offset, int size) { return innerlist.TrySlide(offset, size); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="otherView"></param>
         /// <returns></returns>
         public IList<T>? Span(IList<T> otherView) { return innerlist.Span(((WrappedArray<T>)otherView).innerlist); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public void Reverse() { innerlist.Reverse(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public bool IsSorted() { return innerlist.IsSorted(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="comparer"></param>
         /// <returns></returns>
         public bool IsSorted(SCG.IComparer<T> comparer) { return innerlist.IsSorted(comparer); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public void Sort() { innerlist.Sort(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="comparer"></param>
         public void Sort(SCG.IComparer<T> comparer) { innerlist.Sort(comparer); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public void Shuffle() { innerlist.Shuffle(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="rnd"></param>
         public void Shuffle(Random rnd) { innerlist.Shuffle(rnd); }
@@ -305,13 +305,13 @@ namespace C5
         #region IIndexed<T> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public Speed IndexingSpeed => Speed.Constant;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="start"></param>
         /// <param name="count"></param>
@@ -319,42 +319,42 @@ namespace C5
         public IDirectedCollectionValue<T> this[int start, int count] => innerlist[start, count];
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
         public int IndexOf(T item) { return innerlist.IndexOf(item); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
         public int LastIndexOf(T item) { return innerlist.LastIndexOf(item); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
         public int FindIndex(Func<T, bool> predicate) { return innerlist.FindIndex(predicate); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
         public int FindLastIndex(Func<T, bool> predicate) { return innerlist.FindLastIndex(predicate); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="i"></param>
         /// <returns></returns>
         public T RemoveAt(int i) { throw new FixedSizeCollectionException(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="start"></param>
         /// <param name="count"></param>
@@ -365,13 +365,13 @@ namespace C5
         #region ISequenced<T> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public int GetSequencedHashCode() { return innerlist.GetSequencedHashCode(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="that"></param>
         /// <returns></returns>
@@ -381,52 +381,52 @@ namespace C5
 
         #region ICollection<T> Members
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public Speed ContainsSpeed => Speed.Linear;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public int GetUnsequencedHashCode() { return innerlist.GetUnsequencedHashCode(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="that"></param>
         /// <returns></returns>
         public bool UnsequencedEquals(ICollection<T> that) { return innerlist.UnsequencedEquals(that); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
         public bool Contains(T item) { return innerlist.Contains(item); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
         public int ContainsCount(T item) { return innerlist.ContainsCount(item); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public ICollectionValue<T> UniqueItems() { return innerlist.UniqueItems(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities() { return innerlist.ItemMultiplicities(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
@@ -434,28 +434,28 @@ namespace C5
         { return innerlist.ContainsAll(items); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
         public bool Find(ref T item) { return innerlist.Find(ref item); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
         public bool FindOrAdd(ref T item) { throw new FixedSizeCollectionException(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
         public bool Update(T item) { throw new FixedSizeCollectionException(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <param name="olditem"></param>
@@ -463,14 +463,14 @@ namespace C5
         public bool Update(T item, out T olditem) { throw new FixedSizeCollectionException(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
         public bool UpdateOrAdd(T item) { throw new FixedSizeCollectionException(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <param name="olditem"></param>
@@ -478,14 +478,14 @@ namespace C5
         public bool UpdateOrAdd(T item, out T olditem) { throw new FixedSizeCollectionException(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
         public bool Remove(T item) { throw new FixedSizeCollectionException(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <param name="removeditem"></param>
@@ -493,24 +493,24 @@ namespace C5
         public bool Remove(T item, out T removeditem) { throw new FixedSizeCollectionException(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         public void RemoveAllCopies(T item) { throw new FixedSizeCollectionException(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="items"></param>
         public void RemoveAll(System.Collections.Generic.IEnumerable<T> items) { throw new FixedSizeCollectionException(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public void Clear() { throw new FixedSizeCollectionException(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="items"></param>
         public void RetainAll(System.Collections.Generic.IEnumerable<T> items) { throw new FixedSizeCollectionException(); }
@@ -520,31 +520,31 @@ namespace C5
         #region IExtensible<T> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public bool IsReadOnly => true;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public bool AllowsDuplicates => true;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public SCG.IEqualityComparer<T> EqualityComparer => innerlist.EqualityComparer;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public bool DuplicatesByCounting => false;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
@@ -554,7 +554,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="items"></param>
         public void AddAll(System.Collections.Generic.IEnumerable<T> items)
@@ -563,7 +563,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public bool Check()
@@ -587,7 +587,7 @@ namespace C5
         public virtual EventType ActiveEvents => 0;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public event CollectionChangedHandler<T> CollectionChanged
@@ -597,7 +597,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public event CollectionClearedHandler<T> CollectionCleared
@@ -607,7 +607,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public event ItemsAddedHandler<T> ItemsAdded
@@ -617,7 +617,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public event ItemInsertedHandler<T> ItemInserted
@@ -627,7 +627,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public event ItemsRemovedHandler<T> ItemsRemoved
@@ -637,7 +637,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public event ItemRemovedAtHandler<T> ItemRemovedAt
@@ -647,51 +647,51 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public bool IsEmpty => innerlist.IsEmpty;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public int Count => innerlist.Count;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public Speed CountSpeed => innerlist.CountSpeed;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="array"></param>
         /// <param name="index"></param>
         public void CopyTo(T[] array, int index) { innerlist.CopyTo(array, index); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public T[] ToArray() { return innerlist.ToArray(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="action"></param>
         public void Apply(Action<T> action) { innerlist.Apply(action); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
         public bool Exists(Func<T, bool> predicate) { return innerlist.Exists(predicate); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="predicate"></param>
         /// <param name="item"></param>
@@ -699,20 +699,20 @@ namespace C5
         public bool Find(Func<T, bool> predicate, out T item) { return innerlist.Find(predicate, out item); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
         public bool All(Func<T, bool> predicate) { return innerlist.All(predicate); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public T Choose() { return innerlist.Choose(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
@@ -723,7 +723,7 @@ namespace C5
         #region IEnumerable<T> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public SCG.IEnumerator<T> GetEnumerator() { return innerlist.GetEnumerator(); }
@@ -732,7 +732,7 @@ namespace C5
         #region IShowable Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="stringbuilder"></param>
         /// <param name="rest"></param>
@@ -746,14 +746,14 @@ namespace C5
         #region IFormattable Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override string ToString() { return innerlist.ToString(); }
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="format"></param>
         /// <param name="formatProvider"></param>
@@ -765,13 +765,13 @@ namespace C5
         #region IDirectedCollectionValue<T> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public IDirectedCollectionValue<T> Backwards() { return innerlist.Backwards(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="predicate"></param>
         /// <param name="item"></param>
@@ -785,7 +785,7 @@ namespace C5
         IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards() { return Backwards(); }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public EnumerationDirection Direction => EnumerationDirection.Forwards;
@@ -795,7 +795,7 @@ namespace C5
         #region IDisposable Members
 
         /// <summary>
-        /// Dispose this if a view else operation is illegal 
+        /// Dispose this if a view else operation is illegal
         /// </summary>
         /// <exception cref="FixedSizeCollectionException">If not a view</exception>
         public void Dispose()

@@ -1,17 +1,10 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 // C5 example: 2006-01-29, 2006-06-26
 
-// Compile with 
-//   csc /r:netstandard.dll /r:C5.dll MultiDictionary.cs 
-
-using System;
-using SCG = System.Collections.Generic;
-
 namespace C5.UserGuideExamples
 {
-
     class MultiDictionary
     {
         static void Main()
@@ -81,7 +74,7 @@ namespace C5.UserGuideExamples
         //  non-empty.  Hence for correct semantics, the Contains(k) method
         //  must check that the value collection associated with a key is
         //  non-null and non-empty.
-        //  
+        //
         //  * A value collection may be shared between two or more keys.
         //
 
@@ -90,7 +83,7 @@ namespace C5.UserGuideExamples
 
             // Return total count of values associated with keys.  This basic
             // implementation simply sums over all value collections, and so
-            // is a linear-time operation in the total number of values.  
+            // is a linear-time operation in the total number of values.
 
             public new virtual int Count
             {
@@ -173,15 +166,15 @@ namespace C5.UserGuideExamples
 
             // Inherited from base class HashDictionary<K,ICollection<V>>:
 
-            // Add(K k, ICollection<V> values) 
-            // AddAll(IEnumerable<System.Collections.Generic.KeyValuePair<K,ICollection<V>>> kvs) 
+            // Add(K k, ICollection<V> values)
+            // AddAll(IEnumerable<System.Collections.Generic.KeyValuePair<K,ICollection<V>>> kvs)
             // Clear
             // Clone
             // Find(K k, out ICollection<V> values)
             // Find(ref K k, out ICollection<V> values)
-            // FindOrAdd(K k, ref ICollection<V> values) 
-            // Remove(K k) 
-            // Remove(K k, out ICollection<V> values) 
+            // FindOrAdd(K k, ref ICollection<V> values)
+            // Remove(K k)
+            // Remove(K k, out ICollection<V> values)
             // Update(K k, ICollection<V> values)
             // Update(K k, ICollection<V> values, out ICollection<V> oldValues)
             // UpdateOrAdd(K k, ICollection<V> values)
@@ -340,7 +333,7 @@ namespace C5.UserGuideExamples
                   };
             }
 
-            // Return total count of values associated with keys.  
+            // Return total count of values associated with keys.
 
             public new virtual int Count
             {
@@ -492,7 +485,7 @@ namespace C5.UserGuideExamples
                   };
             }
 
-            // Return total count of values associated with keys.  
+            // Return total count of values associated with keys.
 
             public new virtual int Count => count;
 

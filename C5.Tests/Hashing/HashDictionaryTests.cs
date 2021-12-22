@@ -1,5 +1,5 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using NUnit.Framework;
 using System;
@@ -313,8 +313,3 @@ namespace C5.Tests.hashtable.dictionary
         }
     }
 }
-
-
-
-
-

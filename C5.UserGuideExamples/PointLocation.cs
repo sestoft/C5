@@ -1,19 +1,12 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
-
-// Compile with 
-//   csc /r:netstandard.dll /r:C5.dll PointLocation.cs 
-
-using System;
-using System.Diagnostics;
-using SCG = System.Collections.Generic;
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 namespace C5.UserGuideExamples
 {
     //public enum Site { Cell, Edge, Outside }
 
     /// <summary>
-    /// A line segment with associated data of type T for the cell 
+    /// A line segment with associated data of type T for the cell
     /// to its right respectively left.
     /// </summary>
     public struct Edge<T> : IComparable<Edge<T>>
@@ -110,7 +103,7 @@ namespace C5.UserGuideExamples
     /// A data structure for point location in a plane divided into
     /// cells by edges. This is the classical use of persistent trees
     /// by Sarnak and Tarjan [?]. See de Berg et al for alternatives.
-    /// 
+    ///
     /// The internal data is an outer sorted dictionary that maps each
     /// x coordinate of an endpoint of some edge to an inner sorted set
     /// of the edges crossing or touching the vertical line at that x
@@ -118,7 +111,7 @@ namespace C5.UserGuideExamples
     /// to the immediate right of x. Lookup of a point (x,y) is done by
     /// finding the predecessor of x cell the outer dictionary and then locating
     /// the edges above and below (x,y) by searching in the inner sorted set.
-    /// 
+    ///
     /// The creation of the inner sorted sets is done by maintaining a
     /// (persistent) tree of edges, inserting and deleting edges according
     /// to a horizontal sweep of the edges while saving a snapshot of the
@@ -139,7 +132,7 @@ namespace C5.UserGuideExamples
     /// for large problems.
     ///
     /// The code assumes that the given set of edges is correct, in particular
-    /// that they do not touch at interior points (e.g. cross or coincide). 
+    /// that they do not touch at interior points (e.g. cross or coincide).
     /// </summary>
     public class PointLocator<T>
     {
@@ -334,7 +327,7 @@ namespace C5.UserGuideExamples
 
     /// <summary>
     /// Compare a given point (x,y) to edges: is the point above, at or below
-    /// the edge. Assumes edges not vertical. 
+    /// the edge. Assumes edges not vertical.
     /// Uses crossproduct to compute the result.
     /// </summary>
     internal class PointComparer<T> : IComparable<Edge<T>>
@@ -1410,4 +1403,3 @@ namespace C5.UserGuideExamples
         }
     }
 }
-

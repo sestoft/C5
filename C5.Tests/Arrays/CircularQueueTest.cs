@@ -1,5 +1,5 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using NUnit.Framework;
 using System;
@@ -21,7 +21,7 @@ namespace C5.Tests.arrays.circularqueue
         //[Test]
         //public void Extensible()
         //{
-        //  TODO: Test Circular Queue for Clone(?) and Serializable 
+        //  TODO: Test Circular Queue for Clone(?) and Serializable
         //  C5.Tests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
         //  C5.Tests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
         //}

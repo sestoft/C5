@@ -1,8 +1,9 @@
 # C5 Generic Collection Library for C# and CLI
 
-[![NuGet version (C5)](https://img.shields.io/nuget/v/C5.svg)](https://www.nuget.org/packages/C5/) [![Build Status](https://dev.azure.com/ondfisk/C5/_apis/build/status/C5-CI?branchName=master)](https://dev.azure.com/ondfisk/C5/_build/latest?definitionId=14&branchName=master) ![Azure DevOps tests](https://img.shields.io/azure-devops/tests/ondfisk/C5/14.svg) ![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/ondfisk/C5/14.svg)
+[![NuGet version (C5)](https://img.shields.io/nuget/v/C5.svg)](https://www.nuget.org/packages/C5/)
+[![.github/workflows/main.yml](https://github.com/sestoft/C5/actions/workflows/main.yml/badge.svg)](https://github.com/sestoft/C5/actions/workflows/main.yml)
 
-The C5 library is a set of generic collection classes (or container classes) for the C# programming language and other generics-enabled languages on later versions the CLI platform, as implemented by Microsoft .NET 4.6.1+, .NET Core 2.0+, and Mono.
+The C5 library is a set of generic collection classes (or container classes) for the C# programming language and other generics-enabled languages on later versions the CLI platform, as implemented by Microsoft .NET Framework 4.6.1+, .NET Core 2.0+, .NET 5.0+, and Mono.
 
 The C5 library provides a wide range of classic data structures, rich funcionality, the best possible asymptotic time complexity, documented performance, and a thoroughly tested implementation.
 
@@ -52,23 +53,10 @@ C5 is a .NET Standard 2.0 library supporting .NET Core 2.0+, .NET 4.6.1+, Univer
 
 1. Get C5 from [NuGet](https://www.nuget.org/packages/C5):
 
-```ps
-PM> Install-Package C5
+```bash
+$ dotnet add package C5
 ```
 
-2. Building the unit test project requires NUnit. If you have NuGet installed it should automatically add the reference.
+1. Building the unit test project requires NUnit. If you have NuGet installed it should automatically add the reference.
 
-   There are more than 1400 NUnit test cases which should execute in less
-   than 10 seconds. All should pass.
-
-## License
-
-C5 is released under the [MIT License](http://opensource.org/licenses/MIT):
-
-Copyright (c) 2003-2019 Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+   There are more than 1400 NUnit test cases which should execute in less than 5 seconds. All should pass.

@@ -1,11 +1,11 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 namespace C5
 {
     /// <summary>
     /// The symbolic characterization of the speed of lookups for a collection.
-    /// The values may refer to worst-case, amortized and/or expected asymtotic 
+    /// The values may refer to worst-case, amortized and/or expected asymtotic
     /// complexity wrt. the collection size.
     /// </summary>
     public enum Speed : short

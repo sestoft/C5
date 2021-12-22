@@ -1,13 +1,13 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using System;
 namespace C5
 {
     /// <summary>
-    /// A modern random number generator based on G. Marsaglia: 
+    /// A modern random number generator based on G. Marsaglia:
     /// Seeds for Random Number Generators, Communications of the
-    /// ACM 46, 5 (May 2003) 90-93; and a posting by Marsaglia to 
+    /// ACM 46, 5 (May 2003) 90-93; and a posting by Marsaglia to
     /// comp.lang.c on 2003-04-03.
     /// </summary>
     [Serializable]

@@ -1,5 +1,5 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
-// See https://github.com/sestoft/C5/blob/master/LICENSE.txt for licensing details.
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using System;
 using SCG = System.Collections.Generic;
@@ -29,7 +29,7 @@ namespace C5
 
         #region Util
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item">The item to search for</param>
         /// <param name="middle">The least index, middle, for which array[middle] >= item</param>
@@ -89,7 +89,7 @@ namespace C5
 
 
         /// <summary>
-        /// Create a dynamic sorted array with a natural comparer 
+        /// Create a dynamic sorted array with a natural comparer
         /// (and item equalityComparer,  assumed compatible)
         /// and prescribed initial capacity.
         /// </summary>
@@ -102,8 +102,8 @@ namespace C5
 
         /// <summary>
         /// Create a dynamic sorted array with an external comparer.
-        /// <para>The itemequalityComparer will be compatible 
-        /// <see cref="T:C5.ComparerZeroHashCodeEqualityComparer`1"/> since the 
+        /// <para>The itemequalityComparer will be compatible
+        /// <see cref="T:C5.ComparerZeroHashCodeEqualityComparer`1"/> since the
         /// default equalityComparer for T (<see cref="P:C5.EqualityComparer`1.Default"/>)
         /// is unlikely to be compatible with the external comparer. This makes the
         /// array inadequate for use as item in a collection of unsequenced or sequenced sets or bags
@@ -117,8 +117,8 @@ namespace C5
         /// <summary>
         /// Create a dynamic sorted array with an external comparer
         /// and prescribed initial capacity.
-        /// <para>The itemequalityComparer will be a compatible 
-        /// <see cref="T:C5.ComparerZeroHashCodeEqualityComparer`1"/> since the 
+        /// <para>The itemequalityComparer will be a compatible
+        /// <see cref="T:C5.ComparerZeroHashCodeEqualityComparer`1"/> since the
         /// default equalityComparer for T (<see cref="P:C5.EqualityComparer`1.Default"/>)
         /// is unlikely to be compatible with the external comparer. This makes the
         /// sorted array inadequate for use as item in a collection of unsequenced or sequenced sets or bags
@@ -132,7 +132,7 @@ namespace C5
 
         /// <summary>
         /// Create a dynamic sorted array with an external comparer, an external item equalityComparer
-        /// and prescribed initial capacity. This is the constructor to use if the collection 
+        /// and prescribed initial capacity. This is the constructor to use if the collection
         /// will be used as item in a hash table based collection.
         /// </summary>
         /// <param name="capacity">The capacity</param>
@@ -267,8 +267,8 @@ namespace C5
         /// <summary>
         /// Create a new indexed sorted collection consisting of the results of
         /// mapping all items of this list.
-        /// <exception cref="ArgumentException"/> if the map is not increasing over 
-        /// the items of this collection (with respect to the two given comparison 
+        /// <exception cref="ArgumentException"/> if the map is not increasing over
+        /// the items of this collection (with respect to the two given comparison
         /// relations).
         /// </summary>
         /// <param name="m">The delegate definging the map.</param>
@@ -497,7 +497,7 @@ namespace C5
 
         /// <summary>
         /// Perform a search in the sorted collection for the ranges in which a
-        /// non-increasing (i.e. weakly decreasing) function from the item type to 
+        /// non-increasing (i.e. weakly decreasing) function from the item type to
         /// <code>int</code> is
         /// negative, zero respectively positive. If the supplied cut function is
         /// not non-increasing, the result of this call is undefined.
@@ -553,7 +553,7 @@ namespace C5
             sol = mid;
             bot = sol - 1;
 
-            //Invariant: c.Compare(array[x]) < 0  when rbest <= x < size 
+            //Invariant: c.Compare(array[x]) < 0  when rbest <= x < size
             //           c.Compare(array[x]) >= 0 when x < bot)
             //(Assuming c.Compare monotonic)
             while (rbest > bot)
@@ -608,7 +608,7 @@ namespace C5
 
 
         /// <summary>
-        /// Add all the items from another collection with an enumeration order that 
+        /// Add all the items from another collection with an enumeration order that
         /// is increasing in the items.
         /// <exception cref="ArgumentException"/> if the enumerated items turns out
         /// not to be in increasing order.
@@ -834,7 +834,7 @@ namespace C5
 
         /// <summary>
         /// Check if this collection contains an item equivalent according to the
-        /// itemequalityComparer to a particular value. If so, update the item in the collection 
+        /// itemequalityComparer to a particular value. If so, update the item in the collection
         /// to with a binary copy of the supplied value. If the collection has bag semantics,
         /// it is implementation dependent if this updates all equivalent copies in
         /// the collection or just one.
@@ -847,7 +847,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <param name="olditem"></param>
@@ -872,8 +872,8 @@ namespace C5
 
         /// <summary>
         /// Check if this collection contains an item equivalent according to the
-        /// itemequalityComparer to a particular value. If so, update the item in the collection 
-        /// to with a binary copy of the supplied value; else add the value to the collection. 
+        /// itemequalityComparer to a particular value. If so, update the item in the collection
+        /// to with a binary copy of the supplied value; else add the value to the collection.
         /// </summary>
         /// <param name="item">Value to add or update.</param>
         /// <returns>True if the item was found and updated (hence not added).</returns>
@@ -883,7 +883,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         /// <param name="olditem"></param>
@@ -917,7 +917,7 @@ namespace C5
 
         /// <summary>
         /// Remove a particular item from this collection. If the collection has bag
-        /// semantics only one copy equivalent to the supplied item is removed. 
+        /// semantics only one copy equivalent to the supplied item is removed.
         /// </summary>
         /// <param name="item">The value to remove.</param>
         /// <returns>True if the item was found (and removed).</returns>
@@ -941,8 +941,8 @@ namespace C5
         /// <summary>
         /// Remove a particular item from this collection if found. If the collection
         /// has bag semantics only one copy equivalent to the supplied item is removed,
-        /// which one is implementation dependent. 
-        /// If an item was removed, report a binary copy of the actual item removed in 
+        /// which one is implementation dependent.
+        /// If an item was removed, report a binary copy of the actual item removed in
         /// the argument.
         /// </summary>
         /// <param name="item">The value to remove.</param>
@@ -967,7 +967,7 @@ namespace C5
 
 
         /// <summary>
-        /// Remove all items in another collection from this one. 
+        /// Remove all items in another collection from this one.
         /// </summary>
         /// <param name="items">The items to remove.</param>
         public void RemoveAll(SCG.IEnumerable<T> items)
@@ -1011,7 +1011,7 @@ namespace C5
         }
 
         /// <summary>
-        /// Remove all items not in some other collection from this one. 
+        /// Remove all items not in some other collection from this one.
         /// </summary>
         /// <param name="items">The items to retain.</param>
         public void RetainAll(SCG.IEnumerable<T> items)
@@ -1087,13 +1087,13 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public virtual ICollectionValue<T> UniqueItems() { return this; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
@@ -1146,7 +1146,7 @@ namespace C5
         #region IExtensible<T> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value>False since this collection has set semantics</value>
         public bool AllowsDuplicates => false;
@@ -1154,7 +1154,7 @@ namespace C5
         /// <summary>
         /// By convention this is true for any collection with set semantics.
         /// </summary>
-        /// <value>True if only one representative of a group of equal items 
+        /// <value>True if only one representative of a group of equal items
         /// is kept in the collection together with the total count.</value>
         public virtual bool DuplicatesByCounting => true;
 
@@ -1181,7 +1181,7 @@ namespace C5
         }
 
         /// <summary>
-        /// Add an item to this collection if possible. 
+        /// Add an item to this collection if possible.
         /// </summary>
         /// <param name="item">The item to add.</param>
         void SCG.ICollection<T>.Add(T item)
@@ -1191,7 +1191,7 @@ namespace C5
 
 
         /// <summary>
-        /// Add the elements from another collection with a more specialized item type 
+        /// Add the elements from another collection with a more specialized item type
         /// to this collection. Since this
         /// collection has set semantics, only items not already in the collection
         /// will be added.
@@ -1365,7 +1365,7 @@ namespace C5
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <value></value>
         public virtual Speed IndexingSpeed => Speed.Constant;
@@ -1413,7 +1413,7 @@ namespace C5
 
         /// <summary>
         /// Remove all items in an index interval.
-        /// <exception cref="IndexOutOfRangeException"/>???. 
+        /// <exception cref="IndexOutOfRangeException"/>???.
         /// </summary>
         /// <param name="start">The index of the first item to remove.</param>
         /// <param name="count">The number of items to remove.</param>
