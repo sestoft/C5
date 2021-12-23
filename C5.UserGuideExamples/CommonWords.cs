@@ -40,7 +40,7 @@ internal class CommonWords
         var frequency = wordbag.ItemMultiplicities().ToArray();
         Sorting.IntroSort(frequency, 0, frequency.Length,
             // Lexicographic ordering: decreasing frequency, then increasing string
-            ComparerFactory<System.Collections.Generic.KeyValuePair<string, int>>.CreateComparer(
+            ComparerFactory<SCG.KeyValuePair<string, int>>.CreateComparer(
                 (p1, p2) =>
                 {
                     int major = p2.Value.CompareTo(p1.Value);

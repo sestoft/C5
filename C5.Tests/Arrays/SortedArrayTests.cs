@@ -1,11 +1,6 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
-using NUnit.Framework;
-using System;
-using System.Threading;
-using SCG = System.Collections.Generic;
-
 namespace C5.Tests.arrays.sorted
 {
     [TestFixture]
@@ -1618,13 +1613,13 @@ namespace C5.Tests.arrays.sorted
             [Test]
             public void Map()
             {
-                Assert.AreEqual(0, array.Map(new Func<int, string>(TheMap), new SC()).Count);
+                Assert.AreEqual(0, array.Map(new Func<int, string>(TheMap), new TestStringComparer()).Count);
                 for (int i = 0; i < 11; i++)
                 {
                     array.Add(i * i * i);
                 }
 
-                IIndexedSorted<string> res = array.Map(new Func<int, string>(TheMap), new SC());
+                IIndexedSorted<string> res = array.Map(new Func<int, string>(TheMap), new TestStringComparer());
 
                 Assert.IsTrue(((SortedArray<string>)res).Check());
                 Assert.AreEqual(11, res.Count);
@@ -1643,7 +1638,7 @@ namespace C5.Tests.arrays.sorted
                     array.Add(i * i * i);
                 }
 
-                var exception = Assert.Throws<ArgumentException>(() => { ISorted<string> res = array.Map(new Func<int, string>(BadMap), new SC()); });
+                var exception = Assert.Throws<ArgumentException>(() => { ISorted<string> res = array.Map(new Func<int, string>(BadMap), new TestStringComparer()); });
                 Assert.AreEqual("mapper not monotonic", exception.Message);
             }
 

@@ -185,7 +185,7 @@ class TreebagBug20091113
       public void FindNodeRandomTest()
       {
           Random rand = new Random();
-          SCG.List<float> fList = new System.Collections.Generic.List<float>();
+          SCG.List<float> fList = new SCG.List<float>();
           string failedSequence;
           for (int k = 0; k < 1000; k++)
           {

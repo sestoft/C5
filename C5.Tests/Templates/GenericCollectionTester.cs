@@ -1,11 +1,6 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
-using NUnit.Framework;
-using System;
-using System.Reflection;
-using SCG = System.Collections.Generic;
-
 namespace C5.Tests.Templates
 {
     public abstract class GenericCollectionTester<U, W>
@@ -55,7 +50,7 @@ namespace C5.Tests.Templates
 
     public abstract class GenericCollectionTester<U> : GenericCollectionTester<U, int>
     {
-        public override System.Collections.Generic.IEnumerable<int> GetSpecs()
+        public override SCG.IEnumerable<int> GetSpecs()
         {
             return new int[] { 0 };
         }

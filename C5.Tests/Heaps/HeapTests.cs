@@ -21,14 +21,14 @@ namespace C5.Tests.heaps
     public class Events
     {
         private IPriorityQueue<int> queue;
-        private ArrayList<System.Collections.Generic.KeyValuePair<Acts, int>> events;
+        private ArrayList<SCG.KeyValuePair<Acts, int>> events;
 
 
         [SetUp]
         public void Init()
         {
             queue = new IntervalHeap<int>();
-            events = new ArrayList<System.Collections.Generic.KeyValuePair<Acts, int>>();
+            events = new ArrayList<SCG.KeyValuePair<Acts, int>>();
         }
 
 
@@ -113,17 +113,17 @@ namespace C5.Tests.heaps
 
         private void CollectionChangedEventArgs(object sender)
         {
-            events.Add(new System.Collections.Generic.KeyValuePair<Acts, int>(Acts.Changed, 0));
+            events.Add(new SCG.KeyValuePair<Acts, int>(Acts.Changed, 0));
         }
 
         private void ItemAddedEventArgs(object sender, ItemCountEventArgs<int> e)
         {
-            events.Add(new System.Collections.Generic.KeyValuePair<Acts, int>(Acts.Add, e.Item));
+            events.Add(new SCG.KeyValuePair<Acts, int>(Acts.Add, e.Item));
         }
 
         private void ItemRemovedEventArgs(object sender, ItemCountEventArgs<int> e)
         {
-            events.Add(new System.Collections.Generic.KeyValuePair<Acts, int>(Acts.Remove, e.Item));
+            events.Add(new SCG.KeyValuePair<Acts, int>(Acts.Remove, e.Item));
         }
     }
 

@@ -63,7 +63,7 @@ internal interface IGraphVertex<V, E, W> where W : IComparable<W>
 {
     V Value { get; }
     IGraph<V, E, W> Graph { get; }
-    ICollectionValue<System.Collections.Generic.KeyValuePair<V, E>> Adjacent { get; }
+    ICollectionValue<SCG.KeyValuePair<V, E>> Adjacent { get; }
 }
 
 internal class Vertex<V>
@@ -104,7 +104,7 @@ internal interface IGraph<V, E, W> where W : IComparable<W>
     /// </summary>
     /// <param name="vertex"></param>
     /// <returns></returns>
-    ICollectionValue<System.Collections.Generic.KeyValuePair<V, E>> Adjacent(V vertex);
+    ICollectionValue<SCG.KeyValuePair<V, E>> Adjacent(V vertex);
 
     /// <summary>
     /// The collection of all edges in the graph. The return value is a snapshot
@@ -179,7 +179,7 @@ internal interface IGraph<V, E, W> where W : IComparable<W>
     /// </summary>
     /// <returns>A collection of (vertex,component) pairs, where the first part of the
     /// pair is some vertex in the component.</returns>
-    ICollectionValue<System.Collections.Generic.KeyValuePair<V, IGraph<V, E, W>>> Components();
+    ICollectionValue<SCG.KeyValuePair<V, IGraph<V, E, W>>> Components();
 
     /// <summary>
     /// Traverse the connected component containing the <code>start</code> vertex,
@@ -553,9 +553,9 @@ internal class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
         return new GuardedCollectionValue<V>(_graph.Keys);
     }
 
-    public ICollectionValue<System.Collections.Generic.KeyValuePair<V, E>> Adjacent(V vertex)
+    public ICollectionValue<SCG.KeyValuePair<V, E>> Adjacent(V vertex)
     {
-        return new GuardedCollectionValue<System.Collections.Generic.KeyValuePair<V, E>>(_graph[vertex]);
+        return new GuardedCollectionValue<SCG.KeyValuePair<V, E>>(_graph[vertex]);
     }
 
     private class EdgesValue : CollectionValueBase<Edge<V, E>>
@@ -724,9 +724,9 @@ internal class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
         }
     }
 
-    public ICollectionValue<System.Collections.Generic.KeyValuePair<V, IGraph<V, E, W>>> Components()
+    public ICollectionValue<SCG.KeyValuePair<V, IGraph<V, E, W>>> Components()
     {
-        ArrayList<System.Collections.Generic.KeyValuePair<V, IGraph<V, E, W>>> retval = new ArrayList<System.Collections.Generic.KeyValuePair<V, IGraph<V, E, W>>>();
+        ArrayList<SCG.KeyValuePair<V, IGraph<V, E, W>>> retval = new ArrayList<SCG.KeyValuePair<V, IGraph<V, E, W>>>();
         HashGraph<V, E, W> component;
         ArrayList<V> vertices = null;
         void edgeaction(Edge<V, E> e)
@@ -747,12 +747,12 @@ internal class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
             {
                 //component.graph[start] = graph[start].Clone();
                 HashDictionary<V, E> edgeset = component._graph[start] = new HashDictionary<V, E>();
-                foreach (System.Collections.Generic.KeyValuePair<V, E> adjacent in _graph[start])
+                foreach (SCG.KeyValuePair<V, E> adjacent in _graph[start])
                 {
                     edgeset[adjacent.Key] = adjacent.Value;
                 }
             }
-            retval.Add(new System.Collections.Generic.KeyValuePair<V, IGraph<V, E, W>>(v, component));
+            retval.Add(new SCG.KeyValuePair<V, IGraph<V, E, W>>(v, component));
         }
         TraverseVertices(false, edgeaction, beforecomponent, aftercomponent);
         return retval;
@@ -788,7 +788,7 @@ internal class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
 
             if (_graph.Find(ref v, out HashDictionary<V, E> adjacent))
             {
-                foreach (System.Collections.Generic.KeyValuePair<V, E> p in adjacent)
+                foreach (SCG.KeyValuePair<V, E> p in adjacent)
                 {
                     var end = p.Key;
                     if (!seen.FindOrAdd(ref end))
@@ -839,7 +839,7 @@ internal class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
             before(v);
             if (_graph.Find(ref v, out HashDictionary<V, E> adjacent))
             {
-                foreach (System.Collections.Generic.KeyValuePair<V, E> p in adjacent)
+                foreach (SCG.KeyValuePair<V, E> p in adjacent)
                 {
                     V end = p.Key;
                     Edge<V, E> e = new Edge<V, E>(v, end, p.Value);
@@ -900,7 +900,7 @@ internal class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
             }
             if (_graph.Find(ref current, out HashDictionary<V, E> adjacentnodes))
             {
-                foreach (System.Collections.Generic.KeyValuePair<V, E> adjacent in adjacentnodes)
+                foreach (SCG.KeyValuePair<V, E> adjacent in adjacentnodes)
                 {
                     V end = adjacent.Key;
                     E edgedata = adjacent.Value;
@@ -1035,7 +1035,7 @@ internal class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
             else
             {
                 bool first = true;
-                foreach (System.Collections.Generic.KeyValuePair<V, E> p in clone._graph[current])
+                foreach (SCG.KeyValuePair<V, E> p in clone._graph[current])
                 {
                     W thisweight = Weight.Weight(p.Value);
                     if (first || bestweight.CompareTo(thisweight) > 0)
@@ -1521,7 +1521,7 @@ internal class Graph
         IGraph<string, int, int> g = new HashGraph<string, int, int>(new CountWeight<int>(), Forest(2, 2));
         Console.WriteLine("Forest has: Vertices: {0}, Edges: {1}, Components: {2}", g.VertexCount, g.EdgeCount, g.ComponentCount);
         //g.Print(Console.Out);
-        foreach (System.Collections.Generic.KeyValuePair<string, IGraph<string, int, int>> comp in g.Components())
+        foreach (SCG.KeyValuePair<string, IGraph<string, int, int>> comp in g.Components())
         {
             Console.WriteLine("Component of {0}:", comp.Key);
             comp.Value.Print(Console.Out);

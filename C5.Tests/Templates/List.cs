@@ -1,9 +1,6 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
-using NUnit.Framework;
-using SCG = System.Collections.Generic;
-
 namespace C5.Tests.Templates.List
 {
     internal class Dispose

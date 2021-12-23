@@ -1,10 +1,6 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
-using NUnit.Framework;
-using System;
-using SCG = System.Collections.Generic;
-
 namespace C5.Tests.arrays.hashed
 {
     [TestFixture]
@@ -1040,7 +1036,7 @@ namespace C5.Tests.arrays.hashed
             [Test]
             public void Get()
             {
-                Assert.IsNotNull(((System.Collections.IList)list).SyncRoot);
+                Assert.IsNotNull(((SC.IList)list).SyncRoot);
             }
         }
     }
@@ -2545,7 +2541,7 @@ namespace C5.Tests.arrays.hashed
             [Test]
             public void SyncRoot()
             {
-                Assert.AreSame(((System.Collections.IList)view).SyncRoot, ((System.Collections.IList)list).SyncRoot);
+                Assert.AreSame(((SC.IList)view).SyncRoot, ((SC.IList)list).SyncRoot);
             }
         }
 

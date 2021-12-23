@@ -1,10 +1,6 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
-using NUnit.Framework;
-using System;
-using SCG = System.Collections.Generic;
-
 namespace C5.Tests.hashtable.bag
 {
     [TestFixture]
@@ -55,16 +51,16 @@ namespace C5.Tests.hashtable.bag
     [TestFixture]
     public class Combined
     {
-        private ICollection<System.Collections.Generic.KeyValuePair<int, int>> lst;
+        private ICollection<SCG.KeyValuePair<int, int>> lst;
 
 
         [SetUp]
         public void Init()
         {
-            lst = new HashBag<System.Collections.Generic.KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
+            lst = new HashBag<SCG.KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
             for (int i = 0; i < 10; i++)
             {
-                lst.Add(new System.Collections.Generic.KeyValuePair<int, int>(i, i + 30));
+                lst.Add(new SCG.KeyValuePair<int, int>(i, i + 30));
             }
         }
 
@@ -76,12 +72,12 @@ namespace C5.Tests.hashtable.bag
         [Test]
         public void Find()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+            SCG.KeyValuePair<int, int> p = new SCG.KeyValuePair<int, int>(3, 78);
 
             Assert.IsTrue(lst.Find(ref p));
             Assert.AreEqual(3, p.Key);
             Assert.AreEqual(33, p.Value);
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+            p = new SCG.KeyValuePair<int, int>(13, 78);
             Assert.IsFalse(lst.Find(ref p));
         }
 
@@ -95,9 +91,9 @@ namespace C5.Tests.hashtable.bag
             Assert.IsTrue(lst.FindOrAdd(ref p));
             Assert.AreEqual(3, p.Key);
             Assert.AreEqual(33, p.Value);
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
+            p = new SCG.KeyValuePair<int, int>(13, 79);
             Assert.IsFalse(lst.FindOrAdd(ref p));
-            q = new System.Collections.Generic.KeyValuePair<int, int>(13, q.Value);
+            q = new SCG.KeyValuePair<int, int>(13, q.Value);
             Assert.IsTrue(lst.Find(ref q));
             Assert.AreEqual(13, q.Key);
             Assert.AreEqual(79, q.Value);
@@ -107,15 +103,15 @@ namespace C5.Tests.hashtable.bag
         [Test]
         public void Update()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
-            System.Collections.Generic.KeyValuePair<int, int> q = new System.Collections.Generic.KeyValuePair<int, int>();
+            SCG.KeyValuePair<int, int> p = new SCG.KeyValuePair<int, int>(3, 78);
+            SCG.KeyValuePair<int, int> q = new SCG.KeyValuePair<int, int>();
 
             Assert.IsTrue(lst.Update(p));
-            q = new System.Collections.Generic.KeyValuePair<int, int>(3, q.Value);
+            q = new SCG.KeyValuePair<int, int>(3, q.Value);
             Assert.IsTrue(lst.Find(ref q));
             Assert.AreEqual(3, q.Key);
             Assert.AreEqual(78, q.Value);
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+            p = new SCG.KeyValuePair<int, int>(13, 78);
             Assert.IsFalse(lst.Update(p));
         }
 
@@ -123,17 +119,17 @@ namespace C5.Tests.hashtable.bag
         [Test]
         public void UpdateOrAdd1()
         {
-            var p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
-            var q = new System.Collections.Generic.KeyValuePair<int, int>();
+            var p = new SCG.KeyValuePair<int, int>(3, 78);
+            var q = new SCG.KeyValuePair<int, int>();
 
             Assert.IsTrue(lst.UpdateOrAdd(p));
-            q = new System.Collections.Generic.KeyValuePair<int, int>(3, q.Value);
+            q = new SCG.KeyValuePair<int, int>(3, q.Value);
             Assert.IsTrue(lst.Find(ref q));
             Assert.AreEqual(3, q.Key);
             Assert.AreEqual(78, q.Value);
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
+            p = new SCG.KeyValuePair<int, int>(13, 79);
             Assert.IsFalse(lst.UpdateOrAdd(p));
-            q = new System.Collections.Generic.KeyValuePair<int, int>(13, q.Value);
+            q = new SCG.KeyValuePair<int, int>(13, q.Value);
             Assert.IsTrue(lst.Find(ref q));
             Assert.AreEqual(13, q.Key);
             Assert.AreEqual(79, q.Value);
@@ -155,13 +151,13 @@ namespace C5.Tests.hashtable.bag
         [Test]
         public void RemoveWithReturn()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
-            //System.Collections.Generic.KeyValuePair<int, int> q = new System.Collections.Generic.KeyValuePair<int, int>();
+            SCG.KeyValuePair<int, int> p = new SCG.KeyValuePair<int, int>(3, 78);
+            //SCG.KeyValuePair<int, int> q = new SCG.KeyValuePair<int, int>();
 
             Assert.IsTrue(lst.Remove(p, out p));
             Assert.AreEqual(3, p.Key);
             Assert.AreEqual(33, p.Value);
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+            p = new SCG.KeyValuePair<int, int>(13, 78);
             Assert.IsFalse(lst.Remove(p, out _));
         }
     }

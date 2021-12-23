@@ -6,8 +6,6 @@
 
 namespace C5.UserGuideExamples;
 
-using SCG = System.Collections.Generic;
-
 internal class SortingPermutation
 {
     public static void Main()

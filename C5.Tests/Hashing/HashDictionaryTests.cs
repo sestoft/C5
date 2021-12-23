@@ -1,10 +1,6 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
-using NUnit.Framework;
-using System;
-using System.Linq;
-using SCG = System.Collections.Generic;
 namespace C5.Tests.hashtable.dictionary
 {
     [TestFixture]
@@ -83,7 +79,7 @@ namespace C5.Tests.hashtable.dictionary
         public void Choose()
         {
             dict.Add("ER", "FOO");
-            Assert.AreEqual(new System.Collections.Generic.KeyValuePair<string, string>("ER", "FOO"), dict.Choose());
+            Assert.AreEqual(new SCG.KeyValuePair<string, string>("ER", "FOO"), dict.Choose());
         }
 
         [Test]

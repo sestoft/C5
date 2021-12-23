@@ -31,14 +31,6 @@ internal class KeywordRecognition
 
     private static readonly SCG.IDictionary<string, bool> _keywords4;
 
-    private class SC : SCG.IComparer<string>
-    {
-        public int Compare(string a, string b)
-        {
-            return StringComparer.InvariantCulture.Compare(a, b);
-        }
-    }
-
     private class SH : SCG.IEqualityComparer<string>
     {
         public int GetHashCode(string item)
@@ -56,9 +48,9 @@ internal class KeywordRecognition
     {
         _keywords1 = new HashSet<string>();
         _keywords1.AddAll(_keywordArray);
-        _keywords2 = new TreeSet<string>(new SC());
+        _keywords2 = new TreeSet<string>(StringComparer.InvariantCulture);
         _keywords2.AddAll(_keywordArray);
-        _keywords3 = new SortedArray<string>(new SC());
+        _keywords3 = new SortedArray<string>(StringComparer.InvariantCulture);
         _keywords3.AddAll(_keywordArray);
         _keywords4 = new SCG.Dictionary<string, bool>();
 

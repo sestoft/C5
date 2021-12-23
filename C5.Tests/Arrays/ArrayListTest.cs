@@ -1,10 +1,6 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
-using NUnit.Framework;
-using System;
-using SCG = System.Collections.Generic;
-
 namespace C5.Tests.arrays.list
 {
     [TestFixture]
@@ -44,7 +40,7 @@ namespace C5.Tests.arrays.list
             public void Init()
             {
                 list = new ArrayList<int>(TenEqualityComparer.Default);
-                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
+                seen = new CollectionEventList<int>(SCG.EqualityComparer<int>.Default);
             }
 
             private void Listen() { seen.Listen(list, EventType.Added); }
@@ -1117,7 +1113,7 @@ namespace C5.Tests.arrays.list
             [Test]
             public void Get()
             {
-                Assert.IsNotNull(((System.Collections.IList)list).SyncRoot);
+                Assert.IsNotNull(((SC.IList)list).SyncRoot);
             }
         }
     }
@@ -1889,15 +1885,15 @@ namespace C5.Tests.arrays.list
         [TestFixture]
         public class Combined
         {
-            private IList<System.Collections.Generic.KeyValuePair<int, int>> lst;
+            private IList<SCG.KeyValuePair<int, int>> lst;
 
             [SetUp]
             public void Init()
             {
-                lst = new ArrayList<System.Collections.Generic.KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
+                lst = new ArrayList<SCG.KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
                 for (int i = 0; i < 10; i++)
                 {
-                    lst.Add(new System.Collections.Generic.KeyValuePair<int, int>(i, i + 30));
+                    lst.Add(new SCG.KeyValuePair<int, int>(i, i + 30));
                 }
             }
 
@@ -1913,7 +1909,7 @@ namespace C5.Tests.arrays.list
                 Assert.IsTrue(lst.Find(ref p));
                 Assert.AreEqual(3, p.Key);
                 Assert.AreEqual(33, p.Value);
-                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+                p = new SCG.KeyValuePair<int, int>(13, 78);
                 Assert.IsFalse(lst.Find(ref p));
             }
 
@@ -1939,7 +1935,7 @@ namespace C5.Tests.arrays.list
                 Assert.IsTrue(lst.Update(p));
                 Assert.AreEqual(3, lst[3].Key);
                 Assert.AreEqual(78, lst[3].Value);
-                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+                p = new SCG.KeyValuePair<int, int>(13, 78);
                 Assert.IsFalse(lst.Update(p));
             }
 
@@ -1952,7 +1948,7 @@ namespace C5.Tests.arrays.list
                 Assert.IsTrue(lst.UpdateOrAdd(p));
                 Assert.AreEqual(3, lst[3].Key);
                 Assert.AreEqual(78, lst[3].Value);
-                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
+                p = new SCG.KeyValuePair<int, int>(13, 79);
                 Assert.IsFalse(lst.UpdateOrAdd(p));
                 Assert.AreEqual(13, lst[10].Key);
                 Assert.AreEqual(79, lst[10].Value);
@@ -2016,21 +2012,21 @@ namespace C5.Tests.arrays.list
             [Test]
             public void Stability()
             {
-                IList<System.Collections.Generic.KeyValuePair<int, string>> lst2 = new ArrayList<System.Collections.Generic.KeyValuePair<int, string>>();
-                SCG.IComparer<System.Collections.Generic.KeyValuePair<int, string>> c = new KeyValuePairComparer<int, string>(new IC());
+                IList<SCG.KeyValuePair<int, string>> lst2 = new ArrayList<SCG.KeyValuePair<int, string>>();
+                SCG.IComparer<SCG.KeyValuePair<int, string>> c = new KeyValuePairComparer<int, string>(new IC());
 
-                lst2.Add(new System.Collections.Generic.KeyValuePair<int, string>(5, "a"));
-                lst2.Add(new System.Collections.Generic.KeyValuePair<int, string>(5, "b"));
-                lst2.Add(new System.Collections.Generic.KeyValuePair<int, string>(6, "c"));
-                lst2.Add(new System.Collections.Generic.KeyValuePair<int, string>(4, "d"));
-                lst2.Add(new System.Collections.Generic.KeyValuePair<int, string>(3, "e"));
-                lst2.Add(new System.Collections.Generic.KeyValuePair<int, string>(4, "f"));
-                lst2.Add(new System.Collections.Generic.KeyValuePair<int, string>(5, "handle"));
+                lst2.Add(new SCG.KeyValuePair<int, string>(5, "a"));
+                lst2.Add(new SCG.KeyValuePair<int, string>(5, "b"));
+                lst2.Add(new SCG.KeyValuePair<int, string>(6, "c"));
+                lst2.Add(new SCG.KeyValuePair<int, string>(4, "d"));
+                lst2.Add(new SCG.KeyValuePair<int, string>(3, "e"));
+                lst2.Add(new SCG.KeyValuePair<int, string>(4, "f"));
+                lst2.Add(new SCG.KeyValuePair<int, string>(5, "handle"));
                 Assert.IsFalse(lst2.IsSorted(c));
                 lst2.Sort(c);
                 Assert.IsTrue(lst2.IsSorted(c));
 
-                System.Collections.Generic.KeyValuePair<int, string> p = lst2.RemoveFirst();
+                SCG.KeyValuePair<int, string> p = lst2.RemoveFirst();
 
                 Assert.AreEqual(3, p.Key);
                 Assert.AreEqual("e", p.Value);
@@ -2748,7 +2744,7 @@ namespace C5.Tests.arrays.list
             [Test]
             public void SyncRoot()
             {
-                Assert.AreSame(((System.Collections.IList)view).SyncRoot, ((System.Collections.IList)list).SyncRoot);
+                Assert.AreSame(((SC.IList)view).SyncRoot, ((SC.IList)list).SyncRoot);
             }
         }
         [TestFixture]

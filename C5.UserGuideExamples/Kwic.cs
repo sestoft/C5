@@ -41,10 +41,6 @@
 // dictionary that maps each context to a list of line numbers or page
 // numbers.
 
-// using System;
-// using C5;
-// using SCG = System.Collections.Generic;
-
 namespace C5.UserGuideExamples
 {
     class Kwic

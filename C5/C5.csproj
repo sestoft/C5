@@ -3,7 +3,7 @@
     <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
-    <Version>3.0.0-rc</Version>
+    <Version>3.1.0</Version>
     <Copyright>Copyright © Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm 2003-2021</Copyright>
     <Company>Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm</Company>
     <Description>The C5 Generic Collection Library for C# and CLI is a comprehensive collection library supporting lists, sets, bags, dictionaries, priority queues, (FIFO) queues, and (LIFO) stacks. C5 runs on everything supporting .NET Standard 2.0: .NET Core 2.0+, .NET 4.6.1+, Mono, Xamarin, Universal Windows Platform, and Unity.</Description>

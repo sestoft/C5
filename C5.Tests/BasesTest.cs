@@ -1,12 +1,7 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
-using NUnit.Framework;
-using System;
-using SCG = System.Collections.Generic;
-
-
-namespace C5.Tests.support
+namespace C5.Tests.Support
 {
     namespace bases
     {
@@ -482,17 +477,17 @@ namespace C5.Tests.support
 
                 //TODO: remove all this workaround stuff:
 
-                bool C5.ICollection<int>.ContainsAll(System.Collections.Generic.IEnumerable<int> items)
+                bool C5.ICollection<int>.ContainsAll(SCG.IEnumerable<int> items)
                 {
                     throw new NotImplementedException();
                 }
 
-                void C5.ICollection<int>.RemoveAll(System.Collections.Generic.IEnumerable<int> items)
+                void C5.ICollection<int>.RemoveAll(SCG.IEnumerable<int> items)
                 {
                     throw new NotImplementedException();
                 }
 
-                void C5.ICollection<int>.RetainAll(System.Collections.Generic.IEnumerable<int> items)
+                void C5.ICollection<int>.RetainAll(SCG.IEnumerable<int> items)
                 {
                     throw new NotImplementedException();
                 }

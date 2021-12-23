@@ -138,20 +138,20 @@ namespace C5.UserGuideExamples
     {
         private TreeDictionary<double, ISorted<Edge<T>>> htree;
 
-        private readonly TreeDictionary<double, System.Collections.Generic.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>> endpoints;
+        private readonly TreeDictionary<double, SCG.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>> endpoints;
 
         private bool built = false;
 
         public PointLocator()
         {
             //htree = new TreeDictionary<double,TreeSet<Edge<T>>>(dc);
-            endpoints = new TreeDictionary<double, System.Collections.Generic.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>>();
+            endpoints = new TreeDictionary<double, SCG.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>>();
         }
 
         public PointLocator(SCG.IEnumerable<Edge<T>> edges)
         {
             //htree = new TreeDictionary<double,TreeSet<Edge<T>>>(dc);
-            endpoints = new TreeDictionary<double, System.Collections.Generic.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>>();
+            endpoints = new TreeDictionary<double, SCG.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>>();
             foreach (Edge<T> edge in edges)
             {
                 InnerAdd(edge);
@@ -167,15 +167,15 @@ namespace C5.UserGuideExamples
 
             if (!endpoints.Contains(edge.Xs))
             {
-                endpoints.Add(edge.Xs, new System.Collections.Generic.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>(new LinkedList<Edge<T>>(), new LinkedList<Edge<T>>()));
+                endpoints.Add(edge.Xs, new SCG.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>(new LinkedList<Edge<T>>(), new LinkedList<Edge<T>>()));
             }
 
-            System.Collections.Generic.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>> kv;
+            SCG.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>> kv;
             kv = endpoints[edge.Xs];
             kv.Key.Add(edge);
             if (!endpoints.Contains(edge.Xe))
             {
-                endpoints.Add(edge.Xe, new System.Collections.Generic.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>(new LinkedList<Edge<T>>(), new LinkedList<Edge<T>>()));
+                endpoints.Add(edge.Xe, new SCG.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>(new LinkedList<Edge<T>>(), new LinkedList<Edge<T>>()));
             }
 
             kv = endpoints[edge.Xe];
@@ -214,7 +214,7 @@ namespace C5.UserGuideExamples
 
             htree[double.NegativeInfinity] = vtree.Snapshot();
 
-            foreach (System.Collections.Generic.KeyValuePair<double, System.Collections.Generic.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>> p in endpoints)
+            foreach (SCG.KeyValuePair<double, SCG.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>> p in endpoints)
             {
                 foreach (Edge<T> e in p.Value.Value)
                 {
@@ -433,7 +433,7 @@ namespace C5.UserGuideExamples
 
             #region IEnumerable Members
 
-            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            SC.IEnumerator SC.IEnumerable.GetEnumerator()
             {
                 throw new NotImplementedException();
             }
@@ -442,9 +442,9 @@ namespace C5.UserGuideExamples
 
             #region IEnumerator Members
 
-            object System.Collections.IEnumerator.Current => throw new NotImplementedException();
+            object SC.IEnumerator.Current => throw new NotImplementedException();
 
-            void System.Collections.IEnumerator.Reset()
+            void SC.IEnumerator.Reset()
             {
                 throw new NotImplementedException();
             }
@@ -514,7 +514,7 @@ namespace C5.UserGuideExamples
             }
         }
 
-        public class Lattice : EnumerableBase<Edge<string>>, SCG.IEnumerable<Edge<string>>, SCG.IEnumerator<Edge<string>>, System.Collections.IEnumerator
+        public class Lattice : EnumerableBase<Edge<string>>, SCG.IEnumerable<Edge<string>>, SCG.IEnumerator<Edge<string>>, SC.IEnumerator
         {
             private int currenti = -1, currentj = 0;
 
@@ -624,7 +624,7 @@ namespace C5.UserGuideExamples
 
             #region IEnumerable Members
 
-            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            SC.IEnumerator SC.IEnumerable.GetEnumerator()
             {
                 throw new NotImplementedException();
             }
@@ -633,14 +633,14 @@ namespace C5.UserGuideExamples
 
             #region IEnumerator Members
 
-            object System.Collections.IEnumerator.Current => throw new NotImplementedException();
+            object SC.IEnumerator.Current => throw new NotImplementedException();
 
-            bool System.Collections.IEnumerator.MoveNext()
+            bool SC.IEnumerator.MoveNext()
             {
                 throw new NotImplementedException();
             }
 
-            void System.Collections.IEnumerator.Reset()
+            void SC.IEnumerator.Reset()
             {
                 throw new NotImplementedException();
             }

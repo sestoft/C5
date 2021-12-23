@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
+// This file is part of the C5 Generic Collection Library for C# and CLI
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 namespace C5
 {
     /// <summary>
     /// A sequenced collection, where indices of items in the order are maintained
     /// </summary>
-    public interface IIndexed<T> : ISequenced<T>, IReadOnlyList<T>
+    public interface IIndexed<T> : ISequenced<T>, SCG.IReadOnlyList<T>
     {
         /// <summary>
         /// Gets the number of elements in the collection.

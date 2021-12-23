@@ -1,11 +1,6 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
-using NUnit.Framework;
-using System;
-using SCG = System.Collections.Generic;
-
-
 namespace C5.Tests.trees.RBDictionary
 {
     internal static class Factory
@@ -44,7 +39,7 @@ namespace C5.Tests.trees.RBDictionary
 
 
         [SetUp]
-        public void Init() { dict = new TreeDictionary<string, string>(new SC()); }
+        public void Init() { dict = new TreeDictionary<string, string>(new TestStringComparer()); }
 
 
         [TearDown]
@@ -60,7 +55,7 @@ namespace C5.Tests.trees.RBDictionary
         public void Choose()
         {
             dict.Add("YES", "NO");
-            Assert.AreEqual(new System.Collections.Generic.KeyValuePair<string, string>("YES", "NO"), dict.Choose());
+            Assert.AreEqual(new SCG.KeyValuePair<string, string>("YES", "NO"), dict.Choose());
         }
 
         [Test]
@@ -91,7 +86,7 @@ namespace C5.Tests.trees.RBDictionary
             dict.Add("A", "1");
             dict.Add("C", "2");
             dict.Add("E", "3");
-            Assert.IsTrue(dict.TryPredecessor("B", out System.Collections.Generic.KeyValuePair<string, string> res));
+            Assert.IsTrue(dict.TryPredecessor("B", out SCG.KeyValuePair<string, string> res));
             Assert.AreEqual("1", res.Value);
             Assert.IsTrue(dict.TryPredecessor("C", out res));
             Assert.AreEqual("1", res.Value);
@@ -199,7 +194,7 @@ namespace C5.Tests.trees.RBDictionary
         [SetUp]
         public void Init()
         {
-            ISortedDictionary<string, string> dict = new TreeDictionary<string, string>(new SC())
+            ISortedDictionary<string, string> dict = new TreeDictionary<string, string>(new TestStringComparer())
             {
                 { "A", "1" },
                 { "C", "2" },
@@ -227,7 +222,7 @@ namespace C5.Tests.trees.RBDictionary
         [Test]
         public void Pred2()
         {
-            Assert.IsTrue(dict.TryPredecessor("B", out System.Collections.Generic.KeyValuePair<string, string> res));
+            Assert.IsTrue(dict.TryPredecessor("B", out SCG.KeyValuePair<string, string> res));
             Assert.AreEqual("1", res.Value);
             Assert.IsTrue(dict.TryPredecessor("C", out res));
             Assert.AreEqual("1", res.Value);
@@ -312,13 +307,13 @@ namespace C5.Tests.trees.RBDictionary
     {
         private TreeDictionary<string, string> dict;
 
-        private SCG.IEnumerator<System.Collections.Generic.KeyValuePair<string, string>> dictenum;
+        private SCG.IEnumerator<SCG.KeyValuePair<string, string>> dictenum;
 
 
         [SetUp]
         public void Init()
         {
-            dict = new TreeDictionary<string, string>(new SC())
+            dict = new TreeDictionary<string, string>(new TestStringComparer())
             {
                 ["S"] = "A",
                 ["T"] = "B",
@@ -421,11 +416,11 @@ namespace C5.Tests.trees.RBDictionary
         public void NormalUse()
         {
             Assert.IsTrue(dictenum.MoveNext());
-            Assert.AreEqual(dictenum.Current, new System.Collections.Generic.KeyValuePair<string, string>("R", "C"));
+            Assert.AreEqual(dictenum.Current, new SCG.KeyValuePair<string, string>("R", "C"));
             Assert.IsTrue(dictenum.MoveNext());
-            Assert.AreEqual(dictenum.Current, new System.Collections.Generic.KeyValuePair<string, string>("S", "A"));
+            Assert.AreEqual(dictenum.Current, new SCG.KeyValuePair<string, string>("S", "A"));
             Assert.IsTrue(dictenum.MoveNext());
-            Assert.AreEqual(dictenum.Current, new System.Collections.Generic.KeyValuePair<string, string>("T", "B"));
+            Assert.AreEqual(dictenum.Current, new SCG.KeyValuePair<string, string>("T", "B"));
             Assert.IsFalse(dictenum.MoveNext());
         }
     }
@@ -444,7 +439,7 @@ namespace C5.Tests.trees.RBDictionary
             [SetUp]
             public void Init()
             {
-                dict = new TreeDictionary<string, string>(new SC())
+                dict = new TreeDictionary<string, string>(new TestStringComparer())
                 {
                     ["S"] = "A",
                     ["T"] = "B",

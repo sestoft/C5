@@ -1,9 +1,6 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
-using NUnit.Framework;
-using System;
-using SCG = System.Collections.Generic;
 namespace C5.Tests.hashtable.set
 {
     [TestFixture]
@@ -727,16 +724,16 @@ namespace C5.Tests.hashtable.set
         [TestFixture]
         public class Combined
         {
-            private ICollection<System.Collections.Generic.KeyValuePair<int, int>> lst;
+            private ICollection<SCG.KeyValuePair<int, int>> lst;
 
 
             [SetUp]
             public void Init()
             {
-                lst = new HashSet<System.Collections.Generic.KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
+                lst = new HashSet<SCG.KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
                 for (int i = 0; i < 10; i++)
                 {
-                    lst.Add(new System.Collections.Generic.KeyValuePair<int, int>(i, i + 30));
+                    lst.Add(new SCG.KeyValuePair<int, int>(i, i + 30));
                 }
             }
 
@@ -748,12 +745,12 @@ namespace C5.Tests.hashtable.set
             [Test]
             public void Find()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+                SCG.KeyValuePair<int, int> p = new SCG.KeyValuePair<int, int>(3, 78);
 
                 Assert.IsTrue(lst.Find(ref p));
                 Assert.AreEqual(3, p.Key);
                 Assert.AreEqual(33, p.Value);
-                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+                p = new SCG.KeyValuePair<int, int>(13, 78);
                 Assert.IsFalse(lst.Find(ref p));
             }
 

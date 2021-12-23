@@ -1,11 +1,6 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
-using NUnit.Framework;
-using System;
-using System.Threading;
-using SCG = System.Collections.Generic;
-
 namespace C5.Tests.trees.TreeSet
 {
     [TestFixture]
@@ -2135,13 +2130,13 @@ namespace C5.Tests.trees.TreeSet
             [Test]
             public void Map()
             {
-                Assert.AreEqual(0, tree.Map(new Func<int, string>(TheMap), new SC()).Count);
+                Assert.AreEqual(0, tree.Map(new Func<int, string>(TheMap), new TestStringComparer()).Count);
                 for (int i = 0; i < 11; i++)
                 {
                     tree.Add(i * i * i);
                 }
 
-                IIndexedSorted<string> res = tree.Map(new Func<int, string>(TheMap), new SC());
+                IIndexedSorted<string> res = tree.Map(new Func<int, string>(TheMap), new TestStringComparer());
 
                 Assert.IsTrue(((TreeSet<string>)res).Check("R"));
                 Assert.AreEqual(11, res.Count);
@@ -2162,7 +2157,7 @@ namespace C5.Tests.trees.TreeSet
 
                 var exception = Assert.Throws<ArgumentException>(() =>
                 {
-                    ISorted<string> res = tree.Map(new Func<int, string>(BadMap), new SC());
+                    ISorted<string> res = tree.Map(new Func<int, string>(BadMap), new TestStringComparer());
                 });
                 Assert.AreEqual("mapper not monotonic", exception.Message);
             }
