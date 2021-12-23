@@ -6,16 +6,14 @@ using System;
 using SCG = System.Collections.Generic;
 namespace C5.Tests.hashtable.set
 {
-    using CollectionOfInt = HashSet<int>;
-
     [TestFixture]
     public class GenericTesters
     {
         [Test]
         public void TestEvents()
         {
-            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new Templates.Events.CollectionTester<CollectionOfInt>().Test(factory);
+            static HashSet<int> factory() => new HashSet<int>(TenEqualityComparer.Default);
+            new Templates.Events.CollectionTester<HashSet<int>>().Test(factory);
         }
     }
 
@@ -354,7 +352,7 @@ namespace C5.Tests.hashtable.set
             }
 
 
-            private string aeq(int[] a, params int[] b)
+            private static string Aeq(int[] a, params int[] b)
             {
                 if (a.Length != b.Length)
                 {
@@ -376,7 +374,7 @@ namespace C5.Tests.hashtable.set
             [Test]
             public void ToArray()
             {
-                Assert.AreEqual("Alles klar", aeq(hashset.ToArray()));
+                Assert.AreEqual("Alles klar", Aeq(hashset.ToArray()));
                 hashset.Add(7);
                 hashset.Add(3);
                 hashset.Add(10);
@@ -384,7 +382,7 @@ namespace C5.Tests.hashtable.set
                 int[] r = hashset.ToArray();
 
                 Array.Sort(r);
-                Assert.AreEqual("Alles klar", aeq(r, 3, 7, 10));
+                Assert.AreEqual("Alles klar", Aeq(r, 3, 7, 10));
             }
 
 
@@ -393,20 +391,20 @@ namespace C5.Tests.hashtable.set
             {
                 //Note: for small ints the itemequalityComparer is the identity!
                 hashset.CopyTo(a, 1);
-                Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009));
+                Assert.AreEqual("Alles klar", Aeq(a, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009));
                 hashset.Add(6);
                 hashset.CopyTo(a, 2);
-                Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 6, 1003, 1004, 1005, 1006, 1007, 1008, 1009));
+                Assert.AreEqual("Alles klar", Aeq(a, 1000, 1001, 6, 1003, 1004, 1005, 1006, 1007, 1008, 1009));
                 hashset.Add(4);
                 hashset.Add(9);
                 hashset.CopyTo(a, 4);
 
                 //TODO: make test independent on onterequalityComparer
-                Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 6, 1003, 6, 9, 4, 1007, 1008, 1009));
+                Assert.AreEqual("Alles klar", Aeq(a, 1000, 1001, 6, 1003, 6, 9, 4, 1007, 1008, 1009));
                 hashset.Clear();
                 hashset.Add(7);
                 hashset.CopyTo(a, 9);
-                Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 6, 1003, 6, 9, 4, 1007, 1008, 7));
+                Assert.AreEqual("Alles klar", Aeq(a, 1000, 1001, 6, 1003, 6, 9, 4, 1007, 1008, 7));
             }
 
 
@@ -669,7 +667,7 @@ namespace C5.Tests.hashtable.set
             [Test]
             public void RemoveAll()
             {
-                HashSet<int> list2 = new HashSet<int>();
+                var list2 = new HashSet<int>();
 
                 hashset.Add(4); hashset.Add(5); hashset.Add(6);
                 list2.Add(5); list2.Add(7); list2.Add(4);
@@ -818,24 +816,23 @@ namespace C5.Tests.hashtable.set
             {
                 ICollection<string> coll = new HashSet<string>();
                 // s1 and s2 are distinct objects but contain the same text:
-                string s1 = "abc", s2 = ("def" + s1).Substring(3);
+                string s1 = "abc", s2 = ("def" + s1)[3..];
                 Assert.IsFalse(coll.UpdateOrAdd(s1, out string old));
                 Assert.AreEqual(null, old);
                 Assert.IsTrue(coll.UpdateOrAdd(s2, out old));
-                Assert.IsTrue(object.ReferenceEquals(s1, old));
-                Assert.IsFalse(object.ReferenceEquals(s2, old));
+                Assert.IsTrue(ReferenceEquals(s1, old));
+                Assert.IsFalse(ReferenceEquals(s2, old));
             }
 
             [Test]
             public void RemoveWithReturn()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
-                //System.Collections.Generic.KeyValuePair<int,int> q = new System.Collections.Generic.KeyValuePair<int,int>();
+                var p = new SCG.KeyValuePair<int, int>(3, 78);
 
                 Assert.IsTrue(lst.Remove(p, out p));
                 Assert.AreEqual(3, p.Key);
                 Assert.AreEqual(33, p.Value);
-                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+                p = new SCG.KeyValuePair<int, int>(13, 78);
                 Assert.IsFalse(lst.Remove(p, out _));
             }
         }

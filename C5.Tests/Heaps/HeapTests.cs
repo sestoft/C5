@@ -6,16 +6,14 @@ using System;
 
 namespace C5.Tests.heaps
 {
-    using CollectionOfInt = IntervalHeap<int>;
-
     [TestFixture]
     public class GenericTesters
     {
         [Test]
         public void TestEvents()
         {
-            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new Templates.Events.PriorityQueueTester<CollectionOfInt>().Test(factory);
+            static IntervalHeap<int> factory() => new IntervalHeap<int>(TenEqualityComparer.Default);
+            new Templates.Events.PriorityQueueTester<IntervalHeap<int>>().Test(factory);
         }
     }
 
@@ -55,15 +53,15 @@ namespace C5.Tests.heaps
             ItemsAddedHandler<int> iah;
             ItemsRemovedHandler<int> irh;
             Assert.AreEqual(EventType.None, queue.ActiveEvents);
-            queue.CollectionChanged += (cch = new CollectionChangedHandler<int>(queue_CollectionChanged));
+            queue.CollectionChanged += (cch = new CollectionChangedHandler<int>(CollectionChangedEventArgs));
             Assert.AreEqual(EventType.Changed, queue.ActiveEvents);
-            queue.ItemsAdded += (iah = new ItemsAddedHandler<int>(queue_ItemAdded));
+            queue.ItemsAdded += (iah = new ItemsAddedHandler<int>(ItemAddedEventArgs));
             Assert.AreEqual(EventType.Changed | EventType.Added, queue.ActiveEvents);
-            queue.ItemsRemoved += (irh = new ItemsRemovedHandler<int>(queue_ItemRemoved));
+            queue.ItemsRemoved += (irh = new ItemsRemovedHandler<int>(ItemRemovedEventArgs));
             Assert.AreEqual(EventType.Changed | EventType.Added | EventType.Removed, queue.ActiveEvents);
             queue.Add(34);
             queue.Add(56);
-            queue.AddAll(new int[] { });
+            queue.AddAll(Array.Empty<int>());
             queue.Add(34);
             queue.Add(12);
             queue.DeleteMax();
@@ -91,9 +89,9 @@ namespace C5.Tests.heaps
         public void Guarded()
         {
             ICollectionValue<int> guarded = new GuardedCollectionValue<int>(queue);
-            guarded.CollectionChanged += new CollectionChangedHandler<int>(queue_CollectionChanged);
-            guarded.ItemsAdded += new ItemsAddedHandler<int>(queue_ItemAdded);
-            guarded.ItemsRemoved += new ItemsRemovedHandler<int>(queue_ItemRemoved);
+            guarded.CollectionChanged += new CollectionChangedHandler<int>(CollectionChangedEventArgs);
+            guarded.ItemsAdded += new ItemsAddedHandler<int>(ItemAddedEventArgs);
+            guarded.ItemsRemoved += new ItemsRemovedHandler<int>(ItemRemovedEventArgs);
             queue.Add(34);
             queue.Add(56);
             queue.Add(34);
@@ -113,17 +111,17 @@ namespace C5.Tests.heaps
             }
         }
 
-        private void queue_CollectionChanged(object sender)
+        private void CollectionChangedEventArgs(object sender)
         {
             events.Add(new System.Collections.Generic.KeyValuePair<Acts, int>(Acts.Changed, 0));
         }
 
-        private void queue_ItemAdded(object sender, ItemCountEventArgs<int> e)
+        private void ItemAddedEventArgs(object sender, ItemCountEventArgs<int> e)
         {
             events.Add(new System.Collections.Generic.KeyValuePair<Acts, int>(Acts.Add, e.Item));
         }
 
-        private void queue_ItemRemoved(object sender, ItemCountEventArgs<int> e)
+        private void ItemRemovedEventArgs(object sender, ItemCountEventArgs<int> e)
         {
             events.Add(new System.Collections.Generic.KeyValuePair<Acts, int>(Acts.Remove, e.Item));
         }
@@ -553,10 +551,10 @@ namespace C5.Tests.heaps
         [Test]
         public void RandomWithDeleteHandles()
         {
-            Random ran = new Random(6754);
+            var ran = new Random(6754);
             int length = 1000;
             int[] a = new int[length];
-            ArrayList<int> shuffle = new ArrayList<int>(length);
+            var shuffle = new ArrayList<int>(length);
             IPriorityQueueHandle<int>[] h = new IPriorityQueueHandle<int>[length];
 
             for (int i = 0; i < length; i++)
@@ -643,9 +641,9 @@ namespace C5.Tests.heaps
         {
             int length = 1000;
             int[] a = new int[length];
-            Random ran = new Random(6754);
+            var ran = new Random(6754);
 
-            LinkedList<int> lst = new LinkedList<int>();
+            var lst = new LinkedList<int>();
             for (int i = 0; i < length; i++)
             {
                 lst.Add(a[i] = ran.Next());

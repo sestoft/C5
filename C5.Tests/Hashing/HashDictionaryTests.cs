@@ -7,16 +7,14 @@ using System.Linq;
 using SCG = System.Collections.Generic;
 namespace C5.Tests.hashtable.dictionary
 {
-    using DictionaryIntToInt = HashDictionary<int, int>;
-
     [TestFixture]
     public class GenericTesters
     {
         [Test]
         public void TestEvents()
         {
-            DictionaryIntToInt factory() { return new DictionaryIntToInt(TenEqualityComparer.Default); }
-            new Templates.Events.DictionaryTester<DictionaryIntToInt>().Test(factory);
+            static HashDictionary<int, int> factory() => new(TenEqualityComparer.Default);
+            new Templates.Events.DictionaryTester<HashDictionary<int, int>>().Test(factory);
         }
     }
 
@@ -223,7 +221,7 @@ namespace C5.Tests.hashtable.dictionary
         [Test]
         public void DeepBucket()
         {
-            HashDictionary<int, int> dict2 = new HashDictionary<int, int>();
+            var dict2 = new HashDictionary<int, int>();
 
             for (int i = 0; i < 5; i++)
             {

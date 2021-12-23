@@ -2,7 +2,7 @@
 // See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 // C5 example: This should fail because C5 does not know how to build
-// a comparer for Object.
+// a comparer for object.
 
 // Similarly for Rec<string,int>
 

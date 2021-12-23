@@ -3,18 +3,18 @@
 
 using NUnit.Framework;
 using System;
+using SCG = System.Collections.Generic;
+
 namespace C5.Tests.hashtable.bag
 {
-    using CollectionOfInt = HashBag<int>;
-
     [TestFixture]
     public class GenericTesters
     {
         [Test]
         public void TestEvents()
         {
-            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new Templates.Events.CollectionTester<CollectionOfInt>().Test(factory);
+            static HashBag<int> factory() => new HashBag<int>(TenEqualityComparer.Default);
+            new Templates.Events.CollectionTester<HashBag<int>>().Test(factory);
         }
     }
 
@@ -22,7 +22,6 @@ namespace C5.Tests.hashtable.bag
     {
         public static ICollection<T> New<T>() { return new HashBag<T>(); }
     }
-
 
     [TestFixture]
     public class Formatting
@@ -90,8 +89,8 @@ namespace C5.Tests.hashtable.bag
         [Test]
         public void FindOrAdd()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
-            System.Collections.Generic.KeyValuePair<int, int> q = new System.Collections.Generic.KeyValuePair<int, int>();
+            var p = new SCG.KeyValuePair<int, int>(3, 78);
+            var q = new SCG.KeyValuePair<int, int>();
 
             Assert.IsTrue(lst.FindOrAdd(ref p));
             Assert.AreEqual(3, p.Key);
@@ -143,14 +142,14 @@ namespace C5.Tests.hashtable.bag
         [Test]
         public void UpdateOrAdd2()
         {
-            ICollection<String> coll = new HashBag<String>();
+            ICollection<string> coll = new HashBag<string>();
             // s1 and s2 are distinct objects but contain the same text:
-            String s1 = "abc", s2 = ("def" + s1).Substring(3);
+            string s1 = "abc", s2 = ("def" + s1)[3..];
             Assert.IsFalse(coll.UpdateOrAdd(s1, out string old));
             Assert.AreEqual(null, old);
             Assert.IsTrue(coll.UpdateOrAdd(s2, out old));
-            Assert.IsTrue(Object.ReferenceEquals(s1, old));
-            Assert.IsFalse(Object.ReferenceEquals(s2, old));
+            Assert.IsTrue(ReferenceEquals(s1, old));
+            Assert.IsFalse(ReferenceEquals(s2, old));
         }
 
         [Test]
@@ -461,8 +460,7 @@ namespace C5.Tests.hashtable.bag
             hashbag = null;
         }
 
-
-        private string aeq(int[] a, params int[] b)
+        private static string Aeq(int[] a, params int[] b)
         {
             if (a.Length != b.Length)
             {
@@ -484,7 +482,7 @@ namespace C5.Tests.hashtable.bag
         [Test]
         public void ToArray()
         {
-            Assert.AreEqual("Alles klar", aeq(hashbag.ToArray()));
+            Assert.AreEqual("Alles klar", Aeq(hashbag.ToArray()));
             hashbag.Add(7);
             hashbag.Add(3);
             hashbag.Add(10);
@@ -493,7 +491,7 @@ namespace C5.Tests.hashtable.bag
             int[] r = hashbag.ToArray();
 
             Array.Sort(r);
-            Assert.AreEqual("Alles klar", aeq(r, 3, 3, 7, 10));
+            Assert.AreEqual("Alles klar", Aeq(r, 3, 3, 7, 10));
         }
 
 
@@ -502,21 +500,21 @@ namespace C5.Tests.hashtable.bag
         {
             //Note: for small ints the itemequalityComparer is the identity!
             hashbag.CopyTo(a, 1);
-            Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009));
+            Assert.AreEqual("Alles klar", Aeq(a, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009));
             hashbag.Add(6);
             hashbag.CopyTo(a, 2);
-            Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 6, 1003, 1004, 1005, 1006, 1007, 1008, 1009));
+            Assert.AreEqual("Alles klar", Aeq(a, 1000, 1001, 6, 1003, 1004, 1005, 1006, 1007, 1008, 1009));
             hashbag.Add(4);
             hashbag.Add(6);
             hashbag.Add(9);
             hashbag.CopyTo(a, 4);
 
             //TODO: make independent of interequalityComparer
-            Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 6, 1003, 6, 6, 9, 4, 1008, 1009));
+            Assert.AreEqual("Alles klar", Aeq(a, 1000, 1001, 6, 1003, 6, 6, 9, 4, 1008, 1009));
             hashbag.Clear();
             hashbag.Add(7);
             hashbag.CopyTo(a, 9);
-            Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 6, 1003, 6, 6, 9, 4, 1008, 7));
+            Assert.AreEqual("Alles klar", Aeq(a, 1000, 1001, 6, 1003, 6, 6, 9, 4, 1008, 7));
         }
 
 

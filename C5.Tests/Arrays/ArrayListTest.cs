@@ -432,70 +432,70 @@ namespace C5.Tests.arrays.list
             public void ViewChanged()
             {
                 IList<int> w = list.View(0, 0);
-                Assert.Throws<UnlistenableEventException>(() => w.CollectionChanged += new CollectionChangedHandler<int>(w_CollectionChanged));
+                Assert.Throws<UnlistenableEventException>(() => w.CollectionChanged += new CollectionChangedHandler<int>(CollectionChangedEventArgs));
             }
 
             [Test]
             public void ViewCleared()
             {
                 IList<int> w = list.View(0, 0);
-                Assert.Throws<UnlistenableEventException>(() => w.CollectionCleared += new CollectionClearedHandler<int>(w_CollectionCleared));
+                Assert.Throws<UnlistenableEventException>(() => w.CollectionCleared += new CollectionClearedHandler<int>(CollectionClearedEventArgs));
             }
 
             [Test]
             public void ViewAdded()
             {
                 IList<int> w = list.View(0, 0);
-                Assert.Throws<UnlistenableEventException>(() => w.ItemsAdded += new ItemsAddedHandler<int>(w_ItemAdded));
+                Assert.Throws<UnlistenableEventException>(() => w.ItemsAdded += new ItemsAddedHandler<int>(ItemAddedEventArgs));
             }
 
             [Test]
             public void ViewInserted()
             {
                 IList<int> w = list.View(0, 0);
-                Assert.Throws<UnlistenableEventException>(() => w.ItemInserted += new ItemInsertedHandler<int>(w_ItemInserted));
+                Assert.Throws<UnlistenableEventException>(() => w.ItemInserted += new ItemInsertedHandler<int>(ItemInsertedEventArgs));
             }
 
             [Test]
             public void ViewRemoved()
             {
                 IList<int> w = list.View(0, 0);
-                Assert.Throws<UnlistenableEventException>(() => w.ItemsRemoved += new ItemsRemovedHandler<int>(w_ItemRemoved));
+                Assert.Throws<UnlistenableEventException>(() => w.ItemsRemoved += new ItemsRemovedHandler<int>(ItemRemovedEventArgs));
             }
 
             [Test]
             public void ViewRemovedAt()
             {
                 IList<int> w = list.View(0, 0);
-                Assert.Throws<UnlistenableEventException>(() => w.ItemRemovedAt += new ItemRemovedAtHandler<int>(w_ItemRemovedAt));
+                Assert.Throws<UnlistenableEventException>(() => w.ItemRemovedAt += new ItemRemovedAtHandler<int>(ItemRemovedAtEventArgs));
             }
 
-            private void w_CollectionChanged(object sender)
+            private void CollectionChangedEventArgs(object sender)
             {
                 throw new NotImplementedException();
             }
 
-            private void w_CollectionCleared(object sender, ClearedEventArgs eventArgs)
+            private void CollectionClearedEventArgs(object sender, ClearedEventArgs eventArgs)
             {
                 throw new NotImplementedException();
             }
 
-            private void w_ItemAdded(object sender, ItemCountEventArgs<int> eventArgs)
+            private void ItemAddedEventArgs(object sender, ItemCountEventArgs<int> eventArgs)
             {
                 throw new NotImplementedException();
             }
 
-            private void w_ItemInserted(object sender, ItemAtEventArgs<int> eventArgs)
+            private void ItemInsertedEventArgs(object sender, ItemAtEventArgs<int> eventArgs)
             {
                 throw new NotImplementedException();
             }
 
-            private void w_ItemRemoved(object sender, ItemCountEventArgs<int> eventArgs)
+            private void ItemRemovedEventArgs(object sender, ItemCountEventArgs<int> eventArgs)
             {
                 throw new NotImplementedException();
             }
 
-            private void w_ItemRemovedAt(object sender, ItemAtEventArgs<int> eventArgs)
+            private void ItemRemovedAtEventArgs(object sender, ItemAtEventArgs<int> eventArgs)
             {
                 throw new NotImplementedException();
             }
@@ -504,7 +504,6 @@ namespace C5.Tests.arrays.list
         [TestFixture]
         public class StackQueue
         {
-
             private ArrayList<int> list;
             private CollectionEventList<int> seen;
 
@@ -512,7 +511,7 @@ namespace C5.Tests.arrays.list
             public void Init()
             {
                 list = new ArrayList<int>(TenEqualityComparer.Default);
-                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
+                seen = new CollectionEventList<int>(SCG.EqualityComparer<int>.Default);
             }
 
             private void Listen() { seen.Listen(list, EventType.All); }
@@ -1962,7 +1961,7 @@ namespace C5.Tests.arrays.list
             [Test]
             public void UpdateOrAdd2()
             {
-                ICollection<String> coll = new ArrayList<String>();
+                ICollection<string> coll = new ArrayList<string>();
                 // s1 and s2 are distinct objects but contain the same text:
                 string s1 = "abc", s2 = ("def" + s1)[3..];
                 Assert.IsFalse(coll.UpdateOrAdd(s1, out string old));

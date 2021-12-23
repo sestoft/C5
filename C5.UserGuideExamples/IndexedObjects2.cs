@@ -194,7 +194,7 @@ public class PersonIndexedObjects2
     public static readonly IIndex<string, PersonIndexedObjects2> NameIndex = new HashIndex<string, PersonIndexedObjects2>(p => p.Name);
     public static readonly IIndex<int, PersonIndexedObjects2> YearIndex = new HashIndex<int, PersonIndexedObjects2>(p => p.Date / 10000);
     public static readonly IIndex<int, PersonIndexedObjects2> DayIndex = new HashIndex<int, PersonIndexedObjects2>(p => p.Date % 100);
-    public static readonly TreeIndex<Month, PersonIndexedObjects2> MonthIndex = new TreeIndex<Month, PersonIndexedObjects2>(p => (Month)(p.Date / 100 % 100));
+    public static readonly TreeIndex<Month, PersonIndexedObjects2> MonthIndex = new(p => (Month)(p.Date / 100 % 100));
 
     // Defining and initializing the indexing delegate
     private static event Action<PersonIndexedObjects2> Index;

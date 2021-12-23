@@ -3,20 +3,19 @@
 
 using NUnit.Framework;
 using System;
+using System.Threading;
 using SCG = System.Collections.Generic;
 
 namespace C5.Tests.arrays.sorted
 {
-    using CollectionOfInt = SortedArray<int>;
-
     [TestFixture]
     public class GenericTesters
     {
         [Test]
         public void TestEvents()
         {
-            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory);
+            static SortedArray<int> factory() => new(TenEqualityComparer.Default);
+            new Templates.Events.SortedIndexedTester<SortedArray<int>>().Test(factory);
         }
     }
 
@@ -146,13 +145,13 @@ namespace C5.Tests.arrays.sorted
             Assert.IsTrue(IC.Eq(array.RangeFrom(12), new int[] { 12, 14, 16, 18, 20 }));
             Assert.IsTrue(IC.Eq(array.RangeFrom(2), all));
             Assert.IsTrue(IC.Eq(array.RangeFrom(1), all));
-            Assert.IsTrue(IC.Eq(array.RangeFrom(21), new int[] { }));
+            Assert.IsTrue(IC.Eq(array.RangeFrom(21), Array.Empty<int>()));
             Assert.IsTrue(IC.Eq(array.RangeFrom(20), new int[] { 20 }));
             Assert.IsTrue(IC.Eq(array.RangeTo(8), new int[] { 2, 4, 6 }));
             Assert.IsTrue(IC.Eq(array.RangeTo(7), new int[] { 2, 4, 6 }));
             Assert.AreEqual(3, array.RangeTo(7).Count);
-            Assert.IsTrue(IC.Eq(array.RangeTo(2), new int[] { }));
-            Assert.IsTrue(IC.Eq(array.RangeTo(1), new int[] { }));
+            Assert.IsTrue(IC.Eq(array.RangeTo(2), Array.Empty<int>()));
+            Assert.IsTrue(IC.Eq(array.RangeTo(1), Array.Empty<int>()));
             Assert.IsTrue(IC.Eq(array.RangeTo(3), new int[] { 2 }));
             Assert.IsTrue(IC.Eq(array.RangeTo(20), new int[] { 2, 4, 6, 8, 10, 12, 14, 16, 18 }));
             Assert.IsTrue(IC.Eq(array.RangeTo(21), all));
@@ -178,12 +177,12 @@ namespace C5.Tests.arrays.sorted
             Assert.IsTrue(IC.Eq(array.RangeFrom(12).Backwards(), new int[] { 20, 18, 16, 14, 12 }));
             Assert.IsTrue(IC.Eq(array.RangeFrom(2).Backwards(), lla));
             Assert.IsTrue(IC.Eq(array.RangeFrom(1).Backwards(), lla));
-            Assert.IsTrue(IC.Eq(array.RangeFrom(21).Backwards(), new int[] { }));
+            Assert.IsTrue(IC.Eq(array.RangeFrom(21).Backwards(), Array.Empty<int>()));
             Assert.IsTrue(IC.Eq(array.RangeFrom(20).Backwards(), new int[] { 20 }));
             Assert.IsTrue(IC.Eq(array.RangeTo(8).Backwards(), new int[] { 6, 4, 2 }));
             Assert.IsTrue(IC.Eq(array.RangeTo(7).Backwards(), new int[] { 6, 4, 2 }));
-            Assert.IsTrue(IC.Eq(array.RangeTo(2).Backwards(), new int[] { }));
-            Assert.IsTrue(IC.Eq(array.RangeTo(1).Backwards(), new int[] { }));
+            Assert.IsTrue(IC.Eq(array.RangeTo(2).Backwards(), Array.Empty<int>()));
+            Assert.IsTrue(IC.Eq(array.RangeTo(1).Backwards(), Array.Empty<int>()));
             Assert.IsTrue(IC.Eq(array.RangeTo(3).Backwards(), new int[] { 2 }));
             Assert.IsTrue(IC.Eq(array.RangeTo(20).Backwards(), new int[] { 18, 16, 14, 12, 10, 8, 6, 4, 2 }));
             Assert.IsTrue(IC.Eq(array.RangeTo(21).Backwards(), lla));
@@ -311,7 +310,7 @@ namespace C5.Tests.arrays.sorted
             Assert.Throws<NoSuchItemException>(() => array.Choose());
         }
 
-        private void loadup()
+        private void Loadup()
         {
             for (int i = 10; i < 20; i++)
             {
@@ -320,12 +319,11 @@ namespace C5.Tests.arrays.sorted
             }
         }
 
-
         [Test]
         public void NoDuplicatesEtc()
         {
             Assert.IsFalse(array.AllowsDuplicates);
-            loadup();
+            Loadup();
             Assert.IsFalse(array.AllowsDuplicates);
             Assert.AreEqual(Speed.Log, array.ContainsSpeed);
             Assert.IsTrue(array.Comparer.Compare(2, 3) < 0);
@@ -355,13 +353,13 @@ namespace C5.Tests.arrays.sorted
     [TestFixture]
     public class FindOrAdd
     {
-        private SortedArray<System.Collections.Generic.KeyValuePair<int, string>> bag;
+        private SortedArray<SCG.KeyValuePair<int, string>> bag;
 
 
         [SetUp]
         public void Init()
         {
-            bag = new SortedArray<System.Collections.Generic.KeyValuePair<int, string>>(new KeyValuePairComparer<int, string>(new IC()));
+            bag = new SortedArray<SCG.KeyValuePair<int, string>>(new KeyValuePairComparer<int, string>(new IC()));
         }
 
 
@@ -375,7 +373,7 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void Test()
         {
-            SCG.KeyValuePair<int, string> p = new SCG.KeyValuePair<int, string>(3, "tre");
+            var p = new SCG.KeyValuePair<int, string>(3, "tre");
 
             Assert.IsFalse(bag.FindOrAdd(ref p));
             p = new SCG.KeyValuePair<int, string>(p.Key, "drei");
@@ -490,8 +488,7 @@ namespace C5.Tests.arrays.sorted
         [TearDown]
         public void Dispose() { tree = null; }
 
-
-        private string aeq(int[] a, params int[] b)
+        private static string Aeq(int[] a, params int[] b)
         {
             if (a.Length != b.Length)
             {
@@ -513,10 +510,10 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void ToArray()
         {
-            Assert.AreEqual("Alles klar", aeq(tree.ToArray()));
+            Assert.AreEqual("Alles klar", Aeq(tree.ToArray()));
             tree.Add(7);
             tree.Add(4);
-            Assert.AreEqual("Alles klar", aeq(tree.ToArray(), 4, 7));
+            Assert.AreEqual("Alles klar", Aeq(tree.ToArray(), 4, 7));
         }
 
 
@@ -524,18 +521,18 @@ namespace C5.Tests.arrays.sorted
         public void CopyTo()
         {
             tree.CopyTo(a, 1);
-            Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009));
+            Assert.AreEqual("Alles klar", Aeq(a, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009));
             tree.Add(6);
             tree.CopyTo(a, 2);
-            Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 6, 1003, 1004, 1005, 1006, 1007, 1008, 1009));
+            Assert.AreEqual("Alles klar", Aeq(a, 1000, 1001, 6, 1003, 1004, 1005, 1006, 1007, 1008, 1009));
             tree.Add(4);
             tree.Add(9);
             tree.CopyTo(a, 4);
-            Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 6, 1003, 4, 6, 9, 1007, 1008, 1009));
+            Assert.AreEqual("Alles klar", Aeq(a, 1000, 1001, 6, 1003, 4, 6, 9, 1007, 1008, 1009));
             tree.Clear();
             tree.Add(7);
             tree.CopyTo(a, 9);
-            Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 6, 1003, 4, 6, 9, 1007, 1008, 7));
+            Assert.AreEqual("Alles klar", Aeq(a, 1000, 1001, 6, 1003, 4, 6, 9, 1007, 1008, 7));
         }
 
 
@@ -566,16 +563,16 @@ namespace C5.Tests.arrays.sorted
     [TestFixture]
     public class Combined
     {
-        private IIndexedSorted<System.Collections.Generic.KeyValuePair<int, int>> lst;
+        private IIndexedSorted<SCG.KeyValuePair<int, int>> lst;
 
 
         [SetUp]
         public void Init()
         {
-            lst = new SortedArray<System.Collections.Generic.KeyValuePair<int, int>>(new KeyValuePairComparer<int, int>(new IC()));
+            lst = new SortedArray<SCG.KeyValuePair<int, int>>(new KeyValuePairComparer<int, int>(new IC()));
             for (int i = 0; i < 10; i++)
             {
-                lst.Add(new System.Collections.Generic.KeyValuePair<int, int>(i, i + 30));
+                lst.Add(new SCG.KeyValuePair<int, int>(i, i + 30));
             }
         }
 
@@ -586,12 +583,12 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void Find()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+            var p = new SCG.KeyValuePair<int, int>(3, 78);
 
             Assert.IsTrue(lst.Find(ref p));
             Assert.AreEqual(3, p.Key);
             Assert.AreEqual(33, p.Value);
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+            p = new SCG.KeyValuePair<int, int>(13, 78);
             Assert.IsFalse(lst.Find(ref p));
         }
 
@@ -599,40 +596,38 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void FindOrAdd()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+            var p = new SCG.KeyValuePair<int, int>(3, 78);
 
             Assert.IsTrue(lst.FindOrAdd(ref p));
             Assert.AreEqual(3, p.Key);
             Assert.AreEqual(33, p.Value);
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
+            p = new SCG.KeyValuePair<int, int>(13, 79);
             Assert.IsFalse(lst.FindOrAdd(ref p));
             Assert.AreEqual(13, lst[10].Key);
             Assert.AreEqual(79, lst[10].Value);
         }
 
-
         [Test]
         public void Update()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+            var p = new SCG.KeyValuePair<int, int>(3, 78);
 
             Assert.IsTrue(lst.Update(p));
             Assert.AreEqual(3, lst[3].Key);
             Assert.AreEqual(78, lst[3].Value);
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+            p = new SCG.KeyValuePair<int, int>(13, 78);
             Assert.IsFalse(lst.Update(p));
         }
-
 
         [Test]
         public void UpdateOrAdd1()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+            var p = new SCG.KeyValuePair<int, int>(3, 78);
 
             Assert.IsTrue(lst.UpdateOrAdd(p));
             Assert.AreEqual(3, lst[3].Key);
             Assert.AreEqual(78, lst[3].Value);
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
+            p = new SCG.KeyValuePair<int, int>(13, 79);
             Assert.IsFalse(lst.UpdateOrAdd(p));
             Assert.AreEqual(13, lst[10].Key);
             Assert.AreEqual(79, lst[10].Value);
@@ -641,21 +636,21 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void UpdateOrAdd2()
         {
-            ICollection<String> coll = new SortedArray<String>();
+            ICollection<string> coll = new SortedArray<string>();
             // s1 and s2 are distinct objects but contain the same text:
-            String s1 = "abc", s2 = ("def" + s1).Substring(3);
+            string s1 = "abc", s2 = ("def" + s1)[3..];
             Assert.IsFalse(coll.UpdateOrAdd(s1, out string old));
             Assert.AreEqual(null, old);
             Assert.IsTrue(coll.UpdateOrAdd(s2, out old));
-            Assert.IsTrue(Object.ReferenceEquals(s1, old));
-            Assert.IsFalse(Object.ReferenceEquals(s2, old));
+            Assert.IsTrue(ReferenceEquals(s1, old));
+            Assert.IsFalse(ReferenceEquals(s2, old));
         }
 
         [Test]
         public void UpdateOrAddWithExpand()
         {
             // bug20071217
-            SortedArray<double> arr = new SortedArray<double>();
+            var arr = new SortedArray<double>();
             for (int i = 0; i < 50; i++)
             {
                 arr.UpdateOrAdd(i + 0.1);
@@ -668,7 +663,7 @@ namespace C5.Tests.arrays.sorted
         public void FindOrAddWithExpand()
         {
             // bug20071217
-            SortedArray<double> arr = new SortedArray<double>();
+            var arr = new SortedArray<double>();
             for (int i = 0; i < 50; i++)
             {
                 double iVar = i + 0.1;
@@ -681,14 +676,14 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void RemoveWithReturn()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+            var p = new SCG.KeyValuePair<int, int>(3, 78);
 
             Assert.IsTrue(lst.Remove(p, out p));
             Assert.AreEqual(3, p.Key);
             Assert.AreEqual(33, p.Value);
             Assert.AreEqual(4, lst[3].Key);
             Assert.AreEqual(34, lst[3].Value);
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+            p = new SCG.KeyValuePair<int, int>(13, 78);
             Assert.IsFalse(lst.Remove(p, out _));
         }
     }
@@ -891,7 +886,7 @@ namespace C5.Tests.arrays.sorted
         }
 
 
-        private void loadup()
+        private void Loadup()
         {
             for (int i = 0; i < 20; i++)
             {
@@ -902,7 +897,7 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void FindPredecessor()
         {
-            loadup();
+            Loadup();
             Assert.IsTrue(tree.TryPredecessor(7, out int res) && res == 6);
             Assert.IsTrue(tree.TryPredecessor(8, out res) && res == 6);
 
@@ -925,7 +920,7 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void FindWeakPredecessor()
         {
-            loadup();
+            Loadup();
             Assert.IsTrue(tree.TryWeakPredecessor(7, out int res) && res == 6);
             Assert.IsTrue(tree.TryWeakPredecessor(8, out res) && res == 8);
 
@@ -948,7 +943,7 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void FindSuccessor()
         {
-            loadup();
+            Loadup();
             Assert.IsTrue(tree.TrySuccessor(7, out int res) && res == 8);
             Assert.IsTrue(tree.TrySuccessor(8, out res) && res == 10);
 
@@ -972,7 +967,7 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void FindWeakSuccessor()
         {
-            loadup();
+            Loadup();
             Assert.IsTrue(tree.TryWeakSuccessor(6, out int res) && res == 6);
             Assert.IsTrue(tree.TryWeakSuccessor(7, out res) && res == 8);
 
@@ -996,7 +991,7 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void Predecessor()
         {
-            loadup();
+            Loadup();
             Assert.AreEqual(6, tree.Predecessor(7));
             Assert.AreEqual(6, tree.Predecessor(8));
 
@@ -1023,7 +1018,7 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void WeakPredecessor()
         {
-            loadup();
+            Loadup();
             Assert.AreEqual(6, tree.WeakPredecessor(7));
             Assert.AreEqual(8, tree.WeakPredecessor(8));
 
@@ -1046,7 +1041,7 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void Successor()
         {
-            loadup();
+            Loadup();
             Assert.AreEqual(8, tree.Successor(7));
             Assert.AreEqual(10, tree.Successor(8));
 
@@ -1076,7 +1071,7 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void WeakSuccessor()
         {
-            loadup();
+            Loadup();
             Assert.AreEqual(6, tree.WeakSuccessor(6));
             Assert.AreEqual(8, tree.WeakSuccessor(7));
 
@@ -1118,7 +1113,7 @@ namespace C5.Tests.arrays.sorted
         }
 
 
-        private void loadup()
+        private void Loadup()
         {
             foreach (int i in new int[] { 1, 2, 3, 4 })
             {
@@ -1130,7 +1125,7 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void Normal()
         {
-            loadup();
+            Loadup();
             Assert.AreEqual(1, tree.FindMin());
             Assert.AreEqual(4, tree.FindMax());
             Assert.AreEqual(1, tree.DeleteMin());
@@ -1193,8 +1188,7 @@ namespace C5.Tests.arrays.sorted
             array = new SortedArray<int>(new IC());
         }
 
-
-        private void populate()
+        private void Populate()
         {
             array.Add(30);
             array.Add(50);
@@ -1202,11 +1196,10 @@ namespace C5.Tests.arrays.sorted
             array.Add(70);
         }
 
-
         [Test]
         public void ToArray()
         {
-            populate();
+            Populate();
 
             int[] a = array.ToArray();
 
@@ -1223,7 +1216,7 @@ namespace C5.Tests.arrays.sorted
         {
             Assert.AreEqual(~0, array.IndexOf(20));
             Assert.AreEqual(~0, array.LastIndexOf(20));
-            populate();
+            Populate();
             Assert.AreEqual(10, array[0]);
             Assert.AreEqual(30, array[1]);
             Assert.AreEqual(50, array[2]);
@@ -1248,7 +1241,7 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void IndexTooLarge()
         {
-            populate();
+            Populate();
             Assert.Throws<IndexOutOfRangeException>(() => Console.WriteLine(array[4]));
         }
 
@@ -1256,7 +1249,7 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void IndexTooSmall()
         {
-            populate();
+            Populate();
             Assert.Throws<IndexOutOfRangeException>(() => Console.WriteLine(array[-1]));
         }
 
@@ -1264,7 +1257,7 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void FilledTreeOutsideInput()
         {
-            populate();
+            Populate();
             Assert.AreEqual(0, array.CountFrom(90));
             Assert.AreEqual(0, array.CountFromTo(-20, 0));
             Assert.AreEqual(0, array.CountFromTo(80, 100));
@@ -1278,7 +1271,7 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void FilledTreeIntermediateInput()
         {
-            populate();
+            Populate();
             Assert.AreEqual(3, array.CountFrom(20));
             Assert.AreEqual(1, array.CountFromTo(20, 40));
             Assert.AreEqual(2, array.CountTo(40));
@@ -1288,7 +1281,7 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void FilledTreeMatchingInput()
         {
-            populate();
+            Populate();
             Assert.AreEqual(3, array.CountFrom(30));
             Assert.AreEqual(2, array.CountFromTo(30, 70));
             Assert.AreEqual(0, array.CountFromTo(50, 30));
@@ -1491,7 +1484,6 @@ namespace C5.Tests.arrays.sorted
 
             private SCG.IComparer<int> ic;
 
-
             [SetUp]
             public void Init()
             {
@@ -1499,47 +1491,39 @@ namespace C5.Tests.arrays.sorted
                 array = new SortedArray<int>(ic);
             }
 
+            private bool Never(int i) { return false; }
 
-            private bool never(int i) { return false; }
+            private bool Always(int i) { return true; }
 
+            private bool Even(int i) { return i % 2 == 0; }
 
-            private bool always(int i) { return true; }
+            private string TheMap(int i) { return string.Format("AA {0,4} BB", i); }
 
-
-            private bool even(int i) { return i % 2 == 0; }
-
-
-            private string themap(int i) { return string.Format("AA {0,4} BB", i); }
-
-
-            private string badmap(int i) { return string.Format("AA {0} BB", i); }
-
+            private string BadMap(int i) { return string.Format("AA {0} BB", i); }
 
             private int appfield1;
 
             private int appfield2;
 
-
-            private void apply(int i) { appfield1++; appfield2 += i * i; }
-
+            private void Apply(int i) { appfield1++; appfield2 += i * i; }
 
             [Test]
             public void Apply()
             {
-                Simple simple1 = new Simple();
+                var simple1 = new Simple();
 
-                array.Apply(new Action<int>(simple1.apply));
+                array.Apply(new Action<int>(simple1.Apply));
                 Assert.AreEqual(0, simple1.appfield1);
                 Assert.AreEqual(0, simple1.appfield2);
 
-                Simple simple2 = new Simple();
+                var simple2 = new Simple();
 
                 for (int i = 0; i < 10; i++)
                 {
                     array.Add(i);
                 }
 
-                array.Apply(new Action<int>(simple2.apply));
+                array.Apply(new Action<int>(simple2.Apply));
                 Assert.AreEqual(10, simple2.appfield1);
                 Assert.AreEqual(285, simple2.appfield2);
             }
@@ -1548,99 +1532,99 @@ namespace C5.Tests.arrays.sorted
             [Test]
             public void All()
             {
-                Assert.IsTrue(array.All(new Func<int, bool>(never)));
-                Assert.IsTrue(array.All(new Func<int, bool>(even)));
-                Assert.IsTrue(array.All(new Func<int, bool>(always)));
+                Assert.IsTrue(array.All(new Func<int, bool>(Never)));
+                Assert.IsTrue(array.All(new Func<int, bool>(Even)));
+                Assert.IsTrue(array.All(new Func<int, bool>(Always)));
                 for (int i = 0; i < 10; i++)
                 {
                     array.Add(i);
                 }
 
-                Assert.IsFalse(array.All(new Func<int, bool>(never)));
-                Assert.IsFalse(array.All(new Func<int, bool>(even)));
-                Assert.IsTrue(array.All(new Func<int, bool>(always)));
+                Assert.IsFalse(array.All(new Func<int, bool>(Never)));
+                Assert.IsFalse(array.All(new Func<int, bool>(Even)));
+                Assert.IsTrue(array.All(new Func<int, bool>(Always)));
                 array.Clear();
                 for (int i = 0; i < 10; i++)
                 {
                     array.Add(i * 2);
                 }
 
-                Assert.IsFalse(array.All(new Func<int, bool>(never)));
-                Assert.IsTrue(array.All(new Func<int, bool>(even)));
-                Assert.IsTrue(array.All(new Func<int, bool>(always)));
+                Assert.IsFalse(array.All(new Func<int, bool>(Never)));
+                Assert.IsTrue(array.All(new Func<int, bool>(Even)));
+                Assert.IsTrue(array.All(new Func<int, bool>(Always)));
                 array.Clear();
                 for (int i = 0; i < 10; i++)
                 {
                     array.Add(i * 2 + 1);
                 }
 
-                Assert.IsFalse(array.All(new Func<int, bool>(never)));
-                Assert.IsFalse(array.All(new Func<int, bool>(even)));
-                Assert.IsTrue(array.All(new Func<int, bool>(always)));
+                Assert.IsFalse(array.All(new Func<int, bool>(Never)));
+                Assert.IsFalse(array.All(new Func<int, bool>(Even)));
+                Assert.IsTrue(array.All(new Func<int, bool>(Always)));
             }
 
 
             [Test]
             public void Exists()
             {
-                Assert.IsFalse(array.Exists(new Func<int, bool>(never)));
-                Assert.IsFalse(array.Exists(new Func<int, bool>(even)));
-                Assert.IsFalse(array.Exists(new Func<int, bool>(always)));
+                Assert.IsFalse(array.Exists(new Func<int, bool>(Never)));
+                Assert.IsFalse(array.Exists(new Func<int, bool>(Even)));
+                Assert.IsFalse(array.Exists(new Func<int, bool>(Always)));
                 for (int i = 0; i < 10; i++)
                 {
                     array.Add(i);
                 }
 
-                Assert.IsFalse(array.Exists(new Func<int, bool>(never)));
-                Assert.IsTrue(array.Exists(new Func<int, bool>(even)));
-                Assert.IsTrue(array.Exists(new Func<int, bool>(always)));
+                Assert.IsFalse(array.Exists(new Func<int, bool>(Never)));
+                Assert.IsTrue(array.Exists(new Func<int, bool>(Even)));
+                Assert.IsTrue(array.Exists(new Func<int, bool>(Always)));
                 array.Clear();
                 for (int i = 0; i < 10; i++)
                 {
                     array.Add(i * 2);
                 }
 
-                Assert.IsFalse(array.Exists(new Func<int, bool>(never)));
-                Assert.IsTrue(array.Exists(new Func<int, bool>(even)));
-                Assert.IsTrue(array.Exists(new Func<int, bool>(always)));
+                Assert.IsFalse(array.Exists(new Func<int, bool>(Never)));
+                Assert.IsTrue(array.Exists(new Func<int, bool>(Even)));
+                Assert.IsTrue(array.Exists(new Func<int, bool>(Always)));
                 array.Clear();
                 for (int i = 0; i < 10; i++)
                 {
                     array.Add(i * 2 + 1);
                 }
 
-                Assert.IsFalse(array.Exists(new Func<int, bool>(never)));
-                Assert.IsFalse(array.Exists(new Func<int, bool>(even)));
-                Assert.IsTrue(array.Exists(new Func<int, bool>(always)));
+                Assert.IsFalse(array.Exists(new Func<int, bool>(Never)));
+                Assert.IsFalse(array.Exists(new Func<int, bool>(Even)));
+                Assert.IsTrue(array.Exists(new Func<int, bool>(Always)));
             }
 
 
             [Test]
             public void FindAll()
             {
-                Assert.AreEqual(0, array.FindAll(new Func<int, bool>(never)).Count);
+                Assert.AreEqual(0, array.FindAll(new Func<int, bool>(Never)).Count);
                 for (int i = 0; i < 10; i++)
                 {
                     array.Add(i);
                 }
 
-                Assert.AreEqual(0, array.FindAll(new Func<int, bool>(never)).Count);
-                Assert.AreEqual(10, array.FindAll(new Func<int, bool>(always)).Count);
-                Assert.AreEqual(5, array.FindAll(new Func<int, bool>(even)).Count);
-                Assert.IsTrue(((SortedArray<int>)array.FindAll(new Func<int, bool>(even))).Check());
+                Assert.AreEqual(0, array.FindAll(new Func<int, bool>(Never)).Count);
+                Assert.AreEqual(10, array.FindAll(new Func<int, bool>(Always)).Count);
+                Assert.AreEqual(5, array.FindAll(new Func<int, bool>(Even)).Count);
+                Assert.IsTrue(((SortedArray<int>)array.FindAll(new Func<int, bool>(Even))).Check());
             }
 
 
             [Test]
             public void Map()
             {
-                Assert.AreEqual(0, array.Map(new Func<int, string>(themap), new SC()).Count);
+                Assert.AreEqual(0, array.Map(new Func<int, string>(TheMap), new SC()).Count);
                 for (int i = 0; i < 11; i++)
                 {
                     array.Add(i * i * i);
                 }
 
-                IIndexedSorted<string> res = array.Map(new Func<int, string>(themap), new SC());
+                IIndexedSorted<string> res = array.Map(new Func<int, string>(TheMap), new SC());
 
                 Assert.IsTrue(((SortedArray<string>)res).Check());
                 Assert.AreEqual(11, res.Count);
@@ -1659,7 +1643,7 @@ namespace C5.Tests.arrays.sorted
                     array.Add(i * i * i);
                 }
 
-                var exception = Assert.Throws<ArgumentException>(() => { ISorted<string> res = array.Map(new Func<int, string>(badmap), new SC()); });
+                var exception = Assert.Throws<ArgumentException>(() => { ISorted<string> res = array.Map(new Func<int, string>(BadMap), new SC()); });
                 Assert.AreEqual("mapper not monotonic", exception.Message);
             }
 
@@ -1760,18 +1744,14 @@ namespace C5.Tests.arrays.sorted
         }
     }
 
-
-
-
     namespace MultiOps
     {
         [TestFixture]
         public class AddAll
         {
-            private int sqr(int i) { return i * i; }
+            private int Sqr(int i) { return i * i; }
 
             private SortedArray<int> array;
-
 
             [SetUp]
             public void Init() { array = new SortedArray<int>(new IC()); }
@@ -1780,7 +1760,7 @@ namespace C5.Tests.arrays.sorted
             [Test]
             public void EmptyEmpty()
             {
-                array.AddAll(new FunEnumerable(0, new Func<int, int>(sqr)));
+                array.AddAll(new FunEnumerable(0, new Func<int, int>(Sqr)));
                 Assert.AreEqual(0, array.Count);
                 Assert.IsTrue(array.Check());
             }
@@ -1794,7 +1774,7 @@ namespace C5.Tests.arrays.sorted
                     array.Add(i);
                 }
 
-                array.AddAll(new FunEnumerable(0, new Func<int, int>(sqr)));
+                array.AddAll(new FunEnumerable(0, new Func<int, int>(Sqr)));
                 Assert.AreEqual(5, array.Count);
                 Assert.IsTrue(array.Check());
             }
@@ -1803,7 +1783,7 @@ namespace C5.Tests.arrays.sorted
             [Test]
             public void EmptySome()
             {
-                array.AddAll(new FunEnumerable(4, new Func<int, int>(sqr)));
+                array.AddAll(new FunEnumerable(4, new Func<int, int>(Sqr)));
                 Assert.AreEqual(4, array.Count);
                 Assert.IsTrue(array.Check());
                 Assert.AreEqual(0, array[0]);
@@ -1821,7 +1801,7 @@ namespace C5.Tests.arrays.sorted
                     array.Add(i);
                 }
 
-                array.AddAll(new FunEnumerable(4, new Func<int, int>(sqr)));
+                array.AddAll(new FunEnumerable(4, new Func<int, int>(Sqr)));
                 Assert.AreEqual(9, array.Count);
                 Assert.IsTrue(array.Check());
                 Assert.IsTrue(IC.Eq(array, 0, 1, 3, 4, 5, 6, 7, 8, 9));
@@ -1837,27 +1817,22 @@ namespace C5.Tests.arrays.sorted
         [TestFixture]
         public class AddSorted
         {
-            private int sqr(int i) { return i * i; }
+            private int Sqr(int i) { return i * i; }
 
-
-            private int bad(int i) { return i * (5 - i); }
+            private int Bad(int i) { return i * (5 - i); }
 
             private SortedArray<int> array;
-
 
             [SetUp]
             public void Init() { array = new SortedArray<int>(new IC()); }
 
-
             [Test]
             public void EmptyEmpty()
             {
-                array.AddSorted(new FunEnumerable(0, new Func<int, int>(sqr)));
+                array.AddSorted(new FunEnumerable(0, new Func<int, int>(Sqr)));
                 Assert.AreEqual(0, array.Count);
                 Assert.IsTrue(array.Check());
             }
-
-
 
             [Test]
             public void SomeEmpty()
@@ -1867,17 +1842,15 @@ namespace C5.Tests.arrays.sorted
                     array.Add(i);
                 }
 
-                array.AddSorted(new FunEnumerable(0, new Func<int, int>(sqr)));
+                array.AddSorted(new FunEnumerable(0, new Func<int, int>(Sqr)));
                 Assert.AreEqual(5, array.Count);
                 Assert.IsTrue(array.Check());
             }
 
-
-
             [Test]
             public void EmptySome()
             {
-                array.AddSorted(new FunEnumerable(4, new Func<int, int>(sqr)));
+                array.AddSorted(new FunEnumerable(4, new Func<int, int>(Sqr)));
                 Assert.AreEqual(4, array.Count);
                 Assert.IsTrue(array.Check());
                 Assert.AreEqual(0, array[0]);
@@ -1885,8 +1858,6 @@ namespace C5.Tests.arrays.sorted
                 Assert.AreEqual(4, array[2]);
                 Assert.AreEqual(9, array[3]);
             }
-
-
 
             [Test]
             public void SomeSome()
@@ -1896,7 +1867,7 @@ namespace C5.Tests.arrays.sorted
                     array.Add(i);
                 }
 
-                array.AddSorted(new FunEnumerable(4, new Func<int, int>(sqr)));
+                array.AddSorted(new FunEnumerable(4, new Func<int, int>(Sqr)));
                 Assert.AreEqual(9, array.Count);
                 Assert.IsTrue(array.Check());
                 Assert.IsTrue(IC.Eq(array, 0, 1, 3, 4, 5, 6, 7, 8, 9));
@@ -1905,7 +1876,7 @@ namespace C5.Tests.arrays.sorted
             [Test]
             public void EmptyBad()
             {
-                var exception = Assert.Throws<ArgumentException>(() => array.AddSorted(new FunEnumerable(9, new Func<int, int>(bad))));
+                var exception = Assert.Throws<ArgumentException>(() => array.AddSorted(new FunEnumerable(9, new Func<int, int>(Bad))));
                 Assert.AreEqual("Argument not sorted", exception.Message);
             }
 
@@ -1918,7 +1889,6 @@ namespace C5.Tests.arrays.sorted
         public class Rest
         {
             private SortedArray<int> array, array2;
-
 
             [SetUp]
             public void Init()
@@ -2103,15 +2073,14 @@ namespace C5.Tests.arrays.sorted
         public class SyncRoot
         {
             private SortedArray<int> tree;
-            private readonly Object mySyncRoot = new Object();
+            private readonly object mySyncRoot = new();
             private readonly int sz = 5000;
-
 
             [Test]
             public void Safe()
             {
-                System.Threading.Thread t1 = new System.Threading.Thread(new System.Threading.ThreadStart(safe1));
-                System.Threading.Thread t2 = new System.Threading.Thread(new System.Threading.ThreadStart(safe2));
+                var t1 = new Thread(new ThreadStart(Safe1));
+                var t2 = new Thread(new ThreadStart(Safe2));
 
                 t1.Start();
                 t2.Start();
@@ -2129,8 +2098,8 @@ namespace C5.Tests.arrays.sorted
 
                 for (int i = 0; i < 10; i++)
                 {
-                    System.Threading.Thread t1 = new System.Threading.Thread(new System.Threading.ThreadStart(unsafe1));
-                    System.Threading.Thread t2 = new System.Threading.Thread(new System.Threading.ThreadStart(unsafe2));
+                    var t1 = new Thread(new ThreadStart(Unsafe1));
+                    var t2 = new Thread(new ThreadStart(Unsafe2));
 
                     t1.Start();
                     t2.Start();
@@ -2150,8 +2119,8 @@ namespace C5.Tests.arrays.sorted
             [Test]
             public void SafeUnSafe()
             {
-                System.Threading.Thread t1 = new System.Threading.Thread(new System.Threading.ThreadStart(unsafe1));
-                System.Threading.Thread t2 = new System.Threading.Thread(new System.Threading.ThreadStart(unsafe2));
+                var t1 = new Thread(new ThreadStart(Unsafe1));
+                var t2 = new Thread(new ThreadStart(Unsafe2));
 
                 t1.Start();
                 t1.Join();
@@ -2165,7 +2134,7 @@ namespace C5.Tests.arrays.sorted
             public void Init() { tree = new SortedArray<int>(new IC()); }
 
 
-            private void unsafe1()
+            private void Unsafe1()
             {
                 for (int i = 0; i < 2 * sz; i++)
                 {
@@ -2177,9 +2146,8 @@ namespace C5.Tests.arrays.sorted
                     tree.Remove(i * 4);
                 }
             }
-
-
-            private void safe1()
+            
+            private void Safe1()
             {
                 for (int i = 0; i < 2 * sz; i++)
                 {
@@ -2198,8 +2166,7 @@ namespace C5.Tests.arrays.sorted
                 }
             }
 
-
-            private void unsafe2()
+            private void Unsafe2()
             {
                 for (int i = 2 * sz; i > 0; i--)
                 {
@@ -2212,8 +2179,7 @@ namespace C5.Tests.arrays.sorted
                 }
             }
 
-
-            private void safe2()
+            private void Safe2()
             {
                 for (int i = 2 * sz; i > 0; i--)
                 {
@@ -2261,25 +2227,19 @@ namespace C5.Tests.arrays.sorted
                 public int count = 0;
                 private readonly SortedArray<int> t;
 
-
                 public A(SortedArray<int> t) { this.t = t; }
 
+                public void Count(int i) { count++; }
 
-                public void a(int i) { count++; }
-
-
-                public void traverse() { t.Apply(new Action<int>(a)); }
+                public void Traverse() { t.Apply(new Action<int>(Count)); }
             }
-
-
-
 
             [Test]
             public void Safe()
             {
-                A a = new A(tree);
+                A a = new(tree);
 
-                a.traverse();
+                a.Traverse();
                 Assert.AreEqual(sz, a.count);
             }
 
@@ -2292,7 +2252,7 @@ namespace C5.Tests.arrays.sorted
                 for (int i = 0; i < 10; i++)
                 {
                     a[i] = new A(tree);
-                    t[i] = new System.Threading.Thread(new System.Threading.ThreadStart(a[i].traverse));
+                    t[i] = new System.Threading.Thread(new System.Threading.ThreadStart(a[i].Traverse));
                 }
 
                 for (int i = 0; i < 10; i++)

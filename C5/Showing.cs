@@ -16,14 +16,14 @@ namespace C5
     public static class Showing
     {
         /// <summary>
-        /// Show  <code>Object obj</code> by appending it to <code>stringbuilder</code>
+        /// Show  <code>object obj</code> by appending it to <code>stringbuilder</code>
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="stringbuilder"></param>
         /// <param name="rest"></param>
         /// <param name="formatProvider"></param>
         /// <returns>True if <code>obj</code> was shown completely.</returns>
-        public static bool Show(Object? obj, StringBuilder stringbuilder, ref int rest, IFormatProvider? formatProvider)
+        public static bool Show(object? obj, StringBuilder stringbuilder, ref int rest, IFormatProvider? formatProvider)
         {
             if (rest <= 0)
             {

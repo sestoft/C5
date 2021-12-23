@@ -50,7 +50,7 @@ namespace C5.Tests.arrays.hashed
             public void Init()
             {
                 list = new HashedArrayList<int>(TenEqualityComparer.Default);
-                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
+                seen = new CollectionEventList<int>(SCG.EqualityComparer<int>.Default);
             }
 
             private void Listen() { seen.Listen(list, EventType.All); }
@@ -433,7 +433,7 @@ namespace C5.Tests.arrays.hashed
             public void Init()
             {
                 list = new ArrayList<int>(TenEqualityComparer.Default);
-                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
+                seen = new CollectionEventList<int>(SCG.EqualityComparer<int>.Default);
             }
 
             private void Listen() { seen.Listen(list, EventType.All); }
@@ -1130,7 +1130,7 @@ namespace C5.Tests.arrays.hashed
             [Test]
             public void FindAll()
             {
-                bool f(int i) { return i % 2 == 0; }
+                static bool f(int i) => i % 2 == 0;
 
                 Assert.IsTrue(list.FindAll(f).IsEmpty);
                 list.Add(5); list.Add(8); list.Add(10);
@@ -1142,7 +1142,7 @@ namespace C5.Tests.arrays.hashed
             [Test]
             public void ContainsAll()
             {
-                HashedArrayList<int> list2 = new HashedArrayList<int>();
+                var list2 = new HashedArrayList<int>();
 
                 Assert.IsTrue(list.ContainsAll(list2));
                 list2.Add(4);
@@ -1157,7 +1157,7 @@ namespace C5.Tests.arrays.hashed
             [Test]
             public void RetainAll()
             {
-                HashedArrayList<int> list2 = new HashedArrayList<int>();
+                var list2 = new HashedArrayList<int>();
 
                 list.Add(4); list.Add(5); list.Add(6);
                 list2.Add(5); list2.Add(4); list2.Add(7);
@@ -1181,7 +1181,7 @@ namespace C5.Tests.arrays.hashed
             [Test]
             public void RemoveAll()
             {
-                HashedArrayList<int> list2 = new HashedArrayList<int>();
+                var list2 = new HashedArrayList<int>();
 
                 list.Add(4); list.Add(5); list.Add(6);
                 list2.Add(5); list2.Add(4); list2.Add(7);
@@ -1414,37 +1414,37 @@ namespace C5.Tests.arrays.hashed
             [Test]
             public void ThisWithUpdates()
             {
-                HashedArrayList<System.Collections.Generic.KeyValuePair<int, int>> pairlist = new HashedArrayList<System.Collections.Generic.KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>())
+                var pairlist = new HashedArrayList<SCG.KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>())
                 {
-                    new System.Collections.Generic.KeyValuePair<int, int>(10, 50),
-                    new System.Collections.Generic.KeyValuePair<int, int>(11, 51),
-                    new System.Collections.Generic.KeyValuePair<int, int>(12, 52),
-                    new System.Collections.Generic.KeyValuePair<int, int>(13, 53)
+                    new(10, 50),
+                    new(11, 51),
+                    new(12, 52),
+                    new(13, 53)
                 };
-                pairlist[2] = new System.Collections.Generic.KeyValuePair<int, int>(12, 102);
+                pairlist[2] = new SCG.KeyValuePair<int, int>(12, 102);
                 Assert.IsTrue(pairlist.Check());
-                Assert.AreEqual(new System.Collections.Generic.KeyValuePair<int, int>(12, 102), pairlist[2]);
-                pairlist[2] = new System.Collections.Generic.KeyValuePair<int, int>(22, 202);
+                Assert.AreEqual(new SCG.KeyValuePair<int, int>(12, 102), pairlist[2]);
+                pairlist[2] = new SCG.KeyValuePair<int, int>(22, 202);
                 Assert.IsTrue(pairlist.Check());
-                Assert.AreEqual(new System.Collections.Generic.KeyValuePair<int, int>(22, 202), pairlist[2]);
-                pairlist[1] = new System.Collections.Generic.KeyValuePair<int, int>(12, 303);
+                Assert.AreEqual(new SCG.KeyValuePair<int, int>(22, 202), pairlist[2]);
+                pairlist[1] = new SCG.KeyValuePair<int, int>(12, 303);
                 Assert.IsTrue(pairlist.Check());
-                Assert.AreEqual(new System.Collections.Generic.KeyValuePair<int, int>(12, 303), pairlist[1]);
-                Assert.AreEqual(new System.Collections.Generic.KeyValuePair<int, int>(22, 202), pairlist[2]);
+                Assert.AreEqual(new SCG.KeyValuePair<int, int>(12, 303), pairlist[1]);
+                Assert.AreEqual(new SCG.KeyValuePair<int, int>(22, 202), pairlist[2]);
             }
 
             [Test]
             public void ThisWithUpdatesBad()
             {
-                HashedArrayList<System.Collections.Generic.KeyValuePair<int, int>> pairlist = new HashedArrayList<System.Collections.Generic.KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>())
+                var pairlist = new HashedArrayList<SCG.KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>())
                 {
-                    new System.Collections.Generic.KeyValuePair<int, int>(10, 50),
-                    new System.Collections.Generic.KeyValuePair<int, int>(11, 51),
-                    new System.Collections.Generic.KeyValuePair<int, int>(12, 52),
-                    new System.Collections.Generic.KeyValuePair<int, int>(13, 53)
+                    new(10, 50),
+                    new(11, 51),
+                    new(12, 52),
+                    new(13, 53)
                 };
 
-                Assert.Throws<DuplicateNotAllowedException>(() => pairlist[2] = new System.Collections.Generic.KeyValuePair<int, int>(11, 102));
+                Assert.Throws<DuplicateNotAllowedException>(() => pairlist[2] = new SCG.KeyValuePair<int, int>(11, 102));
             }
 
             [Test]
@@ -1722,7 +1722,7 @@ namespace C5.Tests.arrays.hashed
             [Test]
             public void Map()
             {
-                string m(int i) { return "<<" + i + ">>"; }
+                static string m(int i) => $"<<{i}>>";
                 IList<string> r = lst.Map(m);
 
                 Assert.IsTrue(((HashedArrayList<string>)r).Check());
@@ -1860,16 +1860,16 @@ namespace C5.Tests.arrays.hashed
         [TestFixture]
         public class Combined
         {
-            private IList<System.Collections.Generic.KeyValuePair<int, int>> lst;
+            private IList<SCG.KeyValuePair<int, int>> lst;
 
 
             [SetUp]
             public void Init()
             {
-                lst = new HashedArrayList<System.Collections.Generic.KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
+                lst = new HashedArrayList<SCG.KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
                 for (int i = 0; i < 10; i++)
                 {
-                    lst.Add(new System.Collections.Generic.KeyValuePair<int, int>(i, i + 30));
+                    lst.Add(new SCG.KeyValuePair<int, int>(i, i + 30));
                 }
             }
 
@@ -1887,7 +1887,7 @@ namespace C5.Tests.arrays.hashed
                 Assert.IsTrue(lst.Find(ref p));
                 Assert.AreEqual(3, p.Key);
                 Assert.AreEqual(33, p.Value);
-                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+                p = new SCG.KeyValuePair<int, int>(13, 78);
                 Assert.IsFalse(lst.Find(ref p));
             }
 
@@ -1895,12 +1895,12 @@ namespace C5.Tests.arrays.hashed
             [Test]
             public void FindOrAdd()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+                var p = new SCG.KeyValuePair<int, int>(3, 78);
 
                 Assert.IsTrue(lst.FindOrAdd(ref p));
                 Assert.AreEqual(3, p.Key);
                 Assert.AreEqual(33, p.Value);
-                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
+                p = new SCG.KeyValuePair<int, int>(13, 79);
                 Assert.IsFalse(lst.FindOrAdd(ref p));
                 Assert.AreEqual(13, lst[10].Key);
                 Assert.AreEqual(79, lst[10].Value);
@@ -1910,12 +1910,12 @@ namespace C5.Tests.arrays.hashed
             [Test]
             public void Update()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+                var p = new SCG.KeyValuePair<int, int>(3, 78);
 
                 Assert.IsTrue(lst.Update(p));
                 Assert.AreEqual(3, lst[3].Key);
                 Assert.AreEqual(78, lst[3].Value);
-                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+                p = new SCG.KeyValuePair<int, int>(13, 78);
                 Assert.IsFalse(lst.Update(p));
             }
 
@@ -1923,12 +1923,12 @@ namespace C5.Tests.arrays.hashed
             [Test]
             public void UpdateOrAdd1()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+                var p = new SCG.KeyValuePair<int, int>(3, 78);
 
                 Assert.IsTrue(lst.UpdateOrAdd(p));
                 Assert.AreEqual(3, lst[3].Key);
                 Assert.AreEqual(78, lst[3].Value);
-                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
+                p = new SCG.KeyValuePair<int, int>(13, 79);
                 Assert.IsFalse(lst.UpdateOrAdd(p));
                 Assert.AreEqual(13, lst[10].Key);
                 Assert.AreEqual(79, lst[10].Value);
@@ -1937,27 +1937,27 @@ namespace C5.Tests.arrays.hashed
             [Test]
             public void UpdateOrAdd2()
             {
-                ICollection<String> coll = new HashedArrayList<String>();
+                ICollection<string> coll = new HashedArrayList<string>();
                 // s1 and s2 are distinct objects but contain the same text:
-                String s1 = "abc", s2 = ("def" + s1).Substring(3);
+                string s1 = "abc", s2 = ("def" + s1)[3..];
                 Assert.IsFalse(coll.UpdateOrAdd(s1, out string old));
                 Assert.AreEqual(null, old);
                 Assert.IsTrue(coll.UpdateOrAdd(s2, out old));
-                Assert.IsTrue(Object.ReferenceEquals(s1, old));
-                Assert.IsFalse(Object.ReferenceEquals(s2, old));
+                Assert.IsTrue(ReferenceEquals(s1, old));
+                Assert.IsFalse(ReferenceEquals(s2, old));
             }
 
             [Test]
             public void RemoveWithReturn()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+                var p = new SCG.KeyValuePair<int, int>(3, 78);
 
                 Assert.IsTrue(lst.Remove(p, out p));
                 Assert.AreEqual(3, p.Key);
                 Assert.AreEqual(33, p.Value);
                 Assert.AreEqual(4, lst[3].Key);
                 Assert.AreEqual(34, lst[3].Value);
-                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+                p = new SCG.KeyValuePair<int, int>(13, 78);
                 Assert.IsFalse(lst.Remove(p, out _));
             }
         }
@@ -2106,7 +2106,7 @@ namespace C5.Tests.arrays.hashed
                 view = null;
             }
 
-            private void check()
+            private void Check()
             {
                 Assert.IsTrue(list.Check());
                 Assert.IsTrue(view.Check());
@@ -2117,15 +2117,15 @@ namespace C5.Tests.arrays.hashed
             {
                 IList<int> view2 = list.View(2, 0);
                 list.Insert(view2, 7);
-                check();
+                Check();
                 list.Insert(list, 8);
-                check();
+                Check();
                 view.Insert(view2, 9);
-                check();
+                Check();
                 view.Insert(list.View(3, 2), 10);
-                check();
+                Check();
                 view.Insert(list.ViewOf(0), 11);
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(list, 0, 11, 1, 9, 7, 2, 10, 3, 8));
                 Assert.IsTrue(IC.Eq(view, 11, 1, 9, 7, 2, 10));
             }
@@ -2216,51 +2216,51 @@ namespace C5.Tests.arrays.hashed
             [Test]
             public void Add()
             {
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(list, 0, 1, 2, 3));
                 Assert.IsTrue(IC.Eq(view, 1, 2));
                 view.InsertFirst(10);
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(list, 0, 10, 1, 2, 3));
                 Assert.IsTrue(IC.Eq(view, 10, 1, 2));
                 view.Clear();
                 Assert.IsFalse(view.IsReadOnly);
                 Assert.IsFalse(view.AllowsDuplicates);
                 Assert.IsTrue(view.IsEmpty);
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(list, 0, 3));
                 Assert.IsTrue(IC.Eq(view));
                 view.Add(8);
                 Assert.IsFalse(view.IsEmpty);
                 Assert.IsFalse(view.AllowsDuplicates);
                 Assert.IsFalse(view.IsReadOnly);
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(list, 0, 8, 3));
                 Assert.IsTrue(IC.Eq(view, 8));
                 view.Add(12);
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(list, 0, 8, 12, 3));
                 Assert.IsTrue(IC.Eq(view, 8, 12));
                 view./*ViewOf(12).*/InsertLast(15);
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(list, 0, 8, 12, 15, 3));
                 Assert.IsTrue(IC.Eq(view, 8, 12, 15));
                 view.ViewOf(12).InsertFirst(18);
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(list, 0, 8, 18, 12, 15, 3));
                 Assert.IsTrue(IC.Eq(view, 8, 18, 12, 15));
 
-                HashedArrayList<int> lst2 = new HashedArrayList<int>
+                var lst2 = new HashedArrayList<int>
                 {
                     90,
                     92
                 };
                 view.AddAll(lst2);
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(list, 0, 8, 18, 12, 15, 90, 92, 3));
                 Assert.IsTrue(IC.Eq(view, 8, 18, 12, 15, 90, 92));
                 view.InsertLast(66);
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(list, 0, 8, 18, 12, 15, 90, 92, 66, 3));
                 Assert.IsTrue(IC.Eq(view, 8, 18, 12, 15, 90, 92, 66));
             }
@@ -2285,7 +2285,7 @@ namespace C5.Tests.arrays.hashed
                 Assert.IsTrue(view.Contains(1));
                 Assert.IsFalse(view.Contains(0));
 
-                HashedArrayList<int> lst2 = new HashedArrayList<int>
+                var lst2 = new HashedArrayList<int>
                 {
                     2
                 };
@@ -2316,15 +2316,15 @@ namespace C5.Tests.arrays.hashed
                 Assert.IsFalse(view.FIFO);
                 view.FIFO = true;
                 view.Add(23); view.Add(24); view.Add(25);
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(view, 1, 2, 23, 24, 25));
                 Assert.AreEqual(1, view.Remove());
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(view, 2, 23, 24, 25));
                 view.FIFO = false;
                 Assert.IsFalse(view.FIFO);
                 Assert.AreEqual(25, view.Remove());
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(view, 2, 23, 24));
             }
 
@@ -2410,7 +2410,7 @@ namespace C5.Tests.arrays.hashed
                 view.Add(45); view.Add(47); view.Add(46); view.Add(48);
                 Assert.IsFalse(view.IsSorted(new IC()));
                 view.Sort(new IC());
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(list, 0, 1, 2, 45, 46, 47, 48, 3));
                 Assert.IsTrue(IC.Eq(view, 1, 2, 45, 46, 47, 48));
             }
@@ -2422,22 +2422,22 @@ namespace C5.Tests.arrays.hashed
                 view.Add(1); view.Add(5); view.Add(3); view.Add(1); view.Add(3); view.Add(0);
                 Assert.IsTrue(IC.Eq(view, 1, 2, 5));
                 Assert.IsTrue(view.Remove(1));
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(view, 2, 5));
                 Assert.IsFalse(view.Remove(1));
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(view, 2, 5));
                 Assert.IsFalse(view.Remove(0));
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(view, 2, 5));
                 view.RemoveAllCopies(3);
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(view, 2, 5));
                 Assert.IsTrue(IC.Eq(list, 0, 2, 5, 3));
                 view.Add(1); view.Add(5); view.Add(3); view.Add(1); view.Add(3); view.Add(0);
                 Assert.IsTrue(IC.Eq(view, 2, 5, 1));
 
-                HashedArrayList<int> l2 = new HashedArrayList<int>
+                var l2 = new HashedArrayList<int>
                 {
                     1,
                     2,
@@ -2446,23 +2446,23 @@ namespace C5.Tests.arrays.hashed
                     1
                 };
                 view.RemoveAll(l2);
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(view, 5));
                 view.RetainAll(l2);
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(view));
                 view.Add(2); view.Add(4); view.Add(5);
                 Assert.AreEqual(2, view.RemoveAt(0));
                 Assert.AreEqual(5, view.RemoveAt(1));
                 Assert.AreEqual(4, view.RemoveAt(0));
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(view));
                 view.Add(8); view.Add(6); view.Add(78);
                 Assert.AreEqual(8, view.RemoveFirst());
                 Assert.AreEqual(78, view.RemoveLast());
                 view.Add(2); view.Add(5); view.Add(3); view.Add(1);
                 view.RemoveInterval(1, 2);
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(view, 6, 1));
             }
 
@@ -2477,7 +2477,7 @@ namespace C5.Tests.arrays.hashed
                 }
 
                 view.View(3, 4).Reverse();
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(view, 10, 11, 12, 16, 15, 14, 13, 17, 18, 19));
                 view.Reverse();
                 Assert.IsTrue(IC.Eq(view, 19, 18, 17, 13, 14, 15, 16, 12, 11, 10));
@@ -2489,19 +2489,19 @@ namespace C5.Tests.arrays.hashed
             public void Slide()
             {
                 view.Slide(1);
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(view, 2, 3));
                 view.Slide(-2);
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(view, 0, 1));
                 view.Slide(0, 3);
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(view, 0, 1, 2));
                 view.Slide(2, 1);
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(view, 2));
                 view.Slide(-1, 0);
-                check();
+                Check();
                 Assert.IsTrue(IC.Eq(view));
                 view.Add(28);
                 Assert.IsTrue(IC.Eq(list, 0, 28, 1, 2, 3));
@@ -2526,7 +2526,7 @@ namespace C5.Tests.arrays.hashed
                         view.Insert(1, j++);
                     }
 
-                    check();
+                    Check();
                     if (view.Offset == 0)
                     {
                         break;
@@ -2700,12 +2700,12 @@ namespace C5.Tests.arrays.hashed
                     for (int j = 0; j < 7 - i; j++)
                     {
                         Assert.AreEqual(i < 2 ? i : i < 6 ? 2 : i - 3, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
-                        Assert.AreEqual(s(i, j), views[i][j].Count, "view[" + i + "][" + j + "] count");
+                        Assert.AreEqual(S(i, j), views[i][j].Count, "view[" + i + "][" + j + "] count");
                     }
                 }
             }
 
-            private int s(int i, int j)
+            private static int S(int i, int j)
             {
                 if (j == 0)
                 {
@@ -2982,7 +2982,7 @@ namespace C5.Tests.arrays.hashed
                 }
             }
 
-            private void checkDisposed(bool reverse, int start, int count)
+            private void CheckDisposed(bool reverse, int start, int count)
             {
                 for (int i = 0; i < 7; i++)
                 {
@@ -3030,7 +3030,7 @@ namespace C5.Tests.arrays.hashed
                 Assert.IsTrue(list.Check(), "list check before Reverse");
                 list2.Reverse();
                 Assert.IsTrue(list.Check(), "list check after Reverse");
-                checkDisposed(true, start, count);
+                CheckDisposed(true, start, count);
             }
 
             [Test]
@@ -3041,7 +3041,7 @@ namespace C5.Tests.arrays.hashed
                 Assert.IsTrue(list.Check(), "list check before Sort");
                 list2.Sort();
                 Assert.IsTrue(list.Check(), "list check after Sort");
-                checkDisposed(false, start, count);
+                CheckDisposed(false, start, count);
             }
             [Test]
             public void Shuffle()
@@ -3051,7 +3051,7 @@ namespace C5.Tests.arrays.hashed
                 Assert.IsTrue(list.Check(), "list check before Shuffle");
                 list2.Shuffle();
                 Assert.IsTrue(list.Check(), "list check after Shuffle");
-                checkDisposed(false, start, count);
+                CheckDisposed(false, start, count);
             }
 
 

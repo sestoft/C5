@@ -113,7 +113,7 @@ namespace C5
         /// <returns>True if equal</returns>
         public static bool StaticEquals(ICollection<T> collection1, ICollection<T> collection2, System.Collections.Generic.IEqualityComparer<T> itemequalityComparer)
         {
-            if (object.ReferenceEquals(collection1, collection2))
+            if (ReferenceEquals(collection1, collection2))
             {
                 return true;
             }

@@ -10,22 +10,18 @@ namespace C5.Tests
 {
     internal class SC : SCG.IComparer<string>
     {
-        public int Compare(string a, string b)
-        {
-            return a.CompareTo(b);
-        }
+        public int Compare(string a, string b) => a.CompareTo(b);
 
-
-        public void appl(String s)
+        public static void Appl(string s)
         {
-            System.Console.WriteLine("--{0}", s);
+            Console.WriteLine("--{0}", s);
         }
     }
 
     internal class TenEqualityComparer : SCG.IEqualityComparer<int>, SCG.IComparer<int>
     {
         private TenEqualityComparer() { }
-        public static TenEqualityComparer Default => new TenEqualityComparer();
+        public static TenEqualityComparer Default => new();
         public int GetHashCode(int item) { return (item / 10).GetHashCode(); }
         public bool Equals(int item1, int item2) { return item1 / 10 == item2 / 10; }
         public int Compare(int a, int b) { return (a / 10).CompareTo(b / 10); }
@@ -191,32 +187,32 @@ namespace C5.Tests
             this.listenTo = listenTo;
             if ((listenTo & EventType.Changed) != 0)
             {
-                list.CollectionChanged += new CollectionChangedHandler<T>(changed);
+                list.CollectionChanged += new CollectionChangedHandler<T>(Changed);
             }
 
             if ((listenTo & EventType.Cleared) != 0)
             {
-                list.CollectionCleared += new CollectionClearedHandler<T>(cleared);
+                list.CollectionCleared += new CollectionClearedHandler<T>(Cleared);
             }
 
             if ((listenTo & EventType.Removed) != 0)
             {
-                list.ItemsRemoved += new ItemsRemovedHandler<T>(removed);
+                list.ItemsRemoved += new ItemsRemovedHandler<T>(Removed);
             }
 
             if ((listenTo & EventType.Added) != 0)
             {
-                list.ItemsAdded += new ItemsAddedHandler<T>(added);
+                list.ItemsAdded += new ItemsAddedHandler<T>(Added);
             }
 
             if ((listenTo & EventType.Inserted) != 0)
             {
-                list.ItemInserted += new ItemInsertedHandler<T>(inserted);
+                list.ItemInserted += new ItemInsertedHandler<T>(Inserted);
             }
 
             if ((listenTo & EventType.RemovedAt) != 0)
             {
-                list.ItemRemovedAt += new ItemRemovedAtHandler<T>(removedAt);
+                list.ItemRemovedAt += new ItemRemovedAtHandler<T>(RemovedAt);
             }
         }
         public void Add(CollectionEvent<T> e) { happened.Add(e); }
@@ -259,32 +255,32 @@ namespace C5.Tests
             happened.Apply(delegate (CollectionEvent<T> e) { writer.WriteLine(e); });
         }
 
-        private void changed(object sender)
+        private void Changed(object sender)
         {
             happened.Add(new CollectionEvent<T>(EventType.Changed, new EventArgs(), sender));
         }
 
-        private void cleared(object sender, ClearedEventArgs eventArgs)
+        private void Cleared(object sender, ClearedEventArgs eventArgs)
         {
             happened.Add(new CollectionEvent<T>(EventType.Cleared, eventArgs, sender));
         }
 
-        private void added(object sender, ItemCountEventArgs<T> eventArgs)
+        private void Added(object sender, ItemCountEventArgs<T> eventArgs)
         {
             happened.Add(new CollectionEvent<T>(EventType.Added, eventArgs, sender));
         }
 
-        private void removed(object sender, ItemCountEventArgs<T> eventArgs)
+        private void Removed(object sender, ItemCountEventArgs<T> eventArgs)
         {
             happened.Add(new CollectionEvent<T>(EventType.Removed, eventArgs, sender));
         }
 
-        private void inserted(object sender, ItemAtEventArgs<T> eventArgs)
+        private void Inserted(object sender, ItemAtEventArgs<T> eventArgs)
         {
             happened.Add(new CollectionEvent<T>(EventType.Inserted, eventArgs, sender));
         }
 
-        private void removedAt(object sender, ItemAtEventArgs<T> eventArgs)
+        private void RemovedAt(object sender, ItemAtEventArgs<T> eventArgs)
         {
             happened.Add(new CollectionEvent<T>(EventType.RemovedAt, eventArgs, sender));
         }
@@ -307,7 +303,7 @@ namespace C5.Tests
 
         public bool Equals(CollectionEvent<T> otherEvent, SCG.IEqualityComparer<T> itemequalityComparer)
         {
-            if (otherEvent == null || Act != otherEvent.Act || !object.ReferenceEquals(Sender, otherEvent.Sender))
+            if (otherEvent == null || Act != otherEvent.Act || !ReferenceEquals(Sender, otherEvent.Sender))
             {
                 return false;
             }
@@ -322,7 +318,7 @@ namespace C5.Tests
                     if (Args is ClearedRangeEventArgs)
                     {
                         ClearedRangeEventArgs a = Args as ClearedRangeEventArgs;
-                        if (!(otherEvent.Args is ClearedRangeEventArgs o))
+                        if (otherEvent.Args is not ClearedRangeEventArgs o)
                         {
                             return false;
                         }
@@ -489,10 +485,9 @@ namespace C5.Tests
             }
             catch (Exception)
             {
-                if (arg is IFormattable)
+                if (arg is IFormattable formattable)
                 {
-                    return ((IFormattable)arg).
-                        ToString(format, formatProvider);
+                    return formattable.ToString(format, formatProvider);
                 }
                 else if (IsKeyValuePair(arg))
                 {
@@ -506,10 +501,10 @@ namespace C5.Tests
                     return arg.ToString();
                 }
             }
-            return formatInt(intToBeFormatted);
+            return FormatInt(intToBeFormatted);
         }
 
-        private string formatInt(int intToBeFormatted)
+        private string FormatInt(int intToBeFormatted)
         {
             // The formatting is handled here.
             if (intToBeFormatted == 0)
@@ -549,7 +544,7 @@ namespace C5.Tests
         }
 
         // SCG.KeyValuePair is not showable, so we hack it now.
-        private bool IsKeyValuePair(object arg)
+        private static bool IsKeyValuePair(object arg)
         {
             if (arg != null)
             {
@@ -564,7 +559,7 @@ namespace C5.Tests
             return false;
         }
 
-        private (object key, object value) GetKeyValuePair(object arg)
+        private static (object key, object value) GetKeyValuePair(object arg)
         {
             var type = arg.GetType();
 

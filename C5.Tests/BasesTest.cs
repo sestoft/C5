@@ -22,16 +22,16 @@ namespace C5.Tests.support
                 public string this[int i] { get => array[i]; set => array[i] = value; }
 
 
-                public int thesize { get => size; set => size = value; }
+                public int TheSize { get => size; set => size = value; }
             }
 
 
             [Test]
             public void Check()
             {
-                ABT abt = new ABT
+                var abt = new ABT
                 {
-                    thesize = 3
+                    TheSize = 3
                 };
                 abt[2] = "aaa";
                 // Assert.IsFalse(abt.Check());
@@ -47,26 +47,26 @@ namespace C5.Tests.support
         [TestFixture]
         public class Comparers
         {
-            private class dbl : IComparable<dbl>
+            private class Dbl : IComparable<Dbl>
             {
                 private readonly double d;
 
-                public dbl(double din) { d = din; }
+                public Dbl(double din) { d = din; }
 
-                public int CompareTo(dbl that)
+                public int CompareTo(Dbl that)
                 {
                     return d < that.d ? -1 : d == that.d ? 0 : 1;
                 }
-                public bool Equals(dbl that) { return d == that.d; }
+                public bool Equals(Dbl that) { return d == that.d; }
             }
 
             [Test]
             public void GenericC()
             {
-                SCG.IComparer<dbl> h = SCG.Comparer<dbl>.Default;
-                dbl s = new dbl(3.4);
-                dbl t = new dbl(3.4);
-                dbl u = new dbl(7.4);
+                SCG.IComparer<Dbl> h = SCG.Comparer<Dbl>.Default;
+                Dbl s = new(3.4);
+                Dbl t = new(3.4);
+                Dbl u = new(7.4);
 
                 Assert.AreEqual(0, h.Compare(s, t));
                 Assert.IsTrue(h.Compare(s, u) < 0);
@@ -89,14 +89,14 @@ namespace C5.Tests.support
             [Test]
             public void GenericCViaBuilder()
             {
-                SCG.IComparer<dbl> h = SCG.Comparer<dbl>.Default;
-                dbl s = new dbl(3.4);
-                dbl t = new dbl(3.4);
-                dbl u = new dbl(7.4);
+                SCG.IComparer<Dbl> h = SCG.Comparer<Dbl>.Default;
+                var s = new Dbl(3.4);
+                var t = new Dbl(3.4);
+                var u = new Dbl(7.4);
 
                 Assert.AreEqual(0, h.Compare(s, t));
                 Assert.IsTrue(h.Compare(s, u) < 0);
-                Assert.AreSame(h, SCG.Comparer<dbl>.Default);
+                Assert.AreSame(h, SCG.Comparer<Dbl>.Default);
             }
 
 
@@ -114,7 +114,7 @@ namespace C5.Tests.support
 
             }
 
-            public void ComparerViaBuilderTest<T>(T item1, T item2)
+            public static void ComparerViaBuilderTest<T>(T item1, T item2)
                 where T : IComparable<T>
             {
                 SCG.IComparer<T> h = SCG.Comparer<T>.Default;
@@ -130,18 +130,18 @@ namespace C5.Tests.support
             [Test]
             public void PrimitiveComparersViaBuilder()
             {
-                ComparerViaBuilderTest<char>('A', 'a');
+                ComparerViaBuilderTest('A', 'a');
                 ComparerViaBuilderTest<sbyte>(-122, 126);
                 ComparerViaBuilderTest<byte>(122, 126);
                 ComparerViaBuilderTest<short>(-30000, 3);
                 ComparerViaBuilderTest<ushort>(3, 50000);
-                ComparerViaBuilderTest<int>(-10000000, 10000);
+                ComparerViaBuilderTest(-10000000, 10000);
                 ComparerViaBuilderTest<uint>(10000000, 3000000000);
-                ComparerViaBuilderTest<long>(-1000000000000, 10000000);
-                ComparerViaBuilderTest<ulong>(10000000000000UL, 10000000000004UL);
-                ComparerViaBuilderTest<float>(-0.001F, 0.00001F);
-                ComparerViaBuilderTest<double>(-0.001, 0.00001E-200);
-                ComparerViaBuilderTest<decimal>(-20.001M, 19.999M);
+                ComparerViaBuilderTest(-1000000000000, 10000000);
+                ComparerViaBuilderTest(10000000000000UL, 10000000000004UL);
+                ComparerViaBuilderTest(-0.001F, 0.00001F);
+                ComparerViaBuilderTest(-0.001, 0.00001E-200);
+                ComparerViaBuilderTest(-20.001M, 19.999M);
             }
 
             // This test is obsoleted by the one above, but we keep it for good measure
@@ -507,7 +507,7 @@ namespace C5.Tests.support
             [Test]
             public void UnseqequalityComparerViaBuilder4()
             {
-                SCG.IEqualityComparer<IBar> h = C5.EqualityComparer<IBar>.Default;
+                SCG.IEqualityComparer<IBar> h = EqualityComparer<IBar>.Default;
                 IBar s = new Bar() { 1, 2, 3 };
                 Assert.AreEqual(CHC.UnsequencedHashCode(1, 2, 3), h.GetHashCode(s));
             }
@@ -515,22 +515,22 @@ namespace C5.Tests.support
             [Test]
             public void StaticEqualityComparerWithNull()
             {
-                ArrayList<double> arr = new ArrayList<double>();
-                SCG.IEqualityComparer<double> eqc = C5.EqualityComparer<double>.Default;
+                var arr = new ArrayList<double>();
+                SCG.IEqualityComparer<double> eqc = EqualityComparer<double>.Default;
                 Assert.IsTrue(CollectionBase<double>.StaticEquals(arr, arr, eqc));
                 Assert.IsTrue(CollectionBase<double>.StaticEquals(null, null, eqc));
                 Assert.IsFalse(CollectionBase<double>.StaticEquals(arr, null, eqc));
                 Assert.IsFalse(CollectionBase<double>.StaticEquals(null, arr, eqc));
             }
 
-            private class EveryThingIsEqual : SCG.IEqualityComparer<Object>
+            private class EveryThingIsEqual : SCG.IEqualityComparer<object>
             {
-                public new bool Equals(Object o1, Object o2)
+                public new bool Equals(object o1, object o2)
                 {
                     return true;
                 }
 
-                public int GetHashCode(Object o)
+                public int GetHashCode(object o)
                 {
                     return 1;
                 }
@@ -540,10 +540,10 @@ namespace C5.Tests.support
             public void UnsequencedCollectionComparerEquality()
             {
                 // Repro for bug20101103
-                SCG.IEqualityComparer<Object> eqc = new EveryThingIsEqual();
-                Object o1 = new Object(), o2 = new Object();
-                C5.ICollection<Object> coll1 = new ArrayList<Object>(eqc);
-                C5.ICollection<Object> coll2 = new ArrayList<Object>(eqc);
+                SCG.IEqualityComparer<object> eqc = new EveryThingIsEqual();
+                object o1 = new(), o2 = new();
+                ICollection<object> coll1 = new ArrayList<object>(eqc);
+                ICollection<object> coll2 = new ArrayList<object>(eqc);
                 coll1.Add(o1);
                 coll2.Add(o2);
                 Assert.IsFalse(o1.Equals(o2));

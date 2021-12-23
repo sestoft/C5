@@ -7,7 +7,7 @@ namespace C5.UserGuideExamples
 {
     internal class Locking
     {
-        private static ArrayList<int> _collection = new ArrayList<int>();
+        private static ArrayList<int> _collection = new();
         private static readonly int _count = 1000;
 
         public static void Main()
@@ -81,7 +81,7 @@ namespace C5.UserGuideExamples
             }
         }
 
-        private static readonly object _lock = new object();
+        private static readonly object _lock = new();
 
         public static void SafeAddAndRemove(int count)
         {

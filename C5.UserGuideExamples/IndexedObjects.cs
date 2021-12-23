@@ -80,8 +80,7 @@ public interface IIndexer<Q, R>
 }
 
 // An index maker has a name, it supports adding and removing items
-// from the index, and looking up items by key (here of type
-// Object).
+// from the index, and looking up items by key (here of type object).
 public abstract class IndexMaker<T> : IIndexer<object, T>
 {
     public string Name { get; }
@@ -127,7 +126,7 @@ public class IndexMaker<T, Q> : IndexMaker<T>
     {
         var key = _fun(item);
 
-        return !_dictionary.Contains(key) ? false : _dictionary[key].Remove(item);
+        return _dictionary.Contains(key) && _dictionary[key].Remove(item);
     }
 
     public ICollectionValue<T> this[Q key] => _dictionary[key];

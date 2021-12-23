@@ -24,14 +24,14 @@ namespace C5.Tests.wrappers
                 seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
             }
 
-            private void listen() { seen.Listen(guarded, EventType.All); }
+            private void Listen() { seen.Listen(guarded, EventType.All); }
 
             [Test]
             public void Listenable()
             {
                 Assert.AreEqual(EventType.All, guarded.ListenableEvents);
                 Assert.AreEqual(EventType.None, guarded.ActiveEvents);
-                listen();
+                Listen();
                 Assert.AreEqual(EventType.All, guarded.ActiveEvents);
             }
 
@@ -39,7 +39,7 @@ namespace C5.Tests.wrappers
             public void SetThis()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list[1] = 45;
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(56, 1), guarded),
@@ -54,7 +54,7 @@ namespace C5.Tests.wrappers
             public void Insert()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.Insert(1, 45);
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(45,1), guarded),
@@ -67,7 +67,7 @@ namespace C5.Tests.wrappers
             public void InsertAll()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.InsertAll(1, new int[] { 666, 777, 888 });
                 //seen.Print(Console.Error);
                 seen.Check(new CollectionEvent<int>[] {
@@ -87,7 +87,7 @@ namespace C5.Tests.wrappers
             public void InsertFirstLast()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.InsertFirst(45);
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(45,0), guarded),
@@ -106,7 +106,7 @@ namespace C5.Tests.wrappers
             public void Remove()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.Remove();
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(8, 1), guarded),
@@ -117,7 +117,7 @@ namespace C5.Tests.wrappers
             public void RemoveFirst()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.RemoveFirst();
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.RemovedAt, new ItemAtEventArgs<int>(4,0), guarded),
@@ -129,7 +129,7 @@ namespace C5.Tests.wrappers
             public void RemoveLast()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.RemoveLast();
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.RemovedAt, new ItemAtEventArgs<int>(8,2), guarded),
@@ -141,7 +141,7 @@ namespace C5.Tests.wrappers
             public void Reverse()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.Reverse();
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
@@ -155,7 +155,7 @@ namespace C5.Tests.wrappers
             public void Sort()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.Sort();
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
@@ -168,7 +168,7 @@ namespace C5.Tests.wrappers
             public void Shuffle()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.Shuffle();
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
@@ -181,7 +181,7 @@ namespace C5.Tests.wrappers
             public void RemoveAt()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.RemoveAt(1);
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.RemovedAt, new ItemAtEventArgs<int>(56,1), guarded),
@@ -193,7 +193,7 @@ namespace C5.Tests.wrappers
             public void RemoveInterval()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.RemoveInterval(1, 2);
                 seen.Check(new CollectionEvent<int>[] {
            new CollectionEvent<int>(EventType.Cleared, new ClearedRangeEventArgs(false,2,1), guarded),
@@ -207,7 +207,7 @@ namespace C5.Tests.wrappers
             public void Update()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.Update(53);
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(56, 1), guarded),
@@ -222,7 +222,7 @@ namespace C5.Tests.wrappers
             public void FindOrAdd()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 int val = 53;
                 list.FindOrAdd(ref val);
                 seen.Check(Array.Empty<CollectionEvent<int>>());
@@ -238,7 +238,7 @@ namespace C5.Tests.wrappers
             public void UpdateOrAdd()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 int val = 53;
                 list.UpdateOrAdd(val);
                 seen.Check(new CollectionEvent<int>[] {
@@ -270,7 +270,7 @@ namespace C5.Tests.wrappers
             public void RemoveItem()
             {
                 list.Add(4); list.Add(56); list.Add(18);
-                listen();
+                Listen();
                 list.Remove(53);
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(56, 1), guarded),
@@ -288,7 +288,7 @@ namespace C5.Tests.wrappers
                 {
                     list.Add(10 * i + 5);
                 }
-                listen();
+                Listen();
                 list.RemoveAll(new int[] { 32, 187, 45 });
                 //TODO: the order depends on internals of the HashSet
                 seen.Check(new CollectionEvent<int>[] {
@@ -303,7 +303,7 @@ namespace C5.Tests.wrappers
             public void Clear()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.View(1, 1).Clear();
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Cleared, new ClearedRangeEventArgs(false,1,1), guarded),
@@ -322,7 +322,7 @@ namespace C5.Tests.wrappers
             public void ListDispose()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.View(1, 1).Dispose();
                 seen.Check(Array.Empty<CollectionEvent<int>>());
                 list.Dispose();
@@ -342,7 +342,7 @@ namespace C5.Tests.wrappers
                 {
                     list.Add(10 * i + 5);
                 }
-                listen();
+                Listen();
                 list.RetainAll(new int[] { 32, 187, 45, 62, 82, 95, 2 });
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(15, 1), guarded),
@@ -361,7 +361,7 @@ namespace C5.Tests.wrappers
                 {
                     list.Add(3 * i + 5);
                 }
-                listen();
+                Listen();
                 list.RemoveAllCopies(14);
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(11, 1), guarded),
@@ -375,7 +375,7 @@ namespace C5.Tests.wrappers
             [Test]
             public void Add()
             {
-                listen();
+                Listen();
                 seen.Check(Array.Empty<CollectionEvent<int>>());
                 list.Add(23);
                 seen.Check(new CollectionEvent<int>[] {
@@ -390,7 +390,7 @@ namespace C5.Tests.wrappers
                 {
                     list.Add(10 * i + 5);
                 }
-                listen();
+                Listen();
                 list.AddAll(new int[] { 45, 56, 67 });
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(45, 1), guarded),
@@ -408,35 +408,35 @@ namespace C5.Tests.wrappers
             public void ViewChanged()
             {
                 IList<int> w = list.View(0, 0);
-                Assert.Throws<UnlistenableEventException>(() => w.CollectionChanged += new CollectionChangedHandler<int>(w_CollectionChanged));
+                Assert.Throws<UnlistenableEventException>(() => w.CollectionChanged += new CollectionChangedHandler<int>(CollectionChangedEventArgs));
             }
 
             [Test]
             public void ViewCleared()
             {
                 IList<int> w = list.View(0, 0);
-                Assert.Throws<UnlistenableEventException>(() => w.CollectionCleared += new CollectionClearedHandler<int>(w_CollectionCleared));
+                Assert.Throws<UnlistenableEventException>(() => w.CollectionCleared += new CollectionClearedHandler<int>(CollectionClearedEventArgs));
             }
 
             [Test]
             public void ViewAdded()
             {
                 IList<int> w = list.View(0, 0);
-                Assert.Throws<UnlistenableEventException>(() => w.ItemsAdded += new ItemsAddedHandler<int>(w_ItemAdded));
+                Assert.Throws<UnlistenableEventException>(() => w.ItemsAdded += new ItemsAddedHandler<int>(ItemAddedEventArgs));
             }
 
             [Test]
             public void ViewInserted()
             {
                 IList<int> w = list.View(0, 0);
-                Assert.Throws<UnlistenableEventException>(() => w.ItemInserted += new ItemInsertedHandler<int>(w_ItemInserted));
+                Assert.Throws<UnlistenableEventException>(() => w.ItemInserted += new ItemInsertedHandler<int>(ItemInsertedEventArgs));
             }
 
             [Test]
             public void ViewRemoved()
             {
                 IList<int> w = list.View(0, 0);
-                Assert.Throws<UnlistenableEventException>(() => w.ItemsRemoved += new ItemsRemovedHandler<int>(w_ItemRemoved));
+                Assert.Throws<UnlistenableEventException>(() => w.ItemsRemoved += new ItemsRemovedHandler<int>(ItemRemovedEventArgs));
             }
 
             [Test]
@@ -444,35 +444,35 @@ namespace C5.Tests.wrappers
             {
                 IList<int> w = list.View(0, 0);
 
-                Assert.Throws<UnlistenableEventException>(() => w.ItemRemovedAt += new ItemRemovedAtHandler<int>(w_ItemRemovedAt));
+                Assert.Throws<UnlistenableEventException>(() => w.ItemRemovedAt += new ItemRemovedAtHandler<int>(ItemRemovedAtEventArgs));
             }
 
-            private void w_CollectionChanged(object sender)
+            private void CollectionChangedEventArgs(object sender)
             {
                 throw new NotImplementedException();
             }
 
-            private void w_CollectionCleared(object sender, ClearedEventArgs eventArgs)
+            private void CollectionClearedEventArgs(object sender, ClearedEventArgs eventArgs)
             {
                 throw new NotImplementedException();
             }
 
-            private void w_ItemAdded(object sender, ItemCountEventArgs<int> eventArgs)
+            private void ItemAddedEventArgs(object sender, ItemCountEventArgs<int> eventArgs)
             {
                 throw new NotImplementedException();
             }
 
-            private void w_ItemInserted(object sender, ItemAtEventArgs<int> eventArgs)
+            private void ItemInsertedEventArgs(object sender, ItemAtEventArgs<int> eventArgs)
             {
                 throw new NotImplementedException();
             }
 
-            private void w_ItemRemoved(object sender, ItemCountEventArgs<int> eventArgs)
+            private void ItemRemovedEventArgs(object sender, ItemCountEventArgs<int> eventArgs)
             {
                 throw new NotImplementedException();
             }
 
-            private void w_ItemRemovedAt(object sender, ItemAtEventArgs<int> eventArgs)
+            private void ItemRemovedAtEventArgs(object sender, ItemAtEventArgs<int> eventArgs)
             {
                 throw new NotImplementedException();
             }
