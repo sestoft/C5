@@ -11,7 +11,7 @@ namespace C5.Tests.arrays.circularqueue
         [Test]
         public void TestEvents()
         {
-            static CircularQueue<int> factory() => new CircularQueue<int>();
+            static CircularQueue<int> factory() => new();
             new Templates.Events.QueueTester<CircularQueue<int>>().Test(factory);
             new Templates.Events.StackTester<CircularQueue<int>>().Test(factory);
         }
@@ -53,7 +53,7 @@ namespace C5.Tests.arrays.circularqueue
             queue = new CircularQueue<int>();
         }
 
-        private void loadup1()
+        private void Loadup1()
         {
             queue.Enqueue(11);
             queue.Enqueue(12);
@@ -64,9 +64,9 @@ namespace C5.Tests.arrays.circularqueue
             queue.Enqueue(15);
         }
 
-        private void loadup2()
+        private void Loadup2()
         {
-            loadup1();
+            Loadup1();
             for (int i = 0; i < 4; i++)
             {
                 queue.Dequeue();
@@ -74,7 +74,7 @@ namespace C5.Tests.arrays.circularqueue
             }
         }
 
-        private void loadup3()
+        private void Loadup3()
         {
             for (int i = 0; i < 18; i++)
             {
@@ -92,14 +92,14 @@ namespace C5.Tests.arrays.circularqueue
         public void Expand()
         {
             Assert.IsTrue(queue.Check());
-            loadup3();
+            Loadup3();
             Assert.IsTrue(IC.Eq(queue, 14, 15, 16, 17));
         }
 
         [Test]
         public void Simple()
         {
-            loadup1();
+            Loadup1();
             Assert.IsTrue(queue.Check());
             Assert.AreEqual(5, queue.Count);
             Assert.IsTrue(IC.Eq(queue, 12, 13, 103, 14, 15));
@@ -138,7 +138,7 @@ namespace C5.Tests.arrays.circularqueue
         [Test]
         public void Simple2()
         {
-            loadup2();
+            Loadup2();
             Assert.IsTrue(queue.Check());
             Assert.AreEqual(5, queue.Count);
             Assert.IsTrue(IC.Eq(queue, 15, 1000, 1001, 1002, 1003));
@@ -161,7 +161,7 @@ namespace C5.Tests.arrays.circularqueue
         [Test]
         public void SW200602()
         {
-            C5.CircularQueue<int> list = new C5.CircularQueue<int>(8);
+            var list = new CircularQueue<int>(8);
             for (int count = 0; count <= 7; count++)
             {
                 list.Enqueue(count);

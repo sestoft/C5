@@ -344,7 +344,7 @@ namespace C5
         /// <returns></returns>
         public IList<T>? Span(IList<T> otherView)
         {
-            if (!(otherView is GuardedList<T> otherGuardedList))
+            if (otherView is not GuardedList<T> otherGuardedList)
             {
                 throw new IncompatibleViewException();
             }
@@ -543,7 +543,7 @@ namespace C5
         {
             if (index < 0 || index + Count > arr.Length)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
 
             foreach (T item in this)

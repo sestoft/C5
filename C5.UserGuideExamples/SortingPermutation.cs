@@ -6,6 +6,8 @@
 
 namespace C5.UserGuideExamples;
 
+using SCG = System.Collections.Generic;
+
 internal class SortingPermutation
 {
     public static void Main()
@@ -54,7 +56,7 @@ internal class MySort
         where T : IComparable<T>
     {
         var i = 0;
-        var zipList = lst.Map(x => new System.Collections.Generic.KeyValuePair<T, int>(x, i++));
+        var zipList = lst.Map(x => new SCG.KeyValuePair<T, int>(x, i++));
         zipList.Sort(new KeyValuePairKeyComparer<T>());
         var res = new ArrayList<int>(lst.Count);
 
@@ -66,10 +68,10 @@ internal class MySort
         return res;
     }
 
-    private class KeyValuePairKeyComparer<T> : SCG.IComparer<System.Collections.Generic.KeyValuePair<T, int>>
+    private class KeyValuePairKeyComparer<T> : SCG.IComparer<SCG.KeyValuePair<T, int>>
         where T : IComparable<T>
     {
-        public int Compare(System.Collections.Generic.KeyValuePair<T, int> p1, System.Collections.Generic.KeyValuePair<T, int> p2)
+        public int Compare(SCG.KeyValuePair<T, int> p1, SCG.KeyValuePair<T, int> p2)
         {
             return p1.Key.CompareTo(p2.Key);
         }

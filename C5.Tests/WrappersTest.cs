@@ -79,8 +79,8 @@ namespace C5.Tests.wrappers
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(888, 1), guarded),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
           });
-                list.InsertAll(1, new int[] { });
-                seen.Check(new CollectionEvent<int>[] { });
+                list.InsertAll(1, Array.Empty<int>());
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
             [Test]
@@ -147,7 +147,7 @@ namespace C5.Tests.wrappers
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
         });
                 list.View(1, 0).Reverse();
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
 
@@ -161,7 +161,7 @@ namespace C5.Tests.wrappers
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
         });
                 list.View(1, 0).Sort();
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
             [Test]
@@ -174,7 +174,7 @@ namespace C5.Tests.wrappers
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
         });
                 list.View(1, 0).Shuffle();
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
             [Test]
@@ -200,7 +200,7 @@ namespace C5.Tests.wrappers
          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
         });
                 list.RemoveInterval(1, 0);
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
             [Test]
@@ -215,7 +215,7 @@ namespace C5.Tests.wrappers
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
           });
                 list.Update(67);
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
             [Test]
@@ -225,7 +225,7 @@ namespace C5.Tests.wrappers
                 listen();
                 int val = 53;
                 list.FindOrAdd(ref val);
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
                 val = 67;
                 list.FindOrAdd(ref val);
                 seen.Check(new CollectionEvent<int>[] {
@@ -296,7 +296,7 @@ namespace C5.Tests.wrappers
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(45, 1), guarded),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
                 list.RemoveAll(new int[] { 200, 300 });
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
             [Test]
@@ -315,7 +315,7 @@ namespace C5.Tests.wrappers
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
         });
                 list.Clear();
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
             [Test]
@@ -324,14 +324,14 @@ namespace C5.Tests.wrappers
                 list.Add(4); list.Add(56); list.Add(8);
                 listen();
                 list.View(1, 1).Dispose();
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
                 list.Dispose();
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Cleared, new ClearedRangeEventArgs(true,3,0), guarded),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
         });
                 list.Dispose();
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
 
@@ -351,7 +351,7 @@ namespace C5.Tests.wrappers
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(75, 1), guarded),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
                 list.RetainAll(new int[] { 32, 187, 45, 62, 82, 95, 2 });
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
             [Test]
@@ -369,14 +369,14 @@ namespace C5.Tests.wrappers
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(17, 1), guarded),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
                 list.RemoveAllCopies(14);
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
             [Test]
             public void Add()
             {
                 listen();
-                seen.Check(new CollectionEvent<int>[0]);
+                seen.Check(Array.Empty<CollectionEvent<int>>());
                 list.Add(23);
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(23, 1), guarded),
@@ -397,8 +397,8 @@ namespace C5.Tests.wrappers
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(56, 1), guarded),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(67, 1), guarded),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
-                list.AddAll(new int[] { });
-                seen.Check(new CollectionEvent<int>[] { });
+                list.AddAll(Array.Empty<int>());
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
             [TearDown]
@@ -493,13 +493,12 @@ namespace C5.Tests.wrappers
                 seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
             }
 
-            private void listen() { seen.Listen(guarded, EventType.All); }
-
+            private void Listen() { seen.Listen(guarded, EventType.All); }
 
             [Test]
             public void EnqueueDequeue()
             {
-                listen();
+                Listen();
                 list.Enqueue(67);
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(67,0), guarded),
@@ -525,8 +524,8 @@ namespace C5.Tests.wrappers
             [Test]
             public void PushPop()
             {
-                listen();
-                seen.Check(new CollectionEvent<int>[0]);
+                Listen();
+                seen.Check(Array.Empty<CollectionEvent<int>>());
                 list.Push(23);
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(23,0), guarded),
@@ -575,7 +574,7 @@ namespace C5.Tests.wrappers
             [Test]
             public void NoExc()
             {
-                WrappedArray<int> wrapped = new WrappedArray<int>(new int[] { 4, 6, 5 });
+                var wrapped = new WrappedArray<int>(new int[] { 4, 6, 5 });
                 Assert.AreEqual(6, wrapped[1]);
                 Assert.IsTrue(IC.Eq(wrapped[1, 2], 6, 5));
                 //
@@ -644,8 +643,7 @@ namespace C5.Tests.wrappers
             [Test]
             public void WithExc()
             {
-                WrappedArray<int> wrapped = new WrappedArray<int>(new int[] { 3, 4, 6, 5, 7 });
-                //
+                var wrapped = new WrappedArray<int>(new int[] { 3, 4, 6, 5, 7 });
                 try { wrapped.Add(1); Assert.Fail("No throw"); }
                 catch (FixedSizeCollectionException) { }
                 try { wrapped.AddAll(null); Assert.Fail("No throw"); }
@@ -695,8 +693,8 @@ namespace C5.Tests.wrappers
             public void View()
             {
                 int[] inner = new int[] { 3, 4, 6, 5, 7 };
-                WrappedArray<int> outerwrapped = new WrappedArray<int>(inner);
-                WrappedArray<int> wrapped = (WrappedArray<int>)outerwrapped.View(1, 3);
+                var outerwrapped = new WrappedArray<int>(inner);
+                var wrapped = (WrappedArray<int>)outerwrapped.View(1, 3);
                 //
                 Assert.AreEqual(6, wrapped[1]);
                 Assert.IsTrue(IC.Eq(wrapped[1, 2], 6, 5));
@@ -779,8 +777,8 @@ namespace C5.Tests.wrappers
             public void ViewWithExc()
             {
                 int[] inner = new int[] { 3, 4, 6, 5, 7 };
-                WrappedArray<int> outerwrapped = new WrappedArray<int>(inner);
-                WrappedArray<int> wrapped = (WrappedArray<int>)outerwrapped.View(1, 3);
+                var outerwrapped = new WrappedArray<int>(inner);
+                var wrapped = (WrappedArray<int>)outerwrapped.View(1, 3);
                 //
                 try { wrapped.Add(1); Assert.Fail("No throw"); }
                 catch (FixedSizeCollectionException) { }

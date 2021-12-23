@@ -113,7 +113,7 @@ namespace C5.Tests.Templates.Events
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(200, 1), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
             collection.AddAll(new int[] { });
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check(Array.Empty<CollectionEvent<int>>());
         }
 
     }
@@ -144,7 +144,7 @@ namespace C5.Tests.Templates.Events
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
           });
             collection.Update(67);
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check(Array.Empty<CollectionEvent<int>>());
         }
 
         public void FindOrAdd()
@@ -153,7 +153,7 @@ namespace C5.Tests.Templates.Events
             listen();
             int val = 53;
             collection.FindOrAdd(ref val);
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check(Array.Empty<CollectionEvent<int>>());
             val = 67;
             collection.FindOrAdd(ref val);
             seen.Check(new CollectionEvent<int>[] {
@@ -221,7 +221,7 @@ namespace C5.Tests.Templates.Events
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(45, 1), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
             collection.RemoveAll(new int[] { 200, 300 });
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check(Array.Empty<CollectionEvent<int>>());
         }
 
         public void RetainAll()
@@ -239,7 +239,7 @@ namespace C5.Tests.Templates.Events
           //new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(75, 1), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
             collection.RetainAll(new int[] { 32, 187, 45, 62, 75, 82, 95, 2 });
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check(Array.Empty<CollectionEvent<int>>());
         }
 
         public void RemoveAllCopies()
@@ -267,7 +267,7 @@ namespace C5.Tests.Templates.Events
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(11, 1), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
             collection.RemoveAllCopies(14);
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check(Array.Empty<CollectionEvent<int>>());
         }
 
         public virtual void Clear()
@@ -280,7 +280,7 @@ namespace C5.Tests.Templates.Events
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
         });
             collection.Clear();
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check(Array.Empty<CollectionEvent<int>>());
         }
 
     }
@@ -310,7 +310,7 @@ namespace C5.Tests.Templates.Events
          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
         });
             collection.RemoveInterval(1, 0);
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check(Array.Empty<CollectionEvent<int>>());
         }
     }
 
@@ -361,7 +361,7 @@ namespace C5.Tests.Templates.Events
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(93, 1), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
             collection.AddSorted(new int[] { });
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check(Array.Empty<CollectionEvent<int>>());
         }
 
         public void RemoveRange()
@@ -395,11 +395,11 @@ namespace C5.Tests.Templates.Events
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(25, 1), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
             collection.RemoveRangeFrom(173);
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check(Array.Empty<CollectionEvent<int>>());
             collection.RemoveRangeFromTo(83, 113);
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check(Array.Empty<CollectionEvent<int>>());
             collection.RemoveRangeTo(33);
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check(Array.Empty<CollectionEvent<int>>());
         }
     }
 
@@ -459,7 +459,7 @@ namespace C5.Tests.Templates.Events
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
           });
             collection.InsertAll(1, new int[] { });
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check(Array.Empty<CollectionEvent<int>>());
         }
 
         public void InsertFirstLast()
@@ -527,7 +527,7 @@ namespace C5.Tests.Templates.Events
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
         });
             collection.View(1, 0).Reverse();
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check(Array.Empty<CollectionEvent<int>>());
         }
 
 
@@ -540,7 +540,7 @@ namespace C5.Tests.Templates.Events
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
         });
             collection.View(1, 0).Sort();
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check(Array.Empty<CollectionEvent<int>>());
         }
 
         public void Shuffle()
@@ -552,7 +552,7 @@ namespace C5.Tests.Templates.Events
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
         });
             collection.View(1, 0).Shuffle();
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check(Array.Empty<CollectionEvent<int>>());
         }
 
         public override void Clear()
@@ -570,7 +570,7 @@ namespace C5.Tests.Templates.Events
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
         });
             collection.Clear();
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check(Array.Empty<CollectionEvent<int>>());
         }
 
         public void ListDispose()
@@ -578,14 +578,14 @@ namespace C5.Tests.Templates.Events
             collection.Add(4); collection.Add(56); collection.Add(18);
             listen();
             collection.View(1, 1).Dispose();
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check(Array.Empty<CollectionEvent<int>>());
             collection.Dispose();
             seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Cleared, new ClearedRangeEventArgs(true,3,0), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
         });
             collection.Dispose();
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check(Array.Empty<CollectionEvent<int>>());
         }
 
         /*

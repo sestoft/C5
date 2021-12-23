@@ -86,7 +86,7 @@ public class Hull
 // Points in the plane
 public class Point : IComparable<Point>
 {
-    private static readonly C5Random rnd = new C5Random(42);
+    private static readonly C5Random rnd = new(42);
 
     public double X { get; }
     public double Y { get; }

@@ -7,23 +7,21 @@ using SCG = System.Collections.Generic;
 
 namespace C5.Tests.arrays.hashed
 {
-    using CollectionOfInt = HashedArrayList<int>;
-
     [TestFixture]
     public class GenericTesters
     {
         [Test]
         public void TestEvents()
         {
-            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new Templates.Events.ListTester<CollectionOfInt>().Test(factory);
+            static HashedArrayList<int> factory() => new(TenEqualityComparer.Default);
+            new Templates.Events.ListTester<HashedArrayList<int>>().Test(factory);
         }
 
         [Test]
         public void List()
         {
-            Templates.List.Dispose.Tester<CollectionOfInt>();
-            Templates.List.SCG_IList.Tester<CollectionOfInt>();
+            Templates.List.Dispose.Tester<HashedArrayList<int>>();
+            Templates.List.SCG_IList.Tester<HashedArrayList<int>>();
         }
     }
 
@@ -37,7 +35,7 @@ namespace C5.Tests.arrays.hashed
         internal class TenEqualityComparer : SCG.IEqualityComparer<int>
         {
             private TenEqualityComparer() { }
-            public static TenEqualityComparer Default => new TenEqualityComparer();
+            public static TenEqualityComparer Default => new();
             public int GetHashCode(int item) { return (item / 10).GetHashCode(); }
             public bool Equals(int item1, int item2) { return item1 / 10 == item2 / 10; }
         }
@@ -55,13 +53,13 @@ namespace C5.Tests.arrays.hashed
                 seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
             }
 
-            private void listen() { seen.Listen(list, EventType.All); }
+            private void Listen() { seen.Listen(list, EventType.All); }
 
             [Test]
             public void SetThis()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list[1] = 45;
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(56, 1), list),
@@ -76,7 +74,7 @@ namespace C5.Tests.arrays.hashed
             public void Insert()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.Insert(1, 45);
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(45,1), list),
@@ -89,7 +87,7 @@ namespace C5.Tests.arrays.hashed
             public void InsertAll()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.InsertAll(1, new int[] { 666, 777, 888 });
                 //seen.Print(Console.Error);
                 seen.Check(new CollectionEvent<int>[] {
@@ -101,15 +99,15 @@ namespace C5.Tests.arrays.hashed
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(888, 1), list),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), list)
           });
-                list.InsertAll(1, new int[] { });
-                seen.Check(new CollectionEvent<int>[] { });
+                list.InsertAll(1, Array.Empty<int>());
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
             [Test]
             public void InsertFirstLast()
             {
                 list.Add(4); list.Add(56); list.Add(18);
-                listen();
+                Listen();
                 list.InsertFirst(45);
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(45,0), list),
@@ -128,7 +126,7 @@ namespace C5.Tests.arrays.hashed
             public void Remove()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.Remove();
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(56, 1), list),
@@ -139,7 +137,7 @@ namespace C5.Tests.arrays.hashed
             public void RemoveFirst()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.RemoveFirst();
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.RemovedAt, new ItemAtEventArgs<int>(4,0), list),
@@ -151,7 +149,7 @@ namespace C5.Tests.arrays.hashed
             public void RemoveLast()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.RemoveLast();
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.RemovedAt, new ItemAtEventArgs<int>(56,1), list),
@@ -163,13 +161,13 @@ namespace C5.Tests.arrays.hashed
             public void Reverse()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.Reverse();
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), list)
         });
                 list.View(1, 0).Reverse();
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
 
@@ -177,33 +175,33 @@ namespace C5.Tests.arrays.hashed
             public void Sort()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.Sort();
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), list)
         });
                 list.View(1, 0).Sort();
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
             [Test]
             public void Shuffle()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.Shuffle();
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), list)
         });
                 list.View(1, 0).Shuffle();
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
             [Test]
             public void RemoveAt()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.RemoveAt(1);
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.RemovedAt, new ItemAtEventArgs<int>(56,1), list),
@@ -215,21 +213,21 @@ namespace C5.Tests.arrays.hashed
             public void RemoveInterval()
             {
                 list.Add(4); list.Add(56); list.Add(18);
-                listen();
+                Listen();
                 list.RemoveInterval(1, 2);
                 seen.Check(new CollectionEvent<int>[] {
            new CollectionEvent<int>(EventType.Cleared, new ClearedRangeEventArgs(false,2,1), list),
          new CollectionEvent<int>(EventType.Changed, new EventArgs(), list)
         });
                 list.RemoveInterval(1, 0);
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
             [Test]
             public void Update()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 list.Update(53);
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(56, 1), list),
@@ -237,17 +235,17 @@ namespace C5.Tests.arrays.hashed
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), list)
           });
                 list.Update(67);
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
             [Test]
             public void FindOrAdd()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 int val = 53;
                 list.FindOrAdd(ref val);
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
                 val = 67;
                 list.FindOrAdd(ref val);
                 seen.Check(new CollectionEvent<int>[] {
@@ -260,7 +258,7 @@ namespace C5.Tests.arrays.hashed
             public void UpdateOrAdd()
             {
                 list.Add(4); list.Add(56); list.Add(8);
-                listen();
+                Listen();
                 int val = 53;
                 list.UpdateOrAdd(val);
                 seen.Check(new CollectionEvent<int>[] {
@@ -292,7 +290,7 @@ namespace C5.Tests.arrays.hashed
             public void RemoveItem()
             {
                 list.Add(4); list.Add(56); list.Add(18);
-                listen();
+                Listen();
                 list.Remove(53);
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(56, 1), list),
@@ -310,7 +308,7 @@ namespace C5.Tests.arrays.hashed
                 {
                     list.Add(10 * i + 5);
                 }
-                listen();
+                Listen();
                 list.RemoveAll(new int[] { 32, 187, 45 });
                 //TODO: the order depends on internals of the HashSet
                 seen.Check(new CollectionEvent<int>[] {
@@ -318,14 +316,14 @@ namespace C5.Tests.arrays.hashed
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(45, 1), list),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), list)});
                 list.RemoveAll(new int[] { 200, 300 });
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
             [Test]
             public void Clear()
             {
                 list.Add(4); list.Add(56); list.Add(18);
-                listen();
+                Listen();
                 list.View(1, 1).Clear();
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Cleared, new ClearedRangeEventArgs(false,1,1), list),
@@ -337,23 +335,23 @@ namespace C5.Tests.arrays.hashed
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), list)
         });
                 list.Clear();
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
             [Test]
             public void ListDispose()
             {
                 list.Add(4); list.Add(56); list.Add(18);
-                listen();
+                Listen();
                 list.View(1, 1).Dispose();
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
                 list.Dispose();
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Cleared, new ClearedRangeEventArgs(true,3,0), list),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), list)
         });
                 list.Dispose();
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
 
@@ -364,7 +362,7 @@ namespace C5.Tests.arrays.hashed
                 {
                     list.Add(10 * i + 5);
                 }
-                listen();
+                Listen();
                 list.RetainAll(new int[] { 32, 187, 45, 62, 82, 95, 2 });
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(15, 1), list),
@@ -373,7 +371,7 @@ namespace C5.Tests.arrays.hashed
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(75, 1), list),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), list)});
                 list.RetainAll(new int[] { 32, 187, 45, 62, 82, 95, 2 });
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
             [Test]
@@ -383,20 +381,20 @@ namespace C5.Tests.arrays.hashed
                 {
                     list.Add(3 * i + 5);
                 }
-                listen();
+                Listen();
                 list.RemoveAllCopies(14);
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(11, 1), list),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), list)});
                 list.RemoveAllCopies(14);
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
             [Test]
             public void Add()
             {
-                listen();
-                seen.Check(new CollectionEvent<int>[0]);
+                Listen();
+                seen.Check(Array.Empty<CollectionEvent<int>>());
                 list.Add(23);
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(23, 1), list),
@@ -410,14 +408,14 @@ namespace C5.Tests.arrays.hashed
                 {
                     list.Add(10 * i + 5);
                 }
-                listen();
+                Listen();
                 list.AddAll(new int[] { 145, 56, 167 });
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(145, 1), list),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(167, 1), list),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), list)});
-                list.AddAll(new int[] { });
-                seen.Check(new CollectionEvent<int>[] { });
+                list.AddAll(Array.Empty<int>());
+                seen.Check(Array.Empty<CollectionEvent<int>>());
             }
 
             [TearDown]
@@ -438,12 +436,12 @@ namespace C5.Tests.arrays.hashed
                 seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
             }
 
-            private void listen() { seen.Listen(list, EventType.All); }
+            private void Listen() { seen.Listen(list, EventType.All); }
 
             [Test]
             public void EnqueueDequeue()
             {
-                listen();
+                Listen();
                 list.Enqueue(67);
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(67,0), list),
@@ -469,8 +467,8 @@ namespace C5.Tests.arrays.hashed
             [Test]
             public void PushPop()
             {
-                listen();
-                seen.Check(new CollectionEvent<int>[0]);
+                Listen();
+                seen.Check(Array.Empty<CollectionEvent<int>>());
                 list.Push(23);
                 seen.Check(new CollectionEvent<int>[] {
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(23,0), list),
@@ -833,7 +831,7 @@ namespace C5.Tests.arrays.hashed
             {
                 list.Add(3); list.Add(4); list.Add(5);
 
-                HashedArrayList<int> list2 = new HashedArrayList<int>();
+                var list2 = new HashedArrayList<int>();
 
                 list2.AddAll(list);
                 Assert.IsTrue(IC.Eq(list2, 3, 4, 5));
@@ -950,8 +948,7 @@ namespace C5.Tests.arrays.hashed
             [TearDown]
             public void Dispose() { list = null; }
 
-
-            private string aeq(int[] a, params int[] b)
+            private static string Aeq(int[] a, params int[] b)
             {
                 if (a.Length != b.Length)
                 {
@@ -973,10 +970,10 @@ namespace C5.Tests.arrays.hashed
             [Test]
             public void ToArray()
             {
-                Assert.AreEqual("Alles klar", aeq(list.ToArray()));
+                Assert.AreEqual("Alles klar", Aeq(list.ToArray()));
                 list.Add(7);
                 list.Add(8);
-                Assert.AreEqual("Alles klar", aeq(list.ToArray(), 7, 8));
+                Assert.AreEqual("Alles klar", Aeq(list.ToArray(), 7, 8));
             }
 
 
@@ -984,19 +981,19 @@ namespace C5.Tests.arrays.hashed
             public void CopyTo()
             {
                 list.CopyTo(a, 1);
-                Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009));
+                Assert.AreEqual("Alles klar", Aeq(a, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009));
                 list.Add(6);
                 list.CopyTo(a, 2);
-                Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 6, 1003, 1004, 1005, 1006, 1007, 1008, 1009));
+                Assert.AreEqual("Alles klar", Aeq(a, 1000, 1001, 6, 1003, 1004, 1005, 1006, 1007, 1008, 1009));
                 list.Add(4);
                 list.Add(5);
                 list.Add(9);
                 list.CopyTo(a, 4);
-                Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 6, 1003, 6, 4, 5, 9, 1008, 1009));
+                Assert.AreEqual("Alles klar", Aeq(a, 1000, 1001, 6, 1003, 6, 4, 5, 9, 1008, 1009));
                 list.Clear();
                 list.Add(7);
                 list.CopyTo(a, 9);
-                Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 6, 1003, 6, 4, 5, 9, 1008, 7));
+                Assert.AreEqual("Alles klar", Aeq(a, 1000, 1001, 6, 1003, 6, 4, 5, 9, 1008, 7));
             }
 
 
@@ -1885,7 +1882,7 @@ namespace C5.Tests.arrays.hashed
             [Test]
             public void Find()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+                var p = new SCG.KeyValuePair<int, int>(3, 78);
 
                 Assert.IsTrue(lst.Find(ref p));
                 Assert.AreEqual(3, p.Key);

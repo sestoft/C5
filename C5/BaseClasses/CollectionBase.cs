@@ -190,7 +190,7 @@ namespace C5
             {
                 // To avoid an O(n^2) algorithm, we make an aux hashtable to hold the count of items
                 // bug20101103: HashDictionary<T, int> dict = new HashDictionary<T, int>();
-                HashDictionary<T, int> dict = new HashDictionary<T, int>(itemequalityComparer);
+                var dict = new HashDictionary<T, int>(itemequalityComparer);
                 foreach (T item in collection2)
                 {
                     int count = 1;

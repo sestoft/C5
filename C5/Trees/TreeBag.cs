@@ -2,6 +2,7 @@
 // See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using System;
+using System.Text;
 using SCG = System.Collections.Generic;
 
 namespace C5
@@ -1081,7 +1082,7 @@ namespace C5
             }
 
             //To count theCollect
-            Node head = new Node(), tail = head;
+            Node head = new(), tail = head;
             int z = 1;
             T lastitem = tail.item = e.Current;
 
@@ -1136,7 +1137,7 @@ namespace C5
             {
                 if ((ActiveEvents & EventType.Added) != 0)
                 {
-                    CircularQueue<T> wasAdded = new CircularQueue<T>();
+                    var wasAdded = new CircularQueue<T>();
                     foreach (T item in this)
                     {
                         wasAdded.Enqueue(item);
@@ -2065,7 +2066,7 @@ namespace C5
                 throw new ViewDisposedException("Snapshot has been disposed");
             }
 
-            TreeBag<T> res = new TreeBag<T>(comparer!);
+            var res = new TreeBag<T>(comparer!);
             SCG.IEnumerator<T> e = GetEnumerator();
             Node? head = null, tail = null;
             int z = 0;
@@ -2150,7 +2151,7 @@ namespace C5
                 throw new ViewDisposedException("Snapshot has been disposed");
             }
 
-            TreeBag<V> res = new TreeBag<V>(c);
+            var res = new TreeBag<V>(c);
 
             if (size == 0)
             {
@@ -3906,7 +3907,7 @@ namespace C5
             }
 
             TreeBag<T> res = (TreeBag<T>)MemberwiseClone();
-            SnapRef newSnapRef = new SnapRef(res);
+            var newSnapRef = new SnapRef(res);
             res.isReadOnlyBase = true;
             res.isSnapShot = true;
             res.snapList = newSnapRef;
@@ -3939,7 +3940,7 @@ namespace C5
 
         internal class Range : DirectedCollectionValueBase<T>, IDirectedCollectionValue<T>
         {
-            private int stamp;
+            private readonly int stamp;
             private readonly int size;
             private readonly TreeBag<T> basis;
 
@@ -4366,7 +4367,7 @@ namespace C5
         /// <param name="n">Place (used for id display)</param>
         /// <param name="m">Message</param>
         /// <returns>b</returns>
-        private bool Massert(bool b, Node n, string m)
+        private static bool Massert(bool b, Node n, string m)
         {
             if (!b)
             {
@@ -4448,7 +4449,7 @@ namespace C5
         /// <returns>false if invariant violation</returns>
         public bool Check(string name)
         {
-            System.Text.StringBuilder e = new System.Text.StringBuilder();
+            var e = new StringBuilder();
 
             if (!CheckInner())
             {

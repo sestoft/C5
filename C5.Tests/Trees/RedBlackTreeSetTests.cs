@@ -3,6 +3,7 @@
 
 using NUnit.Framework;
 using System;
+using System.Threading;
 using SCG = System.Collections.Generic;
 
 namespace C5.Tests.trees.TreeSet
@@ -69,12 +70,12 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void Find()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+            var p = new SCG.KeyValuePair<int, int>(3, 78);
 
             Assert.IsTrue(lst.Find(ref p));
             Assert.AreEqual(3, p.Key);
             Assert.AreEqual(33, p.Value);
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+            p = new SCG.KeyValuePair<int, int>(13, 78);
             Assert.IsFalse(lst.Find(ref p));
         }
 
@@ -137,14 +138,14 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void RemoveWithReturn()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+            var p = new SCG.KeyValuePair<int, int>(3, 78);
 
             Assert.IsTrue(lst.Remove(p, out p));
             Assert.AreEqual(3, p.Key);
             Assert.AreEqual(33, p.Value);
             Assert.AreEqual(4, lst[3].Key);
             Assert.AreEqual(34, lst[3].Value);
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+            p = new SCG.KeyValuePair<int, int>(13, 78);
             Assert.IsFalse(lst.Remove(p, out _));
         }
     }
@@ -257,13 +258,13 @@ namespace C5.Tests.trees.TreeSet
             Assert.IsTrue(IC.Eq(tree.RangeFrom(12), new int[] { 12, 14, 16, 18, 20 }));
             Assert.IsTrue(IC.Eq(tree.RangeFrom(2), all));
             Assert.IsTrue(IC.Eq(tree.RangeFrom(1), all));
-            Assert.IsTrue(IC.Eq(tree.RangeFrom(21), new int[] { }));
+            Assert.IsTrue(IC.Eq(tree.RangeFrom(21), Array.Empty<int>()));
             Assert.IsTrue(IC.Eq(tree.RangeFrom(20), new int[] { 20 }));
             Assert.IsTrue(IC.Eq(tree.RangeTo(8), new int[] { 2, 4, 6 }));
             Assert.IsTrue(IC.Eq(tree.RangeTo(7), new int[] { 2, 4, 6 }));
             Assert.AreEqual(3, tree.RangeTo(7).Count);
-            Assert.IsTrue(IC.Eq(tree.RangeTo(2), new int[] { }));
-            Assert.IsTrue(IC.Eq(tree.RangeTo(1), new int[] { }));
+            Assert.IsTrue(IC.Eq(tree.RangeTo(2), Array.Empty<int>()));
+            Assert.IsTrue(IC.Eq(tree.RangeTo(1), Array.Empty<int>()));
             Assert.IsTrue(IC.Eq(tree.RangeTo(3), new int[] { 2 }));
             Assert.IsTrue(IC.Eq(tree.RangeTo(20), new int[] { 2, 4, 6, 8, 10, 12, 14, 16, 18 }));
             Assert.IsTrue(IC.Eq(tree.RangeTo(21), all));
@@ -380,7 +381,7 @@ namespace C5.Tests.trees.TreeSet
         }
 
 
-        private void loadup()
+        private void Loadup()
         {
             for (int i = 10; i < 20; i++)
             {
@@ -431,7 +432,7 @@ namespace C5.Tests.trees.TreeSet
         public void NoDuplicates()
         {
             Assert.IsFalse(tree.AllowsDuplicates);
-            loadup();
+            Loadup();
             Assert.IsFalse(tree.AllowsDuplicates);
         }
 
@@ -855,7 +856,7 @@ namespace C5.Tests.trees.TreeSet
         }
 
 
-        private void loadup()
+        private void Loadup()
         {
             for (int i = 0; i < 20; i++)
             {
@@ -866,7 +867,7 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void FindPredecessor()
         {
-            loadup();
+            Loadup();
             Assert.IsTrue(tree.TryPredecessor(7, out int res) && res == 6);
             Assert.IsTrue(tree.TryPredecessor(8, out res) && res == 6);
 
@@ -889,7 +890,7 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void FindWeakPredecessor()
         {
-            loadup();
+            Loadup();
             Assert.IsTrue(tree.TryWeakPredecessor(7, out int res) && res == 6);
             Assert.IsTrue(tree.TryWeakPredecessor(8, out res) && res == 8);
 
@@ -912,7 +913,7 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void FindSuccessor()
         {
-            loadup();
+            Loadup();
             Assert.IsTrue(tree.TrySuccessor(7, out int res) && res == 8);
             Assert.IsTrue(tree.TrySuccessor(8, out res) && res == 10);
 
@@ -936,7 +937,7 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void FindWeakSuccessor()
         {
-            loadup();
+            Loadup();
             Assert.IsTrue(tree.TryWeakSuccessor(6, out int res) && res == 6);
             Assert.IsTrue(tree.TryWeakSuccessor(7, out res) && res == 8);
 
@@ -960,7 +961,7 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void Predecessor()
         {
-            loadup();
+            Loadup();
             Assert.AreEqual(6, tree.Predecessor(7));
             Assert.AreEqual(6, tree.Predecessor(8));
 
@@ -988,7 +989,7 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void WeakPredecessor()
         {
-            loadup();
+            Loadup();
             Assert.AreEqual(6, tree.WeakPredecessor(7));
             Assert.AreEqual(8, tree.WeakPredecessor(8));
 
@@ -1011,7 +1012,7 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void Successor()
         {
-            loadup();
+            Loadup();
             Assert.AreEqual(8, tree.Successor(7));
             Assert.AreEqual(10, tree.Successor(8));
 
@@ -1039,7 +1040,7 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void WeakSuccessor()
         {
-            loadup();
+            Loadup();
             Assert.AreEqual(6, tree.WeakSuccessor(6));
             Assert.AreEqual(8, tree.WeakSuccessor(7));
 
@@ -1145,7 +1146,7 @@ namespace C5.Tests.trees.TreeSet
             tree = new TreeSet<int>(new IC());
         }
 
-        private void populate()
+        private void Populate()
         {
             tree.Add(30);
             tree.Add(50);
@@ -1156,7 +1157,7 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void ToArray()
         {
-            populate();
+            Populate();
 
             int[] a = tree.ToArray();
 
@@ -1173,7 +1174,7 @@ namespace C5.Tests.trees.TreeSet
         {
             Assert.AreEqual(-1, tree.IndexOf(20));
             Assert.AreEqual(-1, tree.LastIndexOf(20));
-            populate();
+            Populate();
             Assert.AreEqual(10, tree[0]);
             Assert.AreEqual(30, tree[1]);
             Assert.AreEqual(50, tree[2]);
@@ -1198,7 +1199,7 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void IndexTooLarge()
         {
-            populate();
+            Populate();
             Assert.Throws<IndexOutOfRangeException>(() => Console.WriteLine(tree[4]));
         }
 
@@ -1206,7 +1207,7 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void IndexTooSmall()
         {
-            populate();
+            Populate();
             Assert.Throws<IndexOutOfRangeException>(() => Console.WriteLine(tree[-1]));
         }
 
@@ -1214,7 +1215,7 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void FilledTreeOutsideInput()
         {
-            populate();
+            Populate();
             Assert.AreEqual(0, tree.CountFrom(90));
             Assert.AreEqual(0, tree.CountFromTo(-20, 0));
             Assert.AreEqual(0, tree.CountFromTo(80, 100));
@@ -1228,7 +1229,7 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void FilledTreeIntermediateInput()
         {
-            populate();
+            Populate();
             Assert.AreEqual(3, tree.CountFrom(20));
             Assert.AreEqual(1, tree.CountFromTo(20, 40));
             Assert.AreEqual(2, tree.CountTo(40));
@@ -1238,7 +1239,7 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void FilledTreeMatchingInput()
         {
-            populate();
+            Populate();
             Assert.AreEqual(3, tree.CountFrom(30));
             Assert.AreEqual(2, tree.CountFromTo(30, 70));
             Assert.AreEqual(0, tree.CountFromTo(50, 30));
@@ -2005,46 +2006,42 @@ namespace C5.Tests.trees.TreeSet
             }
 
 
-            private bool never(int i) { return false; }
+            private bool Never(int i) { return false; }
+
+            private bool Always(int i) { return true; }
 
 
-            private bool always(int i) { return true; }
+            private bool Even(int i) { return i % 2 == 0; }
+
+            private string TheMap(int i) { return string.Format("AA {0,4} BB", i); }
 
 
-            private bool even(int i) { return i % 2 == 0; }
-
-
-            private string themap(int i) { return string.Format("AA {0,4} BB", i); }
-
-
-            private string badmap(int i) { return string.Format("AA {0} BB", i); }
-
+            private string BadMap(int i) { return string.Format("AA {0} BB", i); }
 
             private int appfield1;
 
             private int appfield2;
 
-
-            private void apply(int i) { appfield1++; appfield2 += i * i; }
+            private void InnerApply(int i) { appfield1++; appfield2 += i * i; }
 
 
             [Test]
             public void Apply()
             {
-                Simple simple1 = new Simple();
+                var simple1 = new Simple();
 
-                tree.Apply(new Action<int>(simple1.apply));
+                tree.Apply(new Action<int>(simple1.InnerApply));
                 Assert.AreEqual(0, simple1.appfield1);
                 Assert.AreEqual(0, simple1.appfield2);
 
-                Simple simple2 = new Simple();
+                var simple2 = new Simple();
 
                 for (int i = 0; i < 10; i++)
                 {
                     tree.Add(i);
                 }
 
-                tree.Apply(new Action<int>(simple2.apply));
+                tree.Apply(new Action<int>(simple2.InnerApply));
                 Assert.AreEqual(10, simple2.appfield1);
                 Assert.AreEqual(285, simple2.appfield2);
             }
@@ -2053,99 +2050,99 @@ namespace C5.Tests.trees.TreeSet
             [Test]
             public void All()
             {
-                Assert.IsTrue(tree.All(new Func<int, bool>(never)));
-                Assert.IsTrue(tree.All(new Func<int, bool>(even)));
-                Assert.IsTrue(tree.All(new Func<int, bool>(always)));
+                Assert.IsTrue(tree.All(new Func<int, bool>(Never)));
+                Assert.IsTrue(tree.All(new Func<int, bool>(Even)));
+                Assert.IsTrue(tree.All(new Func<int, bool>(Always)));
                 for (int i = 0; i < 10; i++)
                 {
                     tree.Add(i);
                 }
 
-                Assert.IsFalse(tree.All(new Func<int, bool>(never)));
-                Assert.IsFalse(tree.All(new Func<int, bool>(even)));
-                Assert.IsTrue(tree.All(new Func<int, bool>(always)));
+                Assert.IsFalse(tree.All(new Func<int, bool>(Never)));
+                Assert.IsFalse(tree.All(new Func<int, bool>(Even)));
+                Assert.IsTrue(tree.All(new Func<int, bool>(Always)));
                 tree.Clear();
                 for (int i = 0; i < 10; i++)
                 {
                     tree.Add(i * 2);
                 }
 
-                Assert.IsFalse(tree.All(new Func<int, bool>(never)));
-                Assert.IsTrue(tree.All(new Func<int, bool>(even)));
-                Assert.IsTrue(tree.All(new Func<int, bool>(always)));
+                Assert.IsFalse(tree.All(new Func<int, bool>(Never)));
+                Assert.IsTrue(tree.All(new Func<int, bool>(Even)));
+                Assert.IsTrue(tree.All(new Func<int, bool>(Always)));
                 tree.Clear();
                 for (int i = 0; i < 10; i++)
                 {
                     tree.Add(i * 2 + 1);
                 }
 
-                Assert.IsFalse(tree.All(new Func<int, bool>(never)));
-                Assert.IsFalse(tree.All(new Func<int, bool>(even)));
-                Assert.IsTrue(tree.All(new Func<int, bool>(always)));
+                Assert.IsFalse(tree.All(new Func<int, bool>(Never)));
+                Assert.IsFalse(tree.All(new Func<int, bool>(Even)));
+                Assert.IsTrue(tree.All(new Func<int, bool>(Always)));
             }
 
 
             [Test]
             public void Exists()
             {
-                Assert.IsFalse(tree.Exists(new Func<int, bool>(never)));
-                Assert.IsFalse(tree.Exists(new Func<int, bool>(even)));
-                Assert.IsFalse(tree.Exists(new Func<int, bool>(always)));
+                Assert.IsFalse(tree.Exists(new Func<int, bool>(Never)));
+                Assert.IsFalse(tree.Exists(new Func<int, bool>(Even)));
+                Assert.IsFalse(tree.Exists(new Func<int, bool>(Always)));
                 for (int i = 0; i < 10; i++)
                 {
                     tree.Add(i);
                 }
 
-                Assert.IsFalse(tree.Exists(new Func<int, bool>(never)));
-                Assert.IsTrue(tree.Exists(new Func<int, bool>(even)));
-                Assert.IsTrue(tree.Exists(new Func<int, bool>(always)));
+                Assert.IsFalse(tree.Exists(new Func<int, bool>(Never)));
+                Assert.IsTrue(tree.Exists(new Func<int, bool>(Even)));
+                Assert.IsTrue(tree.Exists(new Func<int, bool>(Always)));
                 tree.Clear();
                 for (int i = 0; i < 10; i++)
                 {
                     tree.Add(i * 2);
                 }
 
-                Assert.IsFalse(tree.Exists(new Func<int, bool>(never)));
-                Assert.IsTrue(tree.Exists(new Func<int, bool>(even)));
-                Assert.IsTrue(tree.Exists(new Func<int, bool>(always)));
+                Assert.IsFalse(tree.Exists(new Func<int, bool>(Never)));
+                Assert.IsTrue(tree.Exists(new Func<int, bool>(Even)));
+                Assert.IsTrue(tree.Exists(new Func<int, bool>(Always)));
                 tree.Clear();
                 for (int i = 0; i < 10; i++)
                 {
                     tree.Add(i * 2 + 1);
                 }
 
-                Assert.IsFalse(tree.Exists(new Func<int, bool>(never)));
-                Assert.IsFalse(tree.Exists(new Func<int, bool>(even)));
-                Assert.IsTrue(tree.Exists(new Func<int, bool>(always)));
+                Assert.IsFalse(tree.Exists(new Func<int, bool>(Never)));
+                Assert.IsFalse(tree.Exists(new Func<int, bool>(Even)));
+                Assert.IsTrue(tree.Exists(new Func<int, bool>(Always)));
             }
 
 
             [Test]
             public void FindAll()
             {
-                Assert.AreEqual(0, tree.FindAll(new Func<int, bool>(never)).Count);
+                Assert.AreEqual(0, tree.FindAll(new Func<int, bool>(Never)).Count);
                 for (int i = 0; i < 10; i++)
                 {
                     tree.Add(i);
                 }
 
-                Assert.AreEqual(0, tree.FindAll(new Func<int, bool>(never)).Count);
-                Assert.AreEqual(10, tree.FindAll(new Func<int, bool>(always)).Count);
-                Assert.AreEqual(5, tree.FindAll(new Func<int, bool>(even)).Count);
-                Assert.IsTrue(((TreeSet<int>)tree.FindAll(new Func<int, bool>(even))).Check("R"));
+                Assert.AreEqual(0, tree.FindAll(new Func<int, bool>(Never)).Count);
+                Assert.AreEqual(10, tree.FindAll(new Func<int, bool>(Always)).Count);
+                Assert.AreEqual(5, tree.FindAll(new Func<int, bool>(Even)).Count);
+                Assert.IsTrue(((TreeSet<int>)tree.FindAll(new Func<int, bool>(Even))).Check("R"));
             }
 
 
             [Test]
             public void Map()
             {
-                Assert.AreEqual(0, tree.Map(new Func<int, string>(themap), new SC()).Count);
+                Assert.AreEqual(0, tree.Map(new Func<int, string>(TheMap), new SC()).Count);
                 for (int i = 0; i < 11; i++)
                 {
                     tree.Add(i * i * i);
                 }
 
-                IIndexedSorted<string> res = tree.Map(new Func<int, string>(themap), new SC());
+                IIndexedSorted<string> res = tree.Map(new Func<int, string>(TheMap), new SC());
 
                 Assert.IsTrue(((TreeSet<string>)res).Check("R"));
                 Assert.AreEqual(11, res.Count);
@@ -2166,7 +2163,7 @@ namespace C5.Tests.trees.TreeSet
 
                 var exception = Assert.Throws<ArgumentException>(() =>
                 {
-                    ISorted<string> res = tree.Map(new Func<int, string>(badmap), new SC());
+                    ISorted<string> res = tree.Map(new Func<int, string>(BadMap), new SC());
                 });
                 Assert.AreEqual("mapper not monotonic", exception.Message);
             }
@@ -2276,7 +2273,7 @@ namespace C5.Tests.trees.TreeSet
         [TestFixture]
         public class AddAll
         {
-            private int sqr(int i) { return i * i; }
+            private int Sqr(int i) { return i * i; }
 
             private TreeSet<int> tree;
 
@@ -2288,7 +2285,7 @@ namespace C5.Tests.trees.TreeSet
             [Test]
             public void EmptyEmpty()
             {
-                tree.AddAll(new FunEnumerable(0, new Func<int, int>(sqr)));
+                tree.AddAll(new FunEnumerable(0, new Func<int, int>(Sqr)));
                 Assert.AreEqual(0, tree.Count);
                 Assert.IsTrue(tree.Check());
             }
@@ -2302,7 +2299,7 @@ namespace C5.Tests.trees.TreeSet
                     tree.Add(i);
                 }
 
-                tree.AddAll(new FunEnumerable(0, new Func<int, int>(sqr)));
+                tree.AddAll(new FunEnumerable(0, new Func<int, int>(Sqr)));
                 Assert.AreEqual(5, tree.Count);
                 Assert.IsTrue(tree.Check());
             }
@@ -2311,7 +2308,7 @@ namespace C5.Tests.trees.TreeSet
             [Test]
             public void EmptySome()
             {
-                tree.AddAll(new FunEnumerable(4, new Func<int, int>(sqr)));
+                tree.AddAll(new FunEnumerable(4, new Func<int, int>(Sqr)));
                 Assert.AreEqual(4, tree.Count);
                 Assert.IsTrue(tree.Check());
                 Assert.AreEqual(0, tree[0]);
@@ -2329,7 +2326,7 @@ namespace C5.Tests.trees.TreeSet
                     tree.Add(i);
                 }
 
-                tree.AddAll(new FunEnumerable(4, new Func<int, int>(sqr)));
+                tree.AddAll(new FunEnumerable(4, new Func<int, int>(Sqr)));
                 Assert.AreEqual(8, tree.Count);
                 Assert.IsTrue(tree.Check());
                 Assert.IsTrue(IC.Eq(tree, 0, 1, 4, 5, 6, 7, 8, 9));
@@ -2345,13 +2342,12 @@ namespace C5.Tests.trees.TreeSet
         [TestFixture]
         public class AddSorted
         {
-            private int sqr(int i) { return i * i; }
+            private int Sqr(int i) { return i * i; }
 
 
-            private int bad(int i) { return i * (5 - i); }
+            private int Bad(int i) { return i * (5 - i); }
 
             private TreeSet<int> tree;
-
 
             [SetUp]
             public void Init() { tree = new TreeSet<int>(new IC()); }
@@ -2360,12 +2356,10 @@ namespace C5.Tests.trees.TreeSet
             [Test]
             public void EmptyEmpty()
             {
-                tree.AddSorted(new FunEnumerable(0, new Func<int, int>(sqr)));
+                tree.AddSorted(new FunEnumerable(0, new Func<int, int>(Sqr)));
                 Assert.AreEqual(0, tree.Count);
                 Assert.IsTrue(tree.Check());
             }
-
-
 
             [Test]
             public void SomeEmpty()
@@ -2375,17 +2369,15 @@ namespace C5.Tests.trees.TreeSet
                     tree.Add(i);
                 }
 
-                tree.AddSorted(new FunEnumerable(0, new Func<int, int>(sqr)));
+                tree.AddSorted(new FunEnumerable(0, new Func<int, int>(Sqr)));
                 Assert.AreEqual(5, tree.Count);
                 Assert.IsTrue(tree.Check());
             }
 
-
-
             [Test]
             public void EmptySome()
             {
-                tree.AddSorted(new FunEnumerable(4, new Func<int, int>(sqr)));
+                tree.AddSorted(new FunEnumerable(4, new Func<int, int>(Sqr)));
                 Assert.AreEqual(4, tree.Count);
                 Assert.IsTrue(tree.Check());
                 Assert.AreEqual(0, tree[0]);
@@ -2393,8 +2385,6 @@ namespace C5.Tests.trees.TreeSet
                 Assert.AreEqual(4, tree[2]);
                 Assert.AreEqual(9, tree[3]);
             }
-
-
 
             [Test]
             public void SomeSome()
@@ -2404,7 +2394,7 @@ namespace C5.Tests.trees.TreeSet
                     tree.Add(i);
                 }
 
-                tree.AddSorted(new FunEnumerable(4, new Func<int, int>(sqr)));
+                tree.AddSorted(new FunEnumerable(4, new Func<int, int>(Sqr)));
                 Assert.AreEqual(8, tree.Count);
                 Assert.IsTrue(tree.Check());
                 Assert.IsTrue(IC.Eq(tree, 0, 1, 4, 5, 6, 7, 8, 9));
@@ -2413,7 +2403,7 @@ namespace C5.Tests.trees.TreeSet
             [Test]
             public void EmptyBad()
             {
-                var exception = Assert.Throws<ArgumentException>(() => tree.AddSorted(new FunEnumerable(9, new Func<int, int>(bad))));
+                var exception = Assert.Throws<ArgumentException>(() => tree.AddSorted(new FunEnumerable(9, new Func<int, int>(Bad))));
                 Assert.AreEqual("Argument not sorted", exception.Message);
             }
 
@@ -2426,7 +2416,6 @@ namespace C5.Tests.trees.TreeSet
         public class Rest
         {
             private TreeSet<int> tree, tree2;
-
 
             [SetUp]
             public void Init()
@@ -2443,7 +2432,6 @@ namespace C5.Tests.trees.TreeSet
                     tree2.Add(2 * i);
                 }
             }
-
 
             [Test]
             public void RemoveAll()
@@ -2474,7 +2462,6 @@ namespace C5.Tests.trees.TreeSet
                 Assert.IsTrue(tree.Check());
                 Assert.IsTrue(IC.Eq(tree));
             }
-
 
             [Test]
             public void RetainAll()
@@ -2515,7 +2502,6 @@ namespace C5.Tests.trees.TreeSet
                 Assert.IsTrue(IC.Eq(tree));
             }
 
-
             [Test]
             public void ContainsAll()
             {
@@ -2528,7 +2514,6 @@ namespace C5.Tests.trees.TreeSet
                 tree2.Add(8);
                 Assert.IsFalse(tree.ContainsAll(tree2));
             }
-
 
             [Test]
             public void RemoveInterval()
@@ -2547,13 +2532,11 @@ namespace C5.Tests.trees.TreeSet
                 Assert.IsTrue(IC.Eq(tree));
             }
 
-
             [Test]
             public void RemoveRangeBad1()
             {
                 Assert.Throws<ArgumentOutOfRangeException>(() => tree.RemoveInterval(-3, 8));
             }
-
 
             [Test]
             public void RemoveRangeBad2()
@@ -2561,13 +2544,11 @@ namespace C5.Tests.trees.TreeSet
                 Assert.Throws<ArgumentOutOfRangeException>(() => tree.RemoveInterval(3, -8));
             }
 
-
             [Test]
             public void RemoveRangeBad3()
             {
                 Assert.Throws<ArgumentOutOfRangeException>(() => tree.RemoveInterval(3, 8));
             }
-
 
             [Test]
             public void GetRange()
@@ -2610,24 +2591,20 @@ namespace C5.Tests.trees.TreeSet
         }
     }
 
-
-
-
     namespace Sync
     {
         [TestFixture]
         public class SyncRoot
         {
             private TreeSet<int> tree;
-            private readonly Object mySyncRoot = new Object();
+            private readonly object mySyncRoot = new();
             private readonly int sz = 5000;
-
 
             [Test]
             public void Safe()
             {
-                System.Threading.Thread t1 = new System.Threading.Thread(new System.Threading.ThreadStart(safe1));
-                System.Threading.Thread t2 = new System.Threading.Thread(new System.Threading.ThreadStart(safe2));
+                var t1 = new Thread(new System.Threading.ThreadStart(safe1));
+                var t2 = new Thread(new System.Threading.ThreadStart(safe2));
 
                 t1.Start();
                 t2.Start();
@@ -2793,7 +2770,7 @@ namespace C5.Tests.trees.TreeSet
             [Test]
             public void Safe()
             {
-                A a = new A(tree);
+                var a = new A(tree);
 
                 a.traverse();
                 Assert.AreEqual(sz, a.count);

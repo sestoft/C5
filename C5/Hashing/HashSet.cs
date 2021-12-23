@@ -75,7 +75,7 @@ namespace C5
         private readonly double fillfactor = 0.66;
         private int resizethreshhold;
 
-        private static readonly Random Random = new Random();
+        private static readonly Random Random = new();
         private uint _randomhashfactor;
 
         #endregion
@@ -493,7 +493,7 @@ namespace C5
         public virtual void RemoveAll(SCG.IEnumerable<T> items)
         {
             UpdateCheck();
-            RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(this);
+            var raiseHandler = new RaiseForRemoveAllHandler(this);
             bool raise = raiseHandler.MustFire;
             T jtem;
             foreach (var item in items)
@@ -534,7 +534,7 @@ namespace C5
         {
             UpdateCheck();
 
-            HashSet<T> aux = new HashSet<T>(EqualityComparer);
+            var aux = new HashSet<T>(EqualityComparer);
 
             //This only works for sets:
             foreach (var item in items)
@@ -869,7 +869,7 @@ namespace C5
         /// <returns>Histogram data.</returns>
         public ISortedDictionary<int, int> BucketCostDistribution()
         {
-            TreeDictionary<int, int> res = new TreeDictionary<int, int>();
+            var res = new TreeDictionary<int, int>();
             for (int i = 0, s = table.Length; i < s; i++)
             {
                 int count = 0;

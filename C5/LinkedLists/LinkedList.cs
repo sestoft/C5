@@ -229,7 +229,7 @@ namespace C5
         /// <param name="positions"></param>
         /// <param name="nearest"></param>
         /// <returns></returns>
-        private int Dist(int pos, out int nearest, int[] positions)
+        private static int Dist(int pos, out int nearest, int[] positions)
         {
             nearest = -1;
             int bestdist = int.MaxValue;
@@ -250,7 +250,7 @@ namespace C5
         /// <param name="positions"></param>
         /// <param name="nodes"></param>
         /// <returns></returns>
-        private Node Get(int pos, int[] positions, Node[] nodes)
+        private static Node Get(int pos, int[] positions, Node[] nodes)
         {
             int delta = Dist(pos, out int nearest, positions);
             Node node = nodes[nearest];
@@ -281,7 +281,7 @@ namespace C5
         /// <param name="n2"></param>
         /// <param name="positions"></param>
         /// <param name="nodes"></param>
-        private void GetPair(int p1, int p2, out Node n1, out Node n2, int[] positions, Node[] nodes)
+        private static void GetPair(int p1, int p2, out Node n1, out Node n2, int[] positions, Node[] nodes)
         {
             int delta1 = Dist(p1, out int nearest1, positions), d1 = delta1 < 0 ? -delta1 : delta1;
             int delta2 = Dist(p2, out int nearest2, positions), d2 = delta2 < 0 ? -delta2 : delta2;
@@ -310,7 +310,7 @@ namespace C5
         /// <returns></returns>
         private Node Insert(int index, Node succ, T item)
         {
-            Node newnode = new Node(item, succ.prev, succ);
+            var newnode = new Node(item, succ.prev, succ);
             succ.prev!.next = newnode;
             succ.prev = newnode;
             size++;
@@ -592,7 +592,7 @@ namespace C5
             private static PositionComparer _default;
 
             private PositionComparer() { }
-            public static PositionComparer Default => _default ?? (_default = new PositionComparer());
+            public static PositionComparer Default => _default ??= new PositionComparer();
             public int Compare(Position a, Position b)
             {
 
@@ -1037,7 +1037,7 @@ namespace C5
 
             foreach (T item in items)
             {
-                Node tmp = new Node(item, node, null);
+                var tmp = new Node(item, node, null);
                 node.next = tmp;
                 count++;
                 node = tmp;
@@ -1125,8 +1125,8 @@ namespace C5
         {
             ValidityCheck();
 
-            LinkedList<V> retval = new LinkedList<V>();
-            return Map<V>(mapper, retval);
+            var retval = new LinkedList<V>();
+            return Map(mapper, retval);
         }
 
         /// <summary>
@@ -1141,8 +1141,8 @@ namespace C5
         {
             ValidityCheck();
 
-            LinkedList<V> retval = new LinkedList<V>(equalityComparer);
-            return Map<V>(mapper, retval);
+            var retval = new LinkedList<V>(equalityComparer);
+            return Map(mapper, retval);
         }
 
         private IList<V> Map<V>(Func<T, V> mapper, LinkedList<V> retval)
@@ -1346,7 +1346,7 @@ namespace C5
         {
             if (!TrySlide(offset, size))
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(offset));
             }
 
             return this;
@@ -1462,7 +1462,7 @@ namespace C5
                         switch (ViewPosition(view))
                         {
                             case MutualViewPosition.ContainedIn:
-                                (_positions ?? (_positions = new CircularQueue<Position>())).Enqueue(new Position(view, true));
+                                ((CircularQueue<LinkedList<T>.Position>)(_positions ??= new CircularQueue<Position>())).Enqueue(new Position(view, true));
                                 _positions.Enqueue(new Position(view, false));
                                 break;
                             case MutualViewPosition.Overlapping:
@@ -1773,7 +1773,7 @@ namespace C5
             }
 
             DisposeOverlappingViews(false);
-            ArrayList<T> a = new ArrayList<T>();
+            var a = new ArrayList<T>();
             a.AddAll(this);
             a.Shuffle(rnd);
             Node cursor = startsentinel!.next!;
@@ -2154,12 +2154,12 @@ namespace C5
                 return;
             }
 
-            RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
+            var raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
             bool mustFire = raiseHandler.MustFire;
 
-            HashBag<T> toremove = new HashBag<T>(itemequalityComparer);
+            var toremove = new HashBag<T>(itemequalityComparer);
             toremove.AddAll(items);
-            ViewHandler viewHandler = new ViewHandler(this);
+            var viewHandler = new ViewHandler(this);
             int index = 0, removed = 0, myoffset = Offset;
             Node node = startsentinel!.next!;
             while (node != endsentinel)
@@ -2306,12 +2306,12 @@ namespace C5
                 return;
             }
 
-            RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
+            var raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
             bool mustFire = raiseHandler.MustFire;
 
-            HashBag<T> toretain = new HashBag<T>(itemequalityComparer);
+            var toretain = new HashBag<T>(itemequalityComparer);
             toretain.AddAll(items);
-            ViewHandler viewHandler = new ViewHandler(this);
+            var viewHandler = new ViewHandler(this);
             int index = 0, removed = 0, myoffset = Offset;
             Node node = startsentinel!.next!;
             while (node != endsentinel)
@@ -2415,7 +2415,7 @@ namespace C5
         {
             ValidityCheck();
 
-            HashBag<T> tocheck = new HashBag<T>(itemequalityComparer);
+            var tocheck = new HashBag<T>(itemequalityComparer);
             tocheck.AddAll(items);
             if (tocheck.Count > size)
             {
@@ -2442,7 +2442,7 @@ namespace C5
         {
             ValidityCheck();
             int stamp = this.stamp;
-            LinkedList<T> retval = new LinkedList<T>();
+            var retval = new LinkedList<T>();
             Node cursor = startsentinel!.next!;
             Node mcursor = retval.startsentinel!;
 
@@ -2496,8 +2496,7 @@ namespace C5
         /// <returns></returns>
         public virtual ICollectionValue<T> UniqueItems()
         {
-
-            HashBag<T> hashbag = new HashBag<T>(itemequalityComparer);
+            var hashbag = new HashBag<T>(itemequalityComparer);
             hashbag.AddAll(this);
             return hashbag.UniqueItems();
         }
@@ -2506,10 +2505,9 @@ namespace C5
         ///
         /// </summary>
         /// <returns></returns>
-        public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
+        public virtual ICollectionValue<SCG.KeyValuePair<T, int>> ItemMultiplicities()
         {
-
-            HashBag<T> hashbag = new HashBag<T>(itemequalityComparer);
+            var hashbag = new HashBag<T>(itemequalityComparer);
             hashbag.AddAll(this);
             return hashbag.ItemMultiplicities();
         }
@@ -2531,9 +2529,9 @@ namespace C5
                 return;
             }
 
-            RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
+            var raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
             bool mustFire = raiseHandler.MustFire;
-            ViewHandler viewHandler = new ViewHandler(this);
+            var viewHandler = new ViewHandler(this);
             int index = 0, removed = 0, myoffset = Offset;
             //
             Node node = startsentinel!.next!;
@@ -2745,16 +2743,12 @@ namespace C5
                 }
                 if (view.Offset > size || view.Offset < 0)
                 {
-                    Logger.Log(string.Format("Bad view(hash {0}, offset {1}, size {2}), Offset > underlying.size ({2})",
-                      view.GetHashCode(), view.offset, view.size, size));
+                    Logger.Log($"Bad view(hash {view.GetHashCode()}, offset {view.offset}, size {view.size}), Offset > underlying.size ({size})");
                     retval = false;
                 }
                 else if (view.startsentinel != nodes[view.Offset])
                 {
-                    Logger.Log(string.Format("Bad view(hash {0}, offset {1}, size {2}), startsentinel {3} should be {4}",
-                      view.GetHashCode(), view.offset, view.size,
-                      view.startsentinel + " " + view.startsentinel!.GetHashCode(),
-                      nodes[view.Offset] + " " + nodes[view.Offset].GetHashCode()));
+                    Logger.Log($"Bad view(hash {view.GetHashCode()}, offset {view.offset}, size {view.size}), startsentinel {view.startsentinel + " " + view.startsentinel!.GetHashCode()} should be {nodes[view.Offset] + " " + nodes[view.Offset].GetHashCode()}");
                     retval = false;
                 }
                 if (view.Offset + view.size > size || view.Offset + view.size < 0)
@@ -2909,7 +2903,7 @@ namespace C5
         {
             if (index < 0 || index + Count > arr.Length)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
 
             foreach (T item in this)

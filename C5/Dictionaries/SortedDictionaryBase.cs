@@ -458,7 +458,7 @@ namespace C5
 
             public bool Find(ref K item)
             {
-                SCG.KeyValuePair<K, V> p = new SCG.KeyValuePair<K, V>(item, default);
+                var p = new SCG.KeyValuePair<K, V>(item, default);
                 bool retval = sortedpairs.Find(ref p);
                 item = p.Key;
                 return retval;

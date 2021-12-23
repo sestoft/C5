@@ -34,7 +34,7 @@ namespace C5
         /// </summary>
         public virtual event CollectionChangedHandler<T> CollectionChanged
         {
-            add { CheckWillListen(EventType.Changed); (eventBlock ?? (eventBlock = new EventBlock<T>())).CollectionChanged += value; }
+            add { CheckWillListen(EventType.Changed); (eventBlock ??= new EventBlock<T>()).CollectionChanged += value; }
             remove
             {
                 CheckWillListen(EventType.Changed);
@@ -64,7 +64,7 @@ namespace C5
         /// </summary>
         public virtual event CollectionClearedHandler<T> CollectionCleared
         {
-            add { CheckWillListen(EventType.Cleared); (eventBlock ?? (eventBlock = new EventBlock<T>())).CollectionCleared += value; }
+            add { CheckWillListen(EventType.Cleared); (eventBlock ??= new EventBlock<T>()).CollectionCleared += value; }
             remove
             {
                 CheckWillListen(EventType.Cleared);
@@ -105,7 +105,7 @@ namespace C5
         /// </summary>
         public virtual event ItemsAddedHandler<T> ItemsAdded
         {
-            add { CheckWillListen(EventType.Added); (eventBlock ?? (eventBlock = new EventBlock<T>())).ItemsAdded += value; }
+            add { CheckWillListen(EventType.Added); (eventBlock ??= new EventBlock<T>()).ItemsAdded += value; }
             remove
             {
                 CheckWillListen(EventType.Added);
@@ -137,7 +137,7 @@ namespace C5
         /// </summary>
         public virtual event ItemsRemovedHandler<T> ItemsRemoved
         {
-            add { CheckWillListen(EventType.Removed); (eventBlock ?? (eventBlock = new EventBlock<T>())).ItemsRemoved += value; }
+            add { CheckWillListen(EventType.Removed); (eventBlock ??= new EventBlock<T>()).ItemsRemoved += value; }
             remove
             {
                 CheckWillListen(EventType.Removed);
@@ -170,7 +170,7 @@ namespace C5
         /// </summary>
         public virtual event ItemInsertedHandler<T> ItemInserted
         {
-            add { CheckWillListen(EventType.Inserted); (eventBlock ?? (eventBlock = new EventBlock<T>())).ItemInserted += value; }
+            add { CheckWillListen(EventType.Inserted); (eventBlock ??= new EventBlock<T>()).ItemInserted += value; }
             remove
             {
                 CheckWillListen(EventType.Inserted);
@@ -202,7 +202,7 @@ namespace C5
         /// </summary>
         public virtual event ItemRemovedAtHandler<T> ItemRemovedAt
         {
-            add { CheckWillListen(EventType.RemovedAt); (eventBlock ?? (eventBlock = new EventBlock<T>())).ItemRemovedAt += value; }
+            add { CheckWillListen(EventType.RemovedAt); (eventBlock ??= new EventBlock<T>()).ItemRemovedAt += value; }
             remove
             {
                 CheckWillListen(EventType.RemovedAt);
@@ -476,7 +476,7 @@ namespace C5
         {
             if (index < 0 || index + Count > array.Length)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
 
             foreach (T item in this)

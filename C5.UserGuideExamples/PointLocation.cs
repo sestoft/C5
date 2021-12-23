@@ -154,11 +154,11 @@ namespace C5.UserGuideExamples
             endpoints = new TreeDictionary<double, System.Collections.Generic.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>>();
             foreach (Edge<T> edge in edges)
             {
-                add(edge);
+                InnerAdd(edge);
             }
         }
 
-        private void add(Edge<T> edge)
+        private void InnerAdd(Edge<T> edge)
         {
             if (edge.Xs == edge.Xe)
             {
@@ -189,7 +189,7 @@ namespace C5.UserGuideExamples
                 throw new InvalidOperationException("PointLocator static when built");
             }
 
-            add(edge);
+            InnerAdd(edge);
         }
 
         public void AddAll(SCG.IEnumerable<Edge<T>> edges)
@@ -201,7 +201,7 @@ namespace C5.UserGuideExamples
 
             foreach (Edge<T> edge in edges)
             {
-                add(edge);
+                InnerAdd(edge);
             }
         }
 
@@ -210,9 +210,9 @@ namespace C5.UserGuideExamples
             //htree.Clear();
             htree = new TreeDictionary<double, ISorted<Edge<T>>>();
 
-            TreeSet<Edge<T>> vtree = new TreeSet<Edge<T>>();
+            var vtree = new TreeSet<Edge<T>>();
 
-            htree[Double.NegativeInfinity] = (ISorted<Edge<T>>)(vtree.Snapshot());
+            htree[double.NegativeInfinity] = vtree.Snapshot();
 
             foreach (System.Collections.Generic.KeyValuePair<double, System.Collections.Generic.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>> p in endpoints)
             {
@@ -261,11 +261,11 @@ namespace C5.UserGuideExamples
                 throw new InvalidOperationException("PointLocator must be built first");
             }
 
-            System.Collections.Generic.KeyValuePair<double, ISorted<Edge<T>>> p = htree.WeakPredecessor(x);
+            SCG.KeyValuePair<double, ISorted<Edge<T>>> p = htree.WeakPredecessor(x);
 
             //if (DoubleComparer.StaticCompare(cell.key,x)==0)
             //Just note it, we have thrown away the vertical edges!
-            PointComparer<T> c = new PointComparer<T>(x, y);
+            var c = new PointComparer<T>(x, y);
 
             //Return value true here means we are at an edge.
             //But note that if x is in htree.Keys, we may be at a
@@ -293,11 +293,11 @@ namespace C5.UserGuideExamples
                 throw new InvalidOperationException("PointLocator must be built first");
             }
 
-            System.Collections.Generic.KeyValuePair<double, ISorted<Edge<T>>> p = htree.WeakPredecessor(x);
+            SCG.KeyValuePair<double, ISorted<Edge<T>>> p = htree.WeakPredecessor(x);
 
             //if (DoubleComparer.StaticCompare(cell.key,x)==0)
             //Just note it, we have thrown away the vertical edges!
-            PointComparer<T> c = new PointComparer<T>(x, y);
+            var c = new PointComparer<T>(x, y);
 
             //Return value true here means we are at an edge.
             //But note that if x is in htree.Keys, we may be at a
@@ -482,7 +482,7 @@ namespace C5.UserGuideExamples
 
             public bool LookUp(int count, int seed)
             {
-                Random random = new Random(seed);
+                var random = new Random(seed);
                 bool res = false;
 
                 for (int i = 0; i < count; i++)
@@ -499,11 +499,11 @@ namespace C5.UserGuideExamples
                 _ = args.Length >= 3 ? int.Parse(args[2]) : 10;
                 int lookups = args.Length >= 4 ? int.Parse(args[3]) : 500;//00;
 
-                new TestUgly(d).run(lookups);
+                new TestUgly(d).Run(lookups);
             }
 
 
-            public void run(int lookups)
+            public void Run(int lookups)
             {
                 _ = Traverse();
 
@@ -656,7 +656,6 @@ namespace C5.UserGuideExamples
 
             private PointLocator<string> pointlocator;
 
-
             public TestLattice(int d)
             {
                 this.d = d;
@@ -684,7 +683,7 @@ namespace C5.UserGuideExamples
 
             public bool LookUp(int count, int seed)
             {
-                Random random = new Random(seed);
+                var random = new Random(seed);
                 bool res = false;
 
                 for (int i = 0; i < count; i++)
@@ -702,7 +701,7 @@ namespace C5.UserGuideExamples
                 int repeats = 2;
                 int lookups = 50000;
                 Console.WriteLine("TestLattice Run({0}), means over {1} repeats:", d, repeats);
-                TestLattice tl = new TestLattice(d, 0.000001);
+                var tl = new TestLattice(d, 0.000001);
 
                 tl.Traverse();
 
@@ -742,11 +741,11 @@ namespace C5.UserGuideExamples
             }
         }
 
-        internal class T1
+        internal class Test1
         {
-            private static void t1()
+            private static void T1()
             {
-                PointLocator<int> pl = new PointLocator<int>();
+                var pl = new PointLocator<int>();
                 pl.Add(new Edge<int>(1, 1, 3, 4, 1, -1));
                 pl.Add(new Edge<int>(3, 4, 4, 2, 1, -1));
                 pl.Add(new Edge<int>(1, 1, 4, 2, -1, 1));
@@ -796,9 +795,9 @@ namespace C5.UserGuideExamples
 
             }
 
-            private static void t2()
+            private static void T2()
             {
-                PointLocator<int> pl = new PointLocator<int>();
+                var pl = new PointLocator<int>();
                 //outer triangle
                 pl.Add(new Edge<int>(1, 1, 2, 8, 1, -1));
                 pl.Add(new Edge<int>(2, 8, 7, 5, 1, -1));
@@ -910,9 +909,9 @@ namespace C5.UserGuideExamples
                 pl.Place(8, 9, out x); Debug.Assert(x == 0);
             }
 
-            private static void t3()
+            private static void T3()
             {
-                PointLocator<int> pl = new PointLocator<int>();
+                var pl = new PointLocator<int>();
                 pl.Add(new Edge<int>(1, 1, 5, 2, -1, 1));
                 pl.Add(new Edge<int>(5, 2, 6, 6, -1, 1));
                 pl.Add(new Edge<int>(4, 3, 6, 6, 1, -1));
@@ -992,9 +991,9 @@ namespace C5.UserGuideExamples
                 pl.Place(7, 7, out x); Debug.Assert(x == 0);
             }
 
-            private static void t4()
+            private static void T4()
             {
-                PointLocator<int> pl = new PointLocator<int>();
+                var pl = new PointLocator<int>();
                 pl.Add(new Edge<int>(2, 4, 5, 1, -1, 1));
                 pl.Add(new Edge<int>(5, 1, 11, 2, -1, 2));
                 pl.Add(new Edge<int>(5, 1, 9, 4, 2, 1));
@@ -1384,12 +1383,12 @@ namespace C5.UserGuideExamples
                 pl.Place(22, 14, out x); Debug.Assert(x == 0);
             }
 
-            public static void run()
+            public static void Run()
             {
-                t1();
-                t2();
-                t3();
-                t4();
+                T1();
+                T2();
+                T3();
+                T4();
             }
         }
     }
@@ -1398,8 +1397,8 @@ namespace C5.UserGuideExamples
     {
         public static void Main()
         {
-            Test.T1.run();
-            Test.TestUgly.Run(new string[0]);
+            Test.Test1.Run();
+            Test.TestUgly.Run(Array.Empty<string>());
         }
     }
 }

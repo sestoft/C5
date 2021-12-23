@@ -240,7 +240,7 @@ namespace C5
         /// <returns>The new indexed sorted collection.</returns>
         public IIndexedSorted<T> FindAll(Func<T, bool> f)
         {
-            SortedArray<T> res = new SortedArray<T>(_comparer);
+            var res = new SortedArray<T>(_comparer);
             int j = 0, rescap = res.array.Length;
 
             for (int i = 0; i < size; i++)
@@ -275,7 +275,7 @@ namespace C5
         /// <returns>The new sorted collection.</returns>
         public IIndexedSorted<V> Map<V>(Func<T, V> m, SCG.IComparer<V> c)
         {
-            SortedArray<V> res = new SortedArray<V>(size, c);
+            var res = new SortedArray<V>(size, c);
 
             if (size > 0)
             {
@@ -620,7 +620,7 @@ namespace C5
             UpdateCheck();
 
             int j = 0, i = 0, c, itemcount = CountItems(items), numAdded = 0;
-            SortedArray<T> res = new SortedArray<T>(size + itemcount, _comparer);
+            var res = new SortedArray<T>(size + itemcount, _comparer);
             T lastitem = default;
             T[] addedItems = new T[itemcount];
 
@@ -975,7 +975,7 @@ namespace C5
             //(Not better to collect the m items and sort them)
             UpdateCheck();
 
-            RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(this);
+            var raiseHandler = new RaiseForRemoveAllHandler(this);
             bool mustFire = raiseHandler.MustFire;
 
             int[] toremove = new int[(size >> 5) + 1];
@@ -1019,7 +1019,7 @@ namespace C5
             //(Not better to collect the m items and sort them)
             UpdateCheck();
 
-            RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(this);
+            var raiseHandler = new RaiseForRemoveAllHandler(this);
             bool mustFire = raiseHandler.MustFire;
 
             int[] toretain = new int[(size >> 5) + 1];
@@ -1064,7 +1064,7 @@ namespace C5
 
             foreach (T item in items)
             {
-                if (!BinarySearch(item, out int tmp))
+                if (!BinarySearch(item, out _))
                 {
                     return false;
                 }

@@ -50,7 +50,7 @@ namespace C5
         public static string ShowString(IShowable showable, string? format, IFormatProvider? formatProvider)
         {
             int rest = MaxLength(format);
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             showable.Show(sb, ref rest, formatProvider);
             return sb.ToString();
         }

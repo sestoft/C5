@@ -252,7 +252,7 @@ namespace C5
         /// <param name="positions"></param>
         /// <param name="nearest"></param>
         /// <returns></returns>
-        private int Dist(int pos, out int nearest, int[] positions)
+        private static int Dist(int pos, out int nearest, int[] positions)
         {
             nearest = -1;
             int bestdist = int.MaxValue;
@@ -273,7 +273,7 @@ namespace C5
         /// <param name="positions"></param>
         /// <param name="nodes"></param>
         /// <returns></returns>
-        private Node Get(int pos, int[] positions, Node[] nodes)
+        private static Node Get(int pos, int[] positions, Node[] nodes)
         {
             int delta = Dist(pos, out int nearest, positions);
             Node node = nodes[nearest];
@@ -304,7 +304,7 @@ namespace C5
         /// <param name="n2"></param>
         /// <param name="positions"></param>
         /// <param name="nodes"></param>
-        private void GetPair(int p1, int p2, out Node n1, out Node n2, int[] positions, Node[] nodes)
+        private static void GetPair(int p1, int p2, out Node n1, out Node n2, int[] positions, Node[] nodes)
         {
             int delta1 = Dist(p1, out int nearest1, positions), d1 = delta1 < 0 ? -delta1 : delta1;
             int delta2 = Dist(p2, out int nearest2, positions), d2 = delta2 < 0 ? -delta2 : delta2;
@@ -326,7 +326,7 @@ namespace C5
 
         private void Insert(Node succ, T item)
         {
-            Node newnode = new Node(item);
+            var newnode = new Node(item);
             if (dict.FindOrAdd(item, ref newnode))
             {
                 throw new DuplicateNotAllowedException("Item already in indexed list");
@@ -599,7 +599,7 @@ namespace C5
                 int t1 = taggroup.tag;
                 int t2 = that.taggroup.tag;
 
-                return t1 < t2 ? true : t1 > t2 ? false : tag < that.tag;
+                return t1 < t2 || t1 <= t2 && tag < that.tag;
             }
             #endregion
 
@@ -648,7 +648,7 @@ namespace C5
 
         // const int logwordsize = 5;
 
-        private TagGroup GetTagGroup(Node pred, Node succ, out int lowbound, out int highbound)
+        private static TagGroup GetTagGroup(Node pred, Node succ, out int lowbound, out int highbound)
         {
             TagGroup predgroup = pred.taggroup, succgroup = succ.taggroup;
 
@@ -734,7 +734,7 @@ namespace C5
             {
                 System.Diagnostics.Debug.Assert(Taggroups == 0);
 
-                TagGroup newgroup = new TagGroup();
+                var newgroup = new TagGroup();
 
                 Taggroups = 1;
                 node.taggroup = newgroup;
@@ -836,7 +836,7 @@ namespace C5
             tgtdelta = tgtdelta == 0 ? 1 : tgtdelta;
             for (int j = 0; j < newtgs; j++)
             {
-                TagGroup newtaggroup = new TagGroup
+                var newtaggroup = new TagGroup
                 {
                     tag = (tgtag = tgtag >= ntgt - tgtdelta ? ntgt : tgtag + tgtdelta),
                     first = n,
@@ -913,7 +913,7 @@ namespace C5
             private static PositionComparer _default;
 
             private PositionComparer() { }
-            public static PositionComparer Default => _default ?? (_default = new PositionComparer());
+            public static PositionComparer Default => _default ??= new PositionComparer();
             public int Compare(Position a, Position b)
             {
                 return a.Endpoint == b.Endpoint ? 0 : a.Endpoint.Precedes(b.Endpoint) ? -1 : 1;
@@ -1394,7 +1394,7 @@ namespace C5
             {
                 foreach (T item in items)
                 {
-                    Node tmp = new Node(item, node!, null);
+                    var tmp = new Node(item, node!, null);
                     if (!dict.FindOrAdd(item, ref tmp))
                     {
                         tmp.tag = thetag < taglimit ? ++thetag : thetag;
@@ -1507,7 +1507,7 @@ namespace C5
         {
             Validitycheck();
 
-            HashedLinkedList<V> retval = new HashedLinkedList<V>();
+            var retval = new HashedLinkedList<V>();
             return Map<V>(mapper, retval);
         }
 
@@ -1523,7 +1523,7 @@ namespace C5
         {
             Validitycheck();
 
-            HashedLinkedList<V> retval = new HashedLinkedList<V>(equalityComparer);
+            var retval = new HashedLinkedList<V>(equalityComparer);
             return Map<V>(mapper, retval);
         }
 
@@ -1540,7 +1540,7 @@ namespace C5
 
             double tagdelta = int.MaxValue / (size + 1.0);
             int count = 1;
-            HashedLinkedList<V>.TagGroup taggroup = new HashedLinkedList<V>.TagGroup();
+            var taggroup = new HashedLinkedList<V>.TagGroup();
             retval.taggroups = 1;
             taggroup.count = size;
             while (cursor != endsentinel)
@@ -1747,7 +1747,7 @@ namespace C5
         {
             if (!TrySlide(offset, size))
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(offset));
             }
 
             return this;
@@ -1878,7 +1878,7 @@ namespace C5
                         switch (ViewPosition(view))
                         {
                             case MutualViewPosition.ContainedIn:
-                                (_positions ?? (_positions = new CircularQueue<Position>())).Enqueue(new Position(view, true));
+                                ((CircularQueue<HashedLinkedList<T>.Position>)(_positions ??= new CircularQueue<Position>())).Enqueue(new Position(view, true));
                                 _positions.Enqueue(new Position(view, false));
                                 break;
                             case MutualViewPosition.Overlapping:
@@ -2228,7 +2228,7 @@ namespace C5
             }
 
             DisposeOverlappingViews(false);
-            ArrayList<T> a = new ArrayList<T>();
+            var a = new ArrayList<T>();
             a.AddAll(this);
             a.Shuffle(rnd);
             Node cursor = startsentinel!.next!;
@@ -2479,7 +2479,7 @@ namespace C5
         {
             UpdateCheck();
             //This is an extended myinsert:
-            Node node = new Node(item);
+            var node = new Node(item);
             if (!dict.FindOrAdd(item, ref node))
             {
                 InsertNode(true, endsentinel!, node);
@@ -2514,7 +2514,7 @@ namespace C5
         public virtual bool UpdateOrAdd(T item, out T olditem)
         {
             UpdateCheck();
-            Node node = new Node(item);
+            var node = new Node(item);
             //NOTE: it is hard to do this without double access to the dictionary
             //in the update case
             if (dict.FindOrAdd(item, ref node))
@@ -2599,7 +2599,7 @@ namespace C5
                 return;
             }
 
-            RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
+            var raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
             bool mustFire = raiseHandler.MustFire;
             foreach (T item in items)
             {
@@ -2688,7 +2688,7 @@ namespace C5
             }
 
             //TODO: mix with tag maintenance to only run through list once?
-            ViewHandler viewHandler = new ViewHandler(this);
+            var viewHandler = new ViewHandler(this);
             if (viewHandler.viewCount > 0)
             {
                 int removed = 0;
@@ -2752,7 +2752,7 @@ namespace C5
                 return;
             }
 
-            RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
+            var raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
             bool mustFire = raiseHandler.MustFire;
             /*if (underlying == null)
             {
@@ -2778,7 +2778,7 @@ namespace C5
             }
             else*/
             {
-                HashSet<T> toremove = new HashSet<T>(itemequalityComparer);
+                var toremove = new HashSet<T>(itemequalityComparer);
 
                 foreach (T item in this)
                 {
@@ -2856,7 +2856,7 @@ namespace C5
             Validitycheck();
             foreach (T item in items)
             {
-                if (!Contains(item, out Node node))
+                if (!Contains(item, out _))
                 {
                     return false;
                 }
@@ -2877,12 +2877,12 @@ namespace C5
         {
             Validitycheck();
             int stamp = this.stamp;
-            HashedLinkedList<T> retval = new HashedLinkedList<T>();
+            var retval = new HashedLinkedList<T>();
             Node cursor = startsentinel!.next!;
             Node mcursor = retval.startsentinel!;
             double tagdelta = int.MaxValue / (size + 1.0);
             int count = 1;
-            TagGroup taggroup = new TagGroup();
+            var taggroup = new TagGroup();
             retval.taggroups = 1;
             while (cursor != endsentinel)
             {
@@ -3014,7 +3014,7 @@ namespace C5
         public virtual bool Add(T item)
         {
             UpdateCheck();
-            Node node = new Node(item);
+            var node = new Node(item);
             if (!dict.FindOrAdd(item, ref node))
             {
                 InsertNode(true, endsentinel!, node);
@@ -3051,7 +3051,7 @@ namespace C5
             Node pred = endsentinel!.prev!;
             foreach (var item in items)
             {
-                Node node = new Node(item);
+                var node = new Node(item);
                 if (!dict.FindOrAdd(item, ref node))
                 {
                     InsertNode(false, endsentinel, node);
@@ -3106,8 +3106,7 @@ namespace C5
                 }
                 if (view.Offset > size || view.Offset < 0)
                 {
-                    Logger.Log(string.Format("Bad view(hash {0}, offset {1}, size {2}), Offset > underlying.size ({2})",
-                      view.GetHashCode(), view.offset, view.size, size));
+                    Logger.Log($"Bad view(hash {view.GetHashCode()}, offset {view.offset}, size {view.size}), Offset > underlying.size ({size})");
                     retval = false;
                 }
                 else if (view.startsentinel != nodes[view.Offset])
@@ -3153,7 +3152,7 @@ namespace C5
             return retval;
         }
 
-        private string TheItem(Node node)
+        private static string TheItem(Node node)
         {
             return node == null ? "(null node)" : node.item!.ToString();
         }
@@ -3413,7 +3412,7 @@ namespace C5
         {
             if (index < 0 || index + Count > arr.Length)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
 
             foreach (T item in this)
