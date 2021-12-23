@@ -1170,7 +1170,7 @@ namespace C5
             IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards() { return Backwards(); }
 
 
-            public override EnumerationDirection Direction => forwards ? EnumerationDirection.Forwards : EnumerationDirection.Backwards;
+            public override Direction Direction => forwards ? Direction.Forwards : Direction.Backwards;
         }
 
 

@@ -17,7 +17,7 @@ namespace C5
         /// <code>Forwards</code> if same, else <code>Backwards</code>
         /// </summary>
         /// <value>The enumeration direction relative to the original collection.</value>
-        public virtual EnumerationDirection Direction => EnumerationDirection.Forwards;
+        public virtual Direction Direction => Direction.Forwards;
 
         /// <summary>
         /// 

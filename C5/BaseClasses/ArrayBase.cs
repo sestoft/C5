@@ -316,12 +316,12 @@ namespace C5
             /// </summary>
             /// <exception cref="CollectionModifiedException">if underlying collection has been modified.</exception>
             /// <value>The enumeration direction relative to the original collection.</value>
-            public override EnumerationDirection Direction
+            public override Direction Direction
             {
                 get
                 {
                     thebase.ModifyCheck(stamp);
-                    return delta > 0 ? EnumerationDirection.Forwards : EnumerationDirection.Backwards;
+                    return delta > 0 ? Direction.Forwards : Direction.Backwards;
                 }
             }
         }

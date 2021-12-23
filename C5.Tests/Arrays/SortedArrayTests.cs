@@ -195,18 +195,18 @@ namespace C5.Tests.arrays.sorted
         }
 
         [Test]
-        public void Direction()
+        public void DirectionTest()
         {
-            Assert.AreEqual(EnumerationDirection.Forwards, array.Direction);
-            Assert.AreEqual(EnumerationDirection.Forwards, array.RangeFrom(20).Direction);
-            Assert.AreEqual(EnumerationDirection.Forwards, array.RangeTo(7).Direction);
-            Assert.AreEqual(EnumerationDirection.Forwards, array.RangeFromTo(1, 12).Direction);
-            Assert.AreEqual(EnumerationDirection.Forwards, array.RangeAll().Direction);
-            Assert.AreEqual(EnumerationDirection.Backwards, array.Backwards().Direction);
-            Assert.AreEqual(EnumerationDirection.Backwards, array.RangeFrom(20).Backwards().Direction);
-            Assert.AreEqual(EnumerationDirection.Backwards, array.RangeTo(7).Backwards().Direction);
-            Assert.AreEqual(EnumerationDirection.Backwards, array.RangeFromTo(1, 12).Backwards().Direction);
-            Assert.AreEqual(EnumerationDirection.Backwards, array.RangeAll().Backwards().Direction);
+            Assert.AreEqual(Direction.Forwards, array.Direction);
+            Assert.AreEqual(Direction.Forwards, array.RangeFrom(20).Direction);
+            Assert.AreEqual(Direction.Forwards, array.RangeTo(7).Direction);
+            Assert.AreEqual(Direction.Forwards, array.RangeFromTo(1, 12).Direction);
+            Assert.AreEqual(Direction.Forwards, array.RangeAll().Direction);
+            Assert.AreEqual(Direction.Backwards, array.Backwards().Direction);
+            Assert.AreEqual(Direction.Backwards, array.RangeFrom(20).Backwards().Direction);
+            Assert.AreEqual(Direction.Backwards, array.RangeTo(7).Backwards().Direction);
+            Assert.AreEqual(Direction.Backwards, array.RangeFromTo(1, 12).Backwards().Direction);
+            Assert.AreEqual(Direction.Backwards, array.RangeAll().Backwards().Direction);
         }
 
 

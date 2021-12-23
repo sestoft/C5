@@ -350,7 +350,6 @@ namespace C5
                 GC.SuppressFinalize(this);
             }
 
-
             /// <summary>
             /// Remove the internal data (notably the stack array).
             /// </summary>
@@ -2878,7 +2877,7 @@ namespace C5
             { return Backwards(); }
 
 
-            public override EnumerationDirection Direction => forwards ? EnumerationDirection.Forwards : EnumerationDirection.Backwards;
+            public override Direction Direction => forwards ? Direction.Forwards : Direction.Backwards;
         }
         #endregion
 
@@ -3375,7 +3374,7 @@ namespace C5
                 throw new ViewDisposedException("Snapshot has been disposed");
             }
 
-            return new Range(this, true, bot, false, default, EnumerationDirection.Forwards);
+            return new Range(this, true, bot, false, default, Direction.Forwards);
         }
 
 
@@ -3392,7 +3391,7 @@ namespace C5
                 throw new ViewDisposedException("Snapshot has been disposed");
             }
 
-            return new Range(this, true, bot, true, top, EnumerationDirection.Forwards);
+            return new Range(this, true, bot, true, top, Direction.Forwards);
         }
 
 
@@ -3408,7 +3407,7 @@ namespace C5
                 throw new ViewDisposedException("Snapshot has been disposed");
             }
 
-            return new Range(this, false, default, true, top, EnumerationDirection.Forwards);
+            return new Range(this, false, default, true, top, Direction.Forwards);
         }
 
 
@@ -3423,7 +3422,7 @@ namespace C5
                 throw new ViewDisposedException("Snapshot has been disposed");
             }
 
-            return new Range(this, false, default, false, default, EnumerationDirection.Forwards);
+            return new Range(this, false, default, false, default, Direction.Forwards);
         }
 
 
@@ -3947,10 +3946,10 @@ namespace C5
             private readonly T lowend, highend;
 
             private readonly bool haslowend, hashighend;
-            private EnumerationDirection direction;
+            private Direction direction;
 
 
-            public Range(TreeBag<T> basis, bool haslowend, T lowend, bool hashighend, T highend, EnumerationDirection direction)
+            public Range(TreeBag<T> basis, bool haslowend, T lowend, bool hashighend, T highend, Direction direction)
             {
                 this.basis = basis;
                 stamp = basis.stamp;
@@ -4000,7 +3999,7 @@ namespace C5
                     comparer = range.basis.comparer;
                     path = new Node[2 * range.basis.blackdepth];
                     this.range = range;
-                    forwards = range.direction == EnumerationDirection.Forwards;
+                    forwards = range.direction == Direction.Forwards;
                     cursor = new Node();
                     if (forwards)
                     {
@@ -4245,7 +4244,7 @@ namespace C5
             public override SCG.IEnumerator<T> GetEnumerator() { return new Enumerator(this); }
 
 
-            public override EnumerationDirection Direction => direction;
+            public override Direction Direction => direction;
 
 
             #endregion
@@ -4273,7 +4272,7 @@ namespace C5
             {
                 Range b = (Range)MemberwiseClone();
 
-                b.direction = direction == EnumerationDirection.Forwards ? EnumerationDirection.Backwards : EnumerationDirection.Forwards;
+                b.direction = direction == Direction.Forwards ? Direction.Backwards : Direction.Forwards;
                 return b;
             }
 

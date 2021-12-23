@@ -41,7 +41,7 @@ namespace C5
         /// <code>Forwards</code> if same, else <code>Backwards</code>
         /// </summary>
         /// <value>The enumeration direction relative to the original collection.</value>
-        public EnumerationDirection Direction => directedenumerable.Direction;
+        public Direction Direction => directedenumerable.Direction;
 
         #endregion
     }

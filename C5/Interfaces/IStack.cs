@@ -11,17 +11,20 @@ namespace C5
         /// </summary>
         /// <value></value>
         bool AllowsDuplicates { get; }
+
         /// <summary>
         /// Get the <code>index</code>'th element of the stack.  The bottom of the stack has index 0.
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
         T this[int index] { get; }
+
         /// <summary>
         /// Push an item to the top of the stack.
         /// </summary>
         /// <param name="item">The item</param>
         void Push(T item);
+
         /// <summary>
         /// Pop the item at the top of the stack from the stack.
         /// </summary>

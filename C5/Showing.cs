@@ -9,7 +9,6 @@ namespace C5
     // ------------------------------------------------------------
 
     // Static helper methods for Showing collections
-
     /// <summary>
     ///
     /// </summary>

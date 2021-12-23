@@ -786,7 +786,7 @@ namespace C5
         ///
         /// </summary>
         /// <value></value>
-        public EnumerationDirection Direction => EnumerationDirection.Forwards;
+        public Direction Direction => Direction.Forwards;
 
         #endregion
 

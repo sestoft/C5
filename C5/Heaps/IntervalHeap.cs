@@ -661,7 +661,7 @@ namespace C5
 
             public override string ToString()
             {
-                return string.Format("[{0}]", index);
+                return $"[{index}]";
             }
 
         }

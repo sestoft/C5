@@ -31,6 +31,6 @@ namespace C5
             }
         }
 
-        public EnumerationDirection Direction => directedenumerable.Direction;
+        public Direction Direction => directedenumerable.Direction;
     }
 }
