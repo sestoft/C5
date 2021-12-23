@@ -16,7 +16,7 @@ internal class CollectionSanity
         col2.AddAll(new[] { 7, 9, 13 });
         col3.AddAll(new[] { 9, 7, 13 });
 
-        HashSet<IList<int>> hs1 = new HashSet<IList<int>>
+        var hs1 = new HashSet<IList<int>>
             {
                 col1,
                 col2,

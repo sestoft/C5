@@ -948,8 +948,8 @@ namespace C5
         public virtual IList<T> FindAll(Func<T, bool> filter)
         {
             ValidityCheck();
-            int stamp = this.stamp;
-            ArrayList<T> res = new ArrayList<T>(itemequalityComparer);
+            var stamp = this.stamp;
+            var res = new ArrayList<T>(itemequalityComparer);
             int j = 0, rescap = res.array.Length;
             for (int i = 0; i < size; i++)
             {
@@ -983,7 +983,7 @@ namespace C5
         {
             ValidityCheck();
 
-            ArrayList<V> res = new ArrayList<V>(size);
+            var res = new ArrayList<V>(size);
 
             return Map<V>(mapper, res);
         }
@@ -1001,7 +1001,7 @@ namespace C5
         {
             ValidityCheck();
 
-            ArrayList<V> res = new ArrayList<V>(size, itemequalityComparer);
+            var res = new ArrayList<V>(size, itemequalityComparer);
 
             return Map<V>(mapper, res);
         }
@@ -1172,7 +1172,7 @@ namespace C5
         {
             if (!TrySlide(offset, size))
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(offset));
             }
 
             return this;
@@ -1670,16 +1670,16 @@ namespace C5
                 return;
             }
             //TODO: reactivate the old code for small sizes
-            HashBag<T> toremove = new HashBag<T>(itemequalityComparer);
+            var toremove = new HashBag<T>(itemequalityComparer);
             toremove.AddAll(items);
             if (toremove.Count == 0)
             {
                 return;
             }
 
-            RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
+            var raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
             bool mustFire = raiseHandler.MustFire;
-            ViewHandler viewHandler = new ViewHandler(this);
+            var viewHandler = new ViewHandler(this);
             int j = offsetField;
             int removed = 0;
             int i = offsetField, end = offsetField + size;
@@ -1819,16 +1819,16 @@ namespace C5
                 return;
             }
 
-            HashBag<T> toretain = new HashBag<T>(itemequalityComparer);
+            var toretain = new HashBag<T>(itemequalityComparer);
             toretain.AddAll(items);
             if (toretain.Count == 0)
             {
                 Clear();
                 return;
             }
-            RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
+            var raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
             bool mustFire = raiseHandler.MustFire;
-            ViewHandler viewHandler = new ViewHandler(this);
+            var viewHandler = new ViewHandler(this);
             int j = offsetField;
             int removed = 0;
             int i = offsetField, end = offsetField + size;
@@ -1937,7 +1937,7 @@ namespace C5
             ValidityCheck();
 
             //TODO: use aux hash bag to obtain linear time procedure
-            HashBag<T> tomatch = new HashBag<T>(itemequalityComparer);
+            var tomatch = new HashBag<T>(itemequalityComparer);
             tomatch.AddAll(items);
             if (tomatch.Count == 0)
             {
@@ -1984,7 +1984,7 @@ namespace C5
         /// <returns></returns>
         public virtual ICollectionValue<T> UniqueItems()
         {
-            HashBag<T> hashbag = new HashBag<T>(itemequalityComparer);
+            var hashbag = new HashBag<T>(itemequalityComparer);
             hashbag.AddAll(this);
             return hashbag.UniqueItems();
         }
@@ -1995,7 +1995,7 @@ namespace C5
         /// <returns></returns>
         public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
         {
-            HashBag<T> hashbag = new HashBag<T>(itemequalityComparer);
+            var hashbag = new HashBag<T>(itemequalityComparer);
             hashbag.AddAll(this);
             return hashbag.ItemMultiplicities();
         }
@@ -2016,9 +2016,9 @@ namespace C5
                 return;
             }
 
-            RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
+            var raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
             bool mustFire = raiseHandler.MustFire;
-            ViewHandler viewHandler = new ViewHandler(this);
+            var viewHandler = new ViewHandler(this);
             int j = offsetField;
             int removed = 0;
             int i = offsetField, end = offsetField + size;
@@ -2110,7 +2110,7 @@ namespace C5
                     {
                         if (u.array != v.array)
                         {
-                            Logger.Log(string.Format("View from {0} of length has different base array than the underlying list", v.offsetField, v.size));
+                            Logger.Log($"View from {v.offsetField} of length {v.size} has different base array than the underlying list");
                             retval = false;
                         }
                     }
@@ -2398,7 +2398,7 @@ namespace C5
         {
             if (index < 0 || index + Count > arr.Length)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
 
             foreach (T item in this)
