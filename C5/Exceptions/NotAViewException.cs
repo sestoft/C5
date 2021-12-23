@@ -6,7 +6,6 @@ namespace C5
     /// An exception thrown by an operation on a list (<see cref="T:C5.IList`1"/>)
     /// that only makes sense for a view, not for an underlying list.
     /// </summary>
-    [Serializable]
     public class NotAViewException : Exception
     {
         /// <summary>

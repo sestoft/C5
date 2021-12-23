@@ -16,15 +16,8 @@ namespace C5.Tests.arrays.sorted
         public void TestEvents()
         {
             CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory);
+            new Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory);
         }
-
-        //[Test]
-        //public void Extensible()
-        //{
-        //    C5.Tests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5.Tests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-        //}
     }
 
     internal static class Factory

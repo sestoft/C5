@@ -10,7 +10,6 @@ namespace C5
     /// <i>See the source code for <see cref="T:C5.TreeDictionary`2"/> for an example</i>
     ///
     /// </summary>
-    [Serializable]
     public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISortedDictionary<K, V>
     {
         #region Fields
@@ -272,7 +271,6 @@ namespace C5
         }
 
         #endregion
-        [Serializable]
         private class KeyValuePairComparable : IComparable<SCG.KeyValuePair<K, V>>
         {
             private readonly IComparable<K> cutter;
@@ -284,7 +282,6 @@ namespace C5
             public bool Equals(SCG.KeyValuePair<K, V> other) { return cutter.Equals(other.Key); }
         }
 
-        [Serializable]
         private class ProjectedDirectedEnumerable : MappedDirectedEnumerable<SCG.KeyValuePair<K, V>, K>
         {
             public ProjectedDirectedEnumerable(IDirectedEnumerable<SCG.KeyValuePair<K, V>> directedpairs) : base(directedpairs) { }
@@ -293,7 +290,6 @@ namespace C5
 
         }
 
-        [Serializable]
         private class ProjectedDirectedCollectionValue : MappedDirectedCollectionValue<SCG.KeyValuePair<K, V>, K>
         {
             public ProjectedDirectedCollectionValue(IDirectedCollectionValue<SCG.KeyValuePair<K, V>> directedpairs) : base(directedpairs) { }
@@ -302,7 +298,6 @@ namespace C5
 
         }
 
-        [Serializable]
         private class SortedKeysCollection : SequencedBase<K>, ISorted<K>
         {
             private readonly ISortedDictionary<K, V> sorteddict;

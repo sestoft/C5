@@ -16,25 +16,16 @@ namespace C5.Tests.arrays.list
         public void TestEvents()
         {
             CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.ListTester<CollectionOfInt>().Test(factory);
-            new C5.Tests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory);
-            new C5.Tests.Templates.Events.StackTester<CollectionOfInt>().Test(factory);
+            new Templates.Events.ListTester<CollectionOfInt>().Test(factory);
+            new Templates.Events.QueueTester<CollectionOfInt>().Test(factory);
+            new Templates.Events.StackTester<CollectionOfInt>().Test(factory);
         }
-
-        //[Test]
-        //public void Extensible()
-        //{
-        //    C5.Tests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5.Tests.Templates.Extensible.Clone.ViewTester<CollectionOfInt>();
-        //    C5.Tests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-        //    C5.Tests.Templates.Extensible.Serialization.ViewTester<CollectionOfInt>();
-        //}
 
         [Test]
         public void List()
         {
-            C5.Tests.Templates.List.Dispose.Tester<CollectionOfInt>();
-            C5.Tests.Templates.List.SCG_IList.Tester<CollectionOfInt>();
+            Templates.List.Dispose.Tester<CollectionOfInt>();
+            Templates.List.SCG_IList.Tester<CollectionOfInt>();
         }
     }
 

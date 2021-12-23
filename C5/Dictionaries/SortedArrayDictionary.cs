@@ -2,7 +2,6 @@ using System;
 
 namespace C5
 {
-    [Serializable]
     internal class SortedArrayDictionary<K, V> : SortedDictionaryBase<K, V>
     {
         #region Constructors

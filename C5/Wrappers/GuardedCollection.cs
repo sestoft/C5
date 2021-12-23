@@ -8,7 +8,6 @@ namespace C5
     /// <i>Suitable for wrapping hash tables, <see cref="T:C5.HashSet`1"/>
     /// and <see cref="T:C5.HashBag`1"/>  </i></para>
     /// </summary>
-    [Serializable]
     public class GuardedCollection<T> : GuardedCollectionValue<T>, ICollection<T>
     {
         #region Fields

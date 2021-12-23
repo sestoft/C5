@@ -15,7 +15,6 @@ namespace C5
     /// When the FIFO property is set to true the class will function as a (FIFO) queue
     /// but very inefficiently, use a LinkedList (<see cref="T:C5.LinkedList`1"/>) instead.</i>
     /// </summary>
-    [Serializable]
     public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
     {
         #region Fields
@@ -550,7 +549,6 @@ namespace C5
         #endregion
 
         #region Position, PositionComparer and ViewHandler nested types
-        [Serializable]
         private class PositionComparer : SCG.IComparer<Position>
         {
             public int Compare(Position a, Position b)
@@ -1219,7 +1217,7 @@ namespace C5
         {
             if (!TrySlide(offset, size))
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(offset));
             }
 
             return this;
@@ -2126,7 +2124,7 @@ namespace C5
                     {
                         if (u.array != v.array)
                         {
-                            Logger.Log(string.Format("View from {0} of length has different base array than the underlying list", v.offsetField, v.size));
+                            Logger.Log($"View from {v.offsetField} of length {v.size} has different base array than the underlying list");
                             retval = false;
                         }
                     }
@@ -2345,41 +2343,6 @@ namespace C5
 
         #endregion
 
-        #region ISerializable Members
-        /*
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    public HashedArrayList(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) :
-      this(info.GetInt32("sz"),(SCG.IEqualityComparer<T>)(info.GetValue("eq",typeof(SCG.IEqualityComparer<T>))))
-    {
-      size = info.GetInt32("sz");
-      for (int i = 0; i < size; i++)
-      {
-        array[i] = (T)(info.GetValue("elem" + i,typeof(T)));
-      }
-      reindex(0);
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    public void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
-    {
-      info.AddValue("sz", size);
-      info.AddValue("eq", EqualityComparer);
-      for (int i = 0; i < size; i++)
-			{
-        info.AddValue("elem" + i, array[i + offset]);
-      }
-    }
-*/
-        #endregion
-
         #region System.Collections.Generic.IList<T> Members
 
         void System.Collections.Generic.IList<T>.RemoveAt(int index)
@@ -2405,7 +2368,7 @@ namespace C5
         {
             if (index < 0 || index + Count > arr.Length)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
 
             foreach (T item in this)

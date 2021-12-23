@@ -6,7 +6,6 @@ namespace C5
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    [Serializable]
     public class ItemCountEventArgs<T> : EventArgs
     {
         /// <summary>

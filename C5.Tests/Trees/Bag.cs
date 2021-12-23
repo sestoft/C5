@@ -8,9 +8,6 @@ using SCG = System.Collections.Generic;
 
 namespace C5.Tests.trees.TreeBag
 {
-    using CollectionOfInt = TreeBag<int>;
-
-
     [TestFixture]
     public class NewTest
     {
@@ -62,16 +59,9 @@ namespace C5.Tests.trees.TreeBag
         [Test]
         public void TestEvents()
         {
-            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory);
+            static TreeBag<int> factory() => new TreeBag<int>(TenEqualityComparer.Default);
+            new Templates.Events.SortedIndexedTester<TreeBag<int>>().Test(factory);
         }
-
-        //[Test]
-        //public void Extensible()
-        //{
-        //    C5.Tests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5.Tests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-        //}
     }
 
     internal static class Factory

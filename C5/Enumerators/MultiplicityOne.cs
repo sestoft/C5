@@ -2,7 +2,6 @@ using System;
 
 namespace C5
 {
-    [Serializable]
     internal class MultiplicityOne<K> : MappedCollectionValue<K, System.Collections.Generic.KeyValuePair<K, int>>
     {
         public MultiplicityOne(ICollectionValue<K> coll) : base(coll) { }

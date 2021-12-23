@@ -8,7 +8,6 @@ namespace C5
     /// <summary>
     /// Class containing debugging symbols - to eliminate preprocessor directives
     /// </summary>
-    [Serializable]
     internal class Debug
     {
         /// <summary>

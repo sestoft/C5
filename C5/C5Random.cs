@@ -10,7 +10,6 @@ namespace C5
     /// ACM 46, 5 (May 2003) 90-93; and a posting by Marsaglia to
     /// comp.lang.c on 2003-04-03.
     /// </summary>
-    [Serializable]
     public class C5Random : Random
     {
         private readonly uint[] Q = new uint[16];

@@ -5,7 +5,6 @@ namespace C5
     /// <summary>
     /// 
     /// </summary>
-    [Serializable]
     public class ClearedEventArgs : EventArgs
     {
         /// <summary>

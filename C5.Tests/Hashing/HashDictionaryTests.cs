@@ -16,7 +16,7 @@ namespace C5.Tests.hashtable.dictionary
         public void TestEvents()
         {
             DictionaryIntToInt factory() { return new DictionaryIntToInt(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.DictionaryTester<DictionaryIntToInt>().Test(factory);
+            new Templates.Events.DictionaryTester<DictionaryIntToInt>().Test(factory);
         }
     }
 

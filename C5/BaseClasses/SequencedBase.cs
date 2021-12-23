@@ -5,7 +5,6 @@ namespace C5
     /// <summary>
     /// Base class (abstract) for sequenced collection implementations.
     /// </summary>
-    [Serializable]
     public abstract class SequencedBase<T> : DirectedCollectionBase<T>, IDirectedCollectionValue<T>
     {
         #region Fields

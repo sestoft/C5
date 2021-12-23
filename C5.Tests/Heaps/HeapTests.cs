@@ -15,15 +15,8 @@ namespace C5.Tests.heaps
         public void TestEvents()
         {
             CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.PriorityQueueTester<CollectionOfInt>().Test(factory);
+            new Templates.Events.PriorityQueueTester<CollectionOfInt>().Test(factory);
         }
-
-        //[Test]
-        //public void Extensible()
-        //{
-        //    C5.Tests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5.Tests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-        //}
     }
 
     [TestFixture]

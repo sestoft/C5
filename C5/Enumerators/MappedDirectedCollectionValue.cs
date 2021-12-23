@@ -6,7 +6,6 @@ using SCG = System.Collections.Generic;
 
 namespace C5
 {
-    [Serializable]
     internal abstract class MappedDirectedCollectionValue<T, V> : DirectedCollectionValueBase<V>, IDirectedCollectionValue<V>
     {
         private IDirectedCollectionValue<T> directedCollectionValue;

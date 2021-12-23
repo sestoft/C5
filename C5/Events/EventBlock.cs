@@ -9,7 +9,6 @@ namespace C5
     /// Holds the real events for a collection
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    [Serializable]
     internal sealed class EventBlock<T>
     {
         internal EventType events;

@@ -8,7 +8,6 @@ namespace C5
     /// (method or set property) is called. No check is made to see if the update operation, 
     /// if allowed, would actually change the collection. </para>
     /// </summary>
-    [Serializable]
     public class ReadOnlyCollectionException : Exception
     {
         /// <summary>

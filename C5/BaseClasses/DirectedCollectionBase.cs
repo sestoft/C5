@@ -6,7 +6,6 @@ namespace C5
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    [Serializable]
     public abstract class DirectedCollectionBase<T> : CollectionBase<T>, IDirectedCollectionValue<T>
     {
         /// <summary>

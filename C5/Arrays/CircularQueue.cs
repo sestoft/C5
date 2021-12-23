@@ -9,7 +9,6 @@ namespace C5
     ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    [Serializable]
     public class CircularQueue<T> : SequencedBase<T>, IQueue<T>, IStack<T>
     {
         #region Fields

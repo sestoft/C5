@@ -8,7 +8,6 @@ namespace C5
     ///
     /// <i>Suitable for wrapping a Dictionary. <see cref="T:C5.Dictionary`2"/></i>
     /// </summary>
-    [Serializable]
     public class GuardedSortedDictionary<K, V> : GuardedDictionary<K, V>, ISortedDictionary<K, V>
     {
         #region Fields

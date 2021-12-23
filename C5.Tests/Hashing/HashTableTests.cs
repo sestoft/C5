@@ -15,15 +15,8 @@ namespace C5.Tests.hashtable.set
         public void TestEvents()
         {
             CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.CollectionTester<CollectionOfInt>().Test(factory);
+            new Templates.Events.CollectionTester<CollectionOfInt>().Test(factory);
         }
-
-        //[Test]
-        //public void Extensible()
-        //{
-        //    C5.Tests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5.Tests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-        //}
     }
 
     internal static class Factory

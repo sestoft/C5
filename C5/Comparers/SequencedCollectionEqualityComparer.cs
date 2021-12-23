@@ -9,7 +9,6 @@ namespace C5
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="W"></typeparam>
-    [Serializable]
     public class SequencedCollectionEqualityComparer<T, W> : IEqualityComparer<T>
         where T : ISequenced<W>
     {

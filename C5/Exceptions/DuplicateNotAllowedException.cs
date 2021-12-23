@@ -10,7 +10,6 @@ namespace C5
     /// </para>
     /// <para>With dictionaries this can happen with the <see cref="M:C5.IDictionary`2.Add(`0,`1)"/> metod.</para>
     /// </summary>
-    [Serializable]
     public class DuplicateNotAllowedException : Exception
     {
         /// <summary>

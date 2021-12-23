@@ -6,7 +6,6 @@ namespace C5
     /// An exception thrown by enumerators, range views etc. when accessed after 
     /// the underlying collection has been modified.
     /// </summary>
-    [Serializable]
     public class CollectionModifiedException : Exception
     {
         /// <summary>

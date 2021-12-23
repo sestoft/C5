@@ -5,7 +5,6 @@ namespace C5
     /// <summary>
     /// Base class (abstract) for ICollection implementations.
     /// </summary>
-    [Serializable]
     public abstract class CollectionBase<T> : CollectionValueBase<T>
     {
         #region Fields
@@ -72,7 +71,6 @@ namespace C5
 
             //But still heuristic: 
             //Note: the three odd factors should really be random, 
-            //but there will be a problem with serialization/deserialization!
             //Two products is too few
             foreach (T item in items)
             {

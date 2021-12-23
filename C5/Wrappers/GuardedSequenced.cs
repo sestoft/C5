@@ -7,7 +7,6 @@ namespace C5
     ///
     /// <i>This is mainly interesting as a base of other guard classes</i>
     /// </summary>
-    [Serializable]
     public class GuardedSequenced<T> : GuardedCollection<T>, ISequenced<T>
     {
         #region Fields

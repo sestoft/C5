@@ -7,7 +7,6 @@ namespace C5
     /// Default equalityComparer for dictionary entries.
     /// Operations only look at keys and uses an externally defined equalityComparer for that.
     /// </summary>
-    [Serializable]
     public sealed class KeyValuePairEqualityComparer<K, V> : IEqualityComparer<System.Collections.Generic.KeyValuePair<K, V>>
     {
         private readonly System.Collections.Generic.IEqualityComparer<K> keyequalityComparer;

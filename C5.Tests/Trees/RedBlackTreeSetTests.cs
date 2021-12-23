@@ -7,24 +7,15 @@ using SCG = System.Collections.Generic;
 
 namespace C5.Tests.trees.TreeSet
 {
-    using CollectionOfInt = TreeSet<int>;
-
     [TestFixture]
     public class GenericTesters
     {
         [Test]
         public void TestEvents()
         {
-            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory);
+            TreeSet<int> factory() { return new TreeSet<int>(TenEqualityComparer.Default); }
+            new Templates.Events.SortedIndexedTester<TreeSet<int>>().Test(factory);
         }
-
-        //[Test]
-        //public void Extensible()
-        //{
-        //    C5.Tests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5.Tests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-        //}
     }
 
     internal static class Factory
