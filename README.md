@@ -15,6 +15,12 @@ The design has been influenced by the collection libraries for Java and SmallTal
 
 However, it contains functionality and a regularity of design that considerably exceeds that of the standard libraries for those languages.
 
+## Documentation
+
+Research notes are available here: <https://www.itu.dk/research/c5/>.
+
+Auto-generated documentation can be found here: <https://c5.azurewebsites.net/>.
+
 ## Why yet another generic collection library
 
 There are already other generic collection libraries for C#/CLI, including the `System.Collections.Generic` namespace introduced with .NET 2.0 and Wintellect's Power Collections for .NET by Peter Golde (<http://powercollections.codeplex.com/>).
