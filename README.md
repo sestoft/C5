@@ -5,7 +5,7 @@
 
 The C5 library is a set of generic collection classes (or container classes) for the C# programming language and other generics-enabled languages on later versions the CLI platform, as implemented by Microsoft .NET Framework 4.6.1+, .NET Core 2.0+, .NET 5.0+, and Mono.
 
-The C5 library provides a wide range of classic data structures, rich funcionality, the best possible asymptotic time complexity, documented performance, and a thoroughly tested implementation.
+The C5 library provides a wide range of classic data structures, rich functionality, the best possible asymptotic time complexity, documented performance, and a thoroughly tested implementation.
 
 ## Goals of the C5 library
 
