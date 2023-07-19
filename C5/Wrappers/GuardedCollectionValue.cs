@@ -29,7 +29,7 @@ namespace C5
         /// </summary>
         public event CollectionChangedHandler<T> CollectionChanged
         {
-            add { (eventBlock ?? (eventBlock = new ProxyEventBlock<T>(this, collectionvalue))).CollectionChanged += value; }
+            add { (eventBlock ??= new ProxyEventBlock<T>(this, collectionvalue)).CollectionChanged += value; }
             remove
             {
                 if (eventBlock != null)
@@ -44,7 +44,7 @@ namespace C5
         /// </summary>
         public event CollectionClearedHandler<T> CollectionCleared
         {
-            add { (eventBlock ?? (eventBlock = new ProxyEventBlock<T>(this, collectionvalue))).CollectionCleared += value; }
+            add { (eventBlock ??= new ProxyEventBlock<T>(this, collectionvalue)).CollectionCleared += value; }
             remove
             {
                 if (eventBlock != null)
@@ -59,7 +59,7 @@ namespace C5
         /// </summary>
         public event ItemsAddedHandler<T> ItemsAdded
         {
-            add { (eventBlock ?? (eventBlock = new ProxyEventBlock<T>(this, collectionvalue))).ItemsAdded += value; }
+            add { (eventBlock ??= new ProxyEventBlock<T>(this, collectionvalue)).ItemsAdded += value; }
             remove
             {
                 if (eventBlock != null)
@@ -74,7 +74,7 @@ namespace C5
         /// </summary>
         public event ItemInsertedHandler<T> ItemInserted
         {
-            add { (eventBlock ?? (eventBlock = new ProxyEventBlock<T>(this, collectionvalue))).ItemInserted += value; }
+            add { (eventBlock ??= new ProxyEventBlock<T>(this, collectionvalue)).ItemInserted += value; }
             remove
             {
                 if (eventBlock != null)
@@ -89,7 +89,7 @@ namespace C5
         /// </summary>
         public event ItemsRemovedHandler<T> ItemsRemoved
         {
-            add { (eventBlock ?? (eventBlock = new ProxyEventBlock<T>(this, collectionvalue))).ItemsRemoved += value; }
+            add { (eventBlock ??= new ProxyEventBlock<T>(this, collectionvalue)).ItemsRemoved += value; }
             remove
             {
                 if (eventBlock != null)
@@ -104,7 +104,7 @@ namespace C5
         /// </summary>
         public event ItemRemovedAtHandler<T> ItemRemovedAt
         {
-            add { (eventBlock ?? (eventBlock = new ProxyEventBlock<T>(this, collectionvalue))).ItemRemovedAt += value; }
+            add { (eventBlock ??= new ProxyEventBlock<T>(this, collectionvalue)).ItemRemovedAt += value; }
             remove
             {
                 if (eventBlock != null)

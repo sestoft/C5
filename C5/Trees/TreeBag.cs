@@ -3910,10 +3910,7 @@ namespace C5
             res.snapList = newSnapRef;
 
             FindLastLiveSnapShot();
-            if (snapList == null)
-            {
-                snapList = new SnapRef(this);
-            }
+            snapList ??= new SnapRef(this);
 
             SnapRef? lastLiveSnapRef = snapList.Prev;
 

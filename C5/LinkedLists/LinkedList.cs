@@ -595,7 +595,7 @@ namespace C5
             private static PositionComparer _default;
 
             private PositionComparer() { }
-            public static PositionComparer Default => _default ?? (_default = new PositionComparer());
+            public static PositionComparer Default => _default ??= new PositionComparer();
             public int Compare(Position a, Position b)
             {
 
@@ -1256,10 +1256,7 @@ namespace C5
         {
             CheckRange(start, count);
             ValidityCheck();
-            if (views == null)
-            {
-                views = new WeakViewList<LinkedList<T>>();
-            }
+            views ??= new WeakViewList<LinkedList<T>>();
 
             LinkedList<T> retval = (LinkedList<T>)MemberwiseClone();
             retval.underlying = underlying ?? (this);
@@ -1466,7 +1463,7 @@ namespace C5
                         switch (ViewPosition(view))
                         {
                             case MutualViewPosition.ContainedIn:
-                                (_positions ?? (_positions = new CircularQueue<Position>())).Enqueue(new Position(view, true));
+                                (_positions ??= new CircularQueue<Position>()).Enqueue(new Position(view, true));
                                 _positions.Enqueue(new Position(view, false));
                                 break;
                             case MutualViewPosition.Overlapping:

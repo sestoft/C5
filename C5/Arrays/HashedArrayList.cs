@@ -1139,10 +1139,7 @@ namespace C5
         {
             ValidityCheck();
             CheckRange(start, count);
-            if (views == null)
-            {
-                views = new WeakViewList<HashedArrayList<T>>();
-            }
+            views ??= new WeakViewList<HashedArrayList<T>>();
 
             HashedArrayList<T> retval = (HashedArrayList<T>)MemberwiseClone();
 

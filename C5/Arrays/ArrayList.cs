@@ -1092,10 +1092,7 @@ namespace C5
         {
             ValidityCheck();
             CheckRange(start, count);
-            if (views == null)
-            {
-                views = new WeakViewList<ArrayList<T>>();
-            }
+            views ??= new WeakViewList<ArrayList<T>>();
 
             ArrayList<T> retval = (ArrayList<T>)MemberwiseClone();
 
