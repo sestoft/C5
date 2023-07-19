@@ -1728,12 +1728,8 @@ namespace C5
                     while (n != startsentinel) { n = n.next!; i++; }
                     offset = i;
                 }
-                if (offset == null)
-                {
-                    return 0;
-                }
 
-                return offset.Value;
+                return offset ?? 0;
             }
         }
 
