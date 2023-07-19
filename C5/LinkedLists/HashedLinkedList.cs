@@ -601,7 +601,7 @@ namespace C5
                 int t1 = taggroup.tag;
                 int t2 = that.taggroup.tag;
 
-                return t1 < t2 ? true : t1 > t2 ? false : tag < that.tag;
+                return t1 < t2 || (t1 == t2 && tag < that.tag);
             }
             #endregion
 
