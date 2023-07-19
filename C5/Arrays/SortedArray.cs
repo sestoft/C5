@@ -1065,7 +1065,7 @@ namespace C5
 
             foreach (T item in items)
             {
-                if (!BinarySearch(item, out int tmp))
+                if (!BinarySearch(item, out _))
                 {
                     return false;
                 }

@@ -2861,7 +2861,7 @@ namespace C5
             Validitycheck();
             foreach (T item in items)
             {
-                if (!Contains(item, out Node node))
+                if (!Contains(item, out _))
                 {
                     return false;
                 }
