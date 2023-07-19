@@ -1073,7 +1073,7 @@ namespace C5
 
         private void AddSorted(SCG.IEnumerable<T> items, bool raise)
         {
-            SCG.IEnumerator<T> e = items.GetEnumerator(); ;
+            SCG.IEnumerator<T> e = items.GetEnumerator();
             if (size > 0)
             {
                 throw new InternalException("This can't happen");

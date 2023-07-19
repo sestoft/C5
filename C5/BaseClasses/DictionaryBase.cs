@@ -501,7 +501,7 @@ namespace C5
         /// <returns>The enumerator</returns>
         public override System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<K, V>> GetEnumerator()
         {
-            return pairs.GetEnumerator(); ;
+            return pairs.GetEnumerator();
         }
 
         #endregion
