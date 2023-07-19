@@ -694,7 +694,7 @@ namespace C5
         /// <returns>True if the handle is valid.</returns>
         public bool Find(IPriorityQueueHandle<T> handle, out T item)
         {
-            if (!(handle is Handle myhandle))
+            if (handle is not Handle myhandle)
             {
                 item = default;
                 return false;
