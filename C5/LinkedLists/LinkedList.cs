@@ -1834,7 +1834,7 @@ namespace C5
         /// Searches for an item in the list going backwards from the end.
         /// </summary>
         /// <param name="item">Item to search for.</param>
-        /// <returns>Index of of item from the end.</returns>
+        /// <returns>Index of item from the end.</returns>
         public virtual int LastIndexOf(T item)
         {
 
