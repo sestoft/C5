@@ -225,8 +225,8 @@ namespace C5
         /// 
         /// </summary>
         /// <param name="stringbuilder"></param>
-        /// <param name="formatProvider"></param>
         /// <param name="rest"></param>
+        /// <param name="formatProvider"></param>
         /// <returns></returns>
         public bool Show(System.Text.StringBuilder stringbuilder, ref int rest, IFormatProvider? formatProvider)
         {

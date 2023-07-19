@@ -227,8 +227,8 @@ namespace C5
         /// positions, and we do not assume it is sorted.
         /// </summary>
         /// <param name="pos"></param>
-        /// <param name="positions"></param>
         /// <param name="nearest"></param>
+        /// <param name="positions"></param>
         /// <returns></returns>
         private int Dist(int pos, out int nearest, int[] positions)
         {
@@ -348,9 +348,9 @@ namespace C5
         /// <summary>
         ///
         /// </summary>
-        /// <param name="added">The actual number of inserted nodes</param>
-        /// <param name="pred">The predecessor of the inserted nodes</param>
         /// <param name="succ">The successor of the added nodes</param>
+        /// <param name="pred">The predecessor of the inserted nodes</param>
+        /// <param name="added">The actual number of inserted nodes</param>
         /// <param name="realInsertionIndex"></param>
         private void FixViewsAfterInsert(Node succ, Node pred, int added, int realInsertionIndex)
         {
