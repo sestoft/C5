@@ -3372,10 +3372,7 @@ namespace C5
             for (int i = 0; i < count; i++)
             {
                 T item = DeleteMaxInner();
-                if (wasRemoved != null)
-                {
-                    wasRemoved.Enqueue(item);
-                }
+                wasRemoved?.Enqueue(item);
             }
             if (wasRemoved != null)
             {
@@ -3414,10 +3411,7 @@ namespace C5
             {
                 T item = Predecessor(hi);
                 RemoveIterative(ref item, out _);
-                if (wasRemoved != null)
-                {
-                    wasRemoved.Enqueue(item);
-                }
+                wasRemoved?.Enqueue(item);
             }
             if (wasRemoved != null)
             {
@@ -3456,10 +3450,7 @@ namespace C5
             for (int i = 0; i < count; i++)
             {
                 T item = DeleteMinInner();
-                if (wasRemoved != null)
-                {
-                    wasRemoved.Enqueue(item);
-                }
+                wasRemoved?.Enqueue(item);
             }
             if (wasRemoved != null)
             {

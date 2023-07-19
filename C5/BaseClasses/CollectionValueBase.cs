@@ -54,10 +54,7 @@ namespace C5
         /// </summary>
         protected virtual void RaiseCollectionChanged()
         {
-            if (eventBlock != null)
-            {
-                eventBlock.RaiseCollectionChanged(this);
-            }
+            eventBlock?.RaiseCollectionChanged(this);
         }
 
         /// <summary>
@@ -84,10 +81,7 @@ namespace C5
         /// </summary>
         protected virtual void RaiseCollectionCleared(bool full, int count)
         {
-            if (eventBlock != null)
-            {
-                eventBlock.RaiseCollectionCleared(this, full, count);
-            }
+            eventBlock?.RaiseCollectionCleared(this, full, count);
         }
 
         /// <summary>
@@ -95,10 +89,7 @@ namespace C5
         /// </summary>
         protected virtual void RaiseCollectionCleared(bool full, int count, int? offset)
         {
-            if (eventBlock != null)
-            {
-                eventBlock.RaiseCollectionCleared(this, full, count, offset);
-            }
+            eventBlock?.RaiseCollectionCleared(this, full, count, offset);
         }
 
         /// <summary>
@@ -127,10 +118,7 @@ namespace C5
         /// <param name="count"></param>
         protected virtual void RaiseItemsAdded(T item, int count)
         {
-            if (eventBlock != null)
-            {
-                eventBlock.RaiseItemsAdded(this, item, count);
-            }
+            eventBlock?.RaiseItemsAdded(this, item, count);
         }
 
         /// <summary>
@@ -160,10 +148,7 @@ namespace C5
         /// <param name="count"></param>
         protected virtual void RaiseItemsRemoved(T item, int count)
         {
-            if (eventBlock != null)
-            {
-                eventBlock.RaiseItemsRemoved(this, item, count);
-            }
+            eventBlock?.RaiseItemsRemoved(this, item, count);
         }
 
         /// <summary>
@@ -192,10 +177,7 @@ namespace C5
         /// <param name="index"></param>
         protected virtual void RaiseItemInserted(T item, int index)
         {
-            if (eventBlock != null)
-            {
-                eventBlock.RaiseItemInserted(this, item, index);
-            }
+            eventBlock?.RaiseItemInserted(this, item, index);
         }
 
         /// <summary>
@@ -224,10 +206,7 @@ namespace C5
         /// <param name="index"></param>
         protected virtual void RaiseItemRemovedAt(T item, int index)
         {
-            if (eventBlock != null)
-            {
-                eventBlock.RaiseItemRemovedAt(this, item, index);
-            }
+            eventBlock?.RaiseItemRemovedAt(this, item, index);
         }
 
         #region Event support for IList
