@@ -1350,7 +1350,7 @@ namespace C5
         {
             if (!TrySlide(offset, size))
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(offset));
             }
 
             return this;
@@ -2913,7 +2913,7 @@ namespace C5
         {
             if (index < 0 || index + Count > arr.Length)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
 
             foreach (T item in this)
