@@ -29,9 +29,9 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="capacity"></param>
         /// <param name="comparer"></param>
         /// <param name="equalityComparer"></param>
-        /// <param name="capacity"></param>
         public SortedArrayDictionary(int capacity, System.Collections.Generic.IComparer<K> comparer, System.Collections.Generic.IEqualityComparer<K> equalityComparer)
             : base(comparer, equalityComparer)
         {

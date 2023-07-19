@@ -198,8 +198,8 @@ namespace C5
         ///
         /// <param name="dictionary"></param>
         /// <param name="stringbuilder"></param>
-        /// <param name="formatProvider"></param>
         /// <param name="rest"></param>
+        /// <param name="formatProvider"></param>
         /// <returns></returns>
         public static bool ShowDictionary<K, V>(IDictionary<K, V> dictionary, StringBuilder stringbuilder, ref int rest, IFormatProvider? formatProvider)
         {

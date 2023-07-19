@@ -424,7 +424,7 @@ namespace C5
             #region ICollection<K> Members
             public Speed ContainsSpeed => sorteddict.ContainsSpeed;
 
-            public bool Contains(K key) { return sorteddict.Contains(key); ; }
+            public bool Contains(K key) { return sorteddict.Contains(key); }
 
             public int ContainsCount(K item) { return sorteddict.Contains(item) ? 1 : 0; }
 

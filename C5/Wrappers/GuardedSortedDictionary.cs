@@ -152,7 +152,7 @@ namespace C5
         /// <returns></returns>
         public bool Cut(IComparable<K> c, out SCG.KeyValuePair<K, V> lowEntry, out bool lowIsValid, out SCG.KeyValuePair<K, V> highEntry, out bool highIsValid)
         {
-            return sorteddict.Cut(c, out lowEntry, out lowIsValid, out highEntry, out highIsValid); ;
+            return sorteddict.Cut(c, out lowEntry, out lowIsValid, out highEntry, out highIsValid);
         }
 
         /// <summary>

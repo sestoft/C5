@@ -1065,7 +1065,7 @@ namespace C5
 
             foreach (T item in items)
             {
-                if (!BinarySearch(item, out int tmp))
+                if (!BinarySearch(item, out _))
                 {
                     return false;
                 }
@@ -1382,7 +1382,7 @@ namespace C5
         /// Searches for an item in the list going backwards from the end.
         /// </summary>
         /// <param name="item">Item to search for.</param>
-        /// <returns>Index of of item from the end.</returns>
+        /// <returns>Index of item from the end.</returns>
         public int LastIndexOf(T item) { return IndexOfInner(item); }
 
 

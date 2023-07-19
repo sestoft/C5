@@ -1073,7 +1073,7 @@ namespace C5
 
         private void AddSorted(SCG.IEnumerable<T> items, bool raise)
         {
-            SCG.IEnumerator<T> e = items.GetEnumerator(); ;
+            SCG.IEnumerator<T> e = items.GetEnumerator();
             if (size > 0)
             {
                 throw new InternalException("This can't happen");
@@ -3683,10 +3683,7 @@ namespace C5
             for (int i = 0; i < count; i++)
             {
                 T item = DeleteMaxInner();
-                if (wasRemoved != null)
-                {
-                    wasRemoved.Enqueue(item);
-                }
+                wasRemoved?.Enqueue(item);
             }
             if (wasRemoved != null)
             {
@@ -3725,10 +3722,7 @@ namespace C5
             {
                 T item = Predecessor(hi);
                 RemoveIterative(ref item, false, out _);
-                if (wasRemoved != null)
-                {
-                    wasRemoved.Enqueue(item);
-                }
+                wasRemoved?.Enqueue(item);
             }
             if (wasRemoved != null)
             {
@@ -3767,10 +3761,7 @@ namespace C5
             for (int i = 0; i < count; i++)
             {
                 T item = DeleteMinInner();
-                if (wasRemoved != null)
-                {
-                    wasRemoved.Enqueue(item);
-                }
+                wasRemoved?.Enqueue(item);
             }
             if (wasRemoved != null)
             {
@@ -3919,10 +3910,7 @@ namespace C5
             res.snapList = newSnapRef;
 
             FindLastLiveSnapShot();
-            if (snapList == null)
-            {
-                snapList = new SnapRef(this);
-            }
+            snapList ??= new SnapRef(this);
 
             SnapRef? lastLiveSnapRef = snapList.Prev;
 
