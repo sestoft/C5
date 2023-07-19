@@ -1331,7 +1331,7 @@ namespace C5
             {
                 ValidityCheck();
 
-                return (int)offset;
+                return offset;
             }
         }
 
@@ -1399,7 +1399,7 @@ namespace C5
                 return false;
             }
 
-            int oldoffset = (int)(this.offset);
+            int oldoffset = this.offset;
             GetPair(offset - 1, offset + size, out startsentinel, out endsentinel,
                     new int[] { -oldoffset - 1, -1, this.size, underlying.size - oldoffset },
                     new Node[] { underlying.startsentinel!, startsentinel!, endsentinel!, underlying.endsentinel! });
