@@ -2746,7 +2746,7 @@ namespace C5
                 }
                 if (view.Offset > size || view.Offset < 0)
                 {
-                    Logger.Log(string.Format("Bad view(hash {0}, offset {1}, size {2}), Offset > underlying.size ({2})",
+                    Logger.Log(string.Format("Bad view(hash {0}, offset {1}, size {2}), Offset > underlying.size ({3})",
                       view.GetHashCode(), view.offset, view.size, size));
                     retval = false;
                 }

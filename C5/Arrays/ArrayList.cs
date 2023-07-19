@@ -2107,7 +2107,7 @@ namespace C5
                     {
                         if (u.array != v.array)
                         {
-                            Logger.Log(string.Format("View from {0} of length has different base array than the underlying list", v.offsetField, v.size));
+                            Logger.Log(string.Format("View from {0} of length {1} has different base array than the underlying list", v.offsetField, v.size));
                             retval = false;
                         }
                     }
