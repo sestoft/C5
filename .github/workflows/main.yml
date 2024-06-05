@@ -74,4 +74,4 @@ jobs:
           name: lib
 
       - name: Push package to GitHub packages
-        run: dotnet nuget push "**/*.nupkg" --source "https://nuget.pkg.github.com/$GITHUB_REPOSITORY_OWNER/index.json" --api-key ${{ secrets.GITHUB_TOKEN }}
+        run: dotnet nuget push "**/*.nupkg" --source "https://nuget.pkg.github.com/$GITHUB_REPOSITORY_OWNER/index.json" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
