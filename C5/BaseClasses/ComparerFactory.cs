@@ -4,33 +4,32 @@
 using System;
 using System.Collections.Generic;
 
-namespace C5
+namespace C5;
+
+/// <summary>
+/// Factory class to create comparers and equality comparers using Func delegates
+/// </summary>
+/// <typeparam name="T">The type to compare</typeparam>
+public static class ComparerFactory<T>
 {
     /// <summary>
-    /// Factory class to create comparers and equality comparers using Func delegates
+    /// Create a new comparer.
     /// </summary>
-    /// <typeparam name="T">The type to compare</typeparam>
-    public static class ComparerFactory<T>
+    /// <param name="comparer">The compare function.</param>
+    /// <returns>The comparer</returns>
+    public static IComparer<T> CreateComparer(Func<T, T, int> comparer)
     {
-        /// <summary>
-        /// Create a new comparer.
-        /// </summary>
-        /// <param name="comparer">The compare function.</param>
-        /// <returns>The comparer</returns>
-        public static IComparer<T> CreateComparer(Func<T, T, int> comparer)
-        {
-            return new InternalComparer<T>(comparer);
-        }
+        return new InternalComparer<T>(comparer);
+    }
 
-        /// <summary>
-        /// Creates a new equality comparer.
-        /// </summary>
-        /// <param name="equals">The equals function.</param>
-        /// <param name="getHashCode">The getHashCode function.</param>
-        /// <returns>The equality comparer.</returns>
-        public static IEqualityComparer<T> CreateEqualityComparer(Func<T, T, bool> equals, Func<T, int> getHashCode)
-        {
-            return new InternalEqualityComparer<T>(equals, getHashCode);
-        }
+    /// <summary>
+    /// Creates a new equality comparer.
+    /// </summary>
+    /// <param name="equals">The equals function.</param>
+    /// <param name="getHashCode">The getHashCode function.</param>
+    /// <returns>The equality comparer.</returns>
+    public static IEqualityComparer<T> CreateEqualityComparer(Func<T, T, bool> equals, Func<T, int> getHashCode)
+    {
+        return new InternalEqualityComparer<T>(equals, getHashCode);
     }
 }
