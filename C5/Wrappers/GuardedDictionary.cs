@@ -8,7 +8,6 @@ namespace C5
     ///
     /// <i>Suitable for wrapping a HashDictionary. <see cref="T:C5.HashDictionary`2"/></i>
     /// </summary>
-    [Serializable]
     public class GuardedDictionary<K, V> : GuardedCollectionValue<SCG.KeyValuePair<K, V>>, IDictionary<K, V>
     {
         #region Fields

@@ -9,7 +9,6 @@ namespace C5
     /// <summary>
     /// A list collection class based on a doubly linked list data structure.
     /// </summary>
-    [Serializable]
     public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
     {
         #region Fields
@@ -554,7 +553,6 @@ namespace C5
         /// <summary>
         /// An individual cell in the linked list
         /// </summary>
-        [Serializable]
         private class Node
         {
             public Node? prev;
@@ -589,7 +587,6 @@ namespace C5
         #endregion
 
         #region Position, PositionComparer and ViewHandler nested types
-        [Serializable]
         private class PositionComparer : SCG.IComparer<Position>
         {
             private static PositionComparer _default;
@@ -753,7 +750,6 @@ namespace C5
 
         #region Range nested class
 
-        [Serializable]
         private class Range : DirectedCollectionValueBase<T>, IDirectedCollectionValue<T>
         {
             // int start;
@@ -831,7 +827,7 @@ namespace C5
             IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards() { return Backwards(); }
 
 
-            public override EnumerationDirection Direction => forwards ? EnumerationDirection.Forwards : EnumerationDirection.Backwards;
+            public override Direction Direction => forwards ? Direction.Forwards : Direction.Backwards;
         }
 
 

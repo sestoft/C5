@@ -13,7 +13,6 @@ namespace C5
     /// <summary>
     ///
     /// </summary>
-    [Serializable]
     public static class Showing
     {
         /// <summary>

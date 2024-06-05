@@ -2,7 +2,6 @@ using System;
 
 namespace C5
 {
-    [Serializable]
     internal abstract class MappedCollectionValue<T, V> : CollectionValueBase<V>
     {
         private readonly ICollectionValue<T> collectionValue;

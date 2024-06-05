@@ -1,40 +1,6 @@
-# Build ASP.NET Core project using Azure Pipelines
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core?view=vsts
-
+---
 pool:
-  vmImage: 'windows-latest'
-
-variables:
-  buildConfiguration: 'Release'
+  vmImage: ubuntu-latest
 
 steps:
-- task: UseDotNet@2
-  inputs:
-    version: '6.0.x'
-    packageType: sdk
-
-- task: DotNetCoreCLI@2
-  displayName: Build
-  inputs:
-    command: build
-    arguments: /P:SourceLinkCreate=false --configuration $(buildConfiguration)
-
-- task: DotNetCoreCLI@2
-  displayName: Test
-  inputs:
-    command: test
-    projects: "**/*Tests/*.csproj"
-    arguments: '/P:SourceLinkCreate=false --configuration $(buildConfiguration) --collect "Code coverage"'
-
-- task: CopyFiles@2
-  displayName: 'Copy files'
-  inputs:
-    sourceFolder: $(Build.SourcesDirectory)/C5/bin/$(buildConfiguration)
-    contents: '*.nupkg'
-    targetFolder: $(Build.ArtifactStagingDirectory)
-    flattenFolders: true
-
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: $(Build.ArtifactStagingDirectory)
-    artifactName: drop
+  - script: echo "Migrated to GitHub Actions"

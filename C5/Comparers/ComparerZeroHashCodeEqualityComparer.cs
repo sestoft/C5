@@ -12,7 +12,6 @@ namespace C5
     /// <para><b>Note: this will give a new EqualityComparer each time created!</b></para>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    [Serializable]
     internal class ComparerZeroHashCodeEqualityComparer<T> : SCG.IEqualityComparer<T>
     {
         private readonly SCG.IComparer<T> comparer;

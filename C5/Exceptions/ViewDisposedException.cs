@@ -11,7 +11,6 @@ namespace C5
     /// Sort, Reverse or Shuffle on some other, overlapping view or the whole list.
     /// </para>
     /// </summary>
-    [Serializable]
     public class ViewDisposedException : Exception
     {
         /// <summary>

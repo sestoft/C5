@@ -8,7 +8,6 @@ namespace C5
     /// <i>See the source code for <see cref="T:C5.HashDictionary`2"/> for an example</i>
     /// 
     /// </summary>
-    [Serializable]
     public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collections.Generic.KeyValuePair<K, V>>, IDictionary<K, V>
     {
         /// <summary>
@@ -206,7 +205,6 @@ namespace C5
             return pairs.Contains(p);
         }
 
-        [Serializable]
         private class LiftedEnumerable<H> : IEnumerable<System.Collections.Generic.KeyValuePair<K, V>> where H : K
         {
             private readonly System.Collections.Generic.IEnumerable<H> keys;
@@ -350,10 +348,7 @@ namespace C5
             return retval;
         }
 
-
-
         #region Keys,Values support classes
-        [Serializable]
         internal class ValuesCollection : CollectionValueBase<V>, ICollectionValue<V>
         {
             private readonly ICollection<System.Collections.Generic.KeyValuePair<K, V>> pairs;
@@ -381,7 +376,6 @@ namespace C5
             public override Speed CountSpeed => Speed.Constant;
         }
 
-        [Serializable]
         internal class KeysCollection : CollectionValueBase<K>, ICollectionValue<K>
         {
             private readonly ICollection<System.Collections.Generic.KeyValuePair<K, V>> pairs;

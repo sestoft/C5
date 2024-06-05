@@ -12,7 +12,6 @@ namespace C5
     /// Utility class for building default generic equality comparers.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    [Serializable]
     public static class EqualityComparer<T>
     {
         private static SCG.IEqualityComparer<T> _default;

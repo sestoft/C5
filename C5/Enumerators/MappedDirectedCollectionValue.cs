@@ -6,7 +6,6 @@ using SCG = System.Collections.Generic;
 
 namespace C5
 {
-    [Serializable]
     internal abstract class MappedDirectedCollectionValue<T, V> : DirectedCollectionValueBase<V>, IDirectedCollectionValue<V>
     {
         private IDirectedCollectionValue<T> directedCollectionValue;
@@ -43,7 +42,7 @@ namespace C5
             }
         }
 
-        public override EnumerationDirection Direction => directedCollectionValue.Direction;
+        public override Direction Direction => directedCollectionValue.Direction;
 
         IDirectedEnumerable<V> IDirectedEnumerable<V>.Backwards()
         {

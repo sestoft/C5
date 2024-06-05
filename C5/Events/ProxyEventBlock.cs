@@ -7,7 +7,6 @@ namespace C5
     /// This should really be nested in Guarded collection value, only have a guardereal field
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    [Serializable]
     internal sealed class ProxyEventBlock<T>
     {
         private readonly ICollectionValue<T> proxy, real;

@@ -8,7 +8,6 @@ namespace C5
     /// <para>The typical scenario is a lookup by key in a dictionary with an indexer,
     /// see e.g. <see cref="P:C5.IDictionary`2.Item(`0)"/></para>
     /// </summary>
-    [Serializable]
     public class NoSuchItemException : Exception
     {
         /// <summary>

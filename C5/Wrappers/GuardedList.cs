@@ -11,7 +11,6 @@ namespace C5
     /// <see cref="T:C5.HashedArray`1"/>.
     /// </i>
     /// </summary>
-    [Serializable]
     public class GuardedList<T> : GuardedSequenced<T>, IList<T>, System.Collections.Generic.IList<T>
     {
         #region Fields

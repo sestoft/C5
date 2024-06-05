@@ -5,7 +5,6 @@ namespace C5
     /// <summary>
     /// Base class for collection classes of dynamic array type implementations.
     /// </summary>
-    [Serializable]
     public abstract class ArrayBase<T> : SequencedBase<T>
     {
         #region Fields
@@ -214,7 +213,6 @@ namespace C5
         /// <summary>
         /// A helper class for defining results of interval queries on array based collections.
         /// </summary>
-        [Serializable]
         protected class Range : DirectedCollectionValueBase<T>, IDirectedCollectionValue<T>
         {
             private int start;
@@ -318,12 +316,12 @@ namespace C5
             /// </summary>
             /// <exception cref="CollectionModifiedException">if underlying collection has been modified.</exception>
             /// <value>The enumeration direction relative to the original collection.</value>
-            public override EnumerationDirection Direction
+            public override Direction Direction
             {
                 get
                 {
                     thebase.ModifyCheck(stamp);
-                    return delta > 0 ? EnumerationDirection.Forwards : EnumerationDirection.Backwards;
+                    return delta > 0 ? Direction.Forwards : Direction.Backwards;
                 }
             }
         }

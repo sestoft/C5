@@ -7,7 +7,6 @@ namespace C5
     ///
     /// <i>This is mainly interesting as a base of other guard classes</i>
     /// </summary>
-    [Serializable]
     public class GuardedSequenced<T> : GuardedCollection<T>, ISequenced<T>
     {
         #region Fields
@@ -131,7 +130,7 @@ namespace C5
         /// <code>Forwards</code> if same, else <code>Backwards</code>
         /// </summary>
         /// <value>The enumeration direction relative to the original collection.</value>
-        public EnumerationDirection Direction => EnumerationDirection.Forwards;
+        public Direction Direction => Direction.Forwards;
 
         #endregion
     }

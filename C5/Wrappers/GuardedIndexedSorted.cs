@@ -7,7 +7,6 @@ namespace C5
     ///
     /// <i>Suitable for wrapping TreeSet, TreeBag and SortedArray</i>
     /// </summary>
-    [Serializable]
     public class GuardedIndexedSorted<T> : GuardedSorted<T>, IIndexedSorted<T>
     {
         #region Fields

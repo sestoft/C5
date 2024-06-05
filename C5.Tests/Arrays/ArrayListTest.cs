@@ -2249,10 +2249,10 @@ namespace C5.Tests.arrays.list
                     lst.Add(i);
                 }
 
-                Assert.AreEqual(EnumerationDirection.Forwards, lst.Direction);
-                Assert.AreEqual(EnumerationDirection.Forwards, lst[3, 4].Direction);
-                Assert.AreEqual(EnumerationDirection.Backwards, lst[3, 4].Backwards().Direction);
-                Assert.AreEqual(EnumerationDirection.Backwards, lst.Backwards().Direction);
+                Assert.AreEqual(Direction.Forwards, lst.Direction);
+                Assert.AreEqual(Direction.Forwards, lst[3, 4].Direction);
+                Assert.AreEqual(Direction.Backwards, lst[3, 4].Backwards().Direction);
+                Assert.AreEqual(Direction.Backwards, lst.Backwards().Direction);
                 Assert.AreEqual(4, lst[3, 4].Count);
                 Assert.AreEqual(4, lst[3, 4].Backwards().Count);
                 Assert.AreEqual(10, lst.Backwards().Count);
@@ -2462,8 +2462,8 @@ namespace C5.Tests.arrays.list
                 Assert.IsTrue(IC.Eq(view.Backwards(), 2, 1));
                 Assert.AreSame(list, view.Underlying);
                 Assert.IsNull(list.Underlying);
-                Assert.AreEqual(EnumerationDirection.Forwards, view.Direction);
-                Assert.AreEqual(EnumerationDirection.Backwards, view.Backwards().Direction);
+                Assert.AreEqual(Direction.Forwards, view.Direction);
+                Assert.AreEqual(Direction.Backwards, view.Backwards().Direction);
                 Assert.AreEqual(0, list.Offset);
                 Assert.AreEqual(1, view.Offset);
             }

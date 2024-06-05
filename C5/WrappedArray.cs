@@ -12,10 +12,8 @@ namespace C5
     /// size of the array will be invalid (and throw <see cref="T:C5.FixedSizeCollectionException"/>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    [Serializable]
     public class WrappedArray<T> : IList<T>, SCG.IList<T>
     {
-        [Serializable]
         private class InnerList : ArrayList<T>
         {
             internal InnerList(T[] array) { this.array = array; size = array.Length; }
@@ -788,7 +786,7 @@ namespace C5
         ///
         /// </summary>
         /// <value></value>
-        public EnumerationDirection Direction => EnumerationDirection.Forwards;
+        public Direction Direction => Direction.Forwards;
 
         #endregion
 

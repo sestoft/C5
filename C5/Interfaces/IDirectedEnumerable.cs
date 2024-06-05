@@ -23,7 +23,7 @@ namespace C5
         /// <code>Forwards</code> if same, else <code>Backwards</code>
         /// </summary>
         /// <value>The enumeration direction relative to the original collection.</value>
-        EnumerationDirection Direction { get; }
+        Direction Direction { get; }
     }
 
 
