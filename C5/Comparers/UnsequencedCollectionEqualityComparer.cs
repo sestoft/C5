@@ -20,7 +20,7 @@ namespace C5
         /// 
         /// </summary>
         /// <value></value>
-        public static UnsequencedCollectionEqualityComparer<T, W> Default => cached ?? (cached = new UnsequencedCollectionEqualityComparer<T, W>());
+        public static UnsequencedCollectionEqualityComparer<T, W> Default => cached ??= new UnsequencedCollectionEqualityComparer<T, W>();
         /// <summary>
         /// Get the hash code with respect to this unsequenced equalityComparer
         /// </summary>

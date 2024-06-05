@@ -24,10 +24,7 @@ namespace C5
             {
                 if (CollectionChangedInner == null)
                 {
-                    if (collectionChangedProxy == null)
-                    {
-                        collectionChangedProxy = delegate (object sender) { CollectionChangedInner(proxy); };
-                    }
+                    collectionChangedProxy ??= delegate (object sender) { CollectionChangedInner(proxy); };
 
                     real.CollectionChanged += collectionChangedProxy;
                 }
@@ -52,10 +49,7 @@ namespace C5
             {
                 if (CollectionClearedInner == null)
                 {
-                    if (collectionClearedProxy == null)
-                    {
-                        collectionClearedProxy = delegate (object sender, ClearedEventArgs e) { CollectionClearedInner(proxy, e); };
-                    }
+                    collectionClearedProxy ??= delegate (object sender, ClearedEventArgs e) { CollectionClearedInner(proxy, e); };
 
                     real.CollectionCleared += collectionClearedProxy;
                 }
@@ -80,10 +74,7 @@ namespace C5
             {
                 if (ItemsAddedInner == null)
                 {
-                    if (itemsAddedProxy == null)
-                    {
-                        itemsAddedProxy = delegate (object sender, ItemCountEventArgs<T> e) { ItemsAddedInner(proxy, e); };
-                    }
+                    itemsAddedProxy ??= delegate (object sender, ItemCountEventArgs<T> e) { ItemsAddedInner(proxy, e); };
 
                     real.ItemsAdded += itemsAddedProxy;
                 }
@@ -108,10 +99,7 @@ namespace C5
             {
                 if (ItemInsertedInner == null)
                 {
-                    if (itemInsertedProxy == null)
-                    {
-                        itemInsertedProxy = delegate (object sender, ItemAtEventArgs<T> e) { ItemInsertedInner(proxy, e); };
-                    }
+                    itemInsertedProxy ??= delegate (object sender, ItemAtEventArgs<T> e) { ItemInsertedInner(proxy, e); };
 
                     real.ItemInserted += itemInsertedProxy;
                 }
@@ -136,10 +124,7 @@ namespace C5
             {
                 if (ItemsRemovedInner == null)
                 {
-                    if (itemsRemovedProxy == null)
-                    {
-                        itemsRemovedProxy = delegate (object sender, ItemCountEventArgs<T> e) { ItemsRemovedInner?.Invoke(proxy, e); };
-                    }
+                    itemsRemovedProxy ??= delegate (object sender, ItemCountEventArgs<T> e) { ItemsRemovedInner?.Invoke(proxy, e); };
 
                     real.ItemsRemoved += itemsRemovedProxy;
                 }
@@ -164,10 +149,7 @@ namespace C5
             {
                 if (ItemRemovedAtInner == null)
                 {
-                    if (itemRemovedAtProxy == null)
-                    {
-                        itemRemovedAtProxy = delegate (object sender, ItemAtEventArgs<T> e) { ItemRemovedAtInner(proxy, e); };
-                    }
+                    itemRemovedAtProxy ??= delegate (object sender, ItemAtEventArgs<T> e) { ItemRemovedAtInner(proxy, e); };
 
                     real.ItemRemovedAt += itemRemovedAtProxy;
                 }

@@ -25,7 +25,7 @@ namespace C5
         /// </summary>
         public override event CollectionChangedHandler<System.Collections.Generic.KeyValuePair<K, V>> CollectionChanged
         {
-            add { (eventBlock ?? (eventBlock = new ProxyEventBlock<System.Collections.Generic.KeyValuePair<K, V>>(this, pairs))).CollectionChanged += value; }
+            add { (eventBlock ??= new ProxyEventBlock<System.Collections.Generic.KeyValuePair<K, V>>(this, pairs)).CollectionChanged += value; }
             remove
             {
                 if (eventBlock != null)
@@ -40,7 +40,7 @@ namespace C5
         /// </summary>
         public override event CollectionClearedHandler<System.Collections.Generic.KeyValuePair<K, V>> CollectionCleared
         {
-            add { (eventBlock ?? (eventBlock = new ProxyEventBlock<System.Collections.Generic.KeyValuePair<K, V>>(this, pairs))).CollectionCleared += value; }
+            add { (eventBlock ??= new ProxyEventBlock<System.Collections.Generic.KeyValuePair<K, V>>(this, pairs)).CollectionCleared += value; }
             remove
             {
                 if (eventBlock != null)
@@ -55,7 +55,7 @@ namespace C5
         /// </summary>
         public override event ItemsAddedHandler<System.Collections.Generic.KeyValuePair<K, V>> ItemsAdded
         {
-            add { (eventBlock ?? (eventBlock = new ProxyEventBlock<System.Collections.Generic.KeyValuePair<K, V>>(this, pairs))).ItemsAdded += value; }
+            add { (eventBlock ??= new ProxyEventBlock<System.Collections.Generic.KeyValuePair<K, V>>(this, pairs)).ItemsAdded += value; }
             remove
             {
                 if (eventBlock != null)
@@ -70,7 +70,7 @@ namespace C5
         /// </summary>
         public override event ItemsRemovedHandler<System.Collections.Generic.KeyValuePair<K, V>> ItemsRemoved
         {
-            add { (eventBlock ?? (eventBlock = new ProxyEventBlock<System.Collections.Generic.KeyValuePair<K, V>>(this, pairs))).ItemsRemoved += value; }
+            add { (eventBlock ??= new ProxyEventBlock<System.Collections.Generic.KeyValuePair<K, V>>(this, pairs)).ItemsRemoved += value; }
             remove
             {
                 if (eventBlock != null)
@@ -501,7 +501,7 @@ namespace C5
         /// <returns>The enumerator</returns>
         public override System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<K, V>> GetEnumerator()
         {
-            return pairs.GetEnumerator(); ;
+            return pairs.GetEnumerator();
         }
 
         #endregion

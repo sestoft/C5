@@ -35,7 +35,7 @@ namespace C5
         /// </summary>
         public virtual event CollectionChangedHandler<T> CollectionChanged
         {
-            add { CheckWillListen(EventType.Changed); (eventBlock ?? (eventBlock = new EventBlock<T>())).CollectionChanged += value; }
+            add { CheckWillListen(EventType.Changed); (eventBlock ??= new EventBlock<T>()).CollectionChanged += value; }
             remove
             {
                 CheckWillListen(EventType.Changed);
@@ -54,10 +54,7 @@ namespace C5
         /// </summary>
         protected virtual void RaiseCollectionChanged()
         {
-            if (eventBlock != null)
-            {
-                eventBlock.RaiseCollectionChanged(this);
-            }
+            eventBlock?.RaiseCollectionChanged(this);
         }
 
         /// <summary>
@@ -65,7 +62,7 @@ namespace C5
         /// </summary>
         public virtual event CollectionClearedHandler<T> CollectionCleared
         {
-            add { CheckWillListen(EventType.Cleared); (eventBlock ?? (eventBlock = new EventBlock<T>())).CollectionCleared += value; }
+            add { CheckWillListen(EventType.Cleared); (eventBlock ??= new EventBlock<T>()).CollectionCleared += value; }
             remove
             {
                 CheckWillListen(EventType.Cleared);
@@ -84,10 +81,7 @@ namespace C5
         /// </summary>
         protected virtual void RaiseCollectionCleared(bool full, int count)
         {
-            if (eventBlock != null)
-            {
-                eventBlock.RaiseCollectionCleared(this, full, count);
-            }
+            eventBlock?.RaiseCollectionCleared(this, full, count);
         }
 
         /// <summary>
@@ -95,10 +89,7 @@ namespace C5
         /// </summary>
         protected virtual void RaiseCollectionCleared(bool full, int count, int? offset)
         {
-            if (eventBlock != null)
-            {
-                eventBlock.RaiseCollectionCleared(this, full, count, offset);
-            }
+            eventBlock?.RaiseCollectionCleared(this, full, count, offset);
         }
 
         /// <summary>
@@ -106,7 +97,7 @@ namespace C5
         /// </summary>
         public virtual event ItemsAddedHandler<T> ItemsAdded
         {
-            add { CheckWillListen(EventType.Added); (eventBlock ?? (eventBlock = new EventBlock<T>())).ItemsAdded += value; }
+            add { CheckWillListen(EventType.Added); (eventBlock ??= new EventBlock<T>()).ItemsAdded += value; }
             remove
             {
                 CheckWillListen(EventType.Added);
@@ -127,10 +118,7 @@ namespace C5
         /// <param name="count"></param>
         protected virtual void RaiseItemsAdded(T item, int count)
         {
-            if (eventBlock != null)
-            {
-                eventBlock.RaiseItemsAdded(this, item, count);
-            }
+            eventBlock?.RaiseItemsAdded(this, item, count);
         }
 
         /// <summary>
@@ -138,7 +126,7 @@ namespace C5
         /// </summary>
         public virtual event ItemsRemovedHandler<T> ItemsRemoved
         {
-            add { CheckWillListen(EventType.Removed); (eventBlock ?? (eventBlock = new EventBlock<T>())).ItemsRemoved += value; }
+            add { CheckWillListen(EventType.Removed); (eventBlock ??= new EventBlock<T>()).ItemsRemoved += value; }
             remove
             {
                 CheckWillListen(EventType.Removed);
@@ -160,10 +148,7 @@ namespace C5
         /// <param name="count"></param>
         protected virtual void RaiseItemsRemoved(T item, int count)
         {
-            if (eventBlock != null)
-            {
-                eventBlock.RaiseItemsRemoved(this, item, count);
-            }
+            eventBlock?.RaiseItemsRemoved(this, item, count);
         }
 
         /// <summary>
@@ -171,7 +156,7 @@ namespace C5
         /// </summary>
         public virtual event ItemInsertedHandler<T> ItemInserted
         {
-            add { CheckWillListen(EventType.Inserted); (eventBlock ?? (eventBlock = new EventBlock<T>())).ItemInserted += value; }
+            add { CheckWillListen(EventType.Inserted); (eventBlock ??= new EventBlock<T>()).ItemInserted += value; }
             remove
             {
                 CheckWillListen(EventType.Inserted);
@@ -192,10 +177,7 @@ namespace C5
         /// <param name="index"></param>
         protected virtual void RaiseItemInserted(T item, int index)
         {
-            if (eventBlock != null)
-            {
-                eventBlock.RaiseItemInserted(this, item, index);
-            }
+            eventBlock?.RaiseItemInserted(this, item, index);
         }
 
         /// <summary>
@@ -203,7 +185,7 @@ namespace C5
         /// </summary>
         public virtual event ItemRemovedAtHandler<T> ItemRemovedAt
         {
-            add { CheckWillListen(EventType.RemovedAt); (eventBlock ?? (eventBlock = new EventBlock<T>())).ItemRemovedAt += value; }
+            add { CheckWillListen(EventType.RemovedAt); (eventBlock ??= new EventBlock<T>()).ItemRemovedAt += value; }
             remove
             {
                 CheckWillListen(EventType.RemovedAt);
@@ -224,10 +206,7 @@ namespace C5
         /// <param name="index"></param>
         protected virtual void RaiseItemRemovedAt(T item, int index)
         {
-            if (eventBlock != null)
-            {
-                eventBlock.RaiseItemRemovedAt(this, item, index);
-            }
+            eventBlock?.RaiseItemRemovedAt(this, item, index);
         }
 
         #region Event support for IList
@@ -408,10 +387,7 @@ namespace C5
             {
                 if (mustFireRemoved)
                 {
-                    if (wasRemoved == null)
-                    {
-                        wasRemoved = new CircularQueue<T>();
-                    }
+                    wasRemoved ??= new CircularQueue<T>();
 
                     wasRemoved.Enqueue(item);
                 }
@@ -478,7 +454,7 @@ namespace C5
         {
             if (index < 0 || index + Count > array.Length)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
 
             foreach (T item in this)
