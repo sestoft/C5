@@ -227,8 +227,8 @@ namespace C5
         /// positions, and we do not assume it is sorted.
         /// </summary>
         /// <param name="pos"></param>
-        /// <param name="positions"></param>
         /// <param name="nearest"></param>
+        /// <param name="positions"></param>
         /// <returns></returns>
         private int Dist(int pos, out int nearest, int[] positions)
         {
@@ -348,9 +348,9 @@ namespace C5
         /// <summary>
         ///
         /// </summary>
-        /// <param name="added">The actual number of inserted nodes</param>
-        /// <param name="pred">The predecessor of the inserted nodes</param>
         /// <param name="succ">The successor of the added nodes</param>
+        /// <param name="pred">The predecessor of the inserted nodes</param>
+        /// <param name="added">The actual number of inserted nodes</param>
         /// <param name="realInsertionIndex"></param>
         private void FixViewsAfterInsert(Node succ, Node pred, int added, int realInsertionIndex)
         {
@@ -595,7 +595,7 @@ namespace C5
             private static PositionComparer _default;
 
             private PositionComparer() { }
-            public static PositionComparer Default => _default ?? (_default = new PositionComparer());
+            public static PositionComparer Default => _default ??= new PositionComparer();
             public int Compare(Position a, Position b)
             {
 
@@ -1256,10 +1256,7 @@ namespace C5
         {
             CheckRange(start, count);
             ValidityCheck();
-            if (views == null)
-            {
-                views = new WeakViewList<LinkedList<T>>();
-            }
+            views ??= new WeakViewList<LinkedList<T>>();
 
             LinkedList<T> retval = (LinkedList<T>)MemberwiseClone();
             retval.underlying = underlying ?? (this);
@@ -1334,7 +1331,7 @@ namespace C5
             {
                 ValidityCheck();
 
-                return (int)offset;
+                return offset;
             }
         }
 
@@ -1350,7 +1347,7 @@ namespace C5
         {
             if (!TrySlide(offset, size))
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(offset));
             }
 
             return this;
@@ -1402,7 +1399,7 @@ namespace C5
                 return false;
             }
 
-            int oldoffset = (int)(this.offset);
+            int oldoffset = this.offset;
             GetPair(offset - 1, offset + size, out startsentinel, out endsentinel,
                     new int[] { -oldoffset - 1, -1, this.size, underlying.size - oldoffset },
                     new Node[] { underlying.startsentinel!, startsentinel!, endsentinel!, underlying.endsentinel! });
@@ -1466,7 +1463,7 @@ namespace C5
                         switch (ViewPosition(view))
                         {
                             case MutualViewPosition.ContainedIn:
-                                (_positions ?? (_positions = new CircularQueue<Position>())).Enqueue(new Position(view, true));
+                                (_positions ??= new CircularQueue<Position>()).Enqueue(new Position(view, true));
                                 _positions.Enqueue(new Position(view, false));
                                 break;
                             case MutualViewPosition.Overlapping:
@@ -1837,7 +1834,7 @@ namespace C5
         /// Searches for an item in the list going backwards from the end.
         /// </summary>
         /// <param name="item">Item to search for.</param>
-        /// <returns>Index of of item from the end.</returns>
+        /// <returns>Index of item from the end.</returns>
         public virtual int LastIndexOf(T item)
         {
 
@@ -2749,7 +2746,7 @@ namespace C5
                 }
                 if (view.Offset > size || view.Offset < 0)
                 {
-                    Logger.Log(string.Format("Bad view(hash {0}, offset {1}, size {2}), Offset > underlying.size ({2})",
+                    Logger.Log(string.Format("Bad view(hash {0}, offset {1}, size {2}), Offset > underlying.size ({3})",
                       view.GetHashCode(), view.offset, view.size, size));
                     retval = false;
                 }
@@ -2913,7 +2910,7 @@ namespace C5
         {
             if (index < 0 || index + Count > arr.Length)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
 
             foreach (T item in this)

@@ -22,8 +22,8 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="count"></param>
         /// <param name="item"></param>
+        /// <param name="count"></param>
         public ItemCountEventArgs(T item, int count) { Item = item; Count = count; }
         /// <summary>
         /// 

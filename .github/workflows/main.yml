@@ -41,7 +41,7 @@ jobs:
       - name: Test
         run: dotnet test -p:CollectCoverage=true -p:CoverletOutput=TestResults/ -p:CoverletOutputFormat=opencover
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: lib
           path: bin/**/*.nupkg
@@ -61,7 +61,7 @@ jobs:
       - name: Generate Documentation
         run: doxygen Doxyfile
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: docs
           path: docs/
