@@ -3,12 +3,12 @@
 ## Release 3.0.0 of 2024-06-05
 
 - C5 now targets .NET Standard 2.0, .NET 6.0 and .NET 8.0.
-- Breaking change: `Rec<T1, T2, ...>` type removed as it was an exact copy of `ValueTuple<T1, T2, ...>`.
-- Breaking change: All `public readonly` are now properties.
+- Breaking change: `Rec<T1, T2, ...>` type removed. Use `ValueTuple<T1, T2, ...>` instead.
+- Breaking change: All `public readonly` fields converted to properties.
 - Breaking change: `EventTypeEnum` is now `EventType`.
 - Breaking change: custom `KeyValuePair<K, V>` has been replaced by the standard `System.Collections.Generic.KeyValue<TKey, TValue>` for better compatibility.
 - Breaking change: `EnumerationDirection` is now `Direction`.
-- `[Serializable]` attribute removed. Cf. [BinaryFormatter security guide](https://docs.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide).
+- Breaking change: `[Serializable]` attribute removed. Cf. [BinaryFormatter security guide](https://docs.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide).
 
 ## Release 3.0.0-rc of 2021-12-22
 
@@ -78,9 +78,7 @@
 New functionality:
 
 - Interface `C5.ICollection<T>` now extends generic interface `System.Collections.Generic.ICollection<T>`. The `C5.ICollection<T>` interface in some cases describe different exceptions than specified by `SCG.ICollection<T>`, but we have not attempted to fix this because the .NET collection implemented in some cases throw other exceptions than those specified anyway.
-
 - Interface `C5.IList<T>` now extends interface non-generic interface `System.Collections.IList`, so C5 list collections can be passed to .NET GUI components and other framework methods.
-
 - Exception-free methods
 
   - `bool TryPredecessor(T x, out T res)`
