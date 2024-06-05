@@ -2,19 +2,18 @@
 // See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using NUnit.Framework;
+using SCG = System.Collections.Generic;
 
-namespace C5.Tests
+namespace C5.Tests;
+
+public class KeyValuePairTests
 {
-    [TestFixture]
-    public class KeyValuePairTests
+    [Test]
+    public void Create()
     {
-        [Test]
-        public void Create()
-        {
-            var p1 = new System.Collections.Generic.KeyValuePair<int, string>(42, "The answer");
-            var p2 = System.Collections.Generic.KeyValuePair.Create(42, "The answer");
+        var p1 = new SCG.KeyValuePair<int, string>(42, "The answer");
+        var p2 = SCG.KeyValuePair.Create(42, "The answer");
 
-            Assert.AreEqual(p1, p2);
-        }
+        Assert.That(p2, Is.EqualTo(p1));
     }
 }
