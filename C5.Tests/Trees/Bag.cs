@@ -565,16 +565,16 @@ namespace C5.Tests.trees.TreeBag
         [Test]
         public void Direction()
         {
-            Assert.AreEqual(EnumerationDirection.Forwards, tree.Direction);
-            Assert.AreEqual(EnumerationDirection.Forwards, tree.RangeFrom(20).Direction);
-            Assert.AreEqual(EnumerationDirection.Forwards, tree.RangeTo(7).Direction);
-            Assert.AreEqual(EnumerationDirection.Forwards, tree.RangeFromTo(1, 12).Direction);
-            Assert.AreEqual(EnumerationDirection.Forwards, tree.RangeAll().Direction);
-            Assert.AreEqual(EnumerationDirection.Backwards, tree.Backwards().Direction);
-            Assert.AreEqual(EnumerationDirection.Backwards, tree.RangeFrom(20).Backwards().Direction);
-            Assert.AreEqual(EnumerationDirection.Backwards, tree.RangeTo(7).Backwards().Direction);
-            Assert.AreEqual(EnumerationDirection.Backwards, tree.RangeFromTo(1, 12).Backwards().Direction);
-            Assert.AreEqual(EnumerationDirection.Backwards, tree.RangeAll().Backwards().Direction);
+            Assert.AreEqual(C5.Direction.Forwards, tree.Direction);
+            Assert.AreEqual(C5.Direction.Forwards, tree.RangeFrom(20).Direction);
+            Assert.AreEqual(C5.Direction.Forwards, tree.RangeTo(7).Direction);
+            Assert.AreEqual(C5.Direction.Forwards, tree.RangeFromTo(1, 12).Direction);
+            Assert.AreEqual(C5.Direction.Forwards, tree.RangeAll().Direction);
+            Assert.AreEqual(C5.Direction.Backwards, tree.Backwards().Direction);
+            Assert.AreEqual(C5.Direction.Backwards, tree.RangeFrom(20).Backwards().Direction);
+            Assert.AreEqual(C5.Direction.Backwards, tree.RangeTo(7).Backwards().Direction);
+            Assert.AreEqual(C5.Direction.Backwards, tree.RangeFromTo(1, 12).Backwards().Direction);
+            Assert.AreEqual(C5.Direction.Backwards, tree.RangeAll().Backwards().Direction);
         }
 
 

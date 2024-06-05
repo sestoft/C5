@@ -8,7 +8,6 @@ namespace C5
     /// <para>Suitable for wrapping a <see cref="T:C5.CircularQueue`1"/></para>
     /// </summary>
     /// <typeparam name="T">The item type.</typeparam>
-    [Serializable]
     public class GuardedQueue<T> : GuardedDirectedCollectionValue<T>, IQueue<T>
     {
         #region Fields

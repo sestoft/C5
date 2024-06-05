@@ -11,7 +11,6 @@ namespace C5
     /// This class is intentionally declared internal - use the ComparerFactory to create an instance.
     /// </summary>
     /// <typeparam name="T">The type of objects to compare.</typeparam>
-    [Serializable]
     internal class InternalComparer<T> : IComparer<T>
     {
         private readonly Func<T, T, int> _compare;

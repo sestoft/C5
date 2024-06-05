@@ -7,7 +7,6 @@ namespace C5
     ///
     /// <i>This is mainly interesting as a base of other guard classes</i>
     /// </summary>
-    [Serializable]
     public class GuardedCollectionValue<T> : GuardedEnumerable<T>, ICollectionValue<T>
     {
         #region Events

@@ -10,7 +10,6 @@ namespace C5
     /// A priority queue class based on an interval heap data structure.
     /// </summary>
     /// <typeparam name="T">The item type</typeparam>
-    [Serializable]
     public class IntervalHeap<T> : CollectionValueBase<T>, IPriorityQueue<T>
     {
         #region Events
@@ -653,7 +652,6 @@ namespace C5
 
         #region IPriorityQueue<T> Members
 
-        [Serializable]
         private class Handle : IPriorityQueueHandle<T>
         {
             /// <summary>

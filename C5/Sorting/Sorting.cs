@@ -8,7 +8,6 @@ namespace C5
     /// <summary>
     /// A utility class with functions for sorting arrays with respect to an IComparer&lt;T&gt;
     /// </summary>
-    [Serializable]
     public class Sorting
     {
         private Sorting() { }
@@ -82,7 +81,7 @@ namespace C5
             new Sorter<T>(array, comparer).HeapSort(start, start + count);
         }
 
-        [Serializable]
+        
         private class Sorter<T>
         {
             private readonly T[] a;

@@ -6,7 +6,6 @@ namespace C5
     /// An exception thrown by operations on a list that expects an argument
     /// that is a view on the same underlying list.
     /// </summary>
-    [Serializable]
     public class IncompatibleViewException : Exception
     {
         /// <summary>

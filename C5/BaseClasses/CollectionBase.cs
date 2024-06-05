@@ -5,7 +5,6 @@ namespace C5
     /// <summary>
     /// Base class (abstract) for ICollection implementations.
     /// </summary>
-    [Serializable]
     public abstract class CollectionBase<T> : CollectionValueBase<T>
     {
         #region Fields

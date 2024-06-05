@@ -3,13 +3,13 @@
 [![NuGet version (C5)](https://img.shields.io/nuget/v/C5.svg)](https://www.nuget.org/packages/C5/)
 [![.github/workflows/main.yml](https://github.com/sestoft/C5/actions/workflows/main.yml/badge.svg)](https://github.com/sestoft/C5/actions/workflows/main.yml)
 
-The C5 library is a set of generic collection classes (or container classes) for the C# programming language and other generics-enabled languages on later versions the CLI platform, as implemented by Microsoft .NET Framework 4.6.1+, .NET Core 2.0+, .NET 5.0+, and Mono.
+The C5 library is a set of generic collection classes (or container classes) for the C# programming language and other generics-enabled languages on later versions of the .NET runtime (Common Language Runtime).
 
 The C5 library provides a wide range of classic data structures, rich functionality, the best possible asymptotic time complexity, documented performance, and a thoroughly tested implementation.
 
 ## Goals of the C5 library
 
-The overall goal is for C5 to be a generic collection library for the C# programming language and the Common Language Infrastructure (CLI) whose functionality, efficiency and quality meets or exeeds what is available for similar contemporary programming platforms.
+The overall goal is for C5 to be a generic collection library for the C# programming language and the Common Language Infrastructure (CLI) whose functionality, efficiency and quality meets or exceeds what is available for similar contemporary programming platforms.
 
 The design has been influenced by the collection libraries for Java and SmallTalk and the published critique of these.
 
@@ -18,8 +18,6 @@ However, it contains functionality and a regularity of design that considerably 
 ## Documentation
 
 Research notes are available here: <https://www.itu.dk/research/c5/>.
-
-Auto-generated documentation can be found here: <https://c5.azurewebsites.net/>.
 
 ## Why yet another generic collection library
 
@@ -53,15 +51,15 @@ Most of the library API documentation is in place but requires proof-reading.
 
 The C5 implementation was originally built on .NET 2.0 and has only recently been upgraded to .NET 4.0. It does not (yet) use a great number of the new features introduced with C# 3 and 4, notably LINQ and covariant and contravariant type parameters.
 
-C5 is a .NET Standard 2.0 library supporting .NET Core 2.0+, .NET 4.6.1+, Universal Windows Platform, Mono, and Xamarin.
+C5 targets .NET Standard 2.0, NET 6.0, and .NET 8.0.
 
 ## Getting Started
 
 1. Get C5 from [NuGet](https://www.nuget.org/packages/C5):
 
-```bash
-$ dotnet add package C5
-```
+   ```bash
+   dotnet add package C5
+   ```
 
 1. Building the unit test project requires NUnit. If you have NuGet installed it should automatically add the reference.
 

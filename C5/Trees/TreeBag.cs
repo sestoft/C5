@@ -18,7 +18,6 @@ namespace C5
     /// Each distinct item is only kept in one place in the tree - together with the number
     /// of times it is a member of the bag. Thus, if two items that are equal according
     /// </summary>
-    [Serializable]
     public class TreeBag<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted<T>
     {
         #region Fields
@@ -112,7 +111,6 @@ namespace C5
         /// <summary>
         /// The type of node in a Red-Black binary tree
         /// </summary>
-        [Serializable]
         private class Node
         {
             public bool red = true;
@@ -253,7 +251,6 @@ namespace C5
         /// of subtrees waiting to be enumerated. Currently only used for the tree set
         /// enumerators (tree bag enumerators use an iterator block based enumerator).
         /// </summary>
-        [Serializable]
         internal class Enumerator : SCG.IEnumerator<T>
         {
             #region Private Fields
@@ -405,7 +402,6 @@ namespace C5
         /// An enumerator for a snapshot of a node copy persistent red-black tree
         /// collection.
         /// </summary>
-        [Serializable]
         internal class SnapEnumerator : SCG.IEnumerator<T>
         {
             #region Private Fields
@@ -2267,7 +2263,6 @@ namespace C5
 
 
         //TODO: make work with snapshots
-        [Serializable]
         private class Multiplicities : CollectionValueBase<System.Collections.Generic.KeyValuePair<T, int>>, ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>>
         {
             private readonly TreeBag<T> treebag;
@@ -2682,7 +2677,6 @@ namespace C5
         }
 
         #region Interval nested class
-        [Serializable]
         private class Interval : DirectedCollectionValueBase<T>, IDirectedCollectionValue<T>
         {
             private readonly int start, length, stamp;
@@ -2883,7 +2877,7 @@ namespace C5
             { return Backwards(); }
 
 
-            public override EnumerationDirection Direction => forwards ? EnumerationDirection.Forwards : EnumerationDirection.Backwards;
+            public override Direction Direction => forwards ? Direction.Forwards : Direction.Backwards;
         }
         #endregion
 
@@ -3380,7 +3374,7 @@ namespace C5
                 throw new ViewDisposedException("Snapshot has been disposed");
             }
 
-            return new Range(this, true, bot, false, default, EnumerationDirection.Forwards);
+            return new Range(this, true, bot, false, default, Direction.Forwards);
         }
 
 
@@ -3397,7 +3391,7 @@ namespace C5
                 throw new ViewDisposedException("Snapshot has been disposed");
             }
 
-            return new Range(this, true, bot, true, top, EnumerationDirection.Forwards);
+            return new Range(this, true, bot, true, top, Direction.Forwards);
         }
 
 
@@ -3413,7 +3407,7 @@ namespace C5
                 throw new ViewDisposedException("Snapshot has been disposed");
             }
 
-            return new Range(this, false, default, true, top, EnumerationDirection.Forwards);
+            return new Range(this, false, default, true, top, Direction.Forwards);
         }
 
 
@@ -3428,7 +3422,7 @@ namespace C5
                 throw new ViewDisposedException("Snapshot has been disposed");
             }
 
-            return new Range(this, false, default, false, default, EnumerationDirection.Forwards);
+            return new Range(this, false, default, false, default, Direction.Forwards);
         }
 
 
@@ -3805,7 +3799,6 @@ namespace C5
             return ((TreeBag<T>)_snapshot!)!.generation;
         }
 
-        [Serializable]
         private class SnapRef
         {
             public SnapRef? Prev, Next;
@@ -3932,7 +3925,6 @@ namespace C5
 
         #region TreeBag.Range nested class
 
-        [Serializable]
         internal class Range : DirectedCollectionValueBase<T>, IDirectedCollectionValue<T>
         {
             private int stamp;
@@ -3942,10 +3934,10 @@ namespace C5
             private readonly T lowend, highend;
 
             private readonly bool haslowend, hashighend;
-            private EnumerationDirection direction;
+            private Direction direction;
 
 
-            public Range(TreeBag<T> basis, bool haslowend, T lowend, bool hashighend, T highend, EnumerationDirection direction)
+            public Range(TreeBag<T> basis, bool haslowend, T lowend, bool hashighend, T highend, Direction direction)
             {
                 this.basis = basis;
                 stamp = basis.stamp;
@@ -3969,7 +3961,6 @@ namespace C5
 
             #region TreeBag.Range.Enumerator nested class
 
-            [Serializable]
             internal class Enumerator : SCG.IEnumerator<T>
             {
                 #region Private Fields
@@ -3996,7 +3987,7 @@ namespace C5
                     comparer = range.basis.comparer;
                     path = new Node[2 * range.basis.blackdepth];
                     this.range = range;
-                    forwards = range.direction == EnumerationDirection.Forwards;
+                    forwards = range.direction == Direction.Forwards;
                     cursor = new Node();
                     if (forwards)
                     {
@@ -4241,7 +4232,7 @@ namespace C5
             public override SCG.IEnumerator<T> GetEnumerator() { return new Enumerator(this); }
 
 
-            public override EnumerationDirection Direction => direction;
+            public override Direction Direction => direction;
 
 
             #endregion
@@ -4269,7 +4260,7 @@ namespace C5
             {
                 Range b = (Range)MemberwiseClone();
 
-                b.direction = direction == EnumerationDirection.Forwards ? EnumerationDirection.Backwards : EnumerationDirection.Forwards;
+                b.direction = direction == Direction.Forwards ? Direction.Backwards : Direction.Forwards;
                 return b;
             }
 

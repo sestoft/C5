@@ -3,7 +3,7 @@ namespace C5
     /// <summary>
     /// Direction of enumeration order relative to original collection.
     /// </summary>
-    public enum EnumerationDirection
+    public enum Direction
     {
         /// <summary>
         /// Same direction

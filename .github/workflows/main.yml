@@ -11,26 +11,28 @@ on:
   pull_request:
     branches:
       - master
-
+    paths-ignore:
+      - "*.md"
+  
   workflow_dispatch:
 
 env:
-  RESOURCE_GROUP_NAME: ondfisk
-  WEBAPP_NAME: c5
   BUILD_CONFIGURATION: Release
 
 jobs:
   build:
     name: Build & Test
+
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3.1.0
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup
-        uses: actions/setup-dotnet@v4.0.0
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 8.0.x
 
       - name: Restore
         run: dotnet restore
@@ -39,37 +41,37 @@ jobs:
         run: dotnet build --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
 
       - name: Test
-        run: dotnet test -p:CollectCoverage=true -p:CoverletOutput=TestResults/ -p:CoverletOutputFormat=opencover
+        run: dotnet test --configuration ${{ env.BUILD_CONFIGURATION }} --no-build
 
-      - uses: actions/upload-artifact@v3
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
         with:
           name: lib
-          path: bin/**/*.nupkg
+          path: "**/*.nupkg"
 
-  documentation:
-    name: Generate Documentation
+  deploy:
+    name: Deploy
+
+    if: ${{ github.ref == 'refs/heads/master' }}
+
     runs-on: ubuntu-latest
-    container:
-      image: corentinaltepe/doxygen
+
+    permissions:
+      packages: write
+      contents: read
+      issues: read
+      checks: write
+      pull-requests: write
+
+
+    needs:
+      - build
 
     steps:
-      - uses: actions/checkout@v3.1.0
-
-      - name: Install GraphViz
-        run: apk update && apk add graphviz font-bitstream-type1 ghostscript-fonts
-
-      - name: Generate Documentation
-        run: doxygen Doxyfile
-
-      - uses: actions/upload-artifact@v3
+      - name: Download artifact
+        uses: actions/download-artifact@v4
         with:
-          name: docs
-          path: docs/
+          name: lib
 
-  # deploy:
-  #   name: Deploy
-  #   runs-on: ubuntu-latest
-  #   if: ${{ github.ref == 'refs/heads/master' }}
-  #   needs:
-  #     - build
-  #   environment: Production
+      - name: Push package to GitHub packages
+        run: dotnet nuget push "**/*.nupkg" --source "https://nuget.pkg.github.com/$GITHUB_REPOSITORY_OWNER/index.json" --api-key ${{ secrets.GITHUB_TOKEN }}

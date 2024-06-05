@@ -5,7 +5,6 @@ namespace C5
     /// <summary>
     /// Base class for classes implementing ICollectionValue[T]
     /// </summary>
-    [Serializable]
     public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionValue<T>, IShowable
     {
         #region Event handling
@@ -354,7 +353,6 @@ namespace C5
         /// <summary>
         /// 
         /// </summary>
-        [Serializable]
         protected class RaiseForRemoveAllHandler
         {
             private readonly CollectionValueBase<T> collection;

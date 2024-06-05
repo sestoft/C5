@@ -2,7 +2,6 @@ using System;
 
 namespace C5
 {
-    [Serializable]
     internal abstract class MappedDirectedEnumerable<T, V> : EnumerableBase<V>, IDirectedEnumerable<V>
     {
         private IDirectedEnumerable<T> directedenumerable;
@@ -32,6 +31,6 @@ namespace C5
             }
         }
 
-        public EnumerationDirection Direction => directedenumerable.Direction;
+        public Direction Direction => directedenumerable.Direction;
     }
 }

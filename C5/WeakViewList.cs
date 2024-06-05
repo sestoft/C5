@@ -11,12 +11,10 @@ namespace C5
     /// This class is shared between the linked list and array list implementations.
     /// </summary>
     /// <typeparam name="V"></typeparam>
-    [Serializable]
     internal class WeakViewList<V> where V : class
     {
         private Node? start;
 
-        [Serializable]
         internal class Node
         {
             internal WeakReference weakview; internal Node? prev; internal Node next;

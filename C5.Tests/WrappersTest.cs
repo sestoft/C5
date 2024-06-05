@@ -596,7 +596,7 @@ namespace C5.Tests.wrappers
                 Assert.IsTrue(IC.Eq(extarray, 0, 4, 6, 5, 0));
                 Assert.AreEqual(3, wrapped.Count);
                 Assert.AreEqual(Speed.Constant, wrapped.CountSpeed);
-                Assert.AreEqual(EnumerationDirection.Forwards, wrapped.Direction);
+                Assert.AreEqual(Direction.Forwards, wrapped.Direction);
                 Assert.AreEqual(false, wrapped.DuplicatesByCounting);
                 Assert.AreEqual(System.Collections.Generic.EqualityComparer<int>.Default, wrapped.EqualityComparer);
                 Assert.AreEqual(true, wrapped.Exists(is4));
@@ -718,7 +718,7 @@ namespace C5.Tests.wrappers
                 Assert.IsTrue(IC.Eq(extarray, 0, 4, 6, 5, 0));
                 Assert.AreEqual(3, wrapped.Count);
                 Assert.AreEqual(Speed.Constant, wrapped.CountSpeed);
-                Assert.AreEqual(EnumerationDirection.Forwards, wrapped.Direction);
+                Assert.AreEqual(Direction.Forwards, wrapped.Direction);
                 Assert.AreEqual(false, wrapped.DuplicatesByCounting);
                 Assert.AreEqual(System.Collections.Generic.EqualityComparer<int>.Default, wrapped.EqualityComparer);
                 Assert.AreEqual(true, wrapped.Exists(is4));

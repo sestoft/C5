@@ -5,7 +5,6 @@ namespace C5
     /// <summary>
     /// Base class (abstract) for sequenced collection implementations.
     /// </summary>
-    [Serializable]
     public abstract class SequencedBase<T> : DirectedCollectionBase<T>, IDirectedCollectionValue<T>
     {
         #region Fields
@@ -135,7 +134,7 @@ namespace C5
         /// <code>Forwards</code> if same, else <code>Backwards</code>
         /// </summary>
         /// <value>The enumeration direction relative to the original collection.</value>
-        public override EnumerationDirection Direction => EnumerationDirection.Forwards;
+        public override Direction Direction => Direction.Forwards;
 
         /// <summary>
         /// Check if there exists an item  that satisfies a
