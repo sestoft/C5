@@ -1,5 +1,9 @@
 # Release Notes for C5 Generic Collection Library for C#/CLI
 
+## Release 3.1 of
+
+- C5 now targets .NET Standard 2.0 and .NET 8.0.
+
 ## Release 3.0.0 of 2024-06-05
 
 - C5 now targets .NET Standard 2.0, .NET 6.0 and .NET 8.0.

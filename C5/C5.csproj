@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net6.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
-    <Version>3.0.0</Version>
+    <Version>3.1.0</Version>
     <Copyright>Copyright © Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm 2003-2024</Copyright>
     <Company>Niels Kokholm, Peter Sestoft, and Rasmus Lystrøm</Company>
     <Description>The C5 Generic Collection Library for C# and CLI is a comprehensive collection library supporting lists, sets, bags, dictionaries, priority queues, (FIFO) queues, and (LIFO) stacks. C5 runs on everything supporting .NET Standard 2.0: .NET Core 2.0+, .NET 4.6.1+, Mono, Xamarin, Universal Windows Platform, and Unity.</Description>
@@ -15,15 +15,9 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>
       <![CDATA[
-        Release 3.0.0 of 2024-06-05
+        Release 3.1.0 of ...
 
-        - C5 now targets .NET Standard 2.0, .NET 6.0 and .NET 8.0.
-        - Breaking change: Rec<T1, T2, ...> type removed.
-        - Breaking change: All public readonly fields are now properties.
-        - Breaking change: EventTypeEnum is now EventType.
-        - Breaking change: custom KeyValuePair<K, V> has been replaced by the standard System.Collections.Generic.KeyValue<TKey, TValue> for better compatibility.
-        - Breaking change: EnumerationDirection is now Direction.
-        - Breaking change: Serializable attribute removed.
+        - C5 now targets .NET Standard 2.0 and .NET 8.0.
       ]]>
     </PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
