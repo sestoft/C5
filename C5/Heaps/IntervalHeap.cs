@@ -236,8 +236,8 @@ namespace C5
         /// <summary>
         /// Create an interval heap with external item comparer and prescribed initial capacity
         /// </summary>
-        /// <param name="comparer">The external comparer</param>
         /// <param name="capacity">The initial capacity</param>
+        /// <param name="comparer">The external comparer</param>
         public IntervalHeap(int capacity, SCG.IComparer<T> comparer) : this(capacity, comparer, new ComparerZeroHashCodeEqualityComparer<T>(comparer)) { }
 
         private IntervalHeap(int capacity, SCG.IComparer<T> comparer, SCG.IEqualityComparer<T> itemequalityComparer)
@@ -694,7 +694,7 @@ namespace C5
         /// <returns>True if the handle is valid.</returns>
         public bool Find(IPriorityQueueHandle<T> handle, out T item)
         {
-            if (!(handle is Handle myhandle))
+            if (handle is not Handle myhandle)
             {
                 item = default;
                 return false;
