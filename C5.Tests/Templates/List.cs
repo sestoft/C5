@@ -24,9 +24,12 @@ namespace C5.Tests.Templates.List
             slist.Add(5);
             slist.Add(6);
             slist.RemoveAt(1);
-            Assert.AreEqual(2, slist.Count);
-            Assert.AreEqual(4, slist[0]);
-            Assert.AreEqual(6, slist[1]);
+            Assert.That(slist.Count, Is.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(slist[0], Is.EqualTo(4));
+                Assert.That(slist[1], Is.EqualTo(6));
+            });
         }
     }
 }

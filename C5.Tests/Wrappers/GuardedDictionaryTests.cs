@@ -32,7 +32,7 @@ namespace C5.Tests.Wrappers
 
             var guarded = new GuardedDictionary<int, string>(source);
 
-            CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, guarded.Keys);
+            Assert.That(guarded.Keys, Is.EquivalentTo(new[] { 1, 2, 3 }));
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace C5.Tests.Wrappers
 
             var guarded = new GuardedDictionary<int, string>(source);
 
-            CollectionAssert.AreEquivalent(new[] { "one", "two", "three" }, guarded.Values);
+            Assert.That(guarded.Values, Is.EquivalentTo(new[] { "one", "two", "three" }));
         }
     }
 }

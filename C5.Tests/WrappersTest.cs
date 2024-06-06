@@ -29,10 +29,13 @@ namespace C5.Tests.wrappers
             [Test]
             public void Listenable()
             {
-                Assert.AreEqual(EventType.All, guarded.ListenableEvents);
-                Assert.AreEqual(EventType.None, guarded.ActiveEvents);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(guarded.ListenableEvents, Is.EqualTo(EventType.All));
+                    Assert.That(guarded.ActiveEvents, Is.EqualTo(EventType.None));
+                });
                 listen();
-                Assert.AreEqual(EventType.All, guarded.ActiveEvents);
+                Assert.That(guarded.ActiveEvents, Is.EqualTo(EventType.All));
             }
 
             [Test]
@@ -576,69 +579,97 @@ namespace C5.Tests.wrappers
             public void NoExc()
             {
                 WrappedArray<int> wrapped = new([4, 6, 5]);
-                Assert.AreEqual(6, wrapped[1]);
-                Assert.IsTrue(IC.Eq(wrapped[1, 2], 6, 5));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped[1], Is.EqualTo(6));
+                    Assert.That(IC.Eq(wrapped[1, 2], 6, 5), Is.True);
+                });
                 //
                 bool is4(int i) { return i == 4; }
-                Assert.AreEqual(EventType.None, wrapped.ActiveEvents);
-                Assert.AreEqual(false, wrapped.All(is4));
-                Assert.AreEqual(true, wrapped.AllowsDuplicates);
+
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.ActiveEvents, Is.EqualTo(EventType.None));
+                    Assert.That(wrapped.All(is4), Is.EqualTo(false));
+                    Assert.That(wrapped.AllowsDuplicates, Is.EqualTo(true));
+                });
                 wrapped.Apply(delegate (int i) { });
-                Assert.AreEqual("{ 5, 6, 4 }", wrapped.Backwards().ToString());
-                Assert.AreEqual(true, wrapped.Check());
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.Backwards().ToString(), Is.EqualTo("{ 5, 6, 4 }"));
+                    Assert.That(wrapped.Check(), Is.EqualTo(true));
+                });
                 wrapped.Choose();
-                Assert.AreEqual(true, wrapped.Contains(4));
-                Assert.AreEqual(true, wrapped.ContainsAll(new ArrayList<int>()));
-                Assert.AreEqual(1, wrapped.ContainsCount(4));
-                Assert.AreEqual(Speed.Linear, wrapped.ContainsSpeed);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.Contains(4), Is.EqualTo(true));
+                    Assert.That(wrapped.ContainsAll(new ArrayList<int>()), Is.EqualTo(true));
+                    Assert.That(wrapped.ContainsCount(4), Is.EqualTo(1));
+                    Assert.That(wrapped.ContainsSpeed, Is.EqualTo(Speed.Linear));
+                });
                 int[] extarray = new int[5];
                 wrapped.CopyTo(extarray, 1);
-                Assert.IsTrue(IC.Eq(extarray, 0, 4, 6, 5, 0));
-                Assert.AreEqual(3, wrapped.Count);
-                Assert.AreEqual(Speed.Constant, wrapped.CountSpeed);
-                Assert.AreEqual(Direction.Forwards, wrapped.Direction);
-                Assert.AreEqual(false, wrapped.DuplicatesByCounting);
-                Assert.AreEqual(System.Collections.Generic.EqualityComparer<int>.Default, wrapped.EqualityComparer);
-                Assert.AreEqual(true, wrapped.Exists(is4));
-                Assert.IsTrue(IC.Eq(wrapped.Filter(is4), 4));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(extarray, 0, 4, 6, 5, 0), Is.True);
+                    Assert.That(wrapped.Count, Is.EqualTo(3));
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.CountSpeed, Is.EqualTo(Speed.Constant));
+                    Assert.That(wrapped.Direction, Is.EqualTo(Direction.Forwards));
+                    Assert.That(wrapped.DuplicatesByCounting, Is.EqualTo(false));
+                    Assert.That(wrapped.EqualityComparer, Is.EqualTo(System.Collections.Generic.EqualityComparer<int>.Default));
+                    Assert.That(wrapped.Exists(is4), Is.EqualTo(true));
+                    Assert.That(IC.Eq(wrapped.Filter(is4), 4), Is.True);
+                });
                 int j = 5;
-                Assert.AreEqual(true, wrapped.Find(ref j));
-                Assert.AreEqual(true, wrapped.Find(is4, out j));
-                Assert.AreEqual("[ 0:4 ]", wrapped.FindAll(is4).ToString());
-                Assert.AreEqual(0, wrapped.FindIndex(is4));
-                Assert.AreEqual(true, wrapped.FindLast(is4, out j));
-                Assert.AreEqual(0, wrapped.FindLastIndex(is4));
-                Assert.AreEqual(4, wrapped.First);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.Find(ref j), Is.EqualTo(true));
+                    Assert.That(wrapped.Find(is4, out j), Is.EqualTo(true));
+                    Assert.That(wrapped.FindAll(is4).ToString(), Is.EqualTo("[ 0:4 ]"));
+                    Assert.That(wrapped.FindIndex(is4), Is.EqualTo(0));
+                    Assert.That(wrapped.FindLast(is4, out j), Is.EqualTo(true));
+                    Assert.That(wrapped.FindLastIndex(is4), Is.EqualTo(0));
+                    Assert.That(wrapped.First, Is.EqualTo(4));
+                });
                 wrapped.GetEnumerator();
-                Assert.AreEqual(CHC.SequencedHashCode(4, 6, 5), wrapped.GetSequencedHashCode());
-                Assert.AreEqual(CHC.UnsequencedHashCode(4, 6, 5), wrapped.GetUnsequencedHashCode());
-                Assert.AreEqual(Speed.Constant, wrapped.IndexingSpeed);
-                Assert.AreEqual(2, wrapped.IndexOf(5));
-                Assert.AreEqual(false, wrapped.IsEmpty);
-                Assert.AreEqual(true, wrapped.IsReadOnly);
-                Assert.AreEqual(false, wrapped.IsSorted());
-                Assert.AreEqual(true, wrapped.IsValid);
-                Assert.AreEqual(5, wrapped.Last);
-                Assert.AreEqual(2, wrapped.LastIndexOf(5));
-                Assert.AreEqual(EventType.None, wrapped.ListenableEvents);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.GetSequencedHashCode(), Is.EqualTo(CHC.SequencedHashCode(4, 6, 5)));
+                    Assert.That(wrapped.GetUnsequencedHashCode(), Is.EqualTo(CHC.UnsequencedHashCode(4, 6, 5)));
+                    Assert.That(wrapped.IndexingSpeed, Is.EqualTo(Speed.Constant));
+                    Assert.That(wrapped.IndexOf(5), Is.EqualTo(2));
+                    Assert.That(wrapped.IsEmpty, Is.EqualTo(false));
+                    Assert.That(wrapped.IsReadOnly, Is.EqualTo(true));
+                    Assert.That(wrapped.IsSorted(), Is.EqualTo(false));
+                    Assert.That(wrapped.IsValid, Is.EqualTo(true));
+                    Assert.That(wrapped.Last, Is.EqualTo(5));
+                    Assert.That(wrapped.LastIndexOf(5), Is.EqualTo(2));
+                    Assert.That(wrapped.ListenableEvents, Is.EqualTo(EventType.None));
+                });
                 string i2s(int i) { return string.Format("T{0}", i); }
-                Assert.AreEqual("[ 0:T4, 1:T6, 2:T5 ]", wrapped.Map<string>(i2s).ToString());
-                Assert.AreEqual(0, wrapped.Offset);
+                Assert.That(wrapped.Map<string>(i2s).ToString(), Is.EqualTo("[ 0:T4, 1:T6, 2:T5 ]"));
+                Assert.That(wrapped.Offset, Is.EqualTo(0));
                 wrapped.Reverse();
-                Assert.AreEqual("[ 0:5, 1:6, 2:4 ]", wrapped.ToString());
+                Assert.That(wrapped.ToString(), Is.EqualTo("[ 0:5, 1:6, 2:4 ]"));
                 IList<int> other = new ArrayList<int>(); other.AddAll([4, 5, 6]);
-                Assert.IsFalse(wrapped.SequencedEquals(other));
+                Assert.That(wrapped.SequencedEquals(other), Is.False);
                 j = 30;
-                Assert.AreEqual(true, wrapped.Show(new System.Text.StringBuilder(), ref j, null));
+                Assert.That(wrapped.Show(new System.Text.StringBuilder(), ref j, null), Is.EqualTo(true));
                 wrapped.Sort();
-                Assert.AreEqual("[ 0:4, 1:5, 2:6 ]", wrapped.ToString());
-                Assert.IsTrue(IC.Eq(wrapped.ToArray(), 4, 5, 6));
-                Assert.AreEqual("[ ... ]", wrapped.ToString("L4", null));
-                Assert.AreEqual(null, wrapped.Underlying);
-                Assert.IsTrue(IC.SetEq(wrapped.UniqueItems(), 4, 5, 6));
-                Assert.IsTrue(wrapped.UnsequencedEquals(other));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.ToString(), Is.EqualTo("[ 0:4, 1:5, 2:6 ]"));
+                    Assert.That(IC.Eq(wrapped.ToArray(), 4, 5, 6), Is.True);
+                    Assert.That(wrapped.ToString("L4", null), Is.EqualTo("[ ... ]"));
+                    Assert.That(wrapped.Underlying, Is.EqualTo(null));
+                    Assert.That(IC.SetEq(wrapped.UniqueItems(), 4, 5, 6), Is.True);
+                    Assert.That(wrapped.UnsequencedEquals(other), Is.True);
+                });
                 wrapped.Shuffle();
-                Assert.IsTrue(IC.SetEq(wrapped.UniqueItems(), 4, 5, 6));
+                Assert.That(IC.SetEq(wrapped.UniqueItems(), 4, 5, 6), Is.True);
             }
 
             [Test]
@@ -697,82 +728,110 @@ namespace C5.Tests.wrappers
                 int[] inner = [3, 4, 6, 5, 7];
                 WrappedArray<int> outerwrapped = new(inner);
                 WrappedArray<int> wrapped = (WrappedArray<int>)outerwrapped.View(1, 3);
-                //
-                Assert.AreEqual(6, wrapped[1]);
-                Assert.IsTrue(IC.Eq(wrapped[1, 2], 6, 5));
+                Assert.Multiple(() =>
+                {
+                    //
+                    Assert.That(wrapped[1], Is.EqualTo(6));
+                    Assert.That(IC.Eq(wrapped[1, 2], 6, 5), Is.True);
+                });
                 //
                 bool is4(int i) { return i == 4; }
-                Assert.AreEqual(EventType.None, wrapped.ActiveEvents);
-                Assert.AreEqual(false, wrapped.All(is4));
-                Assert.AreEqual(true, wrapped.AllowsDuplicates);
+
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.ActiveEvents, Is.EqualTo(EventType.None));
+                    Assert.That(wrapped.All(is4), Is.EqualTo(false));
+                    Assert.That(wrapped.AllowsDuplicates, Is.EqualTo(true));
+                });
                 wrapped.Apply(delegate (int i) { });
-                Assert.AreEqual("{ 5, 6, 4 }", wrapped.Backwards().ToString());
-                Assert.AreEqual(true, wrapped.Check());
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.Backwards().ToString(), Is.EqualTo("{ 5, 6, 4 }"));
+                    Assert.That(wrapped.Check(), Is.EqualTo(true));
+                });
                 wrapped.Choose();
-                Assert.AreEqual(true, wrapped.Contains(4));
-                Assert.AreEqual(true, wrapped.ContainsAll(new ArrayList<int>()));
-                Assert.AreEqual(1, wrapped.ContainsCount(4));
-                Assert.AreEqual(Speed.Linear, wrapped.ContainsSpeed);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.Contains(4), Is.EqualTo(true));
+                    Assert.That(wrapped.ContainsAll(new ArrayList<int>()), Is.EqualTo(true));
+                    Assert.That(wrapped.ContainsCount(4), Is.EqualTo(1));
+                    Assert.That(wrapped.ContainsSpeed, Is.EqualTo(Speed.Linear));
+                });
                 int[] extarray = new int[5];
                 wrapped.CopyTo(extarray, 1);
-                Assert.IsTrue(IC.Eq(extarray, 0, 4, 6, 5, 0));
-                Assert.AreEqual(3, wrapped.Count);
-                Assert.AreEqual(Speed.Constant, wrapped.CountSpeed);
-                Assert.AreEqual(Direction.Forwards, wrapped.Direction);
-                Assert.AreEqual(false, wrapped.DuplicatesByCounting);
-                Assert.AreEqual(System.Collections.Generic.EqualityComparer<int>.Default, wrapped.EqualityComparer);
-                Assert.AreEqual(true, wrapped.Exists(is4));
-                Assert.IsTrue(IC.Eq(wrapped.Filter(is4), 4));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(extarray, 0, 4, 6, 5, 0), Is.True);
+                    Assert.That(wrapped.Count, Is.EqualTo(3));
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.CountSpeed, Is.EqualTo(Speed.Constant));
+                    Assert.That(wrapped.Direction, Is.EqualTo(Direction.Forwards));
+                    Assert.That(wrapped.DuplicatesByCounting, Is.EqualTo(false));
+                    Assert.That(wrapped.EqualityComparer, Is.EqualTo(System.Collections.Generic.EqualityComparer<int>.Default));
+                    Assert.That(wrapped.Exists(is4), Is.EqualTo(true));
+                    Assert.That(IC.Eq(wrapped.Filter(is4), 4), Is.True);
+                });
                 int j = 5;
-                Assert.AreEqual(true, wrapped.Find(ref j));
-                Assert.AreEqual(true, wrapped.Find(is4, out j));
-                Assert.AreEqual("[ 0:4 ]", wrapped.FindAll(is4).ToString());
-                Assert.AreEqual(0, wrapped.FindIndex(is4));
-                Assert.AreEqual(true, wrapped.FindLast(is4, out j));
-                Assert.AreEqual(0, wrapped.FindLastIndex(is4));
-                Assert.AreEqual(4, wrapped.First);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.Find(ref j), Is.EqualTo(true));
+                    Assert.That(wrapped.Find(is4, out j), Is.EqualTo(true));
+                    Assert.That(wrapped.FindAll(is4).ToString(), Is.EqualTo("[ 0:4 ]"));
+                    Assert.That(wrapped.FindIndex(is4), Is.EqualTo(0));
+                    Assert.That(wrapped.FindLast(is4, out j), Is.EqualTo(true));
+                    Assert.That(wrapped.FindLastIndex(is4), Is.EqualTo(0));
+                    Assert.That(wrapped.First, Is.EqualTo(4));
+                });
                 wrapped.GetEnumerator();
-                Assert.AreEqual(CHC.SequencedHashCode(4, 6, 5), wrapped.GetSequencedHashCode());
-                Assert.AreEqual(CHC.UnsequencedHashCode(4, 6, 5), wrapped.GetUnsequencedHashCode());
-                Assert.AreEqual(Speed.Constant, wrapped.IndexingSpeed);
-                Assert.AreEqual(2, wrapped.IndexOf(5));
-                Assert.AreEqual(false, wrapped.IsEmpty);
-                Assert.AreEqual(true, wrapped.IsReadOnly);
-                Assert.AreEqual(false, wrapped.IsSorted());
-                Assert.AreEqual(true, wrapped.IsValid);
-                Assert.AreEqual(5, wrapped.Last);
-                Assert.AreEqual(2, wrapped.LastIndexOf(5));
-                Assert.AreEqual(EventType.None, wrapped.ListenableEvents);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.GetSequencedHashCode(), Is.EqualTo(CHC.SequencedHashCode(4, 6, 5)));
+                    Assert.That(wrapped.GetUnsequencedHashCode(), Is.EqualTo(CHC.UnsequencedHashCode(4, 6, 5)));
+                    Assert.That(wrapped.IndexingSpeed, Is.EqualTo(Speed.Constant));
+                    Assert.That(wrapped.IndexOf(5), Is.EqualTo(2));
+                    Assert.That(wrapped.IsEmpty, Is.EqualTo(false));
+                    Assert.That(wrapped.IsReadOnly, Is.EqualTo(true));
+                    Assert.That(wrapped.IsSorted(), Is.EqualTo(false));
+                    Assert.That(wrapped.IsValid, Is.EqualTo(true));
+                    Assert.That(wrapped.Last, Is.EqualTo(5));
+                    Assert.That(wrapped.LastIndexOf(5), Is.EqualTo(2));
+                    Assert.That(wrapped.ListenableEvents, Is.EqualTo(EventType.None));
+                });
                 string i2s(int i) { return string.Format("T{0}", i); }
-                Assert.AreEqual("[ 0:T4, 1:T6, 2:T5 ]", wrapped.Map<string>(i2s).ToString());
-                Assert.AreEqual(1, wrapped.Offset);
+                Assert.That(wrapped.Map<string>(i2s).ToString(), Is.EqualTo("[ 0:T4, 1:T6, 2:T5 ]"));
+                Assert.That(wrapped.Offset, Is.EqualTo(1));
                 wrapped.Reverse();
-                Assert.AreEqual("[ 0:5, 1:6, 2:4 ]", wrapped.ToString());
+                Assert.That(wrapped.ToString(), Is.EqualTo("[ 0:5, 1:6, 2:4 ]"));
                 IList<int> other = new ArrayList<int>(); other.AddAll([4, 5, 6]);
-                Assert.IsFalse(wrapped.SequencedEquals(other));
+                Assert.That(wrapped.SequencedEquals(other), Is.False);
                 j = 30;
-                Assert.AreEqual(true, wrapped.Show(new System.Text.StringBuilder(), ref j, null));
+                Assert.That(wrapped.Show(new System.Text.StringBuilder(), ref j, null), Is.EqualTo(true));
                 wrapped.Sort();
-                Assert.AreEqual("[ 0:4, 1:5, 2:6 ]", wrapped.ToString());
-                Assert.IsTrue(IC.Eq(wrapped.ToArray(), 4, 5, 6));
-                Assert.AreEqual("[ ... ]", wrapped.ToString("L4", null));
-                // TODO: Below line removed as NUnit 3.0 test fails trying to enumerate...
-                // Assert.AreEqual(outerwrapped, wrapped.Underlying);
-                Assert.IsTrue(IC.SetEq(wrapped.UniqueItems(), 4, 5, 6));
-                Assert.IsTrue(wrapped.UnsequencedEquals(other));
-                //
-                Assert.IsTrue(wrapped.TrySlide(1));
-                Assert.IsTrue(IC.Eq(wrapped, 5, 6, 7));
-                Assert.IsTrue(wrapped.TrySlide(-1, 2));
-                Assert.IsTrue(IC.Eq(wrapped, 4, 5));
-                Assert.IsFalse(wrapped.TrySlide(-2));
-                Assert.IsTrue(IC.Eq(wrapped.Span(outerwrapped.ViewOf(7)), 4, 5, 6, 7));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.ToString(), Is.EqualTo("[ 0:4, 1:5, 2:6 ]"));
+                    Assert.That(IC.Eq(wrapped.ToArray(), 4, 5, 6), Is.True);
+                    Assert.That(wrapped.ToString("L4", null), Is.EqualTo("[ ... ]"));
+                    // TODO: Below line removed as NUnit 3.0 test fails trying to enumerate...
+                    // Assert.AreEqual(outerwrapped, wrapped.Underlying);
+                    Assert.That(IC.SetEq(wrapped.UniqueItems(), 4, 5, 6), Is.True);
+                    Assert.That(wrapped.UnsequencedEquals(other), Is.True);
+                    //
+                    Assert.That(wrapped.TrySlide(1), Is.True);
+                    Assert.That(IC.Eq(wrapped, 5, 6, 7), Is.True);
+                    Assert.That(wrapped.TrySlide(-1, 2), Is.True);
+                    Assert.That(IC.Eq(wrapped, 4, 5), Is.True);
+                    Assert.That(wrapped.TrySlide(-2), Is.False);
+                    Assert.That(IC.Eq(wrapped.Span(outerwrapped.ViewOf(7)), 4, 5, 6, 7), Is.True);
+                });
                 //
                 wrapped.Shuffle();
-                Assert.IsTrue(IC.SetEq(wrapped.UniqueItems(), 4, 5));
-                Assert.IsTrue(wrapped.IsValid);
+                Assert.That(IC.SetEq(wrapped.UniqueItems(), 4, 5), Is.True);
+                Assert.That(wrapped.IsValid, Is.True);
                 wrapped.Dispose();
-                Assert.IsFalse(wrapped.IsValid);
+                Assert.That(wrapped.IsValid, Is.False);
             }
 
             [Test]

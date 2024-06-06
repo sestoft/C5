@@ -28,12 +28,15 @@ namespace C5.Tests.trees.RBDictionary
         [Test]
         public void Format()
         {
-            Assert.AreEqual("[  ]", coll.ToString());
+            Assert.That(coll.ToString(), Is.EqualTo("[  ]"));
             coll.Add(23, 67); coll.Add(45, 89);
-            Assert.AreEqual("[ [23, 67], [45, 89] ]", coll.ToString());
-            Assert.AreEqual("[ [17, 43], [2D, 59] ]", coll.ToString(null, rad16));
-            Assert.AreEqual("[ [23, 67], ... ]", coll.ToString("L14", null));
-            Assert.AreEqual("[ [17, 43], ... ]", coll.ToString("L14", rad16));
+            Assert.Multiple(() =>
+            {
+                Assert.That(coll.ToString(), Is.EqualTo("[ [23, 67], [45, 89] ]"));
+                Assert.That(coll.ToString(null, rad16), Is.EqualTo("[ [17, 43], [2D, 59] ]"));
+                Assert.That(coll.ToString("L14", null), Is.EqualTo("[ [23, 67], ... ]"));
+                Assert.That(coll.ToString("L14", rad16), Is.EqualTo("[ [17, 43], ... ]"));
+            });
         }
     }
 
@@ -60,7 +63,7 @@ namespace C5.Tests.trees.RBDictionary
         public void Choose()
         {
             dict.Add("YES", "NO");
-            Assert.AreEqual(new System.Collections.Generic.KeyValuePair<string, string>("YES", "NO"), dict.Choose());
+            Assert.That(dict.Choose(), Is.EqualTo(new System.Collections.Generic.KeyValuePair<string, string>("YES", "NO")));
         }
 
         [Test]
@@ -75,14 +78,17 @@ namespace C5.Tests.trees.RBDictionary
             dict.Add("A", "1");
             dict.Add("C", "2");
             dict.Add("E", "3");
-            Assert.AreEqual("1", dict.Predecessor("B").Value);
-            Assert.AreEqual("1", dict.Predecessor("C").Value);
-            Assert.AreEqual("1", dict.WeakPredecessor("B").Value);
-            Assert.AreEqual("2", dict.WeakPredecessor("C").Value);
-            Assert.AreEqual("2", dict.Successor("B").Value);
-            Assert.AreEqual("3", dict.Successor("C").Value);
-            Assert.AreEqual("2", dict.WeakSuccessor("B").Value);
-            Assert.AreEqual("2", dict.WeakSuccessor("C").Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dict.Predecessor("B").Value, Is.EqualTo("1"));
+                Assert.That(dict.Predecessor("C").Value, Is.EqualTo("1"));
+                Assert.That(dict.WeakPredecessor("B").Value, Is.EqualTo("1"));
+                Assert.That(dict.WeakPredecessor("C").Value, Is.EqualTo("2"));
+                Assert.That(dict.Successor("B").Value, Is.EqualTo("2"));
+                Assert.That(dict.Successor("C").Value, Is.EqualTo("3"));
+                Assert.That(dict.WeakSuccessor("B").Value, Is.EqualTo("2"));
+                Assert.That(dict.WeakSuccessor("C").Value, Is.EqualTo("2"));
+            });
         }
 
         [Test]
@@ -91,72 +97,93 @@ namespace C5.Tests.trees.RBDictionary
             dict.Add("A", "1");
             dict.Add("C", "2");
             dict.Add("E", "3");
-            Assert.IsTrue(dict.TryPredecessor("B", out System.Collections.Generic.KeyValuePair<string, string> res));
-            Assert.AreEqual("1", res.Value);
-            Assert.IsTrue(dict.TryPredecessor("C", out res));
-            Assert.AreEqual("1", res.Value);
-            Assert.IsTrue(dict.TryWeakPredecessor("B", out res));
-            Assert.AreEqual("1", res.Value);
-            Assert.IsTrue(dict.TryWeakPredecessor("C", out res));
-            Assert.AreEqual("2", res.Value);
-            Assert.IsTrue(dict.TrySuccessor("B", out res));
-            Assert.AreEqual("2", res.Value);
-            Assert.IsTrue(dict.TrySuccessor("C", out res));
-            Assert.AreEqual("3", res.Value);
-            Assert.IsTrue(dict.TryWeakSuccessor("B", out res));
-            Assert.AreEqual("2", res.Value);
-            Assert.IsTrue(dict.TryWeakSuccessor("C", out res));
-            Assert.AreEqual("2", res.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dict.TryPredecessor("B", out System.Collections.Generic.KeyValuePair<string, string> res), Is.True);
+                Assert.That(res.Value, Is.EqualTo("1"));
+                Assert.That(dict.TryPredecessor("C", out res), Is.True);
+                Assert.That(res.Value, Is.EqualTo("1"));
+                Assert.That(dict.TryWeakPredecessor("B", out res), Is.True);
+                Assert.That(res.Value, Is.EqualTo("1"));
+                Assert.That(dict.TryWeakPredecessor("C", out res), Is.True);
+                Assert.That(res.Value, Is.EqualTo("2"));
+                Assert.That(dict.TrySuccessor("B", out res), Is.True);
+                Assert.That(res.Value, Is.EqualTo("2"));
+                Assert.That(dict.TrySuccessor("C", out res), Is.True);
+                Assert.That(res.Value, Is.EqualTo("3"));
+                Assert.That(dict.TryWeakSuccessor("B", out res), Is.True);
+                Assert.That(res.Value, Is.EqualTo("2"));
+                Assert.That(dict.TryWeakSuccessor("C", out res), Is.True);
+                Assert.That(res.Value, Is.EqualTo("2"));
 
-            Assert.IsFalse(dict.TryPredecessor("A", out res));
-            Assert.AreEqual(null, res.Key);
-            Assert.AreEqual(null, res.Value);
+                Assert.That(dict.TryPredecessor("A", out res), Is.False);
+                Assert.That(res.Key, Is.EqualTo(null));
+                Assert.That(res.Value, Is.EqualTo(null));
 
-            Assert.IsFalse(dict.TryWeakPredecessor("@", out res));
-            Assert.AreEqual(null, res.Key);
-            Assert.AreEqual(null, res.Value);
+                Assert.That(dict.TryWeakPredecessor("@", out res), Is.False);
+                Assert.That(res.Key, Is.EqualTo(null));
+                Assert.That(res.Value, Is.EqualTo(null));
 
-            Assert.IsFalse(dict.TrySuccessor("E", out res));
-            Assert.AreEqual(null, res.Key);
-            Assert.AreEqual(null, res.Value);
+                Assert.That(dict.TrySuccessor("E", out res), Is.False);
+                Assert.That(res.Key, Is.EqualTo(null));
+                Assert.That(res.Value, Is.EqualTo(null));
 
-            Assert.IsFalse(dict.TryWeakSuccessor("F", out res));
-            Assert.AreEqual(null, res.Key);
-            Assert.AreEqual(null, res.Value);
+                Assert.That(dict.TryWeakSuccessor("F", out res), Is.False);
+                Assert.That(res.Key, Is.EqualTo(null));
+                Assert.That(res.Value, Is.EqualTo(null));
+            });
         }
 
         [Test]
         public void Initial()
         {
             bool res;
-            Assert.IsFalse(dict.IsReadOnly);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dict.IsReadOnly, Is.False);
 
-            Assert.AreEqual(dict.Count, 0, "new dict should be empty");
+                Assert.That(0, Is.EqualTo(dict.Count), "new dict should be empty");
+            });
             dict.Add("A", "B");
-            Assert.AreEqual(dict.Count, 1, "bad count");
-            Assert.AreEqual(dict["A"], "B", "Wrong value for dict[A]");
+            Assert.Multiple(() =>
+            {
+                Assert.That(1, Is.EqualTo(dict.Count), "bad count");
+                Assert.That("B", Is.EqualTo(dict["A"]), "Wrong value for dict[A]");
+            });
             dict.Add("C", "D");
-            Assert.AreEqual(dict.Count, 2, "bad count");
-            Assert.AreEqual(dict["A"], "B", "Wrong value");
-            Assert.AreEqual(dict["C"], "D", "Wrong value");
+            Assert.Multiple(() =>
+            {
+                Assert.That(2, Is.EqualTo(dict.Count), "bad count");
+                Assert.That("B", Is.EqualTo(dict["A"]), "Wrong value");
+                Assert.That("D", Is.EqualTo(dict["C"]), "Wrong value");
+            });
             res = dict.Remove("A");
-            Assert.IsTrue(res, "bad return value from Remove(A)");
-            Assert.IsTrue(dict.Check());
-            Assert.AreEqual(dict.Count, 1, "bad count");
-            Assert.AreEqual(dict["C"], "D", "Wrong value of dict[C]");
+            Assert.Multiple(() =>
+            {
+                Assert.That(res, Is.True, "bad return value from Remove(A)");
+                Assert.That(dict.Check(), Is.True);
+                Assert.That(1, Is.EqualTo(dict.Count), "bad count");
+                Assert.That("D", Is.EqualTo(dict["C"]), "Wrong value of dict[C]");
+            });
             res = dict.Remove("Z");
-            Assert.IsFalse(res, "bad return value from Remove(Z)");
-            Assert.AreEqual(dict.Count, 1, "bad count");
-            Assert.AreEqual(dict["C"], "D", "Wrong value of dict[C] (2)");
+            Assert.Multiple(() =>
+            {
+                Assert.That(res, Is.False, "bad return value from Remove(Z)");
+                Assert.That(1, Is.EqualTo(dict.Count), "bad count");
+                Assert.That("D", Is.EqualTo(dict["C"]), "Wrong value of dict[C] (2)");
+            });
             dict.Clear();
-            Assert.AreEqual(dict.Count, 0, "dict should be empty");
+            Assert.That(0, Is.EqualTo(dict.Count), "dict should be empty");
         }
         [Test]
         public void Contains()
         {
             dict.Add("C", "D");
-            Assert.IsTrue(dict.Contains("C"));
-            Assert.IsFalse(dict.Contains("D"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(dict.Contains("C"), Is.True);
+                Assert.That(dict.Contains("D"), Is.False);
+            });
         }
 
 
@@ -166,7 +193,7 @@ namespace C5.Tests.trees.RBDictionary
             dict.Add("A", "B");
 
             var exception = Assert.Throws<DuplicateNotAllowedException>(() => dict.Add("A", "B"));
-            Assert.AreEqual("Key being added: 'A'", exception.Message);
+            Assert.That(exception.Message, Is.EqualTo("Key being added: 'A'"));
         }
 
 
@@ -181,12 +208,15 @@ namespace C5.Tests.trees.RBDictionary
         public void Setter()
         {
             dict["R"] = "UYGUY";
-            Assert.AreEqual(dict["R"], "UYGUY");
+            Assert.That("UYGUY", Is.EqualTo(dict["R"]));
             dict["R"] = "UIII";
-            Assert.AreEqual(dict["R"], "UIII");
+            Assert.That("UIII", Is.EqualTo(dict["R"]));
             dict["S"] = "VVV";
-            Assert.AreEqual(dict["R"], "UIII");
-            Assert.AreEqual(dict["S"], "VVV");
+            Assert.Multiple(() =>
+            {
+                Assert.That("UIII", Is.EqualTo(dict["R"]));
+                Assert.That("VVV", Is.EqualTo(dict["S"]));
+            });
             //dict.dump();
         }
     }
@@ -214,67 +244,79 @@ namespace C5.Tests.trees.RBDictionary
         [Test]
         public void Pred1()
         {
-            Assert.AreEqual("1", dict.Predecessor("B").Value);
-            Assert.AreEqual("1", dict.Predecessor("C").Value);
-            Assert.AreEqual("1", dict.WeakPredecessor("B").Value);
-            Assert.AreEqual("2", dict.WeakPredecessor("C").Value);
-            Assert.AreEqual("2", dict.Successor("B").Value);
-            Assert.AreEqual("3", dict.Successor("C").Value);
-            Assert.AreEqual("2", dict.WeakSuccessor("B").Value);
-            Assert.AreEqual("2", dict.WeakSuccessor("C").Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dict.Predecessor("B").Value, Is.EqualTo("1"));
+                Assert.That(dict.Predecessor("C").Value, Is.EqualTo("1"));
+                Assert.That(dict.WeakPredecessor("B").Value, Is.EqualTo("1"));
+                Assert.That(dict.WeakPredecessor("C").Value, Is.EqualTo("2"));
+                Assert.That(dict.Successor("B").Value, Is.EqualTo("2"));
+                Assert.That(dict.Successor("C").Value, Is.EqualTo("3"));
+                Assert.That(dict.WeakSuccessor("B").Value, Is.EqualTo("2"));
+                Assert.That(dict.WeakSuccessor("C").Value, Is.EqualTo("2"));
+            });
         }
 
         [Test]
         public void Pred2()
         {
-            Assert.IsTrue(dict.TryPredecessor("B", out System.Collections.Generic.KeyValuePair<string, string> res));
-            Assert.AreEqual("1", res.Value);
-            Assert.IsTrue(dict.TryPredecessor("C", out res));
-            Assert.AreEqual("1", res.Value);
-            Assert.IsTrue(dict.TryWeakPredecessor("B", out res));
-            Assert.AreEqual("1", res.Value);
-            Assert.IsTrue(dict.TryWeakPredecessor("C", out res));
-            Assert.AreEqual("2", res.Value);
-            Assert.IsTrue(dict.TrySuccessor("B", out res));
-            Assert.AreEqual("2", res.Value);
-            Assert.IsTrue(dict.TrySuccessor("C", out res));
-            Assert.AreEqual("3", res.Value);
-            Assert.IsTrue(dict.TryWeakSuccessor("B", out res));
-            Assert.AreEqual("2", res.Value);
-            Assert.IsTrue(dict.TryWeakSuccessor("C", out res));
-            Assert.AreEqual("2", res.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dict.TryPredecessor("B", out System.Collections.Generic.KeyValuePair<string, string> res), Is.True);
+                Assert.That(res.Value, Is.EqualTo("1"));
+                Assert.That(dict.TryPredecessor("C", out res), Is.True);
+                Assert.That(res.Value, Is.EqualTo("1"));
+                Assert.That(dict.TryWeakPredecessor("B", out res), Is.True);
+                Assert.That(res.Value, Is.EqualTo("1"));
+                Assert.That(dict.TryWeakPredecessor("C", out res), Is.True);
+                Assert.That(res.Value, Is.EqualTo("2"));
+                Assert.That(dict.TrySuccessor("B", out res), Is.True);
+                Assert.That(res.Value, Is.EqualTo("2"));
+                Assert.That(dict.TrySuccessor("C", out res), Is.True);
+                Assert.That(res.Value, Is.EqualTo("3"));
+                Assert.That(dict.TryWeakSuccessor("B", out res), Is.True);
+                Assert.That(res.Value, Is.EqualTo("2"));
+                Assert.That(dict.TryWeakSuccessor("C", out res), Is.True);
+                Assert.That(res.Value, Is.EqualTo("2"));
 
-            Assert.IsFalse(dict.TryPredecessor("A", out res));
-            Assert.AreEqual(null, res.Key);
-            Assert.AreEqual(null, res.Value);
+                Assert.That(dict.TryPredecessor("A", out res), Is.False);
+                Assert.That(res.Key, Is.EqualTo(null));
+                Assert.That(res.Value, Is.EqualTo(null));
 
-            Assert.IsFalse(dict.TryWeakPredecessor("@", out res));
-            Assert.AreEqual(null, res.Key);
-            Assert.AreEqual(null, res.Value);
+                Assert.That(dict.TryWeakPredecessor("@", out res), Is.False);
+                Assert.That(res.Key, Is.EqualTo(null));
+                Assert.That(res.Value, Is.EqualTo(null));
 
-            Assert.IsFalse(dict.TrySuccessor("E", out res));
-            Assert.AreEqual(null, res.Key);
-            Assert.AreEqual(null, res.Value);
+                Assert.That(dict.TrySuccessor("E", out res), Is.False);
+                Assert.That(res.Key, Is.EqualTo(null));
+                Assert.That(res.Value, Is.EqualTo(null));
 
-            Assert.IsFalse(dict.TryWeakSuccessor("F", out res));
-            Assert.AreEqual(null, res.Key);
-            Assert.AreEqual(null, res.Value);
+                Assert.That(dict.TryWeakSuccessor("F", out res), Is.False);
+                Assert.That(res.Key, Is.EqualTo(null));
+                Assert.That(res.Value, Is.EqualTo(null));
+            });
         }
 
         [Test]
         public void Initial()
         {
-            Assert.IsTrue(dict.IsReadOnly);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dict.IsReadOnly, Is.True);
 
-            Assert.AreEqual(3, dict.Count);
-            Assert.AreEqual("1", dict["A"]);
+                Assert.That(dict.Count, Is.EqualTo(3));
+            });
+            Assert.That(dict["A"], Is.EqualTo("1"));
         }
 
         [Test]
         public void Contains()
         {
-            Assert.IsTrue(dict.Contains("A"));
-            Assert.IsFalse(dict.Contains("1"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(dict.Contains("A"), Is.True);
+                Assert.That(dict.Contains("1"), Is.False);
+            });
         }
 
         [Test]
@@ -339,94 +381,112 @@ namespace C5.Tests.trees.RBDictionary
         public void KeysEnumerator()
         {
             SCG.IEnumerator<string> keys = dict.Keys.GetEnumerator();
-            Assert.AreEqual(3, dict.Keys.Count);
-            Assert.IsTrue(keys.MoveNext());
-            Assert.AreEqual("R", keys.Current);
-            Assert.IsTrue(keys.MoveNext());
-            Assert.AreEqual("S", keys.Current);
-            Assert.IsTrue(keys.MoveNext());
-            Assert.AreEqual("T", keys.Current);
-            Assert.IsFalse(keys.MoveNext());
+            Assert.Multiple(() =>
+            {
+                Assert.That(dict.Keys.Count, Is.EqualTo(3));
+                Assert.That(keys.MoveNext(), Is.True);
+                Assert.That(keys.Current, Is.EqualTo("R"));
+            });
+            Assert.That(keys.MoveNext(), Is.True);
+            Assert.That(keys.Current, Is.EqualTo("S"));
+            Assert.That(keys.MoveNext(), Is.True);
+            Assert.That(keys.Current, Is.EqualTo("T"));
+            Assert.That(keys.MoveNext(), Is.False);
         }
 
         [Test]
         public void KeysISorted()
         {
             ISorted<string> keys = dict.Keys;
-            Assert.IsTrue(keys.IsReadOnly);
-            Assert.AreEqual("R", keys.FindMin());
-            Assert.AreEqual("T", keys.FindMax());
-            Assert.IsTrue(keys.Contains("S"));
-            Assert.AreEqual(3, keys.Count);
-            // This doesn't hold, maybe because the dict uses a special key comparer?
-            // Assert.IsTrue(keys.SequencedEquals(new WrappedArray<string>(new string[] { "R", "S", "T" })));
-            Assert.IsTrue(keys.UniqueItems().All(delegate (string s) { return s == "R" || s == "S" || s == "T"; }));
-            Assert.IsTrue(keys.All(delegate (string s) { return s == "R" || s == "S" || s == "T"; }));
-            Assert.IsFalse(keys.Exists(delegate (string s) { return s != "R" && s != "S" && s != "T"; }));
-            Assert.IsTrue(keys.Find(delegate (string s) { return s == "R"; }, out string res));
-            Assert.AreEqual("R", res);
-            Assert.IsFalse(keys.Find(delegate (string s) { return s == "Q"; }, out res));
-            Assert.AreEqual(null, res);
+            Assert.Multiple(() =>
+            {
+                Assert.That(keys.IsReadOnly, Is.True);
+                Assert.That(keys.FindMin(), Is.EqualTo("R"));
+                Assert.That(keys.FindMax(), Is.EqualTo("T"));
+                Assert.That(keys.Contains("S"), Is.True);
+                Assert.That(keys.Count, Is.EqualTo(3));
+            });
+            Assert.Multiple(() =>
+            {
+                // This doesn't hold, maybe because the dict uses a special key comparer?
+                // Assert.IsTrue(keys.SequencedEquals(new WrappedArray<string>(new string[] { "R", "S", "T" })));
+                Assert.That(keys.UniqueItems().All(delegate (string s) { return s == "R" || s == "S" || s == "T"; }), Is.True);
+                Assert.That(keys.All(delegate (string s) { return s == "R" || s == "S" || s == "T"; }), Is.True);
+                Assert.That(keys.Exists(delegate (string s) { return s != "R" && s != "S" && s != "T"; }), Is.False);
+                Assert.That(keys.Find(delegate (string s) { return s == "R"; }, out string res), Is.True);
+                Assert.That(res, Is.EqualTo("R"));
+                Assert.That(keys.Find(delegate (string s) { return s == "Q"; }, out res), Is.False);
+                Assert.That(res, Is.EqualTo(null));
+            });
         }
 
         [Test]
         public void KeysISortedPred()
         {
             ISorted<string> keys = dict.Keys;
-            Assert.IsTrue(keys.TryPredecessor("S", out string res));
-            Assert.AreEqual("R", res);
-            Assert.IsTrue(keys.TryWeakPredecessor("R", out res));
-            Assert.AreEqual("R", res);
-            Assert.IsTrue(keys.TrySuccessor("S", out res));
-            Assert.AreEqual("T", res);
-            Assert.IsTrue(keys.TryWeakSuccessor("T", out res));
-            Assert.AreEqual("T", res);
-            Assert.IsFalse(keys.TryPredecessor("R", out res));
-            Assert.AreEqual(null, res);
-            Assert.IsFalse(keys.TryWeakPredecessor("P", out res));
-            Assert.AreEqual(null, res);
-            Assert.IsFalse(keys.TrySuccessor("T", out res));
-            Assert.AreEqual(null, res);
-            Assert.IsFalse(keys.TryWeakSuccessor("U", out res));
-            Assert.AreEqual(null, res);
+            Assert.Multiple(() =>
+            {
+                Assert.That(keys.TryPredecessor("S", out string res), Is.True);
+                Assert.That(res, Is.EqualTo("R"));
+                Assert.That(keys.TryWeakPredecessor("R", out res), Is.True);
+                Assert.That(res, Is.EqualTo("R"));
+                Assert.That(keys.TrySuccessor("S", out res), Is.True);
+                Assert.That(res, Is.EqualTo("T"));
+                Assert.That(keys.TryWeakSuccessor("T", out res), Is.True);
+                Assert.That(res, Is.EqualTo("T"));
+                Assert.That(keys.TryPredecessor("R", out res), Is.False);
+                Assert.That(res, Is.EqualTo(null));
+                Assert.That(keys.TryWeakPredecessor("P", out res), Is.False);
+                Assert.That(res, Is.EqualTo(null));
+                Assert.That(keys.TrySuccessor("T", out res), Is.False);
+                Assert.That(res, Is.EqualTo(null));
+                Assert.That(keys.TryWeakSuccessor("U", out res), Is.False);
+                Assert.That(res, Is.EqualTo(null));
 
-            Assert.AreEqual("R", keys.Predecessor("S"));
-            Assert.AreEqual("R", keys.WeakPredecessor("R"));
-            Assert.AreEqual("T", keys.Successor("S"));
-            Assert.AreEqual("T", keys.WeakSuccessor("T"));
+                Assert.That(keys.Predecessor("S"), Is.EqualTo("R"));
+                Assert.That(keys.WeakPredecessor("R"), Is.EqualTo("R"));
+                Assert.That(keys.Successor("S"), Is.EqualTo("T"));
+                Assert.That(keys.WeakSuccessor("T"), Is.EqualTo("T"));
+            });
         }
 
         [Test]
         public void ValuesEnumerator()
         {
             SCG.IEnumerator<string> values = dict.Values.GetEnumerator();
-            Assert.AreEqual(3, dict.Values.Count);
-            Assert.IsTrue(values.MoveNext());
-            Assert.AreEqual("C", values.Current);
-            Assert.IsTrue(values.MoveNext());
-            Assert.AreEqual("A", values.Current);
-            Assert.IsTrue(values.MoveNext());
-            Assert.AreEqual("B", values.Current);
-            Assert.IsFalse(values.MoveNext());
+            Assert.Multiple(() =>
+            {
+                Assert.That(dict.Values.Count, Is.EqualTo(3));
+                Assert.That(values.MoveNext(), Is.True);
+                Assert.That(values.Current, Is.EqualTo("C"));
+            });
+            Assert.That(values.MoveNext(), Is.True);
+            Assert.That(values.Current, Is.EqualTo("A"));
+            Assert.That(values.MoveNext(), Is.True);
+            Assert.That(values.Current, Is.EqualTo("B"));
+            Assert.That(values.MoveNext(), Is.False);
         }
 
         [Test]
         public void Fun()
         {
-            Assert.AreEqual("B", dict.Func("T"));
+            Assert.That(dict.Func("T"), Is.EqualTo("B"));
         }
 
 
         [Test]
         public void NormalUse()
         {
-            Assert.IsTrue(dictEnum.MoveNext());
-            Assert.AreEqual(dictEnum.Current, new System.Collections.Generic.KeyValuePair<string, string>("R", "C"));
-            Assert.IsTrue(dictEnum.MoveNext());
-            Assert.AreEqual(dictEnum.Current, new System.Collections.Generic.KeyValuePair<string, string>("S", "A"));
-            Assert.IsTrue(dictEnum.MoveNext());
-            Assert.AreEqual(dictEnum.Current, new System.Collections.Generic.KeyValuePair<string, string>("T", "B"));
-            Assert.IsFalse(dictEnum.MoveNext());
+            Assert.Multiple(() =>
+            {
+                Assert.That(dictEnum.MoveNext(), Is.True);
+                Assert.That(new System.Collections.Generic.KeyValuePair<string, string>("R", "C"), Is.EqualTo(dictEnum.Current));
+            });
+            Assert.That(dictEnum.MoveNext(), Is.True);
+            Assert.That(new System.Collections.Generic.KeyValuePair<string, string>("S", "A"), Is.EqualTo(dictEnum.Current));
+            Assert.That(dictEnum.MoveNext(), Is.True);
+            Assert.That(new System.Collections.Generic.KeyValuePair<string, string>("T", "B"), Is.EqualTo(dictEnum.Current));
+            Assert.That(dictEnum.MoveNext(), Is.False);
         }
     }
 
@@ -459,19 +519,28 @@ namespace C5.Tests.trees.RBDictionary
             public void Test()
             {
                 dict["SS"] = "D";
-                Assert.AreEqual(5, dict.Count);
-                Assert.AreEqual(4, snap.Count);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dict.Count, Is.EqualTo(5));
+                    Assert.That(snap.Count, Is.EqualTo(4));
+                });
                 dict["T"] = "bb";
-                Assert.AreEqual(5, dict.Count);
-                Assert.AreEqual(4, snap.Count);
-                Assert.AreEqual("B", snap["T"]);
-                Assert.AreEqual("bb", dict["T"]);
-                Assert.IsFalse(dict.IsReadOnly);
-                Assert.IsTrue(snap.IsReadOnly);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dict.Count, Is.EqualTo(5));
+                    Assert.That(snap.Count, Is.EqualTo(4));
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(snap["T"], Is.EqualTo("B"));
+                    Assert.That(dict["T"], Is.EqualTo("bb"));
+                    Assert.That(dict.IsReadOnly, Is.False);
+                    Assert.That(snap.IsReadOnly, Is.True);
+                });
                 //Finally, update of root node:
                 _ = (TreeDictionary<string, string>)dict.Snapshot();
                 dict["S"] = "abe";
-                Assert.AreEqual("abe", dict["S"]);
+                Assert.That(dict["S"], Is.EqualTo("abe"));
             }
 
 

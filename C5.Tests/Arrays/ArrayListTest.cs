@@ -52,10 +52,13 @@ namespace C5.Tests.arrays.list
             [Test]
             public void Listenable()
             {
-                Assert.AreEqual(EventType.All, list.ListenableEvents);
-                Assert.AreEqual(EventType.None, list.ActiveEvents);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.ListenableEvents, Is.EqualTo(EventType.All));
+                    Assert.That(list.ActiveEvents, Is.EqualTo(EventType.None));
+                });
                 listen();
-                Assert.AreEqual(EventType.Added, list.ActiveEvents);
+                Assert.That(list.ActiveEvents, Is.EqualTo(EventType.Added));
             }
 
             [Test]
@@ -601,8 +604,12 @@ namespace C5.Tests.arrays.list
                     Assert.Fail("Should not get here");
                 }
                 catch (BadEnumerableException) { }
-                Assert.IsTrue(list.Check());
-                Assert.IsTrue(IC.Eq(list, 4, 9, 8, 7, 56, 8));
+
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.Check(), Is.True);
+                    Assert.That(IC.Eq(list, 4, 9, 8, 7, 56, 8), Is.True);
+                });
 
             }
 
@@ -616,8 +623,12 @@ namespace C5.Tests.arrays.list
                     Assert.Fail("Should not get here");
                 }
                 catch (BadEnumerableException) { }
-                Assert.IsTrue(list.Check());
-                Assert.IsTrue(IC.Eq(list, 4, 9, 8, 7, 56, 8));
+
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.Check(), Is.True);
+                    Assert.That(IC.Eq(list, 4, 9, 8, 7, 56, 8), Is.True);
+                });
             }
 
             [Test]
@@ -630,8 +641,12 @@ namespace C5.Tests.arrays.list
                     Assert.Fail("Should not get here");
                 }
                 catch (BadEnumerableException) { }
-                Assert.IsTrue(list.Check());
-                Assert.IsTrue(IC.Eq(list, 4, 56, 8));
+
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.Check(), Is.True);
+                    Assert.That(IC.Eq(list, 4, 56, 8), Is.True);
+                });
             }
 
             [Test]
@@ -644,8 +659,12 @@ namespace C5.Tests.arrays.list
                     Assert.Fail("Should not get here");
                 }
                 catch (BadEnumerableException) { }
-                Assert.IsTrue(list.Check());
-                Assert.IsTrue(IC.Eq(list, 4, 56, 8));
+
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.Check(), Is.True);
+                    Assert.That(IC.Eq(list, 4, 56, 8), Is.True);
+                });
             }
 
 
@@ -659,8 +678,12 @@ namespace C5.Tests.arrays.list
                     Assert.Fail("Should not get here");
                 }
                 catch (BadEnumerableException) { }
-                Assert.IsTrue(list.Check());
-                Assert.IsTrue(IC.Eq(list, 4, 56, 8));
+
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.Check(), Is.True);
+                    Assert.That(IC.Eq(list, 4, 56, 8), Is.True);
+                });
             }
 
 
@@ -711,34 +734,52 @@ namespace C5.Tests.arrays.list
             [Test]
             public void All()
             {
-                Assert.IsTrue(list.All(always));
-                Assert.IsTrue(list.All(never));
-                Assert.IsTrue(list.All(even));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.All(always), Is.True);
+                    Assert.That(list.All(never), Is.True);
+                    Assert.That(list.All(even), Is.True);
+                });
                 list.Add(8);
-                Assert.IsTrue(list.All(always));
-                Assert.IsFalse(list.All(never));
-                Assert.IsTrue(list.All(even));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.All(always), Is.True);
+                    Assert.That(list.All(never), Is.False);
+                    Assert.That(list.All(even), Is.True);
+                });
                 list.Add(5);
-                Assert.IsTrue(list.All(always));
-                Assert.IsFalse(list.All(never));
-                Assert.IsFalse(list.All(even));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.All(always), Is.True);
+                    Assert.That(list.All(never), Is.False);
+                    Assert.That(list.All(even), Is.False);
+                });
             }
 
 
             [Test]
             public void Exists()
             {
-                Assert.IsFalse(list.Exists(always));
-                Assert.IsFalse(list.Exists(never));
-                Assert.IsFalse(list.Exists(even));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.Exists(always), Is.False);
+                    Assert.That(list.Exists(never), Is.False);
+                    Assert.That(list.Exists(even), Is.False);
+                });
                 list.Add(5);
-                Assert.IsTrue(list.Exists(always));
-                Assert.IsFalse(list.Exists(never));
-                Assert.IsFalse(list.Exists(even));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.Exists(always), Is.True);
+                    Assert.That(list.Exists(never), Is.False);
+                    Assert.That(list.Exists(even), Is.False);
+                });
                 list.Add(8);
-                Assert.IsTrue(list.Exists(always));
-                Assert.IsFalse(list.Exists(never));
-                Assert.IsTrue(list.Exists(even));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.Exists(always), Is.True);
+                    Assert.That(list.Exists(never), Is.False);
+                    Assert.That(list.Exists(even), Is.True);
+                });
             }
 
 
@@ -749,11 +790,11 @@ namespace C5.Tests.arrays.list
                 void a(int i) { sum = i + 10 * sum; }
 
                 list.Apply(a);
-                Assert.AreEqual(0, sum);
+                Assert.That(sum, Is.EqualTo(0));
                 sum = 0;
                 list.Add(5); list.Add(8); list.Add(7); list.Add(5);
                 list.Apply(a);
-                Assert.AreEqual(5875, sum);
+                Assert.That(sum, Is.EqualTo(5875));
             }
 
 
@@ -778,7 +819,7 @@ namespace C5.Tests.arrays.list
             {
                 SCG.IEnumerator<int> e = list.GetEnumerator();
 
-                Assert.IsFalse(e.MoveNext());
+                Assert.That(e.MoveNext(), Is.False);
             }
 
 
@@ -794,19 +835,22 @@ namespace C5.Tests.arrays.list
 
                 SCG.IEnumerator<int> e = list.GetEnumerator();
 
-                Assert.IsTrue(e.MoveNext());
-                Assert.AreEqual(5, e.Current);
-                Assert.IsTrue(e.MoveNext());
-                Assert.AreEqual(8, e.Current);
-                Assert.IsTrue(e.MoveNext());
-                Assert.AreEqual(5, e.Current);
-                Assert.IsTrue(e.MoveNext());
-                Assert.AreEqual(5, e.Current);
-                Assert.IsTrue(e.MoveNext());
-                Assert.AreEqual(10, e.Current);
-                Assert.IsTrue(e.MoveNext());
-                Assert.AreEqual(1, e.Current);
-                Assert.IsFalse(e.MoveNext());
+                Assert.Multiple(() =>
+                {
+                    Assert.That(e.MoveNext(), Is.True);
+                    Assert.That(e.Current, Is.EqualTo(5));
+                });
+                Assert.That(e.MoveNext(), Is.True);
+                Assert.That(e.Current, Is.EqualTo(8));
+                Assert.That(e.MoveNext(), Is.True);
+                Assert.That(e.Current, Is.EqualTo(5));
+                Assert.That(e.MoveNext(), Is.True);
+                Assert.That(e.Current, Is.EqualTo(5));
+                Assert.That(e.MoveNext(), Is.True);
+                Assert.That(e.Current, Is.EqualTo(10));
+                Assert.That(e.MoveNext(), Is.True);
+                Assert.That(e.Current, Is.EqualTo(1));
+                Assert.That(e.MoveNext(), Is.False);
             }
 
 
@@ -858,12 +902,15 @@ namespace C5.Tests.arrays.list
             [Test]
             public void Format()
             {
-                Assert.AreEqual("[  ]", coll.ToString());
+                Assert.That(coll.ToString(), Is.EqualTo("[  ]"));
                 coll.AddAll([-4, 28, 129, 65530]);
-                Assert.AreEqual("[ 0:-4, 1:28, 2:129, 3:65530 ]", coll.ToString());
-                Assert.AreEqual("[ 0:-4, 1:1C, 2:81, 3:FFFA ]", coll.ToString(null, rad16));
-                Assert.AreEqual("[ 0:-4, 1:28... ]", coll.ToString("L14", null));
-                Assert.AreEqual("[ 0:-4, 1:1C... ]", coll.ToString("L14", rad16));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(coll.ToString(), Is.EqualTo("[ 0:-4, 1:28, 2:129, 3:65530 ]"));
+                    Assert.That(coll.ToString(null, rad16), Is.EqualTo("[ 0:-4, 1:1C, 2:81, 3:FFFA ]"));
+                    Assert.That(coll.ToString("L14", null), Is.EqualTo("[ 0:-4, 1:28... ]"));
+                    Assert.That(coll.ToString("L14", rad16), Is.EqualTo("[ 0:-4, 1:1C... ]"));
+                });
             }
         }
 
@@ -880,7 +927,7 @@ namespace C5.Tests.arrays.list
             public void Choose()
             {
                 list.Add(7);
-                Assert.AreEqual(7, list.Choose());
+                Assert.That(list.Choose(), Is.EqualTo(7));
             }
 
             [Test]
@@ -892,17 +939,20 @@ namespace C5.Tests.arrays.list
             [Test]
             public void CountEtAl()
             {
-                Assert.AreEqual(0, list.Count);
-                Assert.IsTrue(list.IsEmpty);
-                Assert.IsTrue(list.AllowsDuplicates);
+                Assert.That(list.Count, Is.EqualTo(0));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.IsEmpty, Is.True);
+                    Assert.That(list.AllowsDuplicates, Is.True);
+                });
                 list.Add(5);
-                Assert.AreEqual(1, list.Count);
-                Assert.IsFalse(list.IsEmpty);
+                Assert.That(list.Count, Is.EqualTo(1));
+                Assert.That(list.IsEmpty, Is.False);
                 list.Add(5);
-                Assert.AreEqual(2, list.Count);
-                Assert.IsFalse(list.IsEmpty);
+                Assert.That(list.Count, Is.EqualTo(2));
+                Assert.That(list.IsEmpty, Is.False);
                 list.Add(8);
-                Assert.AreEqual(3, list.Count);
+                Assert.That(list.Count, Is.EqualTo(3));
             }
 
             [Test]
@@ -913,10 +963,13 @@ namespace C5.Tests.arrays.list
                 ArrayList<int> list2 = new();
 
                 list2.AddAll(list);
-                Assert.IsTrue(IC.Eq(list2, 3, 4, 5));
+                Assert.That(IC.Eq(list2, 3, 4, 5), Is.True);
                 list.AddAll(list2);
-                Assert.IsTrue(IC.Eq(list2, 3, 4, 5));
-                Assert.IsTrue(IC.Eq(list, 3, 4, 5, 3, 4, 5));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(list2, 3, 4, 5), Is.True);
+                    Assert.That(IC.Eq(list, 3, 4, 5, 3, 4, 5), Is.True);
+                });
             }
 
             [TearDown]
@@ -942,43 +995,49 @@ namespace C5.Tests.arrays.list
             [Test]
             public void Find()
             {
-                Assert.IsFalse(list.Find(pred, out int i));
+                Assert.That(list.Find(pred, out int i), Is.False);
                 list.AddAll([4, 22, 67, 37]);
-                Assert.IsFalse(list.Find(pred, out i));
+                Assert.That(list.Find(pred, out i), Is.False);
                 list.AddAll([45, 122, 675, 137]);
-                Assert.IsTrue(list.Find(pred, out i));
-                Assert.AreEqual(45, i);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.Find(pred, out i), Is.True);
+                    Assert.That(i, Is.EqualTo(45));
+                });
             }
 
             [Test]
             public void FindLast()
             {
-                Assert.IsFalse(list.FindLast(pred, out int i));
+                Assert.That(list.FindLast(pred, out int i), Is.False);
                 list.AddAll([4, 22, 67, 37]);
-                Assert.IsFalse(list.FindLast(pred, out i));
+                Assert.That(list.FindLast(pred, out i), Is.False);
                 list.AddAll([45, 122, 675, 137]);
-                Assert.IsTrue(list.FindLast(pred, out i));
-                Assert.AreEqual(675, i);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.FindLast(pred, out i), Is.True);
+                    Assert.That(i, Is.EqualTo(675));
+                });
             }
 
             [Test]
             public void FindIndex()
             {
-                Assert.IsFalse(0 <= list.FindIndex(pred));
+                Assert.That(0 <= list.FindIndex(pred), Is.False);
                 list.AddAll([4, 22, 67, 37]);
-                Assert.IsFalse(0 <= list.FindIndex(pred));
+                Assert.That(0 <= list.FindIndex(pred), Is.False);
                 list.AddAll([45, 122, 675, 137]);
-                Assert.AreEqual(4, list.FindIndex(pred));
+                Assert.That(list.FindIndex(pred), Is.EqualTo(4));
             }
 
             [Test]
             public void FindLastIndex()
             {
-                Assert.IsFalse(0 <= list.FindLastIndex(pred));
+                Assert.That(0 <= list.FindLastIndex(pred), Is.False);
                 list.AddAll([4, 22, 67, 37]);
-                Assert.IsFalse(0 <= list.FindLastIndex(pred));
+                Assert.That(0 <= list.FindLastIndex(pred), Is.False);
                 list.AddAll([45, 122, 675, 137]);
-                Assert.AreEqual(6, list.FindLastIndex(pred));
+                Assert.That(list.FindLastIndex(pred), Is.EqualTo(6));
             }
         }
 
@@ -996,11 +1055,17 @@ namespace C5.Tests.arrays.list
             [Test]
             public void Test()
             {
-                Assert.IsTrue(IC.SetEq(list.UniqueItems()));
-                Assert.IsTrue(IC.SetEq(list.ItemMultiplicities()));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.SetEq(list.UniqueItems()), Is.True);
+                    Assert.That(IC.SetEq(list.ItemMultiplicities()), Is.True);
+                });
                 list.AddAll([7, 9, 7]);
-                Assert.IsTrue(IC.SetEq(list.UniqueItems(), 7, 9));
-                Assert.IsTrue(IC.SetEq(list.ItemMultiplicities(), 7, 2, 9, 1));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.SetEq(list.UniqueItems(), 7, 9), Is.True);
+                    Assert.That(IC.SetEq(list.ItemMultiplicities(), 7, 2, 9, 1), Is.True);
+                });
             }
         }
 
@@ -1048,10 +1113,10 @@ namespace C5.Tests.arrays.list
             [Test]
             public void ToArray()
             {
-                Assert.AreEqual("Alles klar", aeq(list.ToArray()));
+                Assert.That(aeq(list.ToArray()), Is.EqualTo("Alles klar"));
                 list.Add(7);
                 list.Add(7);
-                Assert.AreEqual("Alles klar", aeq(list.ToArray(), 7, 7));
+                Assert.That(aeq(list.ToArray(), 7, 7), Is.EqualTo("Alles klar"));
             }
 
 
@@ -1059,19 +1124,19 @@ namespace C5.Tests.arrays.list
             public void CopyTo()
             {
                 list.CopyTo(a, 1);
-                Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009));
+                Assert.That(aeq(a, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009), Is.EqualTo("Alles klar"));
                 list.Add(6);
                 list.CopyTo(a, 2);
-                Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 6, 1003, 1004, 1005, 1006, 1007, 1008, 1009));
+                Assert.That(aeq(a, 1000, 1001, 6, 1003, 1004, 1005, 1006, 1007, 1008, 1009), Is.EqualTo("Alles klar"));
                 list.Add(4);
                 list.Add(4);
                 list.Add(9);
                 list.CopyTo(a, 4);
-                Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 6, 1003, 6, 4, 4, 9, 1008, 1009));
+                Assert.That(aeq(a, 1000, 1001, 6, 1003, 6, 4, 4, 9, 1008, 1009), Is.EqualTo("Alles klar"));
                 list.Clear();
                 list.Add(7);
                 list.CopyTo(a, 9);
-                Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 6, 1003, 6, 4, 4, 9, 1008, 7));
+                Assert.That(aeq(a, 1000, 1001, 6, 1003, 6, 4, 4, 9, 1008, 7), Is.EqualTo("Alles klar"));
             }
 
 
@@ -1149,39 +1214,54 @@ namespace C5.Tests.arrays.list
             [Test]
             public void Contains()
             {
-                Assert.IsFalse(list.Contains(5));
+                Assert.That(list.Contains(5), Is.False);
                 list.Add(5);
-                Assert.IsTrue(list.Contains(5));
-                Assert.IsFalse(list.Contains(7));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.Contains(5), Is.True);
+                    Assert.That(list.Contains(7), Is.False);
+                });
                 list.Add(8);
                 list.Add(10);
-                Assert.IsTrue(list.Contains(5));
-                Assert.IsFalse(list.Contains(7));
-                Assert.IsTrue(list.Contains(8));
-                Assert.IsTrue(list.Contains(10));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.Contains(5), Is.True);
+                    Assert.That(list.Contains(7), Is.False);
+                    Assert.That(list.Contains(8), Is.True);
+                    Assert.That(list.Contains(10), Is.True);
+                });
                 list.Remove(8);
-                Assert.IsTrue(list.Contains(5));
-                Assert.IsFalse(list.Contains(7));
-                Assert.IsFalse(list.Contains(8));
-                Assert.IsTrue(list.Contains(10));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.Contains(5), Is.True);
+                    Assert.That(list.Contains(7), Is.False);
+                    Assert.That(list.Contains(8), Is.False);
+                    Assert.That(list.Contains(10), Is.True);
+                });
             }
 
 
             [Test]
             public void ContainsCount()
             {
-                Assert.AreEqual(0, list.ContainsCount(5));
+                Assert.That(list.ContainsCount(5), Is.EqualTo(0));
                 list.Add(5);
-                Assert.AreEqual(1, list.ContainsCount(5));
-                Assert.AreEqual(0, list.ContainsCount(7));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.ContainsCount(5), Is.EqualTo(1));
+                    Assert.That(list.ContainsCount(7), Is.EqualTo(0));
+                });
                 list.Add(8);
-                Assert.AreEqual(1, list.ContainsCount(5));
-                Assert.AreEqual(0, list.ContainsCount(7));
-                Assert.AreEqual(1, list.ContainsCount(8));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.ContainsCount(5), Is.EqualTo(1));
+                    Assert.That(list.ContainsCount(7), Is.EqualTo(0));
+                    Assert.That(list.ContainsCount(8), Is.EqualTo(1));
+                });
                 list.Add(5);
-                Assert.AreEqual(2, list.ContainsCount(5));
-                Assert.AreEqual(0, list.ContainsCount(7));
-                Assert.AreEqual(1, list.ContainsCount(8));
+                Assert.That(list.ContainsCount(5), Is.EqualTo(2));
+                Assert.That(list.ContainsCount(7), Is.EqualTo(0));
+                Assert.That(list.ContainsCount(8), Is.EqualTo(1));
             }
 
 
@@ -1189,14 +1269,17 @@ namespace C5.Tests.arrays.list
             public void RemoveAllCopies()
             {
                 list.Add(5); list.Add(7); list.Add(5);
-                Assert.AreEqual(2, list.ContainsCount(5));
-                Assert.AreEqual(1, list.ContainsCount(7));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.ContainsCount(5), Is.EqualTo(2));
+                    Assert.That(list.ContainsCount(7), Is.EqualTo(1));
+                });
                 list.RemoveAllCopies(5);
-                Assert.AreEqual(0, list.ContainsCount(5));
-                Assert.AreEqual(1, list.ContainsCount(7));
+                Assert.That(list.ContainsCount(5), Is.EqualTo(0));
+                Assert.That(list.ContainsCount(7), Is.EqualTo(1));
                 list.Add(5); list.Add(8); list.Add(5);
                 list.RemoveAllCopies(8);
-                Assert.IsTrue(IC.Eq(list, 7, 5, 5));
+                Assert.That(IC.Eq(list, 7, 5, 5), Is.True);
             }
 
 
@@ -1205,10 +1288,13 @@ namespace C5.Tests.arrays.list
             {
                 bool f(int i) { return i % 2 == 0; }
 
-                Assert.IsTrue(list.FindAll(f).IsEmpty);
+                Assert.That(list.FindAll(f).IsEmpty, Is.True);
                 list.Add(5); list.Add(8); list.Add(5); list.Add(10); list.Add(8);
-                Assert.IsTrue(((ArrayList<int>)list.FindAll(f)).Check());
-                Assert.IsTrue(IC.Eq(list.FindAll(f), 8, 10, 8));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(((ArrayList<int>)list.FindAll(f)).Check(), Is.True);
+                    Assert.That(IC.Eq(list.FindAll(f), 8, 10, 8), Is.True);
+                });
             }
 
 
@@ -1217,17 +1303,17 @@ namespace C5.Tests.arrays.list
             {
                 ArrayList<int> list2 = new();
 
-                Assert.IsTrue(list.ContainsAll(list2));
+                Assert.That(list.ContainsAll(list2), Is.True);
                 list2.Add(4);
-                Assert.IsFalse(list.ContainsAll(list2));
+                Assert.That(list.ContainsAll(list2), Is.False);
                 list.Add(4);
-                Assert.IsTrue(list.ContainsAll(list2));
+                Assert.That(list.ContainsAll(list2), Is.True);
                 list.Add(5);
-                Assert.IsTrue(list.ContainsAll(list2));
+                Assert.That(list.ContainsAll(list2), Is.True);
                 list2.Add(4);
-                Assert.IsFalse(list.ContainsAll(list2));
+                Assert.That(list.ContainsAll(list2), Is.False);
                 list.Add(4);
-                Assert.IsTrue(list.ContainsAll(list2));
+                Assert.That(list.ContainsAll(list2), Is.True);
             }
 
 
@@ -1239,19 +1325,25 @@ namespace C5.Tests.arrays.list
                 list.Add(4); list.Add(4); list.Add(5); list.Add(4); list.Add(6);
                 list2.Add(5); list2.Add(4); list2.Add(7); list2.Add(7); list2.Add(4);
                 list.RetainAll(list2);
-                Assert.IsTrue(list.Check());
-                Assert.IsTrue(IC.Eq(list, 4, 4, 5));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.Check(), Is.True);
+                    Assert.That(IC.Eq(list, 4, 4, 5), Is.True);
+                });
                 list.Add(5); list.Add(4); list.Add(6);
                 list2.Clear();
                 list2.Add(5); list2.Add(5); list2.Add(6);
                 list.RetainAll(list2);
-                Assert.IsTrue(list.Check());
-                Assert.IsTrue(IC.Eq(list, 5, 5, 6));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.Check(), Is.True);
+                    Assert.That(IC.Eq(list, 5, 5, 6), Is.True);
+                });
                 list2.Clear();
                 list2.Add(7); list2.Add(8); list2.Add(9);
                 list.RetainAll(list2);
-                Assert.IsTrue(list.Check());
-                Assert.IsTrue(IC.Eq(list));
+                Assert.That(list.Check(), Is.True);
+                Assert.That(IC.Eq(list), Is.True);
             }
 
 
@@ -1263,55 +1355,70 @@ namespace C5.Tests.arrays.list
                 list.Add(4); list.Add(4); list.Add(5); list.Add(4); list.Add(6);
                 list2.Add(5); list2.Add(4); list2.Add(7); list2.Add(7); list2.Add(4);
                 list.RemoveAll(list2);
-                Assert.IsTrue(list.Check());
-                Assert.IsTrue(IC.Eq(list, 4, 6));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.Check(), Is.True);
+                    Assert.That(IC.Eq(list, 4, 6), Is.True);
+                });
                 list.Add(5); list.Add(4); list.Add(6);
                 list2.Clear();
                 list2.Add(6); list2.Add(5); list2.Add(5); list2.Add(6);
                 list.RemoveAll(list2);
-                Assert.IsTrue(list.Check());
-                Assert.IsTrue(IC.Eq(list, 4, 4));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.Check(), Is.True);
+                    Assert.That(IC.Eq(list, 4, 4), Is.True);
+                });
                 list2.Clear();
                 list2.Add(7); list2.Add(8); list2.Add(9);
                 list.RemoveAll(list2);
-                Assert.IsTrue(list.Check());
-                Assert.IsTrue(IC.Eq(list, 4, 4));
+                Assert.That(list.Check(), Is.True);
+                Assert.That(IC.Eq(list, 4, 4), Is.True);
             }
 
 
             [Test]
             public void Remove()
             {
-                Assert.IsFalse(list.FIFO);
+                Assert.That(list.FIFO, Is.False);
                 list.Add(4); list.Add(4); list.Add(5); list.Add(4); list.Add(6);
-                Assert.IsFalse(list.Remove(2));
-                Assert.IsTrue(list.Check());
-                Assert.IsTrue(list.Remove(4));
-                Assert.IsTrue(list.Check());
-                Assert.IsTrue(IC.Eq(list, 4, 4, 5, 6));
-                Assert.AreEqual(6, list.RemoveLast());
-                Assert.IsTrue(list.Check());
-                Assert.IsTrue(IC.Eq(list, 4, 4, 5));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.Remove(2), Is.False);
+                    Assert.That(list.Check(), Is.True);
+                    Assert.That(list.Remove(4), Is.True);
+                });
+                Assert.That(list.Check(), Is.True);
+                Assert.That(IC.Eq(list, 4, 4, 5, 6), Is.True);
+                Assert.That(list.RemoveLast(), Is.EqualTo(6));
+                Assert.That(list.Check(), Is.True);
+                Assert.That(IC.Eq(list, 4, 4, 5), Is.True);
                 list.Add(7);
-                Assert.AreEqual(4, list.RemoveFirst());
-                Assert.IsTrue(list.Check());
-                Assert.IsTrue(IC.Eq(list, 4, 5, 7));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.RemoveFirst(), Is.EqualTo(4));
+                    Assert.That(list.Check(), Is.True);
+                    Assert.That(IC.Eq(list, 4, 5, 7), Is.True);
+                });
 
                 list.FIFO = true;
                 list.Clear();
                 list.Add(4); list.Add(4); list.Add(5); list.Add(4); list.Add(6);
-                Assert.IsFalse(list.Remove(2));
-                Assert.IsTrue(list.Check());
-                Assert.IsTrue(list.Remove(4));
-                Assert.IsTrue(list.Check());
-                Assert.IsTrue(IC.Eq(list, 4, 5, 4, 6));
-                Assert.AreEqual(6, list.RemoveLast());
-                Assert.IsTrue(list.Check());
-                Assert.IsTrue(IC.Eq(list, 4, 5, 4));
+                Assert.That(list.Remove(2), Is.False);
+                Assert.That(list.Check(), Is.True);
+                Assert.That(list.Remove(4), Is.True);
+                Assert.That(list.Check(), Is.True);
+                Assert.That(IC.Eq(list, 4, 5, 4, 6), Is.True);
+                Assert.That(list.RemoveLast(), Is.EqualTo(6));
+                Assert.That(list.Check(), Is.True);
+                Assert.That(IC.Eq(list, 4, 5, 4), Is.True);
                 list.Add(7);
-                Assert.AreEqual(4, list.RemoveFirst());
-                Assert.IsTrue(list.Check());
-                Assert.IsTrue(IC.Eq(list, 5, 4, 7));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.RemoveFirst(), Is.EqualTo(4));
+                    Assert.That(list.Check(), Is.True);
+                    Assert.That(IC.Eq(list, 5, 4, 7), Is.True);
+                });
             }
 
 
@@ -1320,7 +1427,7 @@ namespace C5.Tests.arrays.list
             {
                 list.Add(7); list.Add(7);
                 list.Clear();
-                Assert.IsTrue(list.IsEmpty);
+                Assert.That(list.IsEmpty, Is.True);
             }
 
 
@@ -1350,17 +1457,23 @@ namespace C5.Tests.arrays.list
             [Test]
             public void IndexOf()
             {
-                Assert.AreEqual(~0, dit.IndexOf(6));
+                Assert.That(dit.IndexOf(6), Is.EqualTo(~0));
                 dit.Add(7);
-                Assert.AreEqual(~1, dit.IndexOf(6));
-                Assert.AreEqual(~1, dit.LastIndexOf(6));
-                Assert.AreEqual(0, dit.IndexOf(7));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.IndexOf(6), Is.EqualTo(~1));
+                    Assert.That(dit.LastIndexOf(6), Is.EqualTo(~1));
+                    Assert.That(dit.IndexOf(7), Is.EqualTo(0));
+                });
                 dit.Add(5); dit.Add(7); dit.Add(8); dit.Add(7);
-                Assert.AreEqual(~5, dit.IndexOf(6));
-                Assert.AreEqual(0, dit.IndexOf(7));
-                Assert.AreEqual(4, dit.LastIndexOf(7));
-                Assert.AreEqual(3, dit.IndexOf(8));
-                Assert.AreEqual(1, dit.LastIndexOf(5));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.IndexOf(6), Is.EqualTo(~5));
+                    Assert.That(dit.IndexOf(7), Is.EqualTo(0));
+                    Assert.That(dit.LastIndexOf(7), Is.EqualTo(4));
+                    Assert.That(dit.IndexOf(8), Is.EqualTo(3));
+                    Assert.That(dit.LastIndexOf(5), Is.EqualTo(1));
+                });
             }
 
             [TearDown]
@@ -1387,15 +1500,18 @@ namespace C5.Tests.arrays.list
             public void RemoveAt()
             {
                 dit.Add(5); dit.Add(7); dit.Add(9); dit.Add(1); dit.Add(2);
-                Assert.AreEqual(7, dit.RemoveAt(1));
-                Assert.IsTrue(((ArrayList<int>)dit).Check());
-                Assert.IsTrue(IC.Eq(dit, 5, 9, 1, 2));
-                Assert.AreEqual(5, dit.RemoveAt(0));
-                Assert.IsTrue(((ArrayList<int>)dit).Check());
-                Assert.IsTrue(IC.Eq(dit, 9, 1, 2));
-                Assert.AreEqual(2, dit.RemoveAt(2));
-                Assert.IsTrue(((ArrayList<int>)dit).Check());
-                Assert.IsTrue(IC.Eq(dit, 9, 1));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.RemoveAt(1), Is.EqualTo(7));
+                    Assert.That(((ArrayList<int>)dit).Check(), Is.True);
+                    Assert.That(IC.Eq(dit, 5, 9, 1, 2), Is.True);
+                    Assert.That(dit.RemoveAt(0), Is.EqualTo(5));
+                });
+                Assert.That(((ArrayList<int>)dit).Check(), Is.True);
+                Assert.That(IC.Eq(dit, 9, 1, 2), Is.True);
+                Assert.That(dit.RemoveAt(2), Is.EqualTo(2));
+                Assert.That(((ArrayList<int>)dit).Check(), Is.True);
+                Assert.That(IC.Eq(dit, 9, 1), Is.True);
             }
 
 
@@ -1426,24 +1542,42 @@ namespace C5.Tests.arrays.list
                 dit.RemoveInterval(0, 0);
                 dit.Add(10); dit.Add(20); dit.Add(30); dit.Add(40); dit.Add(50); dit.Add(60);
                 dit.RemoveInterval(3, 0);
-                Assert.IsTrue(((ArrayList<int>)dit).Check());
-                Assert.IsTrue(IC.Eq(dit, 10, 20, 30, 40, 50, 60));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(((ArrayList<int>)dit).Check(), Is.True);
+                    Assert.That(IC.Eq(dit, 10, 20, 30, 40, 50, 60), Is.True);
+                });
                 dit.RemoveInterval(3, 1);
-                Assert.IsTrue(((ArrayList<int>)dit).Check());
-                Assert.IsTrue(IC.Eq(dit, 10, 20, 30, 50, 60));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(((ArrayList<int>)dit).Check(), Is.True);
+                    Assert.That(IC.Eq(dit, 10, 20, 30, 50, 60), Is.True);
+                });
                 dit.RemoveInterval(1, 3);
-                Assert.IsTrue(((ArrayList<int>)dit).Check());
-                Assert.IsTrue(IC.Eq(dit, 10, 60));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(((ArrayList<int>)dit).Check(), Is.True);
+                    Assert.That(IC.Eq(dit, 10, 60), Is.True);
+                });
                 dit.RemoveInterval(0, 2);
-                Assert.IsTrue(((ArrayList<int>)dit).Check());
-                Assert.IsTrue(IC.Eq(dit));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(((ArrayList<int>)dit).Check(), Is.True);
+                    Assert.That(IC.Eq(dit), Is.True);
+                });
                 dit.Add(10); dit.Add(20); dit.Add(30); dit.Add(40); dit.Add(50); dit.Add(60);
                 dit.RemoveInterval(0, 2);
-                Assert.IsTrue(((ArrayList<int>)dit).Check());
-                Assert.IsTrue(IC.Eq(dit, 30, 40, 50, 60));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(((ArrayList<int>)dit).Check(), Is.True);
+                    Assert.That(IC.Eq(dit, 30, 40, 50, 60), Is.True);
+                });
                 dit.RemoveInterval(2, 2);
-                Assert.IsTrue(((ArrayList<int>)dit).Check());
-                Assert.IsTrue(IC.Eq(dit, 30, 40));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(((ArrayList<int>)dit).Check(), Is.True);
+                    Assert.That(IC.Eq(dit, 30, 40), Is.True);
+                });
             }
 
 
@@ -1493,11 +1627,17 @@ namespace C5.Tests.arrays.list
             public void FirstLast()
             {
                 lst.Add(19);
-                Assert.AreEqual(19, lst.First);
-                Assert.AreEqual(19, lst.Last);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.First, Is.EqualTo(19));
+                    Assert.That(lst.Last, Is.EqualTo(19));
+                });
                 lst.Add(34); lst.InsertFirst(12);
-                Assert.AreEqual(12, lst.First);
-                Assert.AreEqual(34, lst.Last);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.First, Is.EqualTo(12));
+                    Assert.That(lst.Last, Is.EqualTo(34));
+                });
             }
 
 
@@ -1505,12 +1645,12 @@ namespace C5.Tests.arrays.list
             public void This()
             {
                 lst.Add(34);
-                Assert.AreEqual(34, lst[0]);
+                Assert.That(lst[0], Is.EqualTo(34));
                 lst[0] = 56;
-                Assert.AreEqual(56, lst.First);
+                Assert.That(lst.First, Is.EqualTo(56));
                 lst.Add(7); lst.Add(7); lst.Add(7); lst.Add(7);
                 lst[0] = 45; lst[2] = 78; lst[4] = 101;
-                Assert.IsTrue(IC.Eq(lst, 45, 7, 78, 7, 101));
+                Assert.That(IC.Eq(lst, 45, 7, 78, 7, 101), Is.True);
             }
 
 
@@ -1593,48 +1733,54 @@ namespace C5.Tests.arrays.list
             public void Insert()
             {
                 lst.Insert(0, 5);
-                Assert.IsTrue(IC.Eq(lst, 5));
+                Assert.That(IC.Eq(lst, 5), Is.True);
                 lst.Insert(0, 7);
-                Assert.IsTrue(IC.Eq(lst, 7, 5));
+                Assert.That(IC.Eq(lst, 7, 5), Is.True);
                 lst.Insert(1, 4);
-                Assert.IsTrue(IC.Eq(lst, 7, 4, 5));
+                Assert.That(IC.Eq(lst, 7, 4, 5), Is.True);
                 lst.Insert(3, 2);
-                Assert.IsTrue(IC.Eq(lst, 7, 4, 5, 2));
+                Assert.That(IC.Eq(lst, 7, 4, 5, 2), Is.True);
             }
 
             [Test]
             public void InsertDuplicate()
             {
                 lst.Insert(0, 5);
-                Assert.IsTrue(IC.Eq(lst, 5));
+                Assert.That(IC.Eq(lst, 5), Is.True);
                 lst.Insert(0, 7);
-                Assert.IsTrue(IC.Eq(lst, 7, 5));
+                Assert.That(IC.Eq(lst, 7, 5), Is.True);
                 lst.Insert(1, 5);
-                Assert.IsTrue(IC.Eq(lst, 7, 5, 5));
+                Assert.That(IC.Eq(lst, 7, 5, 5), Is.True);
             }
 
             [Test]
             public void InsertAllDuplicate1()
             {
                 lst.Insert(0, 3);
-                Assert.IsTrue(IC.Eq(lst, 3));
+                Assert.That(IC.Eq(lst, 3), Is.True);
                 lst.Insert(0, 7);
-                Assert.IsTrue(IC.Eq(lst, 7, 3));
+                Assert.That(IC.Eq(lst, 7, 3), Is.True);
                 lst.InsertAll(1, [1, 2, 3, 4]);
-                Assert.IsTrue(IC.Eq(lst, 7, 1, 2, 3, 4, 3));
-                Assert.IsTrue(lst.Check());
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(lst, 7, 1, 2, 3, 4, 3), Is.True);
+                    Assert.That(lst.Check(), Is.True);
+                });
             }
 
             [Test]
             public void InsertAllDuplicate2()
             {
                 lst.Insert(0, 3);
-                Assert.IsTrue(IC.Eq(lst, 3));
+                Assert.That(IC.Eq(lst, 3), Is.True);
                 lst.Insert(0, 7);
-                Assert.IsTrue(IC.Eq(lst, 7, 3));
+                Assert.That(IC.Eq(lst, 7, 3), Is.True);
                 lst.InsertAll(1, [5, 6, 5, 8]);
-                Assert.IsTrue(lst.Check());
-                Assert.IsTrue(IC.Eq(lst, 7, 5, 6, 5, 8, 3));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.Check(), Is.True);
+                    Assert.That(IC.Eq(lst, 7, 5, 6, 5, 8, 3), Is.True);
+                });
             }
 
 
@@ -1662,15 +1808,19 @@ namespace C5.Tests.arrays.list
                 {
                     lst.Add(2 * i);
                 }
-                Assert.IsFalse(lst.FIFO);
-                Assert.AreEqual(12, lst.Remove());
-                Assert.AreEqual(10, lst.Remove());
+
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.FIFO, Is.False);
+                    Assert.That(lst.Remove(), Is.EqualTo(12));
+                });
+                Assert.That(lst.Remove(), Is.EqualTo(10));
                 lst.FIFO = true;
-                Assert.AreEqual(0, lst.Remove());
-                Assert.AreEqual(2, lst.Remove());
+                Assert.That(lst.Remove(), Is.EqualTo(0));
+                Assert.That(lst.Remove(), Is.EqualTo(2));
                 lst.FIFO = false;
-                Assert.AreEqual(8, lst.Remove());
-                Assert.AreEqual(6, lst.Remove());
+                Assert.That(lst.Remove(), Is.EqualTo(8));
+                Assert.That(lst.Remove(), Is.EqualTo(6));
             }
 
             [Test]
@@ -1684,7 +1834,7 @@ namespace C5.Tests.arrays.list
                 lst.InsertLast(25);
                 lst.InsertFirst(34);
                 lst.InsertLast(55);
-                Assert.IsTrue(IC.Eq(lst, 34, 24, 14, 4, 5, 15, 25, 55));
+                Assert.That(IC.Eq(lst, 34, 24, 14, 4, 5, 15, 25, 55), Is.True);
             }
 
 
@@ -1696,14 +1846,23 @@ namespace C5.Tests.arrays.list
                 lst.Add(2);
                 lst.Add(5);
                 lst.ViewOf(2).InsertFirst(7);
-                Assert.IsTrue(lst.Check());
-                Assert.IsTrue(IC.Eq(lst, 7, 2, 3, 2, 5));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.Check(), Is.True);
+                    Assert.That(IC.Eq(lst, 7, 2, 3, 2, 5), Is.True);
+                });
                 lst.ViewOf(3).InsertFirst(8);
-                Assert.IsTrue(lst.Check());
-                Assert.IsTrue(IC.Eq(lst, 7, 2, 8, 3, 2, 5));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.Check(), Is.True);
+                    Assert.That(IC.Eq(lst, 7, 2, 8, 3, 2, 5), Is.True);
+                });
                 lst.ViewOf(5).InsertFirst(9);
-                Assert.IsTrue(lst.Check());
-                Assert.IsTrue(IC.Eq(lst, 7, 2, 8, 3, 2, 9, 5));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.Check(), Is.True);
+                    Assert.That(IC.Eq(lst, 7, 2, 8, 3, 2, 9, 5), Is.True);
+                });
             }
 
             [Test]
@@ -1715,14 +1874,23 @@ namespace C5.Tests.arrays.list
                 lst.Add(2);
                 lst.Add(5);
                 lst.LastViewOf(2).InsertLast(7);
-                Assert.IsTrue(lst.Check());
-                Assert.IsTrue(IC.Eq(lst, 1, 2, 3, 2, 7, 5));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.Check(), Is.True);
+                    Assert.That(IC.Eq(lst, 1, 2, 3, 2, 7, 5), Is.True);
+                });
                 lst.LastViewOf(1).InsertLast(8);
-                Assert.IsTrue(lst.Check());
-                Assert.IsTrue(IC.Eq(lst, 1, 8, 2, 3, 2, 7, 5));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.Check(), Is.True);
+                    Assert.That(IC.Eq(lst, 1, 8, 2, 3, 2, 7, 5), Is.True);
+                });
                 lst.LastViewOf(5).InsertLast(9);
-                Assert.IsTrue(lst.Check());
-                Assert.IsTrue(IC.Eq(lst, 1, 8, 2, 3, 2, 7, 5, 9));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.Check(), Is.True);
+                    Assert.That(IC.Eq(lst, 1, 8, 2, 3, 2, 7, 5, 9), Is.True);
+                });
             }
 
             [Test]
@@ -1736,14 +1904,23 @@ namespace C5.Tests.arrays.list
                 IList<int> lst2 = new ArrayList<int>() { 7, 8, 9 };
 
                 lst.InsertAll(0, lst2);
-                Assert.IsTrue(lst.Check());
-                Assert.IsTrue(IC.Eq(lst, 7, 8, 9, 1, 2, 3, 4));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.Check(), Is.True);
+                    Assert.That(IC.Eq(lst, 7, 8, 9, 1, 2, 3, 4), Is.True);
+                });
                 lst.InsertAll(7, lst2);
-                Assert.IsTrue(lst.Check());
-                Assert.IsTrue(IC.Eq(lst, 7, 8, 9, 1, 2, 3, 4, 7, 8, 9));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.Check(), Is.True);
+                    Assert.That(IC.Eq(lst, 7, 8, 9, 1, 2, 3, 4, 7, 8, 9), Is.True);
+                });
                 lst.InsertAll(5, lst2);
-                Assert.IsTrue(lst.Check());
-                Assert.IsTrue(IC.Eq(lst, 7, 8, 9, 1, 2, 7, 8, 9, 3, 4, 7, 8, 9));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.Check(), Is.True);
+                    Assert.That(IC.Eq(lst, 7, 8, 9, 1, 2, 7, 8, 9, 3, 4, 7, 8, 9), Is.True);
+                });
             }
 
 
@@ -1753,18 +1930,24 @@ namespace C5.Tests.arrays.list
                 string m(int i) { return "<<" + i + ">>"; }
                 IList<string> r = lst.Map(m);
 
-                Assert.IsTrue(r.Check());
-                Assert.IsTrue(r.IsEmpty);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(r.Check(), Is.True);
+                    Assert.That(r.IsEmpty, Is.True);
+                });
                 lst.Add(1);
                 lst.Add(2);
                 lst.Add(3);
                 lst.Add(4);
                 r = lst.Map(m);
-                Assert.IsTrue(r.Check());
-                Assert.AreEqual(4, r.Count);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(r.Check(), Is.True);
+                    Assert.That(r.Count, Is.EqualTo(4));
+                });
                 for (int i = 0; i < 4; i++)
                 {
-                    Assert.AreEqual("<<" + (i + 1) + ">>", r[i]);
+                    Assert.That(r[i], Is.EqualTo("<<" + (i + 1) + ">>"));
                 }
             }
 
@@ -1839,11 +2022,14 @@ namespace C5.Tests.arrays.list
                 lst.Add(2);
                 lst.Add(3);
                 lst.Add(4);
-                Assert.AreEqual(1, lst.RemoveFirst());
-                Assert.AreEqual(4, lst.RemoveLast());
-                Assert.AreEqual(2, lst.RemoveFirst());
-                Assert.AreEqual(3, lst.RemoveLast());
-                Assert.IsTrue(lst.IsEmpty);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.RemoveFirst(), Is.EqualTo(1));
+                    Assert.That(lst.RemoveLast(), Is.EqualTo(4));
+                });
+                Assert.That(lst.RemoveFirst(), Is.EqualTo(2));
+                Assert.That(lst.RemoveLast(), Is.EqualTo(3));
+                Assert.That(lst.IsEmpty, Is.True);
             }
 
             [Test]
@@ -1855,20 +2041,35 @@ namespace C5.Tests.arrays.list
                 }
 
                 lst.Reverse();
-                Assert.IsTrue(lst.Check());
-                Assert.IsTrue(IC.Eq(lst, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.Check(), Is.True);
+                    Assert.That(IC.Eq(lst, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0), Is.True);
+                });
                 lst.View(0, 3).Reverse();
-                Assert.IsTrue(lst.Check());
-                Assert.IsTrue(IC.Eq(lst, 7, 8, 9, 6, 5, 4, 3, 2, 1, 0));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.Check(), Is.True);
+                    Assert.That(IC.Eq(lst, 7, 8, 9, 6, 5, 4, 3, 2, 1, 0), Is.True);
+                });
                 lst.View(7, 0).Reverse();
-                Assert.IsTrue(lst.Check());
-                Assert.IsTrue(IC.Eq(lst, 7, 8, 9, 6, 5, 4, 3, 2, 1, 0));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.Check(), Is.True);
+                    Assert.That(IC.Eq(lst, 7, 8, 9, 6, 5, 4, 3, 2, 1, 0), Is.True);
+                });
                 lst.View(7, 3).Reverse();
-                Assert.IsTrue(lst.Check());
-                Assert.IsTrue(IC.Eq(lst, 7, 8, 9, 6, 5, 4, 3, 0, 1, 2));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.Check(), Is.True);
+                    Assert.That(IC.Eq(lst, 7, 8, 9, 6, 5, 4, 3, 0, 1, 2), Is.True);
+                });
                 lst.View(5, 1).Reverse();
-                Assert.IsTrue(lst.Check());
-                Assert.IsTrue(IC.Eq(lst, 7, 8, 9, 6, 5, 4, 3, 0, 1, 2));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.Check(), Is.True);
+                    Assert.That(IC.Eq(lst, 7, 8, 9, 6, 5, 4, 3, 0, 1, 2), Is.True);
+                });
             }
 
 
@@ -1908,11 +2109,14 @@ namespace C5.Tests.arrays.list
             public void Find()
             {
                 System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
-                Assert.IsTrue(lst.Find(ref p));
-                Assert.AreEqual(3, p.Key);
-                Assert.AreEqual(33, p.Value);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.Find(ref p), Is.True);
+                    Assert.That(p.Key, Is.EqualTo(3));
+                    Assert.That(p.Value, Is.EqualTo(33));
+                });
                 p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
-                Assert.IsFalse(lst.Find(ref p));
+                Assert.That(lst.Find(ref p), Is.False);
             }
 
 
@@ -1921,13 +2125,19 @@ namespace C5.Tests.arrays.list
             {
                 System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
 
-                Assert.IsTrue(lst.FindOrAdd(ref p));
-                Assert.AreEqual(3, p.Key);
-                Assert.AreEqual(33, p.Value);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.FindOrAdd(ref p), Is.True);
+                    Assert.That(p.Key, Is.EqualTo(3));
+                    Assert.That(p.Value, Is.EqualTo(33));
+                });
                 p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
-                Assert.IsFalse(lst.FindOrAdd(ref p));
-                Assert.AreEqual(13, lst[10].Key);
-                Assert.AreEqual(79, lst[10].Value);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.FindOrAdd(ref p), Is.False);
+                    Assert.That(lst[10].Key, Is.EqualTo(13));
+                    Assert.That(lst[10].Value, Is.EqualTo(79));
+                });
             }
 
 
@@ -1936,11 +2146,14 @@ namespace C5.Tests.arrays.list
             {
                 System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
 
-                Assert.IsTrue(lst.Update(p));
-                Assert.AreEqual(3, lst[3].Key);
-                Assert.AreEqual(78, lst[3].Value);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.Update(p), Is.True);
+                    Assert.That(lst[3].Key, Is.EqualTo(3));
+                    Assert.That(lst[3].Value, Is.EqualTo(78));
+                });
                 p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
-                Assert.IsFalse(lst.Update(p));
+                Assert.That(lst.Update(p), Is.False);
             }
 
 
@@ -1949,13 +2162,19 @@ namespace C5.Tests.arrays.list
             {
                 System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
 
-                Assert.IsTrue(lst.UpdateOrAdd(p));
-                Assert.AreEqual(3, lst[3].Key);
-                Assert.AreEqual(78, lst[3].Value);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.UpdateOrAdd(p), Is.True);
+                    Assert.That(lst[3].Key, Is.EqualTo(3));
+                    Assert.That(lst[3].Value, Is.EqualTo(78));
+                });
                 p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
-                Assert.IsFalse(lst.UpdateOrAdd(p));
-                Assert.AreEqual(13, lst[10].Key);
-                Assert.AreEqual(79, lst[10].Value);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.UpdateOrAdd(p), Is.False);
+                    Assert.That(lst[10].Key, Is.EqualTo(13));
+                    Assert.That(lst[10].Value, Is.EqualTo(79));
+                });
             }
 
             [Test]
@@ -1964,11 +2183,14 @@ namespace C5.Tests.arrays.list
                 ICollection<string> coll = new ArrayList<string>();
                 // s1 and s2 are distinct objects but contain the same text:
                 string s1 = "abc", s2 = ("def" + s1).Substring(3);
-                Assert.IsFalse(coll.UpdateOrAdd(s1, out string old));
-                Assert.AreEqual(null, old);
-                Assert.IsTrue(coll.UpdateOrAdd(s2, out old));
-                Assert.IsTrue(ReferenceEquals(s1, old));
-                Assert.IsFalse(ReferenceEquals(s2, old));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(coll.UpdateOrAdd(s1, out string old), Is.False);
+                    Assert.That(old, Is.EqualTo(null));
+                    Assert.That(coll.UpdateOrAdd(s2, out old), Is.True);
+                    Assert.That(ReferenceEquals(s1, old), Is.True);
+                    Assert.That(ReferenceEquals(s2, old), Is.False);
+                });
             }
 
             [Test]
@@ -1976,13 +2198,16 @@ namespace C5.Tests.arrays.list
             {
                 System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
 
-                Assert.IsTrue(lst.Remove(p, out p));
-                Assert.AreEqual(3, p.Key);
-                Assert.AreEqual(33, p.Value);
-                Assert.AreEqual(4, lst[3].Key);
-                Assert.AreEqual(34, lst[3].Value);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.Remove(p, out p), Is.True);
+                    Assert.That(p.Key, Is.EqualTo(3));
+                    Assert.That(p.Value, Is.EqualTo(33));
+                    Assert.That(lst[3].Key, Is.EqualTo(4));
+                    Assert.That(lst[3].Value, Is.EqualTo(34));
+                });
                 p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
-                Assert.IsFalse(lst.Remove(p, out _));
+                Assert.That(lst.Remove(p, out _), Is.False);
             }
         }
 
@@ -2005,11 +2230,14 @@ namespace C5.Tests.arrays.list
             public void Sort()
             {
                 lst.Add(5); lst.Add(6); lst.Add(5); lst.Add(7); lst.Add(3);
-                Assert.IsFalse(lst.IsSorted(new IC()));
+                Assert.That(lst.IsSorted(new IC()), Is.False);
                 lst.Sort(new IC());
-                Assert.IsTrue(lst.IsSorted());
-                Assert.IsTrue(lst.IsSorted(new IC()));
-                Assert.IsTrue(IC.Eq(lst, 3, 5, 5, 6, 7));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.IsSorted(), Is.True);
+                    Assert.That(lst.IsSorted(new IC()), Is.True);
+                    Assert.That(IC.Eq(lst, 3, 5, 5, 6, 7), Is.True);
+                });
             }
 
 
@@ -2026,33 +2254,54 @@ namespace C5.Tests.arrays.list
                 lst2.Add(new System.Collections.Generic.KeyValuePair<int, string>(3, "e"));
                 lst2.Add(new System.Collections.Generic.KeyValuePair<int, string>(4, "f"));
                 lst2.Add(new System.Collections.Generic.KeyValuePair<int, string>(5, "handle"));
-                Assert.IsFalse(lst2.IsSorted(c));
+                Assert.That(lst2.IsSorted(c), Is.False);
                 lst2.Sort(c);
-                Assert.IsTrue(lst2.IsSorted(c));
+                Assert.That(lst2.IsSorted(c), Is.True);
 
                 System.Collections.Generic.KeyValuePair<int, string> p = lst2.RemoveFirst();
 
-                Assert.AreEqual(3, p.Key);
-                Assert.AreEqual("e", p.Value);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(p.Key, Is.EqualTo(3));
+                    Assert.That(p.Value, Is.EqualTo("e"));
+                });
                 p = lst2.RemoveFirst();
-                Assert.AreEqual(4, p.Key);
-                Assert.AreEqual("d", p.Value);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(p.Key, Is.EqualTo(4));
+                    Assert.That(p.Value, Is.EqualTo("d"));
+                });
                 p = lst2.RemoveFirst();
-                Assert.AreEqual(4, p.Key);
-                Assert.AreEqual("f", p.Value);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(p.Key, Is.EqualTo(4));
+                    Assert.That(p.Value, Is.EqualTo("f"));
+                });
                 p = lst2.RemoveFirst();
-                Assert.AreEqual(5, p.Key);
-                Assert.AreEqual("a", p.Value);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(p.Key, Is.EqualTo(5));
+                    Assert.That(p.Value, Is.EqualTo("a"));
+                });
                 p = lst2.RemoveFirst();
-                Assert.AreEqual(5, p.Key);
-                Assert.AreEqual("b", p.Value);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(p.Key, Is.EqualTo(5));
+                    Assert.That(p.Value, Is.EqualTo("b"));
+                });
                 p = lst2.RemoveFirst();
-                Assert.AreEqual(5, p.Key);
-                Assert.AreEqual("handle", p.Value);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(p.Key, Is.EqualTo(5));
+                    Assert.That(p.Value, Is.EqualTo("handle"));
+                });
                 p = lst2.RemoveFirst();
-                Assert.AreEqual(6, p.Key);
-                Assert.AreEqual("c", p.Value);
-                Assert.IsTrue(lst2.IsEmpty);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(p.Key, Is.EqualTo(6));
+                    Assert.That(p.Value, Is.EqualTo("c"));
+                    Assert.That(lst2.IsEmpty, Is.True);
+                });
             }
         }
 
@@ -2077,10 +2326,10 @@ namespace C5.Tests.arrays.list
                 for (int i = 0; i < 100; i++)
                 {
                     lst.Shuffle(new C5Random(i + 1));
-                    Assert.IsTrue(lst.Check(), "Check " + i);
+                    Assert.That(lst.Check(), Is.True, "Check " + i);
                     int[] lst2 = lst.ToArray();
                     Sorting.IntroSort<int>(lst2);
-                    Assert.IsTrue(IC.Eq(lst2, 3, 5, 5, 6, 7), "Contents " + i);
+                    Assert.That(IC.Eq(lst2, 3, 5, 5, 6, 7), Is.True, "Contents " + i);
                 }
             }
         }
@@ -2108,11 +2357,11 @@ namespace C5.Tests.arrays.list
                 list.Push(7);
                 list.Push(8);
                 list.Push(9);
-                Assert.AreEqual(9, list.Pop());
-                Assert.AreEqual(8, list.Pop());
-                Assert.AreEqual(7, list.Pop());
-                Assert.AreEqual(5, list.Pop());
-                Assert.AreEqual(7, list.Pop());
+                Assert.That(list.Pop(), Is.EqualTo(9));
+                Assert.That(list.Pop(), Is.EqualTo(8));
+                Assert.That(list.Pop(), Is.EqualTo(7));
+                Assert.That(list.Pop(), Is.EqualTo(5));
+                Assert.That(list.Pop(), Is.EqualTo(7));
             }
 
 
@@ -2120,7 +2369,7 @@ namespace C5.Tests.arrays.list
             public void PopEmpty()
             {
                 list.Push(5);
-                Assert.AreEqual(5, list.Pop());
+                Assert.That(list.Pop(), Is.EqualTo(5));
 
                 Assert.Throws<NoSuchItemException>(() => list.Pop());
             }
@@ -2148,11 +2397,11 @@ namespace C5.Tests.arrays.list
                 list.Enqueue(7);
                 list.Enqueue(8);
                 list.Enqueue(9);
-                Assert.AreEqual(7, list.Dequeue());
-                Assert.AreEqual(5, list.Dequeue());
-                Assert.AreEqual(7, list.Dequeue());
-                Assert.AreEqual(8, list.Dequeue());
-                Assert.AreEqual(9, list.Dequeue());
+                Assert.That(list.Dequeue(), Is.EqualTo(7));
+                Assert.That(list.Dequeue(), Is.EqualTo(5));
+                Assert.That(list.Dequeue(), Is.EqualTo(7));
+                Assert.That(list.Dequeue(), Is.EqualTo(8));
+                Assert.That(list.Dequeue(), Is.EqualTo(9));
             }
 
 
@@ -2160,7 +2409,7 @@ namespace C5.Tests.arrays.list
             public void DeQueueEmpty()
             {
                 list.Enqueue(5);
-                Assert.AreEqual(5, list.Dequeue());
+                Assert.That(list.Dequeue(), Is.EqualTo(5));
 
                 Assert.Throws<NoSuchItemException>(() => list.Dequeue());
             }
@@ -2197,9 +2446,12 @@ namespace C5.Tests.arrays.list
                     lst.Add(i);
                 }
 
-                Assert.IsTrue(IC.Eq(lst[0, 3], 0, 1, 2));
-                Assert.IsTrue(IC.Eq(lst[3, 4], 3, 4, 5, 6));
-                Assert.IsTrue(IC.Eq(lst[6, 4], 6, 7, 8, 9));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(lst[0, 3], 0, 1, 2), Is.True);
+                    Assert.That(IC.Eq(lst[3, 4], 3, 4, 5, 6), Is.True);
+                    Assert.That(IC.Eq(lst[6, 4], 6, 7, 8, 9), Is.True);
+                });
             }
 
 
@@ -2220,10 +2472,13 @@ namespace C5.Tests.arrays.list
                     lst.Add(i);
                 }
 
-                Assert.IsTrue(IC.Eq(lst.Backwards(), 9, 8, 7, 6, 5, 4, 3, 2, 1, 0));
-                Assert.IsTrue(IC.Eq(lst[0, 4].Backwards(), 3, 2, 1, 0));
-                Assert.IsTrue(IC.Eq(lst[3, 4].Backwards(), 6, 5, 4, 3));
-                Assert.IsTrue(IC.Eq(lst[6, 4].Backwards(), 9, 8, 7, 6));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(lst.Backwards(), 9, 8, 7, 6, 5, 4, 3, 2, 1, 0), Is.True);
+                    Assert.That(IC.Eq(lst[0, 4].Backwards(), 3, 2, 1, 0), Is.True);
+                    Assert.That(IC.Eq(lst[3, 4].Backwards(), 6, 5, 4, 3), Is.True);
+                    Assert.That(IC.Eq(lst[6, 4].Backwards(), 9, 8, 7, 6), Is.True);
+                });
             }
 
 
@@ -2235,13 +2490,19 @@ namespace C5.Tests.arrays.list
                     lst.Add(i);
                 }
 
-                Assert.AreEqual(Direction.Forwards, lst.Direction);
-                Assert.AreEqual(Direction.Forwards, lst[3, 4].Direction);
-                Assert.AreEqual(Direction.Backwards, lst[3, 4].Backwards().Direction);
-                Assert.AreEqual(Direction.Backwards, lst.Backwards().Direction);
-                Assert.AreEqual(4, lst[3, 4].Count);
-                Assert.AreEqual(4, lst[3, 4].Backwards().Count);
-                Assert.AreEqual(10, lst.Backwards().Count);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst.Direction, Is.EqualTo(Direction.Forwards));
+                    Assert.That(lst[3, 4].Direction, Is.EqualTo(Direction.Forwards));
+                    Assert.That(lst[3, 4].Backwards().Direction, Is.EqualTo(Direction.Backwards));
+                    Assert.That(lst.Backwards().Direction, Is.EqualTo(Direction.Backwards));
+                    Assert.That(lst[3, 4].Count, Is.EqualTo(4));
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(lst[3, 4].Backwards().Count, Is.EqualTo(4));
+                    Assert.That(lst.Backwards().Count, Is.EqualTo(10));
+                });
             }
 
 
@@ -2288,8 +2549,11 @@ namespace C5.Tests.arrays.list
 
             private void check()
             {
-                Assert.IsTrue(list.Check());
-                Assert.IsTrue(view.Check());
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.Check(), Is.True);
+                    Assert.That(view.Check(), Is.True);
+                });
             }
 
             //static void pint(IEnumerable<int> l) { foreach (int cell in l) Console.WriteLine(cell); }
@@ -2308,8 +2572,11 @@ namespace C5.Tests.arrays.list
                 check();
                 view.Insert(list.ViewOf(0), 11);
                 check();
-                Assert.IsTrue(IC.Eq(list, 0, 11, 1, 9, 7, 2, 10, 3, 8));
-                Assert.IsTrue(IC.Eq(view, 11, 1, 9, 7, 2, 10));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(list, 0, 11, 1, 9, 7, 2, 10, 3, 8), Is.True);
+                    Assert.That(IC.Eq(view, 11, 1, 9, 7, 2, 10), Is.True);
+                });
             }
 
             [Test]
@@ -2340,15 +2607,21 @@ namespace C5.Tests.arrays.list
             public void Span()
             {
                 IList<int> span = list.View(1, 0).Span(list.View(2, 0));
-                Assert.IsTrue(span.Check());
-                Assert.AreEqual(1, span.Offset);
-                Assert.AreEqual(1, span.Count);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(span.Check(), Is.True);
+                    Assert.That(span.Offset, Is.EqualTo(1));
+                    Assert.That(span.Count, Is.EqualTo(1));
+                });
                 span = list.View(0, 2).Span(list.View(2, 2));
-                Assert.IsTrue(span.Check());
-                Assert.AreEqual(0, span.Offset);
-                Assert.AreEqual(4, span.Count);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(span.Check(), Is.True);
+                    Assert.That(span.Offset, Is.EqualTo(0));
+                    Assert.That(span.Count, Is.EqualTo(4));
+                });
                 span = list.View(3, 1).Span(list.View(1, 1));
-                Assert.IsNull(span);
+                Assert.That(span, Is.Null);
             }
 
             [Test]
@@ -2360,119 +2633,170 @@ namespace C5.Tests.arrays.list
                 }
 
                 IList<int> v = view.ViewOf(2);
-                Assert.IsTrue(v.Check());
-                Assert.IsTrue(IC.Eq(v, 2));
-                Assert.AreEqual(2, v.Offset);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(v.Check(), Is.True);
+                    Assert.That(IC.Eq(v, 2), Is.True);
+                    Assert.That(v.Offset, Is.EqualTo(2));
+                });
                 v = list.ViewOf(2);
-                Assert.IsTrue(v.Check());
-                Assert.IsTrue(IC.Eq(v, 2));
-                Assert.AreEqual(2, v.Offset);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(v.Check(), Is.True);
+                    Assert.That(IC.Eq(v, 2), Is.True);
+                    Assert.That(v.Offset, Is.EqualTo(2));
+                });
                 v = list.LastViewOf(2);
-                Assert.IsTrue(v.Check());
-                Assert.IsTrue(IC.Eq(v, 2));
-                Assert.AreEqual(6, v.Offset);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(v.Check(), Is.True);
+                    Assert.That(IC.Eq(v, 2), Is.True);
+                    Assert.That(v.Offset, Is.EqualTo(6));
+                });
             }
 
             [Test]
             public void ArrayStuff()
             {
-                Assert.IsTrue(IC.Eq(view.ToArray(), 1, 2));
+                Assert.That(IC.Eq(view.ToArray(), 1, 2), Is.True);
                 int[] extarray = new int[5];
                 view.CopyTo(extarray, 2);
-                Assert.IsTrue(IC.Eq(extarray, 0, 0, 1, 2, 0));
+                Assert.That(IC.Eq(extarray, 0, 0, 1, 2, 0), Is.True);
             }
 
             [Test]
             public void BadViewOf()
             {
-                Assert.IsNull(view.ViewOf(5));
-                Assert.IsNull(view.LastViewOf(5));
-                Assert.IsNull(view.ViewOf(3));
-                Assert.IsNull(view.LastViewOf(3));
-                Assert.IsNull(view.ViewOf(0));
-                Assert.IsNull(view.LastViewOf(0));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(view.ViewOf(5), Is.Null);
+                    Assert.That(view.LastViewOf(5), Is.Null);
+                    Assert.That(view.ViewOf(3), Is.Null);
+                    Assert.That(view.LastViewOf(3), Is.Null);
+                    Assert.That(view.ViewOf(0), Is.Null);
+                    Assert.That(view.LastViewOf(0), Is.Null);
+                });
             }
 
             [Test]
             public void Add()
             {
                 check();
-                Assert.IsTrue(IC.Eq(list, 0, 1, 2, 3));
-                Assert.IsTrue(IC.Eq(view, 1, 2));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(list, 0, 1, 2, 3), Is.True);
+                    Assert.That(IC.Eq(view, 1, 2), Is.True);
+                });
                 view.InsertFirst(10);
                 check();
-                Assert.IsTrue(IC.Eq(list, 0, 10, 1, 2, 3));
-                Assert.IsTrue(IC.Eq(view, 10, 1, 2));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(list, 0, 10, 1, 2, 3), Is.True);
+                    Assert.That(IC.Eq(view, 10, 1, 2), Is.True);
+                });
                 view.Clear();
-                Assert.IsFalse(view.IsReadOnly);
-                Assert.IsTrue(view.AllowsDuplicates);
-                Assert.IsTrue(view.IsEmpty);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(view.IsReadOnly, Is.False);
+                    Assert.That(view.AllowsDuplicates, Is.True);
+                    Assert.That(view.IsEmpty, Is.True);
+                });
                 check();
-                Assert.IsTrue(IC.Eq(list, 0, 3));
-                Assert.IsTrue(IC.Eq(view));
+                Assert.That(IC.Eq(list, 0, 3), Is.True);
+                Assert.That(IC.Eq(view), Is.True);
                 view.Add(8);
-                Assert.IsFalse(view.IsEmpty);
-                Assert.IsTrue(view.AllowsDuplicates);
-                Assert.IsFalse(view.IsReadOnly);
+                Assert.That(view.IsEmpty, Is.False);
+                Assert.That(view.AllowsDuplicates, Is.True);
+                Assert.That(view.IsReadOnly, Is.False);
                 check();
-                Assert.IsTrue(IC.Eq(list, 0, 8, 3));
-                Assert.IsTrue(IC.Eq(view, 8));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(list, 0, 8, 3), Is.True);
+                    Assert.That(IC.Eq(view, 8), Is.True);
+                });
                 view.Add(12);
                 check();
-                Assert.IsTrue(IC.Eq(list, 0, 8, 12, 3));
-                Assert.IsTrue(IC.Eq(view, 8, 12));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(list, 0, 8, 12, 3), Is.True);
+                    Assert.That(IC.Eq(view, 8, 12), Is.True);
+                });
                 view./*ViewOf(12)*/InsertLast(15);
                 check();
-                Assert.IsTrue(IC.Eq(list, 0, 8, 12, 15, 3));
-                Assert.IsTrue(IC.Eq(view, 8, 12, 15));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(list, 0, 8, 12, 15, 3), Is.True);
+                    Assert.That(IC.Eq(view, 8, 12, 15), Is.True);
+                });
                 view.ViewOf(12).InsertFirst(18);
                 check();
-                Assert.IsTrue(IC.Eq(list, 0, 8, 18, 12, 15, 3));
-                Assert.IsTrue(IC.Eq(view, 8, 18, 12, 15));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(list, 0, 8, 18, 12, 15, 3), Is.True);
+                    Assert.That(IC.Eq(view, 8, 18, 12, 15), Is.True);
+                });
 
                 ArrayList<int> lst2 = new() { 90, 92 };
                 view.AddAll(lst2);
                 check();
-                Assert.IsTrue(IC.Eq(list, 0, 8, 18, 12, 15, 90, 92, 3));
-                Assert.IsTrue(IC.Eq(view, 8, 18, 12, 15, 90, 92));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(list, 0, 8, 18, 12, 15, 90, 92, 3), Is.True);
+                    Assert.That(IC.Eq(view, 8, 18, 12, 15, 90, 92), Is.True);
+                });
                 view.InsertLast(66);
                 check();
 
-                Assert.IsTrue(IC.Eq(list, 0, 8, 18, 12, 15, 90, 92, 66, 3));
-                Assert.IsTrue(IC.Eq(view, 8, 18, 12, 15, 90, 92, 66));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(list, 0, 8, 18, 12, 15, 90, 92, 66, 3), Is.True);
+                    Assert.That(IC.Eq(view, 8, 18, 12, 15, 90, 92, 66), Is.True);
+                });
             }
 
 
             [Test]
             public void Bxxx()
             {
-                Assert.IsTrue(IC.Eq(view.Backwards(), 2, 1));
-                Assert.AreSame(list, view.Underlying);
-                Assert.IsNull(list.Underlying);
-                Assert.AreEqual(Direction.Forwards, view.Direction);
-                Assert.AreEqual(Direction.Backwards, view.Backwards().Direction);
-                Assert.AreEqual(0, list.Offset);
-                Assert.AreEqual(1, view.Offset);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(view.Backwards(), 2, 1), Is.True);
+                    Assert.That(view.Underlying, Is.SameAs(list));
+                    Assert.That(list.Underlying, Is.Null);
+                    Assert.That(view.Direction, Is.EqualTo(Direction.Forwards));
+                    Assert.That(view.Backwards().Direction, Is.EqualTo(Direction.Backwards));
+                    Assert.That(list.Offset, Is.EqualTo(0));
+                    Assert.That(view.Offset, Is.EqualTo(1));
+                });
             }
 
 
             [Test]
             public void Contains()
             {
-                Assert.IsTrue(view.Contains(1));
-                Assert.IsFalse(view.Contains(0));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(view.Contains(1), Is.True);
+                    Assert.That(view.Contains(0), Is.False);
+                });
 
                 ArrayList<int> lst2 = new() { 2 };
 
-                Assert.IsTrue(view.ContainsAll(lst2));
+                Assert.That(view.ContainsAll(lst2), Is.True);
                 lst2.Add(3);
-                Assert.IsFalse(view.ContainsAll(lst2));
-                Assert.AreEqual(Speed.Linear, view.ContainsSpeed);
-                Assert.AreEqual(2, view.Count);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(view.ContainsAll(lst2), Is.False);
+                    Assert.That(view.ContainsSpeed, Is.EqualTo(Speed.Linear));
+                    Assert.That(view.Count, Is.EqualTo(2));
+                });
                 view.Add(1);
-                Assert.AreEqual(1, view.ContainsCount(2));
-                Assert.AreEqual(2, view.ContainsCount(1));
-                Assert.AreEqual(3, view.Count);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(view.ContainsCount(2), Is.EqualTo(1));
+                    Assert.That(view.ContainsCount(1), Is.EqualTo(2));
+                    Assert.That(view.Count, Is.EqualTo(3));
+                });
             }
 
 
@@ -2481,26 +2805,32 @@ namespace C5.Tests.arrays.list
             {
                 ArrayList<int> view2 = (ArrayList<int>)view.View(1, 0);
 
-                Assert.AreSame(list, view2.Underlying);
+                Assert.That(view2.Underlying, Is.SameAs(list));
             }
 
 
             [Test]
             public void FIFO()
             {
-                Assert.IsFalse(view.FIFO);
+                Assert.That(view.FIFO, Is.False);
                 view.FIFO = true;
                 view.Add(23); view.Add(24); view.Add(25);
                 check();
-                Assert.IsTrue(IC.Eq(view, 1, 2, 23, 24, 25));
-                Assert.AreEqual(1, view.Remove());
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(view, 1, 2, 23, 24, 25), Is.True);
+                    Assert.That(view.Remove(), Is.EqualTo(1));
+                });
                 check();
-                Assert.IsTrue(IC.Eq(view, 2, 23, 24, 25));
+                Assert.That(IC.Eq(view, 2, 23, 24, 25), Is.True);
                 view.FIFO = false;
-                Assert.IsFalse(view.FIFO);
-                Assert.AreEqual(25, view.Remove());
+                Assert.Multiple(() =>
+                {
+                    Assert.That(view.FIFO, Is.False);
+                    Assert.That(view.Remove(), Is.EqualTo(25));
+                });
                 check();
-                Assert.IsTrue(IC.Eq(view, 2, 23, 24));
+                Assert.That(IC.Eq(view, 2, 23, 24), Is.True);
             }
 
 
@@ -2509,25 +2839,34 @@ namespace C5.Tests.arrays.list
             {
                 ArrayList<double> dbl = (ArrayList<double>)view.Map(new Func<int, double>(delegate (int i) { return i / 10.0; }));
 
-                Assert.IsTrue(dbl.Check());
-                Assert.AreEqual(0.1, dbl[0]);
-                Assert.AreEqual(0.2, dbl[1]);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dbl.Check(), Is.True);
+                    Assert.That(dbl[0], Is.EqualTo(0.1));
+                    Assert.That(dbl[1], Is.EqualTo(0.2));
+                });
                 for (int i = 0; i < 10; i++)
                 {
                     view.Add(i);
                 }
 
                 list = (ArrayList<int>)view.FindAll(new Func<int, bool>(delegate (int i) { return i % 4 == 1; }));
-                Assert.IsTrue(list.Check());
-                Assert.IsTrue(IC.Eq(list, 1, 1, 5, 9));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.Check(), Is.True);
+                    Assert.That(IC.Eq(list, 1, 1, 5, 9), Is.True);
+                });
             }
 
 
             [Test]
             public void FL()
             {
-                Assert.AreEqual(1, view.First);
-                Assert.AreEqual(2, view.Last);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(view.First, Is.EqualTo(1));
+                    Assert.That(view.Last, Is.EqualTo(2));
+                });
             }
 
 
@@ -2543,17 +2882,17 @@ namespace C5.Tests.arrays.list
                 view = (ArrayList<int>)list.View(5, 7);
                 for (int i = 0; i < 7; i++)
                 {
-                    Assert.AreEqual(i + 5, view[i]);
+                    Assert.That(view[i], Is.EqualTo(i + 5));
                 }
 
                 for (int i = 0; i < 7; i++)
                 {
-                    Assert.AreEqual(i, view.IndexOf(i + 5));
+                    Assert.That(view.IndexOf(i + 5), Is.EqualTo(i));
                 }
 
                 for (int i = 0; i < 7; i++)
                 {
-                    Assert.AreEqual(i, view.LastIndexOf(i + 5));
+                    Assert.That(view.LastIndexOf(i + 5), Is.EqualTo(i));
                 }
             }
 
@@ -2564,15 +2903,21 @@ namespace C5.Tests.arrays.list
                 view.Insert(0, 34);
                 view.Insert(1, 35);
                 view.Insert(4, 36);
-                Assert.IsTrue(view.Check());
-                Assert.IsTrue(IC.Eq(view, 34, 35, 1, 2, 36));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(view.Check(), Is.True);
+                    Assert.That(IC.Eq(view, 34, 35, 1, 2, 36), Is.True);
+                });
 
                 IList<int> list2 = new ArrayList<int>();
 
                 list2.AddAll(view);
                 view.InsertAll(3, list2);
-                Assert.IsTrue(view.Check());
-                Assert.IsTrue(IC.Eq(view, 34, 35, 1, 34, 35, 1, 2, 36, 2, 36));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(view.Check(), Is.True);
+                    Assert.That(IC.Eq(view, 34, 35, 1, 34, 35, 1, 2, 36, 2, 36), Is.True);
+                });
             }
 
             [Test]
@@ -2598,11 +2943,14 @@ namespace C5.Tests.arrays.list
             public void Sort()
             {
                 view.Add(45); view.Add(47); view.Add(46); view.Add(48);
-                Assert.IsFalse(view.IsSorted(new IC()));
+                Assert.That(view.IsSorted(new IC()), Is.False);
                 view.Sort(new IC());
                 check();
-                Assert.IsTrue(IC.Eq(list, 0, 1, 2, 45, 46, 47, 48, 3));
-                Assert.IsTrue(IC.Eq(view, 1, 2, 45, 46, 47, 48));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(list, 0, 1, 2, 45, 46, 47, 48, 3), Is.True);
+                    Assert.That(IC.Eq(view, 1, 2, 45, 46, 47, 48), Is.True);
+                });
             }
 
 
@@ -2610,43 +2958,67 @@ namespace C5.Tests.arrays.list
             public void Remove()
             {
                 view.Add(1); view.Add(5); view.Add(3); view.Add(1); view.Add(3); view.Add(0);
-                Assert.IsTrue(IC.Eq(view, 1, 2, 1, 5, 3, 1, 3, 0));
-                Assert.IsTrue(view.Remove(1));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(view, 1, 2, 1, 5, 3, 1, 3, 0), Is.True);
+                    Assert.That(view.Remove(1), Is.True);
+                });
                 check();
-                Assert.IsTrue(IC.Eq(view, 1, 2, 1, 5, 3, 3, 0));
-                Assert.IsTrue(view.Remove(1));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(view, 1, 2, 1, 5, 3, 3, 0), Is.True);
+                    Assert.That(view.Remove(1), Is.True);
+                });
                 check();
-                Assert.IsTrue(IC.Eq(view, 1, 2, 5, 3, 3, 0));
-                Assert.IsTrue(view.Remove(0));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(view, 1, 2, 5, 3, 3, 0), Is.True);
+                    Assert.That(view.Remove(0), Is.True);
+                });
                 check();
-                Assert.IsTrue(IC.Eq(view, 1, 2, 5, 3, 3));
+                Assert.That(IC.Eq(view, 1, 2, 5, 3, 3), Is.True);
                 view.RemoveAllCopies(3);
                 check();
-                Assert.IsTrue(IC.Eq(view, 1, 2, 5));
-                Assert.IsTrue(IC.Eq(list, 0, 1, 2, 5, 3));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(view, 1, 2, 5), Is.True);
+                    Assert.That(IC.Eq(list, 0, 1, 2, 5, 3), Is.True);
+                });
                 view.Add(1); view.Add(5); view.Add(3); view.Add(1); view.Add(3); view.Add(0);
-                Assert.IsTrue(IC.Eq(view, 1, 2, 5, 1, 5, 3, 1, 3, 0));
+                Assert.That(IC.Eq(view, 1, 2, 5, 1, 5, 3, 1, 3, 0), Is.True);
 
                 view.FIFO = true;
                 view.Clear(); view.Add(1); view.Add(2);
 
                 view.Add(1); view.Add(5); view.Add(3); view.Add(1); view.Add(3); view.Add(0);
-                Assert.IsTrue(IC.Eq(view, 1, 2, 1, 5, 3, 1, 3, 0));
-                Assert.IsTrue(view.Remove(1));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(view, 1, 2, 1, 5, 3, 1, 3, 0), Is.True);
+                    Assert.That(view.Remove(1), Is.True);
+                });
                 check();
-                Assert.IsTrue(IC.Eq(view, 2, 1, 5, 3, 1, 3, 0));
-                Assert.IsTrue(view.Remove(1));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(view, 2, 1, 5, 3, 1, 3, 0), Is.True);
+                    Assert.That(view.Remove(1), Is.True);
+                });
                 check();
-                Assert.IsTrue(IC.Eq(view, 2, 5, 3, 1, 3, 0));
-                Assert.IsTrue(view.Remove(0));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(view, 2, 5, 3, 1, 3, 0), Is.True);
+                    Assert.That(view.Remove(0), Is.True);
+                });
                 check();
-                Assert.IsTrue(IC.Eq(view, 2, 5, 3, 1, 3));
+                Assert.That(IC.Eq(view, 2, 5, 3, 1, 3), Is.True);
                 view.RemoveAllCopies(3);
                 check();
-                Assert.IsTrue(IC.Eq(view, 2, 5, 1));
-                Assert.IsTrue(IC.Eq(list, 0, 2, 5, 1, 3));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(view, 2, 5, 1), Is.True);
+                    Assert.That(IC.Eq(list, 0, 2, 5, 1, 3), Is.True);
+                });
                 view.Add(1); view.Add(5); view.Add(3); view.Add(1); view.Add(3); view.Add(0);
-                Assert.IsTrue(IC.Eq(view, 2, 5, 1, 1, 5, 3, 1, 3, 0));
+                Assert.That(IC.Eq(view, 2, 5, 1, 1, 5, 3, 1, 3, 0), Is.True);
 
                 view.FIFO = false;
 
@@ -2654,23 +3026,29 @@ namespace C5.Tests.arrays.list
 
                 view.RemoveAll(l2);
                 check();
-                Assert.IsTrue(IC.Eq(view, 5, 5, 1, 3, 0));
+                Assert.That(IC.Eq(view, 5, 5, 1, 3, 0), Is.True);
                 view.RetainAll(l2);
                 check();
-                Assert.IsTrue(IC.Eq(view, 1, 3));
+                Assert.That(IC.Eq(view, 1, 3), Is.True);
                 view.Add(2); view.Add(4); view.Add(5);
-                Assert.AreEqual(1, view.RemoveAt(0));
-                Assert.AreEqual(5, view.RemoveAt(3));
-                Assert.AreEqual(2, view.RemoveAt(1));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(view.RemoveAt(0), Is.EqualTo(1));
+                    Assert.That(view.RemoveAt(3), Is.EqualTo(5));
+                    Assert.That(view.RemoveAt(1), Is.EqualTo(2));
+                });
                 check();
-                Assert.IsTrue(IC.Eq(view, 3, 4));
+                Assert.That(IC.Eq(view, 3, 4), Is.True);
                 view.Add(8);
-                Assert.AreEqual(3, view.RemoveFirst());
-                Assert.AreEqual(8, view.RemoveLast());
+                Assert.Multiple(() =>
+                {
+                    Assert.That(view.RemoveFirst(), Is.EqualTo(3));
+                    Assert.That(view.RemoveLast(), Is.EqualTo(8));
+                });
                 view.Add(2); view.Add(5); view.Add(3); view.Add(1);
                 view.RemoveInterval(1, 2);
                 check();
-                Assert.IsTrue(IC.Eq(view, 4, 3, 1));
+                Assert.That(IC.Eq(view, 4, 3, 1), Is.True);
             }
 
 
@@ -2685,10 +3063,13 @@ namespace C5.Tests.arrays.list
 
                 view.View(3, 4).Reverse();
                 check();
-                Assert.IsTrue(IC.Eq(view, 10, 11, 12, 16, 15, 14, 13, 17, 18, 19));
+                Assert.That(IC.Eq(view, 10, 11, 12, 16, 15, 14, 13, 17, 18, 19), Is.True);
                 view.Reverse();
-                Assert.IsTrue(IC.Eq(view, 19, 18, 17, 13, 14, 15, 16, 12, 11, 10));
-                Assert.IsTrue(IC.Eq(list, 0, 19, 18, 17, 13, 14, 15, 16, 12, 11, 10, 3));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(view, 19, 18, 17, 13, 14, 15, 16, 12, 11, 10), Is.True);
+                    Assert.That(IC.Eq(list, 0, 19, 18, 17, 13, 14, 15, 16, 12, 11, 10, 3), Is.True);
+                });
             }
 
 
@@ -2697,21 +3078,24 @@ namespace C5.Tests.arrays.list
             {
                 view.Slide(1);
                 check();
-                Assert.IsTrue(IC.Eq(view, 2, 3));
+                Assert.That(IC.Eq(view, 2, 3), Is.True);
                 view.Slide(-2);
                 check();
-                Assert.IsTrue(IC.Eq(view, 0, 1));
+                Assert.That(IC.Eq(view, 0, 1), Is.True);
                 view.Slide(0, 3);
                 check();
-                Assert.IsTrue(IC.Eq(view, 0, 1, 2));
+                Assert.That(IC.Eq(view, 0, 1, 2), Is.True);
                 view.Slide(2, 1);
                 check();
-                Assert.IsTrue(IC.Eq(view, 2));
-                Assert.AreEqual(view, view.Slide(-1, 0));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(view, 2), Is.True);
+                    Assert.That(view.Slide(-1, 0), Is.EqualTo(view));
+                });
                 check();
-                Assert.IsTrue(IC.Eq(view));
+                Assert.That(IC.Eq(view), Is.True);
                 view.Add(28);
-                Assert.IsTrue(IC.Eq(list, 0, 28, 1, 2, 3));
+                Assert.That(IC.Eq(list, 0, 28, 1, 2, 3), Is.True);
             }
             [Test]
             public void Iterate()
@@ -2741,15 +3125,19 @@ namespace C5.Tests.arrays.list
                         view.Slide(-1, 2);
                     }
                 }
-                Assert.IsTrue(list.Check());
-                Assert.IsTrue(IC.Eq(list, 2, 4, 8, 666, 13, 6, 1, 666, 2, 666, 7));
+
+                Assert.Multiple(() =>
+                {
+                    Assert.That(list.Check(), Is.True);
+                    Assert.That(IC.Eq(list, 2, 4, 8, 666, 13, 6, 1, 666, 2, 666, 7), Is.True);
+                });
             }
 
 
             [Test]
             public void SyncRoot()
             {
-                Assert.AreSame(((System.Collections.IList)view).SyncRoot, ((System.Collections.IList)list).SyncRoot);
+                Assert.That(((System.Collections.IList)list).SyncRoot, Is.SameAs(((System.Collections.IList)view).SyncRoot));
             }
         }
         [TestFixture]
@@ -2785,30 +3173,36 @@ namespace C5.Tests.arrays.list
             [Test]
             public void Insert()
             {
-                Assert.IsTrue(list.Check(), "list check before insert");
+                Assert.That(list.Check(), Is.True, "list check before insert");
                 list.Insert(3, 777);
-                Assert.IsTrue(list.Check(), "list check after insert");
+                Assert.That(list.Check(), Is.True, "list check after insert");
                 for (int i = 0; i < 7; i++)
                 {
                     for (int j = 0; j < 7 - i; j++)
                     {
-                        Assert.AreEqual(i < 3 || (i == 3 && j == 0) ? i : i + 1, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
-                        Assert.AreEqual(i < 3 && i + j > 3 ? j + 1 : j, views[i][j].Count, "view[" + i + "][" + j + "] count");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(views[i][j].Offset, Is.EqualTo(i < 3 || (i == 3 && j == 0) ? i : i + 1), "view[" + i + "][" + j + "] offset");
+                            Assert.That(views[i][j].Count, Is.EqualTo(i < 3 && i + j > 3 ? j + 1 : j), "view[" + i + "][" + j + "] count");
+                        });
                     }
                 }
             }
             [Test]
             public void RemoveAt()
             {
-                Assert.IsTrue(list.Check(), "list check before remove");
+                Assert.That(list.Check(), Is.True, "list check before remove");
                 list.RemoveAt(3);
-                Assert.IsTrue(list.Check(), "list check after remove");
+                Assert.That(list.Check(), Is.True, "list check after remove");
                 for (int i = 0; i < 7; i++)
                 {
                     for (int j = 0; j < 7 - i; j++)
                     {
-                        Assert.AreEqual(i <= 3 ? i : i - 1, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
-                        Assert.AreEqual(i <= 3 && i + j > 3 ? j - 1 : j, views[i][j].Count, "view[" + i + "][" + j + "] count");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(views[i][j].Offset, Is.EqualTo(i <= 3 ? i : i - 1), "view[" + i + "][" + j + "] offset");
+                            Assert.That(views[i][j].Count, Is.EqualTo(i <= 3 && i + j > 3 ? j - 1 : j), "view[" + i + "][" + j + "] count");
+                        });
                     }
                 }
             }
@@ -2816,15 +3210,18 @@ namespace C5.Tests.arrays.list
             [Test]
             public void RemoveInterval()
             {
-                Assert.IsTrue(list.Check(), "list check before remove");
+                Assert.That(list.Check(), Is.True, "list check before remove");
                 list.RemoveInterval(3, 2);
-                Assert.IsTrue(list.Check(), "list check after remove");
+                Assert.That(list.Check(), Is.True, "list check after remove");
                 for (int i = 0; i < 7; i++)
                 {
                     for (int j = 0; j < 7 - i; j++)
                     {
-                        Assert.AreEqual(i <= 3 ? i : i <= 5 ? 3 : i - 2, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
-                        Assert.AreEqual(j == 0 ? 0 : i <= 3 && i + j > 4 ? j - 2 : i > 4 || i + j <= 3 ? j : j - 1, views[i][j].Count, "view[" + i + "][" + j + "] count");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(views[i][j].Offset, Is.EqualTo(i <= 3 ? i : i <= 5 ? 3 : i - 2), "view[" + i + "][" + j + "] offset");
+                            Assert.That(views[i][j].Count, Is.EqualTo(j == 0 ? 0 : i <= 3 && i + j > 4 ? j - 2 : i > 4 || i + j <= 3 ? j : j - 1), "view[" + i + "][" + j + "] count");
+                        });
                     }
                 }
             }
@@ -2833,75 +3230,90 @@ namespace C5.Tests.arrays.list
             [Test]
             public void InsertAtEnd()
             {
-                Assert.IsTrue(list.Check(), "list check before insert");
+                Assert.That(list.Check(), Is.True, "list check before insert");
                 list.InsertLast(777);
-                Assert.IsTrue(list.Check(), "list check after insert");
+                Assert.That(list.Check(), Is.True, "list check after insert");
                 for (int i = 0; i < 7; i++)
                 {
                     for (int j = 0; j < 7 - i; j++)
                     {
-                        Assert.AreEqual(i, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
-                        Assert.AreEqual(j, views[i][j].Count, "view[" + i + "][" + j + "] count");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(views[i][j].Offset, Is.EqualTo(i), "view[" + i + "][" + j + "] offset");
+                            Assert.That(views[i][j].Count, Is.EqualTo(j), "view[" + i + "][" + j + "] count");
+                        });
                     }
                 }
             }
             [Test]
             public void RemoveAtEnd()
             {
-                Assert.IsTrue(list.Check(), "list check before remove");
+                Assert.That(list.Check(), Is.True, "list check before remove");
                 list.RemoveAt(5);
-                Assert.IsTrue(list.Check(), "list check after remove");
+                Assert.That(list.Check(), Is.True, "list check after remove");
                 for (int i = 0; i < 7; i++)
                 {
                     for (int j = 0; j < 7 - i; j++)
                     {
-                        Assert.AreEqual(i <= 5 ? i : i - 1, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
-                        Assert.AreEqual(i <= 5 && i + j > 5 ? j - 1 : j, views[i][j].Count, "view[" + i + "][" + j + "] count");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(views[i][j].Offset, Is.EqualTo(i <= 5 ? i : i - 1), "view[" + i + "][" + j + "] offset");
+                            Assert.That(views[i][j].Count, Is.EqualTo(i <= 5 && i + j > 5 ? j - 1 : j), "view[" + i + "][" + j + "] count");
+                        });
                     }
                 }
             }
             [Test]
             public void InsertAtStart()
             {
-                Assert.IsTrue(list.Check(), "list check before insert");
+                Assert.That(list.Check(), Is.True, "list check before insert");
                 list.Insert(0, 777);
-                Assert.IsTrue(list.Check(), "list check after insert");
+                Assert.That(list.Check(), Is.True, "list check after insert");
                 for (int i = 0; i < 7; i++)
                 {
                     for (int j = 0; j < 7 - i; j++)
                     {
-                        Assert.AreEqual(i == 0 && j == 0 ? 0 : i + 1, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
-                        Assert.AreEqual(j, views[i][j].Count, "view[" + i + "][" + j + "] count");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(views[i][j].Offset, Is.EqualTo(i == 0 && j == 0 ? 0 : i + 1), "view[" + i + "][" + j + "] offset");
+                            Assert.That(views[i][j].Count, Is.EqualTo(j), "view[" + i + "][" + j + "] count");
+                        });
                     }
                 }
             }
             [Test]
             public void RemoveAtStart()
             {
-                Assert.IsTrue(list.Check(), "list check before remove");
+                Assert.That(list.Check(), Is.True, "list check before remove");
                 list.RemoveAt(0);
-                Assert.IsTrue(list.Check(), "list check after remove");
+                Assert.That(list.Check(), Is.True, "list check after remove");
                 for (int i = 0; i < 7; i++)
                 {
                     for (int j = 0; j < 7 - i; j++)
                     {
-                        Assert.AreEqual(i == 0 ? i : i - 1, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
-                        Assert.AreEqual(i == 0 && j > 0 ? j - 1 : j, views[i][j].Count, "view[" + i + "][" + j + "] count");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(views[i][j].Offset, Is.EqualTo(i == 0 ? i : i - 1), "view[" + i + "][" + j + "] offset");
+                            Assert.That(views[i][j].Count, Is.EqualTo(i == 0 && j > 0 ? j - 1 : j), "view[" + i + "][" + j + "] count");
+                        });
                     }
                 }
             }
             [Test]
             public void Clear()
             {
-                Assert.IsTrue(list.Check(), "list check before clear");
+                Assert.That(list.Check(), Is.True, "list check before clear");
                 views[2][3].Clear();
-                Assert.IsTrue(list.Check(), "list check after clear");
+                Assert.That(list.Check(), Is.True, "list check after clear");
                 for (int i = 0; i < 7; i++)
                 {
                     for (int j = 0; j < 7 - i; j++)
                     {
-                        Assert.AreEqual(i < 2 ? i : i < 6 ? 2 : i - 3, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
-                        Assert.AreEqual(s(i, j), views[i][j].Count, "view[" + i + "][" + j + "] count");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(views[i][j].Offset, Is.EqualTo(i < 2 ? i : i < 6 ? 2 : i - 3), "view[" + i + "][" + j + "] offset");
+                            Assert.That(views[i][j].Count, Is.EqualTo(s(i, j)), "view[" + i + "][" + j + "] count");
+                        });
                     }
                 }
             }
@@ -2936,15 +3348,18 @@ namespace C5.Tests.arrays.list
             {
                 ArrayList<int> list2 = new();
                 for (int i = 0; i < 5; i++) { list2.Add(100 + i); }
-                Assert.IsTrue(list.Check(), "list check before insertAll");
+                Assert.That(list.Check(), Is.True, "list check before insertAll");
                 list.InsertAll(3, list2);
-                Assert.IsTrue(list.Check(), "list check after insertAll");
+                Assert.That(list.Check(), Is.True, "list check after insertAll");
                 for (int i = 0; i < 7; i++)
                 {
                     for (int j = 0; j < 7 - i; j++)
                     {
-                        Assert.AreEqual(i < 3 || (i == 3 && j == 0) ? i : i + 5, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
-                        Assert.AreEqual(i < 3 && i + j > 3 ? j + 5 : j, views[i][j].Count, "view[" + i + "][" + j + "] count");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(views[i][j].Offset, Is.EqualTo(i < 3 || (i == 3 && j == 0) ? i : i + 5), "view[" + i + "][" + j + "] offset");
+                            Assert.That(views[i][j].Count, Is.EqualTo(i < 3 && i + j > 3 ? j + 5 : j), "view[" + i + "][" + j + "] count");
+                        });
                     }
                 }
             }
@@ -2954,15 +3369,18 @@ namespace C5.Tests.arrays.list
             {
                 ArrayList<int> list2 = new();
                 for (int i = 0; i < 5; i++) { list2.Add(100 + i); }
-                Assert.IsTrue(list.Check(), "list check before AddAll");
+                Assert.That(list.Check(), Is.True, "list check before AddAll");
                 list.View(1, 2).AddAll(list2);
-                Assert.IsTrue(list.Check(), "list check after AddAll");
+                Assert.That(list.Check(), Is.True, "list check after AddAll");
                 for (int i = 0; i < 7; i++)
                 {
                     for (int j = 0; j < 7 - i; j++)
                     {
-                        Assert.AreEqual(i < 3 || (i == 3 && j == 0) ? i : i + 5, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
-                        Assert.AreEqual(i < 3 && i + j > 3 ? j + 5 : j, views[i][j].Count, "view[" + i + "][" + j + "] count");
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(views[i][j].Offset, Is.EqualTo(i < 3 || (i == 3 && j == 0) ? i : i + 5), "view[" + i + "][" + j + "] offset");
+                            Assert.That(views[i][j].Count, Is.EqualTo(i < 3 && i + j > 3 ? j + 5 : j), "view[" + i + "][" + j + "] count");
+                        });
                     }
                 }
             }
@@ -2984,7 +3402,7 @@ namespace C5.Tests.arrays.list
 
                         _ = (ArrayList<int>)list.View(i, j);
                         list.RemoveAll(list2);
-                        Assert.IsTrue(list.Check(), "list check after RemoveAll, i=" + i + ", j=" + j);
+                        Assert.That(list.Check(), Is.True, "list check after RemoveAll, i=" + i + ", j=" + j);
                     }
                 }
             }
@@ -2992,136 +3410,142 @@ namespace C5.Tests.arrays.list
             public void RemoveAll2()
             {
                 ArrayList<int> list2 = new() { 1, 3, 4 };
-                Assert.IsTrue(list.Check(), "list check before RemoveAll");
+                Assert.That(list.Check(), Is.True, "list check before RemoveAll");
                 list.RemoveAll(list2);
 
-                Assert.AreEqual(0, views[0][0].Offset, "view [0][0] offset");
-                Assert.AreEqual(0, views[0][1].Offset, "view [0][1] offset");
-                Assert.AreEqual(0, views[0][2].Offset, "view [0][2] offset");
-                Assert.AreEqual(0, views[0][3].Offset, "view [0][3] offset");
-                Assert.AreEqual(0, views[0][4].Offset, "view [0][4] offset");
-                Assert.AreEqual(0, views[0][5].Offset, "view [0][5] offset");
-                Assert.AreEqual(0, views[0][6].Offset, "view [0][6] offset");
-                Assert.AreEqual(1, views[1][0].Offset, "view [1][0] offset");
-                Assert.AreEqual(1, views[1][1].Offset, "view [1][1] offset");
-                Assert.AreEqual(1, views[1][2].Offset, "view [1][2] offset");
-                Assert.AreEqual(1, views[1][3].Offset, "view [1][3] offset");
-                Assert.AreEqual(1, views[1][4].Offset, "view [1][4] offset");
-                Assert.AreEqual(1, views[1][5].Offset, "view [1][5] offset");
-                Assert.AreEqual(1, views[2][0].Offset, "view [2][0] offset");
-                Assert.AreEqual(1, views[2][1].Offset, "view [2][1] offset");
-                Assert.AreEqual(1, views[2][2].Offset, "view [2][2] offset");
-                Assert.AreEqual(1, views[2][3].Offset, "view [2][3] offset");
-                Assert.AreEqual(1, views[2][4].Offset, "view [2][4] offset");
-                Assert.AreEqual(2, views[3][0].Offset, "view [3][0] offset");
-                Assert.AreEqual(2, views[3][1].Offset, "view [3][1] offset");
-                Assert.AreEqual(2, views[3][2].Offset, "view [3][2] offset");
-                Assert.AreEqual(2, views[3][3].Offset, "view [3][3] offset");
-                Assert.AreEqual(2, views[4][0].Offset, "view [4][0] offset");
-                Assert.AreEqual(2, views[4][1].Offset, "view [4][1] offset");
-                Assert.AreEqual(2, views[4][2].Offset, "view [4][2] offset");
-                Assert.AreEqual(2, views[5][0].Offset, "view [5][0] offset");
-                Assert.AreEqual(2, views[5][1].Offset, "view [5][1] offset");
-                Assert.AreEqual(3, views[6][0].Offset, "view [6][0] offset");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(views[0][0].Offset, Is.EqualTo(0), "view [0][0] offset");
+                    Assert.That(views[0][1].Offset, Is.EqualTo(0), "view [0][1] offset");
+                    Assert.That(views[0][2].Offset, Is.EqualTo(0), "view [0][2] offset");
+                    Assert.That(views[0][3].Offset, Is.EqualTo(0), "view [0][3] offset");
+                    Assert.That(views[0][4].Offset, Is.EqualTo(0), "view [0][4] offset");
+                    Assert.That(views[0][5].Offset, Is.EqualTo(0), "view [0][5] offset");
+                    Assert.That(views[0][6].Offset, Is.EqualTo(0), "view [0][6] offset");
+                    Assert.That(views[1][0].Offset, Is.EqualTo(1), "view [1][0] offset");
+                    Assert.That(views[1][1].Offset, Is.EqualTo(1), "view [1][1] offset");
+                    Assert.That(views[1][2].Offset, Is.EqualTo(1), "view [1][2] offset");
+                    Assert.That(views[1][3].Offset, Is.EqualTo(1), "view [1][3] offset");
+                    Assert.That(views[1][4].Offset, Is.EqualTo(1), "view [1][4] offset");
+                    Assert.That(views[1][5].Offset, Is.EqualTo(1), "view [1][5] offset");
+                    Assert.That(views[2][0].Offset, Is.EqualTo(1), "view [2][0] offset");
+                    Assert.That(views[2][1].Offset, Is.EqualTo(1), "view [2][1] offset");
+                    Assert.That(views[2][2].Offset, Is.EqualTo(1), "view [2][2] offset");
+                    Assert.That(views[2][3].Offset, Is.EqualTo(1), "view [2][3] offset");
+                    Assert.That(views[2][4].Offset, Is.EqualTo(1), "view [2][4] offset");
+                    Assert.That(views[3][0].Offset, Is.EqualTo(2), "view [3][0] offset");
+                    Assert.That(views[3][1].Offset, Is.EqualTo(2), "view [3][1] offset");
+                    Assert.That(views[3][2].Offset, Is.EqualTo(2), "view [3][2] offset");
+                    Assert.That(views[3][3].Offset, Is.EqualTo(2), "view [3][3] offset");
+                    Assert.That(views[4][0].Offset, Is.EqualTo(2), "view [4][0] offset");
+                    Assert.That(views[4][1].Offset, Is.EqualTo(2), "view [4][1] offset");
+                    Assert.That(views[4][2].Offset, Is.EqualTo(2), "view [4][2] offset");
+                    Assert.That(views[5][0].Offset, Is.EqualTo(2), "view [5][0] offset");
+                    Assert.That(views[5][1].Offset, Is.EqualTo(2), "view [5][1] offset");
+                    Assert.That(views[6][0].Offset, Is.EqualTo(3), "view [6][0] offset");
 
-                Assert.AreEqual(0, views[0][0].Count, "view [0][0] count");
-                Assert.AreEqual(1, views[0][1].Count, "view [0][1] count");
-                Assert.AreEqual(1, views[0][2].Count, "view [0][2] count");
-                Assert.AreEqual(2, views[0][3].Count, "view [0][3] count");
-                Assert.AreEqual(2, views[0][4].Count, "view [0][4] count");
-                Assert.AreEqual(2, views[0][5].Count, "view [0][5] count");
-                Assert.AreEqual(3, views[0][6].Count, "view [0][6] count");
-                Assert.AreEqual(0, views[1][0].Count, "view [1][0] count");
-                Assert.AreEqual(0, views[1][1].Count, "view [1][1] count");
-                Assert.AreEqual(1, views[1][2].Count, "view [1][2] count");
-                Assert.AreEqual(1, views[1][3].Count, "view [1][3] count");
-                Assert.AreEqual(1, views[1][4].Count, "view [1][4] count");
-                Assert.AreEqual(2, views[1][5].Count, "view [1][5] count");
-                Assert.AreEqual(0, views[2][0].Count, "view [2][0] count");
-                Assert.AreEqual(1, views[2][1].Count, "view [2][1] count");
-                Assert.AreEqual(1, views[2][2].Count, "view [2][2] count");
-                Assert.AreEqual(1, views[2][3].Count, "view [2][3] count");
-                Assert.AreEqual(2, views[2][4].Count, "view [2][4] count");
-                Assert.AreEqual(0, views[3][0].Count, "view [3][0] count");
-                Assert.AreEqual(0, views[3][1].Count, "view [3][1] count");
-                Assert.AreEqual(0, views[3][2].Count, "view [3][2] count");
-                Assert.AreEqual(1, views[3][3].Count, "view [3][3] count");
-                Assert.AreEqual(0, views[4][0].Count, "view [4][0] count");
-                Assert.AreEqual(0, views[4][1].Count, "view [4][1] count");
-                Assert.AreEqual(1, views[4][2].Count, "view [4][2] count");
-                Assert.AreEqual(0, views[5][0].Count, "view [5][0] count");
-                Assert.AreEqual(1, views[5][1].Count, "view [5][1] count");
-                Assert.AreEqual(0, views[6][0].Count, "view [6][0] count");
+                    Assert.That(views[0][0].Count, Is.EqualTo(0), "view [0][0] count");
+                    Assert.That(views[0][1].Count, Is.EqualTo(1), "view [0][1] count");
+                    Assert.That(views[0][2].Count, Is.EqualTo(1), "view [0][2] count");
+                    Assert.That(views[0][3].Count, Is.EqualTo(2), "view [0][3] count");
+                    Assert.That(views[0][4].Count, Is.EqualTo(2), "view [0][4] count");
+                    Assert.That(views[0][5].Count, Is.EqualTo(2), "view [0][5] count");
+                    Assert.That(views[0][6].Count, Is.EqualTo(3), "view [0][6] count");
+                    Assert.That(views[1][0].Count, Is.EqualTo(0), "view [1][0] count");
+                    Assert.That(views[1][1].Count, Is.EqualTo(0), "view [1][1] count");
+                    Assert.That(views[1][2].Count, Is.EqualTo(1), "view [1][2] count");
+                    Assert.That(views[1][3].Count, Is.EqualTo(1), "view [1][3] count");
+                    Assert.That(views[1][4].Count, Is.EqualTo(1), "view [1][4] count");
+                    Assert.That(views[1][5].Count, Is.EqualTo(2), "view [1][5] count");
+                    Assert.That(views[2][0].Count, Is.EqualTo(0), "view [2][0] count");
+                    Assert.That(views[2][1].Count, Is.EqualTo(1), "view [2][1] count");
+                    Assert.That(views[2][2].Count, Is.EqualTo(1), "view [2][2] count");
+                    Assert.That(views[2][3].Count, Is.EqualTo(1), "view [2][3] count");
+                    Assert.That(views[2][4].Count, Is.EqualTo(2), "view [2][4] count");
+                    Assert.That(views[3][0].Count, Is.EqualTo(0), "view [3][0] count");
+                    Assert.That(views[3][1].Count, Is.EqualTo(0), "view [3][1] count");
+                    Assert.That(views[3][2].Count, Is.EqualTo(0), "view [3][2] count");
+                    Assert.That(views[3][3].Count, Is.EqualTo(1), "view [3][3] count");
+                    Assert.That(views[4][0].Count, Is.EqualTo(0), "view [4][0] count");
+                    Assert.That(views[4][1].Count, Is.EqualTo(0), "view [4][1] count");
+                    Assert.That(views[4][2].Count, Is.EqualTo(1), "view [4][2] count");
+                    Assert.That(views[5][0].Count, Is.EqualTo(0), "view [5][0] count");
+                    Assert.That(views[5][1].Count, Is.EqualTo(1), "view [5][1] count");
+                    Assert.That(views[6][0].Count, Is.EqualTo(0), "view [6][0] count");
 
-                Assert.IsTrue(list.Check(), "list check after RemoveAll");
+                    Assert.That(list.Check(), Is.True, "list check after RemoveAll");
+                });
             }
 
             [Test]
             public void RetainAll()
             {
                 ArrayList<int> list2 = new() { 2, 4, 5 };
-                Assert.IsTrue(list.Check(), "list check before RetainAll");
+                Assert.That(list.Check(), Is.True, "list check before RetainAll");
                 list.RetainAll(list2);
 
-                Assert.AreEqual(0, views[0][0].Offset, "view [0][0] offset");
-                Assert.AreEqual(0, views[0][1].Offset, "view [0][1] offset");
-                Assert.AreEqual(0, views[0][2].Offset, "view [0][2] offset");
-                Assert.AreEqual(0, views[0][3].Offset, "view [0][3] offset");
-                Assert.AreEqual(0, views[0][4].Offset, "view [0][4] offset");
-                Assert.AreEqual(0, views[0][5].Offset, "view [0][5] offset");
-                Assert.AreEqual(0, views[0][6].Offset, "view [0][6] offset");
-                Assert.AreEqual(0, views[1][0].Offset, "view [1][0] offset");
-                Assert.AreEqual(0, views[1][1].Offset, "view [1][1] offset");
-                Assert.AreEqual(0, views[1][2].Offset, "view [1][2] offset");
-                Assert.AreEqual(0, views[1][3].Offset, "view [1][3] offset");
-                Assert.AreEqual(0, views[1][4].Offset, "view [1][4] offset");
-                Assert.AreEqual(0, views[1][5].Offset, "view [1][5] offset");
-                Assert.AreEqual(0, views[2][0].Offset, "view [2][0] offset");
-                Assert.AreEqual(0, views[2][1].Offset, "view [2][1] offset");
-                Assert.AreEqual(0, views[2][2].Offset, "view [2][2] offset");
-                Assert.AreEqual(0, views[2][3].Offset, "view [2][3] offset");
-                Assert.AreEqual(0, views[2][4].Offset, "view [2][4] offset");
-                Assert.AreEqual(1, views[3][0].Offset, "view [3][0] offset");
-                Assert.AreEqual(1, views[3][1].Offset, "view [3][1] offset");
-                Assert.AreEqual(1, views[3][2].Offset, "view [3][2] offset");
-                Assert.AreEqual(1, views[3][3].Offset, "view [3][3] offset");
-                Assert.AreEqual(1, views[4][0].Offset, "view [4][0] offset");
-                Assert.AreEqual(1, views[4][1].Offset, "view [4][1] offset");
-                Assert.AreEqual(1, views[4][2].Offset, "view [4][2] offset");
-                Assert.AreEqual(2, views[5][0].Offset, "view [5][0] offset");
-                Assert.AreEqual(2, views[5][1].Offset, "view [5][1] offset");
-                Assert.AreEqual(3, views[6][0].Offset, "view [6][0] offset");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(views[0][0].Offset, Is.EqualTo(0), "view [0][0] offset");
+                    Assert.That(views[0][1].Offset, Is.EqualTo(0), "view [0][1] offset");
+                    Assert.That(views[0][2].Offset, Is.EqualTo(0), "view [0][2] offset");
+                    Assert.That(views[0][3].Offset, Is.EqualTo(0), "view [0][3] offset");
+                    Assert.That(views[0][4].Offset, Is.EqualTo(0), "view [0][4] offset");
+                    Assert.That(views[0][5].Offset, Is.EqualTo(0), "view [0][5] offset");
+                    Assert.That(views[0][6].Offset, Is.EqualTo(0), "view [0][6] offset");
+                    Assert.That(views[1][0].Offset, Is.EqualTo(0), "view [1][0] offset");
+                    Assert.That(views[1][1].Offset, Is.EqualTo(0), "view [1][1] offset");
+                    Assert.That(views[1][2].Offset, Is.EqualTo(0), "view [1][2] offset");
+                    Assert.That(views[1][3].Offset, Is.EqualTo(0), "view [1][3] offset");
+                    Assert.That(views[1][4].Offset, Is.EqualTo(0), "view [1][4] offset");
+                    Assert.That(views[1][5].Offset, Is.EqualTo(0), "view [1][5] offset");
+                    Assert.That(views[2][0].Offset, Is.EqualTo(0), "view [2][0] offset");
+                    Assert.That(views[2][1].Offset, Is.EqualTo(0), "view [2][1] offset");
+                    Assert.That(views[2][2].Offset, Is.EqualTo(0), "view [2][2] offset");
+                    Assert.That(views[2][3].Offset, Is.EqualTo(0), "view [2][3] offset");
+                    Assert.That(views[2][4].Offset, Is.EqualTo(0), "view [2][4] offset");
+                    Assert.That(views[3][0].Offset, Is.EqualTo(1), "view [3][0] offset");
+                    Assert.That(views[3][1].Offset, Is.EqualTo(1), "view [3][1] offset");
+                    Assert.That(views[3][2].Offset, Is.EqualTo(1), "view [3][2] offset");
+                    Assert.That(views[3][3].Offset, Is.EqualTo(1), "view [3][3] offset");
+                    Assert.That(views[4][0].Offset, Is.EqualTo(1), "view [4][0] offset");
+                    Assert.That(views[4][1].Offset, Is.EqualTo(1), "view [4][1] offset");
+                    Assert.That(views[4][2].Offset, Is.EqualTo(1), "view [4][2] offset");
+                    Assert.That(views[5][0].Offset, Is.EqualTo(2), "view [5][0] offset");
+                    Assert.That(views[5][1].Offset, Is.EqualTo(2), "view [5][1] offset");
+                    Assert.That(views[6][0].Offset, Is.EqualTo(3), "view [6][0] offset");
 
-                Assert.AreEqual(0, views[0][0].Count, "view [0][0] count");
-                Assert.AreEqual(0, views[0][1].Count, "view [0][1] count");
-                Assert.AreEqual(0, views[0][2].Count, "view [0][2] count");
-                Assert.AreEqual(1, views[0][3].Count, "view [0][3] count");
-                Assert.AreEqual(1, views[0][4].Count, "view [0][4] count");
-                Assert.AreEqual(2, views[0][5].Count, "view [0][5] count");
-                Assert.AreEqual(3, views[0][6].Count, "view [0][6] count");
-                Assert.AreEqual(0, views[1][0].Count, "view [1][0] count");
-                Assert.AreEqual(0, views[1][1].Count, "view [1][1] count");
-                Assert.AreEqual(1, views[1][2].Count, "view [1][2] count");
-                Assert.AreEqual(1, views[1][3].Count, "view [1][3] count");
-                Assert.AreEqual(2, views[1][4].Count, "view [1][4] count");
-                Assert.AreEqual(3, views[1][5].Count, "view [1][5] count");
-                Assert.AreEqual(0, views[2][0].Count, "view [2][0] count");
-                Assert.AreEqual(1, views[2][1].Count, "view [2][1] count");
-                Assert.AreEqual(1, views[2][2].Count, "view [2][2] count");
-                Assert.AreEqual(2, views[2][3].Count, "view [2][3] count");
-                Assert.AreEqual(3, views[2][4].Count, "view [2][4] count");
-                Assert.AreEqual(0, views[3][0].Count, "view [3][0] count");
-                Assert.AreEqual(0, views[3][1].Count, "view [3][1] count");
-                Assert.AreEqual(1, views[3][2].Count, "view [3][2] count");
-                Assert.AreEqual(2, views[3][3].Count, "view [3][3] count");
-                Assert.AreEqual(0, views[4][0].Count, "view [4][0] count");
-                Assert.AreEqual(1, views[4][1].Count, "view [4][1] count");
-                Assert.AreEqual(2, views[4][2].Count, "view [4][2] count");
-                Assert.AreEqual(0, views[5][0].Count, "view [5][0] count");
-                Assert.AreEqual(1, views[5][1].Count, "view [5][1] count");
-                Assert.AreEqual(0, views[6][0].Count, "view [6][0] count");
+                    Assert.That(views[0][0].Count, Is.EqualTo(0), "view [0][0] count");
+                    Assert.That(views[0][1].Count, Is.EqualTo(0), "view [0][1] count");
+                    Assert.That(views[0][2].Count, Is.EqualTo(0), "view [0][2] count");
+                    Assert.That(views[0][3].Count, Is.EqualTo(1), "view [0][3] count");
+                    Assert.That(views[0][4].Count, Is.EqualTo(1), "view [0][4] count");
+                    Assert.That(views[0][5].Count, Is.EqualTo(2), "view [0][5] count");
+                    Assert.That(views[0][6].Count, Is.EqualTo(3), "view [0][6] count");
+                    Assert.That(views[1][0].Count, Is.EqualTo(0), "view [1][0] count");
+                    Assert.That(views[1][1].Count, Is.EqualTo(0), "view [1][1] count");
+                    Assert.That(views[1][2].Count, Is.EqualTo(1), "view [1][2] count");
+                    Assert.That(views[1][3].Count, Is.EqualTo(1), "view [1][3] count");
+                    Assert.That(views[1][4].Count, Is.EqualTo(2), "view [1][4] count");
+                    Assert.That(views[1][5].Count, Is.EqualTo(3), "view [1][5] count");
+                    Assert.That(views[2][0].Count, Is.EqualTo(0), "view [2][0] count");
+                    Assert.That(views[2][1].Count, Is.EqualTo(1), "view [2][1] count");
+                    Assert.That(views[2][2].Count, Is.EqualTo(1), "view [2][2] count");
+                    Assert.That(views[2][3].Count, Is.EqualTo(2), "view [2][3] count");
+                    Assert.That(views[2][4].Count, Is.EqualTo(3), "view [2][4] count");
+                    Assert.That(views[3][0].Count, Is.EqualTo(0), "view [3][0] count");
+                    Assert.That(views[3][1].Count, Is.EqualTo(0), "view [3][1] count");
+                    Assert.That(views[3][2].Count, Is.EqualTo(1), "view [3][2] count");
+                    Assert.That(views[3][3].Count, Is.EqualTo(2), "view [3][3] count");
+                    Assert.That(views[4][0].Count, Is.EqualTo(0), "view [4][0] count");
+                    Assert.That(views[4][1].Count, Is.EqualTo(1), "view [4][1] count");
+                    Assert.That(views[4][2].Count, Is.EqualTo(2), "view [4][2] count");
+                    Assert.That(views[5][0].Count, Is.EqualTo(0), "view [5][0] count");
+                    Assert.That(views[5][1].Count, Is.EqualTo(1), "view [5][1] count");
+                    Assert.That(views[6][0].Count, Is.EqualTo(0), "view [6][0] count");
 
-                Assert.IsTrue(list.Check(), "list check after RetainAll");
+                    Assert.That(list.Check(), Is.True, "list check after RetainAll");
+                });
             }
 
             [Test]
@@ -3137,9 +3561,12 @@ namespace C5.Tests.arrays.list
                         list.AddAll(list2);
                         ArrayList<int> v = (ArrayList<int>)list.View(i, j);
                         list.RemoveAllCopies(2);
-                        Assert.AreEqual((i == 0 && j > 0 ? 1 : 0) + (i <= 4 && i + j > 4 ? 1 : 0) + (i <= 6 && i + j > 6 ? 1 : 0), v.Count, "v.Count, i=" + i + ", j=" + j);
-                        Assert.AreEqual(i == 0 ? 0 : i <= 4 ? 1 : i <= 6 ? 2 : 3, v.Offset, "v.Offset, i=" + i + ", j=" + j);
-                        Assert.IsTrue(list.Check(), "list check after RemoveAllCopies, i=" + i + ", j=" + j);
+                        Assert.That(v.Count, Is.EqualTo((i == 0 && j > 0 ? 1 : 0) + (i <= 4 && i + j > 4 ? 1 : 0) + (i <= 6 && i + j > 6 ? 1 : 0)), "v.Count, i=" + i + ", j=" + j);
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(v.Offset, Is.EqualTo(i == 0 ? 0 : i <= 4 ? 1 : i <= 6 ? 2 : 3), "v.Offset, i=" + i + ", j=" + j);
+                            Assert.That(list.Check(), Is.True, "list check after RemoveAllCopies, i=" + i + ", j=" + j);
+                        });
                     }
                 }
             }
@@ -3161,14 +3588,14 @@ namespace C5.Tests.arrays.list
                             {
                                 Assert.Fail("view[" + i + "][" + j + "] threw");
                             }
-                            Assert.AreEqual(j, views[i][j].Count, "view[" + i + "][" + j + "] size");
+                            Assert.That(views[i][j].Count, Is.EqualTo(j), "view[" + i + "][" + j + "] size");
                             if (reverse && ((j > 0 && start <= i && start + count >= i + j) || (j == 0 && start < i && start + count > i)))
                             {
-                                Assert.AreEqual(start + (start + count - i - j), views[i][j].Offset, "view[" + i + "][" + j + "] offset (mirrored)");
+                                Assert.That(views[i][j].Offset, Is.EqualTo(start + (start + count - i - j)), "view[" + i + "][" + j + "] offset (mirrored)");
                             }
                             else
                             {
-                                Assert.AreEqual(i, views[i][j].Offset, "view[" + i + "][" + j + "] offset");
+                                Assert.That(views[i][j].Offset, Is.EqualTo(i), "view[" + i + "][" + j + "] offset");
                             }
                         }
                         else
@@ -3189,9 +3616,9 @@ namespace C5.Tests.arrays.list
             {
                 int start = 2, count = 3;
                 IList<int> list2 = list.View(start, count);
-                Assert.IsTrue(list.Check(), "list check before Reverse");
+                Assert.That(list.Check(), Is.True, "list check before Reverse");
                 list2.Reverse();
-                Assert.IsTrue(list.Check(), "list check after Reverse");
+                Assert.That(list.Check(), Is.True, "list check after Reverse");
                 checkDisposed(true, start, count);
             }
             [Test]
@@ -3199,9 +3626,9 @@ namespace C5.Tests.arrays.list
             {
                 int start = 2, count = 3;
                 IList<int> list2 = list.View(start, count);
-                Assert.IsTrue(list.Check(), "list check before Sort");
+                Assert.That(list.Check(), Is.True, "list check before Sort");
                 list2.Sort();
-                Assert.IsTrue(list.Check(), "list check after Sort");
+                Assert.That(list.Check(), Is.True, "list check after Sort");
                 checkDisposed(false, start, count);
             }
             [Test]
@@ -3209,9 +3636,9 @@ namespace C5.Tests.arrays.list
             {
                 int start = 2, count = 3;
                 IList<int> list2 = list.View(start, count);
-                Assert.IsTrue(list.Check(), "list check before Shuffle");
+                Assert.That(list.Check(), Is.True, "list check before Shuffle");
                 list2.Shuffle();
-                Assert.IsTrue(list.Check(), "list check after Shuffle");
+                Assert.That(list.Check(), Is.True, "list check after Shuffle");
                 checkDisposed(false, start, count);
             }
 
@@ -3254,8 +3681,11 @@ namespace C5.Tests.arrays.list
             [Test]
             public void Check()
             {
-                Assert.IsTrue(dit.UnsequencedEquals(dat));
-                Assert.IsFalse(dit.UnsequencedEquals(dut));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.UnsequencedEquals(dat), Is.True);
+                    Assert.That(dit.UnsequencedEquals(dut), Is.False);
+                });
             }
 
 
@@ -3264,8 +3694,11 @@ namespace C5.Tests.arrays.list
             {
                 Dit.Add(dit); Dit.Add(dut); Dit.Add(dit);
                 Dat.Add(dut); Dat.Add(dit); Dat.Add(dat);
-                Assert.IsTrue(Dit.UnsequencedEquals(Dat));
-                Assert.IsFalse(Dit.UnsequencedEquals(Dut));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(Dit.UnsequencedEquals(Dat), Is.True);
+                    Assert.That(Dit.UnsequencedEquals(Dut), Is.False);
+                });
             }
 
 
@@ -3311,8 +3744,11 @@ namespace C5.Tests.arrays.list
             [Test]
             public void Check()
             {
-                Assert.IsTrue(dit.UnsequencedEquals(dat));
-                Assert.IsFalse(dit.UnsequencedEquals(dut));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.UnsequencedEquals(dat), Is.True);
+                    Assert.That(dit.UnsequencedEquals(dut), Is.False);
+                });
             }
 
 
@@ -3322,8 +3758,11 @@ namespace C5.Tests.arrays.list
                 Dit.Add(dit); Dit.Add(dut); Dit.Add(dit);
                 Dat.Add(dut); Dat.Add(dit); Dat.Add(dat);
                 Dut.Add(dit); Dut.Add(dut); Dut.Add(dat);
-                Assert.IsFalse(Dit.SequencedEquals(Dat));
-                Assert.IsTrue(Dit.SequencedEquals(Dut));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(Dit.SequencedEquals(Dat), Is.False);
+                    Assert.That(Dit.SequencedEquals(Dut), Is.True);
+                });
             }
 
 
@@ -3375,9 +3814,12 @@ namespace C5.Tests.arrays.list
             [Test]
             public void Check()
             {
-                Assert.IsFalse(dit.SequencedEquals(dat));
-                Assert.IsTrue(dit.SequencedEquals(dot));
-                Assert.IsFalse(dit.SequencedEquals(dut));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.SequencedEquals(dat), Is.False);
+                    Assert.That(dit.SequencedEquals(dot), Is.True);
+                    Assert.That(dit.SequencedEquals(dut), Is.False);
+                });
             }
 
             [Test]
@@ -3387,9 +3829,12 @@ namespace C5.Tests.arrays.list
                 Dat.Add(dut); Dat.Add(dit); Dat.Add(dat);
                 Dut.Add(dot); Dut.Add(dut); Dut.Add(dit);
                 Dot.Add(dit); Dot.Add(dit); Dot.Add(dut);
-                Assert.IsTrue(Dit.UnsequencedEquals(Dut));
-                Assert.IsFalse(Dit.UnsequencedEquals(Dat));
-                Assert.IsTrue(Dit.UnsequencedEquals(Dot));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(Dit.UnsequencedEquals(Dut), Is.True);
+                    Assert.That(Dit.UnsequencedEquals(Dat), Is.False);
+                    Assert.That(Dit.UnsequencedEquals(Dot), Is.True);
+                });
             }
 
             [TearDown]
@@ -3441,9 +3886,12 @@ namespace C5.Tests.arrays.list
             [Test]
             public void Check()
             {
-                Assert.IsFalse(dit.SequencedEquals(dat));
-                Assert.IsTrue(dit.SequencedEquals(dot));
-                Assert.IsFalse(dit.SequencedEquals(dut));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.SequencedEquals(dat), Is.False);
+                    Assert.That(dit.SequencedEquals(dot), Is.True);
+                    Assert.That(dit.SequencedEquals(dut), Is.False);
+                });
             }
 
 
@@ -3454,9 +3902,12 @@ namespace C5.Tests.arrays.list
                 Dat.Add(dut); Dat.Add(dit); Dat.Add(dat);
                 Dut.Add(dot); Dut.Add(dut); Dut.Add(dit);
                 Dot.Add(dit); Dot.Add(dit); Dot.Add(dut);
-                Assert.IsTrue(Dit.SequencedEquals(Dut));
-                Assert.IsFalse(Dit.SequencedEquals(Dat));
-                Assert.IsFalse(Dit.SequencedEquals(Dot));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(Dit.SequencedEquals(Dut), Is.True);
+                    Assert.That(Dit.SequencedEquals(Dat), Is.False);
+                    Assert.That(Dit.SequencedEquals(Dot), Is.False);
+                });
             }
 
 
@@ -3494,30 +3945,36 @@ namespace C5.Tests.arrays.list
             [Test]
             public void EmptyEmpty()
             {
-                Assert.IsTrue(dit.SequencedEquals(dat));
+                Assert.That(dit.SequencedEquals(dat), Is.True);
             }
 
             [Test]
             public void EmptyNonEmpty()
             {
                 dit.Add(3);
-                Assert.IsFalse(dit.SequencedEquals(dat));
-                Assert.IsFalse(dat.SequencedEquals(dit));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.SequencedEquals(dat), Is.False);
+                    Assert.That(dat.SequencedEquals(dit), Is.False);
+                });
             }
 
             [Test]
             public void HashVal()
             {
-                Assert.AreEqual(CHC.SequencedHashCode(), dit.GetSequencedHashCode());
+                Assert.That(dit.GetSequencedHashCode(), Is.EqualTo(CHC.SequencedHashCode()));
                 dit.Add(3);
-                Assert.AreEqual(CHC.SequencedHashCode(3), dit.GetSequencedHashCode());
+                Assert.That(dit.GetSequencedHashCode(), Is.EqualTo(CHC.SequencedHashCode(3)));
                 dit.Add(7);
-                Assert.AreEqual(CHC.SequencedHashCode(3, 7), dit.GetSequencedHashCode());
-                Assert.AreEqual(CHC.SequencedHashCode(), dut.GetSequencedHashCode());
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.GetSequencedHashCode(), Is.EqualTo(CHC.SequencedHashCode(3, 7)));
+                    Assert.That(dut.GetSequencedHashCode(), Is.EqualTo(CHC.SequencedHashCode()));
+                });
                 dut.Add(7);
-                Assert.AreEqual(CHC.SequencedHashCode(7), dut.GetSequencedHashCode());
+                Assert.That(dut.GetSequencedHashCode(), Is.EqualTo(CHC.SequencedHashCode(7)));
                 dut.Add(3);
-                Assert.AreEqual(CHC.SequencedHashCode(7, 3), dut.GetSequencedHashCode());
+                Assert.That(dut.GetSequencedHashCode(), Is.EqualTo(CHC.SequencedHashCode(7, 3)));
             }
 
 
@@ -3526,8 +3983,11 @@ namespace C5.Tests.arrays.list
             {
                 dit.Add(0); dit.Add(31);
                 dat.Add(1); dat.Add(0);
-                Assert.AreEqual(dit.GetSequencedHashCode(), dat.GetSequencedHashCode());
-                Assert.IsFalse(dit.SequencedEquals(dat));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dat.GetSequencedHashCode(), Is.EqualTo(dit.GetSequencedHashCode()));
+                    Assert.That(dit.SequencedEquals(dat), Is.False);
+                });
             }
 
 
@@ -3537,11 +3997,17 @@ namespace C5.Tests.arrays.list
                 dit.Add(3);
                 dit.Add(7);
                 dat.Add(3);
-                Assert.IsFalse(dit.SequencedEquals(dat));
-                Assert.IsFalse(dat.SequencedEquals(dit));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.SequencedEquals(dat), Is.False);
+                    Assert.That(dat.SequencedEquals(dit), Is.False);
+                });
                 dat.Add(7);
-                Assert.IsTrue(dit.SequencedEquals(dat));
-                Assert.IsTrue(dat.SequencedEquals(dit));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.SequencedEquals(dat), Is.True);
+                    Assert.That(dat.SequencedEquals(dit), Is.True);
+                });
             }
 
 
@@ -3550,23 +4016,29 @@ namespace C5.Tests.arrays.list
             {
                 dit.Add(3);
                 dut.Add(3);
-                Assert.IsTrue(dit.SequencedEquals(dut));
-                Assert.IsTrue(dut.SequencedEquals(dit));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.SequencedEquals(dut), Is.True);
+                    Assert.That(dut.SequencedEquals(dit), Is.True);
+                });
                 dit.Add(7);
                 ((ArrayList<int>)dut).InsertFirst(7);
-                Assert.IsFalse(dit.SequencedEquals(dut));
-                Assert.IsFalse(dut.SequencedEquals(dit));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.SequencedEquals(dut), Is.False);
+                    Assert.That(dut.SequencedEquals(dit), Is.False);
+                });
             }
 
 
             [Test]
             public void Reflexive()
             {
-                Assert.IsTrue(dit.SequencedEquals(dit));
+                Assert.That(dit.SequencedEquals(dit), Is.True);
                 dit.Add(3);
-                Assert.IsTrue(dit.SequencedEquals(dit));
+                Assert.That(dit.SequencedEquals(dit), Is.True);
                 dit.Add(7);
-                Assert.IsTrue(dit.SequencedEquals(dit));
+                Assert.That(dit.SequencedEquals(dit), Is.True);
             }
 
 
@@ -3596,7 +4068,7 @@ namespace C5.Tests.arrays.list
             [Test]
             public void EmptyEmpty()
             {
-                Assert.IsTrue(dit.UnsequencedEquals(dat));
+                Assert.That(dit.UnsequencedEquals(dat), Is.True);
             }
 
 
@@ -3604,24 +4076,30 @@ namespace C5.Tests.arrays.list
             public void EmptyNonEmpty()
             {
                 dit.Add(3);
-                Assert.IsFalse(dit.UnsequencedEquals(dat));
-                Assert.IsFalse(dat.UnsequencedEquals(dit));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.UnsequencedEquals(dat), Is.False);
+                    Assert.That(dat.UnsequencedEquals(dit), Is.False);
+                });
             }
 
 
             [Test]
             public void HashVal()
             {
-                Assert.AreEqual(CHC.UnsequencedHashCode(), dit.GetUnsequencedHashCode());
+                Assert.That(dit.GetUnsequencedHashCode(), Is.EqualTo(CHC.UnsequencedHashCode()));
                 dit.Add(3);
-                Assert.AreEqual(CHC.UnsequencedHashCode(3), dit.GetUnsequencedHashCode());
+                Assert.That(dit.GetUnsequencedHashCode(), Is.EqualTo(CHC.UnsequencedHashCode(3)));
                 dit.Add(7);
-                Assert.AreEqual(CHC.UnsequencedHashCode(3, 7), dit.GetUnsequencedHashCode());
-                Assert.AreEqual(CHC.UnsequencedHashCode(), dut.GetUnsequencedHashCode());
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.GetUnsequencedHashCode(), Is.EqualTo(CHC.UnsequencedHashCode(3, 7)));
+                    Assert.That(dut.GetUnsequencedHashCode(), Is.EqualTo(CHC.UnsequencedHashCode()));
+                });
                 dut.Add(3);
-                Assert.AreEqual(CHC.UnsequencedHashCode(3), dut.GetUnsequencedHashCode());
+                Assert.That(dut.GetUnsequencedHashCode(), Is.EqualTo(CHC.UnsequencedHashCode(3)));
                 dut.Add(7);
-                Assert.AreEqual(CHC.UnsequencedHashCode(7, 3), dut.GetUnsequencedHashCode());
+                Assert.That(dut.GetUnsequencedHashCode(), Is.EqualTo(CHC.UnsequencedHashCode(7, 3)));
             }
 
 
@@ -3630,8 +4108,11 @@ namespace C5.Tests.arrays.list
             {
                 dit.Add(-1657792980); dit.Add(-1570288808);
                 dat.Add(1862883298); dat.Add(-272461342);
-                Assert.AreEqual(dit.GetUnsequencedHashCode(), dat.GetUnsequencedHashCode());
-                Assert.IsFalse(dit.UnsequencedEquals(dat));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dat.GetUnsequencedHashCode(), Is.EqualTo(dit.GetUnsequencedHashCode()));
+                    Assert.That(dit.UnsequencedEquals(dat), Is.False);
+                });
             }
 
             [Test]
@@ -3640,11 +4121,17 @@ namespace C5.Tests.arrays.list
                 dit.Add(3);
                 dit.Add(7);
                 dat.Add(3);
-                Assert.IsFalse(dit.UnsequencedEquals(dat));
-                Assert.IsFalse(dat.UnsequencedEquals(dit));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.UnsequencedEquals(dat), Is.False);
+                    Assert.That(dat.UnsequencedEquals(dit), Is.False);
+                });
                 dat.Add(7);
-                Assert.IsTrue(dit.UnsequencedEquals(dat));
-                Assert.IsTrue(dat.UnsequencedEquals(dit));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.UnsequencedEquals(dat), Is.True);
+                    Assert.That(dat.UnsequencedEquals(dit), Is.True);
+                });
             }
 
             [Test]
@@ -3652,22 +4139,28 @@ namespace C5.Tests.arrays.list
             {
                 dit.Add(3);
                 dut.Add(3);
-                Assert.IsTrue(dit.UnsequencedEquals(dut));
-                Assert.IsTrue(dut.UnsequencedEquals(dit));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.UnsequencedEquals(dut), Is.True);
+                    Assert.That(dut.UnsequencedEquals(dit), Is.True);
+                });
                 dit.Add(7);
                 dut.Add(7);
-                Assert.IsTrue(dit.UnsequencedEquals(dut));
-                Assert.IsTrue(dut.UnsequencedEquals(dit));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.UnsequencedEquals(dut), Is.True);
+                    Assert.That(dut.UnsequencedEquals(dit), Is.True);
+                });
             }
 
             [Test]
             public void Reflexive()
             {
-                Assert.IsTrue(dit.UnsequencedEquals(dit));
+                Assert.That(dit.UnsequencedEquals(dit), Is.True);
                 dit.Add(3);
-                Assert.IsTrue(dit.UnsequencedEquals(dit));
+                Assert.That(dit.UnsequencedEquals(dit), Is.True);
                 dit.Add(7);
-                Assert.IsTrue(dit.UnsequencedEquals(dit));
+                Assert.That(dit.UnsequencedEquals(dit), Is.True);
             }
 
             [TearDown]
@@ -3705,8 +4198,11 @@ namespace C5.Tests.arrays.list
             [Test]
             public void Check()
             {
-                Assert.IsTrue(dit.UnsequencedEquals(dat));
-                Assert.IsFalse(dit.UnsequencedEquals(dut));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.UnsequencedEquals(dat), Is.True);
+                    Assert.That(dit.UnsequencedEquals(dut), Is.False);
+                });
             }
 
 
@@ -3715,8 +4211,11 @@ namespace C5.Tests.arrays.list
             {
                 Dit.Add(dit); Dit.Add(dut); Dit.Add(dit);
                 Dat.Add(dut); Dat.Add(dit); Dat.Add(dat);
-                Assert.IsTrue(Dit.UnsequencedEquals(Dat));
-                Assert.IsFalse(Dit.UnsequencedEquals(Dut));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(Dit.UnsequencedEquals(Dat), Is.True);
+                    Assert.That(Dit.UnsequencedEquals(Dut), Is.False);
+                });
             }
 
 
@@ -3758,8 +4257,11 @@ namespace C5.Tests.arrays.list
             [Test]
             public void Check()
             {
-                Assert.IsTrue(dit.UnsequencedEquals(dat));
-                Assert.IsFalse(dit.UnsequencedEquals(dut));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.UnsequencedEquals(dat), Is.True);
+                    Assert.That(dit.UnsequencedEquals(dut), Is.False);
+                });
             }
 
 
@@ -3769,8 +4271,11 @@ namespace C5.Tests.arrays.list
                 Dit.Add(dit); Dit.Add(dut); Dit.Add(dit);
                 Dat.Add(dut); Dat.Add(dit); Dat.Add(dat);
                 Dut.Add(dit); Dut.Add(dut); Dut.Add(dat);
-                Assert.IsFalse(Dit.SequencedEquals(Dat));
-                Assert.IsTrue(Dit.SequencedEquals(Dut));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(Dit.SequencedEquals(Dat), Is.False);
+                    Assert.That(Dit.SequencedEquals(Dut), Is.True);
+                });
             }
 
 
@@ -3815,9 +4320,12 @@ namespace C5.Tests.arrays.list
             [Test]
             public void Check()
             {
-                Assert.IsFalse(dit.SequencedEquals(dat));
-                Assert.IsTrue(dit.SequencedEquals(dot));
-                Assert.IsFalse(dit.SequencedEquals(dut));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.SequencedEquals(dat), Is.False);
+                    Assert.That(dit.SequencedEquals(dot), Is.True);
+                    Assert.That(dit.SequencedEquals(dut), Is.False);
+                });
             }
 
 
@@ -3828,9 +4336,12 @@ namespace C5.Tests.arrays.list
                 Dat.Add(dut); Dat.Add(dit); Dat.Add(dat);
                 Dut.Add(dot); Dut.Add(dut); Dut.Add(dit);
                 Dot.Add(dit); Dot.Add(dit); Dot.Add(dut);
-                Assert.IsTrue(Dit.UnsequencedEquals(Dut));
-                Assert.IsFalse(Dit.UnsequencedEquals(Dat));
-                Assert.IsTrue(Dit.UnsequencedEquals(Dot));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(Dit.UnsequencedEquals(Dut), Is.True);
+                    Assert.That(Dit.UnsequencedEquals(Dat), Is.False);
+                    Assert.That(Dit.UnsequencedEquals(Dot), Is.True);
+                });
             }
 
 
@@ -3879,9 +4390,12 @@ namespace C5.Tests.arrays.list
             [Test]
             public void Check()
             {
-                Assert.IsFalse(dit.SequencedEquals(dat));
-                Assert.IsTrue(dit.SequencedEquals(dot));
-                Assert.IsFalse(dit.SequencedEquals(dut));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(dit.SequencedEquals(dat), Is.False);
+                    Assert.That(dit.SequencedEquals(dot), Is.True);
+                    Assert.That(dit.SequencedEquals(dut), Is.False);
+                });
             }
 
 
@@ -3892,9 +4406,12 @@ namespace C5.Tests.arrays.list
                 Dat.Add(dut); Dat.Add(dit); Dat.Add(dat);
                 Dut.Add(dot); Dut.Add(dut); Dut.Add(dit);
                 Dot.Add(dit); Dot.Add(dit); Dot.Add(dut);
-                Assert.IsTrue(Dit.SequencedEquals(Dut));
-                Assert.IsFalse(Dit.SequencedEquals(Dat));
-                Assert.IsFalse(Dit.SequencedEquals(Dot));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(Dit.SequencedEquals(Dut), Is.True);
+                    Assert.That(Dit.SequencedEquals(Dat), Is.False);
+                    Assert.That(Dit.SequencedEquals(Dot), Is.False);
+                });
             }
 
 

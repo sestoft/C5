@@ -13,43 +13,49 @@ namespace C5.Tests.interfaces
     {
         public void TryC5Coll(ICollection<double> coll)
         {
-            Assert.AreEqual(0, coll.Count);
+            Assert.That(coll.Count, Is.EqualTo(0));
             double[] arr = [];
             coll.CopyTo(arr, 0);
-            Assert.IsFalse(coll.IsReadOnly);
+            Assert.That(coll.IsReadOnly, Is.False);
             coll.Add(2.3);
             coll.Add(3.2);
-            Assert.AreEqual(2, coll.Count);
-            Assert.IsTrue(coll.Contains(2.3));
-            Assert.IsFalse(coll.Contains(3.1));
-            Assert.IsFalse(coll.Remove(3.1));
-            Assert.IsTrue(coll.Remove(3.2));
-            Assert.IsFalse(coll.Contains(3.1));
-            Assert.AreEqual(1, coll.Count);
+            Assert.That(coll.Count, Is.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(coll.Contains(2.3), Is.True);
+                Assert.That(coll.Contains(3.1), Is.False);
+                Assert.That(coll.Remove(3.1), Is.False);
+                Assert.That(coll.Remove(3.2), Is.True);
+            });
+            Assert.That(coll.Contains(3.1), Is.False);
+            Assert.That(coll.Count, Is.EqualTo(1));
             coll.Clear();
-            Assert.AreEqual(0, coll.Count);
-            Assert.IsFalse(coll.Remove(3.1));
+            Assert.That(coll.Count, Is.EqualTo(0));
+            Assert.That(coll.Remove(3.1), Is.False);
         }
 
         public void TrySCGColl(SCG.ICollection<double> coll)
         {
             // All members of SCG.ICollection<T>
-            Assert.AreEqual(0, coll.Count);
+            Assert.That(coll.Count, Is.EqualTo(0));
             double[] arr = [];
             coll.CopyTo(arr, 0);
-            Assert.IsFalse(coll.IsReadOnly);
+            Assert.That(coll.IsReadOnly, Is.False);
             coll.Add(2.3);
             coll.Add(3.2);
-            Assert.AreEqual(2, coll.Count);
-            Assert.IsTrue(coll.Contains(2.3));
-            Assert.IsFalse(coll.Contains(3.1));
-            Assert.IsFalse(coll.Remove(3.1));
-            Assert.IsTrue(coll.Remove(3.2));
-            Assert.IsFalse(coll.Contains(3.1));
-            Assert.AreEqual(1, coll.Count);
+            Assert.That(coll.Count, Is.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(coll.Contains(2.3), Is.True);
+                Assert.That(coll.Contains(3.1), Is.False);
+                Assert.That(coll.Remove(3.1), Is.False);
+                Assert.That(coll.Remove(3.2), Is.True);
+            });
+            Assert.That(coll.Contains(3.1), Is.False);
+            Assert.That(coll.Count, Is.EqualTo(1));
             coll.Clear();
-            Assert.AreEqual(0, coll.Count);
-            Assert.IsFalse(coll.Remove(3.1));
+            Assert.That(coll.Count, Is.EqualTo(0));
+            Assert.That(coll.Remove(3.1), Is.False);
         }
 
         public void TryBothColl(ICollection<double> coll)
@@ -86,51 +92,75 @@ namespace C5.Tests.interfaces
         public void TrySCIList(System.Collections.IList list)
         {
             // Should be called with a C5.IList<B> which is not a WrappedArray
-            Assert.AreEqual(0, list.Count);
+            Assert.That(list.Count, Is.EqualTo(0));
             list.CopyTo(Array.Empty<A>(), 0);
             list.CopyTo(Array.Empty<B>(), 0);
             list.CopyTo(Array.Empty<C>(), 0);
-            Assert.IsTrue(!list.IsFixedSize);
-            Assert.IsFalse(list.IsReadOnly);
-            Assert.IsFalse(list.IsSynchronized);
-            Assert.AreNotEqual(null, list.SyncRoot);
+            Assert.Multiple(() =>
+            {
+                Assert.That(!list.IsFixedSize, Is.True);
+                Assert.That(list.IsReadOnly, Is.False);
+                Assert.That(list.IsSynchronized, Is.False);
+                Assert.That(list.SyncRoot, Is.Not.EqualTo(null));
+            });
             object b1 = new B(), b2 = new B(), c1 = new C(), c2 = new C();
-            Assert.AreEqual(0, list.Add(b1));
-            Assert.AreEqual(1, list.Add(c1));
-            Assert.AreEqual(2, list.Count);
-            Assert.IsTrue(list.Contains(c1));
-            Assert.IsFalse(list.Contains(b2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.Add(b1), Is.EqualTo(0));
+                Assert.That(list.Add(c1), Is.EqualTo(1));
+                Assert.That(list.Count, Is.EqualTo(2));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.Contains(c1), Is.True);
+                Assert.That(list.Contains(b2), Is.False);
+            });
             list[0] = b2;
-            Assert.AreEqual(b2, list[0]);
+            Assert.That(list[0], Is.EqualTo(b2));
             list[1] = c2;
-            Assert.AreEqual(c2, list[1]);
-            Assert.IsTrue(list.Contains(b2));
-            Assert.IsTrue(list.Contains(c2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list[1], Is.EqualTo(c2));
+                Assert.That(list.Contains(b2), Is.True);
+                Assert.That(list.Contains(c2), Is.True);
+            });
             Array arrA = new A[2], arrB = new B[2];
             list.CopyTo(arrA, 0);
             list.CopyTo(arrB, 0);
-            Assert.AreEqual(b2, arrA.GetValue(0));
-            Assert.AreEqual(b2, arrB.GetValue(0));
-            Assert.AreEqual(c2, arrA.GetValue(1));
-            Assert.AreEqual(c2, arrB.GetValue(1));
-            Assert.AreEqual(0, list.IndexOf(b2));
-            Assert.AreEqual(-1, list.IndexOf(b1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(arrA.GetValue(0), Is.EqualTo(b2));
+                Assert.That(arrB.GetValue(0), Is.EqualTo(b2));
+                Assert.That(arrA.GetValue(1), Is.EqualTo(c2));
+                Assert.That(arrB.GetValue(1), Is.EqualTo(c2));
+                Assert.That(list.IndexOf(b2), Is.EqualTo(0));
+                Assert.That(list.IndexOf(b1), Is.EqualTo(-1));
+            });
             list.Remove(b1);
             list.Remove(b2);
-            Assert.IsFalse(list.Contains(b2));
-            Assert.AreEqual(1, list.Count); // Contains c2 only
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.Contains(b2), Is.False);
+                Assert.That(list.Count, Is.EqualTo(1)); // Contains c2 only
+            });
             list.Insert(0, b2);
             list.Insert(2, b1);
-            Assert.AreEqual(b2, list[0]);
-            Assert.AreEqual(c2, list[1]);
-            Assert.AreEqual(b1, list[2]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(list[0], Is.EqualTo(b2));
+                Assert.That(list[1], Is.EqualTo(c2));
+                Assert.That(list[2], Is.EqualTo(b1));
+            });
             list.Remove(c2);
-            Assert.AreEqual(b2, list[0]);
-            Assert.AreEqual(b1, list[1]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(list[0], Is.EqualTo(b2));
+                Assert.That(list[1], Is.EqualTo(b1));
+            });
             list.RemoveAt(1);
-            Assert.AreEqual(b2, list[0]);
+            Assert.That(list[0], Is.EqualTo(b2));
             list.Clear();
-            Assert.AreEqual(0, list.Count);
+            Assert.That(list.Count, Is.EqualTo(0));
             list.Remove(b1);
         }
 
@@ -149,30 +179,39 @@ namespace C5.Tests.interfaces
             B[] myarray = [new B(), new B(), new C()];
             System.Collections.IList list = new WrappedArray<B>(myarray);
             // Should be called with a three-element WrappedArray<B>
-            Assert.AreEqual(3, list.Count);
-            Assert.IsTrue(list.IsFixedSize);
-            Assert.IsFalse(list.IsSynchronized);
-            Assert.AreNotEqual(null, list.SyncRoot);
-            Assert.AreEqual(myarray.SyncRoot, list.SyncRoot);
+            Assert.That(list.Count, Is.EqualTo(3));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.IsFixedSize, Is.True);
+                Assert.That(list.IsSynchronized, Is.False);
+                Assert.That(list.SyncRoot, Is.Not.EqualTo(null));
+            });
+            Assert.That(list.SyncRoot, Is.EqualTo(myarray.SyncRoot));
             object b1 = new B(), b2 = new B(), c1 = new C(), c2 = new C();
             list[0] = b2;
-            Assert.AreEqual(b2, list[0]);
+            Assert.That(list[0], Is.EqualTo(b2));
             list[1] = c2;
-            Assert.AreEqual(c2, list[1]);
-            Assert.IsTrue(list.Contains(b2));
-            Assert.IsTrue(list.Contains(c2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list[1], Is.EqualTo(c2));
+                Assert.That(list.Contains(b2), Is.True);
+                Assert.That(list.Contains(c2), Is.True);
+            });
             Array arrA = new A[3], arrB = new B[3];
             list.CopyTo(arrA, 0);
             list.CopyTo(arrB, 0);
-            Assert.AreEqual(b2, arrA.GetValue(0));
-            Assert.AreEqual(b2, arrB.GetValue(0));
-            Assert.AreEqual(c2, arrA.GetValue(1));
-            Assert.AreEqual(c2, arrB.GetValue(1));
-            Assert.AreEqual(0, list.IndexOf(b2));
-            Assert.AreEqual(-1, list.IndexOf(b1));
-            Assert.AreEqual(-1, list.IndexOf(c1));
-            Assert.IsFalse(list.Contains(b1));
-            Assert.IsFalse(list.Contains(c1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(arrA.GetValue(0), Is.EqualTo(b2));
+                Assert.That(arrB.GetValue(0), Is.EqualTo(b2));
+                Assert.That(arrA.GetValue(1), Is.EqualTo(c2));
+                Assert.That(arrB.GetValue(1), Is.EqualTo(c2));
+                Assert.That(list.IndexOf(b2), Is.EqualTo(0));
+                Assert.That(list.IndexOf(b1), Is.EqualTo(-1));
+                Assert.That(list.IndexOf(c1), Is.EqualTo(-1));
+                Assert.That(list.Contains(b1), Is.False);
+                Assert.That(list.Contains(c1), Is.False);
+            });
         }
 
         [Test]
@@ -181,17 +220,23 @@ namespace C5.Tests.interfaces
             B[] myarray = [];
             System.Collections.IList list = new WrappedArray<B>(myarray);
             // Should be called with an empty WrappedArray<B>
-            Assert.AreEqual(0, list.Count);
+            Assert.That(list.Count, Is.EqualTo(0));
             list.CopyTo(Array.Empty<A>(), 0);
             list.CopyTo(Array.Empty<B>(), 0);
             list.CopyTo(Array.Empty<C>(), 0);
-            Assert.IsFalse(list.IsSynchronized);
-            Assert.AreNotEqual(null, list.SyncRoot);
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.IsSynchronized, Is.False);
+                Assert.That(list.SyncRoot, Is.Not.EqualTo(null));
+            });
             object b1 = new B(), b2 = new B(), c1 = new C(), c2 = new C();
-            Assert.IsFalse(list.Contains(b2));
-            Assert.IsFalse(list.Contains(c2));
-            Assert.AreEqual(-1, list.IndexOf(b1));
-            Assert.AreEqual(-1, list.IndexOf(c1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.Contains(b2), Is.False);
+                Assert.That(list.Contains(c2), Is.False);
+                Assert.That(list.IndexOf(b1), Is.EqualTo(-1));
+                Assert.That(list.IndexOf(c1), Is.EqualTo(-1));
+            });
         }
 
         [Test]
@@ -204,25 +249,31 @@ namespace C5.Tests.interfaces
             System.Collections.IList list = new GuardedList<B>(mylist);
             object b1 = b1_, b2 = b2_, c1 = c1_, c2 = c2_;
             // Should be called with a three-element GuardedList<B>
-            Assert.AreEqual(3, list.Count);
-            Assert.IsTrue(list.IsFixedSize);
-            Assert.IsTrue(list.IsReadOnly);
-            Assert.IsFalse(list.IsSynchronized);
-            Assert.AreNotEqual(null, list.SyncRoot);
-            Assert.AreEqual(list.SyncRoot, ((System.Collections.IList)mylist).SyncRoot);
-            Assert.IsTrue(list.Contains(b1));
-            Assert.IsTrue(list.Contains(b2));
-            Assert.IsTrue(list.Contains(c1));
-            Assert.IsFalse(list.Contains(c2));
+            Assert.That(list.Count, Is.EqualTo(3));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.IsFixedSize, Is.True);
+                Assert.That(list.IsReadOnly, Is.True);
+                Assert.That(list.IsSynchronized, Is.False);
+                Assert.That(list.SyncRoot, Is.Not.EqualTo(null));
+                Assert.That(((System.Collections.IList)mylist).SyncRoot, Is.EqualTo(list.SyncRoot));
+                Assert.That(list.Contains(b1), Is.True);
+                Assert.That(list.Contains(b2), Is.True);
+                Assert.That(list.Contains(c1), Is.True);
+                Assert.That(list.Contains(c2), Is.False);
+            });
             Array arrA = new A[3], arrB = new B[3];
             list.CopyTo(arrA, 0);
             list.CopyTo(arrB, 0);
-            Assert.AreEqual(b1, arrA.GetValue(0));
-            Assert.AreEqual(b1, arrB.GetValue(0));
-            Assert.AreEqual(b2, arrA.GetValue(1));
-            Assert.AreEqual(b2, arrB.GetValue(1));
-            Assert.AreEqual(0, list.IndexOf(b1));
-            Assert.AreEqual(-1, list.IndexOf(c2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(arrA.GetValue(0), Is.EqualTo(b1));
+                Assert.That(arrB.GetValue(0), Is.EqualTo(b1));
+                Assert.That(arrA.GetValue(1), Is.EqualTo(b2));
+                Assert.That(arrB.GetValue(1), Is.EqualTo(b2));
+                Assert.That(list.IndexOf(b1), Is.EqualTo(0));
+                Assert.That(list.IndexOf(c2), Is.EqualTo(-1));
+            });
         }
 
         [Test]
@@ -230,17 +281,23 @@ namespace C5.Tests.interfaces
         {
             System.Collections.IList list = new GuardedList<B>(new ArrayList<B>());
             // Should be called with an empty GuardedList<B>
-            Assert.AreEqual(0, list.Count);
+            Assert.That(list.Count, Is.EqualTo(0));
             list.CopyTo(Array.Empty<A>(), 0);
             list.CopyTo(Array.Empty<B>(), 0);
             list.CopyTo(Array.Empty<C>(), 0);
-            Assert.IsFalse(list.IsSynchronized);
-            Assert.AreNotEqual(null, list.SyncRoot);
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.IsSynchronized, Is.False);
+                Assert.That(list.SyncRoot, Is.Not.EqualTo(null));
+            });
             object b1 = new B(), b2 = new B(), c1 = new C(), c2 = new C();
-            Assert.IsFalse(list.Contains(b2));
-            Assert.IsFalse(list.Contains(c2));
-            Assert.AreEqual(-1, list.IndexOf(b1));
-            Assert.AreEqual(-1, list.IndexOf(c1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.Contains(b2), Is.False);
+                Assert.That(list.Contains(c2), Is.False);
+                Assert.That(list.IndexOf(b1), Is.EqualTo(-1));
+                Assert.That(list.IndexOf(c1), Is.EqualTo(-1));
+            });
         }
 
         [Test]
@@ -253,42 +310,54 @@ namespace C5.Tests.interfaces
             System.Collections.IList list = new GuardedList<B>(mylist).View(1, 3);
             object b1 = b1_, b2 = b2_, c1 = c1_, c2 = c2_;
             // Should be called with a three-element view of a GuardedList<B>
-            Assert.AreEqual(3, list.Count);
-            Assert.IsTrue(list.IsFixedSize);
-            Assert.IsTrue(list.IsReadOnly);
-            Assert.IsFalse(list.IsSynchronized);
-            Assert.AreNotEqual(null, list.SyncRoot);
-            Assert.AreEqual(list.SyncRoot, ((System.Collections.IList)mylist).SyncRoot);
-            Assert.IsTrue(list.Contains(b1));
-            Assert.IsTrue(list.Contains(b2));
-            Assert.IsTrue(list.Contains(c1));
-            Assert.IsFalse(list.Contains(c2));
+            Assert.That(list.Count, Is.EqualTo(3));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.IsFixedSize, Is.True);
+                Assert.That(list.IsReadOnly, Is.True);
+                Assert.That(list.IsSynchronized, Is.False);
+                Assert.That(list.SyncRoot, Is.Not.EqualTo(null));
+                Assert.That(((System.Collections.IList)mylist).SyncRoot, Is.EqualTo(list.SyncRoot));
+                Assert.That(list.Contains(b1), Is.True);
+                Assert.That(list.Contains(b2), Is.True);
+                Assert.That(list.Contains(c1), Is.True);
+                Assert.That(list.Contains(c2), Is.False);
+            });
             Array arrA = new A[3], arrB = new B[3];
             list.CopyTo(arrA, 0);
             list.CopyTo(arrB, 0);
-            Assert.AreEqual(b1, arrA.GetValue(0));
-            Assert.AreEqual(b1, arrB.GetValue(0));
-            Assert.AreEqual(b2, arrA.GetValue(1));
-            Assert.AreEqual(b2, arrB.GetValue(1));
-            Assert.AreEqual(0, list.IndexOf(b1));
-            Assert.AreEqual(-1, list.IndexOf(c2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(arrA.GetValue(0), Is.EqualTo(b1));
+                Assert.That(arrB.GetValue(0), Is.EqualTo(b1));
+                Assert.That(arrA.GetValue(1), Is.EqualTo(b2));
+                Assert.That(arrB.GetValue(1), Is.EqualTo(b2));
+                Assert.That(list.IndexOf(b1), Is.EqualTo(0));
+                Assert.That(list.IndexOf(c2), Is.EqualTo(-1));
+            });
         }
 
         [Test]
         public void TryViewOfGuardedListAsSCIList2()
         {
             System.Collections.IList list = new GuardedList<B>(new ArrayList<B>()).View(0, 0);
-            Assert.AreEqual(0, list.Count);
+            Assert.That(list.Count, Is.EqualTo(0));
             list.CopyTo(Array.Empty<A>(), 0);
             list.CopyTo(Array.Empty<B>(), 0);
             list.CopyTo(Array.Empty<C>(), 0);
-            Assert.IsFalse(list.IsSynchronized);
-            Assert.AreNotEqual(null, list.SyncRoot);
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.IsSynchronized, Is.False);
+                Assert.That(list.SyncRoot, Is.Not.EqualTo(null));
+            });
             object b1 = new B(), b2 = new B(), c1 = new C(), c2 = new C();
-            Assert.IsFalse(list.Contains(b2));
-            Assert.IsFalse(list.Contains(c2));
-            Assert.AreEqual(-1, list.IndexOf(b1));
-            Assert.AreEqual(-1, list.IndexOf(c1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.Contains(b2), Is.False);
+                Assert.That(list.Contains(c2), Is.False);
+                Assert.That(list.IndexOf(b1), Is.EqualTo(-1));
+                Assert.That(list.IndexOf(c1), Is.EqualTo(-1));
+            });
         }
 
         private void TryListViewAsSCIList1(IList<B> mylist)
@@ -299,40 +368,52 @@ namespace C5.Tests.interfaces
             System.Collections.IList list = mylist.View(1, 3);
             object b1 = b1_, b2 = b2_, c1 = c1_, c2 = c2_;
             // Should be called with a three-element view on ArrayList<B>
-            Assert.AreEqual(3, list.Count);
-            Assert.IsFalse(list.IsSynchronized);
-            Assert.AreNotEqual(null, list.SyncRoot);
-            Assert.AreEqual(list.SyncRoot, mylist.SyncRoot);
-            Assert.IsTrue(list.Contains(b1));
-            Assert.IsTrue(list.Contains(b2));
-            Assert.IsTrue(list.Contains(c1));
-            Assert.IsFalse(list.Contains(c2));
+            Assert.That(list.Count, Is.EqualTo(3));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.IsSynchronized, Is.False);
+                Assert.That(list.SyncRoot, Is.Not.EqualTo(null));
+                Assert.That(mylist.SyncRoot, Is.EqualTo(list.SyncRoot));
+                Assert.That(list.Contains(b1), Is.True);
+                Assert.That(list.Contains(b2), Is.True);
+                Assert.That(list.Contains(c1), Is.True);
+                Assert.That(list.Contains(c2), Is.False);
+            });
             Array arrA = new A[3], arrB = new B[3];
             list.CopyTo(arrA, 0);
             list.CopyTo(arrB, 0);
-            Assert.AreEqual(b1, arrA.GetValue(0));
-            Assert.AreEqual(b1, arrB.GetValue(0));
-            Assert.AreEqual(b2, arrA.GetValue(1));
-            Assert.AreEqual(b2, arrB.GetValue(1));
-            Assert.AreEqual(0, list.IndexOf(b1));
-            Assert.AreEqual(-1, list.IndexOf(c2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(arrA.GetValue(0), Is.EqualTo(b1));
+                Assert.That(arrB.GetValue(0), Is.EqualTo(b1));
+                Assert.That(arrA.GetValue(1), Is.EqualTo(b2));
+                Assert.That(arrB.GetValue(1), Is.EqualTo(b2));
+                Assert.That(list.IndexOf(b1), Is.EqualTo(0));
+                Assert.That(list.IndexOf(c2), Is.EqualTo(-1));
+            });
         }
 
         private void TryListViewAsSCIList2(IList<B> mylist)
         {
             System.Collections.IList list = mylist.View(0, 0);
-            Assert.AreEqual(0, list.Count);
+            Assert.That(list.Count, Is.EqualTo(0));
             list.CopyTo(Array.Empty<A>(), 0);
             list.CopyTo(Array.Empty<B>(), 0);
             list.CopyTo(Array.Empty<C>(), 0);
-            Assert.IsFalse(list.IsSynchronized);
-            Assert.AreNotEqual(null, list.SyncRoot);
-            Assert.AreEqual(list.SyncRoot, mylist.SyncRoot);
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.IsSynchronized, Is.False);
+                Assert.That(list.SyncRoot, Is.Not.EqualTo(null));
+                Assert.That(mylist.SyncRoot, Is.EqualTo(list.SyncRoot));
+            });
             object b1 = new B(), b2 = new B(), c1 = new C(), c2 = new C();
-            Assert.IsFalse(list.Contains(b2));
-            Assert.IsFalse(list.Contains(c2));
-            Assert.AreEqual(-1, list.IndexOf(b1));
-            Assert.AreEqual(-1, list.IndexOf(c1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.Contains(b2), Is.False);
+                Assert.That(list.Contains(c2), Is.False);
+                Assert.That(list.IndexOf(b1), Is.EqualTo(-1));
+                Assert.That(list.IndexOf(c1), Is.EqualTo(-1));
+            });
         }
 
         [Test]
@@ -376,48 +457,54 @@ namespace C5.Tests.interfaces
     {
         public void TryDictionary(IDictionary<string, string> dict)
         {
-            Assert.AreEqual(0, dict.Count);
-            Assert.IsTrue(dict.IsEmpty);
-            Assert.IsFalse(dict.IsReadOnly);
+            Assert.That(dict.Count, Is.EqualTo(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(dict.IsEmpty, Is.True);
+                Assert.That(dict.IsReadOnly, Is.False);
+            });
             System.Collections.Generic.KeyValuePair<string, string>[] arr = [];
             dict.CopyTo(arr, 0);
             dict["R"] = "A";
             dict["S"] = "B";
             dict["T"] = "C";
-            Assert.IsTrue(dict.Update("R", "A1"));
-            Assert.AreEqual("A1", dict["R"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dict.Update("R", "A1"), Is.True);
+                Assert.That(dict["R"], Is.EqualTo("A1"));
 
-            Assert.IsFalse(dict.Update("U", "D1"));
-            Assert.IsFalse(dict.Contains("U"));
+                Assert.That(dict.Update("U", "D1"), Is.False);
+                Assert.That(dict.Contains("U"), Is.False);
 
-            Assert.IsTrue(dict.Update("R", "A2", out string old));
-            Assert.AreEqual("A2", dict["R"]);
-            Assert.AreEqual("A1", old);
+                Assert.That(dict.Update("R", "A2", out string old), Is.True);
+                Assert.That(dict["R"], Is.EqualTo("A2"));
+                Assert.That(old, Is.EqualTo("A1"));
 
-            Assert.IsFalse(dict.Update("U", "D2", out old));
-            Assert.AreEqual(null, old);
-            Assert.IsFalse(dict.Contains("U"));
+                Assert.That(dict.Update("U", "D2", out old), Is.False);
+                Assert.That(old, Is.EqualTo(null));
+                Assert.That(dict.Contains("U"), Is.False);
 
-            Assert.IsTrue(dict.UpdateOrAdd("R", "A3"));
-            Assert.AreEqual("A3", dict["R"]);
+                Assert.That(dict.UpdateOrAdd("R", "A3"), Is.True);
+                Assert.That(dict["R"], Is.EqualTo("A3"));
 
-            Assert.IsFalse(dict.UpdateOrAdd("U", "D3"));
-            Assert.IsTrue(dict.Contains("U"));
-            Assert.AreEqual("D3", dict["U"]);
+                Assert.That(dict.UpdateOrAdd("U", "D3"), Is.False);
+                Assert.That(dict.Contains("U"), Is.True);
+                Assert.That(dict["U"], Is.EqualTo("D3"));
 
-            Assert.IsTrue(dict.UpdateOrAdd("R", "A4", out old));
-            Assert.AreEqual("A4", dict["R"]);
-            Assert.AreEqual("A3", old);
+                Assert.That(dict.UpdateOrAdd("R", "A4", out old), Is.True);
+                Assert.That(dict["R"], Is.EqualTo("A4"));
+                Assert.That(old, Is.EqualTo("A3"));
 
-            Assert.IsTrue(dict.UpdateOrAdd("U", "D4", out old));
-            Assert.IsTrue(dict.Contains("U"));
-            Assert.AreEqual("D4", dict["U"]);
-            Assert.AreEqual("D3", old);
+                Assert.That(dict.UpdateOrAdd("U", "D4", out old), Is.True);
+                Assert.That(dict.Contains("U"), Is.True);
+                Assert.That(dict["U"], Is.EqualTo("D4"));
+                Assert.That(old, Is.EqualTo("D3"));
 
-            Assert.IsFalse(dict.UpdateOrAdd("V", "E1", out old));
-            Assert.IsTrue(dict.Contains("V"));
-            Assert.AreEqual("E1", dict["V"]);
-            Assert.AreEqual(null, old);
+                Assert.That(dict.UpdateOrAdd("V", "E1", out old), Is.False);
+                Assert.That(dict.Contains("V"), Is.True);
+                Assert.That(dict["V"], Is.EqualTo("E1"));
+                Assert.That(old, Is.EqualTo(null));
+            });
         }
 
         [Test]

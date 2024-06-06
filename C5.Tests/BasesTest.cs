@@ -37,7 +37,7 @@ namespace C5.Tests.support
                 // Assert.IsFalse(abt.Check());
                 abt[0] = "##";
                 abt[1] = "##";
-                Assert.IsTrue(abt.Check());
+                Assert.That(abt.Check(), Is.True);
             }
         }
     }
@@ -68,8 +68,11 @@ namespace C5.Tests.support
                 dbl t = new(3.4);
                 dbl u = new(7.4);
 
-                Assert.AreEqual(0, h.Compare(s, t));
-                Assert.IsTrue(h.Compare(s, u) < 0);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.Compare(s, t), Is.EqualTo(0));
+                    Assert.That(h.Compare(s, u) < 0, Is.True);
+                });
             }
 
 
@@ -81,8 +84,11 @@ namespace C5.Tests.support
                 string t = "bamse";
                 string u = "bimse";
 
-                Assert.AreEqual(0, h.Compare(s, t));
-                Assert.IsTrue(h.Compare(s, u) < 0);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.Compare(s, t), Is.EqualTo(0));
+                    Assert.That(h.Compare(s, u) < 0, Is.True);
+                });
             }
 
 
@@ -94,9 +100,12 @@ namespace C5.Tests.support
                 dbl t = new(3.4);
                 dbl u = new(7.4);
 
-                Assert.AreEqual(0, h.Compare(s, t));
-                Assert.IsTrue(h.Compare(s, u) < 0);
-                Assert.AreSame(h, SCG.Comparer<dbl>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.Compare(s, t), Is.EqualTo(0));
+                    Assert.That(h.Compare(s, u) < 0, Is.True);
+                    Assert.That(SCG.Comparer<dbl>.Default, Is.SameAs(h));
+                });
             }
 
 
@@ -108,9 +117,12 @@ namespace C5.Tests.support
                 string t = "bamse";
                 string u = "bimse";
 
-                Assert.AreEqual(0, h.Compare(s, t));
-                Assert.IsTrue(h.Compare(s, u) < 0);
-                Assert.AreSame(h, SCG.Comparer<string>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.Compare(s, t), Is.EqualTo(0));
+                    Assert.That(h.Compare(s, u) < 0, Is.True);
+                    Assert.That(SCG.Comparer<string>.Default, Is.SameAs(h));
+                });
 
             }
 
@@ -118,13 +130,16 @@ namespace C5.Tests.support
                 where T : IComparable<T>
             {
                 SCG.IComparer<T> h = SCG.Comparer<T>.Default;
-                Assert.AreSame(h, SCG.Comparer<T>.Default);
-                Assert.AreEqual(0, h.Compare(item1, item1));
-                Assert.AreEqual(0, h.Compare(item2, item2));
-                Assert.IsTrue(h.Compare(item1, item2) < 0);
-                Assert.IsTrue(h.Compare(item2, item1) > 0);
-                Assert.AreEqual(Math.Sign(item1.CompareTo(item2)), Math.Sign(h.Compare(item1, item2)));
-                Assert.AreEqual(Math.Sign(item2.CompareTo(item1)), Math.Sign(h.Compare(item2, item1)));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(SCG.Comparer<T>.Default, Is.SameAs(h));
+                    Assert.That(h.Compare(item1, item1), Is.EqualTo(0));
+                    Assert.That(h.Compare(item2, item2), Is.EqualTo(0));
+                    Assert.That(h.Compare(item1, item2) < 0, Is.True);
+                    Assert.That(h.Compare(item2, item1) > 0, Is.True);
+                    Assert.That(Math.Sign(h.Compare(item1, item2)), Is.EqualTo(Math.Sign(item1.CompareTo(item2))));
+                    Assert.That(Math.Sign(h.Compare(item2, item1)), Is.EqualTo(Math.Sign(item2.CompareTo(item1))));
+                });
             }
 
             [Test]
@@ -153,17 +168,23 @@ namespace C5.Tests.support
                 int t = 4;
                 int u = 5;
 
-                Assert.AreEqual(0, h.Compare(s, t));
-                Assert.IsTrue(h.Compare(s, u) < 0);
-                Assert.AreSame(h, SCG.Comparer<int>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.Compare(s, t), Is.EqualTo(0));
+                    Assert.That(h.Compare(s, u) < 0, Is.True);
+                    Assert.That(SCG.Comparer<int>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
             public void Nulls()
             {
-                Assert.IsTrue(SCG.Comparer<string>.Default.Compare(null, "abe") < 0);
-                Assert.IsTrue(SCG.Comparer<string>.Default.Compare(null, null) == 0);
-                Assert.IsTrue(SCG.Comparer<string>.Default.Compare("abe", null) > 0);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(SCG.Comparer<string>.Default.Compare(null, "abe") < 0, Is.True);
+                    Assert.That(SCG.Comparer<string>.Default.Compare(null, null) == 0, Is.True);
+                    Assert.That(SCG.Comparer<string>.Default.Compare("abe", null) > 0, Is.True);
+                });
             }
         }
 
@@ -178,9 +199,12 @@ namespace C5.Tests.support
                 string t = "bamse";
                 string u = "bimse";
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                });
             }
 
 
@@ -192,9 +216,12 @@ namespace C5.Tests.support
                 double t = 3.4;
                 double u = 5.7;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                });
             }
 
             [Test]
@@ -205,10 +232,13 @@ namespace C5.Tests.support
                 string t = "bamse";
                 string u = "bimse";
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, EqualityComparer<string>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<string>.Default, Is.SameAs(h));
+                });
             }
 
 
@@ -220,10 +250,13 @@ namespace C5.Tests.support
                 double t = 3.4;
                 double u = 5.7;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, EqualityComparer<double>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<double>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
@@ -234,10 +267,13 @@ namespace C5.Tests.support
                 char t = '�';
                 char u = 'r';
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, EqualityComparer<char>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<char>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
@@ -248,10 +284,13 @@ namespace C5.Tests.support
                 sbyte t = 3;
                 sbyte u = -5;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, EqualityComparer<sbyte>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<sbyte>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
@@ -262,10 +301,13 @@ namespace C5.Tests.support
                 byte t = 3;
                 byte u = 5;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, EqualityComparer<byte>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<byte>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
@@ -276,10 +318,13 @@ namespace C5.Tests.support
                 short t = 3;
                 short u = -5;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, EqualityComparer<short>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<short>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
@@ -290,10 +335,13 @@ namespace C5.Tests.support
                 ushort t = 3;
                 ushort u = 60000;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, EqualityComparer<ushort>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<ushort>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
@@ -304,10 +352,13 @@ namespace C5.Tests.support
                 int t = 3;
                 int u = -5;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, EqualityComparer<int>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<int>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
@@ -318,10 +369,13 @@ namespace C5.Tests.support
                 uint t = 3;
                 uint u = 3000000000;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, EqualityComparer<uint>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<uint>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
@@ -332,10 +386,13 @@ namespace C5.Tests.support
                 long t = 3;
                 long u = -500000000000000L;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, EqualityComparer<long>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<long>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
@@ -346,10 +403,13 @@ namespace C5.Tests.support
                 ulong t = 3;
                 ulong u = 500000000000000UL;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, EqualityComparer<ulong>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<ulong>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
@@ -360,10 +420,13 @@ namespace C5.Tests.support
                 float t = 3.1F;
                 float u = -5.2F;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, EqualityComparer<float>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<float>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
@@ -374,10 +437,13 @@ namespace C5.Tests.support
                 double t = 3.12345;
                 double u = -5.2;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, EqualityComparer<double>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<double>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
@@ -388,10 +454,13 @@ namespace C5.Tests.support
                 decimal t = 3.0001M;
                 decimal u = -500000000000000M;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, EqualityComparer<decimal>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<decimal>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
@@ -404,10 +473,13 @@ namespace C5.Tests.support
                 s.Add(1); s.Add(2); s.Add(3);
                 t.Add(3); t.Add(2); t.Add(1);
                 u.Add(3); u.Add(2); u.Add(4);
-                Assert.AreEqual(s.GetUnsequencedHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, EqualityComparer<ICollection<int>>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetUnsequencedHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<ICollection<int>>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
@@ -415,7 +487,7 @@ namespace C5.Tests.support
             {
                 SCG.IEqualityComparer<LinkedList<int>> h = EqualityComparer<LinkedList<int>>.Default;
                 LinkedList<int> s = new() { 1, 2, 3 };
-                Assert.AreEqual(CHC.SequencedHashCode(1, 2, 3), h.GetHashCode(s));
+                Assert.That(h.GetHashCode(s), Is.EqualTo(CHC.SequencedHashCode(1, 2, 3)));
             }
 
             [Test]
@@ -423,7 +495,7 @@ namespace C5.Tests.support
             {
                 SCG.IEqualityComparer<C5.HashSet<int>> h = EqualityComparer<HashSet<int>>.Default;
                 C5.HashSet<int> s = new() { 1, 2, 3 };
-                Assert.AreEqual(CHC.UnsequencedHashCode(1, 2, 3), h.GetHashCode(s));
+                Assert.That(h.GetHashCode(s), Is.EqualTo(CHC.UnsequencedHashCode(1, 2, 3)));
             }
 
             //generic types implementing collection interfaces
@@ -432,7 +504,7 @@ namespace C5.Tests.support
             {
                 SCG.IEqualityComparer<C5.IList<int>> h = EqualityComparer<IList<int>>.Default;
                 C5.IList<int> s = new LinkedList<int>() { 1, 2, 3 };
-                Assert.AreEqual(CHC.SequencedHashCode(1, 2, 3), h.GetHashCode(s));
+                Assert.That(h.GetHashCode(s), Is.EqualTo(CHC.SequencedHashCode(1, 2, 3)));
             }
 
             private interface IFoo<T> : C5.ICollection<T> { void Bamse(); }
@@ -448,7 +520,7 @@ namespace C5.Tests.support
             {
                 SCG.IEqualityComparer<IFoo<int>> h = EqualityComparer<IFoo<int>>.Default;
                 IFoo<int> s = new Foo<int>() { 1, 2, 3 };
-                Assert.AreEqual(CHC.UnsequencedHashCode(1, 2, 3), h.GetHashCode(s));
+                Assert.That(h.GetHashCode(s), Is.EqualTo(CHC.UnsequencedHashCode(1, 2, 3)));
             }
 
             //Nongeneric types implementing collection types:
@@ -467,7 +539,7 @@ namespace C5.Tests.support
             {
                 SCG.IEqualityComparer<IBaz> h = EqualityComparer<IBaz>.Default;
                 IBaz s = new Baz() { 1, 2, 3 };
-                Assert.AreEqual(CHC.SequencedHashCode(1, 2, 3), h.GetHashCode(s));
+                Assert.That(h.GetHashCode(s), Is.EqualTo(CHC.SequencedHashCode(1, 2, 3)));
             }
 
             private interface IBar : C5.ICollection<int>
@@ -509,7 +581,7 @@ namespace C5.Tests.support
             {
                 SCG.IEqualityComparer<IBar> h = EqualityComparer<IBar>.Default;
                 IBar s = new Bar() { 1, 2, 3 };
-                Assert.AreEqual(CHC.UnsequencedHashCode(1, 2, 3), h.GetHashCode(s));
+                Assert.That(h.GetHashCode(s), Is.EqualTo(CHC.UnsequencedHashCode(1, 2, 3)));
             }
 
             [Test]
@@ -517,10 +589,13 @@ namespace C5.Tests.support
             {
                 ArrayList<double> arr = new();
                 SCG.IEqualityComparer<double> eqc = EqualityComparer<double>.Default;
-                Assert.IsTrue(CollectionBase<double>.StaticEquals(arr, arr, eqc));
-                Assert.IsTrue(CollectionBase<double>.StaticEquals(null, null, eqc));
-                Assert.IsFalse(CollectionBase<double>.StaticEquals(arr, null, eqc));
-                Assert.IsFalse(CollectionBase<double>.StaticEquals(null, arr, eqc));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(CollectionBase<double>.StaticEquals(arr, arr, eqc), Is.True);
+                    Assert.That(CollectionBase<double>.StaticEquals(null, null, eqc), Is.True);
+                    Assert.That(CollectionBase<double>.StaticEquals(arr, null, eqc), Is.False);
+                    Assert.That(CollectionBase<double>.StaticEquals(null, arr, eqc), Is.False);
+                });
             }
 
             private class EveryThingIsEqual : SCG.IEqualityComparer<object>
@@ -546,8 +621,11 @@ namespace C5.Tests.support
                 C5.ICollection<Object> coll2 = new ArrayList<object>(eqc);
                 coll1.Add(o1);
                 coll2.Add(o2);
-                Assert.IsFalse(o1.Equals(o2));
-                Assert.IsTrue(coll1.UnsequencedEquals(coll2));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(o1.Equals(o2), Is.False);
+                    Assert.That(coll1.UnsequencedEquals(coll2), Is.True);
+                });
             }
         }
     }

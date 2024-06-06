@@ -56,16 +56,19 @@ namespace C5.Tests.arrays.circularqueue
         [Test]
         public void Format()
         {
-            Assert.AreEqual("{  }", coll.ToString());
+            Assert.That(coll.ToString(), Is.EqualTo("{  }"));
             foreach (int i in new int[] { -4, 28, 129, 65530 })
             {
                 coll.Enqueue(i);
             }
 
-            Assert.AreEqual("{ -4, 28, 129, 65530 }", coll.ToString());
-            Assert.AreEqual("{ -4, 1C, 81, FFFA }", coll.ToString(null, rad16));
-            Assert.AreEqual("{ -4, 28, 129... }", coll.ToString("L14", null));
-            Assert.AreEqual("{ -4, 1C, 81... }", coll.ToString("L14", rad16));
+            Assert.Multiple(() =>
+            {
+                Assert.That(coll.ToString(), Is.EqualTo("{ -4, 28, 129, 65530 }"));
+                Assert.That(coll.ToString(null, rad16), Is.EqualTo("{ -4, 1C, 81, FFFA }"));
+                Assert.That(coll.ToString("L14", null), Is.EqualTo("{ -4, 28, 129... }"));
+                Assert.That(coll.ToString("L14", rad16), Is.EqualTo("{ -4, 1C, 81... }"));
+            });
         }
     }
 
@@ -106,11 +109,11 @@ namespace C5.Tests.arrays.circularqueue
             for (int i = 0; i < 18; i++)
             {
                 queue.Enqueue(i);
-                Assert.IsTrue(queue.Check());
+                Assert.That(queue.Check(), Is.True);
             }
             for (int i = 0; i < 14; i++)
             {
-                Assert.IsTrue(queue.Check());
+                Assert.That(queue.Check(), Is.True);
                 queue.Dequeue();
             }
         }
@@ -118,36 +121,42 @@ namespace C5.Tests.arrays.circularqueue
         [Test]
         public void Expand()
         {
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
             loadup3();
-            Assert.IsTrue(IC.Eq(queue, 14, 15, 16, 17));
+            Assert.That(IC.Eq(queue, 14, 15, 16, 17), Is.True);
         }
 
         [Test]
         public void Simple()
         {
             loadup1();
-            Assert.IsTrue(queue.Check());
-            Assert.AreEqual(5, queue.Count);
-            Assert.IsTrue(IC.Eq(queue, 12, 13, 103, 14, 15));
-            Assert.AreEqual(12, queue.Choose());
+            Assert.Multiple(() =>
+            {
+                Assert.That(queue.Check(), Is.True);
+                Assert.That(queue.Count, Is.EqualTo(5));
+                Assert.That(IC.Eq(queue, 12, 13, 103, 14, 15), Is.True);
+            });
+            Assert.That(queue.Choose(), Is.EqualTo(12));
         }
 
         [Test]
         public void Stack()
         {
             queue.Push(1);
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
             queue.Push(2);
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
             queue.Push(3);
-            Assert.IsTrue(queue.Check());
-            Assert.AreEqual(3, queue.Pop());
-            Assert.IsTrue(queue.Check());
-            Assert.AreEqual(2, queue.Pop());
-            Assert.IsTrue(queue.Check());
-            Assert.AreEqual(1, queue.Pop());
-            Assert.IsTrue(queue.Check());
+            Assert.Multiple(() =>
+            {
+                Assert.That(queue.Check(), Is.True);
+                Assert.That(queue.Pop(), Is.EqualTo(3));
+            });
+            Assert.That(queue.Check(), Is.True);
+            Assert.That(queue.Pop(), Is.EqualTo(2));
+            Assert.That(queue.Check(), Is.True);
+            Assert.That(queue.Pop(), Is.EqualTo(1));
+            Assert.That(queue.Check(), Is.True);
         }
 
         [Test]
@@ -166,22 +175,28 @@ namespace C5.Tests.arrays.circularqueue
         public void Simple2()
         {
             loadup2();
-            Assert.IsTrue(queue.Check());
-            Assert.AreEqual(5, queue.Count);
-            Assert.IsTrue(IC.Eq(queue, 15, 1000, 1001, 1002, 1003));
-            Assert.AreEqual(15, queue.Choose());
+            Assert.Multiple(() =>
+            {
+                Assert.That(queue.Check(), Is.True);
+                Assert.That(queue.Count, Is.EqualTo(5));
+                Assert.That(IC.Eq(queue, 15, 1000, 1001, 1002, 1003), Is.True);
+            });
+            Assert.That(queue.Choose(), Is.EqualTo(15));
         }
 
         [Test]
         public void Counting()
         {
-            Assert.IsTrue(queue.IsEmpty);
-            Assert.AreEqual(0, queue.Count);
-            Assert.AreEqual(Speed.Constant, queue.CountSpeed);
+            Assert.Multiple(() =>
+            {
+                Assert.That(queue.IsEmpty, Is.True);
+                Assert.That(queue.Count, Is.EqualTo(0));
+            });
+            Assert.That(queue.CountSpeed, Is.EqualTo(Speed.Constant));
             queue.Enqueue(11);
-            Assert.IsFalse(queue.IsEmpty);
+            Assert.That(queue.IsEmpty, Is.False);
             queue.Enqueue(12);
-            Assert.AreEqual(2, queue.Count);
+            Assert.That(queue.Count, Is.EqualTo(2));
         }
 
         //This test by Steve Wallace uncovered a bug in the indexing.
@@ -196,7 +211,7 @@ namespace C5.Tests.arrays.circularqueue
             int end = list.Count;
             for (int index = 0; index < end; index++)
             {
-                Assert.AreEqual(index, list[0]);
+                Assert.That(list[0], Is.EqualTo(index));
                 list.Dequeue();
             }
         }

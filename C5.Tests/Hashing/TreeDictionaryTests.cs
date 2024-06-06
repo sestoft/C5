@@ -18,7 +18,7 @@ namespace C5.Tests.hashing
             tree.UpdateOrAdd(0, 0);
             var last = tree.Values.LastOrDefault();
 
-            Assert.AreEqual(0, last);
+            Assert.That(last, Is.EqualTo(0));
         }
 
         [TestCase(1, 10, Description = "Once")]
@@ -39,7 +39,7 @@ namespace C5.Tests.hashing
                 }
             }
 
-            Assert.AreEqual(expectedResult, sum);
+            Assert.That(sum, Is.EqualTo(expectedResult));
         }
 
         [TestCase(1, 10, Description = "Once")]
@@ -60,7 +60,7 @@ namespace C5.Tests.hashing
                 }
             }
 
-            Assert.AreEqual(expectedResult, sum);
+            Assert.That(sum, Is.EqualTo(expectedResult));
         }
 
         [TestCase(1, 10, Description = "Once")]
@@ -83,8 +83,11 @@ namespace C5.Tests.hashing
                 }
             }
 
-            Assert.AreEqual(expectedResult, keys);
-            Assert.AreEqual(-expectedResult, values);
+            Assert.Multiple(() =>
+            {
+                Assert.That(keys, Is.EqualTo(expectedResult));
+                Assert.That(values, Is.EqualTo(-expectedResult));
+            });
         }
     }
 }

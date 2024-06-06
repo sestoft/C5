@@ -63,10 +63,13 @@ namespace C5.Tests.Templates.Events
         }
         public virtual void Listenable()
         {
-            Assert.AreEqual(EventType.Basic, collection.ListenableEvents);
-            Assert.AreEqual(EventType.None, collection.ActiveEvents);
+            Assert.Multiple(() =>
+            {
+                Assert.That(collection.ListenableEvents, Is.EqualTo(EventType.Basic));
+                Assert.That(collection.ActiveEvents, Is.EqualTo(EventType.None));
+            });
             listen();
-            Assert.AreEqual(listenTo, collection.ActiveEvents);
+            Assert.That(collection.ActiveEvents, Is.EqualTo(listenTo));
         }
 
         public void Add()
@@ -406,10 +409,13 @@ namespace C5.Tests.Templates.Events
 
         public override void Listenable()
         {
-            Assert.AreEqual(EventType.All, collection.ListenableEvents);
-            Assert.AreEqual(EventType.None, collection.ActiveEvents);
+            Assert.Multiple(() =>
+            {
+                Assert.That(collection.ListenableEvents, Is.EqualTo(EventType.All));
+                Assert.That(collection.ActiveEvents, Is.EqualTo(EventType.None));
+            });
             listen();
-            Assert.AreEqual(listenTo, collection.ActiveEvents);
+            Assert.That(collection.ActiveEvents, Is.EqualTo(listenTo));
         }
         public void SetThis()
         {
@@ -846,10 +852,13 @@ namespace C5.Tests.Templates.Events
 
         public virtual void Listenable()
         {
-            Assert.AreEqual(EventType.Basic, collection.ListenableEvents);
-            Assert.AreEqual(EventType.None, collection.ActiveEvents);
+            Assert.Multiple(() =>
+            {
+                Assert.That(collection.ListenableEvents, Is.EqualTo(EventType.Basic));
+                Assert.That(collection.ActiveEvents, Is.EqualTo(EventType.None));
+            });
             listen();
-            Assert.AreEqual(listenTo, collection.ActiveEvents);
+            Assert.That(collection.ActiveEvents, Is.EqualTo(listenTo));
         }
 
         public void AddAndREmove()
