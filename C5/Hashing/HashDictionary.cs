@@ -22,11 +22,11 @@ public class HashDictionary<K, V> : DictionaryBase<K, V>, IDictionary<K, V>
     /// Initial capacity of internal table will be 16 entries and threshold for
     /// expansion is 66% fill.
     /// </summary>
-    /// <param name="keyequalityComparer">The external key equalitySCG.Comparer</param>
-    public HashDictionary(SCG.IEqualityComparer<K> keyequalityComparer)
-        : base(keyequalityComparer)
+    /// <param name="keyEqualityComparer">The external key equalitySCG.Comparer</param>
+    public HashDictionary(SCG.IEqualityComparer<K> keyEqualityComparer)
+        : base(keyEqualityComparer)
     {
-        pairs = new HashSet<System.Collections.Generic.KeyValuePair<K, V>>(new KeyValuePairEqualityComparer<K, V>(keyequalityComparer));
+        pairs = new HashSet<SCG.KeyValuePair<K, V>>(new KeyValuePairEqualityComparer<K, V>(keyEqualityComparer));
     }
 
     /// <summary>
@@ -36,10 +36,10 @@ public class HashDictionary<K, V> : DictionaryBase<K, V>, IDictionary<K, V>
     /// <param name="capacity">The initial capacity. Will be rounded upwards to nearest
     /// power of 2, at least 16.</param>
     /// <param name="fill">The expansion threshold. Must be between 10% and 90%.</param>
-    /// <param name="keyequalityComparer">The external key equalitySCG.Comparer</param>
-    public HashDictionary(int capacity, double fill, SCG.IEqualityComparer<K> keyequalityComparer)
-        : base(keyequalityComparer)
+    /// <param name="keyEqualityComparer">The external key equalitySCG.Comparer</param>
+    public HashDictionary(int capacity, double fill, SCG.IEqualityComparer<K> keyEqualityComparer)
+        : base(keyEqualityComparer)
     {
-        pairs = new HashSet<System.Collections.Generic.KeyValuePair<K, V>>(capacity, fill, new KeyValuePairEqualityComparer<K, V>(keyequalityComparer));
+        pairs = new HashSet<SCG.KeyValuePair<K, V>>(capacity, fill, new KeyValuePairEqualityComparer<K, V>(keyEqualityComparer));
     }
 }

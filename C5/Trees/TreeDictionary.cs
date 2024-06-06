@@ -29,7 +29,7 @@ public class TreeDictionary<K, V> : SortedDictionaryBase<K, V>, IDictionary<K, V
     private TreeDictionary(SCG.IComparer<K> comparer, SCG.IEqualityComparer<K> equalityComparer)
         : base(comparer, equalityComparer)
     {
-        pairs = sortedpairs = new TreeSet<System.Collections.Generic.KeyValuePair<K, V>>(new KeyValuePairComparer<K, V>(comparer));
+        pairs = sortedPairs = new TreeSet<System.Collections.Generic.KeyValuePair<K, V>>(new KeyValuePairComparer<K, V>(comparer));
     }
 
     #endregion
@@ -43,7 +43,7 @@ public class TreeDictionary<K, V> : SortedDictionaryBase<K, V>, IDictionary<K, V
     {
         TreeDictionary<K, V> res = (TreeDictionary<K, V>)MemberwiseClone();
 
-        res.pairs = (TreeSet<System.Collections.Generic.KeyValuePair<K, V>>)((TreeSet<System.Collections.Generic.KeyValuePair<K, V>>)sortedpairs).Snapshot();
+        res.pairs = (TreeSet<System.Collections.Generic.KeyValuePair<K, V>>)((TreeSet<System.Collections.Generic.KeyValuePair<K, V>>)sortedPairs).Snapshot();
         return res;
     }
 }

@@ -17,7 +17,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <summary>
     ///
     /// </summary>
-    protected ISorted<SCG.KeyValuePair<K, V>> sortedpairs;
+    protected ISorted<SCG.KeyValuePair<K, V>> sortedPairs;
     private readonly SCG.IComparer<K> keycomparer;
 
     /// <summary>
@@ -41,7 +41,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     ///
     /// </summary>
     /// <value></value>
-    public new ISorted<K>? Keys => new SortedKeysCollection(this, sortedpairs, keycomparer, EqualityComparer);
+    public new ISorted<K>? Keys => new SortedKeysCollection(this, sortedPairs, keycomparer, EqualityComparer);
 
     /// <summary>
     /// Find the entry in the dictionary whose key is the
@@ -52,7 +52,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns>True if key has a predecessor</returns>
     public bool TryPredecessor(K key, out SCG.KeyValuePair<K, V> res)
     {
-        return sortedpairs.TryPredecessor(new SCG.KeyValuePair<K, V>(key, default), out res);
+        return sortedPairs.TryPredecessor(new SCG.KeyValuePair<K, V>(key, default), out res);
     }
 
     /// <summary>
@@ -64,7 +64,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns>True if the key has a successor</returns>
     public bool TrySuccessor(K key, out SCG.KeyValuePair<K, V> res)
     {
-        return sortedpairs.TrySuccessor(new SCG.KeyValuePair<K, V>(key, default), out res);
+        return sortedPairs.TrySuccessor(new SCG.KeyValuePair<K, V>(key, default), out res);
     }
 
     /// <summary>
@@ -76,7 +76,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns>True if key has a weak predecessor</returns>
     public bool TryWeakPredecessor(K key, out SCG.KeyValuePair<K, V> res)
     {
-        return sortedpairs.TryWeakPredecessor(new SCG.KeyValuePair<K, V>(key, default), out res);
+        return sortedPairs.TryWeakPredecessor(new SCG.KeyValuePair<K, V>(key, default), out res);
     }
 
     /// <summary>
@@ -88,7 +88,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns>True if the key has a weak successor</returns>
     public bool TryWeakSuccessor(K key, out SCG.KeyValuePair<K, V> res)
     {
-        return sortedpairs.TryWeakSuccessor(new SCG.KeyValuePair<K, V>(key, default), out res);
+        return sortedPairs.TryWeakSuccessor(new SCG.KeyValuePair<K, V>(key, default), out res);
     }
 
     /// <summary>
@@ -100,7 +100,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns>The entry</returns>
     public SCG.KeyValuePair<K, V> Predecessor(K key)
     {
-        return sortedpairs.Predecessor(new SCG.KeyValuePair<K, V>(key, default));
+        return sortedPairs.Predecessor(new SCG.KeyValuePair<K, V>(key, default));
     }
 
     /// <summary>
@@ -112,7 +112,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns>The entry</returns>
     public SCG.KeyValuePair<K, V> Successor(K key)
     {
-        return sortedpairs.Successor(new SCG.KeyValuePair<K, V>(key, default));
+        return sortedPairs.Successor(new SCG.KeyValuePair<K, V>(key, default));
     }
 
     /// <summary>
@@ -124,7 +124,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns>The entry</returns>
     public SCG.KeyValuePair<K, V> WeakPredecessor(K key)
     {
-        return sortedpairs.WeakPredecessor(new SCG.KeyValuePair<K, V>(key, default));
+        return sortedPairs.WeakPredecessor(new SCG.KeyValuePair<K, V>(key, default));
     }
 
     /// <summary>
@@ -136,7 +136,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns>The entry</returns>
     public SCG.KeyValuePair<K, V> WeakSuccessor(K key)
     {
-        return sortedpairs.WeakSuccessor(new SCG.KeyValuePair<K, V>(key, default));
+        return sortedPairs.WeakSuccessor(new SCG.KeyValuePair<K, V>(key, default));
     }
 
     #endregion
@@ -149,7 +149,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns></returns>
     public SCG.KeyValuePair<K, V> FindMin()
     {
-        return sortedpairs.FindMin();
+        return sortedPairs.FindMin();
     }
 
     /// <summary>
@@ -158,7 +158,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns></returns>
     public SCG.KeyValuePair<K, V> DeleteMin()
     {
-        return sortedpairs.DeleteMin();
+        return sortedPairs.DeleteMin();
     }
 
     /// <summary>
@@ -167,7 +167,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns></returns>
     public SCG.KeyValuePair<K, V> FindMax()
     {
-        return sortedpairs.FindMax();
+        return sortedPairs.FindMax();
     }
 
     /// <summary>
@@ -176,7 +176,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns></returns>
     public SCG.KeyValuePair<K, V> DeleteMax()
     {
-        return sortedpairs.DeleteMax();
+        return sortedPairs.DeleteMax();
     }
 
     /// <summary>
@@ -190,7 +190,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns></returns>
     public bool Cut(IComparable<K> cutter, out SCG.KeyValuePair<K, V> lowEntry, out bool lowIsValid, out SCG.KeyValuePair<K, V> highEntry, out bool highIsValid)
     {
-        return sortedpairs.Cut(new KeyValuePairComparable(cutter), out lowEntry, out lowIsValid, out highEntry, out highIsValid);
+        return sortedPairs.Cut(new KeyValuePairComparable(cutter), out lowEntry, out lowIsValid, out highEntry, out highIsValid);
     }
 
     /// <summary>
@@ -200,7 +200,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns></returns>
     public IDirectedEnumerable<SCG.KeyValuePair<K, V>> RangeFrom(K bot)
     {
-        return sortedpairs.RangeFrom(new SCG.KeyValuePair<K, V>(bot, default));
+        return sortedPairs.RangeFrom(new SCG.KeyValuePair<K, V>(bot, default));
     }
 
     /// <summary>
@@ -211,7 +211,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns></returns>
     public IDirectedEnumerable<SCG.KeyValuePair<K, V>> RangeFromTo(K bot, K top)
     {
-        return sortedpairs.RangeFromTo(new SCG.KeyValuePair<K, V>(bot, default), new SCG.KeyValuePair<K, V>(top, default));
+        return sortedPairs.RangeFromTo(new SCG.KeyValuePair<K, V>(bot, default), new SCG.KeyValuePair<K, V>(top, default));
     }
 
     /// <summary>
@@ -221,7 +221,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns></returns>
     public IDirectedEnumerable<SCG.KeyValuePair<K, V>> RangeTo(K top)
     {
-        return sortedpairs.RangeTo(new SCG.KeyValuePair<K, V>(top, default));
+        return sortedPairs.RangeTo(new SCG.KeyValuePair<K, V>(top, default));
     }
 
     /// <summary>
@@ -230,7 +230,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns></returns>
     public IDirectedCollectionValue<SCG.KeyValuePair<K, V>> RangeAll()
     {
-        return sortedpairs.RangeAll();
+        return sortedPairs.RangeAll();
     }
 
     /// <summary>
@@ -239,7 +239,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <param name="items"></param>
     public void AddSorted(SCG.IEnumerable<SCG.KeyValuePair<K, V>> items)
     {
-        sortedpairs.AddSorted(items);
+        sortedPairs.AddSorted(items);
     }
 
     /// <summary>
@@ -248,7 +248,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <param name="lowKey"></param>
     public void RemoveRangeFrom(K lowKey)
     {
-        sortedpairs.RemoveRangeFrom(new SCG.KeyValuePair<K, V>(lowKey, default));
+        sortedPairs.RemoveRangeFrom(new SCG.KeyValuePair<K, V>(lowKey, default));
     }
 
     /// <summary>
@@ -258,7 +258,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <param name="highKey"></param>
     public void RemoveRangeFromTo(K lowKey, K highKey)
     {
-        sortedpairs.RemoveRangeFromTo(new SCG.KeyValuePair<K, V>(lowKey, default), new SCG.KeyValuePair<K, V>(highKey, default));
+        sortedPairs.RemoveRangeFromTo(new SCG.KeyValuePair<K, V>(lowKey, default), new SCG.KeyValuePair<K, V>(highKey, default));
     }
 
     /// <summary>
@@ -267,7 +267,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <param name="highKey"></param>
     public void RemoveRangeTo(K highKey)
     {
-        sortedpairs.RemoveRangeTo(new SCG.KeyValuePair<K, V>(highKey, default));
+        sortedPairs.RemoveRangeTo(new SCG.KeyValuePair<K, V>(highKey, default));
     }
 
     #endregion

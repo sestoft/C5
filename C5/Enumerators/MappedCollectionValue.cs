@@ -5,26 +5,26 @@ namespace C5;
 
 internal abstract class MappedCollectionValue<T, V> : CollectionValueBase<V>
 {
-    private readonly ICollectionValue<T> collectionValue;
+    private readonly ICollectionValue<T> _collectionValue;
 
     public abstract V Map(T item);
 
     protected MappedCollectionValue(ICollectionValue<T> collectionValue)
     {
-        this.collectionValue = collectionValue;
+        _collectionValue = collectionValue;
     }
 
-    public override V Choose() { return Map(collectionValue.Choose()); }
+    public override V Choose() => Map(_collectionValue.Choose());
 
-    public override bool IsEmpty => collectionValue.IsEmpty;
+    public override bool IsEmpty => _collectionValue.IsEmpty;
 
-    public override int Count => collectionValue.Count;
+    public override int Count => _collectionValue.Count;
 
-    public override Speed CountSpeed => collectionValue.CountSpeed;
+    public override Speed CountSpeed => _collectionValue.CountSpeed;
 
     public override System.Collections.Generic.IEnumerator<V> GetEnumerator()
     {
-        foreach (var item in collectionValue)
+        foreach (var item in _collectionValue)
         {
             yield return Map(item);
         }
