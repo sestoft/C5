@@ -7,34 +7,23 @@ using SCG = System.Collections.Generic;
 
 namespace C5.Tests.arrays.list
 {
-    using CollectionOfInt = ArrayList<int>;
-
     [TestFixture]
     public class GenericTesters
     {
         [Test]
         public void TestEvents()
         {
-            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.ListTester<CollectionOfInt>().Test(factory);
-            new C5.Tests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory);
-            new C5.Tests.Templates.Events.StackTester<CollectionOfInt>().Test(factory);
+            ArrayList<int> factory() { return new ArrayList<int>(TenEqualityComparer.Default); }
+            new C5.Tests.Templates.Events.ListTester<ArrayList<int>>().Test(factory);
+            new C5.Tests.Templates.Events.QueueTester<ArrayList<int>>().Test(factory);
+            new C5.Tests.Templates.Events.StackTester<ArrayList<int>>().Test(factory);
         }
-
-        //[Test]
-        //public void Extensible()
-        //{
-        //    C5.Tests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5.Tests.Templates.Extensible.Clone.ViewTester<CollectionOfInt>();
-        //    C5.Tests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-        //    C5.Tests.Templates.Extensible.Serialization.ViewTester<CollectionOfInt>();
-        //}
 
         [Test]
         public void List()
         {
-            Templates.List.Dispose.Tester<CollectionOfInt>();
-            Templates.List.SCG_IList.Tester<CollectionOfInt>();
+            Templates.List.Dispose.Tester<ArrayList<int>>();
+            Templates.List.SCG_IList.Tester<ArrayList<int>>();
         }
     }
 
@@ -437,7 +426,7 @@ namespace C5.Tests.arrays.list
             }
 
             [TearDown]
-            public void Dispose() { list = null; seen = null; }
+            public void Dispose() { list.Dispose(); seen = null; }
 
             [Test]
             public void ViewChanged()
@@ -582,7 +571,7 @@ namespace C5.Tests.arrays.list
             }
 
             [TearDown]
-            public void Dispose() { list = null; seen = null; }
+            public void Dispose() { list.Dispose(); seen = null; }
         }
     }
 
@@ -676,7 +665,7 @@ namespace C5.Tests.arrays.list
 
 
             [TearDown]
-            public void Dispose() { list = null; }
+            public void Dispose() { list.Dispose(); }
         }
 
         /// <summary>
@@ -769,7 +758,7 @@ namespace C5.Tests.arrays.list
 
 
             [TearDown]
-            public void Dispose() { list = null; }
+            public void Dispose() { list.Dispose(); }
         }
 
 
@@ -851,7 +840,7 @@ namespace C5.Tests.arrays.list
             }
 
             [TearDown]
-            public void Dispose() { list = null; }
+            public void Dispose() { list.Dispose(); }
         }
     }
 
@@ -931,7 +920,7 @@ namespace C5.Tests.arrays.list
             }
 
             [TearDown]
-            public void Dispose() { list = null; }
+            public void Dispose() { list.Dispose(); }
         }
 
         [TestFixture]
@@ -948,7 +937,7 @@ namespace C5.Tests.arrays.list
             }
 
             [TearDown]
-            public void Dispose() { list = null; }
+            public void Dispose() { list.Dispose(); }
 
             [Test]
             public void Find()
@@ -1002,7 +991,7 @@ namespace C5.Tests.arrays.list
             public void Init() { list = new ArrayList<int>(); }
 
             [TearDown]
-            public void Dispose() { list = null; }
+            public void Dispose() { list.Dispose(); }
 
             [Test]
             public void Test()
@@ -1035,7 +1024,7 @@ namespace C5.Tests.arrays.list
 
 
             [TearDown]
-            public void Dispose() { list = null; }
+            public void Dispose() { list.Dispose(); }
 
 
             private string aeq(int[] a, params int[] b)
@@ -1123,7 +1112,7 @@ namespace C5.Tests.arrays.list
 
 
             [TearDown]
-            public void Dispose() { list = null; }
+            public void Dispose() { list.Dispose(); }
 
 
             [Test]
@@ -1336,7 +1325,7 @@ namespace C5.Tests.arrays.list
 
 
             [TearDown]
-            public void Dispose() { list = null; }
+            public void Dispose() { list.Dispose(); }
         }
     }
 
@@ -1348,7 +1337,7 @@ namespace C5.Tests.arrays.list
         [TestFixture]
         public class Searching
         {
-            private IIndexed<int> dit;
+            private ArrayList<int> dit;
 
 
             [SetUp]
@@ -1377,14 +1366,14 @@ namespace C5.Tests.arrays.list
             [TearDown]
             public void Dispose()
             {
-                dit = null;
+                dit.Dispose();
             }
         }
 
         [TestFixture]
         public class Removing
         {
-            private IIndexed<int> dit;
+            private ArrayList<int> dit;
 
 
             [SetUp]
@@ -1461,7 +1450,7 @@ namespace C5.Tests.arrays.list
             [TearDown]
             public void Dispose()
             {
-                dit = null;
+                dit.Dispose();
             }
         }
     }
@@ -1479,7 +1468,7 @@ namespace C5.Tests.arrays.list
 
 
             [TearDown]
-            public void Dispose() { lst = null; }
+            public void Dispose() { lst.Dispose(); }
 
 
             [Test]
@@ -1594,14 +1583,11 @@ namespace C5.Tests.arrays.list
         {
             private IList<int> lst;
 
-
             [SetUp]
             public void Init() { lst = new ArrayList<int>(); }
 
-
             [TearDown]
-            public void Dispose() { lst = null; }
-
+            public void Dispose() { lst.Dispose(); }
 
             [Test]
             public void Insert()
@@ -1901,21 +1887,21 @@ namespace C5.Tests.arrays.list
         [TestFixture]
         public class Combined
         {
-            private IList<System.Collections.Generic.KeyValuePair<int, int>> lst;
+            private IList<SCG.KeyValuePair<int, int>> lst;
 
             [SetUp]
             public void Init()
             {
-                lst = new ArrayList<System.Collections.Generic.KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
+                lst = new ArrayList<SCG.KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
                 for (int i = 0; i < 10; i++)
                 {
-                    lst.Add(new System.Collections.Generic.KeyValuePair<int, int>(i, i + 30));
+                    lst.Add(new SCG.KeyValuePair<int, int>(i, i + 30));
                 }
             }
 
 
             [TearDown]
-            public void Dispose() { lst = null; }
+            public void Dispose() { lst.Dispose(); }
 
 
             [Test]
@@ -2012,7 +1998,7 @@ namespace C5.Tests.arrays.list
 
 
             [TearDown]
-            public void Dispose() { lst = null; }
+            public void Dispose() { lst.Dispose(); }
 
 
             [Test]
@@ -2081,7 +2067,7 @@ namespace C5.Tests.arrays.list
 
 
             [TearDown]
-            public void Dispose() { lst = null; }
+            public void Dispose() { lst.Dispose(); }
 
 
             [Test]
@@ -2107,7 +2093,7 @@ namespace C5.Tests.arrays.list
         [TestFixture]
         public class Stack
         {
-            private IStack<int> list;
+            private ArrayList<int> list;
 
 
             [SetUp]
@@ -2142,14 +2128,14 @@ namespace C5.Tests.arrays.list
             [TearDown]
             public void Dispose()
             {
-                list = null;
+                list.Dispose();
             }
         }
 
         [TestFixture]
         public class Queue
         {
-            private IQueue<int> list;
+            private ArrayList<int> list;
 
             [SetUp]
             public void Init() { list = new ArrayList<int>(); }
@@ -2181,7 +2167,7 @@ namespace C5.Tests.arrays.list
 
 
             [TearDown]
-            public void Dispose() { list = null; }
+            public void Dispose() { list.Dispose(); }
         }
     }
 
@@ -2199,7 +2185,7 @@ namespace C5.Tests.arrays.list
 
 
             [TearDown]
-            public void Dispose() { lst = null; }
+            public void Dispose() { lst.Dispose(); }
 
 
             [Test]
@@ -2296,7 +2282,8 @@ namespace C5.Tests.arrays.list
             [TearDown]
             public void Dispose()
             {
-                list = view = null;
+                list.Dispose();
+                view.Dispose();
             }
 
             private void check()
@@ -2768,7 +2755,7 @@ namespace C5.Tests.arrays.list
         [TestFixture]
         public class MulipleViews
         {
-            private IList<int> list;
+            private ArrayList<int> list;
             private IList<int>[][] views;
             [SetUp]
             public void Init()
@@ -2792,7 +2779,7 @@ namespace C5.Tests.arrays.list
             [TearDown]
             public void Dispose()
             {
-                list = null;
+                list.Dispose();
                 views = null;
             }
             [Test]
@@ -3240,9 +3227,13 @@ namespace C5.Tests.arrays.list
         [TestFixture]
         public class MultiLevelUnorderedOfUnOrdered
         {
-            private ICollection<int> dit, dat, dut;
+            private ArrayList<int> dit;
+            private TreeSet<int> dat;
+            private ArrayList<int> dut;
 
-            private ICollection<ICollection<int>> Dit, Dat, Dut;
+            private ArrayList<ICollection<int>> Dit;
+            private ArrayList<ICollection<int>> Dat;
+            private ArrayList<ICollection<int>> Dut;
 
 
             [SetUp]
@@ -3281,19 +3272,25 @@ namespace C5.Tests.arrays.list
             [TearDown]
             public void Dispose()
             {
-                dit = dat = dut = null;
-                Dit = Dat = Dut = null;
+                dit.Dispose();
+                dat.Dispose();
+                dut.Dispose();
+                Dit.Dispose();
+                Dat.Dispose();
+                Dut.Dispose();
             }
         }
-
-
 
         [TestFixture]
         public class MultiLevelOrderedOfUnOrdered
         {
-            private ICollection<int> dit, dat, dut;
+            private ArrayList<int> dit;
+            private TreeSet<int> dat;
+            private ArrayList<int> dut;
 
-            private ISequenced<ICollection<int>> Dit, Dat, Dut;
+            private ArrayList<ICollection<int>> Dit;
+            private ArrayList<ICollection<int>> Dat;
+            private ArrayList<ICollection<int>> Dut;
 
 
             [SetUp]
@@ -3333,8 +3330,12 @@ namespace C5.Tests.arrays.list
             [TearDown]
             public void Dispose()
             {
-                dit = dat = dut = null;
-                Dit = Dat = Dut = null;
+                dit.Dispose();
+                dat.Dispose();
+                dut.Dispose();
+                Dit.Dispose();
+                Dat.Dispose();
+                Dut.Dispose();
             }
         }
 
@@ -3343,9 +3344,15 @@ namespace C5.Tests.arrays.list
         [TestFixture]
         public class MultiLevelUnOrderedOfOrdered
         {
-            private ISequenced<int> dit, dat, dut, dot;
+            private TreeSet<int> dit;
+            private ArrayList<int> dat;
+            private ArrayList<int> dut;
+            private ArrayList<int> dot;
 
-            private ICollection<ISequenced<int>> Dit, Dat, Dut, Dot;
+            private ArrayList<ISequenced<int>> Dit;
+            private ArrayList<ISequenced<int>> Dat;
+            private ArrayList<ISequenced<int>> Dut;
+            private ArrayList<ISequenced<int>> Dot;
 
 
             [SetUp]
@@ -3365,7 +3372,6 @@ namespace C5.Tests.arrays.list
                 Dot = new ArrayList<ISequenced<int>>();
             }
 
-
             [Test]
             public void Check()
             {
@@ -3373,7 +3379,6 @@ namespace C5.Tests.arrays.list
                 Assert.IsTrue(dit.SequencedEquals(dot));
                 Assert.IsFalse(dit.SequencedEquals(dut));
             }
-
 
             [Test]
             public void Multi()
@@ -3387,23 +3392,32 @@ namespace C5.Tests.arrays.list
                 Assert.IsTrue(Dit.UnsequencedEquals(Dot));
             }
 
-
             [TearDown]
             public void Dispose()
             {
-                dit = dat = dut = dot = null;
-                Dit = Dat = Dut = Dot = null;
+                dit.Dispose();
+                dat.Dispose();
+                dut.Dispose();
+                dot.Dispose();
+                Dit.Dispose();
+                Dat.Dispose();
+                Dut.Dispose();
+                Dot.Dispose();
             }
         }
-
-
 
         [TestFixture]
         public class MultiLevelOrderedOfOrdered
         {
-            private ISequenced<int> dit, dat, dut, dot;
+            private TreeSet<int> dit;
+            private ArrayList<int> dat;
+            private ArrayList<int> dut;
+            private ArrayList<int> dot;
 
-            private ISequenced<ISequenced<int>> Dit, Dat, Dut, Dot;
+            private ArrayList<ISequenced<int>> Dit;
+            private ArrayList<ISequenced<int>> Dat;
+            private ArrayList<ISequenced<int>> Dut;
+            private ArrayList<ISequenced<int>> Dot;
 
 
             [SetUp]
@@ -3449,13 +3463,17 @@ namespace C5.Tests.arrays.list
             [TearDown]
             public void Dispose()
             {
-                dit = dat = dut = dot = null;
-                Dit = Dat = Dut = Dot = null;
+                dit.Dispose();
+                dat.Dispose();
+                dut.Dispose();
+                dot.Dispose();
+                Dit.Dispose();
+                Dat.Dispose();
+                Dut.Dispose();
+                Dot.Dispose();
             }
         }
     }
-
-
 
 
     namespace HashingAndEquals
@@ -3463,8 +3481,7 @@ namespace C5.Tests.arrays.list
         [TestFixture]
         public class ISequenced
         {
-            private ISequenced<int> dit, dat, dut;
-
+            private ArrayList<int> dit, dat, dut;
 
             [SetUp]
             public void Init()
@@ -3474,13 +3491,11 @@ namespace C5.Tests.arrays.list
                 dut = new ArrayList<int>();
             }
 
-
             [Test]
             public void EmptyEmpty()
             {
                 Assert.IsTrue(dit.SequencedEquals(dat));
             }
-
 
             [Test]
             public void EmptyNonEmpty()
@@ -3558,18 +3573,16 @@ namespace C5.Tests.arrays.list
             [TearDown]
             public void Dispose()
             {
-                dit = null;
-                dat = null;
-                dut = null;
+                dit.Dispose();
+                dat.Dispose();
+                dut.Dispose();
             }
         }
-
-
 
         [TestFixture]
         public class IEditableCollection
         {
-            private ICollection<int> dit, dat, dut;
+            private ArrayList<int> dit, dat, dut;
 
 
             [SetUp]
@@ -3579,7 +3592,6 @@ namespace C5.Tests.arrays.list
                 dat = new ArrayList<int>();
                 dut = new ArrayList<int>();
             }
-
 
             [Test]
             public void EmptyEmpty()
@@ -3622,7 +3634,6 @@ namespace C5.Tests.arrays.list
                 Assert.IsFalse(dit.UnsequencedEquals(dat));
             }
 
-
             [Test]
             public void Normal()
             {
@@ -3635,7 +3646,6 @@ namespace C5.Tests.arrays.list
                 Assert.IsTrue(dit.UnsequencedEquals(dat));
                 Assert.IsTrue(dat.UnsequencedEquals(dit));
             }
-
 
             [Test]
             public void WrongOrder()
@@ -3650,7 +3660,6 @@ namespace C5.Tests.arrays.list
                 Assert.IsTrue(dut.UnsequencedEquals(dit));
             }
 
-
             [Test]
             public void Reflexive()
             {
@@ -3661,24 +3670,21 @@ namespace C5.Tests.arrays.list
                 Assert.IsTrue(dit.UnsequencedEquals(dit));
             }
 
-
             [TearDown]
             public void Dispose()
             {
-                dit = null;
-                dat = null;
-                dut = null;
+                dit.Dispose();
+                dat.Dispose();
+                dut.Dispose();
             }
         }
-
-
 
         [TestFixture]
         public class MultiLevelUnorderedOfUnOrdered
         {
-            private ICollection<int> dit, dat, dut;
+            private ArrayList<int> dit, dat, dut;
 
-            private ICollection<ICollection<int>> Dit, Dat, Dut;
+            private ArrayList<ICollection<int>> Dit, Dat, Dut;
 
 
             [SetUp]
@@ -3717,19 +3723,21 @@ namespace C5.Tests.arrays.list
             [TearDown]
             public void Dispose()
             {
-                dit = dat = dut = null;
-                Dit = Dat = Dut = null;
+                dit.Dispose();
+                dat.Dispose();
+                dut.Dispose();
+                Dit.Dispose();
+                Dat.Dispose();
+                Dut.Dispose();
             }
         }
-
-
 
         [TestFixture]
         public class MultiLevelOrderedOfUnOrdered
         {
-            private ICollection<int> dit, dat, dut;
+            private ArrayList<int> dit, dat, dut;
 
-            private ISequenced<ICollection<int>> Dit, Dat, Dut;
+            private ArrayList<ICollection<int>> Dit, Dat, Dut;
 
 
             [SetUp]
@@ -3769,19 +3777,21 @@ namespace C5.Tests.arrays.list
             [TearDown]
             public void Dispose()
             {
-                dit = dat = dut = null;
-                Dit = Dat = Dut = null;
+                dit.Dispose();
+                dat.Dispose();
+                dut.Dispose();
+                Dit.Dispose();
+                Dat.Dispose();
+                Dut.Dispose();
             }
         }
-
-
 
         [TestFixture]
         public class MultiLevelUnOrderedOfOrdered
         {
-            private ISequenced<int> dit, dat, dut, dot;
+            private ArrayList<int> dit, dat, dut, dot;
 
-            private ICollection<ISequenced<int>> Dit, Dat, Dut, Dot;
+            private ArrayList<ISequenced<int>> Dit, Dat, Dut, Dot;
 
 
             [SetUp]
@@ -3827,8 +3837,14 @@ namespace C5.Tests.arrays.list
             [TearDown]
             public void Dispose()
             {
-                dit = dat = dut = dot = null;
-                Dit = Dat = Dut = Dot = null;
+                dit.Dispose();
+                dat.Dispose();
+                dut.Dispose();
+                dot.Dispose();
+                Dit.Dispose();
+                Dat.Dispose();
+                Dut.Dispose();
+                Dot.Dispose();
             }
         }
 
@@ -3837,9 +3853,9 @@ namespace C5.Tests.arrays.list
         [TestFixture]
         public class MultiLevelOrderedOfOrdered
         {
-            private ISequenced<int> dit, dat, dut, dot;
+            private ArrayList<int> dit, dat, dut, dot;
 
-            private ISequenced<ISequenced<int>> Dit, Dat, Dut, Dot;
+            private ArrayList<ISequenced<int>> Dit, Dat, Dut, Dot;
 
 
             [SetUp]
@@ -3885,8 +3901,14 @@ namespace C5.Tests.arrays.list
             [TearDown]
             public void Dispose()
             {
-                dit = dat = dut = dot = null;
-                Dit = Dat = Dut = Dot = null;
+                dit.Dispose();
+                dat.Dispose();
+                dut.Dispose();
+                dot.Dispose();
+                Dit.Dispose();
+                Dat.Dispose();
+                Dut.Dispose();
+                Dot.Dispose();
             }
         }
     }

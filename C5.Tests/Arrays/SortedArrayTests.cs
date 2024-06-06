@@ -7,24 +7,15 @@ using SCG = System.Collections.Generic;
 
 namespace C5.Tests.arrays.sorted
 {
-    using CollectionOfInt = SortedArray<int>;
-
     [TestFixture]
     public class GenericTesters
     {
         [Test]
         public void TestEvents()
         {
-            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory);
+            SortedArray<int> factory() { return new SortedArray<int>(TenEqualityComparer.Default); }
+            new C5.Tests.Templates.Events.SortedIndexedTester<SortedArray<int>>().Test(factory);
         }
-
-        //[Test]
-        //public void Extensible()
-        //{
-        //    C5.Tests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5.Tests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-        //}
     }
 
     internal static class Factory
@@ -1388,7 +1379,7 @@ namespace C5.Tests.arrays.sorted
             public void Dispose()
             {
                 tree = null;
-                e = null;
+                e.Dispose();
             }
         }
 
@@ -1455,7 +1446,7 @@ namespace C5.Tests.arrays.sorted
             public void Dispose()
             {
                 tree = null;
-                e = null;
+                e.Dispose();
             }
         }
     }

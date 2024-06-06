@@ -13,7 +13,7 @@ namespace C5.Tests.wrappers
         public class IList_
         {
             private ArrayList<int> list;
-            private ICollectionValue<int> guarded;
+            private GuardedList<int> guarded;
             private CollectionEventList<int> seen;
 
             [SetUp]
@@ -402,7 +402,7 @@ namespace C5.Tests.wrappers
             }
 
             [TearDown]
-            public void Dispose() { list = null; seen = null; }
+            public void Dispose() { list.Dispose(); guarded.Dispose(); seen = null; }
 
             [Test]
             public void ViewChanged()
@@ -482,7 +482,7 @@ namespace C5.Tests.wrappers
         public class StackQueue
         {
             private ArrayList<int> list;
-            private ICollectionValue<int> guarded;
+            private GuardedList<int> guarded;
             private CollectionEventList<int> seen;
 
             [SetUp]
@@ -550,7 +550,7 @@ namespace C5.Tests.wrappers
             }
 
             [TearDown]
-            public void Dispose() { list = null; seen = null; }
+            public void Dispose() { list.Dispose(); guarded.Dispose(); seen = null; }
         }
 
 

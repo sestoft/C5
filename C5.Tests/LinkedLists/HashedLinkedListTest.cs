@@ -8,32 +8,21 @@ using SCG = System.Collections.Generic;
 
 namespace C5.Tests.linkedlists.hashed
 {
-    using CollectionOfInt = HashedLinkedList<int>;
-
     [TestFixture]
     public class GenericTesters
     {
         [Test]
         public void TestEvents()
         {
-            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.ListTester<CollectionOfInt>().Test(factory);
+            HashedLinkedList<int> factory() { return new HashedLinkedList<int>(TenEqualityComparer.Default); }
+            new C5.Tests.Templates.Events.ListTester<HashedLinkedList<int>>().Test(factory);
         }
-
-        //[Test]
-        //public void Extensible()
-        //{
-        //    C5.Tests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5.Tests.Templates.Extensible.Clone.ViewTester<CollectionOfInt>();
-        //    C5.Tests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-        //    C5.Tests.Templates.Extensible.Serialization.ViewTester<CollectionOfInt>();
-        //}
 
         [Test]
         public void List()
         {
-            Templates.List.Dispose.Tester<CollectionOfInt>();
-            Templates.List.SCG_IList.Tester<CollectionOfInt>();
+            Templates.List.Dispose.Tester<HashedLinkedList<int>>();
+            Templates.List.SCG_IList.Tester<HashedLinkedList<int>>();
         }
     }
 
@@ -113,7 +102,7 @@ namespace C5.Tests.linkedlists.hashed
 
 
             [TearDown]
-            public void Dispose() { list = null; }
+            public void Dispose() { list.Dispose(); }
         }
 
 
@@ -191,7 +180,7 @@ namespace C5.Tests.linkedlists.hashed
             }
 
             [TearDown]
-            public void Dispose() { list = null; }
+            public void Dispose() { list.Dispose(); }
         }
     }
 
@@ -279,7 +268,7 @@ namespace C5.Tests.linkedlists.hashed
 
 
             [TearDown]
-            public void Dispose() { list = null; }
+            public void Dispose() { list.Dispose(); }
         }
 
         [TestFixture]
@@ -296,7 +285,7 @@ namespace C5.Tests.linkedlists.hashed
             }
 
             [TearDown]
-            public void Dispose() { list = null; }
+            public void Dispose() { list.Dispose(); }
 
             [Test]
             public void Find()
@@ -350,7 +339,7 @@ namespace C5.Tests.linkedlists.hashed
             public void Init() { list = new HashedLinkedList<int>(); }
 
             [TearDown]
-            public void Dispose() { list = null; }
+            public void Dispose() { list.Dispose(); }
 
             [Test]
             public void Test()
@@ -385,7 +374,7 @@ namespace C5.Tests.linkedlists.hashed
             [TearDown]
             public void Dispose()
             {
-                list = null;
+                list.Dispose();
             }
 
 
@@ -473,7 +462,7 @@ namespace C5.Tests.linkedlists.hashed
 
 
             [TearDown]
-            public void Dispose() { list = null; }
+            public void Dispose() { list.Dispose(); }
 
 
             [Test]
@@ -662,7 +651,7 @@ namespace C5.Tests.linkedlists.hashed
 
 
             [TearDown]
-            public void Dispose() { list = null; }
+            public void Dispose() { list.Dispose(); }
         }
     }
 
@@ -674,7 +663,7 @@ namespace C5.Tests.linkedlists.hashed
         [TestFixture]
         public class Searching
         {
-            private IIndexed<int> dit;
+            private HashedLinkedList<int> dit;
 
 
             [SetUp]
@@ -703,14 +692,16 @@ namespace C5.Tests.linkedlists.hashed
             [TearDown]
             public void Dispose()
             {
-                dit = null;
+                dit.Dispose();
             }
         }
 
         [TestFixture]
         public class Removing
         {
-            private IIndexed<int> dit;
+#pragma warning disable NUnit1032 // TODO: Breaks tests
+            private HashedLinkedList<int> dit;
+#pragma warning restore NUnit1032 // An IDisposable field/property should be Disposed in a TearDown method
 
             [SetUp]
             public void Init()
@@ -784,6 +775,7 @@ namespace C5.Tests.linkedlists.hashed
             public void Dispose()
             {
                 dit = null;
+                // not working: dit.Dispose();
             }
         }
     }
@@ -793,7 +785,7 @@ namespace C5.Tests.linkedlists.hashed
         [TestFixture]
         public class Searching
         {
-            private IList<int> lst;
+            private HashedLinkedList<int> lst;
 
 
             [SetUp]
@@ -801,7 +793,7 @@ namespace C5.Tests.linkedlists.hashed
 
 
             [TearDown]
-            public void Dispose() { lst = null; }
+            public void Dispose() { lst.Dispose(); }
 
             [Test]
             public void FirstBad()
@@ -848,37 +840,37 @@ namespace C5.Tests.linkedlists.hashed
             [Test]
             public void ThisWithUpdates()
             {
-                HashedLinkedList<System.Collections.Generic.KeyValuePair<int, int>> pairlist = new(new KeyValuePairEqualityComparer<int, int>())
+                HashedLinkedList<SCG.KeyValuePair<int, int>> pairlist = new(new KeyValuePairEqualityComparer<int, int>())
                 {
-                    new System.Collections.Generic.KeyValuePair<int, int>(10, 50),
-                    new System.Collections.Generic.KeyValuePair<int, int>(11, 51),
-                    new System.Collections.Generic.KeyValuePair<int, int>(12, 52),
-                    new System.Collections.Generic.KeyValuePair<int, int>(13, 53)
+                    new SCG.KeyValuePair<int, int>(10, 50),
+                    new SCG.KeyValuePair<int, int>(11, 51),
+                    new SCG.KeyValuePair<int, int>(12, 52),
+                    new SCG.KeyValuePair<int, int>(13, 53)
                 };
-                pairlist[2] = new System.Collections.Generic.KeyValuePair<int, int>(12, 102);
+                pairlist[2] = new SCG.KeyValuePair<int, int>(12, 102);
                 Assert.IsTrue(pairlist.Check());
-                Assert.AreEqual(new System.Collections.Generic.KeyValuePair<int, int>(12, 102), pairlist[2]);
-                pairlist[2] = new System.Collections.Generic.KeyValuePair<int, int>(22, 202);
+                Assert.AreEqual(new SCG.KeyValuePair<int, int>(12, 102), pairlist[2]);
+                pairlist[2] = new SCG.KeyValuePair<int, int>(22, 202);
                 Assert.IsTrue(pairlist.Check());
-                Assert.AreEqual(new System.Collections.Generic.KeyValuePair<int, int>(22, 202), pairlist[2]);
-                pairlist[1] = new System.Collections.Generic.KeyValuePair<int, int>(12, 303);
+                Assert.AreEqual(new SCG.KeyValuePair<int, int>(22, 202), pairlist[2]);
+                pairlist[1] = new SCG.KeyValuePair<int, int>(12, 303);
                 Assert.IsTrue(pairlist.Check());
-                Assert.AreEqual(new System.Collections.Generic.KeyValuePair<int, int>(12, 303), pairlist[1]);
-                Assert.AreEqual(new System.Collections.Generic.KeyValuePair<int, int>(22, 202), pairlist[2]);
+                Assert.AreEqual(new SCG.KeyValuePair<int, int>(12, 303), pairlist[1]);
+                Assert.AreEqual(new SCG.KeyValuePair<int, int>(22, 202), pairlist[2]);
             }
 
             [Test]
             public void ThisWithUpdatesBad()
             {
-                HashedLinkedList<System.Collections.Generic.KeyValuePair<int, int>> pairlist = new(new KeyValuePairEqualityComparer<int, int>())
+                HashedLinkedList<SCG.KeyValuePair<int, int>> pairlist = new(new KeyValuePairEqualityComparer<int, int>())
                 {
-                    new System.Collections.Generic.KeyValuePair<int, int>(10, 50),
-                    new System.Collections.Generic.KeyValuePair<int, int>(11, 51),
-                    new System.Collections.Generic.KeyValuePair<int, int>(12, 52),
-                    new System.Collections.Generic.KeyValuePair<int, int>(13, 53)
+                    new SCG.KeyValuePair<int, int>(10, 50),
+                    new SCG.KeyValuePair<int, int>(11, 51),
+                    new SCG.KeyValuePair<int, int>(12, 52),
+                    new SCG.KeyValuePair<int, int>(13, 53)
                 };
 
-                Assert.Throws<ArgumentException>(() => pairlist[2] = new System.Collections.Generic.KeyValuePair<int, int>(11, 102));
+                Assert.Throws<ArgumentException>(() => pairlist[2] = new SCG.KeyValuePair<int, int>(11, 102));
             }
 
             [Test]
@@ -937,15 +929,15 @@ namespace C5.Tests.linkedlists.hashed
         [TestFixture]
         public class Combined
         {
-            private IList<System.Collections.Generic.KeyValuePair<int, int>> lst;
+            private HashedLinkedList<SCG.KeyValuePair<int, int>> lst;
 
             [SetUp]
             public void Init()
             {
-                lst = new HashedLinkedList<System.Collections.Generic.KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
+                lst = new HashedLinkedList<SCG.KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
                 for (int i = 0; i < 10; i++)
                 {
-                    lst.Add(new System.Collections.Generic.KeyValuePair<int, int>(i, i + 30));
+                    lst.Add(new SCG.KeyValuePair<int, int>(i, i + 30));
                 }
             }
 
@@ -953,18 +945,18 @@ namespace C5.Tests.linkedlists.hashed
             [TearDown]
             public void Dispose()
             {
-                lst = null;
+                lst.Dispose();
             }
 
             [Test]
             public void Find()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+                SCG.KeyValuePair<int, int> p = new(3, 78);
 
                 Assert.IsTrue(lst.Find(ref p));
                 Assert.AreEqual(3, p.Key);
                 Assert.AreEqual(33, p.Value);
-                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+                p = new SCG.KeyValuePair<int, int>(13, 78);
                 Assert.IsFalse(lst.Find(ref p));
             }
 
@@ -972,12 +964,12 @@ namespace C5.Tests.linkedlists.hashed
             [Test]
             public void FindOrAdd()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+                SCG.KeyValuePair<int, int> p = new(3, 78);
 
                 Assert.IsTrue(lst.FindOrAdd(ref p));
                 Assert.AreEqual(3, p.Key);
                 Assert.AreEqual(33, p.Value);
-                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
+                p = new SCG.KeyValuePair<int, int>(13, 79);
                 Assert.IsFalse(lst.FindOrAdd(ref p));
                 Assert.AreEqual(13, lst[10].Key);
                 Assert.AreEqual(79, lst[10].Value);
@@ -987,12 +979,12 @@ namespace C5.Tests.linkedlists.hashed
             [Test]
             public void Update()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+                SCG.KeyValuePair<int, int> p = new(3, 78);
 
                 Assert.IsTrue(lst.Update(p));
                 Assert.AreEqual(3, lst[3].Key);
                 Assert.AreEqual(78, lst[3].Value);
-                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+                p = new SCG.KeyValuePair<int, int>(13, 78);
                 Assert.IsFalse(lst.Update(p));
             }
 
@@ -1000,12 +992,12 @@ namespace C5.Tests.linkedlists.hashed
             [Test]
             public void UpdateOrAdd1()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+                SCG.KeyValuePair<int, int> p = new(3, 78);
 
                 Assert.IsTrue(lst.UpdateOrAdd(p));
                 Assert.AreEqual(3, lst[3].Key);
                 Assert.AreEqual(78, lst[3].Value);
-                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
+                p = new SCG.KeyValuePair<int, int>(13, 79);
                 Assert.IsFalse(lst.UpdateOrAdd(p));
                 Assert.AreEqual(13, lst[10].Key);
                 Assert.AreEqual(79, lst[10].Value);
@@ -1027,14 +1019,14 @@ namespace C5.Tests.linkedlists.hashed
             [Test]
             public void RemoveWithReturn()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+                SCG.KeyValuePair<int, int> p = new(3, 78);
 
                 Assert.IsTrue(lst.Remove(p, out p));
                 Assert.AreEqual(3, p.Key);
                 Assert.AreEqual(33, p.Value);
                 Assert.AreEqual(4, lst[3].Key);
                 Assert.AreEqual(34, lst[3].Value);
-                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+                p = new SCG.KeyValuePair<int, int>(13, 78);
                 Assert.IsFalse(lst.Remove(p, out _));
             }
         }
@@ -1043,7 +1035,9 @@ namespace C5.Tests.linkedlists.hashed
         [TestFixture]
         public class Inserting
         {
+#pragma warning disable NUnit1032 // TODO: Breaks tests
             private IList<int> lst;
+#pragma warning restore NUnit1032 // An IDisposable field/property should be Disposed in a TearDown method
 
 
             [SetUp]
@@ -1051,7 +1045,10 @@ namespace C5.Tests.linkedlists.hashed
 
 
             [TearDown]
-            public void Dispose() { lst = null; }
+            public void Dispose()
+            {
+                // lst.Dispose();
+            }
 
 
             [Test]
@@ -1411,7 +1408,7 @@ namespace C5.Tests.linkedlists.hashed
             [TearDown]
             public void Dispose()
             {
-                lst = null;
+                lst.Dispose();
             }
 
             [Test]
@@ -1430,7 +1427,7 @@ namespace C5.Tests.linkedlists.hashed
         [TestFixture]
         public class ShuffleTests
         {
-            private IList<int> lst;
+            private HashedLinkedList<int> lst;
 
 
             [SetUp]
@@ -1438,7 +1435,7 @@ namespace C5.Tests.linkedlists.hashed
 
 
             [TearDown]
-            public void Dispose() { lst = null; }
+            public void Dispose() { lst.Dispose(); }
 
 
             [Test]
@@ -1536,7 +1533,7 @@ namespace C5.Tests.linkedlists.hashed
 
 
             [TearDown]
-            public void Dispose() { lst = null; }
+            public void Dispose() { lst.Dispose(); }
 
 
             [Test]
@@ -1611,8 +1608,10 @@ namespace C5.Tests.linkedlists.hashed
         [TestFixture]
         public class Simple
         {
+#pragma warning disable NUnit1032 // TODO: Breaks tests
             private HashedLinkedList<int> list;
             private HashedLinkedList<int> view;
+#pragma warning restore NUnit1032 // An IDisposable field/property should be Disposed in a TearDown method
 
             [SetUp]
             public void Init()
@@ -1624,8 +1623,8 @@ namespace C5.Tests.linkedlists.hashed
             [TearDown]
             public void Dispose()
             {
-                list = null;
-                view = null;
+                //list.Dispose();
+                //view.Dispose();
             }
 
             private void check()
@@ -2058,7 +2057,9 @@ namespace C5.Tests.linkedlists.hashed
         [TestFixture]
         public class MultipleViews
         {
+#pragma warning disable NUnit1032 // TODO: Breaks tests
             private IList<int> list;
+#pragma warning restore NUnit1032 // An IDisposable field/property should be Disposed in a TearDown method
             private IList<int>[][] views;
             [SetUp]
             public void Init()
@@ -2082,7 +2083,7 @@ namespace C5.Tests.linkedlists.hashed
             [TearDown]
             public void Dispose()
             {
-                list = null;
+                //list.Dispose();
                 views = null;
             }
             [Test]
@@ -2547,7 +2548,7 @@ namespace C5.Tests.linkedlists.hashed
         [TestFixture]
         public class ISequenced
         {
-            private ISequenced<int> dit, dat, dut;
+            private HashedLinkedList<int> dit, dat, dut;
 
 
             [SetUp]
@@ -2642,9 +2643,9 @@ namespace C5.Tests.linkedlists.hashed
             [TearDown]
             public void Dispose()
             {
-                dit = null;
-                dat = null;
-                dut = null;
+                dit.Dispose();
+                dat.Dispose();
+                dut.Dispose();
             }
         }
 
@@ -2653,7 +2654,7 @@ namespace C5.Tests.linkedlists.hashed
         [TestFixture]
         public class IEditableCollection
         {
-            private ICollection<int> dit, dat, dut;
+            private HashedLinkedList<int> dit, dat, dut;
 
 
             [SetUp]
@@ -2749,9 +2750,9 @@ namespace C5.Tests.linkedlists.hashed
             [TearDown]
             public void Dispose()
             {
-                dit = null;
-                dat = null;
-                dut = null;
+                dit.Dispose();
+                dat.Dispose();
+                dut.Dispose();
             }
         }
 
@@ -2760,9 +2761,9 @@ namespace C5.Tests.linkedlists.hashed
         [TestFixture]
         public class MultiLevelUnorderedOfUnOrdered
         {
-            private ICollection<int> dit, dat, dut;
+            private HashedLinkedList<int> dit, dat, dut;
 
-            private ICollection<ICollection<int>> Dit, Dat, Dut;
+            private HashedLinkedList<ICollection<int>> Dit, Dat, Dut;
 
 
             [SetUp]
@@ -2801,8 +2802,12 @@ namespace C5.Tests.linkedlists.hashed
             [TearDown]
             public void Dispose()
             {
-                dit = dat = dut = null;
-                Dit = Dat = Dut = null;
+                dit.Dispose();
+                dat.Dispose();
+                dut.Dispose();
+                Dit.Dispose();
+                Dat.Dispose();
+                Dut.Dispose();
             }
         }
 
@@ -2811,9 +2816,9 @@ namespace C5.Tests.linkedlists.hashed
         [TestFixture]
         public class MultiLevelOrderedOfUnOrdered
         {
-            private ICollection<int> dit, dat, dut;
+            private HashedLinkedList<int> dit, dat, dut;
 
-            private ISequenced<ICollection<int>> Dit, Dat, Dut;
+            private HashedLinkedList<ICollection<int>> Dit, Dat, Dut;
 
 
             [SetUp]
@@ -2853,8 +2858,12 @@ namespace C5.Tests.linkedlists.hashed
             [TearDown]
             public void Dispose()
             {
-                dit = dat = dut = null;
-                Dit = Dat = Dut = null;
+                dit.Dispose();
+                dat.Dispose();
+                dut.Dispose();
+                Dit.Dispose();
+                Dat.Dispose();
+                Dut.Dispose();
             }
         }
 
@@ -2863,9 +2872,9 @@ namespace C5.Tests.linkedlists.hashed
         [TestFixture]
         public class MultiLevelUnOrderedOfOrdered
         {
-            private ISequenced<int> dit, dat, dut, dot;
+            private HashedLinkedList<int> dit, dat, dut, dot;
 
-            private ICollection<ISequenced<int>> Dit, Dat, Dut, Dot;
+            private HashedLinkedList<ISequenced<int>> Dit, Dat, Dut, Dot;
 
 
             [SetUp]
@@ -2911,8 +2920,14 @@ namespace C5.Tests.linkedlists.hashed
             [TearDown]
             public void Dispose()
             {
-                dit = dat = dut = dot = null;
-                Dit = Dat = Dut = Dot = null;
+                dit.Dispose();
+                dat.Dispose();
+                dut.Dispose();
+                dot.Dispose();
+                Dit.Dispose();
+                Dat.Dispose();
+                Dut.Dispose();
+                Dot.Dispose();
             }
         }
 
@@ -2921,9 +2936,9 @@ namespace C5.Tests.linkedlists.hashed
         [TestFixture]
         public class MultiLevelOrderedOfOrdered
         {
-            private ISequenced<int> dit, dat, dut, dot;
+            private HashedLinkedList<int> dit, dat, dut, dot;
 
-            private ISequenced<ISequenced<int>> Dit, Dat, Dut, Dot;
+            private HashedLinkedList<ISequenced<int>> Dit, Dat, Dut, Dot;
 
 
             [SetUp]
@@ -2969,8 +2984,14 @@ namespace C5.Tests.linkedlists.hashed
             [TearDown]
             public void Dispose()
             {
-                dit = dat = dut = dot = null;
-                Dit = Dat = Dut = Dot = null;
+                dit.Dispose();
+                dat.Dispose();
+                dut.Dispose();
+                dot.Dispose();
+                Dit.Dispose();
+                Dat.Dispose();
+                Dut.Dispose();
+                Dot.Dispose();
             }
         }
     }

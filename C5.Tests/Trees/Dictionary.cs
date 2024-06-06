@@ -312,7 +312,7 @@ namespace C5.Tests.trees.RBDictionary
     {
         private TreeDictionary<string, string> dict;
 
-        private SCG.IEnumerator<System.Collections.Generic.KeyValuePair<string, string>> dictenum;
+        private SCG.IEnumerator<SCG.KeyValuePair<string, string>> dictEnum;
 
 
         [SetUp]
@@ -324,14 +324,14 @@ namespace C5.Tests.trees.RBDictionary
                 ["T"] = "B",
                 ["R"] = "C"
             };
-            dictenum = dict.GetEnumerator();
+            dictEnum = dict.GetEnumerator();
         }
 
 
         [TearDown]
         public void Dispose()
         {
-            dictenum = null;
+            dictEnum.Dispose();
             dict = null;
         }
 
@@ -420,13 +420,13 @@ namespace C5.Tests.trees.RBDictionary
         [Test]
         public void NormalUse()
         {
-            Assert.IsTrue(dictenum.MoveNext());
-            Assert.AreEqual(dictenum.Current, new System.Collections.Generic.KeyValuePair<string, string>("R", "C"));
-            Assert.IsTrue(dictenum.MoveNext());
-            Assert.AreEqual(dictenum.Current, new System.Collections.Generic.KeyValuePair<string, string>("S", "A"));
-            Assert.IsTrue(dictenum.MoveNext());
-            Assert.AreEqual(dictenum.Current, new System.Collections.Generic.KeyValuePair<string, string>("T", "B"));
-            Assert.IsFalse(dictenum.MoveNext());
+            Assert.IsTrue(dictEnum.MoveNext());
+            Assert.AreEqual(dictEnum.Current, new System.Collections.Generic.KeyValuePair<string, string>("R", "C"));
+            Assert.IsTrue(dictEnum.MoveNext());
+            Assert.AreEqual(dictEnum.Current, new System.Collections.Generic.KeyValuePair<string, string>("S", "A"));
+            Assert.IsTrue(dictEnum.MoveNext());
+            Assert.AreEqual(dictEnum.Current, new System.Collections.Generic.KeyValuePair<string, string>("T", "B"));
+            Assert.IsFalse(dictEnum.MoveNext());
         }
     }
 

@@ -8,9 +8,6 @@ using SCG = System.Collections.Generic;
 
 namespace C5.Tests.trees.TreeBag
 {
-    using CollectionOfInt = TreeBag<int>;
-
-
     [TestFixture]
     public class NewTest
     {
@@ -62,16 +59,9 @@ namespace C5.Tests.trees.TreeBag
         [Test]
         public void TestEvents()
         {
-            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory);
+            TreeBag<int> factory() { return new TreeBag<int>(TenEqualityComparer.Default); }
+            new C5.Tests.Templates.Events.SortedIndexedTester<TreeBag<int>>().Test(factory);
         }
-
-        //[Test]
-        //public void Extensible()
-        //{
-        //    C5.Tests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5.Tests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-        //}
     }
 
     internal static class Factory
@@ -104,33 +94,33 @@ namespace C5.Tests.trees.TreeBag
     [TestFixture]
     public class Combined
     {
-        private IIndexedSorted<System.Collections.Generic.KeyValuePair<int, int>> lst;
+        private TreeBag<SCG.KeyValuePair<int, int>> lst;
 
 
         [SetUp]
         public void Init()
         {
-            lst = new TreeBag<System.Collections.Generic.KeyValuePair<int, int>>(new KeyValuePairComparer<int, int>(new IC()));
+            lst = new TreeBag<SCG.KeyValuePair<int, int>>(new KeyValuePairComparer<int, int>(new IC()));
             for (int i = 0; i < 10; i++)
             {
-                lst.Add(new System.Collections.Generic.KeyValuePair<int, int>(i, i + 30));
+                lst.Add(new SCG.KeyValuePair<int, int>(i, i + 30));
             }
         }
 
 
         [TearDown]
-        public void Dispose() { lst = null; }
+        public void Dispose() { lst.Dispose(); }
 
 
         [Test]
         public void Find()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+            SCG.KeyValuePair<int, int> p = new(3, 78);
 
             Assert.IsTrue(lst.Find(ref p));
             Assert.AreEqual(3, p.Key);
             Assert.AreEqual(33, p.Value);
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+            p = new SCG.KeyValuePair<int, int>(13, 78);
             Assert.IsFalse(lst.Find(ref p));
         }
 
@@ -138,12 +128,12 @@ namespace C5.Tests.trees.TreeBag
         [Test]
         public void FindOrAdd()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+            SCG.KeyValuePair<int, int> p = new(3, 78);
 
             Assert.IsTrue(lst.FindOrAdd(ref p));
             Assert.AreEqual(3, p.Key);
             Assert.AreEqual(33, p.Value);
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
+            p = new SCG.KeyValuePair<int, int>(13, 79);
             Assert.IsFalse(lst.FindOrAdd(ref p));
             Assert.AreEqual(13, lst[11].Key);
             Assert.AreEqual(79, lst[11].Value);
@@ -153,12 +143,12 @@ namespace C5.Tests.trees.TreeBag
         [Test]
         public void Update()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+            SCG.KeyValuePair<int, int> p = new(3, 78);
 
             Assert.IsTrue(lst.Update(p));
             Assert.AreEqual(3, lst[3].Key);
             Assert.AreEqual(78, lst[3].Value);
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+            p = new SCG.KeyValuePair<int, int>(13, 78);
             Assert.IsFalse(lst.Update(p));
         }
 
@@ -166,12 +156,12 @@ namespace C5.Tests.trees.TreeBag
         [Test]
         public void UpdateOrAdd1()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+            SCG.KeyValuePair<int, int> p = new(3, 78);
 
             Assert.IsTrue(lst.UpdateOrAdd(p));
             Assert.AreEqual(3, lst[3].Key);
             Assert.AreEqual(78, lst[3].Value);
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
+            p = new SCG.KeyValuePair<int, int>(13, 79);
             Assert.IsFalse(lst.UpdateOrAdd(p));
             Assert.AreEqual(13, lst[10].Key);
             Assert.AreEqual(79, lst[10].Value);
@@ -193,14 +183,14 @@ namespace C5.Tests.trees.TreeBag
         [Test]
         public void RemoveWithReturn()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+            SCG.KeyValuePair<int, int> p = new(3, 78);
 
             Assert.IsTrue(lst.Remove(p, out p));
             Assert.AreEqual(3, p.Key);
             Assert.AreEqual(33, p.Value);
             Assert.AreEqual(4, lst[3].Key);
             Assert.AreEqual(34, lst[3].Value);
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+            p = new SCG.KeyValuePair<int, int>(13, 78);
             Assert.IsFalse(lst.Remove(p, out _));
         }
     }
@@ -222,7 +212,7 @@ namespace C5.Tests.trees.TreeBag
         [TearDown]
         public void Dispose()
         {
-            bag = null;
+            bag.Dispose();
         }
 
         [Test]
@@ -310,20 +300,20 @@ namespace C5.Tests.trees.TreeBag
     [TestFixture]
     public class FindOrAdd
     {
-        private TreeBag<System.Collections.Generic.KeyValuePair<int, string>> bag;
+        private TreeBag<SCG.KeyValuePair<int, string>> bag;
 
 
         [SetUp]
         public void Init()
         {
-            bag = new TreeBag<System.Collections.Generic.KeyValuePair<int, string>>(new KeyValuePairComparer<int, string>(new IC()));
+            bag = new TreeBag<SCG.KeyValuePair<int, string>>(new KeyValuePairComparer<int, string>(new IC()));
         }
 
 
         [TearDown]
         public void Dispose()
         {
-            bag = null;
+            bag.Dispose();
         }
 
 
@@ -366,8 +356,8 @@ namespace C5.Tests.trees.TreeBag
         [TearDown]
         public void Dispose()
         {
-            bagenum = null;
-            bag = null;
+            bagenum.Dispose();
+            bag.Dispose();
         }
 
 
@@ -581,7 +571,7 @@ namespace C5.Tests.trees.TreeBag
         [TearDown]
         public void Dispose()
         {
-            tree = null;
+            tree.Dispose();
             c = null;
         }
     }
@@ -621,7 +611,7 @@ namespace C5.Tests.trees.TreeBag
         [TearDown]
         public void Dispose()
         {
-            tree = null;
+            tree.Dispose();
         }
     }
 
@@ -711,7 +701,7 @@ namespace C5.Tests.trees.TreeBag
         [TearDown]
         public void Dispose()
         {
-            tree = null;
+            tree.Dispose();
         }
     }
 
@@ -729,7 +719,7 @@ namespace C5.Tests.trees.TreeBag
         }
 
         [TearDown]
-        public void Dispose() { list = null; }
+        public void Dispose() { list.Dispose(); }
 
         [Test]
         public void Find()
@@ -783,7 +773,7 @@ namespace C5.Tests.trees.TreeBag
         public void Init() { list = new TreeBag<int>(); }
 
         [TearDown]
-        public void Dispose() { list = null; }
+        public void Dispose() { list.Dispose(); }
 
         [Test]
         public void Test()
@@ -805,7 +795,7 @@ namespace C5.Tests.trees.TreeBag
         public void Init() { list = new TreeBag<int>(); }
 
         [TearDown]
-        public void Dispose() { list = null; }
+        public void Dispose() { list.Dispose(); }
 
         [Test]
         public void Test1()
@@ -996,7 +986,7 @@ namespace C5.Tests.trees.TreeBag
 
 
         [TearDown]
-        public void Dispose() { tree = null; }
+        public void Dispose() { tree.Dispose(); }
 
 
         private string aeq(int[] a, params int[] b)
@@ -1264,7 +1254,7 @@ namespace C5.Tests.trees.TreeBag
         [TearDown]
         public void Dispose()
         {
-            tree = null;
+            tree.Dispose();
         }
     }
 
@@ -1404,7 +1394,7 @@ namespace C5.Tests.trees.TreeBag
         [TearDown]
         public void Dispose()
         {
-            tree = null;
+            tree.Dispose();
         }
     }
 
@@ -1479,7 +1469,7 @@ namespace C5.Tests.trees.TreeBag
         [TearDown]
         public void Dispose()
         {
-            tree = null;
+            tree.Dispose();
         }
     }
 
@@ -1620,7 +1610,7 @@ namespace C5.Tests.trees.TreeBag
         [TearDown]
         public void Dispose()
         {
-            tree = null;
+            tree.Dispose();
         }
     }
 
@@ -1685,8 +1675,8 @@ namespace C5.Tests.trees.TreeBag
             [TearDown]
             public void Dispose()
             {
-                tree = null;
-                e = null;
+                tree.Dispose();
+                e.Dispose();
             }
         }
 
@@ -1749,8 +1739,8 @@ namespace C5.Tests.trees.TreeBag
             [TearDown]
             public void Dispose()
             {
-                tree = null;
-                e = null;
+                tree.Dispose();
+                e.Dispose();
             }
         }
     }
@@ -1935,7 +1925,7 @@ namespace C5.Tests.trees.TreeBag
             [TearDown]
             public void Dispose()
             {
-                tree = null;
+                tree.Dispose();
                 ic = null;
             }
         }
@@ -2231,7 +2221,7 @@ namespace C5.Tests.trees.TreeBag
             [TearDown]
             public void Dispose()
             {
-                tree = null;
+                tree.Dispose();
                 ic = null;
             }
         }
@@ -2241,23 +2231,11 @@ namespace C5.Tests.trees.TreeBag
         [TestFixture]
         public class Multiple
         {
+#pragma warning disable NUnit1032 // TODO: Breaks tests
             private TreeBag<int> tree;
+#pragma warning restore NUnit1032 // An IDisposable field/property should be Disposed in a TearDown method
 
             private SCG.IComparer<int> ic;
-
-
-
-            /* private bool eq(SCG.IEnumerable<int> me, int[] that)
-            {
-                int i = 0, maxind = that.Length - 1;
-
-                foreach (int item in me)
-                    if (i > maxind || ic.Compare(item, that[i++]) != 0)
-                        return false;
-
-                return true;
-            } */
-
 
             [SetUp]
             public void Init()
@@ -2342,14 +2320,11 @@ namespace C5.Tests.trees.TreeBag
             [TearDown]
             public void Dispose()
             {
-                tree = null;
+                //tree.Dispose();
                 ic = null;
             }
         }
     }
-
-
-
 
     namespace HigherOrder
     {
@@ -2667,7 +2642,7 @@ namespace C5.Tests.trees.TreeBag
 
 
             [TearDown]
-            public void Dispose() { ic = null; tree = null; }
+            public void Dispose() { ic = null; tree.Dispose(); }
         }
     }
 
@@ -2742,7 +2717,7 @@ namespace C5.Tests.trees.TreeBag
 
 
             [TearDown]
-            public void Dispose() { tree = null; }
+            public void Dispose() { tree.Dispose(); }
         }
 
 
@@ -2839,7 +2814,7 @@ namespace C5.Tests.trees.TreeBag
 
 
             [TearDown]
-            public void Dispose() { tree = null; }
+            public void Dispose() { tree.Dispose(); }
         }
 
 
@@ -2899,22 +2874,10 @@ namespace C5.Tests.trees.TreeBag
                 Assert.IsTrue(IC.Eq(tree));
             }
 
-            /*
-            private void pint<T>(SCG.IEnumerable<T> e)
-            {
-                foreach (T i in e)
-                    Console.Write("{0} ", i);
-
-                Console.WriteLine();
-            }
-            */
-
             [Test]
             public void RetainAll()
             {
                 tree.Add(8); tree2.Add(6);
-                //pint<int>(tree);
-                //pint<int>(tree2);
                 tree.RetainAll(tree2.RangeFromTo(3, 17));
                 Assert.AreEqual(3, tree.Count);
                 Assert.IsTrue(tree.Check());
@@ -3103,7 +3066,7 @@ namespace C5.Tests.trees.TreeBag
 
 
             [TearDown]
-            public void Dispose() { tree = null; tree2 = null; }
+            public void Dispose() { tree.Dispose(); tree2.Dispose(); }
         }
     }
 
@@ -3113,7 +3076,7 @@ namespace C5.Tests.trees.TreeBag
         [TestFixture]
         public class ISequenced
         {
-            private ISequenced<int> dit, dat, dut;
+            private TreeBag<int> dit, dat, dut;
 
 
             [SetUp]
@@ -3198,9 +3161,9 @@ namespace C5.Tests.trees.TreeBag
             [TearDown]
             public void Dispose()
             {
-                dit = null;
-                dat = null;
-                dut = null;
+                dit.Dispose();
+                dat.Dispose();
+                dut.Dispose();
             }
         }
 
@@ -3209,7 +3172,7 @@ namespace C5.Tests.trees.TreeBag
         [TestFixture]
         public class IEditableCollection
         {
-            private ICollection<int> dit, dat, dut;
+            private TreeBag<int> dit, dat, dut;
 
 
             [SetUp]
@@ -3295,9 +3258,9 @@ namespace C5.Tests.trees.TreeBag
             [TearDown]
             public void Dispose()
             {
-                dit = null;
-                dat = null;
-                dut = null;
+                dit.Dispose();
+                dat.Dispose();
+                dut.Dispose();
             }
         }
     }

@@ -7,24 +7,15 @@ using SCG = System.Collections.Generic;
 
 namespace C5.Tests.trees.TreeSet
 {
-    using CollectionOfInt = TreeSet<int>;
-
     [TestFixture]
     public class GenericTesters
     {
         [Test]
         public void TestEvents()
         {
-            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.SortedIndexedTester<CollectionOfInt>().Test(factory);
+            TreeSet<int> factory() { return new TreeSet<int>(TenEqualityComparer.Default); }
+            new C5.Tests.Templates.Events.SortedIndexedTester<TreeSet<int>>().Test(factory);
         }
-
-        //[Test]
-        //public void Extensible()
-        //{
-        //    C5.Tests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5.Tests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-        //}
     }
 
     internal static class Factory
@@ -57,33 +48,33 @@ namespace C5.Tests.trees.TreeSet
     [TestFixture]
     public class Combined
     {
-        private IIndexedSorted<System.Collections.Generic.KeyValuePair<int, int>> lst;
+        private TreeSet<SCG.KeyValuePair<int, int>> lst;
 
 
         [SetUp]
         public void Init()
         {
-            lst = new TreeSet<System.Collections.Generic.KeyValuePair<int, int>>(new KeyValuePairComparer<int, int>(new IC()));
+            lst = new TreeSet<SCG.KeyValuePair<int, int>>(new KeyValuePairComparer<int, int>(new IC()));
             for (int i = 0; i < 10; i++)
             {
-                lst.Add(new System.Collections.Generic.KeyValuePair<int, int>(i, i + 30));
+                lst.Add(new SCG.KeyValuePair<int, int>(i, i + 30));
             }
         }
 
 
         [TearDown]
-        public void Dispose() { lst = null; }
+        public void Dispose() { lst.Dispose(); }
 
 
         [Test]
         public void Find()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+            SCG.KeyValuePair<int, int> p = new(3, 78);
 
             Assert.IsTrue(lst.Find(ref p));
             Assert.AreEqual(3, p.Key);
             Assert.AreEqual(33, p.Value);
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+            p = new SCG.KeyValuePair<int, int>(13, 78);
             Assert.IsFalse(lst.Find(ref p));
         }
 
@@ -91,12 +82,12 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void FindOrAdd()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+            SCG.KeyValuePair<int, int> p = new(3, 78);
 
             Assert.IsTrue(lst.FindOrAdd(ref p));
             Assert.AreEqual(3, p.Key);
             Assert.AreEqual(33, p.Value);
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
+            p = new SCG.KeyValuePair<int, int>(13, 79);
             Assert.IsFalse(lst.FindOrAdd(ref p));
             Assert.AreEqual(13, lst[10].Key);
             Assert.AreEqual(79, lst[10].Value);
@@ -106,12 +97,12 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void Update()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+            SCG.KeyValuePair<int, int> p = new(3, 78);
 
             Assert.IsTrue(lst.Update(p));
             Assert.AreEqual(3, lst[3].Key);
             Assert.AreEqual(78, lst[3].Value);
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+            p = new SCG.KeyValuePair<int, int>(13, 78);
             Assert.IsFalse(lst.Update(p));
         }
 
@@ -119,12 +110,12 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void UpdateOrAdd1()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+            SCG.KeyValuePair<int, int> p = new(3, 78);
 
             Assert.IsTrue(lst.UpdateOrAdd(p));
             Assert.AreEqual(3, lst[3].Key);
             Assert.AreEqual(78, lst[3].Value);
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
+            p = new SCG.KeyValuePair<int, int>(13, 79);
             Assert.IsFalse(lst.UpdateOrAdd(p));
             Assert.AreEqual(13, lst[10].Key);
             Assert.AreEqual(79, lst[10].Value);
@@ -146,14 +137,14 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void RemoveWithReturn()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+            SCG.KeyValuePair<int, int> p = new(3, 78);
 
             Assert.IsTrue(lst.Remove(p, out p));
             Assert.AreEqual(3, p.Key);
             Assert.AreEqual(33, p.Value);
             Assert.AreEqual(4, lst[3].Key);
             Assert.AreEqual(34, lst[3].Value);
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+            p = new SCG.KeyValuePair<int, int>(13, 78);
             Assert.IsFalse(lst.Remove(p, out _));
         }
     }
@@ -334,7 +325,7 @@ namespace C5.Tests.trees.TreeSet
         [TearDown]
         public void Dispose()
         {
-            tree = null;
+            tree.Dispose();
             c = null;
         }
     }
@@ -371,7 +362,7 @@ namespace C5.Tests.trees.TreeSet
         [TearDown]
         public void Dispose()
         {
-            tree = null;
+            tree.Dispose();
         }
     }
 
@@ -458,7 +449,7 @@ namespace C5.Tests.trees.TreeSet
         [TearDown]
         public void Dispose()
         {
-            tree = null;
+            tree.Dispose();
         }
     }
 
@@ -466,20 +457,20 @@ namespace C5.Tests.trees.TreeSet
     [TestFixture]
     public class FindOrAdd
     {
-        private TreeSet<System.Collections.Generic.KeyValuePair<int, string>> bag;
+        private TreeSet<SCG.KeyValuePair<int, string>> bag;
 
 
         [SetUp]
         public void Init()
         {
-            bag = new TreeSet<System.Collections.Generic.KeyValuePair<int, string>>(new KeyValuePairComparer<int, string>(new IC()));
+            bag = new TreeSet<SCG.KeyValuePair<int, string>>(new KeyValuePairComparer<int, string>(new IC()));
         }
 
 
         [TearDown]
         public void Dispose()
         {
-            bag = null;
+            bag.Dispose();
         }
 
 
@@ -511,7 +502,7 @@ namespace C5.Tests.trees.TreeSet
         }
 
         [TearDown]
-        public void Dispose() { list = null; }
+        public void Dispose() { list.Dispose(); }
 
         [Test]
         public void Find()
@@ -565,7 +556,7 @@ namespace C5.Tests.trees.TreeSet
         public void Init() { list = new TreeSet<int>(); }
 
         [TearDown]
-        public void Dispose() { list = null; }
+        public void Dispose() { list.Dispose(); }
 
         [Test]
         public void Test()
@@ -598,7 +589,7 @@ namespace C5.Tests.trees.TreeSet
 
 
         [TearDown]
-        public void Dispose() { tree = null; }
+        public void Dispose() { tree.Dispose(); }
 
 
         private string aeq(int[] a, params int[] b)
@@ -845,7 +836,7 @@ namespace C5.Tests.trees.TreeSet
         [TearDown]
         public void Dispose()
         {
-            tree = null;
+            tree.Dispose();
         }
     }
 
@@ -1072,7 +1063,7 @@ namespace C5.Tests.trees.TreeSet
         [TearDown]
         public void Dispose()
         {
-            tree = null;
+            tree.Dispose();
         }
     }
 
@@ -1139,7 +1130,7 @@ namespace C5.Tests.trees.TreeSet
         [TearDown]
         public void Dispose()
         {
-            tree = null;
+            tree.Dispose();
         }
     }
 
@@ -1267,7 +1258,7 @@ namespace C5.Tests.trees.TreeSet
         [TearDown]
         public void Dispose()
         {
-            tree = null;
+            tree.Dispose();
         }
     }
 
@@ -1332,8 +1323,8 @@ namespace C5.Tests.trees.TreeSet
             [TearDown]
             public void Dispose()
             {
-                tree = null;
-                e = null;
+                tree.Dispose();
+                e.Dispose();
             }
         }
 
@@ -1394,8 +1385,8 @@ namespace C5.Tests.trees.TreeSet
             [TearDown]
             public void Dispose()
             {
-                tree = null;
-                e = null;
+                tree.Dispose();
+                e.Dispose();
             }
         }
     }
@@ -1623,7 +1614,7 @@ namespace C5.Tests.trees.TreeSet
             [TearDown]
             public void Dispose()
             {
-                tree = null;
+                tree.Dispose();
                 ic = null;
             }
         }
@@ -1856,7 +1847,7 @@ namespace C5.Tests.trees.TreeSet
             [TearDown]
             public void Dispose()
             {
-                tree = null;
+                tree.Dispose();
                 ic = null;
             }
         }
@@ -1864,7 +1855,9 @@ namespace C5.Tests.trees.TreeSet
         [TestFixture]
         public class Multiple
         {
+#pragma warning disable NUnit1032 // TODO: Breaks tests
             private TreeSet<int> tree;
+#pragma warning restore NUnit1032 // An IDisposable field/property should be Disposed in a TearDown method
 
             private SCG.IComparer<int> ic;
 
@@ -1961,14 +1954,11 @@ namespace C5.Tests.trees.TreeSet
             [TearDown]
             public void Dispose()
             {
-                tree = null;
+                //tree.Dispose();
                 ic = null;
             }
         }
     }
-
-
-
 
     namespace HigherOrder
     {
@@ -2273,7 +2263,7 @@ namespace C5.Tests.trees.TreeSet
 
 
             [TearDown]
-            public void Dispose() { ic = null; tree = null; }
+            public void Dispose() { ic = null; tree.Dispose(); }
         }
     }
 
@@ -2346,7 +2336,7 @@ namespace C5.Tests.trees.TreeSet
 
 
             [TearDown]
-            public void Dispose() { tree = null; }
+            public void Dispose() { tree.Dispose(); }
         }
 
 
@@ -2428,7 +2418,7 @@ namespace C5.Tests.trees.TreeSet
 
 
             [TearDown]
-            public void Dispose() { tree = null; }
+            public void Dispose() { tree.Dispose(); }
         }
 
         [TestFixture]
@@ -2615,7 +2605,7 @@ namespace C5.Tests.trees.TreeSet
             }
 
             [TearDown]
-            public void Dispose() { tree = null; tree2 = null; }
+            public void Dispose() { tree.Dispose(); tree2.Dispose(); }
         }
     }
 
@@ -2759,7 +2749,7 @@ namespace C5.Tests.trees.TreeSet
 
 
             [TearDown]
-            public void Dispose() { tree = null; }
+            public void Dispose() { tree.Dispose(); }
         }
 
 
@@ -2838,7 +2828,7 @@ namespace C5.Tests.trees.TreeSet
 
 
             [TearDown]
-            public void Dispose() { tree = null; }
+            public void Dispose() { tree.Dispose(); }
         }
     }
 
@@ -2850,7 +2840,7 @@ namespace C5.Tests.trees.TreeSet
         [TestFixture]
         public class ISequenced
         {
-            private ISequenced<int> dit, dat, dut;
+            private TreeSet<int> dit, dat, dut;
 
 
             [SetUp]
@@ -2935,108 +2925,107 @@ namespace C5.Tests.trees.TreeSet
             [TearDown]
             public void Dispose()
             {
-                dit = null;
-                dat = null;
-                dut = null;
+                dit.Dispose();
+                dat.Dispose();
+                dut.Dispose();
+            }
+
+
+
+            [TestFixture]
+            public class IEditableCollection
+            {
+                private TreeSet<int> dit, dat, dut;
+
+
+                [SetUp]
+                public void Init()
+                {
+                    dit = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
+                    dat = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
+                    dut = new TreeSet<int>(new RevIC(), EqualityComparer<int>.Default);
+                }
+
+
+                [Test]
+                public void EmptyEmpty()
+                {
+                    Assert.IsTrue(dit.UnsequencedEquals(dat));
+                }
+
+
+                [Test]
+                public void EmptyNonEmpty()
+                {
+                    dit.Add(3);
+                    Assert.IsFalse(dit.UnsequencedEquals(dat));
+                    Assert.IsFalse(dat.UnsequencedEquals(dit));
+                }
+
+
+                [Test]
+                public void HashVal()
+                {
+                    Assert.AreEqual(CHC.UnsequencedHashCode(), dit.GetUnsequencedHashCode());
+                    dit.Add(3);
+                    Assert.AreEqual(CHC.UnsequencedHashCode(3), dit.GetUnsequencedHashCode());
+                    dit.Add(7);
+                    Assert.AreEqual(CHC.UnsequencedHashCode(3, 7), dit.GetUnsequencedHashCode());
+                    Assert.AreEqual(CHC.UnsequencedHashCode(), dut.GetUnsequencedHashCode());
+                    dut.Add(3);
+                    Assert.AreEqual(CHC.UnsequencedHashCode(3), dut.GetUnsequencedHashCode());
+                    dut.Add(7);
+                    Assert.AreEqual(CHC.UnsequencedHashCode(7, 3), dut.GetUnsequencedHashCode());
+                }
+
+
+                [Test]
+                public void Normal()
+                {
+                    dit.Add(3);
+                    dit.Add(7);
+                    dat.Add(3);
+                    Assert.IsFalse(dit.UnsequencedEquals(dat));
+                    Assert.IsFalse(dat.UnsequencedEquals(dit));
+                    dat.Add(7);
+                    Assert.IsTrue(dit.UnsequencedEquals(dat));
+                    Assert.IsTrue(dat.UnsequencedEquals(dit));
+                }
+
+
+                [Test]
+                public void WrongOrder()
+                {
+                    dit.Add(3);
+                    dut.Add(3);
+                    Assert.IsTrue(dit.UnsequencedEquals(dut));
+                    Assert.IsTrue(dut.UnsequencedEquals(dit));
+                    dit.Add(7);
+                    dut.Add(7);
+                    Assert.IsTrue(dit.UnsequencedEquals(dut));
+                    Assert.IsTrue(dut.UnsequencedEquals(dit));
+                }
+
+
+                [Test]
+                public void Reflexive()
+                {
+                    Assert.IsTrue(dit.UnsequencedEquals(dit));
+                    dit.Add(3);
+                    Assert.IsTrue(dit.UnsequencedEquals(dit));
+                    dit.Add(7);
+                    Assert.IsTrue(dit.UnsequencedEquals(dit));
+                }
+
+
+                [TearDown]
+                public void Dispose()
+                {
+                    dit.Dispose();
+                    dat.Dispose();
+                    dut.Dispose();
+                }
             }
         }
-
-
-
-        [TestFixture]
-        public class IEditableCollection
-        {
-            private ICollection<int> dit, dat, dut;
-
-
-            [SetUp]
-            public void Init()
-            {
-                dit = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
-                dat = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
-                dut = new TreeSet<int>(new RevIC(), EqualityComparer<int>.Default);
-            }
-
-
-            [Test]
-            public void EmptyEmpty()
-            {
-                Assert.IsTrue(dit.UnsequencedEquals(dat));
-            }
-
-
-            [Test]
-            public void EmptyNonEmpty()
-            {
-                dit.Add(3);
-                Assert.IsFalse(dit.UnsequencedEquals(dat));
-                Assert.IsFalse(dat.UnsequencedEquals(dit));
-            }
-
-
-            [Test]
-            public void HashVal()
-            {
-                Assert.AreEqual(CHC.UnsequencedHashCode(), dit.GetUnsequencedHashCode());
-                dit.Add(3);
-                Assert.AreEqual(CHC.UnsequencedHashCode(3), dit.GetUnsequencedHashCode());
-                dit.Add(7);
-                Assert.AreEqual(CHC.UnsequencedHashCode(3, 7), dit.GetUnsequencedHashCode());
-                Assert.AreEqual(CHC.UnsequencedHashCode(), dut.GetUnsequencedHashCode());
-                dut.Add(3);
-                Assert.AreEqual(CHC.UnsequencedHashCode(3), dut.GetUnsequencedHashCode());
-                dut.Add(7);
-                Assert.AreEqual(CHC.UnsequencedHashCode(7, 3), dut.GetUnsequencedHashCode());
-            }
-
-
-            [Test]
-            public void Normal()
-            {
-                dit.Add(3);
-                dit.Add(7);
-                dat.Add(3);
-                Assert.IsFalse(dit.UnsequencedEquals(dat));
-                Assert.IsFalse(dat.UnsequencedEquals(dit));
-                dat.Add(7);
-                Assert.IsTrue(dit.UnsequencedEquals(dat));
-                Assert.IsTrue(dat.UnsequencedEquals(dit));
-            }
-
-
-            [Test]
-            public void WrongOrder()
-            {
-                dit.Add(3);
-                dut.Add(3);
-                Assert.IsTrue(dit.UnsequencedEquals(dut));
-                Assert.IsTrue(dut.UnsequencedEquals(dit));
-                dit.Add(7);
-                dut.Add(7);
-                Assert.IsTrue(dit.UnsequencedEquals(dut));
-                Assert.IsTrue(dut.UnsequencedEquals(dit));
-            }
-
-
-            [Test]
-            public void Reflexive()
-            {
-                Assert.IsTrue(dit.UnsequencedEquals(dit));
-                dit.Add(3);
-                Assert.IsTrue(dit.UnsequencedEquals(dit));
-                dit.Add(7);
-                Assert.IsTrue(dit.UnsequencedEquals(dit));
-            }
-
-
-            [TearDown]
-            public void Dispose()
-            {
-                dit = null;
-                dat = null;
-                dut = null;
-            }
-        }
-
     }
 }

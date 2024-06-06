@@ -5,25 +5,23 @@ using NUnit.Framework;
 using System;
 namespace C5.Tests.arrays.circularqueue
 {
-    using CollectionOfInt = CircularQueue<int>;
-
     [TestFixture]
     public class GenericTesters
     {
         [Test]
         public void TestEvents()
         {
-            CollectionOfInt factory() { return new CollectionOfInt(); }
-            new C5.Tests.Templates.Events.QueueTester<CollectionOfInt>().Test(factory);
-            new C5.Tests.Templates.Events.StackTester<CollectionOfInt>().Test(factory);
+            CircularQueue<int> factory() { return new CircularQueue<int>(); }
+            new C5.Tests.Templates.Events.QueueTester<CircularQueue<int>>().Test(factory);
+            new C5.Tests.Templates.Events.StackTester<CircularQueue<int>>().Test(factory);
         }
 
         //[Test]
         //public void Extensible()
         //{
         //  TODO: Test Circular Queue for Clone(?) and Serializable
-        //  C5.Tests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //  C5.Tests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
+        //  C5.Tests.Templates.Extensible.Clone.Tester<CircularQueue<int>>();
+        //  C5.Tests.Templates.Extensible.Serialization.Tester<CircularQueue<int>>();
         //}
     }
 

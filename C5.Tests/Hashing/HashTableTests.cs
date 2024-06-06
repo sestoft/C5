@@ -6,24 +6,15 @@ using System;
 using SCG = System.Collections.Generic;
 namespace C5.Tests.hashtable.set
 {
-    using CollectionOfInt = HashSet<int>;
-
     [TestFixture]
     public class GenericTesters
     {
         [Test]
         public void TestEvents()
         {
-            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.CollectionTester<CollectionOfInt>().Test(factory);
+            HashSet<int> factory() { return new HashSet<int>(TenEqualityComparer.Default); }
+            new C5.Tests.Templates.Events.CollectionTester<HashSet<int>>().Test(factory);
         }
-
-        //[Test]
-        //public void Extensible()
-        //{
-        //    C5.Tests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5.Tests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
-        //}
     }
 
     internal static class Factory
@@ -1016,9 +1007,9 @@ namespace C5.Tests.hashtable.set
         [TestFixture]
         public class MultiLevelOrderedOfUnOrdered
         {
-            private ICollection<int> dit, dat, dut;
+            private HashSet<int> dit, dat, dut;
 
-            private ISequenced<ICollection<int>> Dit, Dat, Dut;
+            private LinkedList<ICollection<int>> Dit, Dat, Dut;
 
 
             [SetUp]
@@ -1059,18 +1050,18 @@ namespace C5.Tests.hashtable.set
             public void Dispose()
             {
                 dit = dat = dut = null;
-                Dit = Dat = Dut = null;
+                Dit.Dispose();
+                Dat.Dispose();
+                Dut.Dispose();
             }
         }
-
-
 
         [TestFixture]
         public class MultiLevelUnOrderedOfOrdered
         {
-            private ISequenced<int> dit, dat, dut, dot;
+            private LinkedList<int> dit, dat, dut, dot;
 
-            private ICollection<ISequenced<int>> Dit, Dat, Dut, Dot;
+            private HashSet<ISequenced<int>> Dit, Dat, Dut, Dot;
 
 
             [SetUp]
@@ -1117,7 +1108,10 @@ namespace C5.Tests.hashtable.set
             [TearDown]
             public void Dispose()
             {
-                dit = dat = dut = dot = null;
+                dit.Dispose();
+                dat.Dispose();
+                dut.Dispose();
+                dot.Dispose();
                 Dit = Dat = Dut = Dot = null;
             }
         }

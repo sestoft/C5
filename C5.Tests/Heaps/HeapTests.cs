@@ -6,23 +6,21 @@ using System;
 
 namespace C5.Tests.heaps
 {
-    using CollectionOfInt = IntervalHeap<int>;
-
     [TestFixture]
     public class GenericTesters
     {
         [Test]
         public void TestEvents()
         {
-            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.PriorityQueueTester<CollectionOfInt>().Test(factory);
+            IntervalHeap<int> factory() { return new IntervalHeap<int>(TenEqualityComparer.Default); }
+            new C5.Tests.Templates.Events.PriorityQueueTester<IntervalHeap<int>>().Test(factory);
         }
 
         //[Test]
         //public void Extensible()
         //{
-        //    C5.Tests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5.Tests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
+        //    C5.Tests.Templates.Extensible.Clone.Tester<IntervalHeap<int>>();
+        //    C5.Tests.Templates.Extensible.Serialization.Tester<IntervalHeap<int>>();
         //}
     }
 
@@ -42,7 +40,7 @@ namespace C5.Tests.heaps
 
 
         [TearDown]
-        public void Dispose() { queue = null; events = null; }
+        public void Dispose() { queue = null; events.Dispose(); }
 
         [Test]
         public void Listenable()

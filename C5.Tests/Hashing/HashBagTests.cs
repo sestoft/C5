@@ -5,23 +5,21 @@ using NUnit.Framework;
 using System;
 namespace C5.Tests.hashtable.bag
 {
-    using CollectionOfInt = HashBag<int>;
-
     [TestFixture]
     public class GenericTesters
     {
         [Test]
         public void TestEvents()
         {
-            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.CollectionTester<CollectionOfInt>().Test(factory);
+            HashBag<int> factory() { return new HashBag<int>(TenEqualityComparer.Default); }
+            new C5.Tests.Templates.Events.CollectionTester<HashBag<int>>().Test(factory);
         }
 
         //[Test]
         //public void Extensible()
         //{
-        //    C5.Tests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5.Tests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
+        //    C5.Tests.Templates.Extensible.Clone.Tester<HashBag<int>>();
+        //    C5.Tests.Templates.Extensible.Serialization.Tester<HashBag<int>>();
         //}
     }
 
@@ -554,7 +552,8 @@ namespace C5.Tests.hashtable.bag
     [TestFixture]
     public class HashingEquals
     {
-        private ICollection<int> h1, h2;
+        private HashBag<int> h1;
+        private LinkedList<int> h2;
 
 
         [SetUp]
@@ -564,13 +563,12 @@ namespace C5.Tests.hashtable.bag
             h2 = new LinkedList<int>();
         }
 
-
         [TearDown]
         public void Dispose()
         {
-            h1 = h2 = null;
+            h1 = null;
+            h2.Dispose();
         }
-
 
         [Test]
         public void Hashing()
@@ -583,7 +581,6 @@ namespace C5.Tests.hashtable.bag
             h1.Add(9);
             Assert.IsTrue(h1.GetUnsequencedHashCode() == h2.GetUnsequencedHashCode());
         }
-
 
         [Test]
         public void Equals()
