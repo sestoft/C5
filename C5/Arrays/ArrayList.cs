@@ -15,7 +15,12 @@ namespace C5;
 /// When the FIFO property is set to true the class will function as a (FIFO) queue
 /// but very inefficiently, use a LinkedList (<see cref="T:C5.LinkedList`1"/>) instead.</i>
 /// </summary>
-public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
+/// <remarks>
+/// Create an array list with external item equalityComparer and prescribed initial capacity.
+/// </remarks>
+/// <param name="capacity">The prescribed capacity</param>
+/// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
+public class ArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequalityComparer) : ArrayBase<T>(capacity, itemequalityComparer), IList<T>, IStack<T>, IQueue<T>
 {
     #region Fields
 
@@ -416,7 +421,7 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
     /// <summary>
     /// During RemoveAll, we need to cache the original endpoint indices of views (??? also for ArrayList?)
     /// </summary>
-    private struct Position
+    private readonly struct Position
     {
         public ArrayList<T>? View { get; }
 
@@ -540,18 +545,6 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
     /// </summary>
     /// <param name="capacity">The prescribed capacity</param>
     public ArrayList(int capacity) : this(capacity, EqualityComparer<T>.Default) { }
-
-
-    /// <summary>
-    /// Create an array list with external item equalityComparer and prescribed initial capacity.
-    /// </summary>
-    /// <param name="capacity">The prescribed capacity</param>
-    /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
-    public ArrayList(int capacity, SCG.IEqualityComparer<T> itemequalityComparer)
-        : base(capacity, itemequalityComparer)
-    {
-
-    }
 
     #endregion
 
@@ -869,7 +862,7 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
         return Map<V>(mapper, res);
     }
 
-    private IList<V> Map<V>(Func<T, V> mapper, ArrayList<V> res)
+    private ArrayList<V> Map<V>(Func<T, V> mapper, ArrayList<V> res)
     {
         int stamp = this.stamp;
         if (size > 0)
@@ -1052,7 +1045,7 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
     {
         if (!TrySlide(offset, size))
         {
-            throw new ArgumentOutOfRangeException();
+            throw new ArgumentOutOfRangeException(nameof(offset));
         }
 
         return this;
@@ -1132,10 +1125,7 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
 
         for (int i = 0, length = size / 2, end = offsetField + size - 1; i < length; i++)
         {
-            T swap = array[offsetField + i];
-
-            array[offsetField + i] = array[end - i];
-            array[end - i] = swap;
+            (array[end - i], array[offsetField + i]) = (array[offsetField + i], array[end - i]);
         }
 
         //TODO: be more forgiving wrt. disposing
@@ -1224,9 +1214,7 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
             int j = rnd.Next(i, top);
             if (j != i)
             {
-                T tmp = array[i];
-                array[i] = array[j];
-                array[j] = tmp;
+                (array[j], array[i]) = (array[i], array[j]);
             }
         }
         DisposeOverlappingViews(false);
@@ -2161,6 +2149,8 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
     /// </summary>
     public virtual void Dispose()
     {
+        GC.SuppressFinalize(this);
+
         Dispose(false);
     }
 

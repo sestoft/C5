@@ -16,7 +16,12 @@ namespace C5;
 /// When the FIFO property is set to true the class will function as a (FIFO) queue
 /// but very inefficiently, use a LinkedList (<see cref="T:C5.LinkedList`1"/>) instead.</i>
 /// </summary>
-public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
+/// <remarks>
+/// Create an array list with external item equalityComparer and prescribed initial capacity.
+/// </remarks>
+/// <param name="capacity">The prescribed capacity</param>
+/// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
+public class HashedArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequalityComparer) : ArrayBase<T>(capacity, itemequalityComparer), IList<T>, SCG.IList<T>
 {
     #region Fields
 
@@ -43,7 +48,7 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
     /// The underlying field of the FIFO property
     /// </summary>
     private bool fIFO = false;
-    private readonly HashSet<System.Collections.Generic.KeyValuePair<T, int>> itemIndex;
+    private readonly HashSet<SCG.KeyValuePair<T, int>> itemIndex = new(new KeyValuePairEqualityComparer<T, int>(itemequalityComparer));
     #endregion
     #region Events
 
@@ -561,7 +566,7 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
     /// <summary>
     /// During RemoveAll, we need to cache the original endpoint indices of views (??? also for HashedArrayList?)
     /// </summary>
-    private struct Position
+    private readonly struct Position
     {
         public HashedArrayList<T>? View { get; }
 
@@ -601,8 +606,8 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
                     {
                         if (leftEnds == null || rightEnds == null)
                         {
-                            leftEnds = new HashedArrayList<Position>();
-                            rightEnds = new HashedArrayList<Position>();
+                            leftEnds = [];
+                            rightEnds = [];
                         }
                         leftEnds.Add(new Position(v, true));
                         rightEnds.Add(new Position(v, false));
@@ -684,18 +689,6 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
     /// </summary>
     /// <param name="capacity">The prescribed capacity</param>
     public HashedArrayList(int capacity) : this(capacity, EqualityComparer<T>.Default) { }
-
-
-    /// <summary>
-    /// Create an array list with external item equalityComparer and prescribed initial capacity.
-    /// </summary>
-    /// <param name="capacity">The prescribed capacity</param>
-    /// <param name="itemequalityComparer">The external item equalitySCG.Comparer</param>
-    public HashedArrayList(int capacity, SCG.IEqualityComparer<T> itemequalityComparer)
-        : base(capacity, itemequalityComparer)
-    {
-        itemIndex = new HashSet<System.Collections.Generic.KeyValuePair<T, int>>(new KeyValuePairEqualityComparer<T, int>(itemequalityComparer));
-    }
 
     #endregion
 
@@ -1047,7 +1040,7 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
         return Map<V>(mapper, res);
     }
 
-    private IList<V> Map<V>(Func<T, V> mapper, HashedArrayList<V> res)
+    private HashedArrayList<V> Map<V>(Func<T, V> mapper, HashedArrayList<V> res)
     {
         int stamp = this.stamp;
         if (size > 0)
@@ -1235,7 +1228,7 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
     {
         if (!TrySlide(offset, size))
         {
-            throw new ArgumentOutOfRangeException();
+            throw new ArgumentOutOfRangeException(nameof(offset));
         }
 
         return this;
@@ -1315,10 +1308,7 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
 
         for (int i = 0, length = size / 2, end = offsetField + size - 1; i < length; i++)
         {
-            T swap = array[offsetField + i];
-
-            array[offsetField + i] = array[end - i];
-            array[end - i] = swap;
+            (array[end - i], array[offsetField + i]) = (array[offsetField + i], array[end - i]);
         }
         ReIndex(offsetField, offsetField + size);
         //TODO: be more forgiving wrt. disposing
@@ -1407,9 +1397,7 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
             int j = rnd.Next(i, top);
             if (j != i)
             {
-                T tmp = array[i];
-                array[i] = array[j];
-                array[j] = tmp;
+                (array[j], array[i]) = (array[i], array[j]);
             }
         }
         DisposeOverlappingViews(false);
@@ -2304,6 +2292,8 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
     /// </summary>
     public virtual void Dispose()
     {
+        GC.SuppressFinalize(this);
+
         Dispose(false);
     }
 

@@ -534,7 +534,7 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
     {
         if (index < 0 || index + Count > array.Length)
         {
-            throw new ArgumentOutOfRangeException();
+            throw new ArgumentOutOfRangeException(nameof(index));
         }
 
         foreach (System.Collections.Generic.KeyValuePair<T, int> p in dict)
