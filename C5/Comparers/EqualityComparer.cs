@@ -14,7 +14,7 @@ namespace C5;
 /// <typeparam name="T"></typeparam>
 public static class EqualityComparer<T>
 {
-    private static SCG.IEqualityComparer<T> _default;
+    private static SCG.IEqualityComparer<T>? _default;
 
     private static readonly Type SequencedCollectionEqualityComparer = typeof(SequencedCollectionEqualityComparer<,>);
 
@@ -73,6 +73,6 @@ public static class EqualityComparer<T>
 
     private static SCG.IEqualityComparer<T> CreateAndCache(Type equalityComparertype)
     {
-        return _default = (SCG.IEqualityComparer<T>)(equalityComparertype.GetTypeInfo().GetProperty("Default", BindingFlags.Static | BindingFlags.Public).GetValue(null, null));
+        return _default = (SCG.IEqualityComparer<T>)(equalityComparertype.GetTypeInfo().GetProperty("Default", BindingFlags.Static | BindingFlags.Public)!.GetValue(null, null))!;
     }
 }

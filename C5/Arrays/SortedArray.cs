@@ -360,7 +360,6 @@ public class SortedArray<T> : ArrayBase<T>, IIndexedSorted<T>
     /// <returns>True if item has a weak predecessor; otherwise false.</returns>
     public bool TryWeakPredecessor(T item, out T res)
     {
-
         if (!BinarySearch(item, out int lo))
         {
             lo--;

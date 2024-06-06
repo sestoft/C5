@@ -60,7 +60,7 @@ public class ArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequalityCom
     #endregion
     #region Util
 
-    private bool Equals(T i1, T i2) { return itemEqualityComparer.Equals(i1, i2); }
+    private bool Equals(T i1, T i2) => itemEqualityComparer.Equals(i1, i2);
 
     /// <summary>
     /// Increment or decrement the private size fields

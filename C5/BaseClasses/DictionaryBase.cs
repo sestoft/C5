@@ -8,23 +8,28 @@ namespace C5;
 /// <i>See the source code for <see cref="T:C5.HashDictionary`2"/> for an example</i>
 ///
 /// </summary>
-public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collections.Generic.KeyValuePair<K, V>>, IDictionary<K, V>
+/// <remarks>
+///
+/// </remarks>
+/// <param name="keyEqualityComparer"></param>
+public abstract class DictionaryBase<K, V>(IEqualityComparer<K> keyEqualityComparer) : CollectionValueBase<KeyValuePair<K, V>>, IDictionary<K, V>
 {
     /// <summary>
     /// The set collection of entries underlying this dictionary implementation
     /// </summary>
-    protected ICollection<System.Collections.Generic.KeyValuePair<K, V>> pairs;
-    private readonly System.Collections.Generic.IEqualityComparer<K> keyequalityComparer;
+    protected ICollection<KeyValuePair<K, V>> pairs;
+
+    private readonly IEqualityComparer<K> keyEqualityComparer = keyEqualityComparer ?? throw new NullReferenceException("Key equality comparer cannot be null");
 
     #region Events
-    private ProxyEventBlock<System.Collections.Generic.KeyValuePair<K, V>>? eventBlock;
+    private ProxyEventBlock<KeyValuePair<K, V>>? eventBlock;
 
     /// <summary>
     /// The change event. Will be raised for every change operation on the collection.
     /// </summary>
-    public override event CollectionChangedHandler<System.Collections.Generic.KeyValuePair<K, V>> CollectionChanged
+    public override event CollectionChangedHandler<KeyValuePair<K, V>> CollectionChanged
     {
-        add { (eventBlock ??= new ProxyEventBlock<System.Collections.Generic.KeyValuePair<K, V>>(this, pairs)).CollectionChanged += value; }
+        add { (eventBlock ??= new ProxyEventBlock<KeyValuePair<K, V>>(this, pairs)).CollectionChanged += value; }
         remove
         {
             if (eventBlock != null)
@@ -37,9 +42,9 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <summary>
     /// The change event. Will be raised for every change operation on the collection.
     /// </summary>
-    public override event CollectionClearedHandler<System.Collections.Generic.KeyValuePair<K, V>> CollectionCleared
+    public override event CollectionClearedHandler<KeyValuePair<K, V>> CollectionCleared
     {
-        add { (eventBlock ??= new ProxyEventBlock<System.Collections.Generic.KeyValuePair<K, V>>(this, pairs)).CollectionCleared += value; }
+        add { (eventBlock ??= new ProxyEventBlock<KeyValuePair<K, V>>(this, pairs)).CollectionCleared += value; }
         remove
         {
             if (eventBlock != null)
@@ -52,9 +57,9 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <summary>
     /// The item added  event. Will be raised for every individual addition to the collection.
     /// </summary>
-    public override event ItemsAddedHandler<System.Collections.Generic.KeyValuePair<K, V>> ItemsAdded
+    public override event ItemsAddedHandler<KeyValuePair<K, V>> ItemsAdded
     {
-        add { (eventBlock ??= new ProxyEventBlock<System.Collections.Generic.KeyValuePair<K, V>>(this, pairs)).ItemsAdded += value; }
+        add { (eventBlock ??= new ProxyEventBlock<KeyValuePair<K, V>>(this, pairs)).ItemsAdded += value; }
         remove
         {
             if (eventBlock != null)
@@ -67,9 +72,9 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <summary>
     /// The item added  event. Will be raised for every individual removal from the collection.
     /// </summary>
-    public override event ItemsRemovedHandler<System.Collections.Generic.KeyValuePair<K, V>> ItemsRemoved
+    public override event ItemsRemovedHandler<KeyValuePair<K, V>> ItemsRemoved
     {
-        add { (eventBlock ??= new ProxyEventBlock<System.Collections.Generic.KeyValuePair<K, V>>(this, pairs)).ItemsRemoved += value; }
+        add { (eventBlock ??= new ProxyEventBlock<KeyValuePair<K, V>>(this, pairs)).ItemsRemoved += value; }
         remove
         {
             if (eventBlock != null)
@@ -91,22 +96,13 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
 
     #endregion
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="keyequalityComparer"></param>
-    protected DictionaryBase(System.Collections.Generic.IEqualityComparer<K> keyequalityComparer)
-    {
-        this.keyequalityComparer = keyequalityComparer ?? throw new NullReferenceException("Key equality comparer cannot be null");
-    }
-
     #region IDictionary<K,V> Members
 
     /// <summary>
     ///
     /// </summary>
     /// <value></value>
-    public virtual System.Collections.Generic.IEqualityComparer<K> EqualityComparer => keyequalityComparer;
+    public virtual IEqualityComparer<K> EqualityComparer => keyEqualityComparer;
 
 
     /// <summary>
@@ -117,7 +113,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <param name="value">Value to add</param>
     public virtual void Add(K key, V value)
     {
-        System.Collections.Generic.KeyValuePair<K, V> p = new(key, value);
+        KeyValuePair<K, V> p = new(key, value);
 
         if (!pairs.Add(p))
         {
@@ -132,13 +128,13 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <exception cref="DuplicateNotAllowedException">
     /// If the input contains duplicate keys or a key already present in this dictionary.</exception>
     /// <param name="entries"></param>
-    public virtual void AddAll<L, W>(System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<L, W>> entries)
+    public virtual void AddAll<L, W>(IEnumerable<KeyValuePair<L, W>> entries)
         where L : K
         where W : V
     {
-        foreach (System.Collections.Generic.KeyValuePair<L, W> pair in entries)
+        foreach (KeyValuePair<L, W> pair in entries)
         {
-            System.Collections.Generic.KeyValuePair<K, V> p = new(pair.Key, pair.Value);
+            KeyValuePair<K, V> p = new(pair.Key, pair.Value);
             if (!pairs.Add(p))
             {
                 throw new DuplicateNotAllowedException("Key being added: '" + pair.Key + "'");
@@ -153,7 +149,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <returns>True if an entry was found (and removed)</returns>
     public virtual bool Remove(K key)
     {
-        System.Collections.Generic.KeyValuePair<K, V> p = new(key, default);
+        KeyValuePair<K, V> p = new(key, default!);
 
         return pairs.Remove(p);
     }
@@ -167,7 +163,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <returns>True if an entry was found (and removed)</returns>
     public virtual bool Remove(K key, out V value)
     {
-        System.Collections.Generic.KeyValuePair<K, V> p = new(key, default);
+        KeyValuePair<K, V> p = new(key, default!);
 
         if (pairs.Remove(p, out p))
         {
@@ -200,20 +196,20 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <returns>True if key was found</returns>
     public virtual bool Contains(K key)
     {
-        System.Collections.Generic.KeyValuePair<K, V> p = new(key, default);
+        KeyValuePair<K, V> p = new(key, default!);
 
         return pairs.Contains(p);
     }
 
-    private class LiftedEnumerable<H> : IEnumerable<System.Collections.Generic.KeyValuePair<K, V>> where H : K
+    private class LiftedEnumerable<H> : IEnumerable<KeyValuePair<K, V>> where H : K
     {
-        private readonly System.Collections.Generic.IEnumerable<H> keys;
-        public LiftedEnumerable(System.Collections.Generic.IEnumerable<H> keys) { this.keys = keys; }
-        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<K, V>> GetEnumerator()
+        private readonly IEnumerable<H> keys;
+        public LiftedEnumerable(IEnumerable<H> keys) => this.keys = keys;
+        public IEnumerator<KeyValuePair<K, V>> GetEnumerator()
         {
             foreach (H key in keys)
             {
-                yield return new System.Collections.Generic.KeyValuePair<K, V>(key, default);
+                yield return new KeyValuePair<K, V>(key, default!);
             }
         }
 
@@ -232,7 +228,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// </summary>
     /// <param name="keys"></param>
     /// <returns></returns>
-    public virtual bool ContainsAll<H>(System.Collections.Generic.IEnumerable<H> keys) where H : K
+    public virtual bool ContainsAll<H>(IEnumerable<H> keys) where H : K
     {
         return pairs.ContainsAll(new LiftedEnumerable<H>(keys));
     }
@@ -246,7 +242,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <returns>True if key was found</returns>
     public virtual bool Find(ref K key, out V value)
     {
-        System.Collections.Generic.KeyValuePair<K, V> p = new(key, default);
+        KeyValuePair<K, V> p = new(key, default!);
 
         if (pairs.Find(ref p))
         {
@@ -271,7 +267,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <returns>True if key was found</returns>
     public virtual bool Update(K key, V value)
     {
-        System.Collections.Generic.KeyValuePair<K, V> p = new(key, value);
+        KeyValuePair<K, V> p = new(key, value);
 
         return pairs.Update(p);
     }
@@ -286,13 +282,12 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <returns></returns>
     public virtual bool Update(K key, V value, out V oldvalue)
     {
-        System.Collections.Generic.KeyValuePair<K, V> p = new(key, value);
+        KeyValuePair<K, V> p = new(key, value);
 
         bool retval = pairs.Update(p, out p);
         oldvalue = p.Value;
         return retval;
     }
-
 
     /// <summary>
     /// Look for a specific key in the dictionary. If found, report the corresponding value,
@@ -304,7 +299,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <returns>True if key was found</returns>
     public virtual bool FindOrAdd(K key, ref V value)
     {
-        System.Collections.Generic.KeyValuePair<K, V> p = new(key, value);
+        KeyValuePair<K, V> p = new(key, value);
 
         if (!pairs.FindOrAdd(ref p))
         {
@@ -328,9 +323,8 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <returns>True if entry was updated.</returns>
     public virtual bool UpdateOrAdd(K key, V value)
     {
-        return pairs.UpdateOrAdd(new System.Collections.Generic.KeyValuePair<K, V>(key, value));
+        return pairs.UpdateOrAdd(new KeyValuePair<K, V>(key, value));
     }
-
 
     /// <summary>
     /// Update value in dictionary corresponding to key if found, else add new entry.
@@ -342,7 +336,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <returns></returns>
     public virtual bool UpdateOrAdd(K key, V value, out V oldvalue)
     {
-        System.Collections.Generic.KeyValuePair<K, V> p = new(key, value);
+        KeyValuePair<K, V> p = new(key, value);
         bool retval = pairs.UpdateOrAdd(p, out p);
         oldvalue = p.Value;
         return retval;
@@ -351,10 +345,10 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     #region Keys,Values support classes
     internal class ValuesCollection : CollectionValueBase<V>, ICollectionValue<V>
     {
-        private readonly ICollection<System.Collections.Generic.KeyValuePair<K, V>> pairs;
+        private readonly ICollection<KeyValuePair<K, V>> pairs;
 
 
-        internal ValuesCollection(ICollection<System.Collections.Generic.KeyValuePair<K, V>> pairs)
+        internal ValuesCollection(ICollection<KeyValuePair<K, V>> pairs)
         { this.pairs = pairs; }
 
 
@@ -363,7 +357,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
         public override System.Collections.Generic.IEnumerator<V> GetEnumerator()
         {
             //Updatecheck is performed by the pairs enumerator
-            foreach (System.Collections.Generic.KeyValuePair<K, V> p in pairs)
+            foreach (KeyValuePair<K, V> p in pairs)
             {
                 yield return p.Value;
             }
@@ -378,17 +372,17 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
 
     internal class KeysCollection : CollectionValueBase<K>, ICollectionValue<K>
     {
-        private readonly ICollection<System.Collections.Generic.KeyValuePair<K, V>> pairs;
+        private readonly ICollection<KeyValuePair<K, V>> pairs;
 
 
-        internal KeysCollection(ICollection<System.Collections.Generic.KeyValuePair<K, V>> pairs)
+        internal KeysCollection(ICollection<KeyValuePair<K, V>> pairs)
         { this.pairs = pairs; }
 
         public override K Choose() { return pairs.Choose().Key; }
 
         public override System.Collections.Generic.IEnumerator<K> GetEnumerator()
         {
-            foreach (System.Collections.Generic.KeyValuePair<K, V> p in pairs)
+            foreach (KeyValuePair<K, V> p in pairs)
             {
                 yield return p.Key;
             }
@@ -407,7 +401,6 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// </summary>
     /// <value>A collection containing all the keys of the dictionary</value>
     public virtual ICollectionValue<K> Keys => new KeysCollection(pairs);
-
 
     /// <summary>
     ///
@@ -431,7 +424,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     {
         get
         {
-            System.Collections.Generic.KeyValuePair<K, V> p = new(key, default);
+            KeyValuePair<K, V> p = new(key, default!);
 
             if (pairs.Find(ref p))
             {
@@ -442,9 +435,8 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
                 throw new NoSuchItemException("Key '" + key!.ToString() + "' not present in Dictionary");
             }
         }
-        set => pairs.UpdateOrAdd(new System.Collections.Generic.KeyValuePair<K, V>(key, value));
+        set => pairs.UpdateOrAdd(new KeyValuePair<K, V>(key, value));
     }
-
 
     /// <summary>
     ///
@@ -452,16 +444,15 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <value>True if dictionary is read  only</value>
     public virtual bool IsReadOnly => pairs.IsReadOnly;
 
-
     /// <summary>
     /// Check the integrity of the internal data structures of this dictionary.
     /// </summary>
     /// <returns>True if check does not fail.</returns>
-    public virtual bool Check() { return pairs.Check(); }
+    public virtual bool Check() => pairs.Check();
 
     #endregion
 
-    #region ICollectionValue<System.Collections.Generic.KeyValuePair<K,V>> Members
+    #region ICollectionValue<KeyValuePair<K,V>> Members
 
     /// <summary>
     ///
@@ -487,13 +478,13 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// </summary>
     /// <exception cref="NoSuchItemException">if collection is empty.</exception>
     /// <returns></returns>
-    public override System.Collections.Generic.KeyValuePair<K, V> Choose() { return pairs.Choose(); }
+    public override KeyValuePair<K, V> Choose() { return pairs.Choose(); }
 
     /// <summary>
     /// Create an enumerator for the collection of entries of the dictionary
     /// </summary>
     /// <returns>The enumerator</returns>
-    public override System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<K, V>> GetEnumerator()
+    public override System.Collections.Generic.IEnumerator<KeyValuePair<K, V>> GetEnumerator()
     {
         return pairs.GetEnumerator();
     }
@@ -509,6 +500,6 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <returns></returns>
     public override bool Show(System.Text.StringBuilder stringbuilder, ref int rest, IFormatProvider? formatProvider)
     {
-        return Showing.ShowDictionary<K, V>(this, stringbuilder, ref rest, formatProvider);
+        return Showing.ShowDictionary(this, stringbuilder, ref rest, formatProvider);
     }
 }

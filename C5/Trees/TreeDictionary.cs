@@ -39,11 +39,12 @@ public class TreeDictionary<K, V> : SortedDictionaryBase<K, V>, IDictionary<K, V
     /// Make a snapshot of the current state of this dictionary
     /// </summary>
     /// <returns>The snapshot</returns>
-    public SCG.IEnumerable<System.Collections.Generic.KeyValuePair<K, V>> Snapshot()
+    public SCG.IEnumerable<SCG.KeyValuePair<K, V>> Snapshot()
     {
         TreeDictionary<K, V> res = (TreeDictionary<K, V>)MemberwiseClone();
 
-        res.pairs = (TreeSet<System.Collections.Generic.KeyValuePair<K, V>>)((TreeSet<System.Collections.Generic.KeyValuePair<K, V>>)sortedPairs).Snapshot();
+        res.pairs = (TreeSet<SCG.KeyValuePair<K, V>>)((TreeSet<SCG.KeyValuePair<K, V>>)sortedPairs).Snapshot();
+
         return res;
     }
 }

@@ -18,14 +18,14 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     ///
     /// </summary>
     protected ISorted<SCG.KeyValuePair<K, V>> sortedPairs;
-    private readonly SCG.IComparer<K> keycomparer;
+    private readonly SCG.IComparer<K> keyComparer;
 
     /// <summary>
     ///
     /// </summary>
-    /// <param name="keycomparer"></param>
+    /// <param name="keyComparer"></param>
     /// <param name="keyequalityComparer"></param>
-    protected SortedDictionaryBase(SCG.IComparer<K> keycomparer, SCG.IEqualityComparer<K> keyequalityComparer) : base(keyequalityComparer) { this.keycomparer = keycomparer; }
+    protected SortedDictionaryBase(SCG.IComparer<K> keyComparer, SCG.IEqualityComparer<K> keyequalityComparer) : base(keyequalityComparer) { this.keyComparer = keyComparer; }
 
     #endregion
 
@@ -35,13 +35,13 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// The key comparer used by this dictionary.
     /// </summary>
     /// <value></value>
-    public SCG.IComparer<K> Comparer => keycomparer;
+    public SCG.IComparer<K> Comparer => keyComparer;
 
     /// <summary>
     ///
     /// </summary>
     /// <value></value>
-    public new ISorted<K>? Keys => new SortedKeysCollection(this, sortedPairs, keycomparer, EqualityComparer);
+    public new ISorted<K> Keys => new SortedKeysCollection(this, sortedPairs, keyComparer, EqualityComparer);
 
     /// <summary>
     /// Find the entry in the dictionary whose key is the
@@ -52,7 +52,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns>True if key has a predecessor</returns>
     public bool TryPredecessor(K key, out SCG.KeyValuePair<K, V> res)
     {
-        return sortedPairs.TryPredecessor(new SCG.KeyValuePair<K, V>(key, default), out res);
+        return sortedPairs.TryPredecessor(new SCG.KeyValuePair<K, V>(key, default!), out res);
     }
 
     /// <summary>
@@ -64,7 +64,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns>True if the key has a successor</returns>
     public bool TrySuccessor(K key, out SCG.KeyValuePair<K, V> res)
     {
-        return sortedPairs.TrySuccessor(new SCG.KeyValuePair<K, V>(key, default), out res);
+        return sortedPairs.TrySuccessor(new SCG.KeyValuePair<K, V>(key, default!), out res);
     }
 
     /// <summary>
@@ -76,7 +76,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns>True if key has a weak predecessor</returns>
     public bool TryWeakPredecessor(K key, out SCG.KeyValuePair<K, V> res)
     {
-        return sortedPairs.TryWeakPredecessor(new SCG.KeyValuePair<K, V>(key, default), out res);
+        return sortedPairs.TryWeakPredecessor(new SCG.KeyValuePair<K, V>(key, default!), out res);
     }
 
     /// <summary>
@@ -88,7 +88,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns>True if the key has a weak successor</returns>
     public bool TryWeakSuccessor(K key, out SCG.KeyValuePair<K, V> res)
     {
-        return sortedPairs.TryWeakSuccessor(new SCG.KeyValuePair<K, V>(key, default), out res);
+        return sortedPairs.TryWeakSuccessor(new SCG.KeyValuePair<K, V>(key, default!), out res);
     }
 
     /// <summary>
@@ -100,7 +100,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns>The entry</returns>
     public SCG.KeyValuePair<K, V> Predecessor(K key)
     {
-        return sortedPairs.Predecessor(new SCG.KeyValuePair<K, V>(key, default));
+        return sortedPairs.Predecessor(new SCG.KeyValuePair<K, V>(key, default!));
     }
 
     /// <summary>
@@ -112,7 +112,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns>The entry</returns>
     public SCG.KeyValuePair<K, V> Successor(K key)
     {
-        return sortedPairs.Successor(new SCG.KeyValuePair<K, V>(key, default));
+        return sortedPairs.Successor(new SCG.KeyValuePair<K, V>(key, default!));
     }
 
     /// <summary>
@@ -124,7 +124,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns>The entry</returns>
     public SCG.KeyValuePair<K, V> WeakPredecessor(K key)
     {
-        return sortedPairs.WeakPredecessor(new SCG.KeyValuePair<K, V>(key, default));
+        return sortedPairs.WeakPredecessor(new SCG.KeyValuePair<K, V>(key, default!));
     }
 
     /// <summary>
@@ -136,7 +136,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns>The entry</returns>
     public SCG.KeyValuePair<K, V> WeakSuccessor(K key)
     {
-        return sortedPairs.WeakSuccessor(new SCG.KeyValuePair<K, V>(key, default));
+        return sortedPairs.WeakSuccessor(new SCG.KeyValuePair<K, V>(key, default!));
     }
 
     #endregion
@@ -221,7 +221,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns></returns>
     public IDirectedEnumerable<SCG.KeyValuePair<K, V>> RangeTo(K top)
     {
-        return sortedPairs.RangeTo(new SCG.KeyValuePair<K, V>(top, default));
+        return sortedPairs.RangeTo(new SCG.KeyValuePair<K, V>(top, default!));
     }
 
     /// <summary>
@@ -248,7 +248,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <param name="lowKey"></param>
     public void RemoveRangeFrom(K lowKey)
     {
-        sortedPairs.RemoveRangeFrom(new SCG.KeyValuePair<K, V>(lowKey, default));
+        sortedPairs.RemoveRangeFrom(new SCG.KeyValuePair<K, V>(lowKey, default!));
     }
 
     /// <summary>
@@ -258,7 +258,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <param name="highKey"></param>
     public void RemoveRangeFromTo(K lowKey, K highKey)
     {
-        sortedPairs.RemoveRangeFromTo(new SCG.KeyValuePair<K, V>(lowKey, default), new SCG.KeyValuePair<K, V>(highKey, default));
+        sortedPairs.RemoveRangeFromTo(new SCG.KeyValuePair<K, V>(lowKey, default!), new SCG.KeyValuePair<K, V>(highKey, default!));
     }
 
     /// <summary>
@@ -267,7 +267,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <param name="highKey"></param>
     public void RemoveRangeTo(K highKey)
     {
-        sortedPairs.RemoveRangeTo(new SCG.KeyValuePair<K, V>(highKey, default));
+        sortedPairs.RemoveRangeTo(new SCG.KeyValuePair<K, V>(highKey, default!));
     }
 
     #endregion
@@ -282,62 +282,56 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
         public bool Equals(SCG.KeyValuePair<K, V> other) { return cutter.Equals(other.Key); }
     }
 
-    private class ProjectedDirectedEnumerable : MappedDirectedEnumerable<SCG.KeyValuePair<K, V>, K>
+    private class ProjectedDirectedEnumerable(IDirectedEnumerable<SCG.KeyValuePair<K, V>> directedpairs) : MappedDirectedEnumerable<SCG.KeyValuePair<K, V>, K>(directedpairs)
     {
-        public ProjectedDirectedEnumerable(IDirectedEnumerable<SCG.KeyValuePair<K, V>> directedpairs) : base(directedpairs) { }
-
-        public override K Map(SCG.KeyValuePair<K, V> pair) { return pair.Key; }
-
+        public override K Map(SCG.KeyValuePair<K, V> pair) => pair.Key;
     }
 
-    private class ProjectedDirectedCollectionValue : MappedDirectedCollectionValue<SCG.KeyValuePair<K, V>, K>
+    private class ProjectedDirectedCollectionValue(IDirectedCollectionValue<SCG.KeyValuePair<K, V>> directedpairs) : MappedDirectedCollectionValue<SCG.KeyValuePair<K, V>, K>(directedpairs)
     {
-        public ProjectedDirectedCollectionValue(IDirectedCollectionValue<SCG.KeyValuePair<K, V>> directedpairs) : base(directedpairs) { }
-
-        public override K Map(SCG.KeyValuePair<K, V> pair) { return pair.Key; }
-
+        public override K Map(SCG.KeyValuePair<K, V> pair) => pair.Key;
     }
 
     private class SortedKeysCollection : SequencedBase<K>, ISorted<K>
     {
-        private readonly ISortedDictionary<K, V> sorteddict;
+        private readonly ISortedDictionary<K, V> sortedDict;
 
         //TODO: eliminate this. Only problem is the Find method because we lack method on dictionary that also
         //      returns the actual key.
-        private readonly ISorted<SCG.KeyValuePair<K, V>> sortedpairs;
+        private readonly ISorted<SCG.KeyValuePair<K, V>> sortedPairs;
         private readonly SCG.IComparer<K> comparer;
 
-        internal SortedKeysCollection(ISortedDictionary<K, V> sorteddict, ISorted<SCG.KeyValuePair<K, V>> sortedpairs, SCG.IComparer<K> comparer, SCG.IEqualityComparer<K> itemequalityComparer)
+        internal SortedKeysCollection(ISortedDictionary<K, V> sortedDict, ISorted<SCG.KeyValuePair<K, V>> sortedPairs, SCG.IComparer<K> comparer, SCG.IEqualityComparer<K> itemequalityComparer)
             : base(itemequalityComparer)
         {
-            this.sorteddict = sorteddict;
-            this.sortedpairs = sortedpairs;
+            this.sortedDict = sortedDict;
+            this.sortedPairs = sortedPairs;
             this.comparer = comparer;
         }
 
-        public override K Choose() { return sorteddict.Choose().Key; }
+        public override K Choose() { return sortedDict.Choose().Key; }
 
         public override SCG.IEnumerator<K> GetEnumerator()
         {
-            foreach (SCG.KeyValuePair<K, V> p in sorteddict)
+            foreach (SCG.KeyValuePair<K, V> p in sortedDict)
             {
                 yield return p.Key;
             }
         }
 
-        public override bool IsEmpty => sorteddict.IsEmpty;
+        public override bool IsEmpty => sortedDict.IsEmpty;
 
-        public override int Count => sorteddict.Count;
+        public override int Count => sortedDict.Count;
 
-        public override Speed CountSpeed => sorteddict.CountSpeed;
+        public override Speed CountSpeed => sortedDict.CountSpeed;
 
         #region ISorted<K> Members
 
-        public K FindMin() { return sorteddict.FindMin().Key; }
+        public K FindMin() { return sortedDict.FindMin().Key; }
 
         public K DeleteMin() { throw new ReadOnlyCollectionException(); }
 
-        public K FindMax() { return sorteddict.FindMax().Key; }
+        public K FindMax() { return sortedDict.FindMax().Key; }
 
         public K DeleteMax() { throw new ReadOnlyCollectionException(); }
 
@@ -345,43 +339,43 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
 
         public bool TryPredecessor(K item, out K res)
         {
-            bool success = sorteddict.TryPredecessor(item, out SCG.KeyValuePair<K, V> pRes);
+            bool success = sortedDict.TryPredecessor(item, out SCG.KeyValuePair<K, V> pRes);
             res = pRes.Key;
             return success;
         }
 
         public bool TrySuccessor(K item, out K res)
         {
-            bool success = sorteddict.TrySuccessor(item, out SCG.KeyValuePair<K, V> pRes);
+            bool success = sortedDict.TrySuccessor(item, out SCG.KeyValuePair<K, V> pRes);
             res = pRes.Key;
             return success;
         }
 
         public bool TryWeakPredecessor(K item, out K res)
         {
-            bool success = sorteddict.TryWeakPredecessor(item, out SCG.KeyValuePair<K, V> pRes);
+            bool success = sortedDict.TryWeakPredecessor(item, out SCG.KeyValuePair<K, V> pRes);
             res = pRes.Key;
             return success;
         }
 
         public bool TryWeakSuccessor(K item, out K res)
         {
-            bool success = sorteddict.TryWeakSuccessor(item, out SCG.KeyValuePair<K, V> pRes);
+            bool success = sortedDict.TryWeakSuccessor(item, out SCG.KeyValuePair<K, V> pRes);
             res = pRes.Key;
             return success;
         }
 
-        public K Predecessor(K item) { return sorteddict.Predecessor(item).Key; }
+        public K Predecessor(K item) { return sortedDict.Predecessor(item).Key; }
 
-        public K Successor(K item) { return sorteddict.Successor(item).Key; }
+        public K Successor(K item) { return sortedDict.Successor(item).Key; }
 
-        public K WeakPredecessor(K item) { return sorteddict.WeakPredecessor(item).Key; }
+        public K WeakPredecessor(K item) { return sortedDict.WeakPredecessor(item).Key; }
 
-        public K WeakSuccessor(K item) { return sorteddict.WeakSuccessor(item).Key; }
+        public K WeakSuccessor(K item) { return sortedDict.WeakSuccessor(item).Key; }
 
         public bool Cut(IComparable<K> c, out K low, out bool lowIsValid, out K high, out bool highIsValid)
         {
-            bool retval = sorteddict.Cut(c, out SCG.KeyValuePair<K, V> lowpair, out lowIsValid, out SCG.KeyValuePair<K, V> highpair, out highIsValid);
+            bool retval = sortedDict.Cut(c, out SCG.KeyValuePair<K, V> lowpair, out lowIsValid, out SCG.KeyValuePair<K, V> highpair, out highIsValid);
             low = lowpair.Key;
             high = highpair.Key;
             return retval;
@@ -389,22 +383,22 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
 
         public IDirectedEnumerable<K> RangeFrom(K bot)
         {
-            return new ProjectedDirectedEnumerable(sorteddict.RangeFrom(bot));
+            return new ProjectedDirectedEnumerable(sortedDict.RangeFrom(bot));
         }
 
         public IDirectedEnumerable<K> RangeFromTo(K bot, K top)
         {
-            return new ProjectedDirectedEnumerable(sorteddict.RangeFromTo(bot, top));
+            return new ProjectedDirectedEnumerable(sortedDict.RangeFromTo(bot, top));
         }
 
         public IDirectedEnumerable<K> RangeTo(K top)
         {
-            return new ProjectedDirectedEnumerable(sorteddict.RangeTo(top));
+            return new ProjectedDirectedEnumerable(sortedDict.RangeTo(top));
         }
 
         public IDirectedCollectionValue<K> RangeAll()
         {
-            return new ProjectedDirectedCollectionValue(sorteddict.RangeAll());
+            return new ProjectedDirectedCollectionValue(sortedDict.RangeAll());
         }
 
         public void AddSorted(SCG.IEnumerable<K> items) { throw new ReadOnlyCollectionException(); }
@@ -417,11 +411,11 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
         #endregion
 
         #region ICollection<K> Members
-        public Speed ContainsSpeed => sorteddict.ContainsSpeed;
+        public Speed ContainsSpeed => sortedDict.ContainsSpeed;
 
-        public bool Contains(K key) { return sorteddict.Contains(key); }
+        public bool Contains(K key) { return sortedDict.Contains(key); }
 
-        public int ContainsCount(K item) { return sorteddict.Contains(item) ? 1 : 0; }
+        public int ContainsCount(K item) { return sortedDict.Contains(item) ? 1 : 0; }
 
         /// <summary>
         ///
@@ -447,7 +441,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
             //TODO: optimize?
             foreach (K item in items)
             {
-                if (!sorteddict.Contains(item))
+                if (!sortedDict.Contains(item))
                 {
                     return false;
                 }
@@ -459,7 +453,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
         public bool Find(ref K item)
         {
             SCG.KeyValuePair<K, V> p = new(item, default);
-            bool retval = sortedpairs.Find(ref p);
+            bool retval = sortedPairs.Find(ref p);
             item = p.Key;
             return retval;
         }
@@ -501,7 +495,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
 
         public void AddAll(SCG.IEnumerable<K> items) { throw new ReadOnlyCollectionException(); }
 
-        public bool Check() { return sorteddict.Check(); }
+        public bool Check() { return sortedDict.Check(); }
 
         #endregion
 
