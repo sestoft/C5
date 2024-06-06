@@ -191,7 +191,7 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
     #endregion
     #region Util
 
-    private bool Equals(T i1, T i2) { return itemequalityComparer.Equals(i1, i2); }
+    private bool Equals(T i1, T i2) { return itemEqualityComparer.Equals(i1, i2); }
 
     /// <summary>
     /// Increment or decrement the private size fields
@@ -793,7 +793,7 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
             T item = array[index];
 
             System.Collections.Generic.KeyValuePair<T, int> p = new(value, index);
-            if (itemequalityComparer.Equals(value, item))
+            if (itemEqualityComparer.Equals(value, item))
             {
                 array[index] = value;
                 itemIndex.Update(p);
@@ -985,7 +985,7 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
     {
         ValidityCheck();
         int stamp = this.stamp;
-        HashedArrayList<T> res = new(itemequalityComparer);
+        HashedArrayList<T> res = new(itemEqualityComparer);
         int j = 0, rescap = res.array.Length;
         for (int i = 0; i < size; i++)
         {
@@ -1718,7 +1718,7 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
             return;
         }
         //TODO: reactivate the old code for small sizes
-        HashBag<T> toremove = new(itemequalityComparer);
+        HashBag<T> toremove = new(itemEqualityComparer);
         toremove.AddAll(items);
         if (toremove.Count == 0)
         {
@@ -1879,7 +1879,7 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
             return;
         }
 
-        HashBag<T> toretain = new(itemequalityComparer);
+        HashBag<T> toretain = new(itemEqualityComparer);
         toretain.AddAll(items);
         if (toretain.Count == 0)
         {
@@ -2395,7 +2395,7 @@ public void GetObjectData(System.Runtime.Serialization.SerializationInfo info, S
     bool System.Collections.ICollection.IsSynchronized => false;
 
     [Obsolete]
-    Object System.Collections.ICollection.SyncRoot => underlying != null ? ((System.Collections.ICollection)underlying).SyncRoot : array;
+    object System.Collections.ICollection.SyncRoot => underlying != null ? ((System.Collections.ICollection)underlying).SyncRoot : array;
 
     void System.Collections.ICollection.CopyTo(Array arr, int index)
     {
@@ -2414,35 +2414,35 @@ public void GetObjectData(System.Runtime.Serialization.SerializationInfo info, S
 
     #region System.Collections.IList Members
 
-    Object System.Collections.IList.this[int index]
+    object System.Collections.IList.this[int index]
     {
         get => this[index]!;
         set => this[index] = (T)value;
     }
 
-    int System.Collections.IList.Add(Object o)
+    int System.Collections.IList.Add(object o)
     {
         bool added = Add((T)o);
         // What position to report if item not added? SC.IList.Add doesn't say
         return added ? Count - 1 : -1;
     }
 
-    bool System.Collections.IList.Contains(Object o)
+    bool System.Collections.IList.Contains(object o)
     {
         return Contains((T)o);
     }
 
-    int System.Collections.IList.IndexOf(Object o)
+    int System.Collections.IList.IndexOf(object o)
     {
         return Math.Max(-1, IndexOf((T)o));
     }
 
-    void System.Collections.IList.Insert(int index, Object o)
+    void System.Collections.IList.Insert(int index, object o)
     {
         Insert(index, (T)o);
     }
 
-    void System.Collections.IList.Remove(Object o)
+    void System.Collections.IList.Remove(object o)
     {
         Remove((T)o);
     }

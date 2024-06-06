@@ -212,7 +212,7 @@ namespace C5.UserGuideExamples
 
             TreeSet<Edge<T>> vtree = new();
 
-            htree[Double.NegativeInfinity] = (ISorted<Edge<T>>)(vtree.Snapshot());
+            htree[double.NegativeInfinity] = (ISorted<Edge<T>>)(vtree.Snapshot());
 
             foreach (System.Collections.Generic.KeyValuePair<double, System.Collections.Generic.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>> p in endpoints)
             {

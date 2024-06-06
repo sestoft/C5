@@ -36,7 +36,7 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
     /// <summary>
     /// The size of the underlying list.
     /// </summary>
-    private int Underlyingsize => (underlying ?? this).size;
+    private int UnderlyingSize => (underlying ?? this).size;
 
     /// <summary>
     /// The underlying field of the FIFO property
@@ -52,145 +52,10 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
     /// <value></value>
     public override EventType ListenableEvents => underlying == null ? EventType.All : EventType.None;
 
-    /*
-        /// <summary>
-        ///
-        /// </summary>
-        /// <value></value>
-        public override event CollectionChangedHandler<T> CollectionChanged
-        {
-          add
-          {
-            if (underlying == null)
-              base.CollectionChanged += value;
-            else
-              throw new UnlistenableEventException("Can't listen to a view");
-          }
-          remove
-          {
-            if (underlying == null)
-              base.CollectionChanged -= value;
-            else
-              throw new UnlistenableEventException("Can't listen to a view");
-          }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <value></value>
-        public override event CollectionClearedHandler<T> CollectionCleared
-        {
-          add
-          {
-            if (underlying == null)
-              base.CollectionCleared += value;
-            else
-              throw new UnlistenableEventException("Can't listen to a view");
-          }
-          remove
-          {
-            if (underlying == null)
-              base.CollectionCleared -= value;
-            else
-              throw new UnlistenableEventException("Can't listen to a view");
-          }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <value></value>
-        public override event ItemsAddedHandler<T> ItemsAdded
-        {
-          add
-          {
-            if (underlying == null)
-              base.ItemsAdded += value;
-            else
-              throw new UnlistenableEventException("Can't listen to a view");
-          }
-          remove
-          {
-            if (underlying == null)
-              base.ItemsAdded -= value;
-            else
-              throw new UnlistenableEventException("Can't listen to a view");
-          }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <value></value>
-        public override event ItemInsertedHandler<T> ItemInserted
-        {
-          add
-          {
-            if (underlying == null)
-              base.ItemInserted += value;
-            else
-              throw new UnlistenableEventException("Can't listen to a view");
-          }
-          remove
-          {
-            if (underlying == null)
-              base.ItemInserted -= value;
-            else
-              throw new UnlistenableEventException("Can't listen to a view");
-          }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <value></value>
-        public override event ItemsRemovedHandler<T> ItemsRemoved
-        {
-          add
-          {
-            if (underlying == null)
-              base.ItemsRemoved += value;
-            else
-              throw new UnlistenableEventException("Can't listen to a view");
-          }
-          remove
-          {
-            if (underlying == null)
-              base.ItemsRemoved -= value;
-            else
-              throw new UnlistenableEventException("Can't listen to a view");
-          }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <value></value>
-        public override event ItemRemovedAtHandler<T> ItemRemovedAt
-        {
-          add
-          {
-            if (underlying == null)
-              base.ItemRemovedAt += value;
-            else
-              throw new UnlistenableEventException("Can't listen to a view");
-          }
-          remove
-          {
-            if (underlying == null)
-              base.ItemRemovedAt -= value;
-            else
-              throw new UnlistenableEventException("Can't listen to a view");
-          }
-        }
-
-          */
-
     #endregion
     #region Util
 
-    private bool Equals(T i1, T i2) { return itemequalityComparer.Equals(i1, i2); }
+    private bool Equals(T i1, T i2) { return itemEqualityComparer.Equals(i1, i2); }
 
     /// <summary>
     /// Increment or decrement the private size fields
@@ -210,23 +75,24 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
     /// Double the size of the internal array.
     /// </summary>
     protected override void Expand()
-    { Expand(2 * array.Length, Underlyingsize); }
-
+    {
+        Expand(2 * array.Length, UnderlyingSize);
+    }
 
     /// <summary>
     /// Expand the internal array, resetting the index of the first unused element.
     /// </summary>
-    /// <param name="newcapacity">The new capacity (will be rounded upwards to a power of 2).</param>
-    /// <param name="newsize">The new count of </param>
-    protected override void Expand(int newcapacity, int newsize)
+    /// <param name="newCapacity">The new capacity (will be rounded upwards to a power of 2).</param>
+    /// <param name="newSize">The new count of </param>
+    protected override void Expand(int newCapacity, int newSize)
     {
         if (underlying != null)
         {
-            underlying.Expand(newcapacity, newsize);
+            underlying.Expand(newCapacity, newSize);
         }
         else
         {
-            base.Expand(newcapacity, newsize);
+            base.Expand(newCapacity, newSize);
             if (views != null)
             {
                 foreach (ArrayList<T> v in views)
@@ -255,7 +121,6 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
         }
     }
 
-
     /// <summary>
     /// Check if we are a view that the underlying list has only been updated through us.
     /// <para>This method should be called from enumerators etc to guard against
@@ -269,7 +134,6 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
             throw new ViewDisposedException();
         }
     }
-
 
     /// <summary>
     /// Check that the list has not been updated since a particular time.
@@ -342,15 +206,15 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
 
     private void BaseInsertInner(int i, T item)
     {
-        if (Underlyingsize == array.Length)
+        if (UnderlyingSize == array.Length)
         {
             Expand();
         }
 
         i += offsetField;
-        if (i < Underlyingsize)
+        if (i < UnderlyingSize)
         {
-            Array.Copy(array, i, array, i + 1, Underlyingsize - i);
+            Array.Copy(array, i, array, i + 1, UnderlyingSize - i);
         }
 
         array[i] = item;
@@ -372,12 +236,12 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
         FixViewsBeforeSingleRemove(i);
         var retval = array[i];
         AddToSize(-1);
-        if (Underlyingsize > i)
+        if (UnderlyingSize > i)
         {
-            Array.Copy(array, i + 1, array, i, Underlyingsize - i);
+            Array.Copy(array, i + 1, array, i, UnderlyingSize - i);
         }
 
-        array[Underlyingsize] = default;
+        array[UnderlyingSize] = default;
 
         return retval;
     }
@@ -860,14 +724,14 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
             return;
         }
 
-        if (toadd + Underlyingsize > array.Length)
+        if (toadd + UnderlyingSize > array.Length)
         {
-            Expand(toadd + Underlyingsize, Underlyingsize);
+            Expand(toadd + UnderlyingSize, UnderlyingSize);
         }
 
-        if (Underlyingsize > index)
+        if (UnderlyingSize > index)
         {
-            Array.Copy(array, index, array, index + toadd, Underlyingsize - index);
+            Array.Copy(array, index, array, index + toadd, UnderlyingSize - index);
         }
 
         int i = index;
@@ -884,8 +748,8 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
             int added = i - index;
             if (added < toadd)
             {
-                Array.Copy(array, index + toadd, array, i, Underlyingsize - index);
-                Array.Clear(array, Underlyingsize + added, toadd - added);
+                Array.Copy(array, index + toadd, array, i, UnderlyingSize - index);
+                Array.Clear(array, UnderlyingSize + added, toadd - added);
             }
             if (added > 0)
             {
@@ -948,7 +812,7 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
     {
         ValidityCheck();
         int stamp = this.stamp;
-        ArrayList<T> res = new(itemequalityComparer);
+        ArrayList<T> res = new(itemEqualityComparer);
         int j = 0, rescap = res.array.Length;
         for (int i = 0; i < size; i++)
         {
@@ -1223,7 +1087,7 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
         int newoffset = offsetField + offset;
         int newsize = size;
 
-        if (newoffset < 0 || newsize < 0 || newoffset + newsize > Underlyingsize)
+        if (newoffset < 0 || newsize < 0 || newoffset + newsize > UnderlyingSize)
         {
             return false;
         }
@@ -1429,9 +1293,9 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
         start += offsetField;
         FixViewsBeforeRemove(start, count);
 
-        Array.Copy(array, start + count, array, start, Underlyingsize - start - count);
+        Array.Copy(array, start + count, array, start, UnderlyingSize - start - count);
         AddToSize(-count);
-        Array.Clear(array, Underlyingsize, count);
+        Array.Clear(array, UnderlyingSize, count);
 
         (underlying ?? this).RaiseForRemoveInterval(start, count);
     }
@@ -1666,7 +1530,7 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
             return;
         }
         //TODO: reactivate the old code for small sizes
-        HashBag<T> toremove = new(itemequalityComparer);
+        HashBag<T> toremove = new(itemEqualityComparer);
         toremove.AddAll(items);
         if (toremove.Count == 0)
         {
@@ -1709,10 +1573,10 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
             return;
         }
 
-        viewHandler.UpdateViewSizesAndCounts(removed, Underlyingsize);
-        Array.Copy(array, offsetField + size, array, j, Underlyingsize - offsetField - size);
+        viewHandler.UpdateViewSizesAndCounts(removed, UnderlyingSize);
+        Array.Copy(array, offsetField + size, array, j, UnderlyingSize - offsetField - size);
         AddToSize(-removed);
-        Array.Clear(array, Underlyingsize, removed);
+        Array.Clear(array, UnderlyingSize, removed);
 
         if (mustFire)
         {
@@ -1815,7 +1679,7 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
             return;
         }
 
-        HashBag<T> toretain = new(itemequalityComparer);
+        HashBag<T> toretain = new(itemEqualityComparer);
         toretain.AddAll(items);
         if (toretain.Count == 0)
         {
@@ -1858,10 +1722,10 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
             return;
         }
 
-        viewHandler.UpdateViewSizesAndCounts(removed, Underlyingsize);
-        Array.Copy(array, offsetField + size, array, j, Underlyingsize - offsetField - size);
+        viewHandler.UpdateViewSizesAndCounts(removed, UnderlyingSize);
+        Array.Copy(array, offsetField + size, array, j, UnderlyingSize - offsetField - size);
         AddToSize(-removed);
-        Array.Clear(array, Underlyingsize, removed);
+        Array.Clear(array, UnderlyingSize, removed);
 
         raiseHandler.Raise();
     }
@@ -1933,7 +1797,7 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
         ValidityCheck();
 
         //TODO: use aux hash bag to obtain linear time procedure
-        HashBag<T> tomatch = new(itemequalityComparer);
+        HashBag<T> tomatch = new(itemEqualityComparer);
         tomatch.AddAll(items);
         if (tomatch.Count == 0)
         {
@@ -1980,7 +1844,7 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
     /// <returns></returns>
     public virtual ICollectionValue<T> UniqueItems()
     {
-        HashBag<T> hashbag = new(itemequalityComparer);
+        HashBag<T> hashbag = new(itemEqualityComparer);
         hashbag.AddAll(this);
         return hashbag.UniqueItems();
     }
@@ -1991,7 +1855,7 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
     /// <returns></returns>
     public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
     {
-        HashBag<T> hashbag = new(itemequalityComparer);
+        HashBag<T> hashbag = new(itemEqualityComparer);
         hashbag.AddAll(this);
         return hashbag.ItemMultiplicities();
     }
@@ -2045,10 +1909,10 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
             return;
         }
 
-        viewHandler.UpdateViewSizesAndCounts(removed, Underlyingsize);
-        Array.Copy(array, offsetField + size, array, j, Underlyingsize - offsetField - size);
+        viewHandler.UpdateViewSizesAndCounts(removed, UnderlyingSize);
+        Array.Copy(array, offsetField + size, array, j, UnderlyingSize - offsetField - size);
         AddToSize(-removed);
-        Array.Clear(array, Underlyingsize, removed);
+        Array.Clear(array, UnderlyingSize, removed);
         raiseHandler.Raise();
     }
 
@@ -2062,15 +1926,15 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
     {
         bool retval = true;
 
-        if (Underlyingsize > array.Length)
+        if (UnderlyingSize > array.Length)
         {
             Logger.Log(string.Format("underlyingsize ({0}) > array.Length ({1})", size, array.Length));
             return false;
         }
 
-        if (offsetField + size > Underlyingsize)
+        if (offsetField + size > UnderlyingSize)
         {
-            Logger.Log(string.Format("offset({0})+size({1}) > underlyingsize ({2})", offsetField, size, Underlyingsize));
+            Logger.Log(string.Format("offset({0})+size({1}) > underlyingsize ({2})", offsetField, size, UnderlyingSize));
             return false;
         }
 
@@ -2080,7 +1944,7 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
             return false;
         }
 
-        for (int i = 0; i < Underlyingsize; i++)
+        for (int i = 0; i < UnderlyingSize; i++)
         {
             if (array[i] == null)
             {
@@ -2089,7 +1953,7 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
             }
         }
 
-        for (int i = Underlyingsize, length = array.Length; i < length; i++)
+        for (int i = UnderlyingSize, length = array.Length; i < length; i++)
         {
             if (!Equals(array[i], default))
             {
@@ -2162,15 +2026,15 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
             return;
         }
 
-        if (toadd + Underlyingsize > array.Length)
+        if (toadd + UnderlyingSize > array.Length)
         {
-            Expand(toadd + Underlyingsize, Underlyingsize);
+            Expand(toadd + UnderlyingSize, UnderlyingSize);
         }
 
         int i = size + offsetField;
-        if (Underlyingsize > i)
+        if (UnderlyingSize > i)
         {
-            Array.Copy(array, i, array, i + toadd, Underlyingsize - i);
+            Array.Copy(array, i, array, i + toadd, UnderlyingSize - i);
         }
 
         try
@@ -2185,8 +2049,8 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
             int added = i - size - offsetField;
             if (added < toadd)
             {
-                Array.Copy(array, size + offsetField + toadd, array, i, Underlyingsize - size - offsetField);
-                Array.Clear(array, Underlyingsize + added, toadd - added);
+                Array.Copy(array, size + offsetField + toadd, array, i, UnderlyingSize - size - offsetField);
+                Array.Clear(array, UnderlyingSize + added, toadd - added);
             }
             if (added > 0)
             {
@@ -2388,7 +2252,7 @@ public void GetObjectData(System.Runtime.Serialization.SerializationInfo info, S
     bool System.Collections.ICollection.IsSynchronized => false;
 
     [Obsolete]
-    Object System.Collections.ICollection.SyncRoot => underlying != null ? ((System.Collections.ICollection)underlying).SyncRoot : array;
+    object System.Collections.ICollection.SyncRoot => underlying != null ? ((System.Collections.ICollection)underlying).SyncRoot : array;
 
     void System.Collections.ICollection.CopyTo(Array arr, int index)
     {
@@ -2407,35 +2271,35 @@ public void GetObjectData(System.Runtime.Serialization.SerializationInfo info, S
 
     #region System.Collections.IList Members
 
-    Object System.Collections.IList.this[int index]
+    object System.Collections.IList.this[int index]
     {
         get => this[index]!;
         set => this[index] = (T)value;
     }
 
-    int System.Collections.IList.Add(Object o)
+    int System.Collections.IList.Add(object o)
     {
         bool added = Add((T)o);
         // What position to report if item not added? SC.IList.Add doesn't say
         return added ? Count - 1 : -1;
     }
 
-    bool System.Collections.IList.Contains(Object o)
+    bool System.Collections.IList.Contains(object o)
     {
         return Contains((T)o);
     }
 
-    int System.Collections.IList.IndexOf(Object o)
+    int System.Collections.IList.IndexOf(object o)
     {
         return Math.Max(-1, IndexOf((T)o));
     }
 
-    void System.Collections.IList.Insert(int index, Object o)
+    void System.Collections.IList.Insert(int index, object o)
     {
         Insert(index, (T)o);
     }
 
-    void System.Collections.IList.Remove(Object o)
+    void System.Collections.IList.Remove(object o)
     {
         Remove((T)o);
     }

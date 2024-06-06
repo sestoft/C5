@@ -14,7 +14,7 @@ public class CircularQueue<T> : SequencedBase<T>, IQueue<T>, IStack<T>
 {
     #region Fields
     /*
-    Invariant: the itemes in the queue ar the elements from front upwards,
+    Invariant: the items in the queue ar the elements from front upwards,
     possibly wrapping around at the end of array, to back.
 
     if front<=back then size = back - front + 1;

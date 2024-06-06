@@ -109,19 +109,17 @@ internal class Toposort
             if (!sorted.Contains(start))
             {
                 sorted.InsertLast(start);
-                using (IList<MyNode<T>> cursor = sorted.View(sorted.Count - 1, 1))
+                using IList<MyNode<T>> cursor = sorted.View(sorted.Count - 1, 1);
+                do
                 {
-                    do
+                    MyNode<T> child;
+                    while ((child = PendingChild(sorted, cursor.First)) != null)
                     {
-                        MyNode<T> child;
-                        while ((child = PendingChild(sorted, cursor.First)) != null)
-                        {
-                            cursor.InsertFirst(child);
-                            cursor.Slide(0, 1);
-                        }
+                        cursor.InsertFirst(child);
+                        cursor.Slide(0, 1);
                     }
-                    while (cursor.TrySlide(+1));
                 }
+                while (cursor.TrySlide(+1));
             }
         }
 

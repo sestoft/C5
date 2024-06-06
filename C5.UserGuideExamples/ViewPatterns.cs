@@ -223,13 +223,11 @@ internal class ViewPatterns
     {
         foreach (var x in xs)
         {
-            using (var view = list.ViewOf(x))
+            using var view = list.ViewOf(x);
+            if (view != null)
             {
-                if (view != null)
-                {
-                    view.Remove();
-                    view.Add(y);
-                }
+                view.Remove();
+                view.Add(y);
             }
         }
     }
@@ -299,17 +297,15 @@ internal class ViewPatterns
     // Find the index of the first item that satisfies p
     public static int FindFirstIndex<T>(IList<T> list, Func<T, bool> p)
     {
-        using (var view = list.View(0, 0))
+        using var view = list.View(0, 0);
+        while (view.TrySlide(0, 1))
         {
-            while (view.TrySlide(0, 1))
+            if (p(view.First))
             {
-                if (p(view.First))
-                {
-                    return view.Offset;
-                }
-
-                view.Slide(+1, 0);
+                return view.Offset;
             }
+
+            view.Slide(+1, 0);
         }
         return -1;
     }
@@ -317,14 +313,12 @@ internal class ViewPatterns
     // Find the index of the last item that satisfies p
     public static int FindLastIndex<T>(IList<T> list, Func<T, bool> p)
     {
-        using (var view = list.View(list.Count, 0))
+        using var view = list.View(list.Count, 0);
+        while (view.TrySlide(-1, 1))
         {
-            while (view.TrySlide(-1, 1))
+            if (p(view.First))
             {
-                if (p(view.First))
-                {
-                    return view.Offset;
-                }
+                return view.Offset;
             }
         }
         return -1;

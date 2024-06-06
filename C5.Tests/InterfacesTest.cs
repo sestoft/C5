@@ -94,7 +94,7 @@ namespace C5.Tests.interfaces
             Assert.IsFalse(list.IsReadOnly);
             Assert.IsFalse(list.IsSynchronized);
             Assert.AreNotEqual(null, list.SyncRoot);
-            Object b1 = new B(), b2 = new B(), c1 = new C(), c2 = new C();
+            object b1 = new B(), b2 = new B(), c1 = new C(), c2 = new C();
             Assert.AreEqual(0, list.Add(b1));
             Assert.AreEqual(1, list.Add(c1));
             Assert.AreEqual(2, list.Count);
@@ -154,7 +154,7 @@ namespace C5.Tests.interfaces
             Assert.IsFalse(list.IsSynchronized);
             Assert.AreNotEqual(null, list.SyncRoot);
             Assert.AreEqual(myarray.SyncRoot, list.SyncRoot);
-            Object b1 = new B(), b2 = new B(), c1 = new C(), c2 = new C();
+            object b1 = new B(), b2 = new B(), c1 = new C(), c2 = new C();
             list[0] = b2;
             Assert.AreEqual(b2, list[0]);
             list[1] = c2;
@@ -187,7 +187,7 @@ namespace C5.Tests.interfaces
             list.CopyTo(Array.Empty<C>(), 0);
             Assert.IsFalse(list.IsSynchronized);
             Assert.AreNotEqual(null, list.SyncRoot);
-            Object b1 = new B(), b2 = new B(), c1 = new C(), c2 = new C();
+            object b1 = new B(), b2 = new B(), c1 = new C(), c2 = new C();
             Assert.IsFalse(list.Contains(b2));
             Assert.IsFalse(list.Contains(c2));
             Assert.AreEqual(-1, list.IndexOf(b1));
@@ -202,7 +202,7 @@ namespace C5.Tests.interfaces
             ArrayList<B> mylist = new();
             mylist.AddAll([b1_, b2_, c1_]);
             System.Collections.IList list = new GuardedList<B>(mylist);
-            Object b1 = b1_, b2 = b2_, c1 = c1_, c2 = c2_;
+            object b1 = b1_, b2 = b2_, c1 = c1_, c2 = c2_;
             // Should be called with a three-element GuardedList<B>
             Assert.AreEqual(3, list.Count);
             Assert.IsTrue(list.IsFixedSize);
@@ -236,7 +236,7 @@ namespace C5.Tests.interfaces
             list.CopyTo(Array.Empty<C>(), 0);
             Assert.IsFalse(list.IsSynchronized);
             Assert.AreNotEqual(null, list.SyncRoot);
-            Object b1 = new B(), b2 = new B(), c1 = new C(), c2 = new C();
+            object b1 = new B(), b2 = new B(), c1 = new C(), c2 = new C();
             Assert.IsFalse(list.Contains(b2));
             Assert.IsFalse(list.Contains(c2));
             Assert.AreEqual(-1, list.IndexOf(b1));
@@ -251,7 +251,7 @@ namespace C5.Tests.interfaces
             ArrayList<B> mylist = new();
             mylist.AddAll([new B(), b1_, b2_, c1_, new B()]);
             System.Collections.IList list = new GuardedList<B>(mylist).View(1, 3);
-            Object b1 = b1_, b2 = b2_, c1 = c1_, c2 = c2_;
+            object b1 = b1_, b2 = b2_, c1 = c1_, c2 = c2_;
             // Should be called with a three-element view of a GuardedList<B>
             Assert.AreEqual(3, list.Count);
             Assert.IsTrue(list.IsFixedSize);
@@ -284,7 +284,7 @@ namespace C5.Tests.interfaces
             list.CopyTo(Array.Empty<C>(), 0);
             Assert.IsFalse(list.IsSynchronized);
             Assert.AreNotEqual(null, list.SyncRoot);
-            Object b1 = new B(), b2 = new B(), c1 = new C(), c2 = new C();
+            object b1 = new B(), b2 = new B(), c1 = new C(), c2 = new C();
             Assert.IsFalse(list.Contains(b2));
             Assert.IsFalse(list.Contains(c2));
             Assert.AreEqual(-1, list.IndexOf(b1));
@@ -297,7 +297,7 @@ namespace C5.Tests.interfaces
             C c1_ = new(), c2_ = new();
             mylist.AddAll([new B(), b1_, b2_, c1_, new B()]);
             System.Collections.IList list = mylist.View(1, 3);
-            Object b1 = b1_, b2 = b2_, c1 = c1_, c2 = c2_;
+            object b1 = b1_, b2 = b2_, c1 = c1_, c2 = c2_;
             // Should be called with a three-element view on ArrayList<B>
             Assert.AreEqual(3, list.Count);
             Assert.IsFalse(list.IsSynchronized);
@@ -328,7 +328,7 @@ namespace C5.Tests.interfaces
             Assert.IsFalse(list.IsSynchronized);
             Assert.AreNotEqual(null, list.SyncRoot);
             Assert.AreEqual(list.SyncRoot, mylist.SyncRoot);
-            Object b1 = new B(), b2 = new B(), c1 = new C(), c2 = new C();
+            object b1 = new B(), b2 = new B(), c1 = new C(), c2 = new C();
             Assert.IsFalse(list.Contains(b2));
             Assert.IsFalse(list.Contains(c2));
             Assert.AreEqual(-1, list.IndexOf(b1));

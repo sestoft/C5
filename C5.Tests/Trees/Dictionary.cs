@@ -360,12 +360,12 @@ namespace C5.Tests.trees.RBDictionary
             Assert.AreEqual(3, keys.Count);
             // This doesn't hold, maybe because the dict uses a special key comparer?
             // Assert.IsTrue(keys.SequencedEquals(new WrappedArray<string>(new string[] { "R", "S", "T" })));
-            Assert.IsTrue(keys.UniqueItems().All(delegate (String s) { return s == "R" || s == "S" || s == "T"; }));
-            Assert.IsTrue(keys.All(delegate (String s) { return s == "R" || s == "S" || s == "T"; }));
-            Assert.IsFalse(keys.Exists(delegate (String s) { return s != "R" && s != "S" && s != "T"; }));
-            Assert.IsTrue(keys.Find(delegate (String s) { return s == "R"; }, out string res));
+            Assert.IsTrue(keys.UniqueItems().All(delegate (string s) { return s == "R" || s == "S" || s == "T"; }));
+            Assert.IsTrue(keys.All(delegate (string s) { return s == "R" || s == "S" || s == "T"; }));
+            Assert.IsFalse(keys.Exists(delegate (string s) { return s != "R" && s != "S" && s != "T"; }));
+            Assert.IsTrue(keys.Find(delegate (string s) { return s == "R"; }, out string res));
             Assert.AreEqual("R", res);
-            Assert.IsFalse(keys.Find(delegate (String s) { return s == "Q"; }, out res));
+            Assert.IsFalse(keys.Find(delegate (string s) { return s == "Q"; }, out res));
             Assert.AreEqual(null, res);
         }
 

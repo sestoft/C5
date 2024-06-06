@@ -30,7 +30,7 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
     /// <summary>
     /// The item equalityComparer of the collection
     /// </summary>
-    protected readonly System.Collections.Generic.IEqualityComparer<T> itemequalityComparer;
+    protected readonly System.Collections.Generic.IEqualityComparer<T> itemEqualityComparer;
     private int iUnSequencedHashCode, iUnSequencedHashCodeStamp = -1;
 
     #endregion
@@ -41,7 +41,7 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
     /// <param name="itemequalityComparer"></param>
     protected CollectionBase(System.Collections.Generic.IEqualityComparer<T> itemequalityComparer)
     {
-        this.itemequalityComparer = itemequalityComparer ?? throw new NullReferenceException("Item EqualityComparer cannot be null.");
+        this.itemEqualityComparer = itemequalityComparer ?? throw new NullReferenceException("Item EqualityComparer cannot be null.");
     }
 
     #region Util
@@ -117,7 +117,7 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
     /// <returns>True if equal</returns>
     public static bool StaticEquals(ICollection<T> collection1, ICollection<T> collection2, System.Collections.Generic.IEqualityComparer<T> itemequalityComparer)
     {
-        if (object.ReferenceEquals(collection1, collection2))
+        if (ReferenceEquals(collection1, collection2))
         {
             return true;
         }
@@ -234,7 +234,7 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
             return iUnSequencedHashCode;
         }
 
-        iUnSequencedHashCode = ComputeHashCode(this, itemequalityComparer);
+        iUnSequencedHashCode = ComputeHashCode(this, itemEqualityComparer);
         iUnSequencedHashCodeStamp = stamp;
         return iUnSequencedHashCode;
     }
@@ -248,7 +248,7 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
     /// <returns>True if  equal</returns>
     public virtual bool UnsequencedEquals(ICollection<T> otherCollection)
     {
-        return otherCollection != null && StaticEquals((ICollection<T>)this, otherCollection, itemequalityComparer);
+        return otherCollection != null && StaticEquals((ICollection<T>)this, otherCollection, itemEqualityComparer);
     }
 
 
@@ -318,7 +318,7 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
     ///
     /// </summary>
     /// <value></value>
-    public virtual System.Collections.Generic.IEqualityComparer<T> EqualityComparer => itemequalityComparer;
+    public virtual System.Collections.Generic.IEqualityComparer<T> EqualityComparer => itemEqualityComparer;
 
     /// <summary>
     ///

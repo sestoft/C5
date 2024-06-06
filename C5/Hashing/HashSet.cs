@@ -111,9 +111,9 @@ public class HashSet<T> : CollectionBase<T>, ICollection<T>
 
     #region Basic Util
 
-    private bool Equals(T i1, T i2) { return itemequalityComparer.Equals(i1, i2); }
+    private bool Equals(T i1, T i2) { return itemEqualityComparer.Equals(i1, i2); }
 
-    private int GetHashCode(T item) { return itemequalityComparer.GetHashCode(item); }
+    private int GetHashCode(T item) { return itemEqualityComparer.GetHashCode(item); }
 
     private int Hv2i(int hashval)
     {

@@ -687,18 +687,18 @@ namespace C5.Tests.heaps
             // Remove();
             q.DeleteMin();
             // XAddMaxReplace(9, 2);
-            q.Add(ref h2, Double.MaxValue);
+            q.Add(ref h2, double.MaxValue);
             q[h2] = 9;
             // XAddMaxReplace(32, 4);
-            q.Add(ref h4, Double.MaxValue);
+            q.Add(ref h4, double.MaxValue);
             q[h4] = 32;
             // XAddMaxReplace(44, 7);
-            q.Add(ref h7, Double.MaxValue);
+            q.Add(ref h7, double.MaxValue);
             q[h7] = 44;
             // Remove();
             q.DeleteMin();
             // XAddMaxReplace(0, 5);
-            q.Add(ref h5, Double.MaxValue);
+            q.Add(ref h5, double.MaxValue);
             q[h5] = 0;
             // Internally inconsistent data structure already now
             Assert.IsTrue(q.Check());

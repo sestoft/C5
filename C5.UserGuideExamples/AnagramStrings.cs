@@ -40,16 +40,14 @@ internal class AnagramStrings
     private static SCG.IEnumerable<string> ReadFileWords(string filename)
     {
         var delimiter = new Regex("[^a-z���A-Z���0-9-]+");
-        using (var reader = File.OpenText(filename))
+        using var reader = File.OpenText(filename);
+        for (var line = reader.ReadLine(); line != null; line = reader.ReadLine())
         {
-            for (var line = reader.ReadLine(); line != null; line = reader.ReadLine())
+            foreach (var s in delimiter.Split(line))
             {
-                foreach (var s in delimiter.Split(line))
+                if (s != "")
                 {
-                    if (s != "")
-                    {
-                        yield return s.ToLower();
-                    }
+                    yield return s.ToLower();
                 }
             }
         }

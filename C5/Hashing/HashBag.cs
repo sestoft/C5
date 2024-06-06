@@ -352,7 +352,7 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
     {
         UpdateCheck();
 
-        HashBag<T> res = new(itemequalityComparer);
+        HashBag<T> res = new(itemEqualityComparer);
 
         foreach (T item in items)
         {
@@ -421,7 +421,7 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
     /// <returns>True if all items are found.</returns>
     public virtual bool ContainsAll(SCG.IEnumerable<T> items)
     {
-        HashBag<T> res = new(itemequalityComparer);
+        HashBag<T> res = new(itemEqualityComparer);
 
         foreach (T item in items)
         {

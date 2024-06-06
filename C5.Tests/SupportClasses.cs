@@ -16,9 +16,9 @@ namespace C5.Tests
         }
 
 
-        public void appl(String s)
+        public void appl(string s)
         {
-            System.Console.WriteLine("--{0}", s);
+            Console.WriteLine("--{0}", s);
         }
     }
 
@@ -307,7 +307,7 @@ namespace C5.Tests
 
         public bool Equals(CollectionEvent<T> otherEvent, SCG.IEqualityComparer<T> itemequalityComparer)
         {
-            if (otherEvent == null || Act != otherEvent.Act || !object.ReferenceEquals(Sender, otherEvent.Sender))
+            if (otherEvent == null || Act != otherEvent.Act || !ReferenceEquals(Sender, otherEvent.Sender))
             {
                 return false;
             }

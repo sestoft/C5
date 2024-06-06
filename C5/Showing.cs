@@ -23,7 +23,7 @@ public static class Showing
     /// <param name="rest"></param>
     /// <param name="formatProvider"></param>
     /// <returns>True if <code>obj</code> was shown completely.</returns>
-    public static bool Show(Object? obj, StringBuilder stringbuilder, ref int rest, IFormatProvider? formatProvider)
+    public static bool Show(object? obj, StringBuilder stringbuilder, ref int rest, IFormatProvider? formatProvider)
     {
         if (rest <= 0)
         {
@@ -144,7 +144,7 @@ public static class Showing
                     stringbuilder.Append(", ");
                     rest -= 2;
                 }
-                if (complete = Showing.Show(p.Key, stringbuilder, ref rest, formatProvider))
+                if (complete = Show(p.Key, stringbuilder, ref rest, formatProvider))
                 {
                     string multiplicityString = string.Format("(*{0})", p.Value);
                     stringbuilder.Append(multiplicityString);
@@ -177,7 +177,7 @@ public static class Showing
                     stringbuilder.Append(indexString);
                     rest -= indexString.Length;
                 }
-                complete = Showing.Show(x, stringbuilder, ref rest, formatProvider);
+                complete = Show(x, stringbuilder, ref rest, formatProvider);
             }
         }
         if (!complete)
@@ -225,7 +225,7 @@ public static class Showing
                 stringbuilder.Append(", ");
                 rest -= 2;
             }
-            complete = Showing.Show(p, stringbuilder, ref rest, formatProvider);
+            complete = Show(p, stringbuilder, ref rest, formatProvider);
         }
         if (!complete)
         {

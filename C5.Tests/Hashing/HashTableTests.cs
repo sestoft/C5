@@ -829,8 +829,8 @@ namespace C5.Tests.hashtable.set
                 Assert.IsFalse(coll.UpdateOrAdd(s1, out string old));
                 Assert.AreEqual(null, old);
                 Assert.IsTrue(coll.UpdateOrAdd(s2, out old));
-                Assert.IsTrue(object.ReferenceEquals(s1, old));
-                Assert.IsFalse(object.ReferenceEquals(s2, old));
+                Assert.IsTrue(ReferenceEquals(s1, old));
+                Assert.IsFalse(ReferenceEquals(s2, old));
             }
 
             [Test]

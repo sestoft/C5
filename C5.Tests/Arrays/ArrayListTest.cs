@@ -33,8 +33,8 @@ namespace C5.Tests.arrays.list
         [Test]
         public void List()
         {
-            C5.Tests.Templates.List.Dispose.Tester<CollectionOfInt>();
-            C5.Tests.Templates.List.SCG_IList.Tester<CollectionOfInt>();
+            Templates.List.Dispose.Tester<CollectionOfInt>();
+            Templates.List.SCG_IList.Tester<CollectionOfInt>();
         }
     }
 
@@ -55,7 +55,7 @@ namespace C5.Tests.arrays.list
             public void Init()
             {
                 list = new ArrayList<int>(TenEqualityComparer.Default);
-                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
+                seen = new CollectionEventList<int>(SCG.EqualityComparer<int>.Default);
             }
 
             private void listen() { seen.Listen(list, EventType.Added); }
@@ -523,7 +523,7 @@ namespace C5.Tests.arrays.list
             public void Init()
             {
                 list = new ArrayList<int>(TenEqualityComparer.Default);
-                seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
+                seen = new CollectionEventList<int>(SCG.EqualityComparer<int>.Default);
             }
 
             private void listen() { seen.Listen(list, EventType.All); }
@@ -1975,14 +1975,14 @@ namespace C5.Tests.arrays.list
             [Test]
             public void UpdateOrAdd2()
             {
-                ICollection<String> coll = new ArrayList<String>();
+                ICollection<string> coll = new ArrayList<string>();
                 // s1 and s2 are distinct objects but contain the same text:
-                String s1 = "abc", s2 = ("def" + s1).Substring(3);
+                string s1 = "abc", s2 = ("def" + s1).Substring(3);
                 Assert.IsFalse(coll.UpdateOrAdd(s1, out string old));
                 Assert.AreEqual(null, old);
                 Assert.IsTrue(coll.UpdateOrAdd(s2, out old));
-                Assert.IsTrue(Object.ReferenceEquals(s1, old));
-                Assert.IsFalse(Object.ReferenceEquals(s2, old));
+                Assert.IsTrue(ReferenceEquals(s1, old));
+                Assert.IsFalse(ReferenceEquals(s2, old));
             }
 
             [Test]

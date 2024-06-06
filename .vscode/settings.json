@@ -19,5 +19,7 @@
     "cSpell.enableFiletypes": [
         "*"
     ],
-    "cSpell.ignoreWords": []
+    "cSpell.words": [
+        "showable"
+    ]
 }

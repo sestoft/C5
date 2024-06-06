@@ -1,6 +1,7 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
+using System.Linq;
 using SCG = System.Collections.Generic;
 
 namespace C5;
@@ -21,34 +22,7 @@ public abstract class EnumerableBase<T> : SCG.IEnumerable<T>
     /// </summary>
     /// <param name="items">The enumerable to count</param>
     /// <returns>The size of the enumerable</returns>
-    protected static int CountItems(SCG.IEnumerable<T> items)
-    {
-        // ICollectionValue<T> jtems = items as ICollectionValue<T>;
+    protected static int CountItems(SCG.IEnumerable<T> items) => items is ICollectionValue<T> collectionValue ? collectionValue.Count : items.Count();
 
-        if (items is ICollectionValue<T> jtems)
-        {
-            return jtems.Count;
-        }
-
-        int count = 0;
-
-        using (SCG.IEnumerator<T> e = items.GetEnumerator())
-        {
-            while (e.MoveNext())
-            {
-                count++;
-            }
-        }
-
-        return count;
-    }
-
-    #region IEnumerable Members
-
-    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
-
-    #endregion
+    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
 }

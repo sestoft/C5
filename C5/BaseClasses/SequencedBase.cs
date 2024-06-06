@@ -19,38 +19,37 @@ public abstract class SequencedBase<T> : DirectedCollectionBase<T>, IDirectedCol
     /// <summary>
     ///
     /// </summary>
-    /// <param name="itemequalityComparer"></param>
-    protected SequencedBase(System.Collections.Generic.IEqualityComparer<T> itemequalityComparer) : base(itemequalityComparer) { }
+    /// <param name="itemEqualityComparer"></param>
+    protected SequencedBase(System.Collections.Generic.IEqualityComparer<T> itemEqualityComparer) : base(itemEqualityComparer) { }
 
     #region Util
 
     //TODO: make random for release
-    private const int HASHFACTOR = 31;
+    private const int HashFactor = 31;
 
     /// <summary>
     /// Compute the unsequenced hash code of a collection
     /// </summary>
     /// <param name="items">The collection to compute hash code for</param>
-    /// <param name="itemequalityComparer">The item equalitySCG.Comparer</param>
+    /// <param name="itemEqualityComparer">The item equalitySCG.Comparer</param>
     /// <returns>The hash code</returns>
-    public static int ComputeHashCode(ISequenced<T> items, System.Collections.Generic.IEqualityComparer<T> itemequalityComparer)
+    public static int ComputeHashCode(ISequenced<T> items, System.Collections.Generic.IEqualityComparer<T> itemEqualityComparer)
     {
-        //NOTE: It must be possible to devise a much stronger combined hashcode,
-        //but unfortunately, it has to be universal. OR we could use a (strong)
-        //family and initialise its parameter randomly at load time of this class!
-        //(We would not want to have yet a flag to check for invalidation?!)
-        //NBNBNB: the current hashcode has the very bad property that items with hashcode 0
+        // NOTE: It must be possible to devise a much stronger combined hash code,
+        // but unfortunately, it has to be universal. OR we could use a (strong)
+        // family and initialize its parameter randomly at load time of this class!
+        // (We would not want to have yet a flag to check for invalidation?!)
+        // NB: the current hash code has the very bad property that items with hash code 0
         // is ignored.
         int iIndexedHashCode = 0;
 
         foreach (T item in items)
         {
-            iIndexedHashCode = iIndexedHashCode * HASHFACTOR + itemequalityComparer.GetHashCode(item);
+            iIndexedHashCode = iIndexedHashCode * HashFactor + itemEqualityComparer.GetHashCode(item);
         }
 
         return iIndexedHashCode;
     }
-
 
     /// <summary>
     /// Examine if tit and tat are equal as sequenced collections
@@ -58,11 +57,11 @@ public abstract class SequencedBase<T> : DirectedCollectionBase<T>, IDirectedCol
     /// </summary>
     /// <param name="collection1">The first collection</param>
     /// <param name="collection2">The second collection</param>
-    /// <param name="itemequalityComparer">The item equalityComparer to use for comparison</param>
+    /// <param name="itemEqualityComparer">The item equalityComparer to use for comparison</param>
     /// <returns>True if equal</returns>
-    public static bool StaticEquals(ISequenced<T> collection1, ISequenced<T> collection2, System.Collections.Generic.IEqualityComparer<T> itemequalityComparer)
+    public static bool StaticEquals(ISequenced<T> collection1, ISequenced<T> collection2, System.Collections.Generic.IEqualityComparer<T> itemEqualityComparer)
     {
-        if (object.ReferenceEquals(collection1, collection2))
+        if (ReferenceEquals(collection1, collection2))
         {
             return true;
         }
@@ -79,21 +78,19 @@ public abstract class SequencedBase<T> : DirectedCollectionBase<T>, IDirectedCol
             return false;
         }
 
-        using (System.Collections.Generic.IEnumerator<T> dat = collection2.GetEnumerator(), dit = collection1.GetEnumerator())
+        using System.Collections.Generic.IEnumerator<T> dat = collection2.GetEnumerator(), dit = collection1.GetEnumerator();
+
+        while (dit.MoveNext())
         {
-            while (dit.MoveNext())
+            dat.MoveNext();
+            if (!itemEqualityComparer.Equals(dit.Current, dat.Current))
             {
-                dat.MoveNext();
-                if (!itemequalityComparer.Equals(dit.Current, dat.Current))
-                {
-                    return false;
-                }
+                return false;
             }
         }
 
         return true;
     }
-
 
     /// <summary>
     /// Get the sequenced collection hash code of this collection: from the cached
@@ -107,7 +104,7 @@ public abstract class SequencedBase<T> : DirectedCollectionBase<T>, IDirectedCol
             return iSequencedHashCode;
         }
 
-        iSequencedHashCode = ComputeHashCode((ISequenced<T>)this, itemequalityComparer);
+        iSequencedHashCode = ComputeHashCode((ISequenced<T>)this, itemEqualityComparer);
         iSequencedHashCodeStamp = stamp;
         return iSequencedHashCode;
     }
@@ -121,7 +118,7 @@ public abstract class SequencedBase<T> : DirectedCollectionBase<T>, IDirectedCol
     /// <returns>True if  equal</returns>
     public virtual bool SequencedEquals(ISequenced<T> otherCollection)
     {
-        return StaticEquals((ISequenced<T>)this, otherCollection, itemequalityComparer);
+        return StaticEquals((ISequenced<T>)this, otherCollection, itemEqualityComparer);
     }
 
 

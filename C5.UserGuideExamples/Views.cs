@@ -113,13 +113,11 @@ internal class Views
     {
         foreach (T x in xs)
         {
-            using (IList<T> view = list.ViewOf(x))
+            using IList<T> view = list.ViewOf(x);
+            if (view != null)
             {
-                if (view != null)
-                {
-                    view.Remove();
-                    view.Add(y);
-                }
+                view.Remove();
+                view.Add(y);
             }
         }
     }

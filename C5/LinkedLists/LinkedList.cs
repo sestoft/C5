@@ -67,7 +67,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
 
     #region Util
 
-    private bool Equals(T i1, T i2) { return itemequalityComparer.Equals(i1, i2); }
+    private bool Equals(T i1, T i2) { return itemEqualityComparer.Equals(i1, i2); }
 
     #region Check utilities
     /// <summary>
@@ -150,7 +150,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
         while (node != endsentinel)
         {
             //if (item.Equals(node.item))
-            if (itemequalityComparer.Equals(item, node!.item))
+            if (itemEqualityComparer.Equals(item, node!.item))
             {
                 return true;
             }
@@ -167,7 +167,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
         while (node != startsentinel)
         {
             //if (item.Equals(node.item))
-            if (itemequalityComparer.Equals(item, node!.item))
+            if (itemEqualityComparer.Equals(item, node!.item))
             {
                 return true;
             }
@@ -2154,7 +2154,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
         RaiseForRemoveAllHandler raiseHandler = new(underlying ?? this);
         bool mustFire = raiseHandler.MustFire;
 
-        HashBag<T> toremove = new(itemequalityComparer);
+        HashBag<T> toremove = new(itemEqualityComparer);
         toremove.AddAll(items);
         ViewHandler viewHandler = new(this);
         int index = 0, removed = 0, myoffset = Offset;
@@ -2306,7 +2306,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
         RaiseForRemoveAllHandler raiseHandler = new(underlying ?? this);
         bool mustFire = raiseHandler.MustFire;
 
-        HashBag<T> toretain = new(itemequalityComparer);
+        HashBag<T> toretain = new(itemEqualityComparer);
         toretain.AddAll(items);
         ViewHandler viewHandler = new(this);
         int index = 0, removed = 0, myoffset = Offset;
@@ -2412,7 +2412,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
     {
         ValidityCheck();
 
-        HashBag<T> tocheck = new(itemequalityComparer);
+        HashBag<T> tocheck = new(itemEqualityComparer);
         tocheck.AddAll(items);
         if (tocheck.Count > size)
         {
@@ -2477,7 +2477,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
         Node node = startsentinel!.next!;
         while (node != endsentinel)
         {
-            if (itemequalityComparer.Equals(node!.item, item))
+            if (itemEqualityComparer.Equals(node!.item, item))
             {
                 retval++;
             }
@@ -2494,7 +2494,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
     public virtual ICollectionValue<T> UniqueItems()
     {
 
-        HashBag<T> hashbag = new(itemequalityComparer);
+        HashBag<T> hashbag = new(itemEqualityComparer);
         hashbag.AddAll(this);
         return hashbag.UniqueItems();
     }
@@ -2506,7 +2506,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
     public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
     {
 
-        HashBag<T> hashbag = new(itemequalityComparer);
+        HashBag<T> hashbag = new(itemEqualityComparer);
         hashbag.AddAll(this);
         return hashbag.ItemMultiplicities();
     }
@@ -2537,7 +2537,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
         while (node != endsentinel)
         {
             //pass by a stretch of nodes
-            while (node != endsentinel && !itemequalityComparer.Equals(node!.item, item))
+            while (node != endsentinel && !itemEqualityComparer.Equals(node!.item, item))
             {
                 node = node.next!;
                 index++;
@@ -2545,7 +2545,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
             viewHandler.SkipEndpoints(removed, myoffset + index);
             //Remove a stretch of nodes
             Node localend = node.prev!; //Latest node not to be removed
-            while (node != endsentinel && itemequalityComparer.Equals(node!.item, item))
+            while (node != endsentinel && itemEqualityComparer.Equals(node!.item, item))
             {
                 if (mustFire)
                 {
@@ -2919,35 +2919,35 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
 
     #region System.Collections.IList Members
 
-    Object System.Collections.IList.this[int index]
+    object System.Collections.IList.this[int index]
     {
         get => this[index]!;
         set => this[index] = (T)value;
     }
 
-    int System.Collections.IList.Add(Object o)
+    int System.Collections.IList.Add(object o)
     {
         bool added = Add((T)o);
         // What position to report if item not added? SC.IList.Add doesn't say
         return added ? Count - 1 : -1;
     }
 
-    bool System.Collections.IList.Contains(Object o)
+    bool System.Collections.IList.Contains(object o)
     {
         return Contains((T)o);
     }
 
-    int System.Collections.IList.IndexOf(Object o)
+    int System.Collections.IList.IndexOf(object o)
     {
         return Math.Max(-1, IndexOf((T)o));
     }
 
-    void System.Collections.IList.Insert(int index, Object o)
+    void System.Collections.IList.Insert(int index, object o)
     {
         Insert(index, (T)o);
     }
 
-    void System.Collections.IList.Remove(Object o)
+    void System.Collections.IList.Remove(object o)
     {
         Remove((T)o);
     }
