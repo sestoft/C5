@@ -457,8 +457,8 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
                     {
                         if (leftEnds == null || rightEnds == null)
                         {
-                            leftEnds = new ArrayList<Position>();
-                            rightEnds = new ArrayList<Position>();
+                            leftEnds = [];
+                            rightEnds = [];
                         }
                         leftEnds.Add(new Position(v, true));
                         rightEnds.Add(new Position(v, false));
