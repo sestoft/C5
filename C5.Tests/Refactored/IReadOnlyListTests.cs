@@ -13,7 +13,7 @@ public class IReadOnlyListTests
     {
         var list = new ArrayList<int> { 0, 1, 2, 3, 4 } as IReadOnlyList<int>;
 
-        Assert.AreEqual(5, list.Count);
-        Assert.AreEqual(2, list[2]);
+        Assert.That(list.Count, Is.EqualTo(5));
+        Assert.That(list[2], Is.EqualTo(2));
     }
 }
