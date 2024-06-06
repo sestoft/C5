@@ -1035,7 +1035,7 @@ public class TreeSet<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted
         }
 
         //To count theCollect
-        Node head = new Node(), tail = head;
+        Node head = new(), tail = head;
         int z = 1;
         T lastitem = tail.item = e.Current;
 
@@ -1078,7 +1078,7 @@ public class TreeSet<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted
         {
             if ((ActiveEvents & EventType.Added) != 0)
             {
-                CircularQueue<T> wasAdded = new CircularQueue<T>();
+                CircularQueue<T> wasAdded = new();
                 foreach (T item in this)
                 {
                     wasAdded.Enqueue(item);
@@ -1945,7 +1945,7 @@ public class TreeSet<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted
             throw new ViewDisposedException("Snapshot has been disposed");
         }
 
-        TreeSet<T> res = new TreeSet<T>(comparer!);
+        TreeSet<T> res = new(comparer!);
         SCG.IEnumerator<T> e = GetEnumerator();
         Node? head = null, tail = null;
         int z = 0;
@@ -2012,7 +2012,7 @@ public class TreeSet<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted
             throw new ViewDisposedException("Snapshot has been disposed");
         }
 
-        TreeSet<V> res = new TreeSet<V>(c);
+        TreeSet<V> res = new(c);
 
         if (size == 0)
         {
@@ -3564,7 +3564,7 @@ public class TreeSet<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted
         }
 
         TreeSet<T> res = (TreeSet<T>)MemberwiseClone();
-        SnapRef newSnapRef = new SnapRef(res);
+        SnapRef newSnapRef = new(res);
         res.isReadOnlyBase = true;
         res.isSnapShot = true;
         res.snapList = newSnapRef;
@@ -4096,7 +4096,7 @@ generation
     /// <returns>false if invariant violation</returns>
     public bool Check(string name)
     {
-        System.Text.StringBuilder e = new System.Text.StringBuilder();
+        System.Text.StringBuilder e = new();
 
         if (!CheckInner())
         {

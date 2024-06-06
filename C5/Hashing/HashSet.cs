@@ -75,7 +75,7 @@ public class HashSet<T> : CollectionBase<T>, ICollection<T>
     private readonly double fillfactor = 0.66;
     private int resizethreshhold;
 
-    private static readonly Random Random = new Random();
+    private static readonly Random Random = new();
     private uint _randomhashfactor;
 
     #endregion
@@ -493,7 +493,7 @@ public class HashSet<T> : CollectionBase<T>, ICollection<T>
     public virtual void RemoveAll(SCG.IEnumerable<T> items)
     {
         UpdateCheck();
-        RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(this);
+        RaiseForRemoveAllHandler raiseHandler = new(this);
         bool raise = raiseHandler.MustFire;
         T jtem;
         foreach (var item in items)
@@ -534,7 +534,7 @@ public class HashSet<T> : CollectionBase<T>, ICollection<T>
     {
         UpdateCheck();
 
-        HashSet<T> aux = new HashSet<T>(EqualityComparer);
+        HashSet<T> aux = new(EqualityComparer);
 
         //This only works for sets:
         foreach (var item in items)
@@ -869,7 +869,7 @@ public class HashSet<T> : CollectionBase<T>, ICollection<T>
     /// <returns>Histogram data.</returns>
     public ISortedDictionary<int, int> BucketCostDistribution()
     {
-        TreeDictionary<int, int> res = new TreeDictionary<int, int>();
+        TreeDictionary<int, int> res = new();
         for (int i = 0, s = table.Length; i < s; i++)
         {
             int count = 0;

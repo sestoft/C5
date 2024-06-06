@@ -33,7 +33,7 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
     #endregion
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="itemequalityComparer"></param>
     protected CollectionBase(System.Collections.Generic.IEqualityComparer<T> itemequalityComparer)
@@ -69,8 +69,8 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
     {
         int h = 0;
 
-        //But still heuristic: 
-        //Note: the three odd factors should really be random, 
+        //But still heuristic:
+        //Note: the three odd factors should really be random,
         //but there will be a problem with serialization/deserialization!
         //Two products is too few
         foreach (T item in items)
@@ -138,7 +138,7 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
             return false;
         }
 
-        //TODO: move this to the sorted implementation classes? 
+        //TODO: move this to the sorted implementation classes?
         //Really depends on speed of InstanceOfType: we could save a cast
         {
             if (collection1 is ISorted<T> stit && collection2 is ISorted<T> stat && stit.Comparer == stat.Comparer)
@@ -191,7 +191,7 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
         {
             // To avoid an O(n^2) algorithm, we make an aux hashtable to hold the count of items
             // bug20101103: HashDictionary<T, int> dict = new HashDictionary<T, int>();
-            HashDictionary<T, int> dict = new HashDictionary<T, int>(itemequalityComparer);
+            HashDictionary<T, int> dict = new(itemequalityComparer);
             foreach (T item in collection2)
             {
                 int count = 1;
@@ -220,7 +220,7 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
 
 
     /// <summary>
-    /// Get the unsequenced collection hash code of this collection: from the cached 
+    /// Get the unsequenced collection hash code of this collection: from the cached
     /// value if present and up to date, else (re)compute.
     /// </summary>
     /// <returns>The hash code</returns>
@@ -252,7 +252,7 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
     /// <summary>
     /// Check if the collection has been modified since a specified time, expressed as a stamp value.
     /// </summary>
-    /// <exception cref="CollectionModifiedException"> if this collection has been updated 
+    /// <exception cref="CollectionModifiedException"> if this collection has been updated
     /// since a target time</exception>
     /// <param name="thestamp">The stamp identifying the target time</param>
     protected virtual void ModifyCheck(int thestamp)
@@ -283,7 +283,7 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
     #region ICollection<T> members
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <value>True if this collection is read only</value>
     public virtual bool IsReadOnly => isReadOnlyBase;
@@ -292,7 +292,7 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
 
     #region ICollectionValue<T> members
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <value>The size of this collection</value>
     public override int Count => size;
@@ -302,7 +302,7 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
     /// in terms of the size of this collection (worst-case or amortized as
     /// relevant).
     /// </summary>
-    /// <value>A characterization of the speed of the 
+    /// <value>A characterization of the speed of the
     /// <code>Count</code> property in this collection.</value>
     public override Speed CountSpeed => Speed.Constant;
 
@@ -312,13 +312,13 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
     #region IExtensible<T> members
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <value></value>
     public virtual System.Collections.Generic.IEqualityComparer<T> EqualityComparer => itemequalityComparer;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <value>True if this collection is empty</value>
     public override bool IsEmpty => size == 0;

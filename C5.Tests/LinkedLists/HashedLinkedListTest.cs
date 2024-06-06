@@ -210,7 +210,7 @@ namespace C5.Tests.linkedlists.hashed
             public void Format()
             {
                 Assert.AreEqual("[  ]", coll.ToString());
-                coll.AddAll(new int[] { -4, 28, 129, 65530 });
+                coll.AddAll([-4, 28, 129, 65530]);
                 Assert.AreEqual("[ -4, 28, 129, 65530 ]", coll.ToString());
                 Assert.AreEqual("[ -4, 1C, 81, FFFA ]", coll.ToString(null, rad16));
                 Assert.AreEqual("[ -4, 28, 129... ]", coll.ToString("L14", null));
@@ -268,7 +268,7 @@ namespace C5.Tests.linkedlists.hashed
             {
                 list.Add(3); list.Add(4); list.Add(5);
 
-                HashedLinkedList<int> list2 = new HashedLinkedList<int>();
+                HashedLinkedList<int> list2 = new();
 
                 list2.AddAll(list);
                 Assert.IsTrue(IC.Eq(list2, 3, 4, 5));
@@ -302,9 +302,9 @@ namespace C5.Tests.linkedlists.hashed
             public void Find()
             {
                 Assert.IsFalse(list.Find(pred, out int i));
-                list.AddAll(new int[] { 4, 22, 67, 37 });
+                list.AddAll([4, 22, 67, 37]);
                 Assert.IsFalse(list.Find(pred, out i));
-                list.AddAll(new int[] { 45, 122, 675, 137 });
+                list.AddAll([45, 122, 675, 137]);
                 Assert.IsTrue(list.Find(pred, out i));
                 Assert.AreEqual(45, i);
             }
@@ -313,9 +313,9 @@ namespace C5.Tests.linkedlists.hashed
             public void FindLast()
             {
                 Assert.IsFalse(list.FindLast(pred, out int i));
-                list.AddAll(new int[] { 4, 22, 67, 37 });
+                list.AddAll([4, 22, 67, 37]);
                 Assert.IsFalse(list.FindLast(pred, out i));
-                list.AddAll(new int[] { 45, 122, 675, 137 });
+                list.AddAll([45, 122, 675, 137]);
                 Assert.IsTrue(list.FindLast(pred, out i));
                 Assert.AreEqual(675, i);
             }
@@ -324,9 +324,9 @@ namespace C5.Tests.linkedlists.hashed
             public void FindIndex()
             {
                 Assert.IsFalse(0 <= list.FindIndex(pred));
-                list.AddAll(new int[] { 4, 22, 67, 37 });
+                list.AddAll([4, 22, 67, 37]);
                 Assert.IsFalse(0 <= list.FindIndex(pred));
-                list.AddAll(new int[] { 45, 122, 675, 137 });
+                list.AddAll([45, 122, 675, 137]);
                 Assert.AreEqual(4, list.FindIndex(pred));
             }
 
@@ -334,9 +334,9 @@ namespace C5.Tests.linkedlists.hashed
             public void FindLastIndex()
             {
                 Assert.IsFalse(0 <= list.FindLastIndex(pred));
-                list.AddAll(new int[] { 4, 22, 67, 37 });
+                list.AddAll([4, 22, 67, 37]);
                 Assert.IsFalse(0 <= list.FindLastIndex(pred));
-                list.AddAll(new int[] { 45, 122, 675, 137 });
+                list.AddAll([45, 122, 675, 137]);
                 Assert.AreEqual(6, list.FindLastIndex(pred));
             }
         }
@@ -357,7 +357,7 @@ namespace C5.Tests.linkedlists.hashed
             {
                 Assert.IsTrue(IC.SetEq(list.UniqueItems()));
                 Assert.IsTrue(IC.SetEq(list.ItemMultiplicities()));
-                list.AddAll(new int[] { 7, 9, 7 });
+                list.AddAll([7, 9, 7]);
                 Assert.IsTrue(IC.SetEq(list.UniqueItems(), 7, 9));
                 Assert.IsTrue(IC.SetEq(list.ItemMultiplicities(), 7, 1, 9, 1));
             }
@@ -573,7 +573,7 @@ namespace C5.Tests.linkedlists.hashed
             [Test]
             public void ContainsAll()
             {
-                HashedLinkedList<int> list2 = new HashedLinkedList<int>();
+                HashedLinkedList<int> list2 = new();
 
                 Assert.IsTrue(list.ContainsAll(list2));
                 list2.Add(4);
@@ -588,7 +588,7 @@ namespace C5.Tests.linkedlists.hashed
             [Test]
             public void RetainAll()
             {
-                HashedLinkedList<int> list2 = new HashedLinkedList<int>();
+                HashedLinkedList<int> list2 = new();
 
                 list.Add(4); list.Add(5); list.Add(6);
                 list2.Add(5); list2.Add(4); list2.Add(7);
@@ -612,7 +612,7 @@ namespace C5.Tests.linkedlists.hashed
             [Test]
             public void RemoveAll()
             {
-                HashedLinkedList<int> list2 = new HashedLinkedList<int>();
+                HashedLinkedList<int> list2 = new();
 
                 list.Add(4); list.Add(5); list.Add(6);
                 list2.Add(5); list2.Add(4); list2.Add(7);
@@ -848,7 +848,7 @@ namespace C5.Tests.linkedlists.hashed
             [Test]
             public void ThisWithUpdates()
             {
-                HashedLinkedList<System.Collections.Generic.KeyValuePair<int, int>> pairlist = new HashedLinkedList<System.Collections.Generic.KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>())
+                HashedLinkedList<System.Collections.Generic.KeyValuePair<int, int>> pairlist = new(new KeyValuePairEqualityComparer<int, int>())
                 {
                     new System.Collections.Generic.KeyValuePair<int, int>(10, 50),
                     new System.Collections.Generic.KeyValuePair<int, int>(11, 51),
@@ -870,7 +870,7 @@ namespace C5.Tests.linkedlists.hashed
             [Test]
             public void ThisWithUpdatesBad()
             {
-                HashedLinkedList<System.Collections.Generic.KeyValuePair<int, int>> pairlist = new HashedLinkedList<System.Collections.Generic.KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>())
+                HashedLinkedList<System.Collections.Generic.KeyValuePair<int, int>> pairlist = new(new KeyValuePairEqualityComparer<int, int>())
                 {
                     new System.Collections.Generic.KeyValuePair<int, int>(10, 50),
                     new System.Collections.Generic.KeyValuePair<int, int>(11, 51),
@@ -959,7 +959,7 @@ namespace C5.Tests.linkedlists.hashed
             [Test]
             public void Find()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
 
                 Assert.IsTrue(lst.Find(ref p));
                 Assert.AreEqual(3, p.Key);
@@ -972,7 +972,7 @@ namespace C5.Tests.linkedlists.hashed
             [Test]
             public void FindOrAdd()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
 
                 Assert.IsTrue(lst.FindOrAdd(ref p));
                 Assert.AreEqual(3, p.Key);
@@ -987,7 +987,7 @@ namespace C5.Tests.linkedlists.hashed
             [Test]
             public void Update()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
 
                 Assert.IsTrue(lst.Update(p));
                 Assert.AreEqual(3, lst[3].Key);
@@ -1000,7 +1000,7 @@ namespace C5.Tests.linkedlists.hashed
             [Test]
             public void UpdateOrAdd1()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
 
                 Assert.IsTrue(lst.UpdateOrAdd(p));
                 Assert.AreEqual(3, lst[3].Key);
@@ -1027,7 +1027,7 @@ namespace C5.Tests.linkedlists.hashed
             [Test]
             public void RemoveWithReturn()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
 
                 Assert.IsTrue(lst.Remove(p, out p));
                 Assert.AreEqual(3, p.Key);
@@ -1087,7 +1087,7 @@ namespace C5.Tests.linkedlists.hashed
                 Assert.IsTrue(IC.Eq(lst, 7, 3));
                 try
                 {
-                    lst.InsertAll(1, new int[] { 1, 2, 3, 4 });
+                    lst.InsertAll(1, [1, 2, 3, 4]);
                 }
                 catch (DuplicateNotAllowedException)
                 {
@@ -1105,7 +1105,7 @@ namespace C5.Tests.linkedlists.hashed
                 Assert.IsTrue(IC.Eq(lst, 7, 3));
                 try
                 {
-                    lst.InsertAll(1, new int[] { 5, 6, 5, 8 });
+                    lst.InsertAll(1, [5, 6, 5, 8]);
                 }
                 catch (DuplicateNotAllowedException)
                 {
@@ -1463,7 +1463,7 @@ namespace C5.Tests.linkedlists.hashed
             public void AddingThenRemovingTest1()
             {
                 // bug20070911:
-                HashedLinkedList<int> test = new HashedLinkedList<int>();
+                HashedLinkedList<int> test = new();
                 for (int i = 0; i < 33; i++)
                 {
                     test.Add(i);
@@ -1476,7 +1476,7 @@ namespace C5.Tests.linkedlists.hashed
                 Assert.IsTrue(test.IsEmpty);
                 for (int count = 0; count < 520; count++)
                 {
-                    HashedLinkedList<int> hll = new HashedLinkedList<int>();
+                    HashedLinkedList<int> hll = new();
                     for (int i = 1; i <= count; i++)
                     {
                         hll.Add(i);
@@ -1494,7 +1494,7 @@ namespace C5.Tests.linkedlists.hashed
             public void AddingThenRemovingTest2()
             {
                 // bug20070911:
-                HashedLinkedList<int> test = new HashedLinkedList<int>();
+                HashedLinkedList<int> test = new();
                 for (int i = 0; i < 33; i++)
                 {
                     test.Add(i);
@@ -1507,7 +1507,7 @@ namespace C5.Tests.linkedlists.hashed
                 Assert.IsTrue(test.IsEmpty);
                 for (int count = 0; count < 520; count++)
                 {
-                    HashedLinkedList<int> hll = new HashedLinkedList<int>();
+                    HashedLinkedList<int> hll = new();
                     for (int i = 1; i <= count; i++)
                     {
                         hll.Add(i);
@@ -1771,7 +1771,7 @@ namespace C5.Tests.linkedlists.hashed
                 Assert.IsTrue(IC.Eq(list, 0, 8, 18, 12, 15, 3));
                 Assert.IsTrue(IC.Eq(view, 8, 18, 12, 15));
 
-                HashedLinkedList<int> lst2 = new HashedLinkedList<int>() { 90, 92 };
+                HashedLinkedList<int> lst2 = new() { 90, 92 };
 
                 view.AddAll(lst2);
                 check();
@@ -1803,7 +1803,7 @@ namespace C5.Tests.linkedlists.hashed
                 Assert.IsTrue(view.Contains(1));
                 Assert.IsFalse(view.Contains(0));
 
-                HashedLinkedList<int> lst2 = new HashedLinkedList<int>() { 2 };
+                HashedLinkedList<int> lst2 = new() { 2 };
                 Assert.IsTrue(view.ContainsAll(lst2));
                 lst2.Add(3);
                 Assert.IsFalse(view.ContainsAll(lst2));
@@ -1947,7 +1947,7 @@ namespace C5.Tests.linkedlists.hashed
                 view.Add(1); view.Add(5); view.Add(3); view.Add(1); view.Add(3); view.Add(0);
                 Assert.IsTrue(IC.Eq(view, 2, 5, 1));
 
-                HashedLinkedList<int> l2 = new HashedLinkedList<int>() { 1, 2, 2, 3, 1 };
+                HashedLinkedList<int> l2 = new() { 1, 2, 2, 3, 1 };
 
                 view.RemoveAll(l2);
                 check();

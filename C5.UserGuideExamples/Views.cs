@@ -10,7 +10,7 @@ internal class Views
     public static void Main()
     {
         IList<char> lst = new LinkedList<char>();
-        lst.AddAll(new char[] { 'a', 'b', 'c', 'd' });
+        lst.AddAll(['a', 'b', 'c', 'd']);
         IList<char>
           A = lst.View(0, 2),
           B = lst.View(2, 0),
@@ -19,7 +19,7 @@ internal class Views
           E = lst.View(4, 0),
           F = lst.View(1, 2),
           G = lst.View(0, 4);
-        IList<char>[] views = { A, B, C, D, E, F, G };
+        IList<char>[] views = [A, B, C, D, E, F, G];
         Console.WriteLine("ABCDEFG overlaps with:");
         foreach (IList<char> u in views)
         {

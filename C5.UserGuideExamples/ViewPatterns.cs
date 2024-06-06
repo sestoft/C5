@@ -10,7 +10,7 @@ internal class ViewPatterns
     public static void Main()
     {
         IList<char> lst = new ArrayList<char>();
-        lst.AddAll(new char[] { 'a', 'b', 'c', 'd' });
+        lst.AddAll(['a', 'b', 'c', 'd']);
         IList<char> v1 = lst.View(1, 1);
         Console.WriteLine("v1 = {0}", v1);
         InsertBeforeFirst(v1, '<', 'b');
@@ -38,7 +38,7 @@ internal class ViewPatterns
         }
 
         IList<char> lst2 = new ArrayList<char>();
-        lst2.AddAll(new char[] { 'a', 'b', 'c', 'A', 'a', 'd', 'a' });
+        lst2.AddAll(['a', 'b', 'c', 'A', 'a', 'd', 'a']);
 
         foreach (var i in IndexesOf(lst2, 'a'))
         {

@@ -10,11 +10,11 @@ internal class Toposort
     public static void Main()
     {
         MyNode<string>
-          d = new MyNode<string>("d"),
-          e = new MyNode<string>("e"),
-          c = new MyNode<string>("c", d, e),
-          b = new MyNode<string>("b", d),
-          a = new MyNode<string>("a", d, b, c);
+          d = new("d"),
+          e = new("e"),
+          c = new("c", d, e),
+          b = new("b", d),
+          a = new("a", d, b, c);
 
         foreach (var n in Toposort0(a))
         {

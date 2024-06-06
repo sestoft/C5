@@ -209,7 +209,7 @@ namespace C5.Tests.hashtable.set
             public void Format()
             {
                 Assert.AreEqual("{  }", coll.ToString());
-                coll.AddAll(new int[] { -4, 28, 129, 65530 });
+                coll.AddAll([-4, 28, 129, 65530]);
                 Assert.AreEqual("{ 65530, -4, 28, 129 }", coll.ToString());
                 Assert.AreEqual("{ FFFA, -4, 1C, 81 }", coll.ToString(null, rad16));
                 Assert.AreEqual("{ 65530, -4, ... }", coll.ToString("L14", null));
@@ -263,7 +263,7 @@ namespace C5.Tests.hashtable.set
             {
                 hashset.Add(3); hashset.Add(4); hashset.Add(5);
 
-                HashSet<int> hashset2 = new HashSet<int>();
+                HashSet<int> hashset2 = new();
 
                 hashset2.AddAll(hashset);
                 Assert.IsTrue(IC.SetEq(hashset2, 3, 4, 5));
@@ -303,9 +303,9 @@ namespace C5.Tests.hashtable.set
             public void Find()
             {
                 Assert.IsFalse(list.Find(pred, out int i));
-                list.AddAll(new int[] { 4, 22, 67, 37 });
+                list.AddAll([4, 22, 67, 37]);
                 Assert.IsFalse(list.Find(pred, out i));
-                list.AddAll(new int[] { 45, 122, 675, 137 });
+                list.AddAll([45, 122, 675, 137]);
                 Assert.IsTrue(list.Find(pred, out i));
                 Assert.AreEqual(45, i);
             }
@@ -327,7 +327,7 @@ namespace C5.Tests.hashtable.set
             {
                 Assert.IsTrue(IC.SetEq(list.UniqueItems()));
                 Assert.IsTrue(IC.SetEq(list.ItemMultiplicities()));
-                list.AddAll(new int[] { 7, 9, 7 });
+                list.AddAll([7, 9, 7]);
                 Assert.IsTrue(IC.SetEq(list.UniqueItems(), 7, 9));
                 Assert.IsTrue(IC.SetEq(list.ItemMultiplicities(), 7, 1, 9, 1));
             }
@@ -610,7 +610,7 @@ namespace C5.Tests.hashtable.set
             [Test]
             public void ContainsAll()
             {
-                HashSet<int> list2 = new HashSet<int>();
+                HashSet<int> list2 = new();
 
                 Assert.IsTrue(hashset.ContainsAll(list2));
                 list2.Add(4);
@@ -629,7 +629,7 @@ namespace C5.Tests.hashtable.set
             [Test]
             public void RetainAll()
             {
-                HashSet<int> list2 = new HashSet<int>();
+                HashSet<int> list2 = new();
 
                 hashset.Add(4); hashset.Add(5); hashset.Add(6);
                 list2.Add(5); list2.Add(4); list2.Add(7);
@@ -657,10 +657,10 @@ namespace C5.Tests.hashtable.set
                     _largeArrayTwo[i] = "" + (i + LARGE_ARRAY_MID);
                 }
 
-                HashSet<string> setOne = new HashSet<string>();
+                HashSet<string> setOne = new();
                 setOne.AddAll(_largeArrayOne);
 
-                HashSet<string> setTwo = new HashSet<string>();
+                HashSet<string> setTwo = new();
                 setTwo.AddAll(_largeArrayTwo);
 
                 setOne.RetainAll(setTwo);
@@ -676,7 +676,7 @@ namespace C5.Tests.hashtable.set
             [Test]
             public void RemoveAll()
             {
-                HashSet<int> list2 = new HashSet<int>();
+                HashSet<int> list2 = new();
 
                 hashset.Add(4); hashset.Add(5); hashset.Add(6);
                 list2.Add(5); list2.Add(7); list2.Add(4);
@@ -757,7 +757,7 @@ namespace C5.Tests.hashtable.set
             [Test]
             public void Find()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
 
                 Assert.IsTrue(lst.Find(ref p));
                 Assert.AreEqual(3, p.Key);
@@ -836,7 +836,7 @@ namespace C5.Tests.hashtable.set
             [Test]
             public void RemoveWithReturn()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
                 //System.Collections.Generic.KeyValuePair<int,int> q = new System.Collections.Generic.KeyValuePair<int,int>();
 
                 Assert.IsTrue(lst.Remove(p, out p));

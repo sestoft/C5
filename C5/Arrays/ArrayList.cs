@@ -948,7 +948,7 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
     {
         ValidityCheck();
         int stamp = this.stamp;
-        ArrayList<T> res = new ArrayList<T>(itemequalityComparer);
+        ArrayList<T> res = new(itemequalityComparer);
         int j = 0, rescap = res.array.Length;
         for (int i = 0; i < size; i++)
         {
@@ -982,7 +982,7 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
     {
         ValidityCheck();
 
-        ArrayList<V> res = new ArrayList<V>(size);
+        ArrayList<V> res = new(size);
 
         return Map<V>(mapper, res);
     }
@@ -1000,7 +1000,7 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
     {
         ValidityCheck();
 
-        ArrayList<V> res = new ArrayList<V>(size, itemequalityComparer);
+        ArrayList<V> res = new(size, itemequalityComparer);
 
         return Map<V>(mapper, res);
     }
@@ -1666,16 +1666,16 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
             return;
         }
         //TODO: reactivate the old code for small sizes
-        HashBag<T> toremove = new HashBag<T>(itemequalityComparer);
+        HashBag<T> toremove = new(itemequalityComparer);
         toremove.AddAll(items);
         if (toremove.Count == 0)
         {
             return;
         }
 
-        RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
+        RaiseForRemoveAllHandler raiseHandler = new(underlying ?? this);
         bool mustFire = raiseHandler.MustFire;
-        ViewHandler viewHandler = new ViewHandler(this);
+        ViewHandler viewHandler = new(this);
         int j = offsetField;
         int removed = 0;
         int i = offsetField, end = offsetField + size;
@@ -1815,16 +1815,16 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
             return;
         }
 
-        HashBag<T> toretain = new HashBag<T>(itemequalityComparer);
+        HashBag<T> toretain = new(itemequalityComparer);
         toretain.AddAll(items);
         if (toretain.Count == 0)
         {
             Clear();
             return;
         }
-        RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
+        RaiseForRemoveAllHandler raiseHandler = new(underlying ?? this);
         bool mustFire = raiseHandler.MustFire;
-        ViewHandler viewHandler = new ViewHandler(this);
+        ViewHandler viewHandler = new(this);
         int j = offsetField;
         int removed = 0;
         int i = offsetField, end = offsetField + size;
@@ -1933,7 +1933,7 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
         ValidityCheck();
 
         //TODO: use aux hash bag to obtain linear time procedure
-        HashBag<T> tomatch = new HashBag<T>(itemequalityComparer);
+        HashBag<T> tomatch = new(itemequalityComparer);
         tomatch.AddAll(items);
         if (tomatch.Count == 0)
         {
@@ -1980,7 +1980,7 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
     /// <returns></returns>
     public virtual ICollectionValue<T> UniqueItems()
     {
-        HashBag<T> hashbag = new HashBag<T>(itemequalityComparer);
+        HashBag<T> hashbag = new(itemequalityComparer);
         hashbag.AddAll(this);
         return hashbag.UniqueItems();
     }
@@ -1991,7 +1991,7 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
     /// <returns></returns>
     public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
     {
-        HashBag<T> hashbag = new HashBag<T>(itemequalityComparer);
+        HashBag<T> hashbag = new(itemequalityComparer);
         hashbag.AddAll(this);
         return hashbag.ItemMultiplicities();
     }
@@ -2012,9 +2012,9 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
             return;
         }
 
-        RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
+        RaiseForRemoveAllHandler raiseHandler = new(underlying ?? this);
         bool mustFire = raiseHandler.MustFire;
-        ViewHandler viewHandler = new ViewHandler(this);
+        ViewHandler viewHandler = new(this);
         int j = offsetField;
         int removed = 0;
         int i = offsetField, end = offsetField + size;

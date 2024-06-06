@@ -10,7 +10,7 @@ internal class SortingPermutation
 {
     public static void Main()
     {
-        string[] cities = { "Tokyo", "Beijing", "Hangzhou", "Kyoto", "Beijing", "Copenhagen", "Seattle" };
+        string[] cities = ["Tokyo", "Beijing", "Hangzhou", "Kyoto", "Beijing", "Copenhagen", "Seattle"];
 
         IList<string> alst = new ArrayList<string>();
         alst.AddAll(cities);

@@ -22,7 +22,7 @@ internal class WeakViewList<V> where V : class
     }
     internal Node Add(V view)
     {
-        Node newNode = new Node(view);
+        Node newNode = new(view);
         if (start != null) { start.prev = newNode; newNode.next = start; }
         start = newNode;
         return newNode;

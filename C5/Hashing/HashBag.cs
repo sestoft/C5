@@ -95,7 +95,7 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
     /// <returns>True if bag contains item</returns>
     public virtual bool Find(ref T item)
     {
-        System.Collections.Generic.KeyValuePair<T, int> p = new System.Collections.Generic.KeyValuePair<T, int>(item, 0);
+        System.Collections.Generic.KeyValuePair<T, int> p = new(item, 0);
 
         if (dict.Find(ref p))
         {
@@ -127,7 +127,7 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
     /// <returns></returns>
     public virtual bool Update(T item, out T olditem)
     {
-        SCG.KeyValuePair<T, int> p = new SCG.KeyValuePair<T, int>(item, 0);
+        SCG.KeyValuePair<T, int> p = new(item, 0);
 
         UpdateCheck();
 
@@ -254,7 +254,7 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
     public virtual bool Remove(T item, out T removeditem)
     {
         UpdateCheck();
-        SCG.KeyValuePair<T, int> p = new SCG.KeyValuePair<T, int>(item, 0);
+        SCG.KeyValuePair<T, int> p = new(item, 0);
         if (dict.Find(ref p))
         {
             removeditem = p.Key;
@@ -292,7 +292,7 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
         RaiseForRemoveAllHandler? raiseHandler = mustRaise ? new RaiseForRemoveAllHandler(this) : null;
         foreach (T item in items)
         {
-            SCG.KeyValuePair<T, int> p = new SCG.KeyValuePair<T, int>(item, 0);
+            SCG.KeyValuePair<T, int> p = new(item, 0);
             if (dict.Find(ref p))
             {
                 size--;
@@ -352,11 +352,11 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
     {
         UpdateCheck();
 
-        HashBag<T> res = new HashBag<T>(itemequalityComparer);
+        HashBag<T> res = new(itemequalityComparer);
 
         foreach (T item in items)
         {
-            SCG.KeyValuePair<T, int> p = new SCG.KeyValuePair<T, int>(item, default);
+            SCG.KeyValuePair<T, int> p = new(item, default);
             if (dict.Find(ref p))
             {
                 SCG.KeyValuePair<T, int> q = p;
@@ -421,7 +421,7 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
     /// <returns>True if all items are found.</returns>
     public virtual bool ContainsAll(SCG.IEnumerable<T> items)
     {
-        HashBag<T> res = new HashBag<T>(itemequalityComparer);
+        HashBag<T> res = new(itemequalityComparer);
 
         foreach (T item in items)
         {
@@ -467,7 +467,7 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
     /// <returns>The count</returns>
     public virtual int ContainsCount(T item)
     {
-        System.Collections.Generic.KeyValuePair<T, int> p = new System.Collections.Generic.KeyValuePair<T, int>(item, 0);
+        System.Collections.Generic.KeyValuePair<T, int> p = new(item, 0);
 
         if (dict.Find(ref p))
         {
@@ -500,7 +500,7 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
     {
         UpdateCheck();
 
-        System.Collections.Generic.KeyValuePair<T, int> p = new System.Collections.Generic.KeyValuePair<T, int>(item, 0);
+        System.Collections.Generic.KeyValuePair<T, int> p = new(item, 0);
 
         if (dict.Find(ref p))
         {

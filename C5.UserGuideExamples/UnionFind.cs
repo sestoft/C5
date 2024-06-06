@@ -59,7 +59,7 @@ internal class UnionFind
 
 public class Eqclass<T>
 {
-    private static readonly HashDictionary<T, Eqclass<T>> dict = new HashDictionary<T, Eqclass<T>>();
+    private static readonly HashDictionary<T, Eqclass<T>> dict = new();
 
     private Eqclass<T> _link;
     private int _rank;

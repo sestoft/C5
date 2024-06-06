@@ -289,12 +289,12 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
         if (d1 < d2)
         {
             n1 = Get(p1, positions, nodes);
-            n2 = Get(p2, new int[] { positions[nearest2], p1 }, new Node[] { nodes[nearest2], n1 });
+            n2 = Get(p2, [positions[nearest2], p1], [nodes[nearest2], n1]);
         }
         else
         {
             n2 = Get(p2, positions, nodes);
-            n1 = Get(p1, new int[] { positions[nearest1], p2 }, new Node[] { nodes[nearest1], n2 });
+            n1 = Get(p1, [positions[nearest1], p2], [nodes[nearest1], n2]);
         }
     }
     #endregion
@@ -310,7 +310,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
     /// <returns></returns>
     private Node Insert(int index, Node succ, T item)
     {
-        Node newnode = new Node(item, succ.prev, succ);
+        Node newnode = new(item, succ.prev, succ);
         succ.prev!.next = newnode;
         succ.prev = newnode;
         size++;
@@ -1037,7 +1037,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
 
         foreach (T item in items)
         {
-            Node tmp = new Node(item, node, null);
+            Node tmp = new(item, node, null);
             node.next = tmp;
             count++;
             node = tmp;
@@ -1125,7 +1125,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
     {
         ValidityCheck();
 
-        LinkedList<V> retval = new LinkedList<V>();
+        LinkedList<V> retval = new();
         return Map<V>(mapper, retval);
     }
 
@@ -1141,7 +1141,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
     {
         ValidityCheck();
 
-        LinkedList<V> retval = new LinkedList<V>(equalityComparer);
+        LinkedList<V> retval = new(equalityComparer);
         return Map<V>(mapper, retval);
     }
 
@@ -1259,7 +1259,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
         retval.offset = offset + start;
         retval.size = count;
         GetPair(start - 1, start + count, out retval.startsentinel, out retval.endsentinel,
-            new int[] { -1, size }, new Node[] { startsentinel!, endsentinel! });
+            [-1, size], [startsentinel!, endsentinel!]);
         //retval.startsentinel = start == 0 ? startsentinel : get(start - 1);
         //retval.endsentinel = start + count == size ? endsentinel : get(start + count);
 
@@ -1397,8 +1397,8 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
 
         int oldoffset = this.offset;
         GetPair(offset - 1, offset + size, out startsentinel, out endsentinel,
-                new int[] { -oldoffset - 1, -1, this.size, underlying.size - oldoffset },
-                new Node[] { underlying.startsentinel!, startsentinel!, endsentinel!, underlying.endsentinel! });
+                [-oldoffset - 1, -1, this.size, underlying.size - oldoffset],
+                [underlying.startsentinel!, startsentinel!, endsentinel!, underlying.endsentinel!]);
 
         this.size = size;
         this.offset += offset;
@@ -1770,7 +1770,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
         }
 
         DisposeOverlappingViews(false);
-        ArrayList<T> a = new ArrayList<T>();
+        ArrayList<T> a = new();
         a.AddAll(this);
         a.Shuffle(rnd);
         Node cursor = startsentinel!.next!;
@@ -2151,12 +2151,12 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
             return;
         }
 
-        RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
+        RaiseForRemoveAllHandler raiseHandler = new(underlying ?? this);
         bool mustFire = raiseHandler.MustFire;
 
-        HashBag<T> toremove = new HashBag<T>(itemequalityComparer);
+        HashBag<T> toremove = new(itemequalityComparer);
         toremove.AddAll(items);
-        ViewHandler viewHandler = new ViewHandler(this);
+        ViewHandler viewHandler = new(this);
         int index = 0, removed = 0, myoffset = Offset;
         Node node = startsentinel!.next!;
         while (node != endsentinel)
@@ -2303,12 +2303,12 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
             return;
         }
 
-        RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
+        RaiseForRemoveAllHandler raiseHandler = new(underlying ?? this);
         bool mustFire = raiseHandler.MustFire;
 
-        HashBag<T> toretain = new HashBag<T>(itemequalityComparer);
+        HashBag<T> toretain = new(itemequalityComparer);
         toretain.AddAll(items);
-        ViewHandler viewHandler = new ViewHandler(this);
+        ViewHandler viewHandler = new(this);
         int index = 0, removed = 0, myoffset = Offset;
         Node node = startsentinel!.next!;
         while (node != endsentinel)
@@ -2412,7 +2412,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
     {
         ValidityCheck();
 
-        HashBag<T> tocheck = new HashBag<T>(itemequalityComparer);
+        HashBag<T> tocheck = new(itemequalityComparer);
         tocheck.AddAll(items);
         if (tocheck.Count > size)
         {
@@ -2439,7 +2439,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
     {
         ValidityCheck();
         int stamp = this.stamp;
-        LinkedList<T> retval = new LinkedList<T>();
+        LinkedList<T> retval = new();
         Node cursor = startsentinel!.next!;
         Node mcursor = retval.startsentinel!;
 
@@ -2494,7 +2494,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
     public virtual ICollectionValue<T> UniqueItems()
     {
 
-        HashBag<T> hashbag = new HashBag<T>(itemequalityComparer);
+        HashBag<T> hashbag = new(itemequalityComparer);
         hashbag.AddAll(this);
         return hashbag.UniqueItems();
     }
@@ -2506,7 +2506,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
     public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
     {
 
-        HashBag<T> hashbag = new HashBag<T>(itemequalityComparer);
+        HashBag<T> hashbag = new(itemequalityComparer);
         hashbag.AddAll(this);
         return hashbag.ItemMultiplicities();
     }
@@ -2528,9 +2528,9 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
             return;
         }
 
-        RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
+        RaiseForRemoveAllHandler raiseHandler = new(underlying ?? this);
         bool mustFire = raiseHandler.MustFire;
-        ViewHandler viewHandler = new ViewHandler(this);
+        ViewHandler viewHandler = new(this);
         int index = 0, removed = 0, myoffset = Offset;
         //
         Node node = startsentinel!.next!;

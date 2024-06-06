@@ -458,7 +458,7 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
 
         public bool Find(ref K item)
         {
-            SCG.KeyValuePair<K, V> p = new SCG.KeyValuePair<K, V>(item, default);
+            SCG.KeyValuePair<K, V> p = new(item, default);
             bool retval = sortedpairs.Find(ref p);
             item = p.Key;
             return retval;

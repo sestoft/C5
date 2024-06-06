@@ -50,7 +50,7 @@ public static class Showing
     public static string ShowString(IShowable showable, string? format, IFormatProvider? formatProvider)
     {
         int rest = MaxLength(format);
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new();
         showable.Show(sb, ref rest, formatProvider);
         return sb.ToString();
     }

@@ -190,7 +190,7 @@ namespace C5.Tests.arrays.circularqueue
         [Test]
         public void SW200602()
         {
-            C5.CircularQueue<int> list = new C5.CircularQueue<int>(8);
+            C5.CircularQueue<int> list = new(8);
             for (int count = 0; count <= 7; count++)
             {
                 list.Enqueue(count);

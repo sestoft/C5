@@ -12,12 +12,12 @@ internal class CollectionSanity
         var col1 = new LinkedList<int>();
         var col2 = new LinkedList<int>();
         var col3 = new LinkedList<int>();
-        col1.AddAll(new[] { 7, 9, 13 });
-        col2.AddAll(new[] { 7, 9, 13 });
-        col3.AddAll(new[] { 9, 7, 13 });
+        col1.AddAll([7, 9, 13]);
+        col2.AddAll([7, 9, 13]);
+        col3.AddAll([9, 7, 13]);
 
-        HashSet<IList<int>> hs1 = new HashSet<IList<int>>
-            {
+        HashSet<IList<int>> hs1 = new()
+        {
                 col1,
                 col2,
                 col3

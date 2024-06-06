@@ -241,7 +241,7 @@ public class SortedArray<T> : ArrayBase<T>, IIndexedSorted<T>
     /// <returns>The new indexed sorted collection.</returns>
     public IIndexedSorted<T> FindAll(Func<T, bool> f)
     {
-        SortedArray<T> res = new SortedArray<T>(_comparer);
+        SortedArray<T> res = new(_comparer);
         int j = 0, rescap = res.array.Length;
 
         for (int i = 0; i < size; i++)
@@ -276,7 +276,7 @@ public class SortedArray<T> : ArrayBase<T>, IIndexedSorted<T>
     /// <returns>The new sorted collection.</returns>
     public IIndexedSorted<V> Map<V>(Func<T, V> m, SCG.IComparer<V> c)
     {
-        SortedArray<V> res = new SortedArray<V>(size, c);
+        SortedArray<V> res = new(size, c);
 
         if (size > 0)
         {
@@ -621,7 +621,7 @@ public class SortedArray<T> : ArrayBase<T>, IIndexedSorted<T>
         UpdateCheck();
 
         int j = 0, i = 0, c, itemcount = CountItems(items), numAdded = 0;
-        SortedArray<T> res = new SortedArray<T>(size + itemcount, _comparer);
+        SortedArray<T> res = new(size + itemcount, _comparer);
         T lastitem = default;
         T[] addedItems = new T[itemcount];
 
@@ -976,7 +976,7 @@ public class SortedArray<T> : ArrayBase<T>, IIndexedSorted<T>
         //(Not better to collect the m items and sort them)
         UpdateCheck();
 
-        RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(this);
+        RaiseForRemoveAllHandler raiseHandler = new(this);
         bool mustFire = raiseHandler.MustFire;
 
         int[] toremove = new int[(size >> 5) + 1];
@@ -1020,7 +1020,7 @@ public class SortedArray<T> : ArrayBase<T>, IIndexedSorted<T>
         //(Not better to collect the m items and sort them)
         UpdateCheck();
 
-        RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(this);
+        RaiseForRemoveAllHandler raiseHandler = new(this);
         bool mustFire = raiseHandler.MustFire;
 
         int[] toretain = new int[(size >> 5) + 1];

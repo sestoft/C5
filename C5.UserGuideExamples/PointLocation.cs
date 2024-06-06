@@ -210,7 +210,7 @@ namespace C5.UserGuideExamples
             //htree.Clear();
             htree = new TreeDictionary<double, ISorted<Edge<T>>>();
 
-            TreeSet<Edge<T>> vtree = new TreeSet<Edge<T>>();
+            TreeSet<Edge<T>> vtree = new();
 
             htree[Double.NegativeInfinity] = (ISorted<Edge<T>>)(vtree.Snapshot());
 
@@ -265,7 +265,7 @@ namespace C5.UserGuideExamples
 
             //if (DoubleComparer.StaticCompare(cell.key,x)==0)
             //Just note it, we have thrown away the vertical edges!
-            PointComparer<T> c = new PointComparer<T>(x, y);
+            PointComparer<T> c = new(x, y);
 
             //Return value true here means we are at an edge.
             //But note that if x is in htree.Keys, we may be at a
@@ -297,7 +297,7 @@ namespace C5.UserGuideExamples
 
             //if (DoubleComparer.StaticCompare(cell.key,x)==0)
             //Just note it, we have thrown away the vertical edges!
-            PointComparer<T> c = new PointComparer<T>(x, y);
+            PointComparer<T> c = new(x, y);
 
             //Return value true here means we are at an edge.
             //But note that if x is in htree.Keys, we may be at a
@@ -482,7 +482,7 @@ namespace C5.UserGuideExamples
 
             public bool LookUp(int count, int seed)
             {
-                Random random = new Random(seed);
+                Random random = new(seed);
                 bool res = false;
 
                 for (int i = 0; i < count; i++)
@@ -684,7 +684,7 @@ namespace C5.UserGuideExamples
 
             public bool LookUp(int count, int seed)
             {
-                Random random = new Random(seed);
+                Random random = new(seed);
                 bool res = false;
 
                 for (int i = 0; i < count; i++)
@@ -702,7 +702,7 @@ namespace C5.UserGuideExamples
                 int repeats = 2;
                 int lookups = 50000;
                 Console.WriteLine("TestLattice Run({0}), means over {1} repeats:", d, repeats);
-                TestLattice tl = new TestLattice(d, 0.000001);
+                TestLattice tl = new(d, 0.000001);
 
                 tl.Traverse();
 
@@ -746,7 +746,7 @@ namespace C5.UserGuideExamples
         {
             private static void t1()
             {
-                PointLocator<int> pl = new PointLocator<int>();
+                PointLocator<int> pl = new();
                 pl.Add(new Edge<int>(1, 1, 3, 4, 1, -1));
                 pl.Add(new Edge<int>(3, 4, 4, 2, 1, -1));
                 pl.Add(new Edge<int>(1, 1, 4, 2, -1, 1));
@@ -798,7 +798,7 @@ namespace C5.UserGuideExamples
 
             private static void t2()
             {
-                PointLocator<int> pl = new PointLocator<int>();
+                PointLocator<int> pl = new();
                 //outer triangle
                 pl.Add(new Edge<int>(1, 1, 2, 8, 1, -1));
                 pl.Add(new Edge<int>(2, 8, 7, 5, 1, -1));
@@ -912,7 +912,7 @@ namespace C5.UserGuideExamples
 
             private static void t3()
             {
-                PointLocator<int> pl = new PointLocator<int>();
+                PointLocator<int> pl = new();
                 pl.Add(new Edge<int>(1, 1, 5, 2, -1, 1));
                 pl.Add(new Edge<int>(5, 2, 6, 6, -1, 1));
                 pl.Add(new Edge<int>(4, 3, 6, 6, 1, -1));
@@ -994,7 +994,7 @@ namespace C5.UserGuideExamples
 
             private static void t4()
             {
-                PointLocator<int> pl = new PointLocator<int>();
+                PointLocator<int> pl = new();
                 pl.Add(new Edge<int>(2, 4, 5, 1, -1, 1));
                 pl.Add(new Edge<int>(5, 1, 11, 2, -1, 2));
                 pl.Add(new Edge<int>(5, 1, 9, 4, 2, 1));
@@ -1399,7 +1399,7 @@ namespace C5.UserGuideExamples
         public static void Main()
         {
             Test.T1.run();
-            Test.TestUgly.Run(new string[0]);
+            Test.TestUgly.Run([]);
         }
     }
 }

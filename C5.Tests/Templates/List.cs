@@ -10,7 +10,7 @@ namespace C5.Tests.Templates.List
     {
         public static void Tester<U>() where U : class, IList<int>, new()
         {
-            U extensible = new U();
+            U extensible = new();
             extensible.Dispose();
         }
     }

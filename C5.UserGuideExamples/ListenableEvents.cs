@@ -15,7 +15,7 @@ internal class ListenableEvents
         PrintEvents("HashedArrayList", new HashedArrayList<int>());
         PrintEvents("HashedLinkedList", new HashedLinkedList<int>());
         PrintEvents("SortedArray", new SortedArray<int>());
-        PrintEvents("WrappedArray", new WrappedArray<int>(new int[0]));
+        PrintEvents("WrappedArray", new WrappedArray<int>([]));
         PrintEvents("TreeSet", new TreeSet<int>());
         PrintEvents("TreeBag", new TreeBag<int>());
         PrintEvents("HashSet", new HashSet<int>());

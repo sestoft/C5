@@ -29,7 +29,7 @@ namespace C5.Tests.support
             [Test]
             public void Check()
             {
-                ABT abt = new ABT
+                ABT abt = new()
                 {
                     thesize = 3
                 };
@@ -64,9 +64,9 @@ namespace C5.Tests.support
             public void GenericC()
             {
                 SCG.IComparer<dbl> h = SCG.Comparer<dbl>.Default;
-                dbl s = new dbl(3.4);
-                dbl t = new dbl(3.4);
-                dbl u = new dbl(7.4);
+                dbl s = new(3.4);
+                dbl t = new(3.4);
+                dbl u = new(7.4);
 
                 Assert.AreEqual(0, h.Compare(s, t));
                 Assert.IsTrue(h.Compare(s, u) < 0);
@@ -90,9 +90,9 @@ namespace C5.Tests.support
             public void GenericCViaBuilder()
             {
                 SCG.IComparer<dbl> h = SCG.Comparer<dbl>.Default;
-                dbl s = new dbl(3.4);
-                dbl t = new dbl(3.4);
-                dbl u = new dbl(7.4);
+                dbl s = new(3.4);
+                dbl t = new(3.4);
+                dbl u = new(7.4);
 
                 Assert.AreEqual(0, h.Compare(s, t));
                 Assert.IsTrue(h.Compare(s, u) < 0);
@@ -414,7 +414,7 @@ namespace C5.Tests.support
             public void SeqequalityComparerViaBuilder2()
             {
                 SCG.IEqualityComparer<LinkedList<int>> h = C5.EqualityComparer<LinkedList<int>>.Default;
-                LinkedList<int> s = new LinkedList<int>() { 1, 2, 3 };
+                LinkedList<int> s = new() { 1, 2, 3 };
                 Assert.AreEqual(CHC.SequencedHashCode(1, 2, 3), h.GetHashCode(s));
             }
 
@@ -422,7 +422,7 @@ namespace C5.Tests.support
             public void UnseqequalityComparerViaBuilder2()
             {
                 SCG.IEqualityComparer<C5.HashSet<int>> h = C5.EqualityComparer<C5.HashSet<int>>.Default;
-                C5.HashSet<int> s = new C5.HashSet<int>() { 1, 2, 3 };
+                C5.HashSet<int> s = new() { 1, 2, 3 };
                 Assert.AreEqual(CHC.UnsequencedHashCode(1, 2, 3), h.GetHashCode(s));
             }
 
@@ -515,7 +515,7 @@ namespace C5.Tests.support
             [Test]
             public void StaticEqualityComparerWithNull()
             {
-                ArrayList<double> arr = new ArrayList<double>();
+                ArrayList<double> arr = new();
                 SCG.IEqualityComparer<double> eqc = C5.EqualityComparer<double>.Default;
                 Assert.IsTrue(CollectionBase<double>.StaticEquals(arr, arr, eqc));
                 Assert.IsTrue(CollectionBase<double>.StaticEquals(null, null, eqc));
@@ -541,7 +541,7 @@ namespace C5.Tests.support
             {
                 // Repro for bug20101103
                 SCG.IEqualityComparer<Object> eqc = new EveryThingIsEqual();
-                Object o1 = new Object(), o2 = new Object();
+                Object o1 = new(), o2 = new();
                 C5.ICollection<Object> coll1 = new ArrayList<Object>(eqc);
                 C5.ICollection<Object> coll2 = new ArrayList<Object>(eqc);
                 coll1.Add(o1);

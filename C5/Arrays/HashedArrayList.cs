@@ -299,7 +299,7 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
     /// <returns>The index of first occurrence</returns>
     private int IndexOfInner(T item)
     {
-        System.Collections.Generic.KeyValuePair<T, int> p = new System.Collections.Generic.KeyValuePair<T, int>(item, default);
+        System.Collections.Generic.KeyValuePair<T, int> p = new(item, default);
         if (itemIndex.Find(ref p) && p.Value >= offsetField && p.Value < offsetField + size)
         {
             return p.Value - offsetField;
@@ -329,7 +329,7 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
     /// <param name="item">Item to insert</param>
     protected override void InsertProtected(int i, T item)
     {
-        System.Collections.Generic.KeyValuePair<T, int> p = new System.Collections.Generic.KeyValuePair<T, int>(item, offsetField + i);
+        System.Collections.Generic.KeyValuePair<T, int> p = new(item, offsetField + i);
         if (itemIndex.FindOrAdd(ref p))
         {
             throw new DuplicateNotAllowedException("Item already in indexed list: " + item);
@@ -792,7 +792,7 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
             index += offsetField;
             T item = array[index];
 
-            System.Collections.Generic.KeyValuePair<T, int> p = new System.Collections.Generic.KeyValuePair<T, int>(value, index);
+            System.Collections.Generic.KeyValuePair<T, int> p = new(value, index);
             if (itemequalityComparer.Equals(value, item))
             {
                 array[index] = value;
@@ -904,7 +904,7 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
 
             foreach (T item in items)
             {
-                System.Collections.Generic.KeyValuePair<T, int> p = new System.Collections.Generic.KeyValuePair<T, int>(item, i);
+                System.Collections.Generic.KeyValuePair<T, int> p = new(item, i);
                 if (itemIndex.FindOrAdd(ref p))
                 {
                     throw new DuplicateNotAllowedException("Item already in indexed list");
@@ -985,7 +985,7 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
     {
         ValidityCheck();
         int stamp = this.stamp;
-        HashedArrayList<T> res = new HashedArrayList<T>(itemequalityComparer);
+        HashedArrayList<T> res = new(itemequalityComparer);
         int j = 0, rescap = res.array.Length;
         for (int i = 0; i < size; i++)
         {
@@ -1022,7 +1022,7 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
     {
         ValidityCheck();
 
-        HashedArrayList<V> res = new HashedArrayList<V>(size);
+        HashedArrayList<V> res = new(size);
 
         return Map<V>(mapper, res);
     }
@@ -1042,7 +1042,7 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
     {
         ValidityCheck();
 
-        HashedArrayList<V> res = new HashedArrayList<V>(size, itemequalityComparer);
+        HashedArrayList<V> res = new(size, itemequalityComparer);
 
         return Map<V>(mapper, res);
     }
@@ -1056,7 +1056,7 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
             {
                 V mappeditem = mapper(array[offsetField + i]);
                 ModifyCheck(stamp);
-                System.Collections.Generic.KeyValuePair<V, int> p = new System.Collections.Generic.KeyValuePair<V, int>(mappeditem, i);
+                System.Collections.Generic.KeyValuePair<V, int> p = new(mappeditem, i);
                 if (res.itemIndex.FindOrAdd(ref p))
                 {
                     throw new ArgumentException("Mapped item already in indexed list");
@@ -1718,16 +1718,16 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
             return;
         }
         //TODO: reactivate the old code for small sizes
-        HashBag<T> toremove = new HashBag<T>(itemequalityComparer);
+        HashBag<T> toremove = new(itemequalityComparer);
         toremove.AddAll(items);
         if (toremove.Count == 0)
         {
             return;
         }
 
-        RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
+        RaiseForRemoveAllHandler raiseHandler = new(underlying ?? this);
         bool mustFire = raiseHandler.MustFire;
-        ViewHandler viewHandler = new ViewHandler(this);
+        ViewHandler viewHandler = new(this);
         int j = offsetField;
         int removed = 0;
         int i = offsetField, end = offsetField + size;
@@ -1879,20 +1879,20 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
             return;
         }
 
-        HashBag<T> toretain = new HashBag<T>(itemequalityComparer);
+        HashBag<T> toretain = new(itemequalityComparer);
         toretain.AddAll(items);
         if (toretain.Count == 0)
         {
             Clear();
             return;
         }
-        RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
+        RaiseForRemoveAllHandler raiseHandler = new(underlying ?? this);
         bool mustFire = raiseHandler.MustFire;
-        ViewHandler viewHandler = new ViewHandler(this);
+        ViewHandler viewHandler = new(this);
         int j = offsetField;
         int removed = 0;
         int i = offsetField, end = offsetField + size;
-        System.Collections.Generic.KeyValuePair<T, int> p = new SCG.KeyValuePair<T, int>();
+        System.Collections.Generic.KeyValuePair<T, int> p = new();
         while (i < end)
         {
             T item;
@@ -2180,7 +2180,7 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
     public virtual bool Add(T item)
     {
         UpdateCheck();
-        System.Collections.Generic.KeyValuePair<T, int> p = new System.Collections.Generic.KeyValuePair<T, int>(item, size + offsetField);
+        System.Collections.Generic.KeyValuePair<T, int> p = new(item, size + offsetField);
         if (itemIndex.FindOrAdd(ref p))
         {
             return false;
@@ -2221,7 +2221,7 @@ public class HashedArrayList<T> : ArrayBase<T>, IList<T>, SCG.IList<T>
         {
             foreach (T item in items)
             {
-                System.Collections.Generic.KeyValuePair<T, int> p = new System.Collections.Generic.KeyValuePair<T, int>(item, i);
+                System.Collections.Generic.KeyValuePair<T, int> p = new(item, i);
                 if (itemIndex.FindOrAdd(ref p))
                 {
                     continue;

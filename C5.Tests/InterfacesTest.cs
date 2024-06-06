@@ -14,7 +14,7 @@ namespace C5.Tests.interfaces
         public void TryC5Coll(ICollection<double> coll)
         {
             Assert.AreEqual(0, coll.Count);
-            double[] arr = { };
+            double[] arr = [];
             coll.CopyTo(arr, 0);
             Assert.IsFalse(coll.IsReadOnly);
             coll.Add(2.3);
@@ -35,7 +35,7 @@ namespace C5.Tests.interfaces
         {
             // All members of SCG.ICollection<T>
             Assert.AreEqual(0, coll.Count);
-            double[] arr = { };
+            double[] arr = [];
             coll.CopyTo(arr, 0);
             Assert.IsFalse(coll.IsReadOnly);
             coll.Add(2.3);
@@ -87,9 +87,9 @@ namespace C5.Tests.interfaces
         {
             // Should be called with a C5.IList<B> which is not a WrappedArray
             Assert.AreEqual(0, list.Count);
-            list.CopyTo(new A[0], 0);
-            list.CopyTo(new B[0], 0);
-            list.CopyTo(new C[0], 0);
+            list.CopyTo(Array.Empty<A>(), 0);
+            list.CopyTo(Array.Empty<B>(), 0);
+            list.CopyTo(Array.Empty<C>(), 0);
             Assert.IsTrue(!list.IsFixedSize);
             Assert.IsFalse(list.IsReadOnly);
             Assert.IsFalse(list.IsSynchronized);
@@ -146,7 +146,7 @@ namespace C5.Tests.interfaces
         [Test]
         public void TryWrappedArrayAsSCIList1()
         {
-            B[] myarray = new B[] { new B(), new B(), new C() };
+            B[] myarray = [new B(), new B(), new C()];
             System.Collections.IList list = new WrappedArray<B>(myarray);
             // Should be called with a three-element WrappedArray<B>
             Assert.AreEqual(3, list.Count);
@@ -178,13 +178,13 @@ namespace C5.Tests.interfaces
         [Test]
         public void TryWrappedArrayAsSCIList2()
         {
-            B[] myarray = new B[] { };
+            B[] myarray = [];
             System.Collections.IList list = new WrappedArray<B>(myarray);
             // Should be called with an empty WrappedArray<B>
             Assert.AreEqual(0, list.Count);
-            list.CopyTo(new A[0], 0);
-            list.CopyTo(new B[0], 0);
-            list.CopyTo(new C[0], 0);
+            list.CopyTo(Array.Empty<A>(), 0);
+            list.CopyTo(Array.Empty<B>(), 0);
+            list.CopyTo(Array.Empty<C>(), 0);
             Assert.IsFalse(list.IsSynchronized);
             Assert.AreNotEqual(null, list.SyncRoot);
             Object b1 = new B(), b2 = new B(), c1 = new C(), c2 = new C();
@@ -197,10 +197,10 @@ namespace C5.Tests.interfaces
         [Test]
         public void TryGuardedListAsSCIList1()
         {
-            B b1_ = new B(), b2_ = new B();
-            C c1_ = new C(), c2_ = new C();
-            ArrayList<B> mylist = new ArrayList<B>();
-            mylist.AddAll(new B[] { b1_, b2_, c1_ });
+            B b1_ = new(), b2_ = new();
+            C c1_ = new(), c2_ = new();
+            ArrayList<B> mylist = new();
+            mylist.AddAll([b1_, b2_, c1_]);
             System.Collections.IList list = new GuardedList<B>(mylist);
             Object b1 = b1_, b2 = b2_, c1 = c1_, c2 = c2_;
             // Should be called with a three-element GuardedList<B>
@@ -231,9 +231,9 @@ namespace C5.Tests.interfaces
             System.Collections.IList list = new GuardedList<B>(new ArrayList<B>());
             // Should be called with an empty GuardedList<B>
             Assert.AreEqual(0, list.Count);
-            list.CopyTo(new A[0], 0);
-            list.CopyTo(new B[0], 0);
-            list.CopyTo(new C[0], 0);
+            list.CopyTo(Array.Empty<A>(), 0);
+            list.CopyTo(Array.Empty<B>(), 0);
+            list.CopyTo(Array.Empty<C>(), 0);
             Assert.IsFalse(list.IsSynchronized);
             Assert.AreNotEqual(null, list.SyncRoot);
             Object b1 = new B(), b2 = new B(), c1 = new C(), c2 = new C();
@@ -246,10 +246,10 @@ namespace C5.Tests.interfaces
         [Test]
         public void TryViewOfGuardedListAsSCIList1()
         {
-            B b1_ = new B(), b2_ = new B();
-            C c1_ = new C(), c2_ = new C();
-            ArrayList<B> mylist = new ArrayList<B>();
-            mylist.AddAll(new B[] { new B(), b1_, b2_, c1_, new B() });
+            B b1_ = new(), b2_ = new();
+            C c1_ = new(), c2_ = new();
+            ArrayList<B> mylist = new();
+            mylist.AddAll([new B(), b1_, b2_, c1_, new B()]);
             System.Collections.IList list = new GuardedList<B>(mylist).View(1, 3);
             Object b1 = b1_, b2 = b2_, c1 = c1_, c2 = c2_;
             // Should be called with a three-element view of a GuardedList<B>
@@ -279,9 +279,9 @@ namespace C5.Tests.interfaces
         {
             System.Collections.IList list = new GuardedList<B>(new ArrayList<B>()).View(0, 0);
             Assert.AreEqual(0, list.Count);
-            list.CopyTo(new A[0], 0);
-            list.CopyTo(new B[0], 0);
-            list.CopyTo(new C[0], 0);
+            list.CopyTo(Array.Empty<A>(), 0);
+            list.CopyTo(Array.Empty<B>(), 0);
+            list.CopyTo(Array.Empty<C>(), 0);
             Assert.IsFalse(list.IsSynchronized);
             Assert.AreNotEqual(null, list.SyncRoot);
             Object b1 = new B(), b2 = new B(), c1 = new C(), c2 = new C();
@@ -293,9 +293,9 @@ namespace C5.Tests.interfaces
 
         private void TryListViewAsSCIList1(IList<B> mylist)
         {
-            B b1_ = new B(), b2_ = new B();
-            C c1_ = new C(), c2_ = new C();
-            mylist.AddAll(new B[] { new B(), b1_, b2_, c1_, new B() });
+            B b1_ = new(), b2_ = new();
+            C c1_ = new(), c2_ = new();
+            mylist.AddAll([new B(), b1_, b2_, c1_, new B()]);
             System.Collections.IList list = mylist.View(1, 3);
             Object b1 = b1_, b2 = b2_, c1 = c1_, c2 = c2_;
             // Should be called with a three-element view on ArrayList<B>
@@ -322,9 +322,9 @@ namespace C5.Tests.interfaces
         {
             System.Collections.IList list = mylist.View(0, 0);
             Assert.AreEqual(0, list.Count);
-            list.CopyTo(new A[0], 0);
-            list.CopyTo(new B[0], 0);
-            list.CopyTo(new C[0], 0);
+            list.CopyTo(Array.Empty<A>(), 0);
+            list.CopyTo(Array.Empty<B>(), 0);
+            list.CopyTo(Array.Empty<C>(), 0);
             Assert.IsFalse(list.IsSynchronized);
             Assert.AreNotEqual(null, list.SyncRoot);
             Assert.AreEqual(list.SyncRoot, mylist.SyncRoot);
@@ -366,7 +366,7 @@ namespace C5.Tests.interfaces
         [Test]
         public void TryGuardedViewAsSCIList()
         {
-            ArrayList<B> mylist = new ArrayList<B>();
+            ArrayList<B> mylist = new();
             TryListViewAsSCIList2(new GuardedList<B>(mylist));
         }
     }
@@ -379,7 +379,7 @@ namespace C5.Tests.interfaces
             Assert.AreEqual(0, dict.Count);
             Assert.IsTrue(dict.IsEmpty);
             Assert.IsFalse(dict.IsReadOnly);
-            System.Collections.Generic.KeyValuePair<string, string>[] arr = { };
+            System.Collections.Generic.KeyValuePair<string, string>[] arr = [];
             dict.CopyTo(arr, 0);
             dict["R"] = "A";
             dict["S"] = "B";

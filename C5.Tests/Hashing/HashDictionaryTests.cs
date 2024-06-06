@@ -223,7 +223,7 @@ namespace C5.Tests.hashtable.dictionary
         [Test]
         public void DeepBucket()
         {
-            HashDictionary<int, int> dict2 = new HashDictionary<int, int>();
+            HashDictionary<int, int> dict2 = new();
 
             for (int i = 0; i < 5; i++)
             {

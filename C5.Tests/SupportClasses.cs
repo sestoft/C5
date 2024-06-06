@@ -25,7 +25,7 @@ namespace C5.Tests
     internal class TenEqualityComparer : SCG.IEqualityComparer<int>, SCG.IComparer<int>
     {
         private TenEqualityComparer() { }
-        public static TenEqualityComparer Default => new TenEqualityComparer();
+        public static TenEqualityComparer Default => new();
         public int GetHashCode(int item) { return (item / 10).GetHashCode(); }
         public bool Equals(int item1, int item2) { return item1 / 10 == item2 / 10; }
         public int Compare(int a, int b) { return (a / 10).CompareTo(b / 10); }
@@ -435,11 +435,11 @@ namespace C5.Tests
 
         // The value to be formatted is returned as a signed string
         // of digits from the rDigits array.
-        private static readonly char[] rDigits = {
+        private static readonly char[] rDigits = [
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
         'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
-        'U', 'V', 'W', 'X', 'Y', 'Z' };
+        'U', 'V', 'W', 'X', 'Y', 'Z' ];
 
         public string Format(string format, object arg, IFormatProvider formatProvider)
         {

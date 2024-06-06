@@ -57,7 +57,7 @@ namespace C5.Tests.Templates
     {
         public override System.Collections.Generic.IEnumerable<int> GetSpecs()
         {
-            return new int[] { 0 };
+            return [0];
         }
 
         public override void SetUp(U collection, int testSpec)

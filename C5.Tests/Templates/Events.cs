@@ -26,11 +26,8 @@ namespace C5.Tests.Templates.Events
         {
             get
             {
-                CircularQueue<EventType> specs = new CircularQueue<EventType>();
-                //foreach (EventType listenTo in Enum.GetValues(typeof(EventType)))
-                //  if ((listenTo & ~EventType.Basic) == 0)
-                //    specs.Enqueue(listenTo);
-                //specs.Enqueue(EventType.Added | EventType.Removed);
+                CircularQueue<EventType> specs = new();
+
                 for (int spec = 0; spec <= (int)EventType.Basic; spec++)
                 {
                     specs.Enqueue((EventType)spec);
@@ -43,10 +40,7 @@ namespace C5.Tests.Templates.Events
         {
             get
             {
-                CircularQueue<EventType> specs = new CircularQueue<EventType>();
-                //foreach (EventType listenTo in Enum.GetValues(typeof(EventType)))
-                //  specs.Enqueue(listenTo);
-                //specs.Enqueue(EventType.Added | EventType.Removed);
+                CircularQueue<EventType> specs = new();
 
                 for (int spec = 0; spec <= (int)EventType.All; spec++)
                 {
@@ -78,11 +72,11 @@ namespace C5.Tests.Templates.Events
         public void Add()
         {
             listen();
-            seen.Check(new CollectionEvent<int>[0]);
+            seen.Check([]);
             collection.Add(23);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(23, 1), collection),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
         }
 
         public void AddAll()
@@ -92,28 +86,28 @@ namespace C5.Tests.Templates.Events
                 collection.Add(10 * i + 5);
             }
             listen();
-            collection.AddAll(new int[] { 45, 200, 56, 67 });
+            collection.AddAll([45, 200, 56, 67]);
             seen.Check(collection.AllowsDuplicates ?
               collection.DuplicatesByCounting ?
                 new CollectionEvent<int>[] {
-          new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(45, 1), collection),
-          new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(200, 1), collection),
-          new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(55, 1), collection),
-          new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(65, 1), collection),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)}
+          new(EventType.Added, new ItemCountEventArgs<int>(45, 1), collection),
+          new(EventType.Added, new ItemCountEventArgs<int>(200, 1), collection),
+          new(EventType.Added, new ItemCountEventArgs<int>(55, 1), collection),
+          new(EventType.Added, new ItemCountEventArgs<int>(65, 1), collection),
+          new(EventType.Changed, new EventArgs(), collection)}
               :
-                new CollectionEvent<int>[] {
+                [
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(45, 1), collection),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(200, 1), collection),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(56, 1), collection),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(67, 1), collection),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)}
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]
                 :
-                new CollectionEvent<int>[] {
+                [
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(200, 1), collection),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
-            collection.AddAll(new int[] { });
-            seen.Check(new CollectionEvent<int>[] { });
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
+            collection.AddAll([]);
+            seen.Check([]);
         }
 
     }
@@ -129,22 +123,22 @@ namespace C5.Tests.Templates.Events
               collection.AllowsDuplicates ?
               collection.DuplicatesByCounting ?
               new CollectionEvent<int>[] {
-          new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(54, 2), collection),
-          new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(53, 2), collection),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
+          new(EventType.Removed, new ItemCountEventArgs<int>(54, 2), collection),
+          new(EventType.Added, new ItemCountEventArgs<int>(53, 2), collection),
+          new(EventType.Changed, new EventArgs(), collection)
           }
-              : new CollectionEvent<int>[] {
+              : [
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(54, 1), collection),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(53, 1), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
-          }
-              : new CollectionEvent<int>[] {
+          ]
+              : [
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(54, 1), collection),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(53, 1), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
-          });
+          ]);
             collection.Update(67);
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check([]);
         }
 
         public void FindOrAdd()
@@ -153,13 +147,13 @@ namespace C5.Tests.Templates.Events
             listen();
             int val = 53;
             collection.FindOrAdd(ref val);
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check([]);
             val = 67;
             collection.FindOrAdd(ref val);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(67, 1), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
-        });
+        ]);
         }
 
         public void UpdateOrAdd()
@@ -168,29 +162,29 @@ namespace C5.Tests.Templates.Events
             listen();
             int val = 53;
             collection.UpdateOrAdd(val);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(56, 1), collection),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(53, 1), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
-        });
+        ]);
             val = 67;
             collection.UpdateOrAdd(val);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(67, 1), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
-        });
+        ]);
             collection.UpdateOrAdd(51, out _);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(53, 1), collection),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(51, 1), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
-        });
+        ]);
             // val = 67;
             collection.UpdateOrAdd(81, out _);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(81, 1), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
-        });
+        ]);
         }
 
         public void RemoveItem()
@@ -198,13 +192,13 @@ namespace C5.Tests.Templates.Events
             collection.Add(4); collection.Add(56); collection.Add(18);
             listen();
             collection.Remove(53);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(56, 1), collection),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
             collection.Remove(11);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(18, 1), collection),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
         }
 
         public void RemoveAll()
@@ -214,14 +208,14 @@ namespace C5.Tests.Templates.Events
                 collection.Add(10 * i + 5);
             }
             listen();
-            collection.RemoveAll(new int[] { 32, 187, 45 });
+            collection.RemoveAll([32, 187, 45]);
             //TODO: the order depends on internals of the HashSet
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(35, 1), collection),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(45, 1), collection),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
-            collection.RemoveAll(new int[] { 200, 300 });
-            seen.Check(new CollectionEvent<int>[] { });
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
+            collection.RemoveAll([200, 300]);
+            seen.Check([]);
         }
 
         public void RetainAll()
@@ -231,15 +225,15 @@ namespace C5.Tests.Templates.Events
                 collection.Add(10 * i + 5);
             }
             listen();
-            collection.RetainAll(new int[] { 32, 187, 45, 62, 75, 82, 95, 2 });
-            seen.Check(new CollectionEvent<int>[] {
+            collection.RetainAll([32, 187, 45, 62, 75, 82, 95, 2]);
+            seen.Check([
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(15, 1), collection),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(25, 1), collection),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(55, 1), collection),
           //new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(75, 1), collection),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
-            collection.RetainAll(new int[] { 32, 187, 45, 62, 75, 82, 95, 2 });
-            seen.Check(new CollectionEvent<int>[] { });
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
+            collection.RetainAll([32, 187, 45, 62, 75, 82, 95, 2]);
+            seen.Check([]);
         }
 
         public void RemoveAllCopies()
@@ -254,20 +248,20 @@ namespace C5.Tests.Templates.Events
               collection.AllowsDuplicates ?
                 collection.DuplicatesByCounting ?
                   new CollectionEvent<int>[] {
-              new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(11, 3), collection),
-              new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)}
+              new(EventType.Removed, new ItemCountEventArgs<int>(11, 3), collection),
+              new(EventType.Changed, new EventArgs(), collection)}
                 :
-                new CollectionEvent<int>[] {
+                [
             new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(11, 1), collection),
             new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(14, 1), collection),
             new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(17, 1), collection),
-            new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)}
+            new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]
               :
-              new CollectionEvent<int>[] {
+              [
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(11, 1), collection),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
             collection.RemoveAllCopies(14);
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check([]);
         }
 
         public virtual void Clear()
@@ -275,12 +269,12 @@ namespace C5.Tests.Templates.Events
             collection.Add(4); collection.Add(56); collection.Add(8);
             listen();
             collection.Clear();
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Cleared, new ClearedEventArgs(true, collection.AllowsDuplicates ? 3 : 2), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
-        });
+        ]);
             collection.Clear();
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check([]);
         }
 
     }
@@ -292,10 +286,10 @@ namespace C5.Tests.Templates.Events
             collection.Add(4); collection.Add(16); collection.Add(28);
             listen();
             collection.RemoveAt(1);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.RemovedAt, new ItemAtEventArgs<int>(16,1), collection),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(16, 1), collection),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
         }
 
         public void RemoveInterval()
@@ -303,14 +297,14 @@ namespace C5.Tests.Templates.Events
             collection.Add(4); collection.Add(56); collection.Add(18);
             listen();
             collection.RemoveInterval(1, 2);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
         collection is IList<int> ?
            new CollectionEvent<int>(EventType.Cleared, new ClearedRangeEventArgs(false,2,1), collection):
            new CollectionEvent<int>(EventType.Cleared, new ClearedEventArgs(false,2), collection),
          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
-        });
+        ]);
             collection.RemoveInterval(1, 0);
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check([]);
         }
     }
 
@@ -324,44 +318,44 @@ namespace C5.Tests.Templates.Events
             collection.Add(12);
             listen();
             collection.DeleteMax();
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
         new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(56, 1), collection),
         new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection),
-      });
+      ]);
             collection.DeleteMin();
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
         new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(12, 1), collection),
         new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection),
-      });
+      ]);
         }
 
         public void AddSorted()
         {
             listen();
-            collection.AddSorted(collection.AllowsDuplicates ? new int[] { 31, 62, 63, 93 } : new int[] { 31, 62, 93 });
+            collection.AddSorted(collection.AllowsDuplicates ? new int[] { 31, 62, 63, 93 } : [31, 62, 93]);
             seen.Check(collection.AllowsDuplicates ?
               collection.DuplicatesByCounting ?
                 new CollectionEvent<int>[] {
-          new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(31, 1), collection),
-          new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(62, 1), collection),
-          new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(62, 1), collection),
-          new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(93, 1), collection),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)}
+          new(EventType.Added, new ItemCountEventArgs<int>(31, 1), collection),
+          new(EventType.Added, new ItemCountEventArgs<int>(62, 1), collection),
+          new(EventType.Added, new ItemCountEventArgs<int>(62, 1), collection),
+          new(EventType.Added, new ItemCountEventArgs<int>(93, 1), collection),
+          new(EventType.Changed, new EventArgs(), collection)}
               :
-                new CollectionEvent<int>[] {
+                [
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(31, 1), collection),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(62, 1), collection),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(63, 1), collection),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(93, 1), collection),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)}
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]
                 :
-                new CollectionEvent<int>[] {
+                [
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(31, 1), collection),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(62, 1), collection),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(93, 1), collection),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
-            collection.AddSorted(new int[] { });
-            seen.Check(new CollectionEvent<int>[] { });
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
+            collection.AddSorted([]);
+            seen.Check([]);
         }
 
         public void RemoveRange()
@@ -375,31 +369,31 @@ namespace C5.Tests.Templates.Events
             collection.RemoveRangeFrom(173);
             //TODO: fix order to remove in:
             seen.Check(
-                new CollectionEvent<int>[] {
+                [
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(195, 1), collection),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(185, 1), collection),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(175, 1), collection),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
             collection.RemoveRangeFromTo(83, 113);
             seen.Check(
-                new CollectionEvent<int>[] {
+                [
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(105, 1), collection),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(95, 1), collection),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(85, 1), collection),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
             collection.RemoveRangeTo(33);
             seen.Check(
-                new CollectionEvent<int>[] {
+                [
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(5, 1), collection),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(15, 1), collection),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(25, 1), collection),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
             collection.RemoveRangeFrom(173);
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check([]);
             collection.RemoveRangeFromTo(83, 113);
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check([]);
             collection.RemoveRangeTo(33);
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check([]);
         }
     }
 
@@ -422,13 +416,13 @@ namespace C5.Tests.Templates.Events
             collection.Add(4); collection.Add(56); collection.Add(8);
             listen();
             collection[1] = 45;
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(56, 1), collection),
           new CollectionEvent<int>(EventType.RemovedAt, new ItemAtEventArgs<int>(56,1), collection),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(45, 1), collection),
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(45,1), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
-          });
+          ]);
         }
 
         public void Insert()
@@ -436,20 +430,20 @@ namespace C5.Tests.Templates.Events
             collection.Add(4); collection.Add(56); collection.Add(8);
             listen();
             collection.Insert(1, 45);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(45,1), collection),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(45, 1), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
-          });
+          ]);
         }
 
         public void InsertAll()
         {
             collection.Add(4); collection.Add(56); collection.Add(8);
             listen();
-            collection.InsertAll(1, new int[] { 666, 777, 888 });
+            collection.InsertAll(1, [666, 777, 888]);
             //seen.Print(Console.Error);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(666,1), collection),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(666, 1), collection),
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(777,2), collection),
@@ -457,9 +451,9 @@ namespace C5.Tests.Templates.Events
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(888,3), collection),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(888, 1), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
-          });
-            collection.InsertAll(1, new int[] { });
-            seen.Check(new CollectionEvent<int>[] { });
+          ]);
+            collection.InsertAll(1, []);
+            seen.Check([]);
         }
 
         public void InsertFirstLast()
@@ -467,17 +461,17 @@ namespace C5.Tests.Templates.Events
             collection.Add(4); collection.Add(56); collection.Add(18);
             listen();
             collection.InsertFirst(45);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(45,0), collection),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(45, 1), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
-          });
+          ]);
             collection.InsertLast(88);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(88,4), collection),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(88, 1), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
-          });
+          ]);
         }
 
         public void Remove()
@@ -486,14 +480,14 @@ namespace C5.Tests.Templates.Events
             collection.Add(4); collection.Add(56); collection.Add(18);
             listen();
             collection.Remove();
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(18, 1), collection),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
             collection.FIFO = true;
             collection.Remove();
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(4, 1), collection),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
         }
 
         public void RemoveFirst()
@@ -501,10 +495,10 @@ namespace C5.Tests.Templates.Events
             collection.Add(4); collection.Add(56); collection.Add(18);
             listen();
             collection.RemoveFirst();
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.RemovedAt, new ItemAtEventArgs<int>(4,0), collection),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(4, 1), collection),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
         }
 
         public void RemoveLast()
@@ -512,10 +506,10 @@ namespace C5.Tests.Templates.Events
             collection.Add(4); collection.Add(56); collection.Add(18);
             listen();
             collection.RemoveLast();
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.RemovedAt, new ItemAtEventArgs<int>(18,2), collection),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(18, 1), collection),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
         }
 
         public void Reverse()
@@ -523,11 +517,11 @@ namespace C5.Tests.Templates.Events
             collection.Add(4); collection.Add(56); collection.Add(8);
             listen();
             collection.Reverse();
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
-        });
+        ]);
             collection.View(1, 0).Reverse();
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check([]);
         }
 
 
@@ -536,11 +530,11 @@ namespace C5.Tests.Templates.Events
             collection.Add(4); collection.Add(56); collection.Add(8);
             listen();
             collection.Sort();
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
-        });
+        ]);
             collection.View(1, 0).Sort();
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check([]);
         }
 
         public void Shuffle()
@@ -548,11 +542,11 @@ namespace C5.Tests.Templates.Events
             collection.Add(4); collection.Add(56); collection.Add(8);
             listen();
             collection.Shuffle();
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
-        });
+        ]);
             collection.View(1, 0).Shuffle();
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check([]);
         }
 
         public override void Clear()
@@ -560,17 +554,17 @@ namespace C5.Tests.Templates.Events
             collection.Add(4); collection.Add(56); collection.Add(18);
             listen();
             collection.View(1, 1).Clear();
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Cleared, new ClearedRangeEventArgs(false,1,1), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
-        });
+        ]);
             collection.Clear();
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Cleared, new ClearedRangeEventArgs(true,2,0), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
-        });
+        ]);
             collection.Clear();
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check([]);
         }
 
         public void ListDispose()
@@ -578,14 +572,14 @@ namespace C5.Tests.Templates.Events
             collection.Add(4); collection.Add(56); collection.Add(18);
             listen();
             collection.View(1, 1).Dispose();
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check([]);
             collection.Dispose();
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
           new CollectionEvent<int>(EventType.Cleared, new ClearedRangeEventArgs(true,3,0), collection),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
-        });
+        ]);
             collection.Dispose();
-            seen.Check(new CollectionEvent<int>[] { });
+            seen.Check([]);
         }
 
         /*
@@ -683,27 +677,27 @@ namespace C5.Tests.Templates.Events
         public void PushPop()
         {
             listen();
-            seen.Check(new CollectionEvent<int>[0]);
+            seen.Check([]);
             collection.Push(23);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
               new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(23,0), collection),
               new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(23, 1), collection),
-              new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
+              new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
             collection.Push(-12);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
               new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(-12,1), collection),
               new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(-12, 1), collection),
-              new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
+              new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
             collection.Pop();
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
               new CollectionEvent<int>(EventType.RemovedAt, new ItemAtEventArgs<int>(-12,1), collection),
               new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(-12, 1), collection),
-              new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
+              new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
             collection.Pop();
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
               new CollectionEvent<int>(EventType.RemovedAt, new ItemAtEventArgs<int>(23,0), collection),
               new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(23, 1), collection),
-              new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
+              new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
         }
     }
 
@@ -718,25 +712,25 @@ namespace C5.Tests.Templates.Events
         {
             listen();
             collection.Enqueue(67);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
               new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(67,0), collection),
               new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(67, 1), collection),
-              new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
+              new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
             collection.Enqueue(2);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
               new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(2,1), collection),
               new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(2, 1), collection),
-              new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
+              new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
             collection.Dequeue();
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
               new CollectionEvent<int>(EventType.RemovedAt, new ItemAtEventArgs<int>(67,0), collection),
               new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(67, 1), collection),
-              new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
+              new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
             collection.Dequeue();
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
               new CollectionEvent<int>(EventType.RemovedAt, new ItemAtEventArgs<int>(2,0), collection),
               new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(2, 1), collection),
-              new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)});
+              new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)]);
         }
 
     }
@@ -752,46 +746,45 @@ namespace C5.Tests.Templates.Events
         {
             listen();
             collection.Add(34);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
         new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(34, 1), collection),
         new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection),
-      });
+      ]);
             collection.Add(56);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
         new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(56, 1), collection),
         new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection),
-      });
-            collection.AddAll(new int[] { });
-            seen.Check(new CollectionEvent<int>[] {
-      });
+      ]);
+            collection.AddAll([]);
+            seen.Check([]);
             collection.Add(34);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
         new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(34, 1), collection),
         new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection),
-      });
+      ]);
             collection.Add(12);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
         new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(12, 1), collection),
         new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection),
-      });
+      ]);
             collection.DeleteMax();
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
         new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(56, 1), collection),
         new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection),
-      });
+      ]);
             collection.DeleteMin();
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
         new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(12, 1), collection),
         new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection),
-      });
-            collection.AddAll(new int[] { 4, 5, 6, 2 });
-            seen.Check(new CollectionEvent<int>[] {
+      ]);
+            collection.AddAll([4, 5, 6, 2]);
+            seen.Check([
         new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(4, 1), collection),
         new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(5, 1), collection),
         new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(6, 1), collection),
         new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(2, 1), collection),
         new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection)
-      });
+      ]);
         }
 
         public void WithHandles()
@@ -799,48 +792,48 @@ namespace C5.Tests.Templates.Events
             listen();
             IPriorityQueueHandle<int> handle = null;
             collection.Add(34);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
         new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(34, 1), collection),
         new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection),
-      });
+      ]);
             collection.Add(56);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
         new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(56, 1), collection),
         new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection),
-      });
+      ]);
             collection.Add(ref handle, 34);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
         new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(34, 1), collection),
         new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection),
-      });
+      ]);
             collection.Add(12);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
         new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(12, 1), collection),
         new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection),
-      });
+      ]);
             collection.DeleteMax(out _);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
         new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(56, 1), collection),
         new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection),
-      });
+      ]);
             collection.DeleteMin(out _);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
         new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(12, 1), collection),
         new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection),
-      });
+      ]);
 
             collection.Replace(handle, 117);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
         new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(34, 1), collection),
         new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(117, 1), collection),
         new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection),
-      });
+      ]);
 
             collection.Delete(handle);
-            seen.Check(new CollectionEvent<int>[] {
+            seen.Check([
         new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(117, 1), collection),
         new CollectionEvent<int>(EventType.Changed, new EventArgs(), collection),
-      });
+      ]);
         }
     }
 
@@ -862,15 +855,15 @@ namespace C5.Tests.Templates.Events
         public void AddAndREmove()
         {
             listen();
-            seen.Check(new CollectionEvent<System.Collections.Generic.KeyValuePair<int, int>>[0]);
+            seen.Check([]);
             collection.Add(23, 45);
-            seen.Check(new CollectionEvent<System.Collections.Generic.KeyValuePair<int, int>>[] {
+            seen.Check([
           new CollectionEvent<System.Collections.Generic.KeyValuePair<int,int>>(EventType.Added, new ItemCountEventArgs<System.Collections.Generic.KeyValuePair<int,int>>(new System.Collections.Generic.KeyValuePair<int,int>(23,45), 1), collection),
-          new CollectionEvent<System.Collections.Generic.KeyValuePair<int,int>>(EventType.Changed, new EventArgs(), collection)});
+          new CollectionEvent<System.Collections.Generic.KeyValuePair<int,int>>(EventType.Changed, new EventArgs(), collection)]);
             collection.Remove(25);
-            seen.Check(new CollectionEvent<System.Collections.Generic.KeyValuePair<int, int>>[] {
+            seen.Check([
           new CollectionEvent<System.Collections.Generic.KeyValuePair<int,int>>(EventType.Removed, new ItemCountEventArgs<System.Collections.Generic.KeyValuePair<int,int>>(new System.Collections.Generic.KeyValuePair<int,int>(23,45), 1), collection),
-          new CollectionEvent<System.Collections.Generic.KeyValuePair<int,int>>(EventType.Changed, new EventArgs(), collection)});
+          new CollectionEvent<System.Collections.Generic.KeyValuePair<int,int>>(EventType.Changed, new EventArgs(), collection)]);
         }
 
 

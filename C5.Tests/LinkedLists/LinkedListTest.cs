@@ -218,7 +218,7 @@ namespace C5.Tests.linkedlists.plain
             public void Format()
             {
                 Assert.AreEqual("[  ]", coll.ToString());
-                coll.AddAll(new int[] { -4, 28, 129, 65530 });
+                coll.AddAll([-4, 28, 129, 65530]);
                 Assert.AreEqual("[ -4, 28, 129, 65530 ]", coll.ToString());
                 Assert.AreEqual("[ -4, 1C, 81, FFFA ]", coll.ToString(null, rad16));
                 Assert.AreEqual("[ -4, 28, 129... ]", coll.ToString("L14", null));
@@ -276,7 +276,7 @@ namespace C5.Tests.linkedlists.plain
             {
                 list.Add(3); list.Add(4); list.Add(5);
 
-                LinkedList<int> list2 = new LinkedList<int>();
+                LinkedList<int> list2 = new();
 
                 list2.AddAll(list);
                 Assert.IsTrue(IC.Eq(list2, 3, 4, 5));
@@ -310,9 +310,9 @@ namespace C5.Tests.linkedlists.plain
             public void Find()
             {
                 Assert.IsFalse(list.Find(pred, out int i));
-                list.AddAll(new int[] { 4, 22, 67, 37 });
+                list.AddAll([4, 22, 67, 37]);
                 Assert.IsFalse(list.Find(pred, out i));
-                list.AddAll(new int[] { 45, 122, 675, 137 });
+                list.AddAll([45, 122, 675, 137]);
                 Assert.IsTrue(list.Find(pred, out i));
                 Assert.AreEqual(45, i);
             }
@@ -321,9 +321,9 @@ namespace C5.Tests.linkedlists.plain
             public void FindLast()
             {
                 Assert.IsFalse(list.FindLast(pred, out int i));
-                list.AddAll(new int[] { 4, 22, 67, 37 });
+                list.AddAll([4, 22, 67, 37]);
                 Assert.IsFalse(list.FindLast(pred, out i));
-                list.AddAll(new int[] { 45, 122, 675, 137 });
+                list.AddAll([45, 122, 675, 137]);
                 Assert.IsTrue(list.FindLast(pred, out i));
                 Assert.AreEqual(675, i);
             }
@@ -332,9 +332,9 @@ namespace C5.Tests.linkedlists.plain
             public void FindIndex()
             {
                 Assert.IsFalse(0 <= list.FindIndex(pred));
-                list.AddAll(new int[] { 4, 22, 67, 37 });
+                list.AddAll([4, 22, 67, 37]);
                 Assert.IsFalse(0 <= list.FindIndex(pred));
-                list.AddAll(new int[] { 45, 122, 675, 137 });
+                list.AddAll([45, 122, 675, 137]);
                 Assert.AreEqual(4, list.FindIndex(pred));
             }
 
@@ -342,9 +342,9 @@ namespace C5.Tests.linkedlists.plain
             public void FindLastIndex()
             {
                 Assert.IsFalse(0 <= list.FindLastIndex(pred));
-                list.AddAll(new int[] { 4, 22, 67, 37 });
+                list.AddAll([4, 22, 67, 37]);
                 Assert.IsFalse(0 <= list.FindLastIndex(pred));
-                list.AddAll(new int[] { 45, 122, 675, 137 });
+                list.AddAll([45, 122, 675, 137]);
                 Assert.AreEqual(6, list.FindLastIndex(pred));
             }
         }
@@ -365,7 +365,7 @@ namespace C5.Tests.linkedlists.plain
             {
                 Assert.IsTrue(IC.SetEq(list.UniqueItems()));
                 Assert.IsTrue(IC.SetEq(list.ItemMultiplicities()));
-                list.AddAll(new int[] { 7, 9, 7 });
+                list.AddAll([7, 9, 7]);
                 Assert.IsTrue(IC.SetEq(list.UniqueItems(), 7, 9));
                 Assert.IsTrue(IC.SetEq(list.ItemMultiplicities(), 7, 2, 9, 1));
             }
@@ -564,7 +564,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void ContainsAll()
             {
-                LinkedList<int> list2 = new LinkedList<int>();
+                LinkedList<int> list2 = new();
 
                 Assert.IsTrue(list.ContainsAll(list2));
                 list2.Add(4);
@@ -583,7 +583,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void RetainAll()
             {
-                LinkedList<int> list2 = new LinkedList<int>();
+                LinkedList<int> list2 = new();
 
                 list.Add(4); list.Add(4); list.Add(5); list.Add(4); list.Add(6);
                 list2.Add(5); list2.Add(4); list2.Add(7); list2.Add(7); list2.Add(4);
@@ -607,7 +607,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void RemoveAll()
             {
-                LinkedList<int> list2 = new LinkedList<int>();
+                LinkedList<int> list2 = new();
 
                 list.Add(4); list.Add(4); list.Add(5); list.Add(4); list.Add(6);
                 list2.Add(5); list2.Add(4); list2.Add(7); list2.Add(7); list2.Add(4);
@@ -945,7 +945,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void Find()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
 
                 Assert.IsTrue(lst.Find(ref p));
                 Assert.AreEqual(3, p.Key);
@@ -958,7 +958,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void FindOrAdd()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
 
                 Assert.IsTrue(lst.FindOrAdd(ref p));
                 Assert.AreEqual(3, p.Key);
@@ -973,7 +973,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void Update()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
 
                 Assert.IsTrue(lst.Update(p));
                 Assert.AreEqual(3, lst[3].Key);
@@ -986,7 +986,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void UpdateOrAdd1()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
 
                 Assert.IsTrue(lst.UpdateOrAdd(p));
                 Assert.AreEqual(3, lst[3].Key);
@@ -1014,7 +1014,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void RemoveWithReturn()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
 
                 Assert.IsTrue(lst.Remove(p, out p));
                 Assert.AreEqual(3, p.Key);
@@ -1071,7 +1071,7 @@ namespace C5.Tests.linkedlists.plain
                 Assert.IsTrue(IC.Eq(lst, 3));
                 lst.Insert(0, 7);
                 Assert.IsTrue(IC.Eq(lst, 7, 3));
-                lst.InsertAll(1, new int[] { 1, 2, 3, 4 });
+                lst.InsertAll(1, [1, 2, 3, 4]);
                 Assert.IsTrue(IC.Eq(lst, 7, 1, 2, 3, 4, 3));
                 Assert.IsTrue(lst.Check());
             }
@@ -1082,7 +1082,7 @@ namespace C5.Tests.linkedlists.plain
                 Assert.IsTrue(IC.Eq(lst, 3));
                 lst.Insert(0, 7);
                 Assert.IsTrue(IC.Eq(lst, 7, 3));
-                lst.InsertAll(1, new int[] { 5, 6, 5, 8 });
+                lst.InsertAll(1, [5, 6, 5, 8]);
                 Assert.IsTrue(lst.Check());
                 Assert.IsTrue(IC.Eq(lst, 7, 5, 6, 5, 8, 3));
             }
@@ -1808,7 +1808,7 @@ namespace C5.Tests.linkedlists.plain
                 Assert.IsTrue(IC.Eq(list, 0, 8, 18, 12, 15, 3));
                 Assert.IsTrue(IC.Eq(view, 8, 18, 12, 15));
 
-                LinkedList<int> lst2 = new LinkedList<int>() { 90, 92 };
+                LinkedList<int> lst2 = new() { 90, 92 };
                 view.AddAll(lst2);
                 check();
                 Assert.IsTrue(IC.Eq(list, 0, 8, 18, 12, 15, 90, 92, 3));
@@ -1839,7 +1839,7 @@ namespace C5.Tests.linkedlists.plain
                 Assert.IsTrue(view.Contains(1));
                 Assert.IsFalse(view.Contains(0));
 
-                LinkedList<int> lst2 = new LinkedList<int>() { 2 };
+                LinkedList<int> lst2 = new() { 2 };
 
                 Assert.IsTrue(view.ContainsAll(lst2));
                 lst2.Add(3);
@@ -2007,7 +2007,7 @@ namespace C5.Tests.linkedlists.plain
                 view.Add(1); view.Add(5); view.Add(3); view.Add(1); view.Add(3); view.Add(0);
                 Assert.IsTrue(IC.Eq(view, 2, 5, 1, 1, 5, 3, 1, 3, 0));
 
-                LinkedList<int> l2 = new LinkedList<int>() { 1, 2, 2, 3, 1 };
+                LinkedList<int> l2 = new() { 1, 2, 2, 3, 1 };
 
                 view.RemoveAll(l2);
                 check();
@@ -2294,7 +2294,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void InsertAll()
             {
-                LinkedList<int> list2 = new LinkedList<int>();
+                LinkedList<int> list2 = new();
                 for (int i = 0; i < 5; i++) { list2.Add(100 + i); }
                 Assert.IsTrue(list.Check(), "list check before insertAll");
                 list.InsertAll(3, list2);
@@ -2312,7 +2312,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void AddAll()
             {
-                LinkedList<int> list2 = new LinkedList<int>();
+                LinkedList<int> list2 = new();
                 for (int i = 0; i < 5; i++) { list2.Add(100 + i); }
                 Assert.IsTrue(list.Check(), "list check before AddAll");
                 list.View(1, 2).AddAll(list2);
@@ -2330,7 +2330,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void RemoveAll1()
             {
-                LinkedList<int> list2 = new LinkedList<int>() { 1, 3, 4 };
+                LinkedList<int> list2 = new() { 1, 3, 4 };
 
                 for (int i = 0; i < 7; i++)
                 {
@@ -2351,7 +2351,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void RemoveAll2()
             {
-                LinkedList<int> list2 = new LinkedList<int>() { 1, 3, 4 };
+                LinkedList<int> list2 = new() { 1, 3, 4 };
                 Assert.IsTrue(list.Check(), "list check before RemoveAll");
                 list.RemoveAll(list2);
 
@@ -2419,7 +2419,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void RetainAll()
             {
-                LinkedList<int> list2 = new LinkedList<int>() { 2, 4, 5 };
+                LinkedList<int> list2 = new() { 2, 4, 5 };
                 Assert.IsTrue(list.Check(), "list check before RetainAll");
                 list.RetainAll(list2);
                 Assert.AreEqual(0, views[0][0].Offset, "view [0][0] offset");
@@ -2487,7 +2487,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void RemoveAllCopies()
             {
-                LinkedList<int> list2 = new LinkedList<int>() { 0, 2, 2, 2, 5, 2, 1 };
+                LinkedList<int> list2 = new() { 0, 2, 2, 2, 5, 2, 1 };
                 for (int i = 0; i < 7; i++)
                 {
                     for (int j = 0; j < 7 - i; j++)
@@ -2633,13 +2633,13 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void AddAll_int_()
             {
-                Assert.Throws<ViewDisposedException>(() => view.AddAll(new int[] { }));
+                Assert.Throws<ViewDisposedException>(() => view.AddAll([]));
             }
 
             [Test]
             public void AddAll()
             {
-                Assert.Throws<ViewDisposedException>(() => view.AddAll(new int[] { }));
+                Assert.Throws<ViewDisposedException>(() => view.AddAll([]));
             }
 
             [Test]
@@ -2681,7 +2681,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void ContainsAll()
             {
-                Assert.Throws<ViewDisposedException>(() => view.ContainsAll(new int[] { }));
+                Assert.Throws<ViewDisposedException>(() => view.ContainsAll([]));
             }
 
             [Test]

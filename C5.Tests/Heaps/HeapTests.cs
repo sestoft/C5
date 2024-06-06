@@ -70,16 +70,16 @@ namespace C5.Tests.heaps
             Assert.AreEqual(EventType.Changed | EventType.Added | EventType.Removed, queue.ActiveEvents);
             queue.Add(34);
             queue.Add(56);
-            queue.AddAll(new int[] { });
+            queue.AddAll([]);
             queue.Add(34);
             queue.Add(12);
             queue.DeleteMax();
             queue.DeleteMin();
-            queue.AddAll(new int[] { 4, 5, 6, 2 });
+            queue.AddAll([4, 5, 6, 2]);
             Assert.AreEqual(17, events.Count);
-            int[] vals = { 34, 0, 56, 0, 34, 0, 12, 0, 56, 0, 12, 0, 4, 5, 6, 2, 0 };
-            Acts[] acts = { Acts.Add, Acts.Changed, Acts.Add, Acts.Changed, Acts.Add, Acts.Changed, Acts.Add, Acts.Changed,
-                Acts.Remove, Acts.Changed, Acts.Remove, Acts.Changed, Acts.Add, Acts.Add, Acts.Add, Acts.Add, Acts.Changed };
+            int[] vals = [34, 0, 56, 0, 34, 0, 12, 0, 56, 0, 12, 0, 4, 5, 6, 2, 0];
+            Acts[] acts = [ Acts.Add, Acts.Changed, Acts.Add, Acts.Changed, Acts.Add, Acts.Changed, Acts.Add, Acts.Changed,
+                Acts.Remove, Acts.Changed, Acts.Remove, Acts.Changed, Acts.Add, Acts.Add, Acts.Add, Acts.Add, Acts.Changed ];
             for (int i = 0; i < vals.Length; i++)
             {
                 //Console.WriteLine("{0}", events[cell]);
@@ -107,11 +107,11 @@ namespace C5.Tests.heaps
             queue.Add(12);
             queue.DeleteMax();
             queue.DeleteMin();
-            queue.AddAll(new int[] { 4, 5, 6, 2 });
+            queue.AddAll([4, 5, 6, 2]);
             Assert.AreEqual(17, events.Count);
-            int[] vals = { 34, 0, 56, 0, 34, 0, 12, 0, 56, 0, 12, 0, 4, 5, 6, 2, 0 };
-            Acts[] acts = { Acts.Add, Acts.Changed, Acts.Add, Acts.Changed, Acts.Add, Acts.Changed, Acts.Add, Acts.Changed,
-                Acts.Remove, Acts.Changed, Acts.Remove, Acts.Changed, Acts.Add, Acts.Add, Acts.Add, Acts.Add, Acts.Changed };
+            int[] vals = [34, 0, 56, 0, 34, 0, 12, 0, 56, 0, 12, 0, 4, 5, 6, 2, 0];
+            Acts[] acts = [ Acts.Add, Acts.Changed, Acts.Add, Acts.Changed, Acts.Add, Acts.Changed, Acts.Add, Acts.Changed,
+                Acts.Remove, Acts.Changed, Acts.Remove, Acts.Changed, Acts.Add, Acts.Add, Acts.Add, Acts.Add, Acts.Changed ];
             for (int i = 0; i < vals.Length; i++)
             {
                 //Console.WriteLine("{0}", events[cell]);
@@ -149,7 +149,7 @@ namespace C5.Tests.heaps
         public void Format()
         {
             Assert.AreEqual("{  }", coll.ToString());
-            coll.AddAll(new int[] { -4, 28, 129, 65530 });
+            coll.AddAll([-4, 28, 129, 65530]);
             Assert.AreEqual("{ -4, 65530, 28, 129 }", coll.ToString());
             Assert.AreEqual("{ -4, FFFA, 1C, 81 }", coll.ToString(null, rad16));
             Assert.AreEqual("{ -4, 65530, ... }", coll.ToString("L14", null));
@@ -510,7 +510,7 @@ namespace C5.Tests.heaps
         {
             int length = 1000;
             int[] a = new int[length];
-            Random ran = new Random(6754);
+            Random ran = new(6754);
 
             for (int i = 0; i < length; i++)
             {
@@ -535,7 +535,7 @@ namespace C5.Tests.heaps
         {
             int length = 1000;
             int[] a = new int[length];
-            Random ran = new Random(6754);
+            Random ran = new(6754);
 
             for (int i = 0; i < length; i++)
             {
@@ -560,10 +560,10 @@ namespace C5.Tests.heaps
         [Test]
         public void RandomWithDeleteHandles()
         {
-            Random ran = new Random(6754);
+            Random ran = new(6754);
             int length = 1000;
             int[] a = new int[length];
-            ArrayList<int> shuffle = new ArrayList<int>(length);
+            ArrayList<int> shuffle = new(length);
             IPriorityQueueHandle<int>[] h = new IPriorityQueueHandle<int>[length];
 
             for (int i = 0; i < length; i++)
@@ -588,11 +588,11 @@ namespace C5.Tests.heaps
         [Test]
         public void RandomIndexing()
         {
-            Random ran = new Random(6754);
+            Random ran = new(6754);
             int length = 1000;
             int[] a = new int[length];
             int[] b = new int[length];
-            ArrayList<int> shuffle = new ArrayList<int>(length);
+            ArrayList<int> shuffle = new(length);
             IPriorityQueueHandle<int>[] h = new IPriorityQueueHandle<int>[length];
 
             for (int i = 0; i < length; i++)
@@ -622,7 +622,7 @@ namespace C5.Tests.heaps
         {
             int length = 1000;
             int[] a = new int[length];
-            Random ran = new Random(6754);
+            Random ran = new(6754);
 
             for (int i = 0; i < length; i++)
             {
@@ -650,9 +650,9 @@ namespace C5.Tests.heaps
         {
             int length = 1000;
             int[] a = new int[length];
-            Random ran = new Random(6754);
+            Random ran = new(6754);
 
-            LinkedList<int> lst = new LinkedList<int>();
+            LinkedList<int> lst = new();
             for (int i = 0; i < length; i++)
             {
                 lst.Add(a[i] = ran.Next());

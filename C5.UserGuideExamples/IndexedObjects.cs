@@ -58,7 +58,7 @@ internal static class IndexedObjectsProgram
     }
 
     private static readonly string[] _months =
-    {
+    [
             "Jan",
             "Feb",
             "Mar",
@@ -71,7 +71,7 @@ internal static class IndexedObjectsProgram
             "Oct",
             "Nov",
             "Dec"
-        };
+        ];
 }
 
 public interface IIndexer<Q, R>

@@ -312,12 +312,12 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
         if (d1 < d2)
         {
             n1 = Get(p1, positions, nodes);
-            n2 = Get(p2, new int[] { positions[nearest2], p1 }, new Node[] { nodes[nearest2], n1 });
+            n2 = Get(p2, [positions[nearest2], p1], [nodes[nearest2], n1]);
         }
         else
         {
             n2 = Get(p2, positions, nodes);
-            n1 = Get(p1, new int[] { positions[nearest1], p2 }, new Node[] { nodes[nearest1], n2 });
+            n1 = Get(p1, [positions[nearest1], p2], [nodes[nearest1], n2]);
         }
     }
     #endregion
@@ -326,7 +326,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
 
     private void Insert(Node succ, T item)
     {
-        Node newnode = new Node(item);
+        Node newnode = new(item);
         if (dict.FindOrAdd(item, ref newnode))
         {
             throw new DuplicateNotAllowedException("Item already in indexed list");
@@ -734,7 +734,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
         {
             System.Diagnostics.Debug.Assert(Taggroups == 0);
 
-            TagGroup newgroup = new TagGroup();
+            TagGroup newgroup = new();
 
             Taggroups = 1;
             node.taggroup = newgroup;
@@ -836,7 +836,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
         tgtdelta = tgtdelta == 0 ? 1 : tgtdelta;
         for (int j = 0; j < newtgs; j++)
         {
-            TagGroup newtaggroup = new TagGroup
+            TagGroup newtaggroup = new()
             {
                 tag = (tgtag = tgtag >= ntgt - tgtdelta ? ntgt : tgtag + tgtdelta),
                 first = n,
@@ -1394,7 +1394,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
         {
             foreach (T item in items)
             {
-                Node tmp = new Node(item, node!, null);
+                Node tmp = new(item, node!, null);
                 if (!dict.FindOrAdd(item, ref tmp))
                 {
                     tmp.tag = thetag < taglimit ? ++thetag : thetag;
@@ -1507,7 +1507,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
     {
         Validitycheck();
 
-        HashedLinkedList<V> retval = new HashedLinkedList<V>();
+        HashedLinkedList<V> retval = new();
         return Map<V>(mapper, retval);
     }
 
@@ -1523,7 +1523,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
     {
         Validitycheck();
 
-        HashedLinkedList<V> retval = new HashedLinkedList<V>(equalityComparer);
+        HashedLinkedList<V> retval = new(equalityComparer);
         return Map<V>(mapper, retval);
     }
 
@@ -1540,7 +1540,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
 
         double tagdelta = int.MaxValue / (size + 1.0);
         int count = 1;
-        HashedLinkedList<V>.TagGroup taggroup = new HashedLinkedList<V>.TagGroup();
+        HashedLinkedList<V>.TagGroup taggroup = new();
         retval.taggroups = 1;
         taggroup.count = size;
         while (cursor != endsentinel)
@@ -1649,7 +1649,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
         retval.offset = offset + start;
         retval.size = count;
         GetPair(start - 1, start + count, out retval.startsentinel, out retval.endsentinel,
-            new int[] { -1, size }, new Node[] { startsentinel!, endsentinel! });
+            [-1, size], [startsentinel!, endsentinel!]);
         //retval.startsentinel = start == 0 ? startsentinel : get(start - 1);
         //retval.endsentinel = start + count == size ? endsentinel : get(start + count);
 
@@ -1792,7 +1792,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
             try
             {
                 GetPair(offset - 1, offset + size, out startsentinel, out endsentinel,
-                    new int[] { -1, this.size }, new Node[] { startsentinel!, endsentinel! });
+                    [-1, this.size], [startsentinel!, endsentinel!]);
                 //TODO: maybe-update offset field
             }
             catch (NullReferenceException)
@@ -1809,8 +1809,8 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
 
             int oldoffset = (int)(this.offset);
             GetPair(offset - 1, offset + size, out startsentinel, out endsentinel,
-                new int[] { -oldoffset - 1, -1, this.size, underlying.size - oldoffset },
-                new Node[] { underlying.startsentinel!, startsentinel!, endsentinel!, underlying.endsentinel! });
+                [-oldoffset - 1, -1, this.size, underlying.size - oldoffset],
+                [underlying.startsentinel!, startsentinel!, endsentinel!, underlying.endsentinel!]);
         }
         this.size = size;
         this.offset += offset;
@@ -2221,7 +2221,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
         }
 
         DisposeOverlappingViews(false);
-        ArrayList<T> a = new ArrayList<T>();
+        ArrayList<T> a = new();
         a.AddAll(this);
         a.Shuffle(rnd);
         Node cursor = startsentinel!.next!;
@@ -2472,7 +2472,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
     {
         UpdateCheck();
         //This is an extended myinsert:
-        Node node = new Node(item);
+        Node node = new(item);
         if (!dict.FindOrAdd(item, ref node))
         {
             InsertNode(true, endsentinel!, node);
@@ -2507,7 +2507,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
     public virtual bool UpdateOrAdd(T item, out T olditem)
     {
         UpdateCheck();
-        Node node = new Node(item);
+        Node node = new(item);
         //NOTE: it is hard to do this without double access to the dictionary
         //in the update case
         if (dict.FindOrAdd(item, ref node))
@@ -2592,7 +2592,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
             return;
         }
 
-        RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
+        RaiseForRemoveAllHandler raiseHandler = new(underlying ?? this);
         bool mustFire = raiseHandler.MustFire;
         foreach (T item in items)
         {
@@ -2681,7 +2681,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
         }
 
         //TODO: mix with tag maintenance to only run through list once?
-        ViewHandler viewHandler = new ViewHandler(this);
+        ViewHandler viewHandler = new(this);
         if (viewHandler.viewCount > 0)
         {
             int removed = 0;
@@ -2745,7 +2745,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
             return;
         }
 
-        RaiseForRemoveAllHandler raiseHandler = new RaiseForRemoveAllHandler(underlying ?? this);
+        RaiseForRemoveAllHandler raiseHandler = new(underlying ?? this);
         bool mustFire = raiseHandler.MustFire;
         /*if (underlying == null)
         {
@@ -2771,7 +2771,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
         }
         else*/
         {
-            HashSet<T> toremove = new HashSet<T>(itemequalityComparer);
+            HashSet<T> toremove = new(itemequalityComparer);
 
             foreach (T item in this)
             {
@@ -2870,12 +2870,12 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
     {
         Validitycheck();
         int stamp = this.stamp;
-        HashedLinkedList<T> retval = new HashedLinkedList<T>();
+        HashedLinkedList<T> retval = new();
         Node cursor = startsentinel!.next!;
         Node mcursor = retval.startsentinel!;
         double tagdelta = int.MaxValue / (size + 1.0);
         int count = 1;
-        TagGroup taggroup = new TagGroup();
+        TagGroup taggroup = new();
         retval.taggroups = 1;
         while (cursor != endsentinel)
         {
@@ -3007,7 +3007,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
     public virtual bool Add(T item)
     {
         UpdateCheck();
-        Node node = new Node(item);
+        Node node = new(item);
         if (!dict.FindOrAdd(item, ref node))
         {
             InsertNode(true, endsentinel!, node);
@@ -3044,7 +3044,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
         Node pred = endsentinel!.prev!;
         foreach (var item in items)
         {
-            Node node = new Node(item);
+            Node node = new(item);
             if (!dict.FindOrAdd(item, ref node))
             {
                 InsertNode(false, endsentinel, node);

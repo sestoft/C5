@@ -47,24 +47,24 @@ public static class EqualityComparer<T>
 
             if (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition().Equals(typeof(ISequenced<>)))
             {
-                return CreateAndCache(SequencedCollectionEqualityComparer.MakeGenericType(new[] { type, type.GetTypeInfo().GetGenericArguments()[0] }));
+                return CreateAndCache(SequencedCollectionEqualityComparer.MakeGenericType([type, type.GetTypeInfo().GetGenericArguments()[0]]));
             }
 
             var isequenced = interfaces.FirstOrDefault(i => i.GetTypeInfo().IsGenericType && i.GetGenericTypeDefinition().Equals(typeof(ISequenced<>)));
             if (isequenced != null)
             {
-                return CreateAndCache(SequencedCollectionEqualityComparer.MakeGenericType(new[] { type, isequenced.GetTypeInfo().GetGenericArguments()[0] }));
+                return CreateAndCache(SequencedCollectionEqualityComparer.MakeGenericType([type, isequenced.GetTypeInfo().GetGenericArguments()[0]]));
             }
 
             if (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition().Equals(typeof(ICollection<>)))
             {
-                return CreateAndCache(UnsequencedCollectionEqualityComparer.MakeGenericType(new[] { type, type.GetTypeInfo().GetGenericArguments()[0] }));
+                return CreateAndCache(UnsequencedCollectionEqualityComparer.MakeGenericType([type, type.GetTypeInfo().GetGenericArguments()[0]]));
             }
 
             var icollection = interfaces.FirstOrDefault(i => i.GetTypeInfo().IsGenericType && i.GetGenericTypeDefinition().Equals(typeof(ICollection<>)));
             if (icollection != null)
             {
-                return CreateAndCache(UnsequencedCollectionEqualityComparer.MakeGenericType(new[] { type, icollection.GetTypeInfo().GetGenericArguments()[0] }));
+                return CreateAndCache(UnsequencedCollectionEqualityComparer.MakeGenericType([type, icollection.GetTypeInfo().GetGenericArguments()[0]]));
             }
 
             return _default = SCG.EqualityComparer<T>.Default;

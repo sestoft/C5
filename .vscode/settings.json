@@ -9,6 +9,7 @@
         "editor.tabSize": 2,
         "editor.autoIndent": "advanced"
     },
+    "editor.tabSize": 4,
     "editor.trimAutoWhitespace": true,
     "files.autoSave": "afterDelay",
     "files.trimFinalNewlines": true,

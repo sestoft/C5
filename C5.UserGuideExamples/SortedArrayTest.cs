@@ -20,7 +20,7 @@ internal class SortedArrayTest
                 }
             );
 
-        SortedArray<(string, int)> sarr = new SortedArray<(string, int)>(lexico)
+        SortedArray<(string, int)> sarr = new(lexico)
             {
                 ("ole", 32),
                 ("hans", 77),

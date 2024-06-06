@@ -6,7 +6,7 @@ namespace C5;
 /// <summary>
 /// A base class for implementing a dictionary based on a set collection implementation.
 /// <i>See the source code for <see cref="T:C5.HashDictionary`2"/> for an example</i>
-/// 
+///
 /// </summary>
 public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collections.Generic.KeyValuePair<K, V>>, IDictionary<K, V>
 {
@@ -80,19 +80,19 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public override EventType ListenableEvents => EventType.Basic;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public override EventType ActiveEvents => pairs.ActiveEvents;
 
     #endregion
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="keyequalityComparer"></param>
     protected DictionaryBase(System.Collections.Generic.IEqualityComparer<K> keyequalityComparer)
@@ -103,7 +103,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     #region IDictionary<K,V> Members
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <value></value>
     public virtual System.Collections.Generic.IEqualityComparer<K> EqualityComparer => keyequalityComparer;
@@ -117,7 +117,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <param name="value">Value to add</param>
     public virtual void Add(K key, V value)
     {
-        System.Collections.Generic.KeyValuePair<K, V> p = new System.Collections.Generic.KeyValuePair<K, V>(key, value);
+        System.Collections.Generic.KeyValuePair<K, V> p = new(key, value);
 
         if (!pairs.Add(p))
         {
@@ -129,7 +129,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// Add the entries from a collection of <see cref="T:C5.KeyValuePair`2"/> pairs to this dictionary.
     /// <para><b>TODO: add restrictions L:K and W:V when the .Net SDK allows it </b></para>
     /// </summary>
-    /// <exception cref="DuplicateNotAllowedException"> 
+    /// <exception cref="DuplicateNotAllowedException">
     /// If the input contains duplicate keys or a key already present in this dictionary.</exception>
     /// <param name="entries"></param>
     public virtual void AddAll<L, W>(System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<L, W>> entries)
@@ -138,7 +138,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     {
         foreach (System.Collections.Generic.KeyValuePair<L, W> pair in entries)
         {
-            System.Collections.Generic.KeyValuePair<K, V> p = new System.Collections.Generic.KeyValuePair<K, V>(pair.Key, pair.Value);
+            System.Collections.Generic.KeyValuePair<K, V> p = new(pair.Key, pair.Value);
             if (!pairs.Add(p))
             {
                 throw new DuplicateNotAllowedException("Key being added: '" + pair.Key + "'");
@@ -153,7 +153,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <returns>True if an entry was found (and removed)</returns>
     public virtual bool Remove(K key)
     {
-        System.Collections.Generic.KeyValuePair<K, V> p = new System.Collections.Generic.KeyValuePair<K, V>(key, default);
+        System.Collections.Generic.KeyValuePair<K, V> p = new(key, default);
 
         return pairs.Remove(p);
     }
@@ -167,7 +167,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <returns>True if an entry was found (and removed)</returns>
     public virtual bool Remove(K key, out V value)
     {
-        System.Collections.Generic.KeyValuePair<K, V> p = new System.Collections.Generic.KeyValuePair<K, V>(key, default);
+        System.Collections.Generic.KeyValuePair<K, V> p = new(key, default);
 
         if (pairs.Remove(p, out p))
         {
@@ -188,7 +188,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     public virtual void Clear() { pairs.Clear(); }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <value></value>
     public virtual Speed ContainsSpeed => pairs.ContainsSpeed;
@@ -200,7 +200,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <returns>True if key was found</returns>
     public virtual bool Contains(K key)
     {
-        System.Collections.Generic.KeyValuePair<K, V> p = new System.Collections.Generic.KeyValuePair<K, V>(key, default);
+        System.Collections.Generic.KeyValuePair<K, V> p = new(key, default);
 
         return pairs.Contains(p);
     }
@@ -228,7 +228,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="keys"></param>
     /// <returns></returns>
@@ -246,7 +246,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <returns>True if key was found</returns>
     public virtual bool Find(ref K key, out V value)
     {
-        System.Collections.Generic.KeyValuePair<K, V> p = new System.Collections.Generic.KeyValuePair<K, V>(key, default);
+        System.Collections.Generic.KeyValuePair<K, V> p = new(key, default);
 
         if (pairs.Find(ref p))
         {
@@ -271,14 +271,14 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <returns>True if key was found</returns>
     public virtual bool Update(K key, V value)
     {
-        System.Collections.Generic.KeyValuePair<K, V> p = new System.Collections.Generic.KeyValuePair<K, V>(key, value);
+        System.Collections.Generic.KeyValuePair<K, V> p = new(key, value);
 
         return pairs.Update(p);
     }
 
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="key"></param>
     /// <param name="value"></param>
@@ -286,7 +286,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <returns></returns>
     public virtual bool Update(K key, V value, out V oldvalue)
     {
-        System.Collections.Generic.KeyValuePair<K, V> p = new System.Collections.Generic.KeyValuePair<K, V>(key, value);
+        System.Collections.Generic.KeyValuePair<K, V> p = new(key, value);
 
         bool retval = pairs.Update(p, out p);
         oldvalue = p.Value;
@@ -304,7 +304,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <returns>True if key was found</returns>
     public virtual bool FindOrAdd(K key, ref V value)
     {
-        System.Collections.Generic.KeyValuePair<K, V> p = new System.Collections.Generic.KeyValuePair<K, V>(key, value);
+        System.Collections.Generic.KeyValuePair<K, V> p = new(key, value);
 
         if (!pairs.FindOrAdd(ref p))
         {
@@ -342,7 +342,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     /// <returns></returns>
     public virtual bool UpdateOrAdd(K key, V value, out V oldvalue)
     {
-        System.Collections.Generic.KeyValuePair<K, V> p = new System.Collections.Generic.KeyValuePair<K, V>(key, value);
+        System.Collections.Generic.KeyValuePair<K, V> p = new(key, value);
         bool retval = pairs.UpdateOrAdd(p, out p);
         oldvalue = p.Value;
         return retval;
@@ -403,25 +403,25 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     #endregion
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <value>A collection containing all the keys of the dictionary</value>
     public virtual ICollectionValue<K> Keys => new KeysCollection(pairs);
 
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <value>A collection containing all the values of the dictionary</value>
     public virtual ICollectionValue<V> Values => new ValuesCollection(pairs);
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public virtual Func<K, V> Func => delegate (K k) { return this[k]; };
 
     /// <summary>
-    /// Indexer by key for dictionary. 
+    /// Indexer by key for dictionary.
     /// <para>The get method will throw an exception if no entry is found. </para>
     /// <para>The set method behaves like <see cref="M:C5.DictionaryBase`2.UpdateOrAdd(`0,`1)"/>.</para>
     /// </summary>
@@ -431,7 +431,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     {
         get
         {
-            System.Collections.Generic.KeyValuePair<K, V> p = new System.Collections.Generic.KeyValuePair<K, V>(key, default);
+            System.Collections.Generic.KeyValuePair<K, V> p = new(key, default);
 
             if (pairs.Find(ref p))
             {
@@ -447,7 +447,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
 
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <value>True if dictionary is read  only</value>
     public virtual bool IsReadOnly => pairs.IsReadOnly;
@@ -464,26 +464,26 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     #region ICollectionValue<System.Collections.Generic.KeyValuePair<K,V>> Members
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <value>True if this collection is empty.</value>
     public override bool IsEmpty => pairs.IsEmpty;
 
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <value>The number of entries in the dictionary</value>
     public override int Count => pairs.Count;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <value>The number of entries in the dictionary</value>
     public override Speed CountSpeed => pairs.CountSpeed;
 
     /// <summary>
-    /// Choose some entry in this Dictionary. 
+    /// Choose some entry in this Dictionary.
     /// </summary>
     /// <exception cref="NoSuchItemException">if collection is empty.</exception>
     /// <returns></returns>
@@ -501,7 +501,7 @@ public abstract class DictionaryBase<K, V> : CollectionValueBase<System.Collecti
     #endregion
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="stringbuilder"></param>
     /// <param name="rest"></param>

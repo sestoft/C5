@@ -1081,7 +1081,7 @@ public class TreeBag<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted
         }
 
         //To count theCollect
-        Node head = new Node(), tail = head;
+        Node head = new(), tail = head;
         int z = 1;
         T lastitem = tail.item = e.Current;
 
@@ -1136,7 +1136,7 @@ public class TreeBag<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted
         {
             if ((ActiveEvents & EventType.Added) != 0)
             {
-                CircularQueue<T> wasAdded = new CircularQueue<T>();
+                CircularQueue<T> wasAdded = new();
                 foreach (T item in this)
                 {
                     wasAdded.Enqueue(item);
@@ -2065,7 +2065,7 @@ public class TreeBag<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted
             throw new ViewDisposedException("Snapshot has been disposed");
         }
 
-        TreeBag<T> res = new TreeBag<T>(comparer!);
+        TreeBag<T> res = new(comparer!);
         SCG.IEnumerator<T> e = GetEnumerator();
         Node? head = null, tail = null;
         int z = 0;
@@ -2150,7 +2150,7 @@ public class TreeBag<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted
             throw new ViewDisposedException("Snapshot has been disposed");
         }
 
-        TreeBag<V> res = new TreeBag<V>(c);
+        TreeBag<V> res = new(c);
 
         if (size == 0)
         {
@@ -3897,7 +3897,7 @@ public class TreeBag<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted
         }
 
         TreeBag<T> res = (TreeBag<T>)MemberwiseClone();
-        SnapRef newSnapRef = new SnapRef(res);
+        SnapRef newSnapRef = new(res);
         res.isReadOnlyBase = true;
         res.isSnapShot = true;
         res.snapList = newSnapRef;
@@ -4436,7 +4436,7 @@ n.items
     /// <returns>false if invariant violation</returns>
     public bool Check(string name)
     {
-        System.Text.StringBuilder e = new System.Text.StringBuilder();
+        System.Text.StringBuilder e = new();
 
         if (!CheckInner())
         {
