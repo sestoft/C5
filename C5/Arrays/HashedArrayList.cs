@@ -2452,8 +2452,8 @@ public void GetObjectData(System.Runtime.Serialization.SerializationInfo info, S
 
     void System.Collections.IList.Remove(object? value)
     {
-        if (value is null && default(T) is not null) throw new ArgumentNullException(nameof(value));
-        if (value is not T) throw new ArgumentException("Wrong type", nameof(value));
+        if (value is null && default(T) is not null) return;
+        if (value is not T) return;
 
         Remove((T)value);
     }
