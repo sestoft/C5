@@ -33,6 +33,13 @@ namespace C5
         /// <param name="collection1">first collection</param>
         /// <param name="collection2">second collection</param>
         /// <returns>True if equal</returns>
-        public bool Equals(T collection1, T collection2) { return collection1 == null ? collection2 == null : collection1.UnsequencedEquals(collection2); }
+        public bool Equals(T? collection1, T? collection2)
+        {
+            if (collection1 == null && collection2 == null) return true;
+            if (collection1 == null) return false;
+            if (collection2 == null) return false;
+
+            return collection1.UnsequencedEquals(collection2);
+        }
     }
 }

@@ -30,8 +30,12 @@ internal class InternalComparer<T> : IComparer<T>
     /// <param name="x">The first object to compare.</param>
     /// <param name="y">The second object to compare.</param>
     /// <returns>A signed integer that indicates the relative values of x and y, as shown in the following table. Value Condition Less than zero x is less than y. Zero x equals y. Greater than zero x is greater than y.</returns>
-    public int Compare(T x, T y)
+    public int Compare(T? x, T? y)
     {
+        if (x is null && y is null) return 0;
+        if (x is null) return -1;
+        if (y is null) return 1;
+
         return _compare(x, y);
     }
 }

@@ -1,4 +1,6 @@
-using System;
+// This file is part of the C5 Generic Collection Library for C# and CLI
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
+
 using SCG = System.Collections.Generic;
 
 namespace C5;
@@ -33,5 +35,12 @@ public class SequencedCollectionEqualityComparer<T, W> : SCG.IEqualityComparer<T
     /// <param name="collection1">first collection</param>
     /// <param name="collection2">second collection</param>
     /// <returns>True if equal</returns>
-    public bool Equals(T collection1, T collection2) { return collection1 == null ? collection2 == null : collection1.SequencedEquals(collection2); }
+    public bool Equals(T? collection1, T? collection2) 
+    {
+        if (collection1 == null && collection2 == null) return true;
+        if (collection1 == null) return false;
+        if (collection2 == null) return false;
+
+        return collection1.SequencedEquals(collection2); 
+    }
 }

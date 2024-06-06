@@ -69,7 +69,7 @@ internal class AnagramStrings
             var anagram = AnagramClass(s);
             if (!classes.Find(ref anagram, out HashSet<string> anagramClass))
             {
-                classes[anagram] = anagramClass = new HashSet<string>();
+                classes[anagram] = anagramClass = [];
             }
             anagramClass.Add(s);
         }
@@ -108,8 +108,10 @@ internal class CharBag : IComparable<CharBag>
         return _contents.Equals(that._contents);
     }
 
-    public int CompareTo(CharBag that)
+    public int CompareTo(CharBag? that)
     {
+        ArgumentNullException.ThrowIfNull(that);
+
         return _contents.CompareTo(that._contents);
     }
 }

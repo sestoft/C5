@@ -33,8 +33,12 @@ internal class InternalEqualityComparer<T> : IEqualityComparer<T>
     /// <param name="x">The first object of type T to compare.</param>
     /// <param name="y">The second object of type T to compare.</param>
     /// <returns>true if the specified objects are equal; otherwise, false.</returns>
-    public bool Equals(T x, T y)
+    public bool Equals(T? x, T? y)
     {
+        if (x is null && y is null) return true;
+        if (x is null) return false;
+        if (y is null) return false;
+
         return _equals(x, y);
     }
 
