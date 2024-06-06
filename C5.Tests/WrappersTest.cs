@@ -612,7 +612,7 @@ namespace C5.Tests.wrappers
                 Assert.Multiple(() =>
                 {
                     Assert.That(IC.Eq(extarray, 0, 4, 6, 5, 0), Is.True);
-                    Assert.That(wrapped.Count, Is.EqualTo(3));
+                    Assert.That(wrapped, Has.Count.EqualTo(3));
                 });
                 Assert.Multiple(() =>
                 {
@@ -762,7 +762,7 @@ namespace C5.Tests.wrappers
                 Assert.Multiple(() =>
                 {
                     Assert.That(IC.Eq(extarray, 0, 4, 6, 5, 0), Is.True);
-                    Assert.That(wrapped.Count, Is.EqualTo(3));
+                    Assert.That(wrapped, Has.Count.EqualTo(3));
                 });
                 Assert.Multiple(() =>
                 {

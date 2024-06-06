@@ -262,25 +262,25 @@ namespace C5.Tests.linkedlists.hashed
             [Test]
             public void CountEtAl()
             {
-                Assert.That(list.Count, Is.EqualTo(0));
+                Assert.That(list, Is.Empty);
                 Assert.Multiple(() =>
                 {
                     Assert.That(list.IsEmpty, Is.True);
                     Assert.That(list.AllowsDuplicates, Is.False);
                     Assert.That(list.Add(5), Is.True);
-                    Assert.That(list.Count, Is.EqualTo(1));
+                    Assert.That(list, Has.Count.EqualTo(1));
                 });
                 Assert.Multiple(() =>
                 {
                     Assert.That(list.IsEmpty, Is.False);
                     Assert.That(list.Add(5), Is.False);
-                    Assert.That(list.Count, Is.EqualTo(1));
+                    Assert.That(list, Has.Count.EqualTo(1));
                 });
                 Assert.Multiple(() =>
                 {
                     Assert.That(list.IsEmpty, Is.False);
                     Assert.That(list.Add(8), Is.True);
-                    Assert.That(list.Count, Is.EqualTo(2));
+                    Assert.That(list, Has.Count.EqualTo(2));
                 });
             }
 
@@ -1471,7 +1471,7 @@ namespace C5.Tests.linkedlists.hashed
                 Assert.Multiple(() =>
                 {
                     Assert.That(((HashedLinkedList<string>)r).Check(), Is.True);
-                    Assert.That(r.Count, Is.EqualTo(4));
+                    Assert.That(r, Has.Count.EqualTo(4));
                 });
                 for (int i = 0; i < 4; i++)
                 {
@@ -1702,7 +1702,7 @@ namespace C5.Tests.linkedlists.hashed
                     {
                         hll.Add(i);
                     }
-                    Assert.That(hll.Count, Is.EqualTo(count));
+                    Assert.That(hll, Has.Count.EqualTo(count));
                     for (int i = 1; i <= count; i++)
                     {
                         hll.Remove(i);
@@ -1733,7 +1733,7 @@ namespace C5.Tests.linkedlists.hashed
                     {
                         hll.Add(i);
                     }
-                    Assert.That(hll.Count, Is.EqualTo(count));
+                    Assert.That(hll, Has.Count.EqualTo(count));
                     for (int i = count; i >= 1; i--)
                     {
                         hll.Remove(i);
@@ -1811,12 +1811,12 @@ namespace C5.Tests.linkedlists.hashed
                     Assert.That(lst[3, 7].Direction, Is.EqualTo(Direction.Forwards));
                     Assert.That(lst[3, 7].Backwards().Direction, Is.EqualTo(Direction.Backwards));
                     Assert.That(lst.Backwards().Direction, Is.EqualTo(Direction.Backwards));
-                    Assert.That(lst[3, 4].Count, Is.EqualTo(4));
+                    Assert.That(lst[3, 4], Has.Count.EqualTo(4));
                 });
                 Assert.Multiple(() =>
                 {
-                    Assert.That(lst[3, 4].Backwards().Count, Is.EqualTo(4));
-                    Assert.That(lst.Backwards().Count, Is.EqualTo(10));
+                    Assert.That(lst[3, 4].Backwards(), Has.Count.EqualTo(4));
+                    Assert.That(lst.Backwards(), Has.Count.EqualTo(10));
                 });
             }
 
@@ -1925,14 +1925,14 @@ namespace C5.Tests.linkedlists.hashed
                 {
                     Assert.That(span.Check(), Is.True);
                     Assert.That(span.Offset, Is.EqualTo(1));
-                    Assert.That(span.Count, Is.EqualTo(1));
+                    Assert.That(span, Has.Count.EqualTo(1));
                 });
                 span = list.View(0, 2).Span(list.View(2, 2));
                 Assert.Multiple(() =>
                 {
                     Assert.That(span.Check(), Is.True);
                     Assert.That(span.Offset, Is.EqualTo(0));
-                    Assert.That(span.Count, Is.EqualTo(4));
+                    Assert.That(span, Has.Count.EqualTo(4));
                 });
                 span = list.View(3, 1).Span(list.View(1, 1));
                 Assert.That(span, Is.Null);
@@ -2102,14 +2102,14 @@ namespace C5.Tests.linkedlists.hashed
                 {
                     Assert.That(view.ContainsAll(lst2), Is.False);
                     Assert.That(view.ContainsSpeed, Is.EqualTo(Speed.Constant));
-                    Assert.That(view.Count, Is.EqualTo(2));
+                    Assert.That(view, Has.Count.EqualTo(2));
                 });
                 view.Add(1);
                 Assert.Multiple(() =>
                 {
                     Assert.That(view.ContainsCount(2), Is.EqualTo(1));
                     Assert.That(view.ContainsCount(1), Is.EqualTo(1));
-                    Assert.That(view.Count, Is.EqualTo(2));
+                    Assert.That(view, Has.Count.EqualTo(2));
                 });
             }
 
@@ -2443,7 +2443,7 @@ namespace C5.Tests.linkedlists.hashed
                         Assert.Multiple(() =>
                         {
                             Assert.That(views[i][j].Offset, Is.EqualTo(i < 3 || (i == 3 && j == 0) ? i : i + 1), "view[" + i + "][" + j + "] offset");
-                            Assert.That(views[i][j].Count, Is.EqualTo(i < 3 && i + j > 3 ? j + 1 : j), "view[" + i + "][" + j + "] count");
+                            Assert.That(views[i][j], Has.Count.EqualTo(i < 3 && i + j > 3 ? j + 1 : j), "view[" + i + "][" + j + "] count");
                         });
                     }
                 }
@@ -2461,7 +2461,7 @@ namespace C5.Tests.linkedlists.hashed
                         Assert.Multiple(() =>
                         {
                             Assert.That(views[i][j].Offset, Is.EqualTo(i <= 3 ? i : i - 1), "view[" + i + "][" + j + "] offset");
-                            Assert.That(views[i][j].Count, Is.EqualTo(i <= 3 && i + j > 3 ? j - 1 : j), "view[" + i + "][" + j + "] count");
+                            Assert.That(views[i][j], Has.Count.EqualTo(i <= 3 && i + j > 3 ? j - 1 : j), "view[" + i + "][" + j + "] count");
                         });
                     }
                 }
@@ -2480,7 +2480,7 @@ namespace C5.Tests.linkedlists.hashed
                         Assert.Multiple(() =>
                         {
                             Assert.That(views[i][j].Offset, Is.EqualTo(i <= 3 ? i : i <= 5 ? 3 : i - 2), "view[" + i + "][" + j + "] offset");
-                            Assert.That(views[i][j].Count, Is.EqualTo(j == 0 ? 0 : i <= 3 && i + j > 4 ? j - 2 : i > 4 || i + j <= 3 ? j : j - 1), "view[" + i + "][" + j + "] count");
+                            Assert.That(views[i][j], Has.Count.EqualTo(j == 0 ? 0 : i <= 3 && i + j > 4 ? j - 2 : i > 4 || i + j <= 3 ? j : j - 1), "view[" + i + "][" + j + "] count");
                         });
                     }
                 }
@@ -2499,7 +2499,7 @@ namespace C5.Tests.linkedlists.hashed
                         Assert.Multiple(() =>
                         {
                             Assert.That(views[i][j].Offset, Is.EqualTo(i), "view[" + i + "][" + j + "] offset");
-                            Assert.That(views[i][j].Count, Is.EqualTo(j), "view[" + i + "][" + j + "] count");
+                            Assert.That(views[i][j], Has.Count.EqualTo(j), "view[" + i + "][" + j + "] count");
                         });
                     }
                 }
@@ -2517,7 +2517,7 @@ namespace C5.Tests.linkedlists.hashed
                         Assert.Multiple(() =>
                         {
                             Assert.That(views[i][j].Offset, Is.EqualTo(i <= 5 ? i : i - 1), "view[" + i + "][" + j + "] offset");
-                            Assert.That(views[i][j].Count, Is.EqualTo(i <= 5 && i + j > 5 ? j - 1 : j), "view[" + i + "][" + j + "] count");
+                            Assert.That(views[i][j], Has.Count.EqualTo(i <= 5 && i + j > 5 ? j - 1 : j), "view[" + i + "][" + j + "] count");
                         });
                     }
                 }
@@ -2535,7 +2535,7 @@ namespace C5.Tests.linkedlists.hashed
                         Assert.Multiple(() =>
                         {
                             Assert.That(views[i][j].Offset, Is.EqualTo(i == 0 && j == 0 ? 0 : i + 1), "view[" + i + "][" + j + "] offset");
-                            Assert.That(views[i][j].Count, Is.EqualTo(j), "view[" + i + "][" + j + "] count");
+                            Assert.That(views[i][j], Has.Count.EqualTo(j), "view[" + i + "][" + j + "] count");
                         });
                     }
                 }
@@ -2553,7 +2553,7 @@ namespace C5.Tests.linkedlists.hashed
                         Assert.Multiple(() =>
                         {
                             Assert.That(views[i][j].Offset, Is.EqualTo(i == 0 ? i : i - 1), "view[" + i + "][" + j + "] offset");
-                            Assert.That(views[i][j].Count, Is.EqualTo(i == 0 && j > 0 ? j - 1 : j), "view[" + i + "][" + j + "] count");
+                            Assert.That(views[i][j], Has.Count.EqualTo(i == 0 && j > 0 ? j - 1 : j), "view[" + i + "][" + j + "] count");
                         });
                     }
                 }
@@ -2574,7 +2574,7 @@ namespace C5.Tests.linkedlists.hashed
                         Assert.Multiple(() =>
                         {
                             Assert.That(views[i][j].Offset, Is.EqualTo(i < 2 ? i : i < 6 ? 2 : i - 3), "view[" + i + "][" + j + "] offset");
-                            Assert.That(views[i][j].Count, Is.EqualTo(s(i, j)), "view[" + i + "][" + j + "] count");
+                            Assert.That(views[i][j], Has.Count.EqualTo(s(i, j)), "view[" + i + "][" + j + "] count");
                         });
                     }
                 }
@@ -2620,7 +2620,7 @@ namespace C5.Tests.linkedlists.hashed
                         Assert.Multiple(() =>
                         {
                             Assert.That(views[i][j].Offset, Is.EqualTo(i < 3 || (i == 3 && j == 0) ? i : i + 5), "view[" + i + "][" + j + "] offset");
-                            Assert.That(views[i][j].Count, Is.EqualTo(i < 3 && i + j > 3 ? j + 5 : j), "view[" + i + "][" + j + "] count");
+                            Assert.That(views[i][j], Has.Count.EqualTo(i < 3 && i + j > 3 ? j + 5 : j), "view[" + i + "][" + j + "] count");
                         });
                     }
                 }
@@ -2641,7 +2641,7 @@ namespace C5.Tests.linkedlists.hashed
                         Assert.Multiple(() =>
                         {
                             Assert.That(views[i][j].Offset, Is.EqualTo(i < 3 || (i == 3 && j == 0) ? i : i + 5), "view[" + i + "][" + j + "] offset");
-                            Assert.That(views[i][j].Count, Is.EqualTo(i < 3 && i + j > 3 ? j + 5 : j), "view[" + i + "][" + j + "] count");
+                            Assert.That(views[i][j], Has.Count.EqualTo(i < 3 && i + j > 3 ? j + 5 : j), "view[" + i + "][" + j + "] count");
                         });
                     }
                 }
@@ -2725,34 +2725,34 @@ namespace C5.Tests.linkedlists.hashed
                     Assert.That(views[5][1].Offset, Is.EqualTo(2), "view [5][1] offset");
                     Assert.That(views[6][0].Offset, Is.EqualTo(3), "view [6][0] offset");
 
-                    Assert.That(views[0][0].Count, Is.EqualTo(0), "view [0][0] count");
-                    Assert.That(views[0][1].Count, Is.EqualTo(1), "view [0][1] count");
-                    Assert.That(views[0][2].Count, Is.EqualTo(1), "view [0][2] count");
-                    Assert.That(views[0][3].Count, Is.EqualTo(2), "view [0][3] count");
-                    Assert.That(views[0][4].Count, Is.EqualTo(2), "view [0][4] count");
-                    Assert.That(views[0][5].Count, Is.EqualTo(2), "view [0][5] count");
-                    Assert.That(views[0][6].Count, Is.EqualTo(3), "view [0][6] count");
-                    Assert.That(views[1][0].Count, Is.EqualTo(0), "view [1][0] count");
-                    Assert.That(views[1][1].Count, Is.EqualTo(0), "view [1][1] count");
-                    Assert.That(views[1][2].Count, Is.EqualTo(1), "view [1][2] count");
-                    Assert.That(views[1][3].Count, Is.EqualTo(1), "view [1][3] count");
-                    Assert.That(views[1][4].Count, Is.EqualTo(1), "view [1][4] count");
-                    Assert.That(views[1][5].Count, Is.EqualTo(2), "view [1][5] count");
-                    Assert.That(views[2][0].Count, Is.EqualTo(0), "view [2][0] count");
-                    Assert.That(views[2][1].Count, Is.EqualTo(1), "view [2][1] count");
-                    Assert.That(views[2][2].Count, Is.EqualTo(1), "view [2][2] count");
-                    Assert.That(views[2][3].Count, Is.EqualTo(1), "view [2][3] count");
-                    Assert.That(views[2][4].Count, Is.EqualTo(2), "view [2][4] count");
-                    Assert.That(views[3][0].Count, Is.EqualTo(0), "view [3][0] count");
-                    Assert.That(views[3][1].Count, Is.EqualTo(0), "view [3][1] count");
-                    Assert.That(views[3][2].Count, Is.EqualTo(0), "view [3][2] count");
-                    Assert.That(views[3][3].Count, Is.EqualTo(1), "view [3][3] count");
-                    Assert.That(views[4][0].Count, Is.EqualTo(0), "view [4][0] count");
-                    Assert.That(views[4][1].Count, Is.EqualTo(0), "view [4][1] count");
-                    Assert.That(views[4][2].Count, Is.EqualTo(1), "view [4][2] count");
-                    Assert.That(views[5][0].Count, Is.EqualTo(0), "view [5][0] count");
-                    Assert.That(views[5][1].Count, Is.EqualTo(1), "view [5][1] count");
-                    Assert.That(views[6][0].Count, Is.EqualTo(0), "view [6][0] count");
+                    Assert.That(views[0][0], Is.Empty, "view [0][0] count");
+                    Assert.That(views[0][1], Has.Count.EqualTo(1), "view [0][1] count");
+                    Assert.That(views[0][2], Has.Count.EqualTo(1), "view [0][2] count");
+                    Assert.That(views[0][3], Has.Count.EqualTo(2), "view [0][3] count");
+                    Assert.That(views[0][4], Has.Count.EqualTo(2), "view [0][4] count");
+                    Assert.That(views[0][5], Has.Count.EqualTo(2), "view [0][5] count");
+                    Assert.That(views[0][6], Has.Count.EqualTo(3), "view [0][6] count");
+                    Assert.That(views[1][0], Is.Empty, "view [1][0] count");
+                    Assert.That(views[1][1], Is.Empty, "view [1][1] count");
+                    Assert.That(views[1][2], Has.Count.EqualTo(1), "view [1][2] count");
+                    Assert.That(views[1][3], Has.Count.EqualTo(1), "view [1][3] count");
+                    Assert.That(views[1][4], Has.Count.EqualTo(1), "view [1][4] count");
+                    Assert.That(views[1][5], Has.Count.EqualTo(2), "view [1][5] count");
+                    Assert.That(views[2][0], Is.Empty, "view [2][0] count");
+                    Assert.That(views[2][1], Has.Count.EqualTo(1), "view [2][1] count");
+                    Assert.That(views[2][2], Has.Count.EqualTo(1), "view [2][2] count");
+                    Assert.That(views[2][3], Has.Count.EqualTo(1), "view [2][3] count");
+                    Assert.That(views[2][4], Has.Count.EqualTo(2), "view [2][4] count");
+                    Assert.That(views[3][0], Is.Empty, "view [3][0] count");
+                    Assert.That(views[3][1], Is.Empty, "view [3][1] count");
+                    Assert.That(views[3][2], Is.Empty, "view [3][2] count");
+                    Assert.That(views[3][3], Has.Count.EqualTo(1), "view [3][3] count");
+                    Assert.That(views[4][0], Is.Empty, "view [4][0] count");
+                    Assert.That(views[4][1], Is.Empty, "view [4][1] count");
+                    Assert.That(views[4][2], Has.Count.EqualTo(1), "view [4][2] count");
+                    Assert.That(views[5][0], Is.Empty, "view [5][0] count");
+                    Assert.That(views[5][1], Has.Count.EqualTo(1), "view [5][1] count");
+                    Assert.That(views[6][0], Is.Empty, "view [6][0] count");
 
                     Assert.That(list.Check(), Is.True, "list check after RemoveAll");
                 });
@@ -2795,34 +2795,34 @@ namespace C5.Tests.linkedlists.hashed
                     Assert.That(views[5][1].Offset, Is.EqualTo(2), "view [5][1] offset");
                     Assert.That(views[6][0].Offset, Is.EqualTo(3), "view [6][0] offset");
 
-                    Assert.That(views[0][0].Count, Is.EqualTo(0), "view [0][0] count");
-                    Assert.That(views[0][1].Count, Is.EqualTo(0), "view [0][1] count");
-                    Assert.That(views[0][2].Count, Is.EqualTo(0), "view [0][2] count");
-                    Assert.That(views[0][3].Count, Is.EqualTo(1), "view [0][3] count");
-                    Assert.That(views[0][4].Count, Is.EqualTo(1), "view [0][4] count");
-                    Assert.That(views[0][5].Count, Is.EqualTo(2), "view [0][5] count");
-                    Assert.That(views[0][6].Count, Is.EqualTo(3), "view [0][6] count");
-                    Assert.That(views[1][0].Count, Is.EqualTo(0), "view [1][0] count");
-                    Assert.That(views[1][1].Count, Is.EqualTo(0), "view [1][1] count");
-                    Assert.That(views[1][2].Count, Is.EqualTo(1), "view [1][2] count");
-                    Assert.That(views[1][3].Count, Is.EqualTo(1), "view [1][3] count");
-                    Assert.That(views[1][4].Count, Is.EqualTo(2), "view [1][4] count");
-                    Assert.That(views[1][5].Count, Is.EqualTo(3), "view [1][5] count");
-                    Assert.That(views[2][0].Count, Is.EqualTo(0), "view [2][0] count");
-                    Assert.That(views[2][1].Count, Is.EqualTo(1), "view [2][1] count");
-                    Assert.That(views[2][2].Count, Is.EqualTo(1), "view [2][2] count");
-                    Assert.That(views[2][3].Count, Is.EqualTo(2), "view [2][3] count");
-                    Assert.That(views[2][4].Count, Is.EqualTo(3), "view [2][4] count");
-                    Assert.That(views[3][0].Count, Is.EqualTo(0), "view [3][0] count");
-                    Assert.That(views[3][1].Count, Is.EqualTo(0), "view [3][1] count");
-                    Assert.That(views[3][2].Count, Is.EqualTo(1), "view [3][2] count");
-                    Assert.That(views[3][3].Count, Is.EqualTo(2), "view [3][3] count");
-                    Assert.That(views[4][0].Count, Is.EqualTo(0), "view [4][0] count");
-                    Assert.That(views[4][1].Count, Is.EqualTo(1), "view [4][1] count");
-                    Assert.That(views[4][2].Count, Is.EqualTo(2), "view [4][2] count");
-                    Assert.That(views[5][0].Count, Is.EqualTo(0), "view [5][0] count");
-                    Assert.That(views[5][1].Count, Is.EqualTo(1), "view [5][1] count");
-                    Assert.That(views[6][0].Count, Is.EqualTo(0), "view [6][0] count");
+                    Assert.That(views[0][0], Is.Empty, "view [0][0] count");
+                    Assert.That(views[0][1], Is.Empty, "view [0][1] count");
+                    Assert.That(views[0][2], Is.Empty, "view [0][2] count");
+                    Assert.That(views[0][3], Has.Count.EqualTo(1), "view [0][3] count");
+                    Assert.That(views[0][4], Has.Count.EqualTo(1), "view [0][4] count");
+                    Assert.That(views[0][5], Has.Count.EqualTo(2), "view [0][5] count");
+                    Assert.That(views[0][6], Has.Count.EqualTo(3), "view [0][6] count");
+                    Assert.That(views[1][0], Is.Empty, "view [1][0] count");
+                    Assert.That(views[1][1], Is.Empty, "view [1][1] count");
+                    Assert.That(views[1][2], Has.Count.EqualTo(1), "view [1][2] count");
+                    Assert.That(views[1][3], Has.Count.EqualTo(1), "view [1][3] count");
+                    Assert.That(views[1][4], Has.Count.EqualTo(2), "view [1][4] count");
+                    Assert.That(views[1][5], Has.Count.EqualTo(3), "view [1][5] count");
+                    Assert.That(views[2][0], Is.Empty, "view [2][0] count");
+                    Assert.That(views[2][1], Has.Count.EqualTo(1), "view [2][1] count");
+                    Assert.That(views[2][2], Has.Count.EqualTo(1), "view [2][2] count");
+                    Assert.That(views[2][3], Has.Count.EqualTo(2), "view [2][3] count");
+                    Assert.That(views[2][4], Has.Count.EqualTo(3), "view [2][4] count");
+                    Assert.That(views[3][0], Is.Empty, "view [3][0] count");
+                    Assert.That(views[3][1], Is.Empty, "view [3][1] count");
+                    Assert.That(views[3][2], Has.Count.EqualTo(1), "view [3][2] count");
+                    Assert.That(views[3][3], Has.Count.EqualTo(2), "view [3][3] count");
+                    Assert.That(views[4][0], Is.Empty, "view [4][0] count");
+                    Assert.That(views[4][1], Has.Count.EqualTo(1), "view [4][1] count");
+                    Assert.That(views[4][2], Has.Count.EqualTo(2), "view [4][2] count");
+                    Assert.That(views[5][0], Is.Empty, "view [5][0] count");
+                    Assert.That(views[5][1], Has.Count.EqualTo(1), "view [5][1] count");
+                    Assert.That(views[6][0], Is.Empty, "view [6][0] count");
 
 
                     Assert.That(list.Check(), Is.True, "list check after RetainAll");
@@ -2863,7 +2863,7 @@ namespace C5.Tests.linkedlists.hashed
                             {
                                 Assert.Fail("view[" + i + "][" + j + "] threw");
                             }
-                            Assert.That(views[i][j].Count, Is.EqualTo(j), "view[" + i + "][" + j + "] size");
+                            Assert.That(views[i][j], Has.Count.EqualTo(j), "view[" + i + "][" + j + "] size");
                             if (reverse && ((j > 0 && start <= i && start + count >= i + j) || (j == 0 && start < i && start + count > i)))
                             {
                                 Assert.That(views[i][j].Offset, Is.EqualTo(start + (start + count - i - j)), "view[" + i + "][" + j + "] offset (mirrored)");

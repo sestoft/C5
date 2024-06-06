@@ -254,30 +254,30 @@ namespace C5.Tests.hashtable.set
             [Test]
             public void CountEtAl()
             {
-                Assert.That(hashset.Count, Is.EqualTo(0));
+                Assert.That(hashset, Is.Empty);
                 Assert.Multiple(() =>
                 {
                     Assert.That(hashset.IsEmpty, Is.True);
                     Assert.That(hashset.AllowsDuplicates, Is.False);
                     Assert.That(hashset.Add(0), Is.True);
-                    Assert.That(hashset.Count, Is.EqualTo(1));
+                    Assert.That(hashset, Has.Count.EqualTo(1));
                 });
                 Assert.Multiple(() =>
                 {
                     Assert.That(hashset.IsEmpty, Is.False);
                     Assert.That(hashset.Add(5), Is.True);
-                    Assert.That(hashset.Count, Is.EqualTo(2));
+                    Assert.That(hashset, Has.Count.EqualTo(2));
                 });
                 Assert.Multiple(() =>
                 {
                     Assert.That(hashset.Add(5), Is.False);
-                    Assert.That(hashset.Count, Is.EqualTo(2));
+                    Assert.That(hashset, Has.Count.EqualTo(2));
                 });
                 Assert.Multiple(() =>
                 {
                     Assert.That(hashset.IsEmpty, Is.False);
                     Assert.That(hashset.Add(8), Is.True);
-                    Assert.That(hashset.Count, Is.EqualTo(3));
+                    Assert.That(hashset, Has.Count.EqualTo(3));
                 });
             }
 

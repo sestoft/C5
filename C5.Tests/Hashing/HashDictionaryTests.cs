@@ -114,13 +114,13 @@ namespace C5.Tests.hashtable.dictionary
             Assert.Multiple(() =>
             {
                 Assert.That(dict.IsReadOnly, Is.False);
-                Assert.That(dict.Count, Is.EqualTo(0), "new dict should be empty");
+                Assert.That(dict, Is.Empty, "new dict should be empty");
             });
             dict.Add("A", "B");
-            Assert.That(dict.Count, Is.EqualTo(1), "bad count");
+            Assert.That(dict, Has.Count.EqualTo(1), "bad count");
             Assert.That(dict["A"], Is.EqualTo("B"), "Wrong value for dict[A]");
             dict.Add("C", "D");
-            Assert.That(dict.Count, Is.EqualTo(2), "bad count");
+            Assert.That(dict, Has.Count.EqualTo(2), "bad count");
             Assert.Multiple(() =>
             {
                 Assert.That(dict["A"], Is.EqualTo("B"), "Wrong value");
@@ -130,14 +130,14 @@ namespace C5.Tests.hashtable.dictionary
             Assert.Multiple(() =>
             {
                 Assert.That(res, Is.True, "bad return value from Remove(A)");
-                Assert.That(dict.Count, Is.EqualTo(1), "bad count");
+                Assert.That(dict, Has.Count.EqualTo(1), "bad count");
             });
             Assert.That(dict["C"], Is.EqualTo("D"), "Wrong value of dict[C]");
             res = dict.Remove("Z");
             Assert.Multiple(() =>
             {
                 Assert.That(res, Is.False, "bad return value from Remove(Z)");
-                Assert.That(dict.Count, Is.EqualTo(1), "bad count");
+                Assert.That(dict, Has.Count.EqualTo(1), "bad count");
             });
             Assert.That(dict["C"], Is.EqualTo("D"), "Wrong value of dict[C] (2)");
         }
@@ -350,7 +350,7 @@ namespace C5.Tests.hashtable.dictionary
         {
             var pairs = _dict.ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            Assert.That(pairs.Count, Is.EqualTo(3));
+            Assert.That(pairs, Has.Count.EqualTo(3));
             Assert.Multiple(() =>
             {
                 Assert.That(pairs.Contains(new SCG.KeyValuePair<string, string>("R", "C")), Is.True);

@@ -15,13 +15,6 @@ namespace C5.Tests.heaps
             IntervalHeap<int> factory() { return new IntervalHeap<int>(TenEqualityComparer.Default); }
             new C5.Tests.Templates.Events.PriorityQueueTester<IntervalHeap<int>>().Test(factory);
         }
-
-        //[Test]
-        //public void Extensible()
-        //{
-        //    C5.Tests.Templates.Extensible.Clone.Tester<IntervalHeap<int>>();
-        //    C5.Tests.Templates.Extensible.Serialization.Tester<IntervalHeap<int>>();
-        //}
     }
 
     [TestFixture]
@@ -45,7 +38,7 @@ namespace C5.Tests.heaps
         [Test]
         public void Listenable()
         {
-            Assert.AreEqual(EventType.Basic, queue.ListenableEvents);
+            Assert.That(queue.ListenableEvents, Is.EqualTo(EventType.Basic));
         }
 
         private enum Acts
@@ -59,13 +52,13 @@ namespace C5.Tests.heaps
             CollectionChangedHandler<int> cch;
             ItemsAddedHandler<int> iah;
             ItemsRemovedHandler<int> irh;
-            Assert.AreEqual(EventType.None, queue.ActiveEvents);
+            Assert.That(queue.ActiveEvents, Is.EqualTo(EventType.None));
             queue.CollectionChanged += (cch = new CollectionChangedHandler<int>(queue_CollectionChanged));
-            Assert.AreEqual(EventType.Changed, queue.ActiveEvents);
+            Assert.That(queue.ActiveEvents, Is.EqualTo(EventType.Changed));
             queue.ItemsAdded += (iah = new ItemsAddedHandler<int>(queue_ItemAdded));
-            Assert.AreEqual(EventType.Changed | EventType.Added, queue.ActiveEvents);
+            Assert.That(queue.ActiveEvents, Is.EqualTo(EventType.Changed | EventType.Added));
             queue.ItemsRemoved += (irh = new ItemsRemovedHandler<int>(queue_ItemRemoved));
-            Assert.AreEqual(EventType.Changed | EventType.Added | EventType.Removed, queue.ActiveEvents);
+            Assert.That(queue.ActiveEvents, Is.EqualTo(EventType.Changed | EventType.Added | EventType.Removed));
             queue.Add(34);
             queue.Add(56);
             queue.AddAll([]);
@@ -74,22 +67,22 @@ namespace C5.Tests.heaps
             queue.DeleteMax();
             queue.DeleteMin();
             queue.AddAll([4, 5, 6, 2]);
-            Assert.AreEqual(17, events.Count);
+            Assert.That(events, Has.Count.EqualTo(17));
             int[] vals = [34, 0, 56, 0, 34, 0, 12, 0, 56, 0, 12, 0, 4, 5, 6, 2, 0];
             Acts[] acts = [ Acts.Add, Acts.Changed, Acts.Add, Acts.Changed, Acts.Add, Acts.Changed, Acts.Add, Acts.Changed,
                 Acts.Remove, Acts.Changed, Acts.Remove, Acts.Changed, Acts.Add, Acts.Add, Acts.Add, Acts.Add, Acts.Changed ];
             for (int i = 0; i < vals.Length; i++)
             {
                 //Console.WriteLine("{0}", events[cell]);
-                Assert.AreEqual(acts[i], events[i].Key, "Action " + i);
-                Assert.AreEqual(vals[i], events[i].Value, "Value " + i);
+                Assert.That(events[i].Key, Is.EqualTo(acts[i]), "Action " + i);
+                Assert.That(events[i].Value, Is.EqualTo(vals[i]), "Value " + i);
             }
             queue.CollectionChanged -= cch;
-            Assert.AreEqual(EventType.Added | EventType.Removed, queue.ActiveEvents);
+            Assert.That(queue.ActiveEvents, Is.EqualTo(EventType.Added | EventType.Removed));
             queue.ItemsAdded -= iah;
-            Assert.AreEqual(EventType.Removed, queue.ActiveEvents);
+            Assert.That(queue.ActiveEvents, Is.EqualTo(EventType.Removed));
             queue.ItemsRemoved -= irh;
-            Assert.AreEqual(EventType.None, queue.ActiveEvents);
+            Assert.That(queue.ActiveEvents, Is.EqualTo(EventType.None));
         }
 
         [Test]
@@ -106,15 +99,15 @@ namespace C5.Tests.heaps
             queue.DeleteMax();
             queue.DeleteMin();
             queue.AddAll([4, 5, 6, 2]);
-            Assert.AreEqual(17, events.Count);
+            Assert.That(events, Has.Count.EqualTo(17));
             int[] vals = [34, 0, 56, 0, 34, 0, 12, 0, 56, 0, 12, 0, 4, 5, 6, 2, 0];
             Acts[] acts = [ Acts.Add, Acts.Changed, Acts.Add, Acts.Changed, Acts.Add, Acts.Changed, Acts.Add, Acts.Changed,
                 Acts.Remove, Acts.Changed, Acts.Remove, Acts.Changed, Acts.Add, Acts.Add, Acts.Add, Acts.Add, Acts.Changed ];
             for (int i = 0; i < vals.Length; i++)
             {
                 //Console.WriteLine("{0}", events[cell]);
-                Assert.AreEqual(vals[i], events[i].Value);
-                Assert.AreEqual(acts[i], events[i].Key);
+                Assert.That(events[i].Value, Is.EqualTo(vals[i]));
+                Assert.That(events[i].Key, Is.EqualTo(acts[i]));
             }
         }
 
@@ -146,12 +139,12 @@ namespace C5.Tests.heaps
         [Test]
         public void Format()
         {
-            Assert.AreEqual("{  }", coll.ToString());
+            Assert.That(coll.ToString(), Is.EqualTo("{  }"));
             coll.AddAll([-4, 28, 129, 65530]);
-            Assert.AreEqual("{ -4, 65530, 28, 129 }", coll.ToString());
-            Assert.AreEqual("{ -4, FFFA, 1C, 81 }", coll.ToString(null, rad16));
-            Assert.AreEqual("{ -4, 65530, ... }", coll.ToString("L14", null));
-            Assert.AreEqual("{ -4, FFFA, ... }", coll.ToString("L14", rad16));
+            Assert.That(coll.ToString(), Is.EqualTo("{ -4, 65530, 28, 129 }"));
+            Assert.That(coll.ToString(null, rad16), Is.EqualTo("{ -4, FFFA, 1C, 81 }"));
+            Assert.That(coll.ToString("L14", null), Is.EqualTo("{ -4, 65530, ... }"));
+            Assert.That(coll.ToString("L14", rad16), Is.EqualTo("{ -4, FFFA, ... }"));
         }
     }
 
@@ -187,36 +180,36 @@ namespace C5.Tests.heaps
             IPriorityQueueHandle<int>[] handles = new IPriorityQueueHandle<int>[10];
 
             queue.Add(ref handles[0], 7);
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
             queue.Add(ref handles[1], 72);
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
             queue.Add(ref handles[2], 27);
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
             queue.Add(ref handles[3], 17);
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
             queue.Add(ref handles[4], 70);
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
             queue.Add(ref handles[5], 1);
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
             queue.Add(ref handles[6], 2);
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
             queue.Add(ref handles[7], 7);
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
             queue.Add(ref handles[8], 8);
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
             queue.Add(ref handles[9], 9);
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
             queue.Delete(handles[2]);
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
             queue.Delete(handles[0]);
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
             queue.Delete(handles[8]);
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
             queue.Delete(handles[4]);
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
             queue.Delete(handles[6]);
-            Assert.IsTrue(queue.Check());
-            Assert.AreEqual(5, queue.Count);
+            Assert.That(queue.Check(), Is.True);
+            Assert.That(queue, Has.Count.EqualTo(5));
         }
 
         [Test]
@@ -227,17 +220,17 @@ namespace C5.Tests.heaps
             queue.Add(10);
             queue.Add(ref handle, 7);
             queue.Add(21);
-            Assert.AreEqual(7, queue.Replace(handle, 12));
-            Assert.AreEqual(21, queue.FindMax());
-            Assert.AreEqual(12, queue.Replace(handle, 34));
-            Assert.AreEqual(34, queue.FindMax());
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Replace(handle, 12), Is.EqualTo(7));
+            Assert.That(queue.FindMax(), Is.EqualTo(21));
+            Assert.That(queue.Replace(handle, 34), Is.EqualTo(12));
+            Assert.That(queue.FindMax(), Is.EqualTo(34));
+            Assert.That(queue.Check(), Is.True);
             //replace max
-            Assert.AreEqual(34, queue.Replace(handle, 60));
-            Assert.AreEqual(60, queue.FindMax());
-            Assert.AreEqual(60, queue.Replace(handle, queue[handle] + 80));
-            Assert.AreEqual(140, queue.FindMax());
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Replace(handle, 60), Is.EqualTo(34));
+            Assert.That(queue.FindMax(), Is.EqualTo(60));
+            Assert.That(queue.Replace(handle, queue[handle] + 80), Is.EqualTo(60));
+            Assert.That(queue.FindMax(), Is.EqualTo(140));
+            Assert.That(queue.Check(), Is.True);
         }
 
         [Test]
@@ -248,8 +241,8 @@ namespace C5.Tests.heaps
             queue.Add(10);
             queue.Add(ref handle, 7);
             //Replace last item in queue with something large
-            Assert.AreEqual(7, queue.Replace(handle, 12));
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Replace(handle, 12), Is.EqualTo(7));
+            Assert.That(queue.Check(), Is.True);
         }
 
         /// <summary>
@@ -260,8 +253,8 @@ namespace C5.Tests.heaps
         {
             IPriorityQueueHandle<int> handle = null;
             queue.Add(ref handle, 10);
-            Assert.AreEqual(10, queue.Replace(handle, 12));
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Replace(handle, 12), Is.EqualTo(10));
+            Assert.That(queue.Check(), Is.True);
         }
 
         /// <summary>
@@ -272,11 +265,11 @@ namespace C5.Tests.heaps
         {
             IPriorityQueueHandle<int> handle1 = null;
             queue.Add(ref handle1, 4);
-            Assert.AreEqual(4, queue.FindMin());
+            Assert.That(queue.FindMin(), Is.EqualTo(4));
             queue.Add(3);
-            Assert.AreEqual(3, queue.FindMin());
-            Assert.AreEqual(4, queue.Replace(handle1, 2));
-            Assert.AreEqual(2, queue.FindMin());
+            Assert.That(queue.FindMin(), Is.EqualTo(3));
+            Assert.That(queue.Replace(handle1, 2), Is.EqualTo(4));
+            Assert.That(queue.FindMin(), Is.EqualTo(2));
         }
 
         [Test]
@@ -284,11 +277,11 @@ namespace C5.Tests.heaps
         {
             IPriorityQueueHandle<int> handle1 = null;
             queue.Add(ref handle1, 2);
-            Assert.AreEqual(2, queue.FindMax());
+            Assert.That(queue.FindMax(), Is.EqualTo(2));
             queue.Add(3);
-            Assert.AreEqual(3, queue.FindMax());
-            Assert.AreEqual(2, queue.Replace(handle1, 4));
-            Assert.AreEqual(4, queue.FindMax());
+            Assert.That(queue.FindMax(), Is.EqualTo(3));
+            Assert.That(queue.Replace(handle1, 4), Is.EqualTo(2));
+            Assert.That(queue.FindMax(), Is.EqualTo(4));
         }
 
         [Test]
@@ -299,25 +292,25 @@ namespace C5.Tests.heaps
                 IPriorityQueue<double> q = new IntervalHeap<double>();
                 IPriorityQueueHandle<double> handle1 = null;
                 q.Add(ref handle1, 3.0);
-                Assert.AreEqual(3.0, q.FindMin());
+                Assert.That(q.FindMin(), Is.EqualTo(3.0));
                 for (int i = 1; i < size; i++)
                 {
                     q.Add(i + 3.0);
                 }
 
-                Assert.AreEqual(3.0, q.FindMin());
+                Assert.That(q.FindMin(), Is.EqualTo(3.0));
                 for (int min = 2; min >= -10; min--)
                 {
-                    Assert.AreEqual(min + 1.0, q.Replace(handle1, min));
-                    Assert.AreEqual(min, q.FindMin());
+                    Assert.That(q.Replace(handle1, min), Is.EqualTo(min + 1.0));
+                    Assert.That(q.FindMin(), Is.EqualTo(min));
                 }
-                Assert.AreEqual(-10.0, q.DeleteMin());
+                Assert.That(q.DeleteMin(), Is.EqualTo(-10.0));
                 for (int i = 1; i < size; i++)
                 {
-                    Assert.AreEqual(i + 3.0, q.DeleteMin());
+                    Assert.That(q.DeleteMin(), Is.EqualTo(i + 3.0));
                 }
 
-                Assert.IsTrue(q.IsEmpty);
+                Assert.That(q.IsEmpty, Is.True);
             }
         }
 
@@ -329,25 +322,25 @@ namespace C5.Tests.heaps
                 IPriorityQueue<double> q = new IntervalHeap<double>();
                 IPriorityQueueHandle<double> handle1 = null;
                 q.Add(ref handle1, -3.0);
-                Assert.AreEqual(-3.0, q.FindMax());
+                Assert.That(q.FindMax(), Is.EqualTo(-3.0));
                 for (int i = 1; i < size; i++)
                 {
                     q.Add(-i - 3.0);
                 }
 
-                Assert.AreEqual(-3.0, q.FindMax());
+                Assert.That(q.FindMax(), Is.EqualTo(-3.0));
                 for (int max = -2; max <= 10; max++)
                 {
-                    Assert.AreEqual(max - 1.0, q.Replace(handle1, max));
-                    Assert.AreEqual(max, q.FindMax());
+                    Assert.That(q.Replace(handle1, max), Is.EqualTo(max - 1.0));
+                    Assert.That(q.FindMax(), Is.EqualTo(max));
                 }
-                Assert.AreEqual(10.0, q.DeleteMax());
+                Assert.That(q.DeleteMax(), Is.EqualTo(10.0));
                 for (int i = 1; i < size; i++)
                 {
-                    Assert.AreEqual(-i - 3.0, q.DeleteMax());
+                    Assert.That(q.DeleteMax(), Is.EqualTo(-i - 3.0));
                 }
 
-                Assert.IsTrue(q.IsEmpty);
+                Assert.That(q.IsEmpty, Is.True);
             }
         }
 
@@ -356,13 +349,13 @@ namespace C5.Tests.heaps
         {
             IPriorityQueueHandle<int> handle1 = null;
             queue.Add(ref handle1, 4);
-            Assert.AreEqual(4, queue.FindMin());
+            Assert.That(queue.FindMin(), Is.EqualTo(4));
             queue.Add(3);
-            Assert.AreEqual(3, queue.FindMin());
+            Assert.That(queue.FindMin(), Is.EqualTo(3));
             queue.Add(2);
-            Assert.AreEqual(4, queue.Delete(handle1));
-            Assert.AreEqual(2, queue.FindMin());
-            Assert.AreEqual(3, queue.FindMax());
+            Assert.That(queue.Delete(handle1), Is.EqualTo(4));
+            Assert.That(queue.FindMin(), Is.EqualTo(2));
+            Assert.That(queue.FindMax(), Is.EqualTo(3));
         }
 
         [Test]
@@ -370,13 +363,13 @@ namespace C5.Tests.heaps
         {
             IPriorityQueueHandle<int> handle1 = null;
             queue.Add(ref handle1, 2);
-            Assert.AreEqual(2, queue.FindMax());
+            Assert.That(queue.FindMax(), Is.EqualTo(2));
             queue.Add(3);
-            Assert.AreEqual(3, queue.FindMax());
+            Assert.That(queue.FindMax(), Is.EqualTo(3));
             queue.Add(4);
-            Assert.AreEqual(2, queue.Delete(handle1));
-            Assert.AreEqual(3, queue.FindMin());
-            Assert.AreEqual(4, queue.FindMax());
+            Assert.That(queue.Delete(handle1), Is.EqualTo(2));
+            Assert.That(queue.FindMin(), Is.EqualTo(3));
+            Assert.That(queue.FindMax(), Is.EqualTo(4));
         }
 
         [Test]
@@ -420,24 +413,23 @@ namespace C5.Tests.heaps
         [Test]
         public void Simple()
         {
-            Assert.IsTrue(queue.AllowsDuplicates);
-            Assert.AreEqual(0, queue.Count);
+            Assert.That(queue.AllowsDuplicates, Is.True);
+            Assert.That(queue, Is.Empty);
             queue.Add(8); queue.Add(18); queue.Add(8); queue.Add(3);
-            Assert.AreEqual(4, queue.Count);
-            Assert.AreEqual(18, queue.DeleteMax());
-            Assert.AreEqual(3, queue.Count);
-            Assert.AreEqual(3, queue.DeleteMin());
-            Assert.AreEqual(2, queue.Count);
-            Assert.AreEqual(8, queue.FindMax());
-            Assert.AreEqual(8, queue.DeleteMax());
-            Assert.AreEqual(8, queue.FindMax());
+            Assert.That(queue, Has.Count.EqualTo(4));
+            Assert.That(queue.DeleteMax(), Is.EqualTo(18));
+            Assert.That(queue, Has.Count.EqualTo(3));
+            Assert.That(queue.DeleteMin(), Is.EqualTo(3));
+            Assert.That(queue, Has.Count.EqualTo(2));
+            Assert.That(queue.FindMax(), Is.EqualTo(8));
+            Assert.That(queue.DeleteMax(), Is.EqualTo(8));
+            Assert.That(queue.FindMax(), Is.EqualTo(8));
             queue.Add(15);
-            Assert.AreEqual(15, queue.FindMax());
-            Assert.AreEqual(8, queue.FindMin());
-            Assert.IsTrue(queue.Comparer.Compare(2, 3) < 0);
-            Assert.IsTrue(queue.Comparer.Compare(4, 3) > 0);
-            Assert.IsTrue(queue.Comparer.Compare(3, 3) == 0);
-
+            Assert.That(queue.FindMax(), Is.EqualTo(15));
+            Assert.That(queue.FindMin(), Is.EqualTo(8));
+            Assert.That(queue.Comparer.Compare(2, 3), Is.LessThan(0));
+            Assert.That(queue.Comparer.Compare(4, 3), Is.GreaterThan(0));
+            Assert.That(queue.Comparer.Compare(3, 3), Is.EqualTo(0));
         }
 
 
@@ -451,7 +443,7 @@ namespace C5.Tests.heaps
                 siz++;
             }
 
-            Assert.AreEqual(0, siz);
+            Assert.That(siz, Is.EqualTo(0));
 
             queue.Add(8); queue.Add(18); queue.Add(8); queue.Add(3);
 
@@ -460,47 +452,47 @@ namespace C5.Tests.heaps
                 a[siz++] = i;
             }
 
-            Assert.AreEqual(4, siz);
+            Assert.That(siz, Is.EqualTo(4));
             Array.Sort(a, 0, siz);
-            Assert.AreEqual(3, a[0]);
-            Assert.AreEqual(8, a[1]);
-            Assert.AreEqual(8, a[2]);
-            Assert.AreEqual(18, a[3]);
+            Assert.That(a[0], Is.EqualTo(3));
+            Assert.That(a[1], Is.EqualTo(8));
+            Assert.That(a[2], Is.EqualTo(8));
+            Assert.That(a[3], Is.EqualTo(18));
 
             siz = 0;
-            Assert.AreEqual(18, queue.DeleteMax());
+            Assert.That(queue.DeleteMax(), Is.EqualTo(18));
             foreach (int i in queue)
             {
                 a[siz++] = i;
             }
 
-            Assert.AreEqual(3, siz);
+            Assert.That(siz, Is.EqualTo(3));
             Array.Sort(a, 0, siz);
-            Assert.AreEqual(3, a[0]);
-            Assert.AreEqual(8, a[1]);
-            Assert.AreEqual(8, a[2]);
+            Assert.That(a[0], Is.EqualTo(3));
+            Assert.That(a[1], Is.EqualTo(8));
+            Assert.That(a[2], Is.EqualTo(8));
 
             siz = 0;
-            Assert.AreEqual(8, queue.DeleteMax());
+            Assert.That(queue.DeleteMax(), Is.EqualTo(8));
             foreach (int i in queue)
             {
                 a[siz++] = i;
             }
 
-            Assert.AreEqual(2, siz);
+            Assert.That(siz, Is.EqualTo(2));
             Array.Sort(a, 0, siz);
-            Assert.AreEqual(3, a[0]);
-            Assert.AreEqual(8, a[1]);
+            Assert.That(a[0], Is.EqualTo(3));
+            Assert.That(a[1], Is.EqualTo(8));
 
             siz = 0;
-            Assert.AreEqual(8, queue.DeleteMax());
+            Assert.That(queue.DeleteMax(), Is.EqualTo(8));
             foreach (int i in queue)
             {
                 a[siz++] = i;
             }
 
-            Assert.AreEqual(1, siz);
-            Assert.AreEqual(3, a[0]);
+            Assert.That(siz, Is.EqualTo(1));
+            Assert.That(a[0], Is.EqualTo(3));
         }
 
         [Test]
@@ -515,17 +507,17 @@ namespace C5.Tests.heaps
                 queue.Add(a[i] = ran.Next());
             }
 
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
             Array.Sort(a);
             for (int i = 0; i < length / 2; i++)
             {
-                Assert.AreEqual(a[length - i - 1], queue.DeleteMax());
-                Assert.IsTrue(queue.Check());
-                Assert.AreEqual(a[i], queue.DeleteMin());
-                Assert.IsTrue(queue.Check());
+                Assert.That(queue.DeleteMax(), Is.EqualTo(a[length - i - 1]));
+                Assert.That(queue.Check(), Is.True);
+                Assert.That(queue.DeleteMin(), Is.EqualTo(a[i]));
+                Assert.That(queue.Check(), Is.True);
             }
 
-            Assert.IsTrue(queue.IsEmpty);
+            Assert.That(queue.IsEmpty, Is.True);
         }
 
         [Test]
@@ -539,20 +531,20 @@ namespace C5.Tests.heaps
             {
                 IPriorityQueueHandle<int> h = null;
                 queue.Add(ref h, a[i] = ran.Next());
-                Assert.IsTrue(queue.Check());
+                Assert.That(queue.Check(), Is.True);
             }
 
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
             Array.Sort(a);
             for (int i = 0; i < length / 2; i++)
             {
-                Assert.AreEqual(a[length - i - 1], queue.DeleteMax());
-                Assert.IsTrue(queue.Check());
-                Assert.AreEqual(a[i], queue.DeleteMin());
-                Assert.IsTrue(queue.Check());
+                Assert.That(queue.DeleteMax(), Is.EqualTo(a[length - i - 1]));
+                Assert.That(queue.Check(), Is.True);
+                Assert.That(queue.DeleteMin(), Is.EqualTo(a[i]));
+                Assert.That(queue.Check(), Is.True);
             }
 
-            Assert.IsTrue(queue.IsEmpty);
+            Assert.That(queue.IsEmpty, Is.True);
         }
 
         [Test]
@@ -568,19 +560,19 @@ namespace C5.Tests.heaps
             {
                 shuffle.Add(i);
                 queue.Add(ref h[i], a[i] = ran.Next());
-                Assert.IsTrue(queue.Check());
+                Assert.That(queue.Check(), Is.True);
             }
 
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
             shuffle.Shuffle(ran);
             for (int i = 0; i < length; i++)
             {
                 int j = shuffle[i];
-                Assert.AreEqual(a[j], queue.Delete(h[j]));
-                Assert.IsTrue(queue.Check());
+                Assert.That(queue.Delete(h[j]), Is.EqualTo(a[j]));
+                Assert.That(queue.Check(), Is.True);
             }
 
-            Assert.IsTrue(queue.IsEmpty);
+            Assert.That(queue.IsEmpty, Is.True);
         }
 
         [Test]
@@ -598,18 +590,18 @@ namespace C5.Tests.heaps
                 shuffle.Add(i);
                 queue.Add(ref h[i], a[i] = ran.Next());
                 b[i] = ran.Next();
-                Assert.IsTrue(queue.Check());
+                Assert.That(queue.Check(), Is.True);
             }
 
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
             shuffle.Shuffle(ran);
             for (int i = 0; i < length; i++)
             {
                 int j = shuffle[i];
-                Assert.AreEqual(a[j], queue[h[j]]);
+                Assert.That(queue[h[j]], Is.EqualTo(a[j]));
                 queue[h[j]] = b[j];
-                Assert.AreEqual(b[j], queue[h[j]]);
-                Assert.IsTrue(queue.Check());
+                Assert.That(queue[h[j]], Is.EqualTo(b[j]));
+                Assert.That(queue.Check(), Is.True);
             }
         }
 
@@ -627,19 +619,19 @@ namespace C5.Tests.heaps
                 queue.Add(a[i] = ran.Next(3, 13));
             }
 
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
 
             Array.Sort(a);
 
             for (int i = 0; i < length / 2; i++)
             {
-                Assert.AreEqual(a[i], queue.DeleteMin());
-                Assert.IsTrue(queue.Check());
-                Assert.AreEqual(a[length - i - 1], _ = queue.DeleteMax());
-                Assert.IsTrue(queue.Check());
+                Assert.That(queue.DeleteMin(), Is.EqualTo(a[i]));
+                Assert.That(queue.Check(), Is.True);
+                Assert.That(_ = queue.DeleteMax(), Is.EqualTo(a[length - i - 1]));
+                Assert.That(queue.Check(), Is.True);
             }
 
-            Assert.IsTrue(queue.IsEmpty);
+            Assert.That(queue.IsEmpty, Is.True);
         }
 
 
@@ -657,17 +649,17 @@ namespace C5.Tests.heaps
             }
 
             queue.AddAll(lst);
-            Assert.IsTrue(queue.Check());
+            Assert.That(queue.Check(), Is.True);
             Array.Sort(a);
             for (int i = 0; i < length / 2; i++)
             {
-                Assert.AreEqual(a[length - i - 1], queue.DeleteMax());
-                Assert.IsTrue(queue.Check());
-                Assert.AreEqual(a[i], queue.DeleteMin());
-                Assert.IsTrue(queue.Check());
+                Assert.That(queue.DeleteMax(), Is.EqualTo(a[length - i - 1]));
+                Assert.That(queue.Check(), Is.True);
+                Assert.That(queue.DeleteMin(), Is.EqualTo(a[i]));
+                Assert.That(queue.Check(), Is.True);
             }
 
-            Assert.IsTrue(queue.IsEmpty);
+            Assert.That(queue.IsEmpty, Is.True);
         }
 
 
@@ -699,7 +691,7 @@ namespace C5.Tests.heaps
             q.Add(ref h5, double.MaxValue);
             q[h5] = 0;
             // Internally inconsistent data structure already now
-            Assert.IsTrue(q.Check());
+            Assert.That(q.Check(), Is.True);
         }
 
         [Test]
@@ -712,8 +704,8 @@ namespace C5.Tests.heaps
             q.Add(ref topRight, 30);
             q.Add(25);
             q[topRight] = 10;
-            Assert.IsTrue(q.Check());
-            Assert.IsTrue(q.FindMax() == 25);
+            Assert.That(q.Check(), Is.True);
+            Assert.That(q.FindMax(), Is.EqualTo(25));
         }
 
         [Test]
@@ -727,8 +719,8 @@ namespace C5.Tests.heaps
             q.Add(24);
             q.Add(26);
             q[topRight] = 10;
-            Assert.IsTrue(q.Check());
-            Assert.IsTrue(q.FindMax() == 26);
+            Assert.That(q.Check(), Is.True);
+            Assert.That(q.FindMax(), Is.EqualTo(26));
         }
 
         [Test]
@@ -743,8 +735,8 @@ namespace C5.Tests.heaps
             q.Add(26);
             q.Add(28);
             q[topRight] = 10;
-            Assert.IsTrue(q.Check());
-            Assert.IsTrue(q.FindMax() == 28);
+            Assert.That(q.Check(), Is.True);
+            Assert.That(q.FindMax(), Is.EqualTo(28));
         }
 
         [Test]
@@ -759,8 +751,8 @@ namespace C5.Tests.heaps
             q.Add(28);
             q.Add(26);
             q[topRight] = 10;
-            Assert.IsTrue(q.Check());
-            Assert.IsTrue(q.FindMax() == 28);
+            Assert.That(q.Check(), Is.True);
+            Assert.That(q.FindMax(), Is.EqualTo(28));
         }
 
         [Test]
@@ -776,8 +768,8 @@ namespace C5.Tests.heaps
             q.Add(23);
             q.Add(28);
             q[topRight] = 10;
-            Assert.IsTrue(q.Check());
-            Assert.IsTrue(q.FindMax() == 28);
+            Assert.That(q.Check(), Is.True);
+            Assert.That(q.FindMax(), Is.EqualTo(28));
         }
 
         [Test]
@@ -793,8 +785,8 @@ namespace C5.Tests.heaps
             q.Add(23);
             q.Add(26);
             q[topRight] = 10;
-            Assert.IsTrue(q.Check());
-            Assert.IsTrue(q.FindMax() == 28);
+            Assert.That(q.Check(), Is.True);
+            Assert.That(q.FindMax(), Is.EqualTo(28));
         }
     }
 

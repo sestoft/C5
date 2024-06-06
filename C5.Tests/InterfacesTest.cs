@@ -13,13 +13,13 @@ namespace C5.Tests.interfaces
     {
         public void TryC5Coll(ICollection<double> coll)
         {
-            Assert.That(coll.Count, Is.EqualTo(0));
+            Assert.That(coll, Is.Empty);
             double[] arr = [];
             coll.CopyTo(arr, 0);
             Assert.That(coll.IsReadOnly, Is.False);
             coll.Add(2.3);
             coll.Add(3.2);
-            Assert.That(coll.Count, Is.EqualTo(2));
+            Assert.That(coll, Has.Count.EqualTo(2));
             Assert.Multiple(() =>
             {
                 Assert.That(coll.Contains(2.3), Is.True);
@@ -28,22 +28,22 @@ namespace C5.Tests.interfaces
                 Assert.That(coll.Remove(3.2), Is.True);
             });
             Assert.That(coll.Contains(3.1), Is.False);
-            Assert.That(coll.Count, Is.EqualTo(1));
+            Assert.That(coll, Has.Count.EqualTo(1));
             coll.Clear();
-            Assert.That(coll.Count, Is.EqualTo(0));
+            Assert.That(coll, Is.Empty);
             Assert.That(coll.Remove(3.1), Is.False);
         }
 
         public void TrySCGColl(SCG.ICollection<double> coll)
         {
             // All members of SCG.ICollection<T>
-            Assert.That(coll.Count, Is.EqualTo(0));
+            Assert.That(coll, Is.Empty);
             double[] arr = [];
             coll.CopyTo(arr, 0);
             Assert.That(coll.IsReadOnly, Is.False);
             coll.Add(2.3);
             coll.Add(3.2);
-            Assert.That(coll.Count, Is.EqualTo(2));
+            Assert.That(coll, Has.Count.EqualTo(2));
             Assert.Multiple(() =>
             {
                 Assert.That(coll.Contains(2.3), Is.True);
@@ -52,9 +52,9 @@ namespace C5.Tests.interfaces
                 Assert.That(coll.Remove(3.2), Is.True);
             });
             Assert.That(coll.Contains(3.1), Is.False);
-            Assert.That(coll.Count, Is.EqualTo(1));
+            Assert.That(coll, Has.Count.EqualTo(1));
             coll.Clear();
-            Assert.That(coll.Count, Is.EqualTo(0));
+            Assert.That(coll, Is.Empty);
             Assert.That(coll.Remove(3.1), Is.False);
         }
 
@@ -92,7 +92,7 @@ namespace C5.Tests.interfaces
         public void TrySCIList(System.Collections.IList list)
         {
             // Should be called with a C5.IList<B> which is not a WrappedArray
-            Assert.That(list.Count, Is.EqualTo(0));
+            Assert.That(list, Is.Empty);
             list.CopyTo(Array.Empty<A>(), 0);
             list.CopyTo(Array.Empty<B>(), 0);
             list.CopyTo(Array.Empty<C>(), 0);
@@ -108,7 +108,7 @@ namespace C5.Tests.interfaces
             {
                 Assert.That(list.Add(b1), Is.EqualTo(0));
                 Assert.That(list.Add(c1), Is.EqualTo(1));
-                Assert.That(list.Count, Is.EqualTo(2));
+                Assert.That(list, Has.Count.EqualTo(2));
             });
             Assert.Multiple(() =>
             {
@@ -141,7 +141,7 @@ namespace C5.Tests.interfaces
             Assert.Multiple(() =>
             {
                 Assert.That(list.Contains(b2), Is.False);
-                Assert.That(list.Count, Is.EqualTo(1)); // Contains c2 only
+                Assert.That(list, Has.Count.EqualTo(1)); // Contains c2 only
             });
             list.Insert(0, b2);
             list.Insert(2, b1);
@@ -160,7 +160,7 @@ namespace C5.Tests.interfaces
             list.RemoveAt(1);
             Assert.That(list[0], Is.EqualTo(b2));
             list.Clear();
-            Assert.That(list.Count, Is.EqualTo(0));
+            Assert.That(list, Is.Empty);
             list.Remove(b1);
         }
 
@@ -179,7 +179,7 @@ namespace C5.Tests.interfaces
             B[] myarray = [new B(), new B(), new C()];
             System.Collections.IList list = new WrappedArray<B>(myarray);
             // Should be called with a three-element WrappedArray<B>
-            Assert.That(list.Count, Is.EqualTo(3));
+            Assert.That(list, Has.Count.EqualTo(3));
             Assert.Multiple(() =>
             {
                 Assert.That(list.IsFixedSize, Is.True);
@@ -220,7 +220,7 @@ namespace C5.Tests.interfaces
             B[] myarray = [];
             System.Collections.IList list = new WrappedArray<B>(myarray);
             // Should be called with an empty WrappedArray<B>
-            Assert.That(list.Count, Is.EqualTo(0));
+            Assert.That(list, Is.Empty);
             list.CopyTo(Array.Empty<A>(), 0);
             list.CopyTo(Array.Empty<B>(), 0);
             list.CopyTo(Array.Empty<C>(), 0);
@@ -249,7 +249,7 @@ namespace C5.Tests.interfaces
             System.Collections.IList list = new GuardedList<B>(mylist);
             object b1 = b1_, b2 = b2_, c1 = c1_, c2 = c2_;
             // Should be called with a three-element GuardedList<B>
-            Assert.That(list.Count, Is.EqualTo(3));
+            Assert.That(list, Has.Count.EqualTo(3));
             Assert.Multiple(() =>
             {
                 Assert.That(list.IsFixedSize, Is.True);
@@ -281,7 +281,7 @@ namespace C5.Tests.interfaces
         {
             System.Collections.IList list = new GuardedList<B>(new ArrayList<B>());
             // Should be called with an empty GuardedList<B>
-            Assert.That(list.Count, Is.EqualTo(0));
+            Assert.That(list, Is.Empty);
             list.CopyTo(Array.Empty<A>(), 0);
             list.CopyTo(Array.Empty<B>(), 0);
             list.CopyTo(Array.Empty<C>(), 0);
@@ -310,7 +310,7 @@ namespace C5.Tests.interfaces
             System.Collections.IList list = new GuardedList<B>(mylist).View(1, 3);
             object b1 = b1_, b2 = b2_, c1 = c1_, c2 = c2_;
             // Should be called with a three-element view of a GuardedList<B>
-            Assert.That(list.Count, Is.EqualTo(3));
+            Assert.That(list, Has.Count.EqualTo(3));
             Assert.Multiple(() =>
             {
                 Assert.That(list.IsFixedSize, Is.True);
@@ -341,7 +341,7 @@ namespace C5.Tests.interfaces
         public void TryViewOfGuardedListAsSCIList2()
         {
             System.Collections.IList list = new GuardedList<B>(new ArrayList<B>()).View(0, 0);
-            Assert.That(list.Count, Is.EqualTo(0));
+            Assert.That(list, Is.Empty);
             list.CopyTo(Array.Empty<A>(), 0);
             list.CopyTo(Array.Empty<B>(), 0);
             list.CopyTo(Array.Empty<C>(), 0);
@@ -368,7 +368,7 @@ namespace C5.Tests.interfaces
             System.Collections.IList list = mylist.View(1, 3);
             object b1 = b1_, b2 = b2_, c1 = c1_, c2 = c2_;
             // Should be called with a three-element view on ArrayList<B>
-            Assert.That(list.Count, Is.EqualTo(3));
+            Assert.That(list, Has.Count.EqualTo(3));
             Assert.Multiple(() =>
             {
                 Assert.That(list.IsSynchronized, Is.False);
@@ -396,7 +396,7 @@ namespace C5.Tests.interfaces
         private void TryListViewAsSCIList2(IList<B> mylist)
         {
             System.Collections.IList list = mylist.View(0, 0);
-            Assert.That(list.Count, Is.EqualTo(0));
+            Assert.That(list, Is.Empty);
             list.CopyTo(Array.Empty<A>(), 0);
             list.CopyTo(Array.Empty<B>(), 0);
             list.CopyTo(Array.Empty<C>(), 0);
@@ -457,7 +457,7 @@ namespace C5.Tests.interfaces
     {
         public void TryDictionary(IDictionary<string, string> dict)
         {
-            Assert.That(dict.Count, Is.EqualTo(0));
+            Assert.That(dict, Is.Empty);
             Assert.Multiple(() =>
             {
                 Assert.That(dict.IsEmpty, Is.True);

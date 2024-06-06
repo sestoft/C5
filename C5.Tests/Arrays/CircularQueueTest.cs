@@ -133,7 +133,7 @@ namespace C5.Tests.arrays.circularqueue
             Assert.Multiple(() =>
             {
                 Assert.That(queue.Check(), Is.True);
-                Assert.That(queue.Count, Is.EqualTo(5));
+                Assert.That(queue, Has.Count.EqualTo(5));
                 Assert.That(IC.Eq(queue, 12, 13, 103, 14, 15), Is.True);
             });
             Assert.That(queue.Choose(), Is.EqualTo(12));
@@ -178,7 +178,7 @@ namespace C5.Tests.arrays.circularqueue
             Assert.Multiple(() =>
             {
                 Assert.That(queue.Check(), Is.True);
-                Assert.That(queue.Count, Is.EqualTo(5));
+                Assert.That(queue, Has.Count.EqualTo(5));
                 Assert.That(IC.Eq(queue, 15, 1000, 1001, 1002, 1003), Is.True);
             });
             Assert.That(queue.Choose(), Is.EqualTo(15));
@@ -190,13 +190,13 @@ namespace C5.Tests.arrays.circularqueue
             Assert.Multiple(() =>
             {
                 Assert.That(queue.IsEmpty, Is.True);
-                Assert.That(queue.Count, Is.EqualTo(0));
+                Assert.That(queue, Is.Empty);
             });
             Assert.That(queue.CountSpeed, Is.EqualTo(Speed.Constant));
             queue.Enqueue(11);
             Assert.That(queue.IsEmpty, Is.False);
             queue.Enqueue(12);
-            Assert.That(queue.Count, Is.EqualTo(2));
+            Assert.That(queue, Has.Count.EqualTo(2));
         }
 
         //This test by Steve Wallace uncovered a bug in the indexing.

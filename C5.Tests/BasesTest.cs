@@ -71,7 +71,7 @@ namespace C5.Tests.support
                 Assert.Multiple(() =>
                 {
                     Assert.That(h.Compare(s, t), Is.EqualTo(0));
-                    Assert.That(h.Compare(s, u) < 0, Is.True);
+                    Assert.That(h.Compare(s, u), Is.LessThan(0));
                 });
             }
 
@@ -87,7 +87,7 @@ namespace C5.Tests.support
                 Assert.Multiple(() =>
                 {
                     Assert.That(h.Compare(s, t), Is.EqualTo(0));
-                    Assert.That(h.Compare(s, u) < 0, Is.True);
+                    Assert.That(h.Compare(s, u), Is.LessThan(0));
                 });
             }
 
@@ -103,7 +103,7 @@ namespace C5.Tests.support
                 Assert.Multiple(() =>
                 {
                     Assert.That(h.Compare(s, t), Is.EqualTo(0));
-                    Assert.That(h.Compare(s, u) < 0, Is.True);
+                    Assert.That(h.Compare(s, u), Is.LessThan(0));
                     Assert.That(SCG.Comparer<dbl>.Default, Is.SameAs(h));
                 });
             }
@@ -120,7 +120,7 @@ namespace C5.Tests.support
                 Assert.Multiple(() =>
                 {
                     Assert.That(h.Compare(s, t), Is.EqualTo(0));
-                    Assert.That(h.Compare(s, u) < 0, Is.True);
+                    Assert.That(h.Compare(s, u), Is.LessThan(0));
                     Assert.That(SCG.Comparer<string>.Default, Is.SameAs(h));
                 });
 
@@ -135,8 +135,8 @@ namespace C5.Tests.support
                     Assert.That(SCG.Comparer<T>.Default, Is.SameAs(h));
                     Assert.That(h.Compare(item1, item1), Is.EqualTo(0));
                     Assert.That(h.Compare(item2, item2), Is.EqualTo(0));
-                    Assert.That(h.Compare(item1, item2) < 0, Is.True);
-                    Assert.That(h.Compare(item2, item1) > 0, Is.True);
+                    Assert.That(h.Compare(item1, item2), Is.LessThan(0));
+                    Assert.That(h.Compare(item2, item1), Is.GreaterThan(0));
                     Assert.That(Math.Sign(h.Compare(item1, item2)), Is.EqualTo(Math.Sign(item1.CompareTo(item2))));
                     Assert.That(Math.Sign(h.Compare(item2, item1)), Is.EqualTo(Math.Sign(item2.CompareTo(item1))));
                 });
@@ -171,7 +171,7 @@ namespace C5.Tests.support
                 Assert.Multiple(() =>
                 {
                     Assert.That(h.Compare(s, t), Is.EqualTo(0));
-                    Assert.That(h.Compare(s, u) < 0, Is.True);
+                    Assert.That(h.Compare(s, u), Is.LessThan(0));
                     Assert.That(SCG.Comparer<int>.Default, Is.SameAs(h));
                 });
             }
@@ -181,9 +181,9 @@ namespace C5.Tests.support
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(SCG.Comparer<string>.Default.Compare(null, "abe") < 0, Is.True);
-                    Assert.That(SCG.Comparer<string>.Default.Compare(null, null) == 0, Is.True);
-                    Assert.That(SCG.Comparer<string>.Default.Compare("abe", null) > 0, Is.True);
+                    Assert.That(SCG.Comparer<string>.Default.Compare(null, "abe"), Is.LessThan(0));
+                    Assert.That(SCG.Comparer<string>.Default.Compare(null, null), Is.EqualTo(0));
+                    Assert.That(SCG.Comparer<string>.Default.Compare("abe", null), Is.GreaterThan(0));
                 });
             }
         }

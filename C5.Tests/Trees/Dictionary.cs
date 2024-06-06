@@ -142,38 +142,38 @@ namespace C5.Tests.trees.RBDictionary
             {
                 Assert.That(dict.IsReadOnly, Is.False);
 
-                Assert.That(0, Is.EqualTo(dict.Count), "new dict should be empty");
+                Assert.That(dict.Count, Is.EqualTo(0), "new dict should be empty");
             });
             dict.Add("A", "B");
             Assert.Multiple(() =>
             {
-                Assert.That(1, Is.EqualTo(dict.Count), "bad count");
-                Assert.That("B", Is.EqualTo(dict["A"]), "Wrong value for dict[A]");
+                Assert.That(dict.Count, Is.EqualTo(1), "bad count");
+                Assert.That(dict["A"], Is.EqualTo("B"), "Wrong value for dict[A]");
             });
             dict.Add("C", "D");
             Assert.Multiple(() =>
             {
-                Assert.That(2, Is.EqualTo(dict.Count), "bad count");
-                Assert.That("B", Is.EqualTo(dict["A"]), "Wrong value");
-                Assert.That("D", Is.EqualTo(dict["C"]), "Wrong value");
+                Assert.That(dict.Count, Is.EqualTo(2), "bad count");
+                Assert.That(dict["A"], Is.EqualTo("B"), "Wrong value");
+                Assert.That(dict["C"], Is.EqualTo("D"), "Wrong value");
             });
             res = dict.Remove("A");
             Assert.Multiple(() =>
             {
                 Assert.That(res, Is.True, "bad return value from Remove(A)");
                 Assert.That(dict.Check(), Is.True);
-                Assert.That(1, Is.EqualTo(dict.Count), "bad count");
-                Assert.That("D", Is.EqualTo(dict["C"]), "Wrong value of dict[C]");
+                Assert.That(dict.Count, Is.EqualTo(1), "bad count");
+                Assert.That(dict["C"], Is.EqualTo("D"), "Wrong value of dict[C]");
             });
             res = dict.Remove("Z");
             Assert.Multiple(() =>
             {
                 Assert.That(res, Is.False, "bad return value from Remove(Z)");
-                Assert.That(1, Is.EqualTo(dict.Count), "bad count");
-                Assert.That("D", Is.EqualTo(dict["C"]), "Wrong value of dict[C] (2)");
+                Assert.That(dict.Count, Is.EqualTo(1), "bad count");
+                Assert.That(dict["C"], Is.EqualTo("D"), "Wrong value of dict[C] (2)");
             });
             dict.Clear();
-            Assert.That(0, Is.EqualTo(dict.Count), "dict should be empty");
+            Assert.That(dict.Count, Is.EqualTo(0), "dict should be empty");
         }
         [Test]
         public void Contains()
@@ -208,14 +208,14 @@ namespace C5.Tests.trees.RBDictionary
         public void Setter()
         {
             dict["R"] = "UYGUY";
-            Assert.That("UYGUY", Is.EqualTo(dict["R"]));
+            Assert.That(dict["R"], Is.EqualTo("UYGUY"));
             dict["R"] = "UIII";
-            Assert.That("UIII", Is.EqualTo(dict["R"]));
+            Assert.That(dict["R"], Is.EqualTo("UIII"));
             dict["S"] = "VVV";
             Assert.Multiple(() =>
             {
-                Assert.That("UIII", Is.EqualTo(dict["R"]));
-                Assert.That("VVV", Is.EqualTo(dict["S"]));
+                Assert.That(dict["R"], Is.EqualTo("UIII"));
+                Assert.That(dict["S"], Is.EqualTo("VVV"));
             });
             //dict.dump();
         }
@@ -304,7 +304,7 @@ namespace C5.Tests.trees.RBDictionary
             {
                 Assert.That(dict.IsReadOnly, Is.True);
 
-                Assert.That(dict.Count, Is.EqualTo(3));
+                Assert.That(dict, Has.Count.EqualTo(3));
             });
             Assert.That(dict["A"], Is.EqualTo("1"));
         }
@@ -383,7 +383,7 @@ namespace C5.Tests.trees.RBDictionary
             SCG.IEnumerator<string> keys = dict.Keys.GetEnumerator();
             Assert.Multiple(() =>
             {
-                Assert.That(dict.Keys.Count, Is.EqualTo(3));
+                Assert.That(dict.Keys, Has.Count.EqualTo(3));
                 Assert.That(keys.MoveNext(), Is.True);
                 Assert.That(keys.Current, Is.EqualTo("R"));
             });
@@ -404,7 +404,7 @@ namespace C5.Tests.trees.RBDictionary
                 Assert.That(keys.FindMin(), Is.EqualTo("R"));
                 Assert.That(keys.FindMax(), Is.EqualTo("T"));
                 Assert.That(keys.Contains("S"), Is.True);
-                Assert.That(keys.Count, Is.EqualTo(3));
+                Assert.That(keys, Has.Count.EqualTo(3));
             });
             Assert.Multiple(() =>
             {
@@ -456,7 +456,7 @@ namespace C5.Tests.trees.RBDictionary
             SCG.IEnumerator<string> values = dict.Values.GetEnumerator();
             Assert.Multiple(() =>
             {
-                Assert.That(dict.Values.Count, Is.EqualTo(3));
+                Assert.That(dict.Values, Has.Count.EqualTo(3));
                 Assert.That(values.MoveNext(), Is.True);
                 Assert.That(values.Current, Is.EqualTo("C"));
             });
@@ -521,14 +521,14 @@ namespace C5.Tests.trees.RBDictionary
                 dict["SS"] = "D";
                 Assert.Multiple(() =>
                 {
-                    Assert.That(dict.Count, Is.EqualTo(5));
-                    Assert.That(snap.Count, Is.EqualTo(4));
+                    Assert.That(dict, Has.Count.EqualTo(5));
+                    Assert.That(snap, Has.Count.EqualTo(4));
                 });
                 dict["T"] = "bb";
                 Assert.Multiple(() =>
                 {
-                    Assert.That(dict.Count, Is.EqualTo(5));
-                    Assert.That(snap.Count, Is.EqualTo(4));
+                    Assert.That(dict, Has.Count.EqualTo(5));
+                    Assert.That(snap, Has.Count.EqualTo(4));
                 });
                 Assert.Multiple(() =>
                 {

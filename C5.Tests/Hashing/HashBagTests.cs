@@ -252,28 +252,28 @@ namespace C5.Tests.hashtable.bag
             {
                 Assert.That(hashbag.IsReadOnly, Is.False);
                 // Assert.IsFalse(hashbag.SyncRoot == null);
-                Assert.That(hashbag.Count, Is.EqualTo(0));
+                Assert.That(hashbag, Is.Empty);
             });
             Assert.Multiple(() =>
             {
                 Assert.That(hashbag.IsEmpty, Is.True);
                 Assert.That(hashbag.AllowsDuplicates, Is.True);
                 Assert.That(hashbag.Add(0), Is.True);
-                Assert.That(hashbag.Count, Is.EqualTo(1));
+                Assert.That(hashbag, Has.Count.EqualTo(1));
             });
             Assert.Multiple(() =>
             {
                 Assert.That(hashbag.IsEmpty, Is.False);
                 Assert.That(hashbag.Add(5), Is.True);
-                Assert.That(hashbag.Count, Is.EqualTo(2));
+                Assert.That(hashbag, Has.Count.EqualTo(2));
             });
             Assert.That(hashbag.Add(5), Is.True);
-            Assert.That(hashbag.Count, Is.EqualTo(3));
+            Assert.That(hashbag, Has.Count.EqualTo(3));
             Assert.Multiple(() =>
             {
                 Assert.That(hashbag.IsEmpty, Is.False);
                 Assert.That(hashbag.Add(8), Is.True);
-                Assert.That(hashbag.Count, Is.EqualTo(4));
+                Assert.That(hashbag, Has.Count.EqualTo(4));
             });
             Assert.Multiple(() =>
             {
@@ -648,7 +648,7 @@ namespace C5.Tests.hashtable.bag
             Assert.That(h1.GetUnsequencedHashCode() != h2.GetUnsequencedHashCode(), Is.True);
             h2.Add(7);
             h1.Add(9);
-            Assert.That(h1.GetUnsequencedHashCode() == h2.GetUnsequencedHashCode(), Is.True);
+            Assert.That(h1.GetUnsequencedHashCode(), Is.EqualTo(h2.GetUnsequencedHashCode()));
         }
 
         [Test]
@@ -669,7 +669,7 @@ namespace C5.Tests.hashtable.bag
             h2.Add(-1615223932);
             Assert.Multiple(() =>
             {
-                Assert.That(h1.GetUnsequencedHashCode() == h2.GetUnsequencedHashCode(), Is.True);
+                Assert.That(h1.GetUnsequencedHashCode(), Is.EqualTo(h2.GetUnsequencedHashCode()));
                 Assert.That(!h1.UnsequencedEquals(h2), Is.True);
             });
             h1.Clear();
@@ -678,7 +678,7 @@ namespace C5.Tests.hashtable.bag
             h1.Add(2);
             h2.Add(2);
             h2.Add(1);
-            Assert.That(h1.GetUnsequencedHashCode() == h2.GetUnsequencedHashCode(), Is.True);
+            Assert.That(h1.GetUnsequencedHashCode(), Is.EqualTo(h2.GetUnsequencedHashCode()));
             Assert.That(h1.UnsequencedEquals(h2), Is.True);
         }
     }
