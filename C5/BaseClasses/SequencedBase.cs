@@ -1,3 +1,6 @@
+// This file is part of the C5 Generic Collection Library for C# and CLI
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
+
 using System;
 
 namespace C5;
@@ -14,7 +17,7 @@ public abstract class SequencedBase<T> : DirectedCollectionBase<T>, IDirectedCol
     #endregion
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="itemequalityComparer"></param>
     protected SequencedBase(System.Collections.Generic.IEqualityComparer<T> itemequalityComparer) : base(itemequalityComparer) { }
@@ -32,7 +35,7 @@ public abstract class SequencedBase<T> : DirectedCollectionBase<T>, IDirectedCol
     /// <returns>The hash code</returns>
     public static int ComputeHashCode(ISequenced<T> items, System.Collections.Generic.IEqualityComparer<T> itemequalityComparer)
     {
-        //NOTE: It must be possible to devise a much stronger combined hashcode, 
+        //NOTE: It must be possible to devise a much stronger combined hashcode,
         //but unfortunately, it has to be universal. OR we could use a (strong)
         //family and initialise its parameter randomly at load time of this class!
         //(We would not want to have yet a flag to check for invalidation?!)
@@ -93,7 +96,7 @@ public abstract class SequencedBase<T> : DirectedCollectionBase<T>, IDirectedCol
 
 
     /// <summary>
-    /// Get the sequenced collection hash code of this collection: from the cached 
+    /// Get the sequenced collection hash code of this collection: from the cached
     /// value if present and up to date, else (re)compute.
     /// </summary>
     /// <returns>The hash code</returns>

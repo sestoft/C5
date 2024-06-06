@@ -1,3 +1,6 @@
+// This file is part of the C5 Generic Collection Library for C# and CLI
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
+
 using System;
 
 namespace C5;
@@ -10,7 +13,7 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
     #region Event handling
     private EventBlock<T>? eventBlock;
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <value></value>
     public virtual EventType ListenableEvents => 0;
@@ -198,7 +201,7 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
             }
         }
     }
-    /// <summary> 
+    /// <summary>
     /// Fire the ItemRemovedAt event
     /// </summary>
     /// <param name="item">The item that was removed</param>
@@ -210,7 +213,7 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
 
     #region Event support for IList
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="index"></param>
     /// <param name="value"></param>
@@ -227,7 +230,7 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
         }
     }
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="i"></param>
     /// <param name="item"></param>
@@ -242,7 +245,7 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="item"></param>
     protected void RaiseForRemove(T item)
@@ -255,7 +258,7 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="item"></param>
     /// <param name="count"></param>
@@ -269,7 +272,7 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="index"></param>
     /// <param name="item"></param>
@@ -287,7 +290,7 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
 
     #region Event  Support for ICollection
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="newitem"></param>
     /// <param name="olditem"></param>
@@ -301,7 +304,7 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
         }
     }
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="newitem"></param>
     /// <param name="olditem"></param>
@@ -316,7 +319,7 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
         }
     }
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="item"></param>
     protected virtual void RaiseForAdd(T item)
@@ -328,7 +331,7 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
         }
     }
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="wasRemoved"></param>
     protected virtual void RaiseForRemoveAll(ICollectionValue<T>? wasRemoved)
@@ -351,7 +354,7 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     protected class RaiseForRemoveAllHandler
     {
@@ -360,7 +363,7 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
         private bool wasChanged = false;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="collection"></param>
         public RaiseForRemoveAllHandler(CollectionValueBase<T> collection)
@@ -373,12 +376,12 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
         private readonly bool mustFireRemoved;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public bool MustFire { get; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="item"></param>
         public void Remove(T item)
@@ -396,7 +399,7 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public void Raise()
         {
@@ -435,14 +438,14 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
     /// in terms of the size of this collection (worst-case or amortized as
     /// relevant).
     /// </summary>
-    /// <value>A characterization of the speed of the 
+    /// <value>A characterization of the speed of the
     /// <code>Count</code> property in this collection.</value>
     public abstract Speed CountSpeed { get; }
 
     /// <summary>
     /// Copy the items of this collection to part of an array.
     /// </summary>
-    /// <exception cref="ArgumentOutOfRangeException"> if <code>index</code> 
+    /// <exception cref="ArgumentOutOfRangeException"> if <code>index</code>
     /// is not a valid index
     /// into the array (i.e. negative or greater than the size of the array)
     /// or the array does not have room for the items.</exception>
@@ -496,8 +499,8 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
     /// Check if there exists an item  that satisfies a
     /// specific predicate in this collection.
     /// </summary>
-    /// <param name="predicate">A delegate 
-    /// (<see cref="T:Func`2"/> with <code>R = bool</code>) 
+    /// <param name="predicate">A delegate
+    /// (<see cref="T:Func`2"/> with <code>R = bool</code>)
     /// defining the predicate</param>
     /// <returns>True if such an item exists</returns>
     public virtual bool Exists(Func<T, bool> predicate)
@@ -517,7 +520,7 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
     /// Check if there exists an item  that satisfies a
     /// specific predicate in this collection and return the first one in enumeration order.
     /// </summary>
-    /// <param name="predicate">A delegate 
+    /// <param name="predicate">A delegate
     /// (<see cref="T:Func`2"/> with <code>R == bool</code>) defining the predicate</param>
     /// <param name="item"></param>
     /// <returns>True is such an item exists</returns>
@@ -539,8 +542,8 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
     /// <summary>
     /// Check if all items in this collection satisfies a specific predicate.
     /// </summary>
-    /// <param name="predicate">A delegate 
-    /// (<see cref="T:Func`2"/> with <code>R = bool</code>) 
+    /// <param name="predicate">A delegate
+    /// (<see cref="T:Func`2"/> with <code>R = bool</code>)
     /// defining the predicate</param>
     /// <returns>True if all items satisfies the predicate</returns>
     public virtual bool All(Func<T, bool> predicate)
@@ -557,11 +560,11 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
     }
 
     /// <summary>
-    /// Create an enumerable, enumerating the items of this collection that satisfies 
+    /// Create an enumerable, enumerating the items of this collection that satisfies
     /// a certain condition.
     /// </summary>
-    /// <param name="predicate">A delegate 
-    /// (<see cref="T:Func`2"/> with <code>R = bool</code>) 
+    /// <param name="predicate">A delegate
+    /// (<see cref="T:Func`2"/> with <code>R = bool</code>)
     /// defining the predicate</param>
     /// <returns>The filtered enumerable</returns>
     public virtual System.Collections.Generic.IEnumerable<T> Filter(Func<T, bool> predicate)
@@ -576,7 +579,7 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
     }
 
     /// <summary>
-    /// Choose some item of this collection. 
+    /// Choose some item of this collection.
     /// </summary>
     /// <exception cref="NoSuchItemException">if collection is empty.</exception>
     /// <returns></returns>
@@ -592,7 +595,7 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
     #region IShowable Members
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="stringbuilder"></param>
     /// <param name="rest"></param>
@@ -607,7 +610,7 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
     #region IFormattable Members
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="format"></param>
     /// <param name="formatProvider"></param>
@@ -620,7 +623,7 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
     #endregion
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <returns></returns>
     public override string ToString()

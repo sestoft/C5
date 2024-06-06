@@ -370,7 +370,7 @@ public class ArrayList<T> : ArrayBase<T>, IList<T>, IStack<T>, IQueue<T>
     {
         i += offsetField;
         FixViewsBeforeSingleRemove(i);
-        T retval = array[i];
+        var retval = array[i];
         AddToSize(-1);
         if (Underlyingsize > i)
         {

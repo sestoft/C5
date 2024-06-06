@@ -1,3 +1,6 @@
+// This file is part of the C5 Generic Collection Library for C# and CLI
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
+
 using System;
 
 namespace C5;
@@ -14,7 +17,7 @@ public abstract class ArrayBase<T> : SequencedBase<T>
     protected T[] array;
 
     /// <summary>
-    /// The offset into the internal array container of the first item. The offset is 0 for a 
+    /// The offset into the internal array container of the first item. The offset is 0 for a
     /// base dynamic array and may be positive for an updatable view into a base dynamic array.
     /// </summary>
     protected int offsetField;
@@ -33,7 +36,7 @@ public abstract class ArrayBase<T> : SequencedBase<T>
     /// <summary>
     /// Expand the internal array container.
     /// </summary>
-    /// <param name="newcapacity">The new size of the internal array - 
+    /// <param name="newcapacity">The new size of the internal array -
     /// will be rounded upwards to a power of 2.</param>
     /// <param name="newsize">The (new) size of the (base) collection.</param>
     protected virtual void Expand(int newcapacity, int newsize)
@@ -104,7 +107,7 @@ public abstract class ArrayBase<T> : SequencedBase<T>
 
     /// <summary>
     /// </summary>
-    /// <exception cref="ArgumentOutOfRangeException">If the arguments does not describe a 
+    /// <exception cref="ArgumentOutOfRangeException">If the arguments does not describe a
     /// valid range in the indexed collection, cf. <see cref="M:C5.CollectionBase`1.checkRange(System.Int32,System.Int32)"/>.</exception>
     /// <value>The directed collection of items in a specific index interval.</value>
     /// <param name="start">The low index of the interval (inclusive).</param>
@@ -176,7 +179,7 @@ public abstract class ArrayBase<T> : SequencedBase<T>
     #region IDirectedCollection<T> Members
 
     /// <summary>
-    /// Create a directed collection with the same contents as this one, but 
+    /// Create a directed collection with the same contents as this one, but
     /// opposite enumeration sequence.
     /// </summary>
     /// <returns>The mirrored collection.</returns>
@@ -230,7 +233,7 @@ public abstract class ArrayBase<T> : SequencedBase<T>
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <exception cref="CollectionModifiedException">if underlying collection has been modified.</exception>
         /// <value>True if this collection is empty.</value>
@@ -238,7 +241,7 @@ public abstract class ArrayBase<T> : SequencedBase<T>
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <exception cref="CollectionModifiedException">if underlying collection has been modified.</exception>
         /// <value>The number of items in the range</value>
@@ -249,13 +252,13 @@ public abstract class ArrayBase<T> : SequencedBase<T>
         /// in terms of the size of this collection (worst-case or amortized as
         /// relevant).
         /// </summary>
-        /// <value>A characterization of the speed of the 
+        /// <value>A characterization of the speed of the
         /// <exception cref="CollectionModifiedException">if underlying collection has been modified.</exception>
         /// <code>Count</code> property in this collection.</value>
         public override Speed CountSpeed { get { thebase.ModifyCheck(stamp); return Speed.Constant; } }
 
         /// <summary>
-        /// Choose some item of this collection. 
+        /// Choose some item of this collection.
         /// </summary>
         /// <exception cref="CollectionModifiedException">if underlying collection has been modified.</exception>
         /// <exception cref="NoSuchItemException">if range is empty.</exception>
@@ -288,7 +291,7 @@ public abstract class ArrayBase<T> : SequencedBase<T>
 
 
         /// <summary>
-        /// Create an array collection range with the same contents as this one, but 
+        /// Create an array collection range with the same contents as this one, but
         /// opposite enumeration sequence.
         /// </summary>
         /// <exception cref="CollectionModifiedException">if underlying collection has been modified.</exception>

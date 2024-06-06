@@ -1,15 +1,18 @@
+// This file is part of the C5 Generic Collection Library for C# and CLI
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
+
 using System;
 
 namespace C5;
 
 /// <summary>
-/// 
+///
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public abstract class DirectedCollectionBase<T> : CollectionBase<T>, IDirectedCollectionValue<T>
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="itemequalityComparer"></param>
     protected DirectedCollectionBase(System.Collections.Generic.IEqualityComparer<T> itemequalityComparer) : base(itemequalityComparer) { }
@@ -20,7 +23,7 @@ public abstract class DirectedCollectionBase<T> : CollectionBase<T>, IDirectedCo
     public virtual Direction Direction => Direction.Forwards;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <returns></returns>
     public abstract IDirectedCollectionValue<T> Backwards();
@@ -31,7 +34,7 @@ public abstract class DirectedCollectionBase<T> : CollectionBase<T>, IDirectedCo
     /// Check if there exists an item  that satisfies a
     /// specific predicate in this collection and return the first one in enumeration order.
     /// </summary>
-    /// <param name="predicate">A delegate 
+    /// <param name="predicate">A delegate
     /// (<see cref="T:Func`2"/> with <code>R == bool</code>) defining the predicate</param>
     /// <param name="item"></param>
     /// <returns>True is such an item exists</returns>

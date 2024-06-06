@@ -1,9 +1,12 @@
+// This file is part of the C5 Generic Collection Library for C# and CLI
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
+
 using System;
 
 namespace C5;
 
 /// <summary>
-/// 
+///
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public abstract class DirectedCollectionValueBase<T> : CollectionValueBase<T>, IDirectedCollectionValue<T>
@@ -15,7 +18,7 @@ public abstract class DirectedCollectionValueBase<T> : CollectionValueBase<T>, I
     public virtual Direction Direction => Direction.Forwards;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <returns></returns>
     public abstract IDirectedCollectionValue<T> Backwards();
@@ -26,7 +29,7 @@ public abstract class DirectedCollectionValueBase<T> : CollectionValueBase<T>, I
     /// Check if there exists an item  that satisfies a
     /// specific predicate in this collection and return the first one in enumeration order.
     /// </summary>
-    /// <param name="predicate">A delegate 
+    /// <param name="predicate">A delegate
     /// (<see cref="T:Func`2"/> with <code>R == bool</code>) defining the predicate</param>
     /// <param name="item"></param>
     /// <returns>True is such an item exists</returns>
