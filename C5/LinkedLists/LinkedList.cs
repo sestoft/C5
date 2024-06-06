@@ -589,15 +589,10 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
     #region Position, PositionComparer and ViewHandler nested types
     private class PositionComparer : SCG.IComparer<Position>
     {
-        private static PositionComparer _default;
-
+        private static readonly PositionComparer _default = new();
         private PositionComparer() { }
-        public static PositionComparer Default => _default ??= new PositionComparer();
-        public int Compare(Position a, Position b)
-        {
-
-            return a.Index.CompareTo(b.Index);
-        }
+        public static PositionComparer Default => _default;
+        public int Compare(Position a, Position b) => a.Index.CompareTo(b.Index);
     }
 
     /// <summary>
@@ -2919,37 +2914,58 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
 
     #region System.Collections.IList Members
 
-    object System.Collections.IList.this[int index]
+    object? System.Collections.IList.this[int index]
     {
         get => this[index]!;
-        set => this[index] = (T)value;
+        set
+        {
+            if (value is null && default(T) is not null) throw new ArgumentNullException(nameof(value));
+            if (value is not T) throw new ArgumentException("Wrong type", nameof(value));
+
+            this[index] = (T)value;
+        }
     }
 
-    int System.Collections.IList.Add(object o)
+    int System.Collections.IList.Add(object? value)
     {
-        bool added = Add((T)o);
+        if (value is null && default(T) is not null) throw new ArgumentNullException(nameof(value));
+        if (value is not T) throw new ArgumentException("Wrong type", nameof(value));
+
+        bool added = Add((T)value);
         // What position to report if item not added? SC.IList.Add doesn't say
         return added ? Count - 1 : -1;
     }
 
-    bool System.Collections.IList.Contains(object o)
+    bool System.Collections.IList.Contains(object? value)
     {
-        return Contains((T)o);
+        if (value is null && default(T) is not null) return false;
+        if (value is not T) return false;
+
+        return Contains((T)value);
     }
 
-    int System.Collections.IList.IndexOf(object o)
+    int System.Collections.IList.IndexOf(object? value)
     {
-        return Math.Max(-1, IndexOf((T)o));
+        if (value is null && default(T) is not null) return -1;
+        if (value is not T) return -1;
+
+        return Math.Max(-1, IndexOf((T)value));
     }
 
-    void System.Collections.IList.Insert(int index, object o)
+    void System.Collections.IList.Insert(int index, object? value)
     {
-        Insert(index, (T)o);
+        if (value is null && default(T) is not null) throw new ArgumentNullException(nameof(value));
+        if (value is not T) throw new ArgumentException("Wrong type", nameof(value));
+
+        Insert(index, (T)value);
     }
 
-    void System.Collections.IList.Remove(object o)
+    void System.Collections.IList.Remove(object? value)
     {
-        Remove((T)o);
+        if (value is null && default(T) is not null) return;
+        if (value is not T) return;
+
+        Remove((T)value);
     }
 
     void System.Collections.IList.RemoveAt(int index)

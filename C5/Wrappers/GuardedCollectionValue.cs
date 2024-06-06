@@ -244,7 +244,7 @@ public class GuardedCollectionValue<T> : GuardedEnumerable<T>, ICollectionValue<
     /// <param name="format"></param>
     /// <param name="formatProvider"></param>
     /// <returns></returns>
-    public string ToString(string format, IFormatProvider formatProvider)
+    public string ToString(string? format, IFormatProvider? formatProvider)
     {
         return collectionvalue.ToString(format, formatProvider);
     }

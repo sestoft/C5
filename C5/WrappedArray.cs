@@ -757,7 +757,7 @@ public class WrappedArray<T> : IList<T>, SCG.IList<T>
     /// <param name="format"></param>
     /// <param name="formatProvider"></param>
     /// <returns></returns>
-    public virtual string ToString(string format, IFormatProvider formatProvider) { return innerlist.ToString(format, formatProvider); }
+    public virtual string ToString(string? format, IFormatProvider? formatProvider) { return innerlist.ToString(format, formatProvider); }
 
     #endregion
 
@@ -873,7 +873,7 @@ public class WrappedArray<T> : IList<T>, SCG.IList<T>
         return added ? Count - 1 : -1;
     }
 
-    bool System.Collections.IList.Contains(object value)
+    bool System.Collections.IList.Contains(object? value)
     {
         if (value is null && default(T) is not null) return false;
         if (value is not T) return false;
@@ -881,7 +881,7 @@ public class WrappedArray<T> : IList<T>, SCG.IList<T>
         return Contains((T)value);
     }
 
-    int System.Collections.IList.IndexOf(object value)
+    int System.Collections.IList.IndexOf(object? value)
     {
         if (value is null && default(T) is not null) return -1;
         if (value is not T) return -1;
