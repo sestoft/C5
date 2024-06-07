@@ -9,7 +9,7 @@ internal class KeywordRecognition
 {
     // Array of 77 keywords:
     private static readonly string[] _keywordArray =
-    {
+    [
             "abstract", "as", "base", "bool", "break", "byte", "case", "catch",
             "char", "checked", "class", "const", "continue", "decimal", "default",
             "delegate", "do", "double", "else", "enum", "event", "explicit",
@@ -21,7 +21,7 @@ internal class KeywordRecognition
             "stackalloc", "static", "string", "struct", "switch", "this", "throw",
             "true", "try", "typeof", "uint", "ulong", "unchecked", "unsafe",
             "ushort", "using", "virtual", "void", "volatile", "while"
-        };
+        ];
 
     private static readonly ICollection<string> _keywords1;
 

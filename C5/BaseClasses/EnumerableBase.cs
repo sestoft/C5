@@ -1,55 +1,28 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
-using System;
+using System.Linq;
 using SCG = System.Collections.Generic;
-namespace C5
+
+namespace C5;
+
+/// <summary>
+/// A base class for implementing an IEnumerable&lt;T&gt;
+/// </summary>
+public abstract class EnumerableBase<T> : SCG.IEnumerable<T>
 {
     /// <summary>
-    /// A base class for implementing an IEnumerable&lt;T&gt;
+    /// Create an enumerator for this collection.
     /// </summary>
-    public abstract class EnumerableBase<T> : SCG.IEnumerable<T>
-    {
-        /// <summary>
-        /// Create an enumerator for this collection.
-        /// </summary>
-        /// <returns>The enumerator</returns>
-        public abstract SCG.IEnumerator<T> GetEnumerator();
+    /// <returns>The enumerator</returns>
+    public abstract SCG.IEnumerator<T> GetEnumerator();
 
-        /// <summary>
-        /// Count the number of items in an enumerable by enumeration
-        /// </summary>
-        /// <param name="items">The enumerable to count</param>
-        /// <returns>The size of the enumerable</returns>
-        protected static int CountItems(SCG.IEnumerable<T> items)
-        {
-            // ICollectionValue<T> jtems = items as ICollectionValue<T>;
+    /// <summary>
+    /// Count the number of items in an enumerable by enumeration
+    /// </summary>
+    /// <param name="items">The enumerable to count</param>
+    /// <returns>The size of the enumerable</returns>
+    protected static int CountItems(SCG.IEnumerable<T> items) => items is ICollectionValue<T> collectionValue ? collectionValue.Count : items.Count();
 
-            if (items is ICollectionValue<T> jtems)
-            {
-                return jtems.Count;
-            }
-
-            int count = 0;
-
-            using (SCG.IEnumerator<T> e = items.GetEnumerator())
-            {
-                while (e.MoveNext())
-                {
-                    count++;
-                }
-            }
-
-            return count;
-        }
-
-        #region IEnumerable Members
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        #endregion
-    }
+    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
 }

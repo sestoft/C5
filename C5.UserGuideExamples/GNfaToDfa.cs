@@ -299,34 +299,32 @@ internal class Nfa
     // http://www.research.att.com/sw/tools/graphviz/
     public void WriteDot(string filename)
     {
-        using (var writer = new StreamWriter(new FileStream(filename, FileMode.Create, FileAccess.Write)))
+        using var writer = new StreamWriter(new FileStream(filename, FileMode.Create, FileAccess.Write));
+        writer.WriteLine("// Format this file as a Postscript file with ");
+        writer.WriteLine("//    dot " + filename + " -Tps -o out.ps\n");
+        writer.WriteLine("digraph nfa {");
+        writer.WriteLine("size=\"11,8.25\";");
+        writer.WriteLine("rotate=90;");
+        writer.WriteLine("rankdir=LR;");
+        writer.WriteLine("start [style=invis];");    // Invisible start node
+        writer.WriteLine("start -> d" + Start); // Edge into start state
+
+        // The accept state has a double circle
+        writer.WriteLine("d" + Exit + " [peripheries=2];");
+
+        // The transitions
+        foreach (var entry in Trans)
         {
-            writer.WriteLine("// Format this file as a Postscript file with ");
-            writer.WriteLine("//    dot " + filename + " -Tps -o out.ps\n");
-            writer.WriteLine("digraph nfa {");
-            writer.WriteLine("size=\"11,8.25\";");
-            writer.WriteLine("rotate=90;");
-            writer.WriteLine("rankdir=LR;");
-            writer.WriteLine("start [style=invis];");    // Invisible start node
-            writer.WriteLine("start -> d" + Start); // Edge into start state
-
-            // The accept state has a double circle
-            writer.WriteLine("d" + Exit + " [peripheries=2];");
-
-            // The transitions
-            foreach (var entry in Trans)
+            var s1 = entry.Key;
+            for (var i = 0; i < entry.Value.Count; i++)
             {
-                var s1 = entry.Key;
-                for (var i = 0; i < entry.Value.Count; i++)
-                {
-                    var s1Trans = entry.Value[i];
-                    var lab = s1Trans.Lab ?? "eps";
-                    var s2 = s1Trans.Target;
-                    writer.WriteLine("d" + s1 + " -> d" + s2 + " [label=\"" + lab + "\"];");
-                }
+                var s1Trans = entry.Value[i];
+                var lab = s1Trans.Lab ?? "eps";
+                var s2 = s1Trans.Target;
+                writer.WriteLine("d" + s1 + " -> d" + s2 + " [label=\"" + lab + "\"];");
             }
-            writer.WriteLine("}");
         }
+        writer.WriteLine("}");
     }
 }
 
@@ -378,39 +376,37 @@ internal class Dfa
     // http://www.research.att.com/sw/tools/graphviz/
     public void WriteDot(string filename)
     {
-        using (var writer = new StreamWriter(new FileStream(filename, FileMode.Create, FileAccess.Write)))
+        using var writer = new StreamWriter(new FileStream(filename, FileMode.Create, FileAccess.Write));
+        writer.WriteLine("// Format this file as a Postscript file with ");
+        writer.WriteLine("//    dot " + filename + " -Tps -o out.ps\n");
+        writer.WriteLine("digraph dfa {");
+        writer.WriteLine("size=\"11,8.25\";");
+        writer.WriteLine("rotate=90;");
+        writer.WriteLine("rankdir=LR;");
+        writer.WriteLine("start [style=invis];");    // Invisible start node
+        writer.WriteLine("start -> d" + Start); // Edge into start state
+
+        // Accept states are double circles
+        foreach (var state in Trans.Keys)
         {
-            writer.WriteLine("// Format this file as a Postscript file with ");
-            writer.WriteLine("//    dot " + filename + " -Tps -o out.ps\n");
-            writer.WriteLine("digraph dfa {");
-            writer.WriteLine("size=\"11,8.25\";");
-            writer.WriteLine("rotate=90;");
-            writer.WriteLine("rankdir=LR;");
-            writer.WriteLine("start [style=invis];");    // Invisible start node
-            writer.WriteLine("start -> d" + Start); // Edge into start state
-
-            // Accept states are double circles
-            foreach (var state in Trans.Keys)
+            if (Accept.Contains(state))
             {
-                if (Accept.Contains(state))
-                {
-                    writer.WriteLine("d" + state + " [peripheries=2];");
-                }
+                writer.WriteLine("d" + state + " [peripheries=2];");
             }
-
-            // The transitions
-            foreach (var entry in Trans)
-            {
-                var s1 = entry.Key;
-                foreach (var s1Trans in entry.Value)
-                {
-                    var lab = s1Trans.Key;
-                    var s2 = s1Trans.Value;
-                    writer.WriteLine($"d{s1} -> d{s2} [label=\"{lab}\"];");
-                }
-            }
-            writer.WriteLine("}");
         }
+
+        // The transitions
+        foreach (var entry in Trans)
+        {
+            var s1 = entry.Key;
+            foreach (var s1Trans in entry.Value)
+            {
+                var lab = s1Trans.Key;
+                var s2 = s1Trans.Value;
+                writer.WriteLine($"d{s1} -> d{s2} [label=\"{lab}\"];");
+            }
+        }
+        writer.WriteLine("}");
     }
 }
 

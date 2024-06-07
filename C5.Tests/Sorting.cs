@@ -35,7 +35,7 @@ namespace C5.Tests.SortingTests
             Sorting.HeapSort<int>(a, 0, length, ic);
             for (int i = 1; i < length; i++)
             {
-                Assert.IsTrue(a[i - 1] <= a[i], "Inversion at " + i);
+                Assert.That(a[i - 1] <= a[i], Is.True, "Inversion at " + i);
             }
         }
 
@@ -46,7 +46,7 @@ namespace C5.Tests.SortingTests
             Sorting.IntroSort<int>(a, 0, length, ic);
             for (int i = 1; i < length; i++)
             {
-                Assert.IsTrue(a[i - 1] <= a[i], "Inversion at " + i);
+                Assert.That(a[i - 1] <= a[i], Is.True, "Inversion at " + i);
             }
         }
 
@@ -58,13 +58,13 @@ namespace C5.Tests.SortingTests
             Sorting.InsertionSort<int>(a, 0, length, ic);
             for (int i = 1; i < length; i++)
             {
-                Assert.IsTrue(a[i - 1] <= a[i], "Inversion at " + i);
+                Assert.That(a[i - 1] <= a[i], Is.True, "Inversion at " + i);
             }
 
             Sorting.InsertionSort<int>(a, length, 2 * length, ic);
             for (int i = length + 1; i < 2 * length; i++)
             {
-                Assert.IsTrue(a[i - 1] <= a[i], "Inversion at " + i);
+                Assert.That(a[i - 1] <= a[i], Is.True, "Inversion at " + i);
             }
         }
 
@@ -104,7 +104,7 @@ namespace C5.Tests.SortingTests
             Sorting.HeapSort<int>(a, 0, length, ic);
             for (int i = 1; i < length; i++)
             {
-                Assert.IsTrue(a[i - 1] <= a[i], "Inversion at " + i);
+                Assert.That(a[i - 1] <= a[i], Is.True, "Inversion at " + i);
             }
         }
 
@@ -115,7 +115,7 @@ namespace C5.Tests.SortingTests
             Sorting.IntroSort<int>(a, 0, length, ic);
             for (int i = 1; i < length; i++)
             {
-                Assert.IsTrue(a[i - 1] <= a[i], "Inversion at " + i);
+                Assert.That(a[i - 1] <= a[i], Is.True, "Inversion at " + i);
             }
         }
 
@@ -127,13 +127,13 @@ namespace C5.Tests.SortingTests
             Sorting.InsertionSort<int>(a, 0, length, ic);
             for (int i = 1; i < length; i++)
             {
-                Assert.IsTrue(a[i - 1] <= a[i], "Inversion at " + i);
+                Assert.That(a[i - 1] <= a[i], Is.True, "Inversion at " + i);
             }
 
             Sorting.InsertionSort<int>(a, length, 2 * length, ic);
             for (int i = length + 1; i < 2 * length; i++)
             {
-                Assert.IsTrue(a[i - 1] <= a[i], "Inversion at " + i);
+                Assert.That(a[i - 1] <= a[i], Is.True, "Inversion at " + i);
             }
         }
 
@@ -171,7 +171,7 @@ namespace C5.Tests.SortingTests
             Sorting.HeapSort<int>(a, 0, length, ic);
             for (int i = 1; i < length; i++)
             {
-                Assert.IsTrue(a[i - 1] <= a[i], "Inversion at " + i);
+                Assert.That(a[i - 1] <= a[i], Is.True, "Inversion at " + i);
             }
         }
 
@@ -182,7 +182,7 @@ namespace C5.Tests.SortingTests
             Sorting.IntroSort<int>(a, 0, length, ic);
             for (int i = 1; i < length; i++)
             {
-                Assert.IsTrue(a[i - 1] <= a[i], "Inversion at " + i);
+                Assert.That(a[i - 1] <= a[i], Is.True, "Inversion at " + i);
             }
         }
 
@@ -194,13 +194,13 @@ namespace C5.Tests.SortingTests
             Sorting.InsertionSort<int>(a, 0, length, ic);
             for (int i = 1; i < length; i++)
             {
-                Assert.IsTrue(a[i - 1] <= a[i], "Inversion at " + i);
+                Assert.That(a[i - 1] <= a[i], Is.True, "Inversion at " + i);
             }
 
             Sorting.InsertionSort<int>(a, length, 2 * length, ic);
             for (int i = length + 1; i < 2 * length; i++)
             {
-                Assert.IsTrue(a[i - 1] <= a[i], "Inversion at " + i);
+                Assert.That(a[i - 1] <= a[i], Is.True, "Inversion at " + i);
             }
         }
 
@@ -238,7 +238,7 @@ namespace C5.Tests.SortingTests
             Sorting.HeapSort<int>(a, 0, length, ic);
             for (int i = 1; i < length; i++)
             {
-                Assert.IsTrue(a[i - 1] <= a[i], "Inversion at " + i);
+                Assert.That(a[i - 1] <= a[i], Is.True, "Inversion at " + i);
             }
         }
 
@@ -249,7 +249,7 @@ namespace C5.Tests.SortingTests
             Sorting.IntroSort<int>(a, 0, length, ic);
             for (int i = 1; i < length; i++)
             {
-                Assert.IsTrue(a[i - 1] <= a[i], "Inversion at " + i);
+                Assert.That(a[i - 1] <= a[i], Is.True, "Inversion at " + i);
             }
         }
 
@@ -261,13 +261,13 @@ namespace C5.Tests.SortingTests
             Sorting.InsertionSort<int>(a, 0, length, ic);
             for (int i = 1; i < length; i++)
             {
-                Assert.IsTrue(a[i - 1] <= a[i], "Inversion at " + i);
+                Assert.That(a[i - 1] <= a[i], Is.True, "Inversion at " + i);
             }
 
             Sorting.InsertionSort<int>(a, length, 2 * length, ic);
             for (int i = length + 1; i < 2 * length; i++)
             {
-                Assert.IsTrue(a[i - 1] <= a[i], "Inversion at " + i);
+                Assert.That(a[i - 1] <= a[i], Is.True, "Inversion at " + i);
             }
         }
 

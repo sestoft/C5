@@ -15,7 +15,7 @@ namespace C5.Tests.support
         {
             private class ABT : ArrayBase<string>
             {
-                public ABT() : base(8, C5.EqualityComparer<string>.Default) { }
+                public ABT() : base(8, EqualityComparer<string>.Default) { }
 
                 public override string Choose() { if (size > 0) { return array[0]; } throw new NoSuchItemException(); }
 
@@ -29,15 +29,14 @@ namespace C5.Tests.support
             [Test]
             public void Check()
             {
-                ABT abt = new ABT
+                ABT abt = new()
                 {
                     thesize = 3
                 };
                 abt[2] = "aaa";
-                // Assert.IsFalse(abt.Check());
                 abt[0] = "##";
                 abt[1] = "##";
-                Assert.IsTrue(abt.Check());
+                Assert.That(abt.Check(), Is.True);
             }
         }
     }
@@ -64,12 +63,15 @@ namespace C5.Tests.support
             public void GenericC()
             {
                 SCG.IComparer<dbl> h = SCG.Comparer<dbl>.Default;
-                dbl s = new dbl(3.4);
-                dbl t = new dbl(3.4);
-                dbl u = new dbl(7.4);
+                dbl s = new(3.4);
+                dbl t = new(3.4);
+                dbl u = new(7.4);
 
-                Assert.AreEqual(0, h.Compare(s, t));
-                Assert.IsTrue(h.Compare(s, u) < 0);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.Compare(s, t), Is.EqualTo(0));
+                    Assert.That(h.Compare(s, u), Is.LessThan(0));
+                });
             }
 
 
@@ -81,8 +83,11 @@ namespace C5.Tests.support
                 string t = "bamse";
                 string u = "bimse";
 
-                Assert.AreEqual(0, h.Compare(s, t));
-                Assert.IsTrue(h.Compare(s, u) < 0);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.Compare(s, t), Is.EqualTo(0));
+                    Assert.That(h.Compare(s, u), Is.LessThan(0));
+                });
             }
 
 
@@ -90,13 +95,16 @@ namespace C5.Tests.support
             public void GenericCViaBuilder()
             {
                 SCG.IComparer<dbl> h = SCG.Comparer<dbl>.Default;
-                dbl s = new dbl(3.4);
-                dbl t = new dbl(3.4);
-                dbl u = new dbl(7.4);
+                dbl s = new(3.4);
+                dbl t = new(3.4);
+                dbl u = new(7.4);
 
-                Assert.AreEqual(0, h.Compare(s, t));
-                Assert.IsTrue(h.Compare(s, u) < 0);
-                Assert.AreSame(h, SCG.Comparer<dbl>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.Compare(s, t), Is.EqualTo(0));
+                    Assert.That(h.Compare(s, u), Is.LessThan(0));
+                    Assert.That(SCG.Comparer<dbl>.Default, Is.SameAs(h));
+                });
             }
 
 
@@ -108,9 +116,12 @@ namespace C5.Tests.support
                 string t = "bamse";
                 string u = "bimse";
 
-                Assert.AreEqual(0, h.Compare(s, t));
-                Assert.IsTrue(h.Compare(s, u) < 0);
-                Assert.AreSame(h, SCG.Comparer<string>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.Compare(s, t), Is.EqualTo(0));
+                    Assert.That(h.Compare(s, u), Is.LessThan(0));
+                    Assert.That(SCG.Comparer<string>.Default, Is.SameAs(h));
+                });
 
             }
 
@@ -118,13 +129,16 @@ namespace C5.Tests.support
                 where T : IComparable<T>
             {
                 SCG.IComparer<T> h = SCG.Comparer<T>.Default;
-                Assert.AreSame(h, SCG.Comparer<T>.Default);
-                Assert.AreEqual(0, h.Compare(item1, item1));
-                Assert.AreEqual(0, h.Compare(item2, item2));
-                Assert.IsTrue(h.Compare(item1, item2) < 0);
-                Assert.IsTrue(h.Compare(item2, item1) > 0);
-                Assert.AreEqual(Math.Sign(item1.CompareTo(item2)), Math.Sign(h.Compare(item1, item2)));
-                Assert.AreEqual(Math.Sign(item2.CompareTo(item1)), Math.Sign(h.Compare(item2, item1)));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(SCG.Comparer<T>.Default, Is.SameAs(h));
+                    Assert.That(h.Compare(item1, item1), Is.EqualTo(0));
+                    Assert.That(h.Compare(item2, item2), Is.EqualTo(0));
+                    Assert.That(h.Compare(item1, item2), Is.LessThan(0));
+                    Assert.That(h.Compare(item2, item1), Is.GreaterThan(0));
+                    Assert.That(Math.Sign(h.Compare(item1, item2)), Is.EqualTo(Math.Sign(item1.CompareTo(item2))));
+                    Assert.That(Math.Sign(h.Compare(item2, item1)), Is.EqualTo(Math.Sign(item2.CompareTo(item1))));
+                });
             }
 
             [Test]
@@ -153,17 +167,23 @@ namespace C5.Tests.support
                 int t = 4;
                 int u = 5;
 
-                Assert.AreEqual(0, h.Compare(s, t));
-                Assert.IsTrue(h.Compare(s, u) < 0);
-                Assert.AreSame(h, SCG.Comparer<int>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.Compare(s, t), Is.EqualTo(0));
+                    Assert.That(h.Compare(s, u), Is.LessThan(0));
+                    Assert.That(SCG.Comparer<int>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
             public void Nulls()
             {
-                Assert.IsTrue(SCG.Comparer<string>.Default.Compare(null, "abe") < 0);
-                Assert.IsTrue(SCG.Comparer<string>.Default.Compare(null, null) == 0);
-                Assert.IsTrue(SCG.Comparer<string>.Default.Compare("abe", null) > 0);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(SCG.Comparer<string>.Default.Compare(null, "abe"), Is.LessThan(0));
+                    Assert.That(SCG.Comparer<string>.Default.Compare(null, null), Is.EqualTo(0));
+                    Assert.That(SCG.Comparer<string>.Default.Compare("abe", null), Is.GreaterThan(0));
+                });
             }
         }
 
@@ -173,266 +193,317 @@ namespace C5.Tests.support
             [Test]
             public void ReftypeequalityComparer()
             {
-                SCG.IEqualityComparer<string> h = C5.EqualityComparer<string>.Default;
+                SCG.IEqualityComparer<string> h = EqualityComparer<string>.Default;
                 string s = "bamse";
                 string t = "bamse";
                 string u = "bimse";
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                });
             }
 
 
             [Test]
             public void ValuetypeequalityComparer()
             {
-                SCG.IEqualityComparer<double> h = C5.EqualityComparer<double>.Default;
+                SCG.IEqualityComparer<double> h = EqualityComparer<double>.Default;
                 double s = 3.4;
                 double t = 3.4;
                 double u = 5.7;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                });
             }
 
             [Test]
             public void ReftypeequalityComparerViaBuilder()
             {
-                SCG.IEqualityComparer<string> h = C5.EqualityComparer<string>.Default;
+                SCG.IEqualityComparer<string> h = EqualityComparer<string>.Default;
                 string s = "bamse";
                 string t = "bamse";
                 string u = "bimse";
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, C5.EqualityComparer<string>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<string>.Default, Is.SameAs(h));
+                });
             }
 
 
             [Test]
             public void ValuetypeequalityComparerViaBuilder()
             {
-                SCG.IEqualityComparer<double> h = C5.EqualityComparer<double>.Default;
+                SCG.IEqualityComparer<double> h = EqualityComparer<double>.Default;
                 double s = 3.4;
                 double t = 3.4;
                 double u = 5.7;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, C5.EqualityComparer<double>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<double>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
             public void CharequalityComparerViaBuilder()
             {
-                SCG.IEqualityComparer<char> h = C5.EqualityComparer<char>.Default;
+                SCG.IEqualityComparer<char> h = EqualityComparer<char>.Default;
                 char s = '�';
                 char t = '�';
                 char u = 'r';
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, C5.EqualityComparer<char>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<char>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
             public void SbyteequalityComparerViaBuilder()
             {
-                SCG.IEqualityComparer<sbyte> h = C5.EqualityComparer<sbyte>.Default;
+                SCG.IEqualityComparer<sbyte> h = EqualityComparer<sbyte>.Default;
                 sbyte s = 3;
                 sbyte t = 3;
                 sbyte u = -5;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, C5.EqualityComparer<sbyte>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<sbyte>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
             public void ByteequalityComparerViaBuilder()
             {
-                SCG.IEqualityComparer<byte> h = C5.EqualityComparer<byte>.Default;
+                SCG.IEqualityComparer<byte> h = EqualityComparer<byte>.Default;
                 byte s = 3;
                 byte t = 3;
                 byte u = 5;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, C5.EqualityComparer<byte>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<byte>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
             public void ShortequalityComparerViaBuilder()
             {
-                SCG.IEqualityComparer<short> h = C5.EqualityComparer<short>.Default;
+                SCG.IEqualityComparer<short> h = EqualityComparer<short>.Default;
                 short s = 3;
                 short t = 3;
                 short u = -5;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, C5.EqualityComparer<short>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<short>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
             public void UshortequalityComparerViaBuilder()
             {
-                SCG.IEqualityComparer<ushort> h = C5.EqualityComparer<ushort>.Default;
+                SCG.IEqualityComparer<ushort> h = EqualityComparer<ushort>.Default;
                 ushort s = 3;
                 ushort t = 3;
                 ushort u = 60000;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, C5.EqualityComparer<ushort>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<ushort>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
             public void IntequalityComparerViaBuilder()
             {
-                SCG.IEqualityComparer<int> h = C5.EqualityComparer<int>.Default;
+                SCG.IEqualityComparer<int> h = EqualityComparer<int>.Default;
                 int s = 3;
                 int t = 3;
                 int u = -5;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, C5.EqualityComparer<int>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<int>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
             public void UintequalityComparerViaBuilder()
             {
-                SCG.IEqualityComparer<uint> h = C5.EqualityComparer<uint>.Default;
+                SCG.IEqualityComparer<uint> h = EqualityComparer<uint>.Default;
                 uint s = 3;
                 uint t = 3;
                 uint u = 3000000000;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, C5.EqualityComparer<uint>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<uint>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
             public void LongequalityComparerViaBuilder()
             {
-                SCG.IEqualityComparer<long> h = C5.EqualityComparer<long>.Default;
+                SCG.IEqualityComparer<long> h = EqualityComparer<long>.Default;
                 long s = 3;
                 long t = 3;
                 long u = -500000000000000L;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, C5.EqualityComparer<long>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<long>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
             public void UlongequalityComparerViaBuilder()
             {
-                SCG.IEqualityComparer<ulong> h = C5.EqualityComparer<ulong>.Default;
+                SCG.IEqualityComparer<ulong> h = EqualityComparer<ulong>.Default;
                 ulong s = 3;
                 ulong t = 3;
                 ulong u = 500000000000000UL;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, C5.EqualityComparer<ulong>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<ulong>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
             public void FloatequalityComparerViaBuilder()
             {
-                SCG.IEqualityComparer<float> h = C5.EqualityComparer<float>.Default;
+                SCG.IEqualityComparer<float> h = EqualityComparer<float>.Default;
                 float s = 3.1F;
                 float t = 3.1F;
                 float u = -5.2F;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, C5.EqualityComparer<float>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<float>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
             public void DoubleequalityComparerViaBuilder()
             {
-                SCG.IEqualityComparer<double> h = C5.EqualityComparer<double>.Default;
+                SCG.IEqualityComparer<double> h = EqualityComparer<double>.Default;
                 double s = 3.12345;
                 double t = 3.12345;
                 double u = -5.2;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, C5.EqualityComparer<double>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<double>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
             public void DecimalequalityComparerViaBuilder()
             {
-                SCG.IEqualityComparer<decimal> h = C5.EqualityComparer<decimal>.Default;
+                SCG.IEqualityComparer<decimal> h = EqualityComparer<decimal>.Default;
                 decimal s = 3.0001M;
                 decimal t = 3.0001M;
                 decimal u = -500000000000000M;
 
-                Assert.AreEqual(s.GetHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, C5.EqualityComparer<decimal>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<decimal>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
             public void UnseqequalityComparerViaBuilder()
             {
-                SCG.IEqualityComparer<C5.ICollection<int>> h = C5.EqualityComparer<C5.ICollection<int>>.Default;
+                SCG.IEqualityComparer<C5.ICollection<int>> h = EqualityComparer<ICollection<int>>.Default;
                 C5.ICollection<int> s = new LinkedList<int>();
                 C5.ICollection<int> t = new LinkedList<int>();
                 C5.ICollection<int> u = new LinkedList<int>();
                 s.Add(1); s.Add(2); s.Add(3);
                 t.Add(3); t.Add(2); t.Add(1);
                 u.Add(3); u.Add(2); u.Add(4);
-                Assert.AreEqual(s.GetUnsequencedHashCode(), h.GetHashCode(s));
-                Assert.IsTrue(h.Equals(s, t));
-                Assert.IsFalse(h.Equals(s, u));
-                Assert.AreSame(h, C5.EqualityComparer<C5.ICollection<int>>.Default);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(h.GetHashCode(s), Is.EqualTo(s.GetUnsequencedHashCode()));
+                    Assert.That(h.Equals(s, t), Is.True);
+                    Assert.That(h.Equals(s, u), Is.False);
+                    Assert.That(EqualityComparer<ICollection<int>>.Default, Is.SameAs(h));
+                });
             }
 
             [Test]
             public void SeqequalityComparerViaBuilder2()
             {
-                SCG.IEqualityComparer<LinkedList<int>> h = C5.EqualityComparer<LinkedList<int>>.Default;
-                LinkedList<int> s = new LinkedList<int>() { 1, 2, 3 };
-                Assert.AreEqual(CHC.SequencedHashCode(1, 2, 3), h.GetHashCode(s));
+                SCG.IEqualityComparer<LinkedList<int>> h = EqualityComparer<LinkedList<int>>.Default;
+                LinkedList<int> s = new() { 1, 2, 3 };
+                Assert.That(h.GetHashCode(s), Is.EqualTo(CHC.SequencedHashCode(1, 2, 3)));
             }
 
             [Test]
             public void UnseqequalityComparerViaBuilder2()
             {
-                SCG.IEqualityComparer<C5.HashSet<int>> h = C5.EqualityComparer<C5.HashSet<int>>.Default;
-                C5.HashSet<int> s = new C5.HashSet<int>() { 1, 2, 3 };
-                Assert.AreEqual(CHC.UnsequencedHashCode(1, 2, 3), h.GetHashCode(s));
+                SCG.IEqualityComparer<C5.HashSet<int>> h = EqualityComparer<HashSet<int>>.Default;
+                C5.HashSet<int> s = new() { 1, 2, 3 };
+                Assert.That(h.GetHashCode(s), Is.EqualTo(CHC.UnsequencedHashCode(1, 2, 3)));
             }
 
             //generic types implementing collection interfaces
             [Test]
             public void SeqequalityComparerViaBuilder3()
             {
-                SCG.IEqualityComparer<C5.IList<int>> h = C5.EqualityComparer<C5.IList<int>>.Default;
+                SCG.IEqualityComparer<C5.IList<int>> h = EqualityComparer<IList<int>>.Default;
                 C5.IList<int> s = new LinkedList<int>() { 1, 2, 3 };
-                Assert.AreEqual(CHC.SequencedHashCode(1, 2, 3), h.GetHashCode(s));
+                Assert.That(h.GetHashCode(s), Is.EqualTo(CHC.SequencedHashCode(1, 2, 3)));
             }
 
             private interface IFoo<T> : C5.ICollection<T> { void Bamse(); }
@@ -446,9 +517,9 @@ namespace C5.Tests.support
             [Test]
             public void UnseqequalityComparerViaBuilder3()
             {
-                SCG.IEqualityComparer<IFoo<int>> h = C5.EqualityComparer<IFoo<int>>.Default;
+                SCG.IEqualityComparer<IFoo<int>> h = EqualityComparer<IFoo<int>>.Default;
                 IFoo<int> s = new Foo<int>() { 1, 2, 3 };
-                Assert.AreEqual(CHC.UnsequencedHashCode(1, 2, 3), h.GetHashCode(s));
+                Assert.That(h.GetHashCode(s), Is.EqualTo(CHC.UnsequencedHashCode(1, 2, 3)));
             }
 
             //Nongeneric types implementing collection types:
@@ -465,9 +536,9 @@ namespace C5.Tests.support
             [Test]
             public void SeqequalityComparerViaBuilder4()
             {
-                SCG.IEqualityComparer<IBaz> h = C5.EqualityComparer<IBaz>.Default;
+                SCG.IEqualityComparer<IBaz> h = EqualityComparer<IBaz>.Default;
                 IBaz s = new Baz() { 1, 2, 3 };
-                Assert.AreEqual(CHC.SequencedHashCode(1, 2, 3), h.GetHashCode(s));
+                Assert.That(h.GetHashCode(s), Is.EqualTo(CHC.SequencedHashCode(1, 2, 3)));
             }
 
             private interface IBar : C5.ICollection<int>
@@ -507,30 +578,33 @@ namespace C5.Tests.support
             [Test]
             public void UnseqequalityComparerViaBuilder4()
             {
-                SCG.IEqualityComparer<IBar> h = C5.EqualityComparer<IBar>.Default;
+                SCG.IEqualityComparer<IBar> h = EqualityComparer<IBar>.Default;
                 IBar s = new Bar() { 1, 2, 3 };
-                Assert.AreEqual(CHC.UnsequencedHashCode(1, 2, 3), h.GetHashCode(s));
+                Assert.That(h.GetHashCode(s), Is.EqualTo(CHC.UnsequencedHashCode(1, 2, 3)));
             }
 
             [Test]
             public void StaticEqualityComparerWithNull()
             {
-                ArrayList<double> arr = new ArrayList<double>();
-                SCG.IEqualityComparer<double> eqc = C5.EqualityComparer<double>.Default;
-                Assert.IsTrue(CollectionBase<double>.StaticEquals(arr, arr, eqc));
-                Assert.IsTrue(CollectionBase<double>.StaticEquals(null, null, eqc));
-                Assert.IsFalse(CollectionBase<double>.StaticEquals(arr, null, eqc));
-                Assert.IsFalse(CollectionBase<double>.StaticEquals(null, arr, eqc));
+                ArrayList<double> arr = new();
+                SCG.IEqualityComparer<double> eqc = EqualityComparer<double>.Default;
+                Assert.Multiple(() =>
+                {
+                    Assert.That(CollectionBase<double>.StaticEquals(arr, arr, eqc), Is.True);
+                    Assert.That(CollectionBase<double>.StaticEquals(null, null, eqc), Is.True);
+                    Assert.That(CollectionBase<double>.StaticEquals(arr, null, eqc), Is.False);
+                    Assert.That(CollectionBase<double>.StaticEquals(null, arr, eqc), Is.False);
+                });
             }
 
-            private class EveryThingIsEqual : SCG.IEqualityComparer<Object>
+            private class EveryThingIsEqual : SCG.IEqualityComparer<object>
             {
-                public new bool Equals(Object o1, Object o2)
+                public new bool Equals(object o1, object o2)
                 {
                     return true;
                 }
 
-                public int GetHashCode(Object o)
+                public int GetHashCode(object o)
                 {
                     return 1;
                 }
@@ -540,14 +614,17 @@ namespace C5.Tests.support
             public void UnsequencedCollectionComparerEquality()
             {
                 // Repro for bug20101103
-                SCG.IEqualityComparer<Object> eqc = new EveryThingIsEqual();
-                Object o1 = new Object(), o2 = new Object();
-                C5.ICollection<Object> coll1 = new ArrayList<Object>(eqc);
-                C5.ICollection<Object> coll2 = new ArrayList<Object>(eqc);
+                SCG.IEqualityComparer<object> eqc = new EveryThingIsEqual();
+                object o1 = new(), o2 = new();
+                C5.ICollection<Object> coll1 = new ArrayList<object>(eqc);
+                C5.ICollection<Object> coll2 = new ArrayList<object>(eqc);
                 coll1.Add(o1);
                 coll2.Add(o2);
-                Assert.IsFalse(o1.Equals(o2));
-                Assert.IsTrue(coll1.UnsequencedEquals(coll2));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(o1.Equals(o2), Is.False);
+                    Assert.That(coll1.UnsequencedEquals(coll2), Is.True);
+                });
             }
         }
     }

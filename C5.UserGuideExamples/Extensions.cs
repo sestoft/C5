@@ -31,8 +31,8 @@ internal static class Extension
     {
         var hs = new HashSet<NamedPerson>
             {
-                new NamedPerson("Ole"),
-                new NamedPerson("Hans")
+                new("Ole"),
+                new("Hans")
             };
 
         foreach (NamedPerson q in (from p in hs where p.Name.Length == 4 select p))

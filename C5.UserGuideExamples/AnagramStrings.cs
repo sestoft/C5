@@ -40,16 +40,14 @@ internal class AnagramStrings
     private static SCG.IEnumerable<string> ReadFileWords(string filename)
     {
         var delimiter = new Regex("[^a-z���A-Z���0-9-]+");
-        using (var reader = File.OpenText(filename))
+        using var reader = File.OpenText(filename);
+        for (var line = reader.ReadLine(); line != null; line = reader.ReadLine())
         {
-            for (var line = reader.ReadLine(); line != null; line = reader.ReadLine())
+            foreach (var s in delimiter.Split(line))
             {
-                foreach (var s in delimiter.Split(line))
+                if (s != "")
                 {
-                    if (s != "")
-                    {
-                        yield return s.ToLower();
-                    }
+                    yield return s.ToLower();
                 }
             }
         }
@@ -71,7 +69,7 @@ internal class AnagramStrings
             var anagram = AnagramClass(s);
             if (!classes.Find(ref anagram, out HashSet<string> anagramClass))
             {
-                classes[anagram] = anagramClass = new HashSet<string>();
+                classes[anagram] = anagramClass = [];
             }
             anagramClass.Add(s);
         }
@@ -110,8 +108,10 @@ internal class CharBag : IComparable<CharBag>
         return _contents.Equals(that._contents);
     }
 
-    public int CompareTo(CharBag that)
+    public int CompareTo(CharBag? that)
     {
+        ArgumentNullException.ThrowIfNull(that);
+
         return _contents.CompareTo(that._contents);
     }
 }

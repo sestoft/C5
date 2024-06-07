@@ -5,7 +5,6 @@ using NUnit.Framework;
 using System;
 using SCG = System.Collections.Generic;
 
-
 namespace C5.Tests
 {
     internal class SC : SCG.IComparer<string>
@@ -15,52 +14,54 @@ namespace C5.Tests
             return a.CompareTo(b);
         }
 
-
-        public void appl(String s)
+        public void appl(string s)
         {
-            System.Console.WriteLine("--{0}", s);
+            Console.WriteLine("--{0}", s);
         }
     }
 
     internal class TenEqualityComparer : SCG.IEqualityComparer<int>, SCG.IComparer<int>
     {
         private TenEqualityComparer() { }
-        public static TenEqualityComparer Default => new TenEqualityComparer();
+
+        public static TenEqualityComparer Default => new();
+
         public int GetHashCode(int item) { return (item / 10).GetHashCode(); }
+
         public bool Equals(int item1, int item2) { return item1 / 10 == item2 / 10; }
+
         public int Compare(int a, int b) { return (a / 10).CompareTo(b / 10); }
     }
 
     internal class IC : SCG.IComparer<int>, IComparable<int>, SCG.IComparer<IC>, IComparable<IC>
     {
-        public int Compare(int a, int b)
-        {
-            return a > b ? 1 : a < b ? -1 : 0;
-        }
+        public int Compare(int a, int b) => a > b ? 1 : a < b ? -1 : 0;
 
-
-        public int Compare(IC a, IC b)
-        {
-            return a.I > b.I ? 1 : a.I < b.I ? -1 : 0;
-        }
+        public int Compare(IC a, IC b) => a.I > b.I ? 1 : a.I < b.I ? -1 : 0;
 
         public int I { get; set; }
 
-
         public IC() { }
 
+        public IC(int i) => I = i;
 
-        public IC(int i) { I = i; }
+        public int CompareTo(int that) => I > that ? 1 : I < that ? -1 : 0;
 
+        public bool Equals(int that) => I == that;
 
-        public int CompareTo(int that) { return I > that ? 1 : I < that ? -1 : 0; }
+        public int CompareTo(IC? that)
+        {
+            if (that is null || I > that.I)
+            {
+                return 1;
+            }
+            else
+            {
+                return I < that.I ? -1 : 0;
+            }
+        }
 
-        public bool Equals(int that) { return I == that; }
-
-
-        public int CompareTo(IC that) { return I > that.I ? 1 : I < that.I ? -1 : 0; }
-        public bool Equals(IC that) { return I == that.I; }
-
+        public bool Equals(IC that) => I == that.I;
 
         public static bool Eq(SCG.IEnumerable<int> me, params int[] that)
         {
@@ -307,7 +308,7 @@ namespace C5.Tests
 
         public bool Equals(CollectionEvent<T> otherEvent, SCG.IEqualityComparer<T> itemequalityComparer)
         {
-            if (otherEvent == null || Act != otherEvent.Act || !object.ReferenceEquals(Sender, otherEvent.Sender))
+            if (otherEvent == null || Act != otherEvent.Act || !ReferenceEquals(Sender, otherEvent.Sender))
             {
                 return false;
             }
@@ -435,11 +436,11 @@ namespace C5.Tests
 
         // The value to be formatted is returned as a signed string
         // of digits from the rDigits array.
-        private static readonly char[] rDigits = {
+        private static readonly char[] rDigits = [
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
         'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
-        'U', 'V', 'W', 'X', 'Y', 'Z' };
+        'U', 'V', 'W', 'X', 'Y', 'Z' ];
 
         public string Format(string format, object arg, IFormatProvider formatProvider)
         {

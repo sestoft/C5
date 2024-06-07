@@ -1,166 +1,166 @@
-using System;
+// This file is part of the C5 Generic Collection Library for C# and CLI
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
-namespace C5
+namespace C5;
+
+/// <summary>
+/// Tentative, to conserve memory in GuardedCollectionValueBase
+/// This should really be nested in Guarded collection value, only have a guardereal field
+/// </summary>
+/// <typeparam name="T"></typeparam>
+internal sealed class ProxyEventBlock<T>
 {
-    /// <summary>
-    /// Tentative, to conserve memory in GuardedCollectionValueBase
-    /// This should really be nested in Guarded collection value, only have a guardereal field
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    internal sealed class ProxyEventBlock<T>
+    private readonly ICollectionValue<T> proxy, real;
+
+    internal ProxyEventBlock(ICollectionValue<T> proxy, ICollectionValue<T> real)
+    { this.proxy = proxy; this.real = real; }
+
+    private event CollectionChangedHandler<T> CollectionChangedInner;
+
+    private CollectionChangedHandler<T>? collectionChangedProxy = null;
+    internal event CollectionChangedHandler<T> CollectionChanged
     {
-        private readonly ICollectionValue<T> proxy, real;
-
-        internal ProxyEventBlock(ICollectionValue<T> proxy, ICollectionValue<T> real)
-        { this.proxy = proxy; this.real = real; }
-
-        private event CollectionChangedHandler<T> CollectionChangedInner;
-
-        private CollectionChangedHandler<T>? collectionChangedProxy = null;
-        internal event CollectionChangedHandler<T> CollectionChanged
+        add
         {
-            add
+            if (CollectionChangedInner == null)
             {
-                if (CollectionChangedInner == null)
-                {
-                    collectionChangedProxy ??= delegate (object sender) { CollectionChangedInner(proxy); };
+                collectionChangedProxy ??= delegate (object sender) { CollectionChangedInner(proxy); };
 
-                    real.CollectionChanged += collectionChangedProxy;
-                }
-                CollectionChangedInner += value;
+                real.CollectionChanged += collectionChangedProxy;
             }
-            remove
+            CollectionChangedInner += value;
+        }
+        remove
+        {
+            CollectionChangedInner -= value;
+            if (CollectionChangedInner == null)
             {
-                CollectionChangedInner -= value;
-                if (CollectionChangedInner == null)
-                {
-                    real.CollectionChanged -= collectionChangedProxy;
-                }
+                real.CollectionChanged -= collectionChangedProxy;
             }
         }
+    }
 
-        private event CollectionClearedHandler<T> CollectionClearedInner;
+    private event CollectionClearedHandler<T> CollectionClearedInner;
 
-        private CollectionClearedHandler<T>? collectionClearedProxy = null;
-        internal event CollectionClearedHandler<T> CollectionCleared
+    private CollectionClearedHandler<T>? collectionClearedProxy = null;
+    internal event CollectionClearedHandler<T> CollectionCleared
+    {
+        add
         {
-            add
+            if (CollectionClearedInner == null)
             {
-                if (CollectionClearedInner == null)
-                {
-                    collectionClearedProxy ??= delegate (object sender, ClearedEventArgs e) { CollectionClearedInner(proxy, e); };
+                collectionClearedProxy ??= delegate (object sender, ClearedEventArgs e) { CollectionClearedInner(proxy, e); };
 
-                    real.CollectionCleared += collectionClearedProxy;
-                }
-                CollectionClearedInner += value;
+                real.CollectionCleared += collectionClearedProxy;
             }
-            remove
+            CollectionClearedInner += value;
+        }
+        remove
+        {
+            CollectionClearedInner -= value;
+            if (CollectionClearedInner == null)
             {
-                CollectionClearedInner -= value;
-                if (CollectionClearedInner == null)
-                {
-                    real.CollectionCleared -= collectionClearedProxy;
-                }
+                real.CollectionCleared -= collectionClearedProxy;
             }
         }
+    }
 
-        private event ItemsAddedHandler<T> ItemsAddedInner;
+    private event ItemsAddedHandler<T> ItemsAddedInner;
 
-        private ItemsAddedHandler<T>? itemsAddedProxy = null;
-        internal event ItemsAddedHandler<T> ItemsAdded
+    private ItemsAddedHandler<T>? itemsAddedProxy = null;
+    internal event ItemsAddedHandler<T> ItemsAdded
+    {
+        add
         {
-            add
+            if (ItemsAddedInner == null)
             {
-                if (ItemsAddedInner == null)
-                {
-                    itemsAddedProxy ??= delegate (object sender, ItemCountEventArgs<T> e) { ItemsAddedInner(proxy, e); };
+                itemsAddedProxy ??= delegate (object sender, ItemCountEventArgs<T> e) { ItemsAddedInner(proxy, e); };
 
-                    real.ItemsAdded += itemsAddedProxy;
-                }
-                ItemsAddedInner += value;
+                real.ItemsAdded += itemsAddedProxy;
             }
-            remove
+            ItemsAddedInner += value;
+        }
+        remove
+        {
+            ItemsAddedInner -= value;
+            if (ItemsAddedInner == null)
             {
-                ItemsAddedInner -= value;
-                if (ItemsAddedInner == null)
-                {
-                    real.ItemsAdded -= itemsAddedProxy;
-                }
+                real.ItemsAdded -= itemsAddedProxy;
             }
         }
+    }
 
-        private event ItemInsertedHandler<T> ItemInsertedInner;
+    private event ItemInsertedHandler<T> ItemInsertedInner;
 
-        private ItemInsertedHandler<T>? itemInsertedProxy = null;
-        internal event ItemInsertedHandler<T> ItemInserted
+    private ItemInsertedHandler<T>? itemInsertedProxy = null;
+    internal event ItemInsertedHandler<T> ItemInserted
+    {
+        add
         {
-            add
+            if (ItemInsertedInner == null)
             {
-                if (ItemInsertedInner == null)
-                {
-                    itemInsertedProxy ??= delegate (object sender, ItemAtEventArgs<T> e) { ItemInsertedInner(proxy, e); };
+                itemInsertedProxy ??= delegate (object sender, ItemAtEventArgs<T> e) { ItemInsertedInner(proxy, e); };
 
-                    real.ItemInserted += itemInsertedProxy;
-                }
-                ItemInsertedInner += value;
+                real.ItemInserted += itemInsertedProxy;
             }
-            remove
+            ItemInsertedInner += value;
+        }
+        remove
+        {
+            ItemInsertedInner -= value;
+            if (ItemInsertedInner == null)
             {
-                ItemInsertedInner -= value;
-                if (ItemInsertedInner == null)
-                {
-                    real.ItemInserted -= itemInsertedProxy;
-                }
+                real.ItemInserted -= itemInsertedProxy;
             }
         }
+    }
 
-        private event ItemsRemovedHandler<T>? ItemsRemovedInner = null;
+    private event ItemsRemovedHandler<T>? ItemsRemovedInner = null;
 
-        private ItemsRemovedHandler<T>? itemsRemovedProxy = null;
-        internal event ItemsRemovedHandler<T> ItemsRemoved
+    private ItemsRemovedHandler<T>? itemsRemovedProxy = null;
+    internal event ItemsRemovedHandler<T> ItemsRemoved
+    {
+        add
         {
-            add
+            if (ItemsRemovedInner == null)
             {
-                if (ItemsRemovedInner == null)
-                {
-                    itemsRemovedProxy ??= delegate (object sender, ItemCountEventArgs<T> e) { ItemsRemovedInner?.Invoke(proxy, e); };
+                itemsRemovedProxy ??= delegate (object sender, ItemCountEventArgs<T> e) { ItemsRemovedInner?.Invoke(proxy, e); };
 
-                    real.ItemsRemoved += itemsRemovedProxy;
-                }
-                ItemsRemovedInner += value;
+                real.ItemsRemoved += itemsRemovedProxy;
             }
-            remove
+            ItemsRemovedInner += value;
+        }
+        remove
+        {
+            ItemsRemovedInner -= value;
+            if (ItemsRemovedInner == null)
             {
-                ItemsRemovedInner -= value;
-                if (ItemsRemovedInner == null)
-                {
-                    real.ItemsRemoved -= itemsRemovedProxy;
-                }
+                real.ItemsRemoved -= itemsRemovedProxy;
             }
         }
+    }
 
-        private event ItemRemovedAtHandler<T> ItemRemovedAtInner;
+    private event ItemRemovedAtHandler<T> ItemRemovedAtInner;
 
-        private ItemRemovedAtHandler<T>? itemRemovedAtProxy = null;
-        internal event ItemRemovedAtHandler<T> ItemRemovedAt
+    private ItemRemovedAtHandler<T>? itemRemovedAtProxy = null;
+    internal event ItemRemovedAtHandler<T> ItemRemovedAt
+    {
+        add
         {
-            add
+            if (ItemRemovedAtInner == null)
             {
-                if (ItemRemovedAtInner == null)
-                {
-                    itemRemovedAtProxy ??= delegate (object sender, ItemAtEventArgs<T> e) { ItemRemovedAtInner(proxy, e); };
+                itemRemovedAtProxy ??= delegate (object sender, ItemAtEventArgs<T> e) { ItemRemovedAtInner(proxy, e); };
 
-                    real.ItemRemovedAt += itemRemovedAtProxy;
-                }
-                ItemRemovedAtInner += value;
+                real.ItemRemovedAt += itemRemovedAtProxy;
             }
-            remove
+            ItemRemovedAtInner += value;
+        }
+        remove
+        {
+            ItemRemovedAtInner -= value;
+            if (ItemRemovedAtInner == null)
             {
-                ItemRemovedAtInner -= value;
-                if (ItemRemovedAtInner == null)
-                {
-                    real.ItemRemovedAt -= itemRemovedAtProxy;
-                }
+                real.ItemRemovedAt -= itemRemovedAtProxy;
             }
         }
     }

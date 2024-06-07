@@ -1,631 +1,633 @@
+// This file is part of the C5 Generic Collection Library for C# and CLI
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
+
 using System;
 
-namespace C5
+namespace C5;
+
+/// <summary>
+/// Base class for classes implementing ICollectionValue[T]
+/// </summary>
+public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionValue<T>, IShowable
 {
+    #region Event handling
+    private EventBlock<T>? eventBlock;
     /// <summary>
-    /// Base class for classes implementing ICollectionValue[T]
+    ///
     /// </summary>
-    public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionValue<T>, IShowable
+    /// <value></value>
+    public virtual EventType ListenableEvents => 0;
+
+    /// <summary>
+    /// A flag bitmap of the events currently subscribed to by this collection.
+    /// </summary>
+    /// <value></value>
+    public virtual EventType ActiveEvents => eventBlock == null ? 0 : eventBlock.events;
+
+    private void CheckWillListen(EventType eventType)
     {
-        #region Event handling
-        private EventBlock<T>? eventBlock;
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <value></value>
-        public virtual EventType ListenableEvents => 0;
-
-        /// <summary>
-        /// A flag bitmap of the events currently subscribed to by this collection.
-        /// </summary>
-        /// <value></value>
-        public virtual EventType ActiveEvents => eventBlock == null ? 0 : eventBlock.events;
-
-        private void CheckWillListen(EventType eventType)
+        if ((ListenableEvents & eventType) == 0)
         {
-            if ((ListenableEvents & eventType) == 0)
-            {
-                throw new UnlistenableEventException();
-            }
+            throw new UnlistenableEventException();
         }
+    }
 
-        /// <summary>
-        /// The change event. Will be raised for every change operation on the collection.
-        /// </summary>
-        public virtual event CollectionChangedHandler<T> CollectionChanged
+    /// <summary>
+    /// The change event. Will be raised for every change operation on the collection.
+    /// </summary>
+    public virtual event CollectionChangedHandler<T> CollectionChanged
+    {
+        add { CheckWillListen(EventType.Changed); (eventBlock ??= new EventBlock<T>()).CollectionChanged += value; }
+        remove
         {
-            add { CheckWillListen(EventType.Changed); (eventBlock ??= new EventBlock<T>()).CollectionChanged += value; }
-            remove
+            CheckWillListen(EventType.Changed);
+            if (eventBlock != null)
             {
-                CheckWillListen(EventType.Changed);
-                if (eventBlock != null)
+                eventBlock.CollectionChanged -= value;
+                if (eventBlock.events == 0)
                 {
-                    eventBlock.CollectionChanged -= value;
-                    if (eventBlock.events == 0)
-                    {
-                        eventBlock = null;
-                    }
+                    eventBlock = null;
                 }
             }
         }
-        /// <summary>
-        /// Fire the CollectionChanged event
-        /// </summary>
-        protected virtual void RaiseCollectionChanged()
-        {
-            eventBlock?.RaiseCollectionChanged(this);
-        }
+    }
+    /// <summary>
+    /// Fire the CollectionChanged event
+    /// </summary>
+    protected virtual void RaiseCollectionChanged()
+    {
+        eventBlock?.RaiseCollectionChanged(this);
+    }
 
-        /// <summary>
-        /// The clear event. Will be raised for every Clear operation on the collection.
-        /// </summary>
-        public virtual event CollectionClearedHandler<T> CollectionCleared
+    /// <summary>
+    /// The clear event. Will be raised for every Clear operation on the collection.
+    /// </summary>
+    public virtual event CollectionClearedHandler<T> CollectionCleared
+    {
+        add { CheckWillListen(EventType.Cleared); (eventBlock ??= new EventBlock<T>()).CollectionCleared += value; }
+        remove
         {
-            add { CheckWillListen(EventType.Cleared); (eventBlock ??= new EventBlock<T>()).CollectionCleared += value; }
-            remove
+            CheckWillListen(EventType.Cleared);
+            if (eventBlock != null)
             {
-                CheckWillListen(EventType.Cleared);
-                if (eventBlock != null)
+                eventBlock.CollectionCleared -= value;
+                if (eventBlock.events == 0)
                 {
-                    eventBlock.CollectionCleared -= value;
-                    if (eventBlock.events == 0)
-                    {
-                        eventBlock = null;
-                    }
+                    eventBlock = null;
                 }
             }
         }
-        /// <summary>
-        /// Fire the CollectionCleared event
-        /// </summary>
-        protected virtual void RaiseCollectionCleared(bool full, int count)
-        {
-            eventBlock?.RaiseCollectionCleared(this, full, count);
-        }
+    }
+    /// <summary>
+    /// Fire the CollectionCleared event
+    /// </summary>
+    protected virtual void RaiseCollectionCleared(bool full, int count)
+    {
+        eventBlock?.RaiseCollectionCleared(this, full, count);
+    }
 
-        /// <summary>
-        /// Fire the CollectionCleared event
-        /// </summary>
-        protected virtual void RaiseCollectionCleared(bool full, int count, int? offset)
-        {
-            eventBlock?.RaiseCollectionCleared(this, full, count, offset);
-        }
+    /// <summary>
+    /// Fire the CollectionCleared event
+    /// </summary>
+    protected virtual void RaiseCollectionCleared(bool full, int count, int? offset)
+    {
+        eventBlock?.RaiseCollectionCleared(this, full, count, offset);
+    }
 
-        /// <summary>
-        /// The item added  event. Will be raised for every individual addition to the collection.
-        /// </summary>
-        public virtual event ItemsAddedHandler<T> ItemsAdded
+    /// <summary>
+    /// The item added  event. Will be raised for every individual addition to the collection.
+    /// </summary>
+    public virtual event ItemsAddedHandler<T> ItemsAdded
+    {
+        add { CheckWillListen(EventType.Added); (eventBlock ??= new EventBlock<T>()).ItemsAdded += value; }
+        remove
         {
-            add { CheckWillListen(EventType.Added); (eventBlock ??= new EventBlock<T>()).ItemsAdded += value; }
-            remove
+            CheckWillListen(EventType.Added);
+            if (eventBlock != null)
             {
-                CheckWillListen(EventType.Added);
-                if (eventBlock != null)
+                eventBlock.ItemsAdded -= value;
+                if (eventBlock.events == 0)
                 {
-                    eventBlock.ItemsAdded -= value;
-                    if (eventBlock.events == 0)
-                    {
-                        eventBlock = null;
-                    }
+                    eventBlock = null;
                 }
             }
         }
-        /// <summary>
-        /// Fire the ItemsAdded event
-        /// </summary>
-        /// <param name="item">The item that was added</param>
-        /// <param name="count"></param>
-        protected virtual void RaiseItemsAdded(T item, int count)
-        {
-            eventBlock?.RaiseItemsAdded(this, item, count);
-        }
+    }
+    /// <summary>
+    /// Fire the ItemsAdded event
+    /// </summary>
+    /// <param name="item">The item that was added</param>
+    /// <param name="count"></param>
+    protected virtual void RaiseItemsAdded(T item, int count)
+    {
+        eventBlock?.RaiseItemsAdded(this, item, count);
+    }
 
-        /// <summary>
-        /// The item removed event. Will be raised for every individual removal from the collection.
-        /// </summary>
-        public virtual event ItemsRemovedHandler<T> ItemsRemoved
+    /// <summary>
+    /// The item removed event. Will be raised for every individual removal from the collection.
+    /// </summary>
+    public virtual event ItemsRemovedHandler<T> ItemsRemoved
+    {
+        add { CheckWillListen(EventType.Removed); (eventBlock ??= new EventBlock<T>()).ItemsRemoved += value; }
+        remove
         {
-            add { CheckWillListen(EventType.Removed); (eventBlock ??= new EventBlock<T>()).ItemsRemoved += value; }
-            remove
+            CheckWillListen(EventType.Removed);
+            if (eventBlock != null)
             {
-                CheckWillListen(EventType.Removed);
-                if (eventBlock != null)
+                eventBlock.ItemsRemoved -= value;
+                if (eventBlock.events == 0)
                 {
-                    eventBlock.ItemsRemoved -= value;
-                    if (eventBlock.events == 0)
-                    {
-                        eventBlock = null;
-                    }
+                    eventBlock = null;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Fire the ItemsRemoved event
+    /// </summary>
+    /// <param name="item">The item that was removed</param>
+    /// <param name="count"></param>
+    protected virtual void RaiseItemsRemoved(T item, int count)
+    {
+        eventBlock?.RaiseItemsRemoved(this, item, count);
+    }
+
+    /// <summary>
+    /// The item added  event. Will be raised for every individual addition to the collection.
+    /// </summary>
+    public virtual event ItemInsertedHandler<T> ItemInserted
+    {
+        add { CheckWillListen(EventType.Inserted); (eventBlock ??= new EventBlock<T>()).ItemInserted += value; }
+        remove
+        {
+            CheckWillListen(EventType.Inserted);
+            if (eventBlock != null)
+            {
+                eventBlock.ItemInserted -= value;
+                if (eventBlock.events == 0)
+                {
+                    eventBlock = null;
+                }
+            }
+        }
+    }
+    /// <summary>
+    /// Fire the ItemInserted event
+    /// </summary>
+    /// <param name="item">The item that was added</param>
+    /// <param name="index"></param>
+    protected virtual void RaiseItemInserted(T item, int index)
+    {
+        eventBlock?.RaiseItemInserted(this, item, index);
+    }
+
+    /// <summary>
+    /// The item removed event. Will be raised for every individual removal from the collection.
+    /// </summary>
+    public virtual event ItemRemovedAtHandler<T> ItemRemovedAt
+    {
+        add { CheckWillListen(EventType.RemovedAt); (eventBlock ??= new EventBlock<T>()).ItemRemovedAt += value; }
+        remove
+        {
+            CheckWillListen(EventType.RemovedAt);
+            if (eventBlock != null)
+            {
+                eventBlock.ItemRemovedAt -= value;
+                if (eventBlock.events == 0)
+                {
+                    eventBlock = null;
+                }
+            }
+        }
+    }
+    /// <summary>
+    /// Fire the ItemRemovedAt event
+    /// </summary>
+    /// <param name="item">The item that was removed</param>
+    /// <param name="index"></param>
+    protected virtual void RaiseItemRemovedAt(T item, int index)
+    {
+        eventBlock?.RaiseItemRemovedAt(this, item, index);
+    }
+
+    #region Event support for IList
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="index"></param>
+    /// <param name="value"></param>
+    /// <param name="item"></param>
+    protected virtual void RaiseForSetThis(int index, T value, T item)
+    {
+        if (ActiveEvents != 0)
+        {
+            RaiseItemsRemoved(item, 1);
+            RaiseItemRemovedAt(item, index);
+            RaiseItemsAdded(value, 1);
+            RaiseItemInserted(value, index);
+            RaiseCollectionChanged();
+        }
+    }
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="i"></param>
+    /// <param name="item"></param>
+    protected virtual void RaiseForInsert(int i, T item)
+    {
+        if (ActiveEvents != 0)
+        {
+            RaiseItemInserted(item, i);
+            RaiseItemsAdded(item, 1);
+            RaiseCollectionChanged();
+        }
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="item"></param>
+    protected void RaiseForRemove(T item)
+    {
+        if (ActiveEvents != 0)
+        {
+            RaiseItemsRemoved(item, 1);
+            RaiseCollectionChanged();
+        }
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="count"></param>
+    protected void RaiseForRemove(T item, int count)
+    {
+        if (ActiveEvents != 0)
+        {
+            RaiseItemsRemoved(item, count);
+            RaiseCollectionChanged();
+        }
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="index"></param>
+    /// <param name="item"></param>
+    protected void RaiseForRemoveAt(int index, T item)
+    {
+        if (ActiveEvents != 0)
+        {
+            RaiseItemRemovedAt(item, index);
+            RaiseItemsRemoved(item, 1);
+            RaiseCollectionChanged();
+        }
+    }
+
+    #endregion
+
+    #region Event  Support for ICollection
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="newitem"></param>
+    /// <param name="olditem"></param>
+    protected virtual void RaiseForUpdate(T newitem, T olditem)
+    {
+        if (ActiveEvents != 0)
+        {
+            RaiseItemsRemoved(olditem, 1);
+            RaiseItemsAdded(newitem, 1);
+            RaiseCollectionChanged();
+        }
+    }
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="newitem"></param>
+    /// <param name="olditem"></param>
+    /// <param name="count"></param>
+    protected virtual void RaiseForUpdate(T newitem, T olditem, int count)
+    {
+        if (ActiveEvents != 0)
+        {
+            RaiseItemsRemoved(olditem, count);
+            RaiseItemsAdded(newitem, count);
+            RaiseCollectionChanged();
+        }
+    }
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="item"></param>
+    protected virtual void RaiseForAdd(T item)
+    {
+        if (ActiveEvents != 0)
+        {
+            RaiseItemsAdded(item, 1);
+            RaiseCollectionChanged();
+        }
+    }
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="wasRemoved"></param>
+    protected virtual void RaiseForRemoveAll(ICollectionValue<T>? wasRemoved)
+    {
+        if ((ActiveEvents & EventType.Removed) != 0)
+        {
+            if (wasRemoved != null)
+            {
+                foreach (T item in wasRemoved)
+                {
+                    RaiseItemsRemoved(item, 1);
                 }
             }
         }
 
-        /// <summary>
-        /// Fire the ItemsRemoved event
-        /// </summary>
-        /// <param name="item">The item that was removed</param>
-        /// <param name="count"></param>
-        protected virtual void RaiseItemsRemoved(T item, int count)
+        if (wasRemoved != null && wasRemoved.Count > 0)
         {
-            eventBlock?.RaiseItemsRemoved(this, item, count);
+            RaiseCollectionChanged();
         }
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    protected class RaiseForRemoveAllHandler
+    {
+        private readonly CollectionValueBase<T> collection;
+        private CircularQueue<T>? wasRemoved = null;
+        private bool wasChanged = false;
 
         /// <summary>
-        /// The item added  event. Will be raised for every individual addition to the collection.
+        ///
         /// </summary>
-        public virtual event ItemInsertedHandler<T> ItemInserted
+        /// <param name="collection"></param>
+        public RaiseForRemoveAllHandler(CollectionValueBase<T> collection)
         {
-            add { CheckWillListen(EventType.Inserted); (eventBlock ??= new EventBlock<T>()).ItemInserted += value; }
-            remove
-            {
-                CheckWillListen(EventType.Inserted);
-                if (eventBlock != null)
-                {
-                    eventBlock.ItemInserted -= value;
-                    if (eventBlock.events == 0)
-                    {
-                        eventBlock = null;
-                    }
-                }
-            }
-        }
-        /// <summary>
-        /// Fire the ItemInserted event
-        /// </summary>
-        /// <param name="item">The item that was added</param>
-        /// <param name="index"></param>
-        protected virtual void RaiseItemInserted(T item, int index)
-        {
-            eventBlock?.RaiseItemInserted(this, item, index);
+            this.collection = collection;
+            mustFireRemoved = (collection.ActiveEvents & EventType.Removed) != 0;
+            MustFire = (collection.ActiveEvents & (EventType.Removed | EventType.Changed)) != 0;
         }
 
-        /// <summary>
-        /// The item removed event. Will be raised for every individual removal from the collection.
-        /// </summary>
-        public virtual event ItemRemovedAtHandler<T> ItemRemovedAt
-        {
-            add { CheckWillListen(EventType.RemovedAt); (eventBlock ??= new EventBlock<T>()).ItemRemovedAt += value; }
-            remove
-            {
-                CheckWillListen(EventType.RemovedAt);
-                if (eventBlock != null)
-                {
-                    eventBlock.ItemRemovedAt -= value;
-                    if (eventBlock.events == 0)
-                    {
-                        eventBlock = null;
-                    }
-                }
-            }
-        }
-        /// <summary> 
-        /// Fire the ItemRemovedAt event
-        /// </summary>
-        /// <param name="item">The item that was removed</param>
-        /// <param name="index"></param>
-        protected virtual void RaiseItemRemovedAt(T item, int index)
-        {
-            eventBlock?.RaiseItemRemovedAt(this, item, index);
-        }
+        private readonly bool mustFireRemoved;
 
-        #region Event support for IList
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <param name="index"></param>
-        /// <param name="value"></param>
+        public bool MustFire { get; }
+
+        /// <summary>
+        ///
+        /// </summary>
         /// <param name="item"></param>
-        protected virtual void RaiseForSetThis(int index, T value, T item)
+        public void Remove(T item)
         {
-            if (ActiveEvents != 0)
+            if (mustFireRemoved)
             {
-                RaiseItemsRemoved(item, 1);
-                RaiseItemRemovedAt(item, index);
-                RaiseItemsAdded(value, 1);
-                RaiseItemInserted(value, index);
-                RaiseCollectionChanged();
+                wasRemoved ??= new CircularQueue<T>();
+
+                wasRemoved.Enqueue(item);
             }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="i"></param>
-        /// <param name="item"></param>
-        protected virtual void RaiseForInsert(int i, T item)
-        {
-            if (ActiveEvents != 0)
+            if (!wasChanged)
             {
-                RaiseItemInserted(item, i);
-                RaiseItemsAdded(item, 1);
-                RaiseCollectionChanged();
+                wasChanged = true;
             }
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// <param name="item"></param>
-        protected void RaiseForRemove(T item)
+        public void Raise()
         {
-            if (ActiveEvents != 0)
+            if (wasRemoved != null)
             {
-                RaiseItemsRemoved(item, 1);
-                RaiseCollectionChanged();
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="item"></param>
-        /// <param name="count"></param>
-        protected void RaiseForRemove(T item, int count)
-        {
-            if (ActiveEvents != 0)
-            {
-                RaiseItemsRemoved(item, count);
-                RaiseCollectionChanged();
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="index"></param>
-        /// <param name="item"></param>
-        protected void RaiseForRemoveAt(int index, T item)
-        {
-            if (ActiveEvents != 0)
-            {
-                RaiseItemRemovedAt(item, index);
-                RaiseItemsRemoved(item, 1);
-                RaiseCollectionChanged();
-            }
-        }
-
-        #endregion
-
-        #region Event  Support for ICollection
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="newitem"></param>
-        /// <param name="olditem"></param>
-        protected virtual void RaiseForUpdate(T newitem, T olditem)
-        {
-            if (ActiveEvents != 0)
-            {
-                RaiseItemsRemoved(olditem, 1);
-                RaiseItemsAdded(newitem, 1);
-                RaiseCollectionChanged();
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="newitem"></param>
-        /// <param name="olditem"></param>
-        /// <param name="count"></param>
-        protected virtual void RaiseForUpdate(T newitem, T olditem, int count)
-        {
-            if (ActiveEvents != 0)
-            {
-                RaiseItemsRemoved(olditem, count);
-                RaiseItemsAdded(newitem, count);
-                RaiseCollectionChanged();
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="item"></param>
-        protected virtual void RaiseForAdd(T item)
-        {
-            if (ActiveEvents != 0)
-            {
-                RaiseItemsAdded(item, 1);
-                RaiseCollectionChanged();
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="wasRemoved"></param>
-        protected virtual void RaiseForRemoveAll(ICollectionValue<T>? wasRemoved)
-        {
-            if ((ActiveEvents & EventType.Removed) != 0)
-            {
-                if (wasRemoved != null)
+                foreach (T item in wasRemoved)
                 {
-                    foreach (T item in wasRemoved)
-                    {
-                        RaiseItemsRemoved(item, 1);
-                    }
+                    collection.RaiseItemsRemoved(item, 1);
                 }
             }
 
-            if (wasRemoved != null && wasRemoved.Count > 0)
+            if (wasChanged)
             {
-                RaiseCollectionChanged();
+                collection.RaiseCollectionChanged();
             }
         }
+    }
+    #endregion
 
-        /// <summary>
-        /// 
-        /// </summary>
-        protected class RaiseForRemoveAllHandler
+    #endregion
+
+    /// <summary>
+    /// Check if collection is empty.
+    /// </summary>
+    /// <value>True if empty</value>
+    public abstract bool IsEmpty { get; }
+
+    /// <summary>
+    /// The number of items in this collection.
+    /// </summary>
+    /// <value></value>
+    public abstract int Count { get; }
+
+    /// <summary>
+    /// The value is symbolic indicating the type of asymptotic complexity
+    /// in terms of the size of this collection (worst-case or amortized as
+    /// relevant).
+    /// </summary>
+    /// <value>A characterization of the speed of the
+    /// <code>Count</code> property in this collection.</value>
+    public abstract Speed CountSpeed { get; }
+
+    /// <summary>
+    /// Copy the items of this collection to part of an array.
+    /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException"> if <code>index</code>
+    /// is not a valid index
+    /// into the array (i.e. negative or greater than the size of the array)
+    /// or the array does not have room for the items.</exception>
+    /// <param name="array">The array to copy to.</param>
+    /// <param name="index">The starting index.</param>
+    public virtual void CopyTo(T[] array, int index)
+    {
+        if (index < 0 || index + Count > array.Length)
         {
-            private readonly CollectionValueBase<T> collection;
-            private CircularQueue<T>? wasRemoved = null;
-            private bool wasChanged = false;
-
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <param name="collection"></param>
-            public RaiseForRemoveAllHandler(CollectionValueBase<T> collection)
-            {
-                this.collection = collection;
-                mustFireRemoved = (collection.ActiveEvents & EventType.Removed) != 0;
-                MustFire = (collection.ActiveEvents & (EventType.Removed | EventType.Changed)) != 0;
-            }
-
-            private readonly bool mustFireRemoved;
-
-            /// <summary>
-            /// 
-            /// </summary>
-            public bool MustFire { get; }
-
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <param name="item"></param>
-            public void Remove(T item)
-            {
-                if (mustFireRemoved)
-                {
-                    wasRemoved ??= new CircularQueue<T>();
-
-                    wasRemoved.Enqueue(item);
-                }
-                if (!wasChanged)
-                {
-                    wasChanged = true;
-                }
-            }
-
-            /// <summary>
-            /// 
-            /// </summary>
-            public void Raise()
-            {
-                if (wasRemoved != null)
-                {
-                    foreach (T item in wasRemoved)
-                    {
-                        collection.RaiseItemsRemoved(item, 1);
-                    }
-                }
-
-                if (wasChanged)
-                {
-                    collection.RaiseCollectionChanged();
-                }
-            }
+            throw new ArgumentOutOfRangeException(nameof(index));
         }
-        #endregion
 
-        #endregion
-
-        /// <summary>
-        /// Check if collection is empty.
-        /// </summary>
-        /// <value>True if empty</value>
-        public abstract bool IsEmpty { get; }
-
-        /// <summary>
-        /// The number of items in this collection.
-        /// </summary>
-        /// <value></value>
-        public abstract int Count { get; }
-
-        /// <summary>
-        /// The value is symbolic indicating the type of asymptotic complexity
-        /// in terms of the size of this collection (worst-case or amortized as
-        /// relevant).
-        /// </summary>
-        /// <value>A characterization of the speed of the 
-        /// <code>Count</code> property in this collection.</value>
-        public abstract Speed CountSpeed { get; }
-
-        /// <summary>
-        /// Copy the items of this collection to part of an array.
-        /// </summary>
-        /// <exception cref="ArgumentOutOfRangeException"> if <code>index</code> 
-        /// is not a valid index
-        /// into the array (i.e. negative or greater than the size of the array)
-        /// or the array does not have room for the items.</exception>
-        /// <param name="array">The array to copy to.</param>
-        /// <param name="index">The starting index.</param>
-        public virtual void CopyTo(T[] array, int index)
+        foreach (T item in this)
         {
-            if (index < 0 || index + Count > array.Length)
-            {
-                throw new ArgumentOutOfRangeException(nameof(index));
-            }
+            array[index++] = item;
+        }
+    }
 
-            foreach (T item in this)
-            {
-                array[index++] = item;
-            }
+    /// <summary>
+    /// Create an array with the items of this collection (in the same order as an
+    /// enumerator would output them).
+    /// </summary>
+    /// <returns>The array</returns>
+    public virtual T[] ToArray()
+    {
+        T[] res = new T[Count];
+        int i = 0;
+
+        foreach (T item in this)
+        {
+            res[i++] = item;
         }
 
-        /// <summary>
-        /// Create an array with the items of this collection (in the same order as an
-        /// enumerator would output them).
-        /// </summary>
-        /// <returns>The array</returns>
-        public virtual T[] ToArray()
+        return res;
+    }
+
+    /// <summary>
+    /// Apply an single argument action, <see cref="T:Action`1"/> to this enumerable
+    /// </summary>
+    /// <param name="action">The action delegate</param>
+    public virtual void Apply(Action<T> action)
+    {
+        foreach (T item in this)
         {
-            T[] res = new T[Count];
-            int i = 0;
-
-            foreach (T item in this)
-            {
-                res[i++] = item;
-            }
-
-            return res;
+            action(item);
         }
+    }
 
-        /// <summary>
-        /// Apply an single argument action, <see cref="T:Action`1"/> to this enumerable
-        /// </summary>
-        /// <param name="action">The action delegate</param>
-        public virtual void Apply(Action<T> action)
+
+    /// <summary>
+    /// Check if there exists an item  that satisfies a
+    /// specific predicate in this collection.
+    /// </summary>
+    /// <param name="predicate">A delegate
+    /// (<see cref="T:Func`2"/> with <code>R = bool</code>)
+    /// defining the predicate</param>
+    /// <returns>True if such an item exists</returns>
+    public virtual bool Exists(Func<T, bool> predicate)
+    {
+        foreach (T item in this)
         {
-            foreach (T item in this)
+            if (predicate(item))
             {
-                action(item);
-            }
-        }
-
-
-        /// <summary>
-        /// Check if there exists an item  that satisfies a
-        /// specific predicate in this collection.
-        /// </summary>
-        /// <param name="predicate">A delegate 
-        /// (<see cref="T:Func`2"/> with <code>R = bool</code>) 
-        /// defining the predicate</param>
-        /// <returns>True if such an item exists</returns>
-        public virtual bool Exists(Func<T, bool> predicate)
-        {
-            foreach (T item in this)
-            {
-                if (predicate(item))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Check if there exists an item  that satisfies a
-        /// specific predicate in this collection and return the first one in enumeration order.
-        /// </summary>
-        /// <param name="predicate">A delegate 
-        /// (<see cref="T:Func`2"/> with <code>R == bool</code>) defining the predicate</param>
-        /// <param name="item"></param>
-        /// <returns>True is such an item exists</returns>
-        public virtual bool Find(Func<T, bool> predicate, out T item)
-        {
-            foreach (T jtem in this)
-            {
-                if (predicate(jtem))
-                {
-                    item = jtem;
-                    return true;
-                }
-            }
-
-            item = default;
-            return false;
-        }
-
-        /// <summary>
-        /// Check if all items in this collection satisfies a specific predicate.
-        /// </summary>
-        /// <param name="predicate">A delegate 
-        /// (<see cref="T:Func`2"/> with <code>R = bool</code>) 
-        /// defining the predicate</param>
-        /// <returns>True if all items satisfies the predicate</returns>
-        public virtual bool All(Func<T, bool> predicate)
-        {
-            foreach (T item in this)
-            {
-                if (!predicate(item))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Create an enumerable, enumerating the items of this collection that satisfies 
-        /// a certain condition.
-        /// </summary>
-        /// <param name="predicate">A delegate 
-        /// (<see cref="T:Func`2"/> with <code>R = bool</code>) 
-        /// defining the predicate</param>
-        /// <returns>The filtered enumerable</returns>
-        public virtual System.Collections.Generic.IEnumerable<T> Filter(Func<T, bool> predicate)
-        {
-            foreach (T item in this)
-            {
-                if (predicate(item))
-                {
-                    yield return item;
-                }
+                return true;
             }
         }
 
-        /// <summary>
-        /// Choose some item of this collection. 
-        /// </summary>
-        /// <exception cref="NoSuchItemException">if collection is empty.</exception>
-        /// <returns></returns>
-        public abstract T Choose();
+        return false;
+    }
 
-
-        /// <summary>
-        /// Create an enumerator for this collection.
-        /// </summary>
-        /// <returns>The enumerator</returns>
-        public abstract override System.Collections.Generic.IEnumerator<T> GetEnumerator();
-
-        #region IShowable Members
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="stringbuilder"></param>
-        /// <param name="rest"></param>
-        /// <param name="formatProvider"></param>
-        /// <returns></returns>
-        public virtual bool Show(System.Text.StringBuilder stringbuilder, ref int rest, IFormatProvider? formatProvider)
+    /// <summary>
+    /// Check if there exists an item  that satisfies a
+    /// specific predicate in this collection and return the first one in enumeration order.
+    /// </summary>
+    /// <param name="predicate">A delegate
+    /// (<see cref="T:Func`2"/> with <code>R == bool</code>) defining the predicate</param>
+    /// <param name="item"></param>
+    /// <returns>True is such an item exists</returns>
+    public virtual bool Find(Func<T, bool> predicate, out T item)
+    {
+        foreach (T jtem in this)
         {
-            return Showing.ShowCollectionValue<T>(this, stringbuilder, ref rest, formatProvider!);
-        }
-        #endregion
-
-        #region IFormattable Members
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="format"></param>
-        /// <param name="formatProvider"></param>
-        /// <returns></returns>
-        public virtual string ToString(string? format, IFormatProvider? formatProvider)
-        {
-            return Showing.ShowString(this, format, formatProvider);
+            if (predicate(jtem))
+            {
+                item = jtem;
+                return true;
+            }
         }
 
-        #endregion
+        item = default;
+        return false;
+    }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
+    /// <summary>
+    /// Check if all items in this collection satisfies a specific predicate.
+    /// </summary>
+    /// <param name="predicate">A delegate
+    /// (<see cref="T:Func`2"/> with <code>R = bool</code>)
+    /// defining the predicate</param>
+    /// <returns>True if all items satisfies the predicate</returns>
+    public virtual bool All(Func<T, bool> predicate)
+    {
+        foreach (T item in this)
         {
-            return ToString(null, null);
+            if (!predicate(item))
+            {
+                return false;
+            }
         }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Create an enumerable, enumerating the items of this collection that satisfies
+    /// a certain condition.
+    /// </summary>
+    /// <param name="predicate">A delegate
+    /// (<see cref="T:Func`2"/> with <code>R = bool</code>)
+    /// defining the predicate</param>
+    /// <returns>The filtered enumerable</returns>
+    public virtual System.Collections.Generic.IEnumerable<T> Filter(Func<T, bool> predicate)
+    {
+        foreach (T item in this)
+        {
+            if (predicate(item))
+            {
+                yield return item;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Choose some item of this collection.
+    /// </summary>
+    /// <exception cref="NoSuchItemException">if collection is empty.</exception>
+    /// <returns></returns>
+    public abstract T Choose();
+
+
+    /// <summary>
+    /// Create an enumerator for this collection.
+    /// </summary>
+    /// <returns>The enumerator</returns>
+    public abstract override System.Collections.Generic.IEnumerator<T> GetEnumerator();
+
+    #region IShowable Members
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="stringbuilder"></param>
+    /// <param name="rest"></param>
+    /// <param name="formatProvider"></param>
+    /// <returns></returns>
+    public virtual bool Show(System.Text.StringBuilder stringbuilder, ref int rest, IFormatProvider? formatProvider)
+    {
+        return Showing.ShowCollectionValue<T>(this, stringbuilder, ref rest, formatProvider!);
+    }
+    #endregion
+
+    #region IFormattable Members
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="format"></param>
+    /// <param name="formatProvider"></param>
+    /// <returns></returns>
+    public virtual string ToString(string? format, IFormatProvider? formatProvider)
+    {
+        return Showing.ShowString(this, format, formatProvider);
+    }
+
+    #endregion
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+        return ToString(null, null);
     }
 }

@@ -49,7 +49,7 @@ internal class BasicMultiCollection<K, V, W, U> : IMultiCollection<K, V>//: IDic
     where W : ICollection<V>, new()
     where U : IDictionary<K, W>, new()
 {
-    private readonly U _dictionary = new U();
+    private readonly U _dictionary = new();
 
     public SCG.IEqualityComparer<K> KeyEqualityComparer => EqualityComparer<K>.Default;
 

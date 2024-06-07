@@ -36,7 +36,7 @@ internal class HashCodes
         }
     }
 
-    private static readonly C5Random rnd = new C5Random();
+    private static readonly C5Random rnd = new();
 
     public static HashSet<int> MakeRandom(int count, SCG.IEqualityComparer<int> eqc)
     {

@@ -10,7 +10,7 @@ namespace C5.Tests.Templates.List
     {
         public static void Tester<U>() where U : class, IList<int>, new()
         {
-            U extensible = new U();
+            U extensible = new();
             extensible.Dispose();
         }
     }
@@ -24,9 +24,12 @@ namespace C5.Tests.Templates.List
             slist.Add(5);
             slist.Add(6);
             slist.RemoveAt(1);
-            Assert.AreEqual(2, slist.Count);
-            Assert.AreEqual(4, slist[0]);
-            Assert.AreEqual(6, slist[1]);
+            Assert.That(slist, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(slist[0], Is.EqualTo(4));
+                Assert.That(slist[1], Is.EqualTo(6));
+            });
         }
     }
 }

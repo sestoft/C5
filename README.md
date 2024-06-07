@@ -63,4 +63,4 @@ C5 targets .NET Standard 2.0, NET 6.0, and .NET 8.0.
 
 1. Building the unit test project requires NUnit. If you have NuGet installed it should automatically add the reference.
 
-   There are more than 1400 NUnit test cases which should execute in less than 5 seconds. All should pass.
+   There are more than 1500 NUnit test cases which should execute in less than 5 seconds. All should pass.

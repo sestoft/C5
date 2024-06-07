@@ -35,7 +35,7 @@ internal class AntiPatterns
           inner2 = new TreeSet<int>(),
           inner3 = new TreeSet<int>();
 
-        inner1.AddAll(new[] { 2, 3, 5, 7, 11 });
+        inner1.AddAll([2, 3, 5, 7, 11]);
         inner2.AddAll(inner1); inner2.Add(13);
         inner3.AddAll(inner1);
 
@@ -72,7 +72,7 @@ internal class AntiPatterns
           inner1 = new TreeSet<int>(),
           inner2 = new TreeSet<int>(),
           inner3 = new TreeSet<int>();
-        inner1.AddAll(new[] { 2, 3, 5, 7, 11 });
+        inner1.AddAll([2, 3, 5, 7, 11]);
         inner2.AddAll(inner1); inner2.Add(13);
         inner3.AddAll(inner1);
 

@@ -78,7 +78,7 @@ internal class QuickViewSort
         QwSort(arr, 0, arr.Length - 1);
     }
 
-    private static readonly Random _random = new Random();
+    private static readonly Random _random = new();
 
     private static int[] RandomInts(int n)
     {

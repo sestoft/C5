@@ -9,8 +9,8 @@ internal class RandomSelection
 {
     public static void Main()
     {
-        ArrayList<int> list = new ArrayList<int>();
-        list.AddAll(new[] { 2, 3, 5, 7, 11, 13, 17, 19 });
+        ArrayList<int> list = new();
+        list.AddAll([2, 3, 5, 7, 11, 13, 17, 19]);
         var copy1 = new ArrayList<int>();
         copy1.AddAll(list);
         var copy2 = new ArrayList<int>();
@@ -40,7 +40,7 @@ internal class RandomSelection
         Console.WriteLine();
     }
 
-    private static readonly C5Random _random = new C5Random();
+    private static readonly C5Random _random = new();
 
     // Select N random items from coll, with replacement.
     // Does not modify the given list.

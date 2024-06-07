@@ -10,11 +10,11 @@ internal class Toposort
     public static void Main()
     {
         MyNode<string>
-          d = new MyNode<string>("d"),
-          e = new MyNode<string>("e"),
-          c = new MyNode<string>("c", d, e),
-          b = new MyNode<string>("b", d),
-          a = new MyNode<string>("a", d, b, c);
+          d = new("d"),
+          e = new("e"),
+          c = new("c", d, e),
+          b = new("b", d),
+          a = new("a", d, b, c);
 
         foreach (var n in Toposort0(a))
         {
@@ -109,19 +109,17 @@ internal class Toposort
             if (!sorted.Contains(start))
             {
                 sorted.InsertLast(start);
-                using (IList<MyNode<T>> cursor = sorted.View(sorted.Count - 1, 1))
+                using IList<MyNode<T>> cursor = sorted.View(sorted.Count - 1, 1);
+                do
                 {
-                    do
+                    MyNode<T> child;
+                    while ((child = PendingChild(sorted, cursor.First)) != null)
                     {
-                        MyNode<T> child;
-                        while ((child = PendingChild(sorted, cursor.First)) != null)
-                        {
-                            cursor.InsertFirst(child);
-                            cursor.Slide(0, 1);
-                        }
+                        cursor.InsertFirst(child);
+                        cursor.Slide(0, 1);
                     }
-                    while (cursor.TrySlide(+1));
                 }
+                while (cursor.TrySlide(+1));
             }
         }
 

@@ -11,9 +11,10 @@ on:
   pull_request:
     branches:
       - master
+      - releases/*
     paths-ignore:
       - "*.md"
-  
+
   workflow_dispatch:
 
 env:
@@ -52,7 +53,7 @@ jobs:
   deploy:
     name: Deploy
 
-    if: ${{ github.ref == 'refs/heads/master' }}
+    if: ${{ github.ref == 'refs/heads/master' && startsWith(github.ref, 'refs/tags/v') }}
 
     runs-on: ubuntu-latest
 

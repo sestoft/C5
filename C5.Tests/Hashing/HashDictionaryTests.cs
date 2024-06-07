@@ -47,12 +47,15 @@ namespace C5.Tests.hashtable.dictionary
         [Test]
         public void Format()
         {
-            Assert.AreEqual("{  }", coll.ToString());
+            Assert.That(coll.ToString(), Is.EqualTo("{  }"));
             coll.Add(23, 67); coll.Add(45, 89);
-            Assert.AreEqual("{ [45, 89], [23, 67] }", coll.ToString());
-            Assert.AreEqual("{ [2D, 59], [17, 43] }", coll.ToString(null, rad16));
-            Assert.AreEqual("{ [45, 89], ... }", coll.ToString("L14", null));
-            Assert.AreEqual("{ [2D, 59], ... }", coll.ToString("L14", rad16));
+            Assert.Multiple(() =>
+            {
+                Assert.That(coll.ToString(), Is.EqualTo("{ [45, 89], [23, 67] }"));
+                Assert.That(coll.ToString(null, rad16), Is.EqualTo("{ [2D, 59], [17, 43] }"));
+                Assert.That(coll.ToString("L14", null), Is.EqualTo("{ [45, 89], ... }"));
+                Assert.That(coll.ToString("L14", rad16), Is.EqualTo("{ [2D, 59], ... }"));
+            });
         }
     }
 
@@ -85,7 +88,7 @@ namespace C5.Tests.hashtable.dictionary
         public void Choose()
         {
             dict.Add("ER", "FOO");
-            Assert.AreEqual(new System.Collections.Generic.KeyValuePair<string, string>("ER", "FOO"), dict.Choose());
+            Assert.That(dict.Choose(), Is.EqualTo(new System.Collections.Generic.KeyValuePair<string, string>("ER", "FOO")));
         }
 
         [Test]
@@ -108,23 +111,35 @@ namespace C5.Tests.hashtable.dictionary
         {
             bool res;
 
-            Assert.IsFalse(dict.IsReadOnly);
-            Assert.AreEqual(0, dict.Count, "new dict should be empty");
+            Assert.Multiple(() =>
+            {
+                Assert.That(dict.IsReadOnly, Is.False);
+                Assert.That(dict, Is.Empty, "new dict should be empty");
+            });
             dict.Add("A", "B");
-            Assert.AreEqual(1, dict.Count, "bad count");
-            Assert.AreEqual("B", dict["A"], "Wrong value for dict[A]");
+            Assert.That(dict, Has.Count.EqualTo(1), "bad count");
+            Assert.That(dict["A"], Is.EqualTo("B"), "Wrong value for dict[A]");
             dict.Add("C", "D");
-            Assert.AreEqual(2, dict.Count, "bad count");
-            Assert.AreEqual("B", dict["A"], "Wrong value");
-            Assert.AreEqual("D", dict["C"], "Wrong value");
+            Assert.That(dict, Has.Count.EqualTo(2), "bad count");
+            Assert.Multiple(() =>
+            {
+                Assert.That(dict["A"], Is.EqualTo("B"), "Wrong value");
+                Assert.That(dict["C"], Is.EqualTo("D"), "Wrong value");
+            });
             res = dict.Remove("A");
-            Assert.IsTrue(res, "bad return value from Remove(A)");
-            Assert.AreEqual(1, dict.Count, "bad count");
-            Assert.AreEqual("D", dict["C"], "Wrong value of dict[C]");
+            Assert.Multiple(() =>
+            {
+                Assert.That(res, Is.True, "bad return value from Remove(A)");
+                Assert.That(dict, Has.Count.EqualTo(1), "bad count");
+            });
+            Assert.That(dict["C"], Is.EqualTo("D"), "Wrong value of dict[C]");
             res = dict.Remove("Z");
-            Assert.IsFalse(res, "bad return value from Remove(Z)");
-            Assert.AreEqual(1, dict.Count, "bad count");
-            Assert.AreEqual("D", dict["C"], "Wrong value of dict[C] (2)");
+            Assert.Multiple(() =>
+            {
+                Assert.That(res, Is.False, "bad return value from Remove(Z)");
+                Assert.That(dict, Has.Count.EqualTo(1), "bad count");
+            });
+            Assert.That(dict["C"], Is.EqualTo("D"), "Wrong value of dict[C] (2)");
         }
 
 
@@ -132,8 +147,11 @@ namespace C5.Tests.hashtable.dictionary
         public void Contains()
         {
             dict.Add("C", "D");
-            Assert.IsTrue(dict.Contains("C"));
-            Assert.IsFalse(dict.Contains("D"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(dict.Contains("C"), Is.True);
+                Assert.That(dict.Contains("D"), Is.False);
+            });
         }
 
 
@@ -143,7 +161,7 @@ namespace C5.Tests.hashtable.dictionary
             dict.Add("A", "B");
 
             var exception = Assert.Throws<DuplicateNotAllowedException>(() => dict.Add("A", "B"));
-            Assert.AreEqual("Key being added: 'A'", exception.Message);
+            Assert.That(exception.Message, Is.EqualTo("Key being added: 'A'"));
         }
 
 
@@ -158,12 +176,15 @@ namespace C5.Tests.hashtable.dictionary
         public void Setter()
         {
             dict["R"] = "UYGUY";
-            Assert.AreEqual("UYGUY", dict["R"]);
+            Assert.That(dict["R"], Is.EqualTo("UYGUY"));
             dict["R"] = "UIII";
-            Assert.AreEqual("UIII", dict["R"]);
+            Assert.That(dict["R"], Is.EqualTo("UIII"));
             dict["S"] = "VVV";
-            Assert.AreEqual("UIII", dict["R"]);
-            Assert.AreEqual("VVV", dict["S"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dict["R"], Is.EqualTo("UIII"));
+                Assert.That(dict["S"], Is.EqualTo("VVV"));
+            });
             //dict.dump();
         }
 
@@ -174,47 +195,64 @@ namespace C5.Tests.hashtable.dictionary
             dict["S"] = "VVV";
             dict["T"] = "XYZ";
 
-
-            Assert.IsTrue(dict.Remove("S", out string s));
-            Assert.AreEqual("VVV", s);
-            Assert.IsFalse(dict.Contains("S"));
-            Assert.IsFalse(dict.Remove("A", out _));
+            Assert.That(dict.Remove("S", out string s), Is.True);
+            Assert.That(s, Is.EqualTo("VVV"));
+            Assert.That(dict.Contains("S"), Is.False);
+            Assert.That(dict.Remove("A", out _), Is.False);
 
             //
             string t = "T", a = "A";
-            Assert.IsTrue(dict.Find(ref t, out s));
-            Assert.AreEqual("XYZ", s);
-            Assert.IsFalse(dict.Find(ref a, out _));
+            Assert.Multiple(() =>
+            {
+                Assert.That(dict.Find(ref t, out s), Is.True);
+                Assert.That(s, Is.EqualTo("XYZ"));
+                Assert.That(dict.Find(ref a, out _), Is.False);
 
-            //
-            Assert.IsTrue(dict.Update("R", "UHU"));
-            Assert.AreEqual("UHU", dict["R"]);
-            Assert.IsFalse(dict.Update("A", "W"));
-            Assert.IsFalse(dict.Contains("A"));
+                //
+                Assert.That(dict.Update("R", "UHU"), Is.True);
+                Assert.That(dict["R"], Is.EqualTo("UHU"));
+                Assert.That(dict.Update("A", "W"), Is.False);
+                Assert.That(dict.Contains("A"), Is.False);
+            });
 
             //
             s = "KKK";
-            Assert.IsFalse(dict.FindOrAdd("B", ref s));
-            Assert.AreEqual("KKK", dict["B"]);
-            Assert.IsTrue(dict.FindOrAdd("T", ref s));
-            Assert.AreEqual("XYZ", s);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dict.FindOrAdd("B", ref s), Is.False);
+                Assert.That(dict["B"], Is.EqualTo("KKK"));
+                Assert.That(dict.FindOrAdd("T", ref s), Is.True);
+                Assert.That(s, Is.EqualTo("XYZ"));
+            });
 
             //
             s = "LLL";
-            Assert.IsTrue(dict.UpdateOrAdd("R", s));
-            Assert.AreEqual("LLL", dict["R"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dict.UpdateOrAdd("R", s), Is.True);
+                Assert.That(dict["R"], Is.EqualTo("LLL"));
+            });
             s = "MMM";
-            Assert.IsFalse(dict.UpdateOrAdd("C", s));
-            Assert.AreEqual("MMM", dict["C"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dict.UpdateOrAdd("C", s), Is.False);
+                Assert.That(dict["C"], Is.EqualTo("MMM"));
+            });
 
             // bug20071112 fixed 2008-02-03
             s = "NNN";
-            Assert.IsTrue(dict.UpdateOrAdd("R", s, out string old));
-            Assert.AreEqual("NNN", dict["R"]);
-            Assert.AreEqual("LLL", old);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dict.UpdateOrAdd("R", s, out string old), Is.True);
+                Assert.That(dict["R"], Is.EqualTo("NNN"));
+                Assert.That(old, Is.EqualTo("LLL"));
+            });
             s = "OOO";
-            Assert.IsFalse(dict.UpdateOrAdd("D", s, out _));
-            Assert.AreEqual("OOO", dict["D"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(dict.UpdateOrAdd("D", s, out _), Is.False);
+                Assert.That(dict["D"], Is.EqualTo("OOO"));
+            });
             // Unclear which of these is correct:
             // Assert.AreEqual(null, old);
             // Assert.AreEqual("OOO", old);
@@ -223,7 +261,7 @@ namespace C5.Tests.hashtable.dictionary
         [Test]
         public void DeepBucket()
         {
-            HashDictionary<int, int> dict2 = new HashDictionary<int, int>();
+            HashDictionary<int, int> dict2 = new();
 
             for (int i = 0; i < 5; i++)
             {
@@ -232,7 +270,7 @@ namespace C5.Tests.hashtable.dictionary
 
             for (int i = 0; i < 5; i++)
             {
-                Assert.AreEqual(5 * i, dict2[16 * i]);
+                Assert.That(dict2[16 * i], Is.EqualTo(5 * i));
             }
 
             for (int i = 0; i < 5; i++)
@@ -242,10 +280,10 @@ namespace C5.Tests.hashtable.dictionary
 
             for (int i = 0; i < 5; i++)
             {
-                Assert.AreEqual(7 * i + 1, dict2[16 * i]);
+                Assert.That(dict2[16 * i], Is.EqualTo(7 * i + 1));
             }
 
-            Assert.IsTrue(dict.Check());
+            Assert.That(dict.Check(), Is.True);
         }
     }
 
@@ -276,10 +314,13 @@ namespace C5.Tests.hashtable.dictionary
         {
             var keys = _dict.Keys.ToArray();
 
-            Assert.AreEqual(3, keys.Length);
-            Assert.IsTrue(keys.Contains("R"));
-            Assert.IsTrue(keys.Contains("S"));
-            Assert.IsTrue(keys.Contains("T"));
+            Assert.That(keys.Length, Is.EqualTo(3));
+            Assert.Multiple(() =>
+            {
+                Assert.That(keys.Contains("R"), Is.True);
+                Assert.That(keys.Contains("S"), Is.True);
+                Assert.That(keys.Contains("T"), Is.True);
+            });
         }
 
 
@@ -288,16 +329,19 @@ namespace C5.Tests.hashtable.dictionary
         {
             var values = _dict.Values.ToArray();
 
-            Assert.AreEqual(3, values.Length);
-            Assert.IsTrue(values.Contains("A"));
-            Assert.IsTrue(values.Contains("B"));
-            Assert.IsTrue(values.Contains("C"));
+            Assert.That(values.Length, Is.EqualTo(3));
+            Assert.Multiple(() =>
+            {
+                Assert.That(values.Contains("A"), Is.True);
+                Assert.That(values.Contains("B"), Is.True);
+                Assert.That(values.Contains("C"), Is.True);
+            });
         }
 
         [Test]
         public void Fun()
         {
-            Assert.AreEqual("B", _dict.Func("T"));
+            Assert.That(_dict.Func("T"), Is.EqualTo("B"));
         }
 
 
@@ -306,10 +350,13 @@ namespace C5.Tests.hashtable.dictionary
         {
             var pairs = _dict.ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            Assert.AreEqual(3, pairs.Count);
-            Assert.IsTrue(pairs.Contains(new SCG.KeyValuePair<string, string>("R", "C")));
-            Assert.IsTrue(pairs.Contains(new SCG.KeyValuePair<string, string>("S", "A")));
-            Assert.IsTrue(pairs.Contains(new SCG.KeyValuePair<string, string>("T", "B")));
+            Assert.That(pairs, Has.Count.EqualTo(3));
+            Assert.Multiple(() =>
+            {
+                Assert.That(pairs.Contains(new SCG.KeyValuePair<string, string>("R", "C")), Is.True);
+                Assert.That(pairs.Contains(new SCG.KeyValuePair<string, string>("S", "A")), Is.True);
+                Assert.That(pairs.Contains(new SCG.KeyValuePair<string, string>("T", "B")), Is.True);
+            });
         }
     }
 }

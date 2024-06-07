@@ -231,7 +231,7 @@ namespace C5.UserGuideExamples
                 }
                 {
                     MultiHashDictionary<int, string, HashSet<string>> mdict
-                      = new MultiHashDictionary<int, string, HashSet<string>>
+                      = new()
                       {
                       { 2, "to" },
                       { 2, "deux" },
@@ -248,8 +248,8 @@ namespace C5.UserGuideExamples
                     mdict.Remove(20, "twenty");
                     Console.WriteLine(mdict);
                     Console.WriteLine("mdict.Count is {0}", mdict.Count);
-                    HashSet<string> zwei = new HashSet<string>
-                {
+                    HashSet<string> zwei = new()
+                    {
                     "zwei"
                 };
                     mdict[2] = zwei;
@@ -259,7 +259,7 @@ namespace C5.UserGuideExamples
                     zwei.Add("kaksi");
                     Console.WriteLine(mdict);
                     Console.WriteLine("mdict.Count is {0}", mdict.Count);
-                    HashSet<string> empty = new HashSet<string>();
+                    HashSet<string> empty = new();
                     mdict[0] = empty;
                     Console.WriteLine(mdict);
                     Console.WriteLine("mdict.Count is {0}", mdict.Count);

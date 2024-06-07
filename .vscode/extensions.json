@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "davidanson.vscode-markdownlint",
+        "github.vscode-github-actions",
+        "ms-dotnettools.csharp",
+        "streetsidesoftware.code-spell-checker",
+        "redhat.vscode-yaml"
+    ]
+}

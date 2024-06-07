@@ -1,32 +1,32 @@
-using System;
+// This file is part of the C5 Generic Collection Library for C# and CLI
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
-namespace C5
+namespace C5;
+
+internal abstract class MappedCollectionValue<T, V> : CollectionValueBase<V>
 {
-    internal abstract class MappedCollectionValue<T, V> : CollectionValueBase<V>
+    private readonly ICollectionValue<T> _collectionValue;
+
+    public abstract V Map(T item);
+
+    protected MappedCollectionValue(ICollectionValue<T> collectionValue)
     {
-        private readonly ICollectionValue<T> collectionValue;
+        _collectionValue = collectionValue;
+    }
 
-        public abstract V Map(T item);
+    public override V Choose() => Map(_collectionValue.Choose());
 
-        protected MappedCollectionValue(ICollectionValue<T> collectionValue)
+    public override bool IsEmpty => _collectionValue.IsEmpty;
+
+    public override int Count => _collectionValue.Count;
+
+    public override Speed CountSpeed => _collectionValue.CountSpeed;
+
+    public override System.Collections.Generic.IEnumerator<V> GetEnumerator()
+    {
+        foreach (var item in _collectionValue)
         {
-            this.collectionValue = collectionValue;
-        }
-
-        public override V Choose() { return Map(collectionValue.Choose()); }
-
-        public override bool IsEmpty => collectionValue.IsEmpty;
-
-        public override int Count => collectionValue.Count;
-
-        public override Speed CountSpeed => collectionValue.CountSpeed;
-
-        public override System.Collections.Generic.IEnumerator<V> GetEnumerator()
-        {
-            foreach (var item in collectionValue)
-            {
-                yield return Map(item);
-            }
+            yield return Map(item);
         }
     }
 }

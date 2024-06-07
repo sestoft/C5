@@ -1,0 +1,25 @@
+{
+    "[yaml]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.autoIndent": "advanced"
+    },
+    "[json]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.autoIndent": "advanced"
+    },
+    "editor.tabSize": 4,
+    "editor.trimAutoWhitespace": true,
+    "files.autoSave": "afterDelay",
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    "cSpell.language": "en",
+    "cSpell.enabled": true,
+    "cSpell.enableFiletypes": [
+        "*"
+    ],
+    "cSpell.words": [
+        "showable"
+    ]
+}

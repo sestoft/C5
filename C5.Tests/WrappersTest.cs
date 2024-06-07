@@ -13,7 +13,7 @@ namespace C5.Tests.wrappers
         public class IList_
         {
             private ArrayList<int> list;
-            private ICollectionValue<int> guarded;
+            private GuardedList<int> guarded;
             private CollectionEventList<int> seen;
 
             [SetUp]
@@ -29,10 +29,13 @@ namespace C5.Tests.wrappers
             [Test]
             public void Listenable()
             {
-                Assert.AreEqual(EventType.All, guarded.ListenableEvents);
-                Assert.AreEqual(EventType.None, guarded.ActiveEvents);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(guarded.ListenableEvents, Is.EqualTo(EventType.All));
+                    Assert.That(guarded.ActiveEvents, Is.EqualTo(EventType.None));
+                });
                 listen();
-                Assert.AreEqual(EventType.All, guarded.ActiveEvents);
+                Assert.That(guarded.ActiveEvents, Is.EqualTo(EventType.All));
             }
 
             [Test]
@@ -41,13 +44,13 @@ namespace C5.Tests.wrappers
                 list.Add(4); list.Add(56); list.Add(8);
                 listen();
                 list[1] = 45;
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(56, 1), guarded),
           new CollectionEvent<int>(EventType.RemovedAt, new ItemAtEventArgs<int>(56,1), guarded),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(45, 1), guarded),
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(45,1), guarded),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
-          });
+          ]);
             }
 
             [Test]
@@ -56,11 +59,11 @@ namespace C5.Tests.wrappers
                 list.Add(4); list.Add(56); list.Add(8);
                 listen();
                 list.Insert(1, 45);
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(45,1), guarded),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(45, 1), guarded),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
-          });
+          ]);
             }
 
             [Test]
@@ -68,9 +71,9 @@ namespace C5.Tests.wrappers
             {
                 list.Add(4); list.Add(56); list.Add(8);
                 listen();
-                list.InsertAll(1, new int[] { 666, 777, 888 });
+                list.InsertAll(1, [666, 777, 888]);
                 //seen.Print(Console.Error);
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(666,1), guarded),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(666, 1), guarded),
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(777,2), guarded),
@@ -78,9 +81,9 @@ namespace C5.Tests.wrappers
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(888,3), guarded),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(888, 1), guarded),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
-          });
-                list.InsertAll(1, new int[] { });
-                seen.Check(new CollectionEvent<int>[] { });
+          ]);
+                list.InsertAll(1, []);
+                seen.Check([]);
             }
 
             [Test]
@@ -89,17 +92,17 @@ namespace C5.Tests.wrappers
                 list.Add(4); list.Add(56); list.Add(8);
                 listen();
                 list.InsertFirst(45);
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(45,0), guarded),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(45, 1), guarded),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
-          });
+          ]);
                 list.InsertLast(88);
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(88,4), guarded),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(88, 1), guarded),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
-          });
+          ]);
             }
 
             [Test]
@@ -108,9 +111,9 @@ namespace C5.Tests.wrappers
                 list.Add(4); list.Add(56); list.Add(8);
                 listen();
                 list.Remove();
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(8, 1), guarded),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)]);
             }
 
             [Test]
@@ -119,10 +122,10 @@ namespace C5.Tests.wrappers
                 list.Add(4); list.Add(56); list.Add(8);
                 listen();
                 list.RemoveFirst();
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.RemovedAt, new ItemAtEventArgs<int>(4,0), guarded),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(4, 1), guarded),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)]);
             }
 
             [Test]
@@ -131,10 +134,10 @@ namespace C5.Tests.wrappers
                 list.Add(4); list.Add(56); list.Add(8);
                 listen();
                 list.RemoveLast();
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.RemovedAt, new ItemAtEventArgs<int>(8,2), guarded),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(8, 1), guarded),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)]);
             }
 
             [Test]
@@ -143,11 +146,11 @@ namespace C5.Tests.wrappers
                 list.Add(4); list.Add(56); list.Add(8);
                 listen();
                 list.Reverse();
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
-        });
+        ]);
                 list.View(1, 0).Reverse();
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check([]);
             }
 
 
@@ -157,11 +160,11 @@ namespace C5.Tests.wrappers
                 list.Add(4); list.Add(56); list.Add(8);
                 listen();
                 list.Sort();
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
-        });
+        ]);
                 list.View(1, 0).Sort();
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check([]);
             }
 
             [Test]
@@ -170,11 +173,11 @@ namespace C5.Tests.wrappers
                 list.Add(4); list.Add(56); list.Add(8);
                 listen();
                 list.Shuffle();
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
-        });
+        ]);
                 list.View(1, 0).Shuffle();
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check([]);
             }
 
             [Test]
@@ -183,10 +186,10 @@ namespace C5.Tests.wrappers
                 list.Add(4); list.Add(56); list.Add(8);
                 listen();
                 list.RemoveAt(1);
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.RemovedAt, new ItemAtEventArgs<int>(56,1), guarded),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(56, 1), guarded),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)]);
             }
 
             [Test]
@@ -195,12 +198,12 @@ namespace C5.Tests.wrappers
                 list.Add(4); list.Add(56); list.Add(8);
                 listen();
                 list.RemoveInterval(1, 2);
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
            new CollectionEvent<int>(EventType.Cleared, new ClearedRangeEventArgs(false,2,1), guarded),
          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
-        });
+        ]);
                 list.RemoveInterval(1, 0);
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check([]);
             }
 
             [Test]
@@ -209,13 +212,13 @@ namespace C5.Tests.wrappers
                 list.Add(4); list.Add(56); list.Add(8);
                 listen();
                 list.Update(53);
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(56, 1), guarded),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(53, 1), guarded),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
-          });
+          ]);
                 list.Update(67);
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check([]);
             }
 
             [Test]
@@ -225,13 +228,13 @@ namespace C5.Tests.wrappers
                 listen();
                 int val = 53;
                 list.FindOrAdd(ref val);
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check([]);
                 val = 67;
                 list.FindOrAdd(ref val);
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(67, 1), guarded),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
-        });
+        ]);
             }
 
             [Test]
@@ -241,29 +244,29 @@ namespace C5.Tests.wrappers
                 listen();
                 int val = 53;
                 list.UpdateOrAdd(val);
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(56, 1), guarded),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(53, 1), guarded),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
-        });
+        ]);
                 val = 67;
                 list.UpdateOrAdd(val);
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(67, 1), guarded),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
-        });
+        ]);
                 list.UpdateOrAdd(51, out _);
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(53, 1), guarded),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(51, 1), guarded),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
-        });
+        ]);
                 // val = 67;
                 list.UpdateOrAdd(81, out _);
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(81, 1), guarded),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
-        });
+        ]);
             }
 
             [Test]
@@ -272,13 +275,13 @@ namespace C5.Tests.wrappers
                 list.Add(4); list.Add(56); list.Add(18);
                 listen();
                 list.Remove(53);
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(56, 1), guarded),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)]);
                 list.Remove(11);
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(18, 1), guarded),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)]);
             }
 
             [Test]
@@ -289,14 +292,14 @@ namespace C5.Tests.wrappers
                     list.Add(10 * i + 5);
                 }
                 listen();
-                list.RemoveAll(new int[] { 32, 187, 45 });
+                list.RemoveAll([32, 187, 45]);
                 //TODO: the order depends on internals of the HashSet
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(35, 1), guarded),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(45, 1), guarded),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
-                list.RemoveAll(new int[] { 200, 300 });
-                seen.Check(new CollectionEvent<int>[] { });
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)]);
+                list.RemoveAll([200, 300]);
+                seen.Check([]);
             }
 
             [Test]
@@ -305,17 +308,17 @@ namespace C5.Tests.wrappers
                 list.Add(4); list.Add(56); list.Add(8);
                 listen();
                 list.View(1, 1).Clear();
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Cleared, new ClearedRangeEventArgs(false,1,1), guarded),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
-        });
+        ]);
                 list.Clear();
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Cleared, new ClearedRangeEventArgs(true,2,0), guarded),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
-        });
+        ]);
                 list.Clear();
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check([]);
             }
 
             [Test]
@@ -324,14 +327,14 @@ namespace C5.Tests.wrappers
                 list.Add(4); list.Add(56); list.Add(8);
                 listen();
                 list.View(1, 1).Dispose();
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check([]);
                 list.Dispose();
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Cleared, new ClearedRangeEventArgs(true,3,0), guarded),
           new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)
-        });
+        ]);
                 list.Dispose();
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check([]);
             }
 
 
@@ -343,15 +346,15 @@ namespace C5.Tests.wrappers
                     list.Add(10 * i + 5);
                 }
                 listen();
-                list.RetainAll(new int[] { 32, 187, 45, 62, 82, 95, 2 });
-                seen.Check(new CollectionEvent<int>[] {
+                list.RetainAll([32, 187, 45, 62, 82, 95, 2]);
+                seen.Check([
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(15, 1), guarded),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(25, 1), guarded),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(55, 1), guarded),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(75, 1), guarded),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
-                list.RetainAll(new int[] { 32, 187, 45, 62, 82, 95, 2 });
-                seen.Check(new CollectionEvent<int>[] { });
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)]);
+                list.RetainAll([32, 187, 45, 62, 82, 95, 2]);
+                seen.Check([]);
             }
 
             [Test]
@@ -363,24 +366,24 @@ namespace C5.Tests.wrappers
                 }
                 listen();
                 list.RemoveAllCopies(14);
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(11, 1), guarded),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(14, 1), guarded),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(17, 1), guarded),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)]);
                 list.RemoveAllCopies(14);
-                seen.Check(new CollectionEvent<int>[] { });
+                seen.Check([]);
             }
 
             [Test]
             public void Add()
             {
                 listen();
-                seen.Check(new CollectionEvent<int>[0]);
+                seen.Check([]);
                 list.Add(23);
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(23, 1), guarded),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)]);
             }
 
             [Test]
@@ -391,18 +394,18 @@ namespace C5.Tests.wrappers
                     list.Add(10 * i + 5);
                 }
                 listen();
-                list.AddAll(new int[] { 45, 56, 67 });
-                seen.Check(new CollectionEvent<int>[] {
+                list.AddAll([45, 56, 67]);
+                seen.Check([
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(45, 1), guarded),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(56, 1), guarded),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(67, 1), guarded),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
-                list.AddAll(new int[] { });
-                seen.Check(new CollectionEvent<int>[] { });
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)]);
+                list.AddAll([]);
+                seen.Check([]);
             }
 
             [TearDown]
-            public void Dispose() { list = null; seen = null; }
+            public void Dispose() { list.Dispose(); guarded.Dispose(); seen = null; }
 
             [Test]
             public void ViewChanged()
@@ -482,7 +485,7 @@ namespace C5.Tests.wrappers
         public class StackQueue
         {
             private ArrayList<int> list;
-            private ICollectionValue<int> guarded;
+            private GuardedList<int> guarded;
             private CollectionEventList<int> seen;
 
             [SetUp]
@@ -501,56 +504,56 @@ namespace C5.Tests.wrappers
             {
                 listen();
                 list.Enqueue(67);
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(67,0), guarded),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(67, 1), guarded),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)]);
                 list.Enqueue(2);
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(2,1), guarded),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(2, 1), guarded),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)]);
                 list.Dequeue();
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.RemovedAt, new ItemAtEventArgs<int>(67,0), guarded),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(67, 1), guarded),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)]);
                 list.Dequeue();
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.RemovedAt, new ItemAtEventArgs<int>(2,0), guarded),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(2, 1), guarded),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)]);
             }
 
             [Test]
             public void PushPop()
             {
                 listen();
-                seen.Check(new CollectionEvent<int>[0]);
+                seen.Check([]);
                 list.Push(23);
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(23,0), guarded),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(23, 1), guarded),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)]);
                 list.Push(-12);
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.Inserted, new ItemAtEventArgs<int>(-12,1), guarded),
           new CollectionEvent<int>(EventType.Added, new ItemCountEventArgs<int>(-12, 1), guarded),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)]);
                 list.Pop();
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.RemovedAt, new ItemAtEventArgs<int>(-12,1), guarded),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(-12, 1), guarded),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)]);
                 list.Pop();
-                seen.Check(new CollectionEvent<int>[] {
+                seen.Check([
           new CollectionEvent<int>(EventType.RemovedAt, new ItemAtEventArgs<int>(23,0), guarded),
           new CollectionEvent<int>(EventType.Removed, new ItemCountEventArgs<int>(23, 1), guarded),
-          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)});
+          new CollectionEvent<int>(EventType.Changed, new EventArgs(), guarded)]);
             }
 
             [TearDown]
-            public void Dispose() { list = null; seen = null; }
+            public void Dispose() { list.Dispose(); guarded.Dispose(); seen = null; }
         }
 
 
@@ -575,76 +578,104 @@ namespace C5.Tests.wrappers
             [Test]
             public void NoExc()
             {
-                WrappedArray<int> wrapped = new WrappedArray<int>(new int[] { 4, 6, 5 });
-                Assert.AreEqual(6, wrapped[1]);
-                Assert.IsTrue(IC.Eq(wrapped[1, 2], 6, 5));
+                WrappedArray<int> wrapped = new([4, 6, 5]);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped[1], Is.EqualTo(6));
+                    Assert.That(IC.Eq(wrapped[1, 2], 6, 5), Is.True);
+                });
                 //
                 bool is4(int i) { return i == 4; }
-                Assert.AreEqual(EventType.None, wrapped.ActiveEvents);
-                Assert.AreEqual(false, wrapped.All(is4));
-                Assert.AreEqual(true, wrapped.AllowsDuplicates);
+
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.ActiveEvents, Is.EqualTo(EventType.None));
+                    Assert.That(wrapped.All(is4), Is.EqualTo(false));
+                    Assert.That(wrapped.AllowsDuplicates, Is.EqualTo(true));
+                });
                 wrapped.Apply(delegate (int i) { });
-                Assert.AreEqual("{ 5, 6, 4 }", wrapped.Backwards().ToString());
-                Assert.AreEqual(true, wrapped.Check());
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.Backwards().ToString(), Is.EqualTo("{ 5, 6, 4 }"));
+                    Assert.That(wrapped.Check(), Is.EqualTo(true));
+                });
                 wrapped.Choose();
-                Assert.AreEqual(true, wrapped.Contains(4));
-                Assert.AreEqual(true, wrapped.ContainsAll(new ArrayList<int>()));
-                Assert.AreEqual(1, wrapped.ContainsCount(4));
-                Assert.AreEqual(Speed.Linear, wrapped.ContainsSpeed);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.Contains(4), Is.EqualTo(true));
+                    Assert.That(wrapped.ContainsAll(new ArrayList<int>()), Is.EqualTo(true));
+                    Assert.That(wrapped.ContainsCount(4), Is.EqualTo(1));
+                    Assert.That(wrapped.ContainsSpeed, Is.EqualTo(Speed.Linear));
+                });
                 int[] extarray = new int[5];
                 wrapped.CopyTo(extarray, 1);
-                Assert.IsTrue(IC.Eq(extarray, 0, 4, 6, 5, 0));
-                Assert.AreEqual(3, wrapped.Count);
-                Assert.AreEqual(Speed.Constant, wrapped.CountSpeed);
-                Assert.AreEqual(Direction.Forwards, wrapped.Direction);
-                Assert.AreEqual(false, wrapped.DuplicatesByCounting);
-                Assert.AreEqual(System.Collections.Generic.EqualityComparer<int>.Default, wrapped.EqualityComparer);
-                Assert.AreEqual(true, wrapped.Exists(is4));
-                Assert.IsTrue(IC.Eq(wrapped.Filter(is4), 4));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(extarray, 0, 4, 6, 5, 0), Is.True);
+                    Assert.That(wrapped, Has.Count.EqualTo(3));
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.CountSpeed, Is.EqualTo(Speed.Constant));
+                    Assert.That(wrapped.Direction, Is.EqualTo(Direction.Forwards));
+                    Assert.That(wrapped.DuplicatesByCounting, Is.EqualTo(false));
+                    Assert.That(wrapped.EqualityComparer, Is.EqualTo(System.Collections.Generic.EqualityComparer<int>.Default));
+                    Assert.That(wrapped.Exists(is4), Is.EqualTo(true));
+                    Assert.That(IC.Eq(wrapped.Filter(is4), 4), Is.True);
+                });
                 int j = 5;
-                Assert.AreEqual(true, wrapped.Find(ref j));
-                Assert.AreEqual(true, wrapped.Find(is4, out j));
-                Assert.AreEqual("[ 0:4 ]", wrapped.FindAll(is4).ToString());
-                Assert.AreEqual(0, wrapped.FindIndex(is4));
-                Assert.AreEqual(true, wrapped.FindLast(is4, out j));
-                Assert.AreEqual(0, wrapped.FindLastIndex(is4));
-                Assert.AreEqual(4, wrapped.First);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.Find(ref j), Is.EqualTo(true));
+                    Assert.That(wrapped.Find(is4, out j), Is.EqualTo(true));
+                    Assert.That(wrapped.FindAll(is4).ToString(), Is.EqualTo("[ 0:4 ]"));
+                    Assert.That(wrapped.FindIndex(is4), Is.EqualTo(0));
+                    Assert.That(wrapped.FindLast(is4, out j), Is.EqualTo(true));
+                    Assert.That(wrapped.FindLastIndex(is4), Is.EqualTo(0));
+                    Assert.That(wrapped.First, Is.EqualTo(4));
+                });
                 wrapped.GetEnumerator();
-                Assert.AreEqual(CHC.SequencedHashCode(4, 6, 5), wrapped.GetSequencedHashCode());
-                Assert.AreEqual(CHC.UnsequencedHashCode(4, 6, 5), wrapped.GetUnsequencedHashCode());
-                Assert.AreEqual(Speed.Constant, wrapped.IndexingSpeed);
-                Assert.AreEqual(2, wrapped.IndexOf(5));
-                Assert.AreEqual(false, wrapped.IsEmpty);
-                Assert.AreEqual(true, wrapped.IsReadOnly);
-                Assert.AreEqual(false, wrapped.IsSorted());
-                Assert.AreEqual(true, wrapped.IsValid);
-                Assert.AreEqual(5, wrapped.Last);
-                Assert.AreEqual(2, wrapped.LastIndexOf(5));
-                Assert.AreEqual(EventType.None, wrapped.ListenableEvents);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.GetSequencedHashCode(), Is.EqualTo(CHC.SequencedHashCode(4, 6, 5)));
+                    Assert.That(wrapped.GetUnsequencedHashCode(), Is.EqualTo(CHC.UnsequencedHashCode(4, 6, 5)));
+                    Assert.That(wrapped.IndexingSpeed, Is.EqualTo(Speed.Constant));
+                    Assert.That(wrapped.IndexOf(5), Is.EqualTo(2));
+                    Assert.That(wrapped.IsEmpty, Is.EqualTo(false));
+                    Assert.That(wrapped.IsReadOnly, Is.EqualTo(true));
+                    Assert.That(wrapped.IsSorted(), Is.EqualTo(false));
+                    Assert.That(wrapped.IsValid, Is.EqualTo(true));
+                    Assert.That(wrapped.Last, Is.EqualTo(5));
+                    Assert.That(wrapped.LastIndexOf(5), Is.EqualTo(2));
+                    Assert.That(wrapped.ListenableEvents, Is.EqualTo(EventType.None));
+                });
                 string i2s(int i) { return string.Format("T{0}", i); }
-                Assert.AreEqual("[ 0:T4, 1:T6, 2:T5 ]", wrapped.Map<string>(i2s).ToString());
-                Assert.AreEqual(0, wrapped.Offset);
+                Assert.That(wrapped.Map<string>(i2s).ToString(), Is.EqualTo("[ 0:T4, 1:T6, 2:T5 ]"));
+                Assert.That(wrapped.Offset, Is.EqualTo(0));
                 wrapped.Reverse();
-                Assert.AreEqual("[ 0:5, 1:6, 2:4 ]", wrapped.ToString());
-                IList<int> other = new ArrayList<int>(); other.AddAll(new int[] { 4, 5, 6 });
-                Assert.IsFalse(wrapped.SequencedEquals(other));
+                Assert.That(wrapped.ToString(), Is.EqualTo("[ 0:5, 1:6, 2:4 ]"));
+                IList<int> other = new ArrayList<int>(); other.AddAll([4, 5, 6]);
+                Assert.That(wrapped.SequencedEquals(other), Is.False);
                 j = 30;
-                Assert.AreEqual(true, wrapped.Show(new System.Text.StringBuilder(), ref j, null));
+                Assert.That(wrapped.Show(new System.Text.StringBuilder(), ref j, null), Is.EqualTo(true));
                 wrapped.Sort();
-                Assert.AreEqual("[ 0:4, 1:5, 2:6 ]", wrapped.ToString());
-                Assert.IsTrue(IC.Eq(wrapped.ToArray(), 4, 5, 6));
-                Assert.AreEqual("[ ... ]", wrapped.ToString("L4", null));
-                Assert.AreEqual(null, wrapped.Underlying);
-                Assert.IsTrue(IC.SetEq(wrapped.UniqueItems(), 4, 5, 6));
-                Assert.IsTrue(wrapped.UnsequencedEquals(other));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.ToString(), Is.EqualTo("[ 0:4, 1:5, 2:6 ]"));
+                    Assert.That(IC.Eq(wrapped.ToArray(), 4, 5, 6), Is.True);
+                    Assert.That(wrapped.ToString("L4", null), Is.EqualTo("[ ... ]"));
+                    Assert.That(wrapped.Underlying, Is.EqualTo(null));
+                    Assert.That(IC.SetEq(wrapped.UniqueItems(), 4, 5, 6), Is.True);
+                    Assert.That(wrapped.UnsequencedEquals(other), Is.True);
+                });
                 wrapped.Shuffle();
-                Assert.IsTrue(IC.SetEq(wrapped.UniqueItems(), 4, 5, 6));
+                Assert.That(IC.SetEq(wrapped.UniqueItems(), 4, 5, 6), Is.True);
             }
 
             [Test]
             public void WithExc()
             {
-                WrappedArray<int> wrapped = new WrappedArray<int>(new int[] { 3, 4, 6, 5, 7 });
+                WrappedArray<int> wrapped = new([3, 4, 6, 5, 7]);
                 //
                 try { wrapped.Add(1); Assert.Fail("No throw"); }
                 catch (FixedSizeCollectionException) { }
@@ -694,92 +725,120 @@ namespace C5.Tests.wrappers
             [Test]
             public void View()
             {
-                int[] inner = new int[] { 3, 4, 6, 5, 7 };
-                WrappedArray<int> outerwrapped = new WrappedArray<int>(inner);
+                int[] inner = [3, 4, 6, 5, 7];
+                WrappedArray<int> outerwrapped = new(inner);
                 WrappedArray<int> wrapped = (WrappedArray<int>)outerwrapped.View(1, 3);
-                //
-                Assert.AreEqual(6, wrapped[1]);
-                Assert.IsTrue(IC.Eq(wrapped[1, 2], 6, 5));
+                Assert.Multiple(() =>
+                {
+                    //
+                    Assert.That(wrapped[1], Is.EqualTo(6));
+                    Assert.That(IC.Eq(wrapped[1, 2], 6, 5), Is.True);
+                });
                 //
                 bool is4(int i) { return i == 4; }
-                Assert.AreEqual(EventType.None, wrapped.ActiveEvents);
-                Assert.AreEqual(false, wrapped.All(is4));
-                Assert.AreEqual(true, wrapped.AllowsDuplicates);
+
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.ActiveEvents, Is.EqualTo(EventType.None));
+                    Assert.That(wrapped.All(is4), Is.EqualTo(false));
+                    Assert.That(wrapped.AllowsDuplicates, Is.EqualTo(true));
+                });
                 wrapped.Apply(delegate (int i) { });
-                Assert.AreEqual("{ 5, 6, 4 }", wrapped.Backwards().ToString());
-                Assert.AreEqual(true, wrapped.Check());
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.Backwards().ToString(), Is.EqualTo("{ 5, 6, 4 }"));
+                    Assert.That(wrapped.Check(), Is.EqualTo(true));
+                });
                 wrapped.Choose();
-                Assert.AreEqual(true, wrapped.Contains(4));
-                Assert.AreEqual(true, wrapped.ContainsAll(new ArrayList<int>()));
-                Assert.AreEqual(1, wrapped.ContainsCount(4));
-                Assert.AreEqual(Speed.Linear, wrapped.ContainsSpeed);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.Contains(4), Is.EqualTo(true));
+                    Assert.That(wrapped.ContainsAll(new ArrayList<int>()), Is.EqualTo(true));
+                    Assert.That(wrapped.ContainsCount(4), Is.EqualTo(1));
+                    Assert.That(wrapped.ContainsSpeed, Is.EqualTo(Speed.Linear));
+                });
                 int[] extarray = new int[5];
                 wrapped.CopyTo(extarray, 1);
-                Assert.IsTrue(IC.Eq(extarray, 0, 4, 6, 5, 0));
-                Assert.AreEqual(3, wrapped.Count);
-                Assert.AreEqual(Speed.Constant, wrapped.CountSpeed);
-                Assert.AreEqual(Direction.Forwards, wrapped.Direction);
-                Assert.AreEqual(false, wrapped.DuplicatesByCounting);
-                Assert.AreEqual(System.Collections.Generic.EqualityComparer<int>.Default, wrapped.EqualityComparer);
-                Assert.AreEqual(true, wrapped.Exists(is4));
-                Assert.IsTrue(IC.Eq(wrapped.Filter(is4), 4));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(IC.Eq(extarray, 0, 4, 6, 5, 0), Is.True);
+                    Assert.That(wrapped, Has.Count.EqualTo(3));
+                });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.CountSpeed, Is.EqualTo(Speed.Constant));
+                    Assert.That(wrapped.Direction, Is.EqualTo(Direction.Forwards));
+                    Assert.That(wrapped.DuplicatesByCounting, Is.EqualTo(false));
+                    Assert.That(wrapped.EqualityComparer, Is.EqualTo(System.Collections.Generic.EqualityComparer<int>.Default));
+                    Assert.That(wrapped.Exists(is4), Is.EqualTo(true));
+                    Assert.That(IC.Eq(wrapped.Filter(is4), 4), Is.True);
+                });
                 int j = 5;
-                Assert.AreEqual(true, wrapped.Find(ref j));
-                Assert.AreEqual(true, wrapped.Find(is4, out j));
-                Assert.AreEqual("[ 0:4 ]", wrapped.FindAll(is4).ToString());
-                Assert.AreEqual(0, wrapped.FindIndex(is4));
-                Assert.AreEqual(true, wrapped.FindLast(is4, out j));
-                Assert.AreEqual(0, wrapped.FindLastIndex(is4));
-                Assert.AreEqual(4, wrapped.First);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.Find(ref j), Is.EqualTo(true));
+                    Assert.That(wrapped.Find(is4, out j), Is.EqualTo(true));
+                    Assert.That(wrapped.FindAll(is4).ToString(), Is.EqualTo("[ 0:4 ]"));
+                    Assert.That(wrapped.FindIndex(is4), Is.EqualTo(0));
+                    Assert.That(wrapped.FindLast(is4, out j), Is.EqualTo(true));
+                    Assert.That(wrapped.FindLastIndex(is4), Is.EqualTo(0));
+                    Assert.That(wrapped.First, Is.EqualTo(4));
+                });
                 wrapped.GetEnumerator();
-                Assert.AreEqual(CHC.SequencedHashCode(4, 6, 5), wrapped.GetSequencedHashCode());
-                Assert.AreEqual(CHC.UnsequencedHashCode(4, 6, 5), wrapped.GetUnsequencedHashCode());
-                Assert.AreEqual(Speed.Constant, wrapped.IndexingSpeed);
-                Assert.AreEqual(2, wrapped.IndexOf(5));
-                Assert.AreEqual(false, wrapped.IsEmpty);
-                Assert.AreEqual(true, wrapped.IsReadOnly);
-                Assert.AreEqual(false, wrapped.IsSorted());
-                Assert.AreEqual(true, wrapped.IsValid);
-                Assert.AreEqual(5, wrapped.Last);
-                Assert.AreEqual(2, wrapped.LastIndexOf(5));
-                Assert.AreEqual(EventType.None, wrapped.ListenableEvents);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.GetSequencedHashCode(), Is.EqualTo(CHC.SequencedHashCode(4, 6, 5)));
+                    Assert.That(wrapped.GetUnsequencedHashCode(), Is.EqualTo(CHC.UnsequencedHashCode(4, 6, 5)));
+                    Assert.That(wrapped.IndexingSpeed, Is.EqualTo(Speed.Constant));
+                    Assert.That(wrapped.IndexOf(5), Is.EqualTo(2));
+                    Assert.That(wrapped.IsEmpty, Is.EqualTo(false));
+                    Assert.That(wrapped.IsReadOnly, Is.EqualTo(true));
+                    Assert.That(wrapped.IsSorted(), Is.EqualTo(false));
+                    Assert.That(wrapped.IsValid, Is.EqualTo(true));
+                    Assert.That(wrapped.Last, Is.EqualTo(5));
+                    Assert.That(wrapped.LastIndexOf(5), Is.EqualTo(2));
+                    Assert.That(wrapped.ListenableEvents, Is.EqualTo(EventType.None));
+                });
                 string i2s(int i) { return string.Format("T{0}", i); }
-                Assert.AreEqual("[ 0:T4, 1:T6, 2:T5 ]", wrapped.Map<string>(i2s).ToString());
-                Assert.AreEqual(1, wrapped.Offset);
+                Assert.That(wrapped.Map<string>(i2s).ToString(), Is.EqualTo("[ 0:T4, 1:T6, 2:T5 ]"));
+                Assert.That(wrapped.Offset, Is.EqualTo(1));
                 wrapped.Reverse();
-                Assert.AreEqual("[ 0:5, 1:6, 2:4 ]", wrapped.ToString());
-                IList<int> other = new ArrayList<int>(); other.AddAll(new int[] { 4, 5, 6 });
-                Assert.IsFalse(wrapped.SequencedEquals(other));
+                Assert.That(wrapped.ToString(), Is.EqualTo("[ 0:5, 1:6, 2:4 ]"));
+                IList<int> other = new ArrayList<int>(); other.AddAll([4, 5, 6]);
+                Assert.That(wrapped.SequencedEquals(other), Is.False);
                 j = 30;
-                Assert.AreEqual(true, wrapped.Show(new System.Text.StringBuilder(), ref j, null));
+                Assert.That(wrapped.Show(new System.Text.StringBuilder(), ref j, null), Is.EqualTo(true));
                 wrapped.Sort();
-                Assert.AreEqual("[ 0:4, 1:5, 2:6 ]", wrapped.ToString());
-                Assert.IsTrue(IC.Eq(wrapped.ToArray(), 4, 5, 6));
-                Assert.AreEqual("[ ... ]", wrapped.ToString("L4", null));
-                // TODO: Below line removed as NUnit 3.0 test fails trying to enumerate...
-                // Assert.AreEqual(outerwrapped, wrapped.Underlying);
-                Assert.IsTrue(IC.SetEq(wrapped.UniqueItems(), 4, 5, 6));
-                Assert.IsTrue(wrapped.UnsequencedEquals(other));
-                //
-                Assert.IsTrue(wrapped.TrySlide(1));
-                Assert.IsTrue(IC.Eq(wrapped, 5, 6, 7));
-                Assert.IsTrue(wrapped.TrySlide(-1, 2));
-                Assert.IsTrue(IC.Eq(wrapped, 4, 5));
-                Assert.IsFalse(wrapped.TrySlide(-2));
-                Assert.IsTrue(IC.Eq(wrapped.Span(outerwrapped.ViewOf(7)), 4, 5, 6, 7));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(wrapped.ToString(), Is.EqualTo("[ 0:4, 1:5, 2:6 ]"));
+                    Assert.That(IC.Eq(wrapped.ToArray(), 4, 5, 6), Is.True);
+                    Assert.That(wrapped.ToString("L4", null), Is.EqualTo("[ ... ]"));
+                    // TODO: Below line removed as NUnit 3.0 test fails trying to enumerate...
+                    // Assert.AreEqual(outerwrapped, wrapped.Underlying);
+                    Assert.That(IC.SetEq(wrapped.UniqueItems(), 4, 5, 6), Is.True);
+                    Assert.That(wrapped.UnsequencedEquals(other), Is.True);
+                    //
+                    Assert.That(wrapped.TrySlide(1), Is.True);
+                    Assert.That(IC.Eq(wrapped, 5, 6, 7), Is.True);
+                    Assert.That(wrapped.TrySlide(-1, 2), Is.True);
+                    Assert.That(IC.Eq(wrapped, 4, 5), Is.True);
+                    Assert.That(wrapped.TrySlide(-2), Is.False);
+                    Assert.That(IC.Eq(wrapped.Span(outerwrapped.ViewOf(7)), 4, 5, 6, 7), Is.True);
+                });
                 //
                 wrapped.Shuffle();
-                Assert.IsTrue(IC.SetEq(wrapped.UniqueItems(), 4, 5));
-                Assert.IsTrue(wrapped.IsValid);
+                Assert.That(IC.SetEq(wrapped.UniqueItems(), 4, 5), Is.True);
+                Assert.That(wrapped.IsValid, Is.True);
                 wrapped.Dispose();
-                Assert.IsFalse(wrapped.IsValid);
+                Assert.That(wrapped.IsValid, Is.False);
             }
 
             [Test]
             public void ViewWithExc()
             {
-                int[] inner = new int[] { 3, 4, 6, 5, 7 };
-                WrappedArray<int> outerwrapped = new WrappedArray<int>(inner);
+                int[] inner = [3, 4, 6, 5, 7];
+                WrappedArray<int> outerwrapped = new(inner);
                 WrappedArray<int> wrapped = (WrappedArray<int>)outerwrapped.View(1, 3);
                 //
                 try { wrapped.Add(1); Assert.Fail("No throw"); }

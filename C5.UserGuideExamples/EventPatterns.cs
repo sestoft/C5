@@ -20,7 +20,7 @@ internal class EventPatterns
     {
         ICollection<int> coll = new ArrayList<int>();
         ICollection<int> bag1 = new HashBag<int>();
-        bag1.AddAll(new[] { 3, 2, 5, 5, 7, 7, 5, 3, 7, 7 });
+        bag1.AddAll([3, 2, 5, 5, 7, 7, 5, 3, 7, 7]);
         // Add change handler
         coll.CollectionChanged += o => Console.WriteLine("Collection changed");
 
@@ -35,7 +35,7 @@ internal class EventPatterns
         AddItemsRemovedCounter(coll);
 
         coll.AddAll(bag1);
-        coll.RemoveAll(new[] { 2, 5, 6, 3, 7, 2 });
+        coll.RemoveAll([2, 5, 6, 3, 7, 2]);
         coll.Clear();
 
         ICollection<int> bag2 = new HashBag<int>();
@@ -87,7 +87,7 @@ internal class EventPatterns
     {
         var coll = new ArrayList<int>();
         var bag = new HashBag<int>();
-        bag.AddAll(new[] { 3, 2, 5, 5, 7, 7, 5, 3, 7, 7 });
+        bag.AddAll([3, 2, 5, 5, 7, 7, 5, 3, 7, 7]);
 
         // Add item inserted handler
         coll.ItemInserted += (o, args) => Console.WriteLine($"Item {args.Item} inserted at {args.Index}");
@@ -159,7 +159,7 @@ internal class EventPatterns
         coll.Add(new Teacher("Jens", "physics"));
         // The update handler is activated also by indexed updates
         var list = new ArrayList<int>();
-        list.AddAll(new[] { 7, 11, 13 });
+        list.AddAll([7, 11, 13]);
         AddItemUpdatedHandler(list);
         list[1] = 9;
     }

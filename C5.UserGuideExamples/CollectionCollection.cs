@@ -20,9 +20,9 @@ internal class CollectionCollection
 
     public static void ListEqualityComparers()
     {
-        _col1.AddAll(new[] { 7, 9, 13 });
-        _col2.AddAll(new[] { 7, 9, 13 });
-        _col3.AddAll(new[] { 9, 7, 13 });
+        _col1.AddAll([7, 9, 13]);
+        _col2.AddAll([7, 9, 13]);
+        _col3.AddAll([9, 7, 13]);
 
         // Default equality and hasher == sequenced equality and hasher
         var hs1 = new HashSet<IList<int>>();
@@ -56,7 +56,7 @@ internal class CollectionCollection
     public static void IntSetSet()
     {
         var outer = new HashSet<ISequenced<int>>();
-        int[] ss = { 2, 3, 5, 7 };
+        int[] ss = [2, 3, 5, 7];
         var inner = new TreeSet<int>();
         outer.Add(inner.Snapshot());
 

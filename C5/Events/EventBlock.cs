@@ -1,157 +1,154 @@
 // This file is part of the C5 Generic Collection Library for C# and CLI
 // See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
-using System;
+namespace C5;
 
-namespace C5
+/// <summary>
+/// Holds the real events for a collection
+/// </summary>
+/// <typeparam name="T"></typeparam>
+internal sealed class EventBlock<T>
 {
-    /// <summary>
-    /// Holds the real events for a collection
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    internal sealed class EventBlock<T>
+    internal EventType events;
+
+    private event CollectionChangedHandler<T> CollectionChangedInner;
+    internal event CollectionChangedHandler<T> CollectionChanged
     {
-        internal EventType events;
+        add
+        {
+            CollectionChangedInner += value;
+            events |= EventType.Changed;
+        }
+        remove
+        {
+            CollectionChangedInner -= value;
+            if (CollectionChangedInner == null)
+            {
+                events &= ~EventType.Changed;
+            }
+        }
+    }
+    internal void RaiseCollectionChanged(object sender)
+    {
+        CollectionChangedInner?.Invoke(sender);
+    }
 
-        private event CollectionChangedHandler<T> CollectionChangedInner;
-        internal event CollectionChangedHandler<T> CollectionChanged
+    private event CollectionClearedHandler<T> CollectionClearedInner;
+    internal event CollectionClearedHandler<T> CollectionCleared
+    {
+        add
         {
-            add
+            CollectionClearedInner += value;
+            events |= EventType.Cleared;
+        }
+        remove
+        {
+            CollectionClearedInner -= value;
+            if (CollectionClearedInner == null)
             {
-                CollectionChangedInner += value;
-                events |= EventType.Changed;
-            }
-            remove
-            {
-                CollectionChangedInner -= value;
-                if (CollectionChangedInner == null)
-                {
-                    events &= ~EventType.Changed;
-                }
+                events &= ~EventType.Cleared;
             }
         }
-        internal void RaiseCollectionChanged(object sender)
-        {
-            CollectionChangedInner?.Invoke(sender);
-        }
+    }
 
-        private event CollectionClearedHandler<T> CollectionClearedInner;
-        internal event CollectionClearedHandler<T> CollectionCleared
-        {
-            add
-            {
-                CollectionClearedInner += value;
-                events |= EventType.Cleared;
-            }
-            remove
-            {
-                CollectionClearedInner -= value;
-                if (CollectionClearedInner == null)
-                {
-                    events &= ~EventType.Cleared;
-                }
-            }
-        }
+    internal void RaiseCollectionCleared(object sender, bool full, int count)
+    {
+        CollectionClearedInner?.Invoke(sender, new ClearedEventArgs(full, count));
+    }
 
-        internal void RaiseCollectionCleared(object sender, bool full, int count)
-        {
-            CollectionClearedInner?.Invoke(sender, new ClearedEventArgs(full, count));
-        }
+    internal void RaiseCollectionCleared(object sender, bool full, int count, int? start)
+    {
+        CollectionClearedInner?.Invoke(sender, new ClearedRangeEventArgs(full, count, start));
+    }
 
-        internal void RaiseCollectionCleared(object sender, bool full, int count, int? start)
+    private event ItemsAddedHandler<T> ItemsAddedInner;
+    internal event ItemsAddedHandler<T> ItemsAdded
+    {
+        add
         {
-            CollectionClearedInner?.Invoke(sender, new ClearedRangeEventArgs(full, count, start));
+            ItemsAddedInner += value;
+            events |= EventType.Added;
         }
-
-        private event ItemsAddedHandler<T> ItemsAddedInner;
-        internal event ItemsAddedHandler<T> ItemsAdded
+        remove
         {
-            add
+            ItemsAddedInner -= value;
+            if (ItemsAddedInner == null)
             {
-                ItemsAddedInner += value;
-                events |= EventType.Added;
-            }
-            remove
-            {
-                ItemsAddedInner -= value;
-                if (ItemsAddedInner == null)
-                {
-                    events &= ~EventType.Added;
-                }
+                events &= ~EventType.Added;
             }
         }
-        internal void RaiseItemsAdded(object sender, T item, int count)
-        {
-            ItemsAddedInner?.Invoke(sender, new ItemCountEventArgs<T>(item, count));
-        }
+    }
+    internal void RaiseItemsAdded(object sender, T item, int count)
+    {
+        ItemsAddedInner?.Invoke(sender, new ItemCountEventArgs<T>(item, count));
+    }
 
-        private event ItemsRemovedHandler<T> ItemsRemovedInner;
-        internal event ItemsRemovedHandler<T> ItemsRemoved
+    private event ItemsRemovedHandler<T> ItemsRemovedInner;
+    internal event ItemsRemovedHandler<T> ItemsRemoved
+    {
+        add
         {
-            add
-            {
-                ItemsRemovedInner += value;
-                events |= EventType.Removed;
-            }
-            remove
-            {
-                ItemsRemovedInner -= value;
-                if (ItemsRemovedInner == null)
-                {
-                    events &= ~EventType.Removed;
-                }
-            }
+            ItemsRemovedInner += value;
+            events |= EventType.Removed;
         }
-
-        internal void RaiseItemsRemoved(object sender, T item, int count)
+        remove
         {
-            ItemsRemovedInner?.Invoke(sender, new ItemCountEventArgs<T>(item, count));
-        }
-
-        private event ItemInsertedHandler<T> ItemInsertedInner;
-        internal event ItemInsertedHandler<T> ItemInserted
-        {
-            add
+            ItemsRemovedInner -= value;
+            if (ItemsRemovedInner == null)
             {
-                ItemInsertedInner += value;
-                events |= EventType.Inserted;
-            }
-            remove
-            {
-                ItemInsertedInner -= value;
-                if (ItemInsertedInner == null)
-                {
-                    events &= ~EventType.Inserted;
-                }
+                events &= ~EventType.Removed;
             }
         }
+    }
 
-        internal void RaiseItemInserted(object sender, T item, int index)
+    internal void RaiseItemsRemoved(object sender, T item, int count)
+    {
+        ItemsRemovedInner?.Invoke(sender, new ItemCountEventArgs<T>(item, count));
+    }
+
+    private event ItemInsertedHandler<T> ItemInsertedInner;
+    internal event ItemInsertedHandler<T> ItemInserted
+    {
+        add
         {
-            ItemInsertedInner?.Invoke(sender, new ItemAtEventArgs<T>(item, index));
+            ItemInsertedInner += value;
+            events |= EventType.Inserted;
         }
-
-        private event ItemRemovedAtHandler<T> ItemRemovedAtInner;
-        internal event ItemRemovedAtHandler<T> ItemRemovedAt
+        remove
         {
-            add
+            ItemInsertedInner -= value;
+            if (ItemInsertedInner == null)
             {
-                ItemRemovedAtInner += value;
-                events |= EventType.RemovedAt;
-            }
-            remove
-            {
-                ItemRemovedAtInner -= value;
-                if (ItemRemovedAtInner == null)
-                {
-                    events &= ~EventType.RemovedAt;
-                }
+                events &= ~EventType.Inserted;
             }
         }
+    }
 
-        internal void RaiseItemRemovedAt(object sender, T item, int index)
+    internal void RaiseItemInserted(object sender, T item, int index)
+    {
+        ItemInsertedInner?.Invoke(sender, new ItemAtEventArgs<T>(item, index));
+    }
+
+    private event ItemRemovedAtHandler<T> ItemRemovedAtInner;
+    internal event ItemRemovedAtHandler<T> ItemRemovedAt
+    {
+        add
         {
-            ItemRemovedAtInner?.Invoke(sender, new ItemAtEventArgs<T>(item, index));
+            ItemRemovedAtInner += value;
+            events |= EventType.RemovedAt;
         }
+        remove
+        {
+            ItemRemovedAtInner -= value;
+            if (ItemRemovedAtInner == null)
+            {
+                events &= ~EventType.RemovedAt;
+            }
+        }
+    }
+
+    internal void RaiseItemRemovedAt(object sender, T item, int index)
+    {
+        ItemRemovedAtInner?.Invoke(sender, new ItemAtEventArgs<T>(item, index));
     }
 }

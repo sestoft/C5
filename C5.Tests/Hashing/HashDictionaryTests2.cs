@@ -26,7 +26,7 @@ namespace C5.Tests.hashing
                 }
             }
 
-            Assert.AreEqual(expectedResult, sum);
+            Assert.That(sum, Is.EqualTo(expectedResult));
         }
 
         [TestCase(1, 10, Description = "Once")]
@@ -47,7 +47,7 @@ namespace C5.Tests.hashing
                 }
             }
 
-            Assert.AreEqual(expectedResult, sum);
+            Assert.That(sum, Is.EqualTo(expectedResult));
         }
 
         [TestCase(1, 10, Description = "Once")]
@@ -70,8 +70,11 @@ namespace C5.Tests.hashing
                 }
             }
 
-            Assert.AreEqual(expectedResult, keys);
-            Assert.AreEqual(-expectedResult, values);
+            Assert.Multiple(() =>
+            {
+                Assert.That(keys, Is.EqualTo(expectedResult));
+                Assert.That(values, Is.EqualTo(-expectedResult));
+            });
         }
     }
 }

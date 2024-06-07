@@ -43,20 +43,18 @@ internal class AnagramHashBag
     {
         var delimiter = new Regex("[^a-z���A-Z���0-9-]+");
 
-        using (var reader = File.OpenText(filename))
+        using var reader = File.OpenText(filename);
+        for (var line = reader.ReadLine(); line != null; line = reader.ReadLine())
         {
-            for (var line = reader.ReadLine(); line != null; line = reader.ReadLine())
+            foreach (var s in delimiter.Split(line))
             {
-                foreach (var s in delimiter.Split(line))
+                if (s != "")
                 {
-                    if (s != "")
-                    {
-                        yield return s.ToLower();
-                    }
-                    if (--n == 0)
-                    {
-                        yield break;
-                    }
+                    yield return s.ToLower();
+                }
+                if (--n == 0)
+                {
+                    yield break;
                 }
             }
         }

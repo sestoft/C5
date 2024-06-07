@@ -27,7 +27,8 @@ internal class DistinctBagProgram
 {
     private static void Main()
     {
-        var nameColl = new DistinctHashBag<PersonDistinctBag>(new PersonDistinctBag.NameEqualityComparer());
+        var nameEqualityComparer = ComparerFactory<PersonDistinctBag>.CreateEqualityComparer((a, b) => StringComparer.InvariantCultureIgnoreCase.Equals(a.Name, b.Name), a => a.Name.GetHashCode());
+        var nameColl = new DistinctHashBag<PersonDistinctBag>(nameEqualityComparer);
         var p1 = new PersonDistinctBag("Peter", 19620625);
         var p2 = new PersonDistinctBag("Carsten", 19640627);
         var p3 = new PersonDistinctBag("Carsten", 19640628);
@@ -97,39 +98,10 @@ public class DistinctHashBag<T> where T : class
     }
 }
 
-public class PersonDistinctBag
+public class PersonDistinctBag(string name, int date)
 {
-    private string Name { get; }
-    private int Date { get; }
+    public string Name { get; } = name;
+    public int Date { get; } = date;
 
-    public PersonDistinctBag(string name, int date)
-    {
-        Name = name;
-        Date = date;
-    }
-
-    public class NameEqualityComparer : SCG.IEqualityComparer<PersonDistinctBag>
-    {
-        public bool Equals(PersonDistinctBag p1, PersonDistinctBag p2)
-        {
-            return p1.Name == p2.Name;
-        }
-        public int GetHashCode(PersonDistinctBag p)
-        {
-            return p.Name.GetHashCode();
-        }
-    }
-
-    public class DateComparer : SCG.IComparer<PersonDistinctBag>
-    {
-        public int Compare(PersonDistinctBag p1, PersonDistinctBag p2)
-        {
-            return p1.Date.CompareTo(p2.Date);
-        }
-    }
-
-    public override string ToString()
-    {
-        return $"{Name} ({Date})";
-    }
+    public override string ToString() => $"{Name} ({Date})";
 }

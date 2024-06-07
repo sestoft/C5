@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+using SCG = System.Collections.Generic;
 
 namespace C5
 {
@@ -9,17 +8,17 @@ namespace C5
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="W"></typeparam>
-    public class UnsequencedCollectionEqualityComparer<T, W> : IEqualityComparer<T>
+    public class UnsequencedCollectionEqualityComparer<T, W> : SCG.IEqualityComparer<T>
         where T : ICollection<W>
     {
-        private static UnsequencedCollectionEqualityComparer<T, W> cached;
+        private static UnsequencedCollectionEqualityComparer<T, W>? _cached;
 
         private UnsequencedCollectionEqualityComparer() { }
         /// <summary>
         /// 
         /// </summary>
         /// <value></value>
-        public static UnsequencedCollectionEqualityComparer<T, W> Default => cached ??= new UnsequencedCollectionEqualityComparer<T, W>();
+        public static UnsequencedCollectionEqualityComparer<T, W> Default => _cached ??= new UnsequencedCollectionEqualityComparer<T, W>();
         /// <summary>
         /// Get the hash code with respect to this unsequenced equalityComparer
         /// </summary>
@@ -34,6 +33,13 @@ namespace C5
         /// <param name="collection1">first collection</param>
         /// <param name="collection2">second collection</param>
         /// <returns>True if equal</returns>
-        public bool Equals(T collection1, T collection2) { return collection1 == null ? collection2 == null : collection1.UnsequencedEquals(collection2); }
+        public bool Equals(T? collection1, T? collection2)
+        {
+            if (collection1 == null && collection2 == null) return true;
+            if (collection1 == null) return false;
+            if (collection2 == null) return false;
+
+            return collection1.UnsequencedEquals(collection2);
+        }
     }
 }

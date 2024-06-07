@@ -19,7 +19,7 @@ namespace C5.Tests.Wrappers
 
             var guarded = new GuardedSortedDictionary<int, string>(source);
 
-            Assert.IsAssignableFrom<GuardedSorted<int>>(guarded.Keys);
+            Assert.That(guarded.Keys, Is.AssignableFrom<GuardedSorted<int>>());
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace C5.Tests.Wrappers
 
             var guarded = new GuardedSortedDictionary<int, string>(source);
 
-            CollectionAssert.AreEquivalent(new[] { 3, 2, 1 }, guarded.Keys);
+            Assert.That(guarded.Keys, Is.EquivalentTo(new[] { 3, 2, 1 }));
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace C5.Tests.Wrappers
 
             var guarded = new GuardedSortedDictionary<int, string>(source);
 
-            Assert.IsAssignableFrom<GuardedCollectionValue<string>>(guarded.Values);
+            Assert.That(guarded.Values, Is.AssignableFrom<GuardedCollectionValue<string>>());
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace C5.Tests.Wrappers
 
             var guarded = new GuardedSortedDictionary<int, string>(source);
 
-            CollectionAssert.AreEquivalent(new[] { "one", "two", "three" }, guarded.Values);
+            Assert.That(guarded.Values, Is.EquivalentTo(new[] { "one", "two", "three" }));
         }
     }
 }

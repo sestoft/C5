@@ -3,13 +3,12 @@
 
 using System;
 
-namespace C5
+namespace C5;
+
+/// <summary>
+/// An exception to throw from library code when an internal inconsistency is encountered.
+/// </summary>
+public class InternalException : Exception
 {
-    /// <summary>
-    /// An exception to throw from library code when an internal inconsistency is encountered.
-    /// </summary>
-    public class InternalException : Exception
-    {
-        internal InternalException(string message) : base(message) { }
-    }
+    internal InternalException(string message) : base(message) { }
 }

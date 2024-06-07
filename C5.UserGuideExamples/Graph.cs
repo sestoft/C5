@@ -726,7 +726,7 @@ internal class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
 
     public ICollectionValue<System.Collections.Generic.KeyValuePair<V, IGraph<V, E, W>>> Components()
     {
-        ArrayList<System.Collections.Generic.KeyValuePair<V, IGraph<V, E, W>>> retval = new ArrayList<System.Collections.Generic.KeyValuePair<V, IGraph<V, E, W>>>();
+        ArrayList<System.Collections.Generic.KeyValuePair<V, IGraph<V, E, W>>> retval = new();
         HashGraph<V, E, W> component;
         ArrayList<V> vertices = null;
         void edgeaction(Edge<V, E> e)
@@ -842,7 +842,7 @@ internal class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
                 foreach (System.Collections.Generic.KeyValuePair<V, E> p in adjacent)
                 {
                     V end = p.Key;
-                    Edge<V, E> e = new Edge<V, E>(v, end, p.Value);
+                    Edge<V, E> e = new(v, end, p.Value);
                     if (!seen.FindOrAdd(ref end))
                     {
                         onfollow(e);
@@ -1233,7 +1233,7 @@ internal class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
         var fakeid = 1;
         foreach (Edge<V, E> e in matching)
         {
-            Vplus fakevertex = new Vplus(fakeid++);
+            Vplus fakevertex = new(fakeid++);
             fused.AddEdge(new Vplus(e.Start), fakevertex, e.EdgeData);
             fused.AddEdge(fakevertex, new Vplus(e.End), e.EdgeData);
         }
@@ -1363,7 +1363,7 @@ internal class UsedByAttribute : Attribute
 
     public override string ToString()
     {
-        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        System.Text.StringBuilder sb = new();
         for (int i = 0; i < tests.Length; i++)
         {
             if (i > 0)
@@ -1394,7 +1394,7 @@ internal class Graph
 {
     private static SCG.IEnumerable<Edge<int, int>> Grid(int n)
     {
-        Random ran = new Random(1717);
+        Random ran = new(1717);
         for (int i = 1; i <= n; i++)
         {
             for (int j = 1; j <= n; j++)
@@ -1531,7 +1531,7 @@ internal class Graph
     //TODO: remove?
     public static void Test3()
     {
-        HashGraph<int, int, int> g = new HashGraph<int, int, int>(new CountWeight<int>(), Grid(5));
+        HashGraph<int, int, int> g = new(new CountWeight<int>(), Grid(5));
         g.Print(Console.Out);
         //EdgeWeight<int, IntWeight> weight = delegate(int i) { return i; };
         Console.WriteLine("========= PFS accum =========");
@@ -1629,7 +1629,7 @@ internal class Graph
     [ExampleDescription("Approximate TSP2")]
     public static void TestTSP2()
     {
-        HashGraph<string, double, double> g = new HashGraph<string, double, double>(new DoubleWeight(), Wheel(true, 20));
+        HashGraph<string, double, double> g = new(new DoubleWeight(), Wheel(true, 20));
 
         foreach (string s in g.ApproximateTSP2())
         {
@@ -1695,7 +1695,7 @@ internal class Graph
     /// </summary>
     public static void TestEuler()
     {
-        HashGraph<string, double, double> g = new HashGraph<string, double, double>(new DoubleWeight(), Wheel(true, 6));
+        HashGraph<string, double, double> g = new(new DoubleWeight(), Wheel(true, 6));
         foreach (string s in g.EulerTour())
         {
             Console.Write(s + " ");
@@ -1729,7 +1729,7 @@ internal class Graph
     [ExampleDescription("Using the advanced DFS to compute articulation points")]
     public static void TestDFS()
     {
-        HashGraph<string, int, int> g = new HashGraph<string, int, int>(new IntWeight());
+        HashGraph<string, int, int> g = new(new IntWeight());
         g.AddEdge("A", "B", 0);
         g.AddEdge("A", "E", 0);
         g.AddEdge("B", "E", 0);
@@ -1742,7 +1742,7 @@ internal class Graph
         g.AddEdge("C", "G", 0);
         g.AddEdge("F", "G", 0);
 
-        HashDictionary<string, int> index = new HashDictionary<string, int>();
+        HashDictionary<string, int> index = new();
         int[] leastIndexReachableFrom = new int[g.VertexCount];
         int nextindex = 0;
         int outgoingFromRoot = 0;

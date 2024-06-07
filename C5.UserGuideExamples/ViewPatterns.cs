@@ -10,7 +10,7 @@ internal class ViewPatterns
     public static void Main()
     {
         IList<char> lst = new ArrayList<char>();
-        lst.AddAll(new char[] { 'a', 'b', 'c', 'd' });
+        lst.AddAll(['a', 'b', 'c', 'd']);
         IList<char> v1 = lst.View(1, 1);
         Console.WriteLine("v1 = {0}", v1);
         InsertBeforeFirst(v1, '<', 'b');
@@ -38,7 +38,7 @@ internal class ViewPatterns
         }
 
         IList<char> lst2 = new ArrayList<char>();
-        lst2.AddAll(new char[] { 'a', 'b', 'c', 'A', 'a', 'd', 'a' });
+        lst2.AddAll(['a', 'b', 'c', 'A', 'a', 'd', 'a']);
 
         foreach (var i in IndexesOf(lst2, 'a'))
         {
@@ -223,13 +223,11 @@ internal class ViewPatterns
     {
         foreach (var x in xs)
         {
-            using (var view = list.ViewOf(x))
+            using var view = list.ViewOf(x);
+            if (view != null)
             {
-                if (view != null)
-                {
-                    view.Remove();
-                    view.Add(y);
-                }
+                view.Remove();
+                view.Add(y);
             }
         }
     }
@@ -299,17 +297,15 @@ internal class ViewPatterns
     // Find the index of the first item that satisfies p
     public static int FindFirstIndex<T>(IList<T> list, Func<T, bool> p)
     {
-        using (var view = list.View(0, 0))
+        using var view = list.View(0, 0);
+        while (view.TrySlide(0, 1))
         {
-            while (view.TrySlide(0, 1))
+            if (p(view.First))
             {
-                if (p(view.First))
-                {
-                    return view.Offset;
-                }
-
-                view.Slide(+1, 0);
+                return view.Offset;
             }
+
+            view.Slide(+1, 0);
         }
         return -1;
     }
@@ -317,14 +313,12 @@ internal class ViewPatterns
     // Find the index of the last item that satisfies p
     public static int FindLastIndex<T>(IList<T> list, Func<T, bool> p)
     {
-        using (var view = list.View(list.Count, 0))
+        using var view = list.View(list.Count, 0);
+        while (view.TrySlide(-1, 1))
         {
-            while (view.TrySlide(-1, 1))
+            if (p(view.First))
             {
-                if (p(view.First))
-                {
-                    return view.Offset;
-                }
+                return view.Offset;
             }
         }
         return -1;

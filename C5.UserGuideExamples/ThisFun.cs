@@ -12,7 +12,7 @@ internal class ThisFun
     {
         var fb = new FooBar();
         IList<int> list = new LinkedList<int>();
-        list.AddAll(new[] { 2, 3, 5, 7, 11 });
+        list.AddAll([2, 3, 5, 7, 11]);
         list.Map<double>(fb).Apply(Console.WriteLine);
         list.Apply(fb);
     }

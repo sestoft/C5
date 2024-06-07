@@ -5,23 +5,21 @@ using NUnit.Framework;
 using System;
 namespace C5.Tests.hashtable.bag
 {
-    using CollectionOfInt = HashBag<int>;
-
     [TestFixture]
     public class GenericTesters
     {
         [Test]
         public void TestEvents()
         {
-            CollectionOfInt factory() { return new CollectionOfInt(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.CollectionTester<CollectionOfInt>().Test(factory);
+            HashBag<int> factory() { return new HashBag<int>(TenEqualityComparer.Default); }
+            new C5.Tests.Templates.Events.CollectionTester<HashBag<int>>().Test(factory);
         }
 
         //[Test]
         //public void Extensible()
         //{
-        //    C5.Tests.Templates.Extensible.Clone.Tester<CollectionOfInt>();
-        //    C5.Tests.Templates.Extensible.Serialization.Tester<CollectionOfInt>();
+        //    C5.Tests.Templates.Extensible.Clone.Tester<HashBag<int>>();
+        //    C5.Tests.Templates.Extensible.Serialization.Tester<HashBag<int>>();
         //}
     }
 
@@ -51,12 +49,15 @@ namespace C5.Tests.hashtable.bag
         [Test]
         public void Format()
         {
-            Assert.AreEqual("{{  }}", coll.ToString());
-            coll.AddAll(new int[] { -4, 28, 129, 65530, -4, 28 });
-            Assert.AreEqual("{{ 65530(*1), -4(*2), 28(*2), 129(*1) }}", coll.ToString());
-            Assert.AreEqual("{{ FFFA(*1), -4(*2), 1C(*2), 81(*1) }}", coll.ToString(null, rad16));
-            Assert.AreEqual("{{ 65530(*1), -4(*2)... }}", coll.ToString("L18", null));
-            Assert.AreEqual("{{ FFFA(*1), -4(*2)... }}", coll.ToString("L18", rad16));
+            Assert.That(coll.ToString(), Is.EqualTo("{{  }}"));
+            coll.AddAll([-4, 28, 129, 65530, -4, 28]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(coll.ToString(), Is.EqualTo("{{ 65530(*1), -4(*2), 28(*2), 129(*1) }}"));
+                Assert.That(coll.ToString(null, rad16), Is.EqualTo("{{ FFFA(*1), -4(*2), 1C(*2), 81(*1) }}"));
+                Assert.That(coll.ToString("L18", null), Is.EqualTo("{{ 65530(*1), -4(*2)... }}"));
+                Assert.That(coll.ToString("L18", rad16), Is.EqualTo("{{ FFFA(*1), -4(*2)... }}"));
+            });
         }
     }
 
@@ -84,47 +85,59 @@ namespace C5.Tests.hashtable.bag
         [Test]
         public void Find()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
+            System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
 
-            Assert.IsTrue(lst.Find(ref p));
-            Assert.AreEqual(3, p.Key);
-            Assert.AreEqual(33, p.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(lst.Find(ref p), Is.True);
+                Assert.That(p.Key, Is.EqualTo(3));
+                Assert.That(p.Value, Is.EqualTo(33));
+            });
             p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
-            Assert.IsFalse(lst.Find(ref p));
+            Assert.That(lst.Find(ref p), Is.False);
         }
 
 
         [Test]
         public void FindOrAdd()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
-            System.Collections.Generic.KeyValuePair<int, int> q = new System.Collections.Generic.KeyValuePair<int, int>();
+            System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+            System.Collections.Generic.KeyValuePair<int, int> q = new();
 
-            Assert.IsTrue(lst.FindOrAdd(ref p));
-            Assert.AreEqual(3, p.Key);
-            Assert.AreEqual(33, p.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(lst.FindOrAdd(ref p), Is.True);
+                Assert.That(p.Key, Is.EqualTo(3));
+                Assert.That(p.Value, Is.EqualTo(33));
+            });
             p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
-            Assert.IsFalse(lst.FindOrAdd(ref p));
+            Assert.That(lst.FindOrAdd(ref p), Is.False);
             q = new System.Collections.Generic.KeyValuePair<int, int>(13, q.Value);
-            Assert.IsTrue(lst.Find(ref q));
-            Assert.AreEqual(13, q.Key);
-            Assert.AreEqual(79, q.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(lst.Find(ref q), Is.True);
+                Assert.That(q.Key, Is.EqualTo(13));
+                Assert.That(q.Value, Is.EqualTo(79));
+            });
         }
 
 
         [Test]
         public void Update()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
-            System.Collections.Generic.KeyValuePair<int, int> q = new System.Collections.Generic.KeyValuePair<int, int>();
+            System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+            System.Collections.Generic.KeyValuePair<int, int> q = new();
 
-            Assert.IsTrue(lst.Update(p));
+            Assert.That(lst.Update(p), Is.True);
             q = new System.Collections.Generic.KeyValuePair<int, int>(3, q.Value);
-            Assert.IsTrue(lst.Find(ref q));
-            Assert.AreEqual(3, q.Key);
-            Assert.AreEqual(78, q.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(lst.Find(ref q), Is.True);
+                Assert.That(q.Key, Is.EqualTo(3));
+                Assert.That(q.Value, Is.EqualTo(78));
+            });
             p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
-            Assert.IsFalse(lst.Update(p));
+            Assert.That(lst.Update(p), Is.False);
         }
 
 
@@ -134,43 +147,55 @@ namespace C5.Tests.hashtable.bag
             var p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
             var q = new System.Collections.Generic.KeyValuePair<int, int>();
 
-            Assert.IsTrue(lst.UpdateOrAdd(p));
+            Assert.That(lst.UpdateOrAdd(p), Is.True);
             q = new System.Collections.Generic.KeyValuePair<int, int>(3, q.Value);
-            Assert.IsTrue(lst.Find(ref q));
-            Assert.AreEqual(3, q.Key);
-            Assert.AreEqual(78, q.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(lst.Find(ref q), Is.True);
+                Assert.That(q.Key, Is.EqualTo(3));
+                Assert.That(q.Value, Is.EqualTo(78));
+            });
             p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
-            Assert.IsFalse(lst.UpdateOrAdd(p));
+            Assert.That(lst.UpdateOrAdd(p), Is.False);
             q = new System.Collections.Generic.KeyValuePair<int, int>(13, q.Value);
-            Assert.IsTrue(lst.Find(ref q));
-            Assert.AreEqual(13, q.Key);
-            Assert.AreEqual(79, q.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(lst.Find(ref q), Is.True);
+                Assert.That(q.Key, Is.EqualTo(13));
+                Assert.That(q.Value, Is.EqualTo(79));
+            });
         }
 
         [Test]
         public void UpdateOrAdd2()
         {
-            ICollection<String> coll = new HashBag<String>();
+            ICollection<string> coll = new HashBag<string>();
             // s1 and s2 are distinct objects but contain the same text:
-            String s1 = "abc", s2 = ("def" + s1).Substring(3);
-            Assert.IsFalse(coll.UpdateOrAdd(s1, out string old));
-            Assert.AreEqual(null, old);
-            Assert.IsTrue(coll.UpdateOrAdd(s2, out old));
-            Assert.IsTrue(Object.ReferenceEquals(s1, old));
-            Assert.IsFalse(Object.ReferenceEquals(s2, old));
+            string s1 = "abc", s2 = ("def" + s1).Substring(3);
+            Assert.Multiple(() =>
+            {
+                Assert.That(coll.UpdateOrAdd(s1, out string old), Is.False);
+                Assert.That(old, Is.EqualTo(null));
+                Assert.That(coll.UpdateOrAdd(s2, out old), Is.True);
+                Assert.That(ReferenceEquals(s1, old), Is.True);
+                Assert.That(ReferenceEquals(s2, old), Is.False);
+            });
         }
 
         [Test]
         public void RemoveWithReturn()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new System.Collections.Generic.KeyValuePair<int, int>(3, 78);
-            //System.Collections.Generic.KeyValuePair<int, int> q = new System.Collections.Generic.KeyValuePair<int, int>();
+            System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+            Assert.Multiple(() =>
+            {
+                //System.Collections.Generic.KeyValuePair<int, int> q = new System.Collections.Generic.KeyValuePair<int, int>();
 
-            Assert.IsTrue(lst.Remove(p, out p));
-            Assert.AreEqual(3, p.Key);
-            Assert.AreEqual(33, p.Value);
+                Assert.That(lst.Remove(p, out p), Is.True);
+                Assert.That(p.Key, Is.EqualTo(3));
+                Assert.That(p.Value, Is.EqualTo(33));
+            });
             p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
-            Assert.IsFalse(lst.Remove(p, out _));
+            Assert.That(lst.Remove(p, out _), Is.False);
         }
     }
 
@@ -211,7 +236,7 @@ namespace C5.Tests.hashtable.bag
         public void Choose()
         {
             hashbag.Add(7);
-            Assert.AreEqual(7, hashbag.Choose());
+            Assert.That(hashbag.Choose(), Is.EqualTo(7));
         }
 
         [Test]
@@ -223,24 +248,39 @@ namespace C5.Tests.hashtable.bag
         [Test]
         public void CountEtAl()
         {
-            Assert.IsFalse(hashbag.IsReadOnly);
-            // Assert.IsFalse(hashbag.SyncRoot == null);
-            Assert.AreEqual(0, hashbag.Count);
-            Assert.IsTrue(hashbag.IsEmpty);
-            Assert.IsTrue(hashbag.AllowsDuplicates);
-            Assert.IsTrue(hashbag.Add(0));
-            Assert.AreEqual(1, hashbag.Count);
-            Assert.IsFalse(hashbag.IsEmpty);
-            Assert.IsTrue(hashbag.Add(5));
-            Assert.AreEqual(2, hashbag.Count);
-            Assert.IsTrue(hashbag.Add(5));
-            Assert.AreEqual(3, hashbag.Count);
-            Assert.IsFalse(hashbag.IsEmpty);
-            Assert.IsTrue(hashbag.Add(8));
-            Assert.AreEqual(4, hashbag.Count);
-            Assert.AreEqual(2, hashbag.ContainsCount(5));
-            Assert.AreEqual(1, hashbag.ContainsCount(8));
-            Assert.AreEqual(1, hashbag.ContainsCount(0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(hashbag.IsReadOnly, Is.False);
+                // Assert.IsFalse(hashbag.SyncRoot == null);
+                Assert.That(hashbag, Is.Empty);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(hashbag.IsEmpty, Is.True);
+                Assert.That(hashbag.AllowsDuplicates, Is.True);
+                Assert.That(hashbag.Add(0), Is.True);
+                Assert.That(hashbag, Has.Count.EqualTo(1));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(hashbag.IsEmpty, Is.False);
+                Assert.That(hashbag.Add(5), Is.True);
+                Assert.That(hashbag, Has.Count.EqualTo(2));
+            });
+            Assert.That(hashbag.Add(5), Is.True);
+            Assert.That(hashbag, Has.Count.EqualTo(3));
+            Assert.Multiple(() =>
+            {
+                Assert.That(hashbag.IsEmpty, Is.False);
+                Assert.That(hashbag.Add(8), Is.True);
+                Assert.That(hashbag, Has.Count.EqualTo(4));
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(hashbag.ContainsCount(5), Is.EqualTo(2));
+                Assert.That(hashbag.ContainsCount(8), Is.EqualTo(1));
+                Assert.That(hashbag.ContainsCount(0), Is.EqualTo(1));
+            });
         }
 
 
@@ -249,32 +289,41 @@ namespace C5.Tests.hashtable.bag
         {
             hashbag.Add(3); hashbag.Add(4); hashbag.Add(4); hashbag.Add(5); hashbag.Add(4);
 
-            HashBag<int> hashbag2 = new HashBag<int>();
+            HashBag<int> hashbag2 = new();
 
             hashbag2.AddAll(hashbag);
-            Assert.IsTrue(IC.SetEq(hashbag2, 3, 4, 4, 4, 5));
+            Assert.That(IC.SetEq(hashbag2, 3, 4, 4, 4, 5), Is.True);
             hashbag.Add(9);
             hashbag.AddAll(hashbag2);
-            Assert.IsTrue(IC.SetEq(hashbag2, 3, 4, 4, 4, 5));
-            Assert.IsTrue(IC.SetEq(hashbag, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 9));
+            Assert.Multiple(() =>
+            {
+                Assert.That(IC.SetEq(hashbag2, 3, 4, 4, 4, 5), Is.True);
+                Assert.That(IC.SetEq(hashbag, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 9), Is.True);
+            });
         }
 
 
         [Test]
         public void ContainsCount()
         {
-            Assert.AreEqual(0, hashbag.ContainsCount(5));
+            Assert.That(hashbag.ContainsCount(5), Is.EqualTo(0));
             hashbag.Add(5);
-            Assert.AreEqual(1, hashbag.ContainsCount(5));
-            Assert.AreEqual(0, hashbag.ContainsCount(7));
+            Assert.Multiple(() =>
+            {
+                Assert.That(hashbag.ContainsCount(5), Is.EqualTo(1));
+                Assert.That(hashbag.ContainsCount(7), Is.EqualTo(0));
+            });
             hashbag.Add(8);
-            Assert.AreEqual(1, hashbag.ContainsCount(5));
-            Assert.AreEqual(0, hashbag.ContainsCount(7));
-            Assert.AreEqual(1, hashbag.ContainsCount(8));
+            Assert.Multiple(() =>
+            {
+                Assert.That(hashbag.ContainsCount(5), Is.EqualTo(1));
+                Assert.That(hashbag.ContainsCount(7), Is.EqualTo(0));
+                Assert.That(hashbag.ContainsCount(8), Is.EqualTo(1));
+            });
             hashbag.Add(5);
-            Assert.AreEqual(2, hashbag.ContainsCount(5));
-            Assert.AreEqual(0, hashbag.ContainsCount(7));
-            Assert.AreEqual(1, hashbag.ContainsCount(8));
+            Assert.That(hashbag.ContainsCount(5), Is.EqualTo(2));
+            Assert.That(hashbag.ContainsCount(7), Is.EqualTo(0));
+            Assert.That(hashbag.ContainsCount(8), Is.EqualTo(1));
         }
 
 
@@ -282,75 +331,78 @@ namespace C5.Tests.hashtable.bag
         public void RemoveAllCopies()
         {
             hashbag.Add(5); hashbag.Add(7); hashbag.Add(5);
-            Assert.AreEqual(2, hashbag.ContainsCount(5));
-            Assert.AreEqual(1, hashbag.ContainsCount(7));
+            Assert.Multiple(() =>
+            {
+                Assert.That(hashbag.ContainsCount(5), Is.EqualTo(2));
+                Assert.That(hashbag.ContainsCount(7), Is.EqualTo(1));
+            });
             hashbag.RemoveAllCopies(5);
-            Assert.AreEqual(0, hashbag.ContainsCount(5));
-            Assert.AreEqual(1, hashbag.ContainsCount(7));
+            Assert.That(hashbag.ContainsCount(5), Is.EqualTo(0));
+            Assert.That(hashbag.ContainsCount(7), Is.EqualTo(1));
             hashbag.Add(5); hashbag.Add(8); hashbag.Add(5);
             hashbag.RemoveAllCopies(8);
-            Assert.IsTrue(IC.Eq(hashbag, 7, 5, 5));
+            Assert.That(IC.Eq(hashbag, 7, 5, 5), Is.True);
         }
 
 
         [Test]
         public void ContainsAll()
         {
-            HashBag<int> list2 = new HashBag<int>();
+            HashBag<int> list2 = new();
 
-            Assert.IsTrue(hashbag.ContainsAll(list2));
+            Assert.That(hashbag.ContainsAll(list2), Is.True);
             list2.Add(4);
-            Assert.IsFalse(hashbag.ContainsAll(list2));
+            Assert.That(hashbag.ContainsAll(list2), Is.False);
             hashbag.Add(4);
-            Assert.IsTrue(hashbag.ContainsAll(list2));
+            Assert.That(hashbag.ContainsAll(list2), Is.True);
             hashbag.Add(5);
-            Assert.IsTrue(hashbag.ContainsAll(list2));
+            Assert.That(hashbag.ContainsAll(list2), Is.True);
             list2.Add(20);
-            Assert.IsFalse(hashbag.ContainsAll(list2));
+            Assert.That(hashbag.ContainsAll(list2), Is.False);
             hashbag.Add(20);
-            Assert.IsTrue(hashbag.ContainsAll(list2));
+            Assert.That(hashbag.ContainsAll(list2), Is.True);
             list2.Add(4);
-            Assert.IsFalse(hashbag.ContainsAll(list2));
+            Assert.That(hashbag.ContainsAll(list2), Is.False);
             hashbag.Add(4);
-            Assert.IsTrue(hashbag.ContainsAll(list2));
+            Assert.That(hashbag.ContainsAll(list2), Is.True);
         }
 
 
         [Test]
         public void RetainAll()
         {
-            HashBag<int> list2 = new HashBag<int>();
+            HashBag<int> list2 = new();
 
             hashbag.Add(4); hashbag.Add(5); hashbag.Add(4); hashbag.Add(6); hashbag.Add(4);
             list2.Add(5); list2.Add(4); list2.Add(7); list2.Add(4);
             hashbag.RetainAll(list2);
-            Assert.IsTrue(IC.SetEq(hashbag, 4, 4, 5));
+            Assert.That(IC.SetEq(hashbag, 4, 4, 5), Is.True);
             hashbag.Add(6);
             list2.Clear();
             list2.Add(7); list2.Add(8); list2.Add(9);
             hashbag.RetainAll(list2);
-            Assert.IsTrue(IC.Eq(hashbag));
+            Assert.That(IC.Eq(hashbag), Is.True);
         }
 
 
         [Test]
         public void RemoveAll()
         {
-            HashBag<int> list2 = new HashBag<int>();
+            HashBag<int> list2 = new();
 
             hashbag.Add(4); hashbag.Add(5); hashbag.Add(6); hashbag.Add(4); hashbag.Add(5);
             list2.Add(5); list2.Add(4); list2.Add(7); list2.Add(4);
             hashbag.RemoveAll(list2);
-            Assert.IsTrue(IC.SetEq(hashbag, 5, 6));
+            Assert.That(IC.SetEq(hashbag, 5, 6), Is.True);
             hashbag.Add(5); hashbag.Add(4);
             list2.Clear();
             list2.Add(6); list2.Add(5);
             hashbag.RemoveAll(list2);
-            Assert.IsTrue(IC.SetEq(hashbag, 4, 5));
+            Assert.That(IC.SetEq(hashbag, 4, 5), Is.True);
             list2.Clear();
             list2.Add(7); list2.Add(8); list2.Add(9);
             hashbag.RemoveAll(list2);
-            Assert.IsTrue(IC.SetEq(hashbag, 4, 5));
+            Assert.That(IC.SetEq(hashbag, 4, 5), Is.True);
         }
 
 
@@ -358,22 +410,28 @@ namespace C5.Tests.hashtable.bag
         public void Remove()
         {
             hashbag.Add(4); hashbag.Add(4); hashbag.Add(5); hashbag.Add(4); hashbag.Add(6);
-            Assert.IsFalse(hashbag.Remove(2));
-            Assert.IsTrue(hashbag.Remove(4));
-            Assert.IsTrue(IC.SetEq(hashbag, 4, 4, 5, 6));
+            Assert.Multiple(() =>
+            {
+                Assert.That(hashbag.Remove(2), Is.False);
+                Assert.That(hashbag.Remove(4), Is.True);
+                Assert.That(IC.SetEq(hashbag, 4, 4, 5, 6), Is.True);
+            });
             hashbag.Add(7);
             hashbag.Add(21); hashbag.Add(37); hashbag.Add(53); hashbag.Add(69); hashbag.Add(53); hashbag.Add(85);
-            Assert.IsTrue(hashbag.Remove(5));
-            Assert.IsTrue(IC.SetEq(hashbag, 4, 4, 6, 7, 21, 37, 53, 53, 69, 85));
-            Assert.IsFalse(hashbag.Remove(165));
-            Assert.IsTrue(hashbag.Check());
-            Assert.IsTrue(IC.SetEq(hashbag, 4, 4, 6, 7, 21, 37, 53, 53, 69, 85));
-            Assert.IsTrue(hashbag.Remove(53));
-            Assert.IsTrue(IC.SetEq(hashbag, 4, 4, 6, 7, 21, 37, 53, 69, 85));
-            Assert.IsTrue(hashbag.Remove(37));
-            Assert.IsTrue(IC.SetEq(hashbag, 4, 4, 6, 7, 21, 53, 69, 85));
-            Assert.IsTrue(hashbag.Remove(85));
-            Assert.IsTrue(IC.SetEq(hashbag, 4, 4, 6, 7, 21, 53, 69));
+            Assert.Multiple(() =>
+            {
+                Assert.That(hashbag.Remove(5), Is.True);
+                Assert.That(IC.SetEq(hashbag, 4, 4, 6, 7, 21, 37, 53, 53, 69, 85), Is.True);
+                Assert.That(hashbag.Remove(165), Is.False);
+                Assert.That(hashbag.Check(), Is.True);
+            });
+            Assert.That(IC.SetEq(hashbag, 4, 4, 6, 7, 21, 37, 53, 53, 69, 85), Is.True);
+            Assert.That(hashbag.Remove(53), Is.True);
+            Assert.That(IC.SetEq(hashbag, 4, 4, 6, 7, 21, 37, 53, 69, 85), Is.True);
+            Assert.That(hashbag.Remove(37), Is.True);
+            Assert.That(IC.SetEq(hashbag, 4, 4, 6, 7, 21, 53, 69, 85), Is.True);
+            Assert.That(hashbag.Remove(85), Is.True);
+            Assert.That(IC.SetEq(hashbag, 4, 4, 6, 7, 21, 53, 69), Is.True);
         }
 
 
@@ -409,12 +467,15 @@ namespace C5.Tests.hashtable.bag
         [Test]
         public void Find()
         {
-            Assert.IsFalse(list.Find(pred, out int i));
-            list.AddAll(new int[] { 4, 22, 67, 37 });
-            Assert.IsFalse(list.Find(pred, out i));
-            list.AddAll(new int[] { 45, 122, 675, 137 });
-            Assert.IsTrue(list.Find(pred, out i));
-            Assert.AreEqual(45, i);
+            Assert.That(list.Find(pred, out int i), Is.False);
+            list.AddAll([4, 22, 67, 37]);
+            Assert.That(list.Find(pred, out i), Is.False);
+            list.AddAll([45, 122, 675, 137]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(list.Find(pred, out i), Is.True);
+                Assert.That(i, Is.EqualTo(45));
+            });
         }
 
     }
@@ -433,11 +494,17 @@ namespace C5.Tests.hashtable.bag
         [Test]
         public void Test()
         {
-            Assert.IsTrue(IC.SetEq(list.UniqueItems()));
-            Assert.IsTrue(IC.SetEq(list.ItemMultiplicities()));
-            list.AddAll(new int[] { 7, 9, 7 });
-            Assert.IsTrue(IC.SetEq(list.UniqueItems(), 7, 9));
-            Assert.IsTrue(IC.SetEq(list.ItemMultiplicities(), 7, 2, 9, 1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(IC.SetEq(list.UniqueItems()), Is.True);
+                Assert.That(IC.SetEq(list.ItemMultiplicities()), Is.True);
+            });
+            list.AddAll([7, 9, 7]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(IC.SetEq(list.UniqueItems(), 7, 9), Is.True);
+                Assert.That(IC.SetEq(list.ItemMultiplicities(), 7, 2, 9, 1), Is.True);
+            });
         }
     }
 
@@ -491,7 +558,7 @@ namespace C5.Tests.hashtable.bag
         [Test]
         public void ToArray()
         {
-            Assert.AreEqual("Alles klar", aeq(hashbag.ToArray()));
+            Assert.That(aeq(hashbag.ToArray()), Is.EqualTo("Alles klar"));
             hashbag.Add(7);
             hashbag.Add(3);
             hashbag.Add(10);
@@ -500,7 +567,7 @@ namespace C5.Tests.hashtable.bag
             int[] r = hashbag.ToArray();
 
             Array.Sort(r);
-            Assert.AreEqual("Alles klar", aeq(r, 3, 3, 7, 10));
+            Assert.That(aeq(r, 3, 3, 7, 10), Is.EqualTo("Alles klar"));
         }
 
 
@@ -509,21 +576,21 @@ namespace C5.Tests.hashtable.bag
         {
             //Note: for small ints the itemequalityComparer is the identity!
             hashbag.CopyTo(a, 1);
-            Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009));
+            Assert.That(aeq(a, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009), Is.EqualTo("Alles klar"));
             hashbag.Add(6);
             hashbag.CopyTo(a, 2);
-            Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 6, 1003, 1004, 1005, 1006, 1007, 1008, 1009));
+            Assert.That(aeq(a, 1000, 1001, 6, 1003, 1004, 1005, 1006, 1007, 1008, 1009), Is.EqualTo("Alles klar"));
             hashbag.Add(4);
             hashbag.Add(6);
             hashbag.Add(9);
             hashbag.CopyTo(a, 4);
 
             //TODO: make independent of interequalityComparer
-            Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 6, 1003, 6, 6, 9, 4, 1008, 1009));
+            Assert.That(aeq(a, 1000, 1001, 6, 1003, 6, 6, 9, 4, 1008, 1009), Is.EqualTo("Alles klar"));
             hashbag.Clear();
             hashbag.Add(7);
             hashbag.CopyTo(a, 9);
-            Assert.AreEqual("Alles klar", aeq(a, 1000, 1001, 6, 1003, 6, 6, 9, 4, 1008, 7));
+            Assert.That(aeq(a, 1000, 1001, 6, 1003, 6, 6, 9, 4, 1008, 7), Is.EqualTo("Alles klar"));
         }
 
 
@@ -554,7 +621,8 @@ namespace C5.Tests.hashtable.bag
     [TestFixture]
     public class HashingEquals
     {
-        private ICollection<int> h1, h2;
+        private HashBag<int> h1;
+        private LinkedList<int> h2;
 
 
         [SetUp]
@@ -564,31 +632,29 @@ namespace C5.Tests.hashtable.bag
             h2 = new LinkedList<int>();
         }
 
-
         [TearDown]
         public void Dispose()
         {
-            h1 = h2 = null;
+            h1 = null;
+            h2.Dispose();
         }
-
 
         [Test]
         public void Hashing()
         {
-            Assert.AreEqual(h1.GetUnsequencedHashCode(), h2.GetUnsequencedHashCode());
+            Assert.That(h2.GetUnsequencedHashCode(), Is.EqualTo(h1.GetUnsequencedHashCode()));
             h1.Add(7);
             h2.Add(9);
-            Assert.IsTrue(h1.GetUnsequencedHashCode() != h2.GetUnsequencedHashCode());
+            Assert.That(h1.GetUnsequencedHashCode() != h2.GetUnsequencedHashCode(), Is.True);
             h2.Add(7);
             h1.Add(9);
-            Assert.IsTrue(h1.GetUnsequencedHashCode() == h2.GetUnsequencedHashCode());
+            Assert.That(h1.GetUnsequencedHashCode(), Is.EqualTo(h2.GetUnsequencedHashCode()));
         }
-
 
         [Test]
         public void Equals()
         {
-            Assert.IsTrue(h1.UnsequencedEquals(h2));
+            Assert.That(h1.UnsequencedEquals(h2), Is.True);
             //            Code 1550734257, Pair (3 x 1602896434, 2 x 1186320090) number 169185 matched oth
             //er pair (3 x -1615223932, 2 x 1019546595)
             h1.Add(1602896434);
@@ -601,16 +667,19 @@ namespace C5.Tests.hashtable.bag
             h2.Add(-1615223932);
             h2.Add(1019546595);
             h2.Add(-1615223932);
-            Assert.IsTrue(h1.GetUnsequencedHashCode() == h2.GetUnsequencedHashCode());
-            Assert.IsTrue(!h1.UnsequencedEquals(h2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(h1.GetUnsequencedHashCode(), Is.EqualTo(h2.GetUnsequencedHashCode()));
+                Assert.That(!h1.UnsequencedEquals(h2), Is.True);
+            });
             h1.Clear();
             h2.Clear();
             h1.Add(1);
             h1.Add(2);
             h2.Add(2);
             h2.Add(1);
-            Assert.IsTrue(h1.GetUnsequencedHashCode() == h2.GetUnsequencedHashCode());
-            Assert.IsTrue(h1.UnsequencedEquals(h2));
+            Assert.That(h1.GetUnsequencedHashCode(), Is.EqualTo(h2.GetUnsequencedHashCode()));
+            Assert.That(h1.UnsequencedEquals(h2), Is.True);
         }
     }
 }

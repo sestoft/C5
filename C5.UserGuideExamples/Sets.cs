@@ -75,9 +75,13 @@ public class Set<T> : HashSet<T>
         return !(s1 == s2);
     }
 
-    public override bool Equals(object that)
+    public override bool Equals(object? that)
     {
-        return this == (that as Set<T>);
+        var t = that as Set<T>;
+
+        ArgumentNullException.ThrowIfNull(t);
+
+        return this == (t);
     }
 
     public override int GetHashCode()

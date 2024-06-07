@@ -13,7 +13,7 @@ namespace C5.UserGuideExamples
     {
         public static void Main()
         {
-            MultiHashDictionary<int, string, Inner> mdict = new MultiHashDictionary<int, string, Inner>
+            MultiHashDictionary<int, string, Inner> mdict = new()
             {
                 { 2, "to" },
                 { 2, "deux" },
@@ -31,7 +31,7 @@ namespace C5.UserGuideExamples
             mdict.Remove(20, "twenty");
             Console.WriteLine(mdict);
             Console.WriteLine("mdict.Count is {0}", mdict.Count);
-            Inner zwei = new Inner
+            Inner zwei = new()
             {
                 "zwei"
             };
@@ -42,7 +42,7 @@ namespace C5.UserGuideExamples
             zwei.Add("kaksi");
             Console.WriteLine(mdict);
             Console.WriteLine("mdict.Count is {0}", mdict.Count);
-            Inner empty = new Inner();
+            Inner empty = new();
             mdict[0] = empty;
             Console.WriteLine(mdict);
             Console.WriteLine("mdict.Count is {0}", mdict.Count);

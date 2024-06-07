@@ -1,21 +1,23 @@
+// This file is part of the C5 Generic Collection Library for C# and CLI
+// See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
+
 using System;
 
-namespace C5
+namespace C5;
+
+/// <summary>
+/// An exception thrown by an operation that need to construct a natural
+/// comparer for a type.
+/// </summary>
+public class NotComparableException : Exception
 {
     /// <summary>
-    /// An exception thrown by an operation that need to construct a natural
-    /// comparer for a type.
+    /// Create a simple exception with no further explanation.
     /// </summary>
-    public class NotComparableException : Exception
-    {
-        /// <summary>
-        /// Create a simple exception with no further explanation.
-        /// </summary>
-        public NotComparableException() : base() { }
-        /// <summary>
-        /// Create the exception with an explanation of the reason.
-        /// </summary>
-        /// <param name="message"></param>
-        public NotComparableException(string message) : base(message) { }
-    }
+    public NotComparableException() : base() { }
+    /// <summary>
+    /// Create the exception with an explanation of the reason.
+    /// </summary>
+    /// <param name="message"></param>
+    public NotComparableException(string message) : base(message) { }
 }
