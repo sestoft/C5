@@ -499,24 +499,12 @@ namespace C5.Tests.linkedlists.hashed
         [TestFixture]
         public class Sync
         {
-            private HashedLinkedList<int> list;
-
-
-            [SetUp]
-            public void Init()
-            {
-                list = new HashedLinkedList<int>();
-            }
-
-
-            [TearDown]
-            public void Dispose() { list.Dispose(); }
-
-
             [Test]
-            public void Get()
+            public void HashedLinkedList_has_SyncRoot()
             {
-                Assert.IsNotNull(((System.Collections.IList)list).SyncRoot);
+                var list = new HashedLinkedList<int>();
+
+                Assert.That(((System.Collections.IList)list).SyncRoot, Is.Not.Null);
             }
         }
     }

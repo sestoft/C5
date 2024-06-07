@@ -513,7 +513,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void Get()
             {
-                Assert.IsNotNull(((System.Collections.IList)list).SyncRoot);
+                Assert.That(((System.Collections.IList)list).SyncRoot, Is.Not.Null);
             }
         }
     }

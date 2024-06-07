@@ -34,7 +34,6 @@ namespace C5.Tests.support
                     thesize = 3
                 };
                 abt[2] = "aaa";
-                // Assert.IsFalse(abt.Check());
                 abt[0] = "##";
                 abt[1] = "##";
                 Assert.That(abt.Check(), Is.True);

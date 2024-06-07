@@ -1166,24 +1166,12 @@ namespace C5.Tests.arrays.list
         [TestFixture]
         public class Sync
         {
-            private ArrayList<int> list;
-
-
-            [SetUp]
-            public void Init()
-            {
-                list = new ArrayList<int>();
-            }
-
-
-            [TearDown]
-            public void Dispose() { list.Dispose(); }
-
-
             [Test]
-            public void Get()
+            public void ArrayList_has_SyncRoot()
             {
-                Assert.IsNotNull(((System.Collections.IList)list).SyncRoot);
+                var list = new ArrayList<int>();
+
+                Assert.That(((System.Collections.IList)list).SyncRoot, Is.Not.Null);
             }
         }
     }

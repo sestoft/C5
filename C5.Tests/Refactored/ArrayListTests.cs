@@ -3,11 +3,21 @@
 
 using NUnit.Framework;
 using System;
+using SCG = System.Collections.Generic;
 
 namespace C5.Tests;
 
 public class ArrayListTests
 {
+    [Test]
+    public void ArrayList_Implements_IReadOnlyList()
+    {
+        var list = new ArrayList<int> { 0, 1, 2, 3, 4 } as SCG.IReadOnlyList<int>;
+
+        Assert.That(list, Has.Count.EqualTo(5));
+        Assert.That(list[2], Is.EqualTo(2));
+    }
+
     [Test]
     public void IList_index_set_given_null_when_T_is_value_type_throws()
     {

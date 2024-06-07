@@ -19,7 +19,7 @@ namespace C5.Tests.Wrappers
 
             var guarded = new GuardedSortedDictionary<int, string>(source);
 
-            Assert.IsAssignableFrom<GuardedSorted<int>>(guarded.Keys);
+            Assert.That(guarded.Keys, Is.AssignableFrom<GuardedSorted<int>>());
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace C5.Tests.Wrappers
 
             var guarded = new GuardedSortedDictionary<int, string>(source);
 
-            Assert.IsAssignableFrom<GuardedCollectionValue<string>>(guarded.Values);
+            Assert.That(guarded.Values, Is.AssignableFrom<GuardedCollectionValue<string>>());
         }
 
         [Test]
