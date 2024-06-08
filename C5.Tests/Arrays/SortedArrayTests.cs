@@ -1818,28 +1818,24 @@ namespace C5.Tests.arrays.sorted
             [Test]
             public void Map()
             {
-                Assert.That(array.Map(new Func<int, string>(themap), new SC()), Is.Empty);
+                Assert.That(array.Map(new Func<int, string>(themap), StringComparer.InvariantCulture), Is.Empty);
                 for (int i = 0; i < 11; i++)
                 {
                     array.Add(i * i * i);
                 }
 
-                IIndexedSorted<string> res = array.Map(new Func<int, string>(themap), new SC());
+                var res = array.Map(new Func<int, string>(themap), StringComparer.InvariantCulture);
 
                 Assert.Multiple(() =>
                 {
                     Assert.That(((SortedArray<string>)res).Check(), Is.True);
                     Assert.That(res, Has.Count.EqualTo(11));
-                });
-                Assert.Multiple(() =>
-                {
                     Assert.That(res[0], Is.EqualTo("AA    0 BB"));
                     Assert.That(res[3], Is.EqualTo("AA   27 BB"));
                     Assert.That(res[5], Is.EqualTo("AA  125 BB"));
                     Assert.That(res[10], Is.EqualTo("AA 1000 BB"));
                 });
             }
-
 
             [Test]
             public void BadMap()
@@ -1849,7 +1845,7 @@ namespace C5.Tests.arrays.sorted
                     array.Add(i * i * i);
                 }
 
-                var exception = Assert.Throws<ArgumentException>(() => { ISorted<string> res = array.Map(new Func<int, string>(badmap), new SC()); });
+                var exception = Assert.Throws<ArgumentException>(() => { ISorted<string> res = array.Map(new Func<int, string>(badmap), StringComparer.InvariantCulture); });
                 Assert.That(exception.Message, Is.EqualTo("mapper not monotonic"));
             }
 

@@ -7,19 +7,6 @@ using SCG = System.Collections.Generic;
 
 namespace C5.Tests
 {
-    internal class SC : SCG.IComparer<string>
-    {
-        public int Compare(string a, string b)
-        {
-            return a.CompareTo(b);
-        }
-
-        public void appl(string s)
-        {
-            Console.WriteLine("--{0}", s);
-        }
-    }
-
     internal class TenEqualityComparer : SCG.IEqualityComparer<int>, SCG.IComparer<int>
     {
         private TenEqualityComparer() { }
@@ -77,6 +64,7 @@ namespace C5.Tests
 
             return i == maxind + 1;
         }
+
         public static bool SetEq(ICollectionValue<int> me, params int[] that)
         {
             int[] me2 = me.ToArray();
@@ -177,16 +165,11 @@ namespace C5.Tests
         public override T Choose() { throw exception; }
     }
 
-    public class CollectionEventList<T>
+    public class CollectionEventList<T>(SCG.IEqualityComparer<T> itemequalityComparer)
     {
-        private readonly ArrayList<CollectionEvent<T>> happened;
+        private readonly ArrayList<CollectionEvent<T>> happened = [];
         private EventType listenTo;
-        private readonly SCG.IEqualityComparer<T> itemequalityComparer;
-        public CollectionEventList(SCG.IEqualityComparer<T> itemequalityComparer)
-        {
-            happened = new ArrayList<CollectionEvent<T>>();
-            this.itemequalityComparer = itemequalityComparer;
-        }
+
         public void Listen(ICollectionValue<T> list, EventType listenTo)
         {
             this.listenTo = listenTo;
@@ -442,58 +425,18 @@ namespace C5.Tests
         'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
         'U', 'V', 'W', 'X', 'Y', 'Z' ];
 
-        public string Format(string format, object arg, IFormatProvider formatProvider)
+        public string Format(string? format, object? arg, IFormatProvider? formatProvider)
         {
-            /*switch (Type.GetTypeCode(argToBeFormatted.GetType()))
-            {
-              case TypeCode.Boolean:
-                break;
-              case TypeCode.Byte:
-                break;
-              case TypeCode.Char:
-                break;
-              case TypeCode.DBNull:
-                break;
-              case TypeCode.DateTime:
-                break;
-              case TypeCode.Decimal:
-                break;
-              case TypeCode.Double:
-                break;
-              case TypeCode.Empty:
-                break;
-              case TypeCode.Int16:
-                break;
-              case TypeCode.Int32:
-                break;
-              case TypeCode.Int64:
-                break;
-              case TypeCode.Object:
-                break;
-              case TypeCode.SByte:
-                break;
-              case TypeCode.Single:
-                break;
-              case TypeCode.String:
-                break;
-              case TypeCode.UInt16:
-                break;
-              case TypeCode.UInt32:
-                break;
-              case TypeCode.UInt64:
-                break;
-            }*/
             int intToBeFormatted;
             try
             {
-                intToBeFormatted = (int)arg;
+                intToBeFormatted = (int)arg!;
             }
             catch (Exception)
             {
-                if (arg is IFormattable)
+                if (arg is IFormattable formattable)
                 {
-                    return ((IFormattable)arg).
-                        ToString(format, formatProvider);
+                    return formattable.ToString(format, formatProvider);
                 }
                 else if (IsKeyValuePair(arg))
                 {
@@ -550,7 +493,7 @@ namespace C5.Tests
         }
 
         // SCG.KeyValuePair is not showable, so we hack it now.
-        private bool IsKeyValuePair(object arg)
+        private static bool IsKeyValuePair(object arg)
         {
             if (arg != null)
             {
@@ -565,12 +508,12 @@ namespace C5.Tests
             return false;
         }
 
-        private (object key, object value) GetKeyValuePair(object arg)
+        private static (object? key, object? value) GetKeyValuePair(object arg)
         {
             var type = arg.GetType();
 
-            var key = type.GetProperty("Key").GetValue(arg, null);
-            var value = type.GetProperty("Value").GetValue(arg, null);
+            var key = type.GetProperty("Key")?.GetValue(arg, null);
+            var value = type.GetProperty("Value")?.GetValue(arg, null);
 
             return (key, value);
         }

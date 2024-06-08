@@ -56,9 +56,9 @@ internal class KeywordRecognition
     {
         _keywords1 = new HashSet<string>();
         _keywords1.AddAll(_keywordArray);
-        _keywords2 = new TreeSet<string>(new SC());
+        _keywords2 = new TreeSet<string>(StringComparer.InvariantCulture);
         _keywords2.AddAll(_keywordArray);
-        _keywords3 = new SortedArray<string>(new SC());
+        _keywords3 = new SortedArray<string>(StringComparer.InvariantCulture);
         _keywords3.AddAll(_keywordArray);
         _keywords4 = new SCG.Dictionary<string, bool>();
 

@@ -47,7 +47,7 @@ namespace C5.Tests.trees.RBDictionary
 
 
         [SetUp]
-        public void Init() { dict = new TreeDictionary<string, string>(new SC()); }
+        public void Init() { dict = new TreeDictionary<string, string>(StringComparer.InvariantCulture); }
 
 
         [TearDown]
@@ -229,7 +229,7 @@ namespace C5.Tests.trees.RBDictionary
         [SetUp]
         public void Init()
         {
-            ISortedDictionary<string, string> dict = new TreeDictionary<string, string>(new SC())
+            ISortedDictionary<string, string> dict = new TreeDictionary<string, string>(StringComparer.InvariantCulture)
             {
                 { "A", "1" },
                 { "C", "2" },
@@ -360,7 +360,7 @@ namespace C5.Tests.trees.RBDictionary
         [SetUp]
         public void Init()
         {
-            dict = new TreeDictionary<string, string>(new SC())
+            dict = new TreeDictionary<string, string>(StringComparer.InvariantCulture)
             {
                 ["S"] = "A",
                 ["T"] = "B",
@@ -504,7 +504,7 @@ namespace C5.Tests.trees.RBDictionary
             [SetUp]
             public void Init()
             {
-                dict = new TreeDictionary<string, string>(new SC())
+                dict = new TreeDictionary<string, string>(StringComparer.InvariantCulture)
                 {
                     ["S"] = "A",
                     ["T"] = "B",

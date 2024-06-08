@@ -1091,54 +1091,33 @@ namespace C5.Tests.arrays.list
             [TearDown]
             public void Dispose() { list.Dispose(); }
 
-
-            private string aeq(int[] a, params int[] b)
-            {
-                if (a.Length != b.Length)
-                {
-                    return "Lengths differ: " + a.Length + " != " + b.Length;
-                }
-
-                for (int i = 0; i < a.Length; i++)
-                {
-                    if (a[i] != b[i])
-                    {
-                        return string.Format("{0}'th elements differ: {1} != {2}", i, a[i], b[i]);
-                    }
-                }
-
-                return "Alles klar";
-            }
-
             [Test]
             public void ToArray()
             {
-                Assert.That(aeq(list.ToArray()), Is.EqualTo("Alles klar"));
+                Assert.That(list.ToArray(), Is.Empty);
                 list.Add(7);
                 list.Add(7);
-                Assert.That(aeq(list.ToArray(), 7, 7), Is.EqualTo("Alles klar"));
+                Assert.That(list.ToArray(), Is.EqualTo(new[] { 7, 7 }));
             }
-
 
             [Test]
             public void CopyTo()
             {
                 list.CopyTo(a, 1);
-                Assert.That(aeq(a, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009), Is.EqualTo("Alles klar"));
+                Assert.That(a, Is.EqualTo(new[] { 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009 }));
                 list.Add(6);
                 list.CopyTo(a, 2);
-                Assert.That(aeq(a, 1000, 1001, 6, 1003, 1004, 1005, 1006, 1007, 1008, 1009), Is.EqualTo("Alles klar"));
+                Assert.That(a, Is.EqualTo(new[] { 1000, 1001, 6, 1003, 1004, 1005, 1006, 1007, 1008, 1009 }));
                 list.Add(4);
                 list.Add(4);
                 list.Add(9);
                 list.CopyTo(a, 4);
-                Assert.That(aeq(a, 1000, 1001, 6, 1003, 6, 4, 4, 9, 1008, 1009), Is.EqualTo("Alles klar"));
+                Assert.That(a, Is.EqualTo(new[] { 1000, 1001, 6, 1003, 6, 4, 4, 9, 1008, 1009 }));
                 list.Clear();
                 list.Add(7);
                 list.CopyTo(a, 9);
-                Assert.That(aeq(a, 1000, 1001, 6, 1003, 6, 4, 4, 9, 1008, 7), Is.EqualTo("Alles klar"));
+                Assert.That(a, Is.EqualTo(new[] { 1000, 1001, 6, 1003, 6, 4, 4, 9, 1008, 7 }));
             }
-
 
             [Test]
             public void CopyToBad()

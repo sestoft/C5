@@ -2399,13 +2399,13 @@ namespace C5.Tests.trees.TreeSet
             [Test]
             public void Map()
             {
-                Assert.That(tree.Map(new Func<int, string>(themap), new SC()), Is.Empty);
+                Assert.That(tree.Map(new Func<int, string>(themap), StringComparer.InvariantCulture), Is.Empty);
                 for (int i = 0; i < 11; i++)
                 {
                     tree.Add(i * i * i);
                 }
 
-                IIndexedSorted<string> res = tree.Map(new Func<int, string>(themap), new SC());
+                IIndexedSorted<string> res = tree.Map(new Func<int, string>(themap), StringComparer.InvariantCulture);
 
                 Assert.Multiple(() =>
                 {
@@ -2432,7 +2432,7 @@ namespace C5.Tests.trees.TreeSet
 
                 var exception = Assert.Throws<ArgumentException>(() =>
                 {
-                    ISorted<string> res = tree.Map(new Func<int, string>(badmap), new SC());
+                    ISorted<string> res = tree.Map(new Func<int, string>(badmap), StringComparer.InvariantCulture);
                 });
                 Assert.That(exception.Message, Is.EqualTo("mapper not monotonic"));
             }

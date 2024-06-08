@@ -191,7 +191,7 @@ namespace C5.Tests.trees.TreeBag
         [Test]
         public void UpdateOrAdd2()
         {
-            ICollection<string> coll = new TreeBag<string>();
+            var coll = new TreeBag<string>();
             // s1 and s2 are distinct objects but contain the same text:
             string s1 = "abc", s2 = ("def" + s1).Substring(3);
             Assert.Multiple(() =>
@@ -232,7 +232,7 @@ namespace C5.Tests.trees.TreeBag
         [SetUp]
         public void Init()
         {
-            bag = new TreeBag<string>(new SC());
+            bag = new TreeBag<string>(StringComparer.InvariantCulture);
         }
 
 
@@ -403,7 +403,7 @@ namespace C5.Tests.trees.TreeBag
         [SetUp]
         public void Init()
         {
-            bag = new TreeBag<string>(new SC());
+            bag = new TreeBag<string>(StringComparer.InvariantCulture);
             foreach (string s in new string[] { "A", "B", "A", "A", "B", "C", "D", "B" })
             {
                 bag.Add(s);
@@ -854,7 +854,7 @@ namespace C5.Tests.trees.TreeBag
         private TreeBag<int> list;
 
         [SetUp]
-        public void Init() { list = new TreeBag<int>(); }
+        public void Init() { list = []; }
 
         [TearDown]
         public void Dispose() { list.Dispose(); }
@@ -882,7 +882,7 @@ namespace C5.Tests.trees.TreeBag
         private TreeBag<int> list;
 
         [SetUp]
-        public void Init() { list = new TreeBag<int>(); }
+        public void Init() { list = []; }
 
         [TearDown]
         public void Dispose() { list.Dispose(); }
@@ -1091,7 +1091,7 @@ namespace C5.Tests.trees.TreeBag
         public void Dispose() { tree.Dispose(); }
 
 
-        private string aeq(int[] a, params int[] b)
+        private static string Aeq(int[] a, params int[] b)
         {
             if (a.Length != b.Length)
             {
@@ -1102,7 +1102,7 @@ namespace C5.Tests.trees.TreeBag
             {
                 if (a[i] != b[i])
                 {
-                    return string.Format("{0}'th elements differ: {1} != {2}", i, a[i], b[i]);
+                    return $"{i}'th elements differ: {a[i]} != {b[i]}";
                 }
             }
 
@@ -1113,11 +1113,11 @@ namespace C5.Tests.trees.TreeBag
         [Test]
         public void ToArray()
         {
-            Assert.That(aeq(tree.ToArray()), Is.EqualTo("Alles klar"));
+            Assert.That(Aeq(tree.ToArray()), Is.EqualTo("Alles klar"));
             tree.Add(4);
             tree.Add(7);
             tree.Add(4);
-            Assert.That(aeq(tree.ToArray(), 4, 4, 7), Is.EqualTo("Alles klar"));
+            Assert.That(Aeq(tree.ToArray(), 4, 4, 7), Is.EqualTo("Alles klar"));
         }
 
 
@@ -1125,19 +1125,19 @@ namespace C5.Tests.trees.TreeBag
         public void CopyTo()
         {
             tree.CopyTo(a, 1);
-            Assert.That(aeq(a, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009), Is.EqualTo("Alles klar"));
+            Assert.That(Aeq(a, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009), Is.EqualTo("Alles klar"));
             tree.Add(6);
             tree.Add(6);
             tree.CopyTo(a, 2);
-            Assert.That(aeq(a, 1000, 1001, 6, 6, 1004, 1005, 1006, 1007, 1008, 1009), Is.EqualTo("Alles klar"));
+            Assert.That(Aeq(a, 1000, 1001, 6, 6, 1004, 1005, 1006, 1007, 1008, 1009), Is.EqualTo("Alles klar"));
             tree.Add(4);
             tree.Add(9);
             tree.CopyTo(a, 4);
-            Assert.That(aeq(a, 1000, 1001, 6, 6, 4, 6, 6, 9, 1008, 1009), Is.EqualTo("Alles klar"));
+            Assert.That(Aeq(a, 1000, 1001, 6, 6, 4, 6, 6, 9, 1008, 1009), Is.EqualTo("Alles klar"));
             tree.Clear();
             tree.Add(7);
             tree.CopyTo(a, 9);
-            Assert.That(aeq(a, 1000, 1001, 6, 6, 4, 6, 6, 9, 1008, 7), Is.EqualTo("Alles klar"));
+            Assert.That(Aeq(a, 1000, 1001, 6, 6, 4, 6, 6, 9, 1008, 7), Is.EqualTo("Alles klar"));
         }
 
 
@@ -2805,7 +2805,7 @@ namespace C5.Tests.trees.TreeBag
             [Test]
             public void Map()
             {
-                Assert.That(tree.Map(new Func<int, string>(themap), new SC()), Is.Empty);
+                Assert.That(tree.Map(new Func<int, string>(themap), StringComparer.InvariantCulture), Is.Empty);
                 for (int i = 0; i < 14; i++)
                 {
                     tree.Add(i * i * i);
@@ -2813,7 +2813,7 @@ namespace C5.Tests.trees.TreeBag
 
                 tree.Add(1);
 
-                IIndexedSorted<string> res = tree.Map(new Func<int, string>(themap), new SC());
+                IIndexedSorted<string> res = tree.Map(new Func<int, string>(themap), StringComparer.InvariantCulture);
 
                 Assert.Multiple(() =>
                 {
@@ -2843,7 +2843,7 @@ namespace C5.Tests.trees.TreeBag
 
                 var exception = Assert.Throws<ArgumentException>(() =>
                 {
-                    ISorted<string> res = tree.Map(new Func<int, string>(badmap), new SC());
+                    ISorted<string> res = tree.Map(new Func<int, string>(badmap), StringComparer.InvariantCulture);
                 });
 
                 Assert.That(exception.Message, Is.EqualTo("mapper not monotonic"));
@@ -3376,8 +3376,8 @@ namespace C5.Tests.trees.TreeBag
             [Test]
             public void GetRangeBug20090616()
             {
-                C5.TreeBag<double> tree = new() {
-          0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 3.0, 3.0, 4.0 };
+                TreeBag<double> tree = [
+          0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 3.0, 3.0, 4.0 ];
                 for (int start = 0; start <= tree.Count - 2; start++)
                 {
                     double[] range = tree[start, 2].ToArray();
@@ -3415,8 +3415,8 @@ namespace C5.Tests.trees.TreeBag
             [Test]
             public void GetRangeBackwardsBug20090616()
             {
-                C5.TreeBag<double> tree = new() {
-          0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 3.0, 3.0, 4.0 };
+                TreeBag<double> tree = [
+          0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 3.0, 3.0, 4.0 ];
                 for (int start = 0; start <= tree.Count - 2; start++)
                 {
                     double[] range = tree[start, 2].Backwards().ToArray();

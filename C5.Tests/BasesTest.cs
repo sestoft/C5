@@ -22,7 +22,7 @@ namespace C5.Tests.support
                 public string this[int i] { get => array[i]; set => array[i] = value; }
 
 
-                public int thesize { get => size; set => size = value; }
+                public int TheSize { get => size; set => size = value; }
             }
 
 
@@ -31,7 +31,7 @@ namespace C5.Tests.support
             {
                 ABT abt = new()
                 {
-                    thesize = 3
+                    TheSize = 3
                 };
                 abt[2] = "aaa";
                 abt[0] = "##";
@@ -46,26 +46,25 @@ namespace C5.Tests.support
         [TestFixture]
         public class Comparers
         {
-            private class dbl : IComparable<dbl>
+            private class Dbl(double din) : IComparable<Dbl>
             {
-                private readonly double d;
+                private readonly double d = din;
 
-                public dbl(double din) { d = din; }
-
-                public int CompareTo(dbl that)
+                public int CompareTo(Dbl? that)
                 {
-                    return d < that.d ? -1 : d == that.d ? 0 : 1;
+                    return d < that?.d ? -1 : d == that?.d ? 0 : 1;
                 }
-                public bool Equals(dbl that) { return d == that.d; }
+
+                public bool Equals(Dbl that) { return d == that.d; }
             }
 
             [Test]
             public void GenericC()
             {
-                SCG.IComparer<dbl> h = SCG.Comparer<dbl>.Default;
-                dbl s = new(3.4);
-                dbl t = new(3.4);
-                dbl u = new(7.4);
+                SCG.IComparer<Dbl> h = SCG.Comparer<Dbl>.Default;
+                Dbl s = new(3.4);
+                Dbl t = new(3.4);
+                Dbl u = new(7.4);
 
                 Assert.Multiple(() =>
                 {
@@ -78,7 +77,7 @@ namespace C5.Tests.support
             [Test]
             public void OrdinaryC()
             {
-                SCG.IComparer<string> h = SCG.Comparer<string>.Default;
+                var h = SCG.Comparer<string>.Default;
                 string s = "bamse";
                 string t = "bamse";
                 string u = "bimse";
@@ -94,16 +93,16 @@ namespace C5.Tests.support
             [Test]
             public void GenericCViaBuilder()
             {
-                SCG.IComparer<dbl> h = SCG.Comparer<dbl>.Default;
-                dbl s = new(3.4);
-                dbl t = new(3.4);
-                dbl u = new(7.4);
+                SCG.IComparer<Dbl> h = SCG.Comparer<Dbl>.Default;
+                Dbl s = new(3.4);
+                Dbl t = new(3.4);
+                Dbl u = new(7.4);
 
                 Assert.Multiple(() =>
                 {
                     Assert.That(h.Compare(s, t), Is.EqualTo(0));
                     Assert.That(h.Compare(s, u), Is.LessThan(0));
-                    Assert.That(SCG.Comparer<dbl>.Default, Is.SameAs(h));
+                    Assert.That(SCG.Comparer<Dbl>.Default, Is.SameAs(h));
                 });
             }
 
@@ -111,7 +110,7 @@ namespace C5.Tests.support
             [Test]
             public void OrdinaryCViaBuilder()
             {
-                SCG.IComparer<string> h = SCG.Comparer<string>.Default;
+                var h = SCG.Comparer<string>.Default;
                 string s = "bamse";
                 string t = "bamse";
                 string u = "bimse";
@@ -125,10 +124,10 @@ namespace C5.Tests.support
 
             }
 
-            public void ComparerViaBuilderTest<T>(T item1, T item2)
+            private static void ComparerViaBuilderTest<T>(T item1, T item2)
                 where T : IComparable<T>
             {
-                SCG.IComparer<T> h = SCG.Comparer<T>.Default;
+                var h = SCG.Comparer<T>.Default;
                 Assert.Multiple(() =>
                 {
                     Assert.That(SCG.Comparer<T>.Default, Is.SameAs(h));
@@ -162,7 +161,7 @@ namespace C5.Tests.support
             [Test]
             public void IntComparerViaBuilder()
             {
-                SCG.IComparer<int> h = SCG.Comparer<int>.Default;
+                var h = SCG.Comparer<int>.Default;
                 int s = 4;
                 int t = 4;
                 int u = 5;
@@ -465,10 +464,10 @@ namespace C5.Tests.support
             [Test]
             public void UnseqequalityComparerViaBuilder()
             {
-                SCG.IEqualityComparer<C5.ICollection<int>> h = EqualityComparer<ICollection<int>>.Default;
-                C5.ICollection<int> s = new LinkedList<int>();
-                C5.ICollection<int> t = new LinkedList<int>();
-                C5.ICollection<int> u = new LinkedList<int>();
+                var h = EqualityComparer<ICollection<int>>.Default;
+                var s = new LinkedList<int>();
+                var t = new LinkedList<int>();
+                var u = new LinkedList<int>();
                 s.Add(1); s.Add(2); s.Add(3);
                 t.Add(3); t.Add(2); t.Add(1);
                 u.Add(3); u.Add(2); u.Add(4);
@@ -485,7 +484,7 @@ namespace C5.Tests.support
             public void SeqequalityComparerViaBuilder2()
             {
                 SCG.IEqualityComparer<LinkedList<int>> h = EqualityComparer<LinkedList<int>>.Default;
-                LinkedList<int> s = new() { 1, 2, 3 };
+                LinkedList<int> s = [1, 2, 3];
                 Assert.That(h.GetHashCode(s), Is.EqualTo(CHC.SequencedHashCode(1, 2, 3)));
             }
 
@@ -493,7 +492,7 @@ namespace C5.Tests.support
             public void UnseqequalityComparerViaBuilder2()
             {
                 SCG.IEqualityComparer<C5.HashSet<int>> h = EqualityComparer<HashSet<int>>.Default;
-                C5.HashSet<int> s = new() { 1, 2, 3 };
+                C5.HashSet<int> s = [1, 2, 3];
                 Assert.That(h.GetHashCode(s), Is.EqualTo(CHC.UnsequencedHashCode(1, 2, 3)));
             }
 
@@ -586,7 +585,7 @@ namespace C5.Tests.support
             [Test]
             public void StaticEqualityComparerWithNull()
             {
-                ArrayList<double> arr = new();
+                ArrayList<double> arr = [];
                 SCG.IEqualityComparer<double> eqc = EqualityComparer<double>.Default;
                 Assert.Multiple(() =>
                 {
@@ -599,7 +598,7 @@ namespace C5.Tests.support
 
             private class EveryThingIsEqual : SCG.IEqualityComparer<object>
             {
-                public new bool Equals(object o1, object o2)
+                public new bool Equals(object? o1, object? o2)
                 {
                     return true;
                 }
@@ -614,15 +613,15 @@ namespace C5.Tests.support
             public void UnsequencedCollectionComparerEquality()
             {
                 // Repro for bug20101103
-                SCG.IEqualityComparer<object> eqc = new EveryThingIsEqual();
+                var eqc = new EveryThingIsEqual();
                 object o1 = new(), o2 = new();
-                C5.ICollection<Object> coll1 = new ArrayList<object>(eqc);
-                C5.ICollection<Object> coll2 = new ArrayList<object>(eqc);
+                var coll1 = new ArrayList<object>(eqc);
+                var coll2 = new ArrayList<object>(eqc);
                 coll1.Add(o1);
                 coll2.Add(o2);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(o1.Equals(o2), Is.False);
+                    Assert.That(o1, Is.Not.EqualTo(o2));
                     Assert.That(coll1.UnsequencedEquals(coll2), Is.True);
                 });
             }
