@@ -635,7 +635,6 @@ namespace C5.Tests.trees.TreeSet
         private TreeSet<int> tree;
         private int[] a;
 
-
         [SetUp]
         public void Init()
         {
@@ -647,57 +646,35 @@ namespace C5.Tests.trees.TreeSet
             }
         }
 
-
         [TearDown]
         public void Dispose() { tree.Dispose(); }
-
-
-        private string aeq(int[] a, params int[] b)
-        {
-            if (a.Length != b.Length)
-            {
-                return "Lengths differ: " + a.Length + " != " + b.Length;
-            }
-
-            for (int i = 0; i < a.Length; i++)
-            {
-                if (a[i] != b[i])
-                {
-                    return string.Format("{0}'th elements differ: {1} != {2}", i, a[i], b[i]);
-                }
-            }
-            return "Alles klar";
-        }
-
 
         [Test]
         public void ToArray()
         {
-            Assert.That(aeq(tree.ToArray()), Is.EqualTo("Alles klar"));
+            Assert.That(tree.ToArray(), Is.Empty);
             tree.Add(7);
             tree.Add(4);
-            Assert.That(aeq(tree.ToArray(), 4, 7), Is.EqualTo("Alles klar"));
+            Assert.That(tree.ToArray(), Is.EqualTo(new[] { 4, 7 }));
         }
-
 
         [Test]
         public void CopyTo()
         {
             tree.CopyTo(a, 1);
-            Assert.That(aeq(a, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009), Is.EqualTo("Alles klar"));
+            Assert.That(a, Is.EqualTo(new[] { 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009 }));
             tree.Add(6);
             tree.CopyTo(a, 2);
-            Assert.That(aeq(a, 1000, 1001, 6, 1003, 1004, 1005, 1006, 1007, 1008, 1009), Is.EqualTo("Alles klar"));
+            Assert.That(a, Is.EqualTo(new[] { 1000, 1001, 6, 1003, 1004, 1005, 1006, 1007, 1008, 1009 }));
             tree.Add(4);
             tree.Add(9);
             tree.CopyTo(a, 4);
-            Assert.That(aeq(a, 1000, 1001, 6, 1003, 4, 6, 9, 1007, 1008, 1009), Is.EqualTo("Alles klar"));
+            Assert.That(a, Is.EqualTo(new[] { 1000, 1001, 6, 1003, 4, 6, 9, 1007, 1008, 1009 }));
             tree.Clear();
             tree.Add(7);
             tree.CopyTo(a, 9);
-            Assert.That(aeq(a, 1000, 1001, 6, 1003, 4, 6, 9, 1007, 1008, 7), Is.EqualTo("Alles klar"));
+            Assert.That(a, Is.EqualTo(new[] { 1000, 1001, 6, 1003, 4, 6, 9, 1007, 1008, 7 }));
         }
-
 
         [Test]
         public void CopyToBad()

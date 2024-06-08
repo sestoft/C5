@@ -396,30 +396,10 @@ namespace C5.Tests.hashtable.set
                 hashset = null;
             }
 
-
-            private string aeq(int[] a, params int[] b)
-            {
-                if (a.Length != b.Length)
-                {
-                    return "Lengths differ: " + a.Length + " != " + b.Length;
-                }
-
-                for (int i = 0; i < a.Length; i++)
-                {
-                    if (a[i] != b[i])
-                    {
-                        return string.Format("{0}'th elements differ: {1} != {2}", i, a[i], b[i]);
-                    }
-                }
-
-                return "Alles klar";
-            }
-
-
             [Test]
             public void ToArray()
             {
-                Assert.That(aeq(hashset.ToArray()), Is.EqualTo("Alles klar"));
+                Assert.That(hashset.ToArray(), Is.Empty);
                 hashset.Add(7);
                 hashset.Add(3);
                 hashset.Add(10);
@@ -427,7 +407,7 @@ namespace C5.Tests.hashtable.set
                 int[] r = hashset.ToArray();
 
                 Array.Sort(r);
-                Assert.That(aeq(r, 3, 7, 10), Is.EqualTo("Alles klar"));
+                Assert.That(r, Is.EqualTo(new[] { 3, 7, 10 }));
             }
 
 
@@ -436,22 +416,21 @@ namespace C5.Tests.hashtable.set
             {
                 //Note: for small ints the itemequalityComparer is the identity!
                 hashset.CopyTo(a, 1);
-                Assert.That(aeq(a, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009), Is.EqualTo("Alles klar"));
+                Assert.That(a, Is.EqualTo(new[] { 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009 }));
                 hashset.Add(6);
                 hashset.CopyTo(a, 2);
-                Assert.That(aeq(a, 1000, 1001, 6, 1003, 1004, 1005, 1006, 1007, 1008, 1009), Is.EqualTo("Alles klar"));
+                Assert.That(a, Is.EqualTo(new[] { 1000, 1001, 6, 1003, 1004, 1005, 1006, 1007, 1008, 1009 }));
                 hashset.Add(4);
                 hashset.Add(9);
                 hashset.CopyTo(a, 4);
 
                 //TODO: make test independent on onterequalityComparer
-                Assert.That(aeq(a, 1000, 1001, 6, 1003, 6, 9, 4, 1007, 1008, 1009), Is.EqualTo("Alles klar"));
+                Assert.That(a, Is.EqualTo(new[] { 1000, 1001, 6, 1003, 6, 9, 4, 1007, 1008, 1009 }));
                 hashset.Clear();
                 hashset.Add(7);
                 hashset.CopyTo(a, 9);
-                Assert.That(aeq(a, 1000, 1001, 6, 1003, 6, 9, 4, 1007, 1008, 7), Is.EqualTo("Alles klar"));
+                Assert.That(a, Is.EqualTo(new[] { 1000, 1001, 6, 1003, 6, 9, 4, 1007, 1008, 7 }));
             }
-
 
             [Test]
             public void CopyToBad()

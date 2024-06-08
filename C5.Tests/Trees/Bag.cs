@@ -1090,54 +1090,33 @@ namespace C5.Tests.trees.TreeBag
         [TearDown]
         public void Dispose() { tree.Dispose(); }
 
-
-        private static string Aeq(int[] a, params int[] b)
-        {
-            if (a.Length != b.Length)
-            {
-                return "Lengths differ: " + a.Length + " != " + b.Length;
-            }
-
-            for (int i = 0; i < a.Length; i++)
-            {
-                if (a[i] != b[i])
-                {
-                    return $"{i}'th elements differ: {a[i]} != {b[i]}";
-                }
-            }
-
-            return "Alles klar";
-        }
-
-
         [Test]
         public void ToArray()
         {
-            Assert.That(Aeq(tree.ToArray()), Is.EqualTo("Alles klar"));
+            Assert.That(tree.ToArray(), Is.Empty);
             tree.Add(4);
             tree.Add(7);
             tree.Add(4);
-            Assert.That(Aeq(tree.ToArray(), 4, 4, 7), Is.EqualTo("Alles klar"));
+            Assert.That(tree.ToArray(), Is.EqualTo(new[] { 4, 4, 7 }));
         }
-
 
         [Test]
         public void CopyTo()
         {
             tree.CopyTo(a, 1);
-            Assert.That(Aeq(a, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009), Is.EqualTo("Alles klar"));
+            Assert.That(a, Is.EqualTo(new[] { 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009 }));
             tree.Add(6);
             tree.Add(6);
             tree.CopyTo(a, 2);
-            Assert.That(Aeq(a, 1000, 1001, 6, 6, 1004, 1005, 1006, 1007, 1008, 1009), Is.EqualTo("Alles klar"));
+            Assert.That(a, Is.EqualTo(new[] { 1000, 1001, 6, 6, 1004, 1005, 1006, 1007, 1008, 1009 }));
             tree.Add(4);
             tree.Add(9);
             tree.CopyTo(a, 4);
-            Assert.That(Aeq(a, 1000, 1001, 6, 6, 4, 6, 6, 9, 1008, 1009), Is.EqualTo("Alles klar"));
+            Assert.That(a, Is.EqualTo(new[] { 1000, 1001, 6, 6, 4, 6, 6, 9, 1008, 1009 }));
             tree.Clear();
             tree.Add(7);
             tree.CopyTo(a, 9);
-            Assert.That(Aeq(a, 1000, 1001, 6, 6, 4, 6, 6, 9, 1008, 7), Is.EqualTo("Alles klar"));
+            Assert.That(a, Is.EqualTo(new[] { 1000, 1001, 6, 6, 4, 6, 6, 9, 1008, 7 }));
         }
 
 
