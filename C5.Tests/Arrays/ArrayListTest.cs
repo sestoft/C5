@@ -2395,7 +2395,6 @@ namespace C5.Tests.arrays.list
             [Test]
             public void GetRange()
             {
-                //Assert.IsTrue(IC.eq(lst[0, 0)));
                 for (int i = 0; i < 10; i++)
                 {
                     lst.Add(i);
@@ -2403,9 +2402,9 @@ namespace C5.Tests.arrays.list
 
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(lst[0, 3], 0, 1, 2), Is.True);
-                    Assert.That(IC.Eq(lst[3, 4], 3, 4, 5, 6), Is.True);
-                    Assert.That(IC.Eq(lst[6, 4], 6, 7, 8, 9), Is.True);
+                    Assert.That(lst[0, 3], Is.EqualTo(new[] { 0, 1, 2 }));
+                    Assert.That(lst[3, 4], Is.EqualTo(new[] { 3, 4, 5, 6 }));
+                    Assert.That(lst[6, 4], Is.EqualTo(new[] { 6, 7, 8, 9 }));
                 });
             }
 

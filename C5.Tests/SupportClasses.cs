@@ -11,7 +11,7 @@ namespace C5.Tests
     {
         private TenEqualityComparer() { }
 
-        public static TenEqualityComparer Instance => new();
+        public static TenEqualityComparer Instance { get; } = new();
 
         public int GetHashCode(int item) { return (item / 10).GetHashCode(); }
 

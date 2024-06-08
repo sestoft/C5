@@ -1638,19 +1638,17 @@ namespace C5.Tests.linkedlists.plain
                 });
             }
         }
+
         [TestFixture]
         public class ShuffleTests
         {
             private IList<int> lst;
 
-
             [SetUp]
             public void Init() { lst = new LinkedList<int>(); }
 
-
             [TearDown]
             public void Dispose() { lst.Dispose(); }
-
 
             [Test]
             public void Shuffle()
@@ -1662,12 +1660,11 @@ namespace C5.Tests.linkedlists.plain
                     Assert.That(lst.Check(), Is.True, "Check " + i);
                     int[] lst2 = lst.ToArray();
                     Sorting.IntroSort(lst2);
-                    Assert.That(IC.Eq(lst2, 3, 5, 5, 6, 7), Is.True, "Contents " + i);
+                    Assert.That(lst2, Is.EqualTo(new[] { 3, 5, 5, 6, 7 }), "Contents " + i);
                 }
             }
         }
     }
-
 
     namespace IStackQueue
     {
@@ -1752,19 +1749,15 @@ namespace C5.Tests.linkedlists.plain
         {
             private IList<int> lst;
 
-
             [SetUp]
             public void Init() { lst = new LinkedList<int>(); }
-
 
             [TearDown]
             public void Dispose() { lst.Dispose(); }
 
-
             [Test]
             public void GetRange()
             {
-                //Assert.IsTrue(IC.eq(lst[0, 0)));
                 for (int i = 0; i < 10; i++)
                 {
                     lst.Add(i);
@@ -1772,9 +1765,9 @@ namespace C5.Tests.linkedlists.plain
 
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(lst[0, 3], 0, 1, 2), Is.True);
-                    Assert.That(IC.Eq(lst[3, 4], 3, 4, 5, 6), Is.True);
-                    Assert.That(IC.Eq(lst[6, 4], 6, 7, 8, 9), Is.True);
+                    Assert.That(lst[0, 3], Is.EqualTo(new[] { 0, 1, 2 }));
+                    Assert.That(lst[3, 4], Is.EqualTo(new[] { 3, 4, 5, 6 }));
+                    Assert.That(lst[6, 4], Is.EqualTo(new[] { 6, 7, 8, 9 }));
                 });
             }
 
@@ -1798,9 +1791,9 @@ namespace C5.Tests.linkedlists.plain
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.Backwards(), Is.EqualTo(new[] { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 }));
-                    Assert.That(IC.Eq(lst[0, 4].Backwards(), 3, 2, 1, 0), Is.True);
-                    Assert.That(IC.Eq(lst[3, 4].Backwards(), 6, 5, 4, 3), Is.True);
-                    Assert.That(IC.Eq(lst[6, 4].Backwards(), 9, 8, 7, 6), Is.True);
+                    Assert.That(lst[0, 4].Backwards(), Is.EqualTo(new[] { 3, 2, 1, 0 }));
+                    Assert.That(lst[3, 4].Backwards(), Is.EqualTo(new[] { 6, 5, 4, 3 }));
+                    Assert.That(lst[6, 4].Backwards(), Is.EqualTo(new[] { 9, 8, 7, 6 }));
                 });
             }
 
