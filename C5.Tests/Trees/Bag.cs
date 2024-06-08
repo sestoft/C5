@@ -103,7 +103,7 @@ namespace C5.Tests.trees.TreeBag
         [SetUp]
         public void Init()
         {
-            lst = new TreeBag<SCG.KeyValuePair<int, int>>(new KeyValuePairComparer<int, int>(new IC()));
+            lst = new TreeBag<SCG.KeyValuePair<int, int>>(new KeyValuePairComparer<int, int>(new IntegerComparer()));
             for (int i = 0; i < 10; i++)
             {
                 lst.Add(new SCG.KeyValuePair<int, int>(i, i + 30));
@@ -360,7 +360,7 @@ namespace C5.Tests.trees.TreeBag
         [SetUp]
         public void Init()
         {
-            bag = new TreeBag<SCG.KeyValuePair<int, string>>(new KeyValuePairComparer<int, string>(new IC()));
+            bag = new TreeBag<SCG.KeyValuePair<int, string>>(new KeyValuePairComparer<int, string>(new IntegerComparer()));
         }
 
 
@@ -468,7 +468,7 @@ namespace C5.Tests.trees.TreeBag
         [SetUp]
         public void Init()
         {
-            c = new IC();
+            c = new IntegerComparer();
             tree = new TreeBag<int>(c);
             for (int i = 1; i <= 10; i++)
             {
@@ -654,7 +654,7 @@ namespace C5.Tests.trees.TreeBag
         [SetUp]
         public void Init()
         {
-            tree = new TreeBag<int>(new IC());
+            tree = new TreeBag<int>(new IntegerComparer());
             for (int i = 10; i < 20; i++)
             {
                 tree.Add(i);
@@ -691,7 +691,7 @@ namespace C5.Tests.trees.TreeBag
         [SetUp]
         public void Init()
         {
-            tree = new TreeBag<int>(new IC());
+            tree = new TreeBag<int>(new IntegerComparer());
         }
 
         private void loadup()
@@ -981,7 +981,7 @@ namespace C5.Tests.trees.TreeBag
         public void Test_ByIndex()
         {
             int i;
-            list = new TreeBag<int>(new IC());
+            list = new TreeBag<int>(new IntegerComparer());
             for (i = 10; i < 20; i++)
             {
                 list.Add(i);
@@ -1064,7 +1064,7 @@ namespace C5.Tests.trees.TreeBag
         [SetUp]
         public void Init()
         {
-            tree = new TreeBag<int>(new IC());
+            tree = new TreeBag<int>(new IntegerComparer());
             a = new int[10];
             for (int i = 0; i < 10; i++)
             {
@@ -1138,7 +1138,7 @@ namespace C5.Tests.trees.TreeBag
         [SetUp]
         public void Init()
         {
-            tree = new TreeBag<int>(new IC());
+            tree = new TreeBag<int>(new IntegerComparer());
             for (int i = 10; i < 20; i++)
             {
                 tree.Add(i);
@@ -1371,7 +1371,7 @@ namespace C5.Tests.trees.TreeBag
         [SetUp]
         public void Init()
         {
-            tree = new TreeBag<int>(new IC());
+            tree = new TreeBag<int>(new IntegerComparer());
         }
 
         private void loadup()
@@ -1522,7 +1522,7 @@ namespace C5.Tests.trees.TreeBag
         [SetUp]
         public void Init()
         {
-            tree = new TreeBag<int>(new IC());
+            tree = new TreeBag<int>(new IntegerComparer());
         }
 
         private void loadup()
@@ -1602,7 +1602,7 @@ namespace C5.Tests.trees.TreeBag
         [SetUp]
         public void Init()
         {
-            tree = new TreeBag<int>(new IC());
+            tree = new TreeBag<int>(new IntegerComparer());
         }
 
 
@@ -1766,7 +1766,7 @@ namespace C5.Tests.trees.TreeBag
             [SetUp]
             public void Init()
             {
-                tree = new TreeBag<int>(new IC());
+                tree = new TreeBag<int>(new IntegerComparer());
                 for (int i = 0; i < 10; i++)
                 {
                     tree.Add(i);
@@ -1832,7 +1832,7 @@ namespace C5.Tests.trees.TreeBag
             [SetUp]
             public void Init()
             {
-                tree = new TreeBag<int>(new IC());
+                tree = new TreeBag<int>(new IntegerComparer());
                 for (int i = 0; i < 10; i++)
                 {
                     tree.Add(i);
@@ -1897,7 +1897,7 @@ namespace C5.Tests.trees.TreeBag
             [SetUp]
             public void Init()
             {
-                ic = new IC();
+                ic = new IntegerComparer();
                 tree = new TreeBag<int>(ic);
                 for (int i = 0; i <= 20; i++)
                 {
@@ -2094,7 +2094,7 @@ namespace C5.Tests.trees.TreeBag
             [SetUp]
             public void Init()
             {
-                ic = new IC();
+                ic = new IntegerComparer();
                 tree = new TreeBag<int>(ic);
                 for (int i = 0; i < 10; i++)
                 {
@@ -2456,7 +2456,7 @@ namespace C5.Tests.trees.TreeBag
             [SetUp]
             public void Init()
             {
-                ic = new IC();
+                ic = new IntegerComparer();
                 tree = new TreeBag<int>(ic);
                 for (int i = 0; i < 10; i++)
                 {
@@ -2587,7 +2587,7 @@ namespace C5.Tests.trees.TreeBag
             [SetUp]
             public void Init()
             {
-                ic = new IC();
+                ic = new IntegerComparer();
                 tree = new TreeBag<int>(ic);
             }
 
@@ -2842,11 +2842,11 @@ namespace C5.Tests.trees.TreeBag
 
                 Assert.Multiple(() =>
                 {
-                    Assert.That(tree.Cut(new IC(3), out int low, out bool lval, out int high, out bool hval), Is.False);
+                    Assert.That(tree.Cut(new IntegerComparer(3), out int low, out bool lval, out int high, out bool hval), Is.False);
                     Assert.That(lval && hval, Is.True);
                     Assert.That(high, Is.EqualTo(4));
                     Assert.That(low, Is.EqualTo(2));
-                    Assert.That(tree.Cut(new IC(6), out low, out lval, out high, out hval), Is.True);
+                    Assert.That(tree.Cut(new IntegerComparer(6), out low, out lval, out high, out hval), Is.True);
                     Assert.That(lval && hval, Is.True);
                     Assert.That(high, Is.EqualTo(8));
                     Assert.That(low, Is.EqualTo(4));
@@ -2939,13 +2939,13 @@ namespace C5.Tests.trees.TreeBag
 
 
             [SetUp]
-            public void Init() { tree = new TreeBag<int>(new IC()); }
+            public void Init() { tree = new TreeBag<int>(new IntegerComparer()); }
 
 
             [Test]
             public void EmptyEmpty()
             {
-                tree.AddAll(new FunEnumerable(0, new Func<int, int>(sqr)));
+                tree.AddAll(new FuncEnumerable(0, new Func<int, int>(sqr)));
                 Assert.That(tree, Is.Empty);
                 Assert.That(tree.Check(), Is.True);
             }
@@ -2959,7 +2959,7 @@ namespace C5.Tests.trees.TreeBag
                     tree.Add(i);
                 }
 
-                tree.AddAll(new FunEnumerable(0, new Func<int, int>(sqr)));
+                tree.AddAll(new FuncEnumerable(0, new Func<int, int>(sqr)));
                 Assert.That(tree, Has.Count.EqualTo(5));
                 Assert.That(tree.Check(), Is.True);
             }
@@ -2968,7 +2968,7 @@ namespace C5.Tests.trees.TreeBag
             [Test]
             public void EmptySome()
             {
-                tree.AddAll(new FunEnumerable(4, new Func<int, int>(sqr)));
+                tree.AddAll(new FuncEnumerable(4, new Func<int, int>(sqr)));
                 Assert.That(tree, Has.Count.EqualTo(4));
                 Assert.Multiple(() =>
                 {
@@ -2991,7 +2991,7 @@ namespace C5.Tests.trees.TreeBag
 
                 tree.Add(1);
 
-                tree.AddAll(new FunEnumerable(4, new Func<int, int>(sqr)));
+                tree.AddAll(new FuncEnumerable(4, new Func<int, int>(sqr)));
                 Assert.That(tree, Has.Count.EqualTo(9));
                 Assert.Multiple(() =>
                 {
@@ -3015,13 +3015,13 @@ namespace C5.Tests.trees.TreeBag
             [SetUp]
             public void Init()
             {
-                tree = new TreeBag<int>(new IC());
+                tree = new TreeBag<int>(new IntegerComparer());
             }
 
             [Test]
             public void EmptyEmpty()
             {
-                tree.AddSorted(new FunEnumerable(0, i => i * i));
+                tree.AddSorted(new FuncEnumerable(0, i => i * i));
                 Assert.That(tree, Is.Empty);
                 Assert.That(tree.Check(), Is.True);
             }
@@ -3034,7 +3034,7 @@ namespace C5.Tests.trees.TreeBag
                     tree.Add(i);
                 }
 
-                tree.AddSorted(new FunEnumerable(0, i => i * i));
+                tree.AddSorted(new FuncEnumerable(0, i => i * i));
                 Assert.That(tree, Has.Count.EqualTo(5));
                 Assert.That(tree.Check(), Is.True);
             }
@@ -3042,7 +3042,7 @@ namespace C5.Tests.trees.TreeBag
             [Test]
             public void EmptySome()
             {
-                tree.AddSorted(new FunEnumerable(4, i => i * i));
+                tree.AddSorted(new FuncEnumerable(4, i => i * i));
 
                 Assert.Multiple(() =>
                 {
@@ -3058,7 +3058,7 @@ namespace C5.Tests.trees.TreeBag
             [Test]
             public void EmptySome2()
             {
-                tree.AddSorted(new FunEnumerable(4, i => i / 3));
+                tree.AddSorted(new FuncEnumerable(4, i => i / 3));
 
                 Assert.Multiple(() =>
                 {
@@ -3080,7 +3080,7 @@ namespace C5.Tests.trees.TreeBag
                 }
 
                 tree.Add(1);
-                tree.AddSorted(new FunEnumerable(4, i => i * i));
+                tree.AddSorted(new FuncEnumerable(4, i => i * i));
 
                 Assert.Multiple(() =>
                 {
@@ -3095,7 +3095,7 @@ namespace C5.Tests.trees.TreeBag
             {
                 static int bad(int i) { return i * (5 - i); }
 
-                var exception = Assert.Throws<ArgumentException>(() => tree.AddSorted(new FunEnumerable(9, bad)));
+                var exception = Assert.Throws<ArgumentException>(() => tree.AddSorted(new FuncEnumerable(9, bad)));
                 Assert.That(exception.Message, Is.EqualTo("Argument not sorted"));
             }
 
@@ -3111,8 +3111,8 @@ namespace C5.Tests.trees.TreeBag
             [SetUp]
             public void Init()
             {
-                tree = new TreeBag<int>(new IC());
-                tree2 = new TreeBag<int>(new IC());
+                tree = new TreeBag<int>(new IntegerComparer());
+                tree2 = new TreeBag<int>(new IntegerComparer());
                 for (int i = 0; i < 10; i++)
                 {
                     tree.Add(i);

@@ -20,50 +20,19 @@ namespace C5.Tests
         public int Compare(int a, int b) { return (a / 10).CompareTo(b / 10); }
     }
 
-    internal class IC : SCG.IComparer<int>, IComparable<int>, SCG.IComparer<IC>, IComparable<IC>
+    internal class IntegerComparer : SCG.IComparer<int>, IComparable<int>
     {
         public int Compare(int a, int b) => a > b ? 1 : a < b ? -1 : 0;
 
-        public int Compare(IC a, IC b) => a.I > b.I ? 1 : a.I < b.I ? -1 : 0;
+        public int I { get; }
 
-        public int I { get; set; }
+        public IntegerComparer() { }
 
-        public IC() { }
-
-        public IC(int i) => I = i;
+        public IntegerComparer(int i) => I = i;
 
         public int CompareTo(int that) => I > that ? 1 : I < that ? -1 : 0;
 
         public bool Equals(int that) => I == that;
-
-        public int CompareTo(IC? that)
-        {
-            if (that is null || I > that.I)
-            {
-                return 1;
-            }
-            else
-            {
-                return I < that.I ? -1 : 0;
-            }
-        }
-
-        public bool Equals(IC that) => I == that.I;
-
-        public static bool Eq(SCG.IEnumerable<int> me, params int[] that)
-        {
-            int i = 0, maxind = that.Length - 1;
-
-            foreach (int item in me)
-            {
-                if (i > maxind || item != that[i++])
-                {
-                    return false;
-                }
-            }
-
-            return i == maxind + 1;
-        }
     }
 
     internal class ReverseIntegerComparer : SCG.IComparer<int>
@@ -71,12 +40,12 @@ namespace C5.Tests
         public int Compare(int a, int b) => a.CompareTo(b) * -1;
     }
 
-    public class FunEnumerable : SCG.IEnumerable<int>
+    public class FuncEnumerable : SCG.IEnumerable<int>
     {
         private readonly int size;
         private readonly Func<int, int> f;
 
-        public FunEnumerable(int size, Func<int, int> f)
+        public FuncEnumerable(int size, Func<int, int> f)
         {
             this.size = size; this.f = f;
         }
@@ -88,7 +57,6 @@ namespace C5.Tests
                 yield return f(i);
             }
         }
-
 
         #region IEnumerable Members
 

@@ -816,9 +816,9 @@ namespace C5.Tests.wrappers
                     Assert.That(wrapped.UniqueItems(), Is.EquivalentTo(new[] { 4, 5, 6 }));
                     Assert.That(wrapped.UnsequencedEquals(other), Is.True);
                     Assert.That(wrapped.TrySlide(1), Is.True);
-                    Assert.That(IC.Eq(wrapped, 5, 6, 7), Is.True);
+                    Assert.That(wrapped.ToArray(), Is.EqualTo(new[] { 5, 6, 7 }));
                     Assert.That(wrapped.TrySlide(-1, 2), Is.True);
-                    Assert.That(IC.Eq(wrapped, 4, 5), Is.True);
+                    Assert.That(wrapped.ToArray(), Is.EqualTo(new[] { 4, 5 }));
                     Assert.That(wrapped.TrySlide(-2), Is.False);
                     Assert.That(wrapped.Span(outerwrapped.ViewOf(7)), Is.EquivalentTo(new[] { 4, 5, 6, 7 }));
                 });

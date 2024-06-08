@@ -1563,13 +1563,13 @@ namespace C5.Tests.linkedlists.plain
             public void Sort()
             {
                 lst.Add(5); lst.Add(6); lst.Add(5); lst.Add(7); lst.Add(3);
-                Assert.That(lst.IsSorted(new IC()), Is.False);
-                lst.Sort(new IC());
+                Assert.That(lst.IsSorted(new IntegerComparer()), Is.False);
+                lst.Sort(new IntegerComparer());
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.Check(), Is.True);
                     Assert.That(lst.IsSorted(), Is.True);
-                    Assert.That(lst.IsSorted(new IC()), Is.True);
+                    Assert.That(lst.IsSorted(new IntegerComparer()), Is.True);
                     Assert.That(lst, Is.EqualTo(new[] { 3, 5, 5, 6, 7 }));
                 });
             }
@@ -1579,7 +1579,7 @@ namespace C5.Tests.linkedlists.plain
             public void Stability()
             {
                 IList<SCG.KeyValuePair<int, string>> lst2 = new LinkedList<SCG.KeyValuePair<int, string>>();
-                SCG.IComparer<SCG.KeyValuePair<int, string>> c = new KeyValuePairComparer<int, string>(new IC());
+                SCG.IComparer<SCG.KeyValuePair<int, string>> c = new KeyValuePairComparer<int, string>(new IntegerComparer());
 
                 lst2.Add(new SCG.KeyValuePair<int, string>(5, "a"));
                 lst2.Add(new SCG.KeyValuePair<int, string>(5, "b"));
@@ -2244,8 +2244,8 @@ namespace C5.Tests.linkedlists.plain
             public void Sort()
             {
                 view.Add(45); view.Add(47); view.Add(46); view.Add(48);
-                Assert.That(view.IsSorted(new IC()), Is.False);
-                view.Sort(new IC());
+                Assert.That(view.IsSorted(new IntegerComparer()), Is.False);
+                view.Sort(new IntegerComparer());
                 check();
                 Assert.Multiple(() =>
                 {

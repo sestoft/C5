@@ -9,7 +9,7 @@ namespace C5.Tests.SortingTests
     [TestFixture]
     public class SortRandom
     {
-        private IC ic;
+        private IntegerComparer ic;
         private Random ran;
         private int[] a;
         private int length;
@@ -18,7 +18,7 @@ namespace C5.Tests.SortingTests
         [SetUp]
         public void Init()
         {
-            ic = new IC();
+            ic = new IntegerComparer();
             ran = new Random(3456);
             length = 100000;
             a = new int[length];
@@ -78,7 +78,7 @@ namespace C5.Tests.SortingTests
     [TestFixture]
     public class SortRandomDuplicates
     {
-        private IC ic;
+        private IntegerComparer ic;
         private Random ran;
         private int[] a;
         private int length;
@@ -87,7 +87,7 @@ namespace C5.Tests.SortingTests
         [SetUp]
         public void Init()
         {
-            ic = new IC();
+            ic = new IntegerComparer();
             ran = new Random(3456);
             length = 100000;
             a = new int[length];
@@ -147,7 +147,7 @@ namespace C5.Tests.SortingTests
     [TestFixture]
     public class SortIncreasing
     {
-        private IC ic;
+        private IntegerComparer ic;
         private int[] a;
         private int length;
 
@@ -155,7 +155,7 @@ namespace C5.Tests.SortingTests
         [SetUp]
         public void Init()
         {
-            ic = new IC();
+            ic = new IntegerComparer();
             length = 100000;
             a = new int[length];
             for (int i = 0; i < length; i++)
@@ -214,7 +214,7 @@ namespace C5.Tests.SortingTests
     [TestFixture]
     public class SortDecreasing
     {
-        private IC ic;
+        private IntegerComparer ic;
         private int[] a;
         private int length;
 
@@ -222,7 +222,7 @@ namespace C5.Tests.SortingTests
         [SetUp]
         public void Init()
         {
-            ic = new IC();
+            ic = new IntegerComparer();
             length = 100000;
             a = new int[length];
             for (int i = 0; i < length; i++)

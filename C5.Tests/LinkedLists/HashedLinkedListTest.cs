@@ -1603,13 +1603,13 @@ namespace C5.Tests.linkedlists.hashed
             public void Sort()
             {
                 lst.Add(5); lst.Add(6); lst.Add(55); lst.Add(7); lst.Add(3);
-                Assert.That(lst.IsSorted(new IC()), Is.False);
-                lst.Sort(new IC());
+                Assert.That(lst.IsSorted(new IntegerComparer()), Is.False);
+                lst.Sort(new IntegerComparer());
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.Check(), Is.True, "Check ");
                     Assert.That(lst.IsSorted(), Is.True);
-                    Assert.That(lst.IsSorted(new IC()), Is.True);
+                    Assert.That(lst.IsSorted(new IntegerComparer()), Is.True);
                     Assert.That(lst, Is.EqualTo(new[] { 3, 5, 6, 7, 55 }));
                 });
             }
@@ -2198,8 +2198,8 @@ namespace C5.Tests.linkedlists.hashed
             public void Sort()
             {
                 view.Add(45); view.Add(47); view.Add(46); view.Add(48);
-                Assert.That(view.IsSorted(new IC()), Is.False);
-                view.Sort(new IC());
+                Assert.That(view.IsSorted(new IntegerComparer()), Is.False);
+                view.Sort(new IntegerComparer());
                 check();
                 Assert.Multiple(() =>
                 {
