@@ -12,7 +12,7 @@ namespace C5;
 public class HashBag<T> : CollectionBase<T>, ICollection<T>
 {
     #region Fields
-    private HashSet<System.Collections.Generic.KeyValuePair<T, int>> dict;
+    private HashSet<SCG.KeyValuePair<T, int>> dict;
     #endregion
 
     #region Events
@@ -38,7 +38,7 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
     public HashBag(SCG.IEqualityComparer<T> itemequalityComparer)
         : base(itemequalityComparer)
     {
-        dict = new HashSet<System.Collections.Generic.KeyValuePair<T, int>>(new KeyValuePairEqualityComparer<T, int>(itemequalityComparer));
+        dict = new HashSet<SCG.KeyValuePair<T, int>>(new KeyValuePairEqualityComparer<T, int>(itemequalityComparer));
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
     public HashBag(int capacity, SCG.IEqualityComparer<T> itemequalityComparer)
         : base(itemequalityComparer)
     {
-        dict = new HashSet<System.Collections.Generic.KeyValuePair<T, int>>(capacity, new KeyValuePairEqualityComparer<T, int>(itemequalityComparer));
+        dict = new HashSet<SCG.KeyValuePair<T, int>>(capacity, new KeyValuePairEqualityComparer<T, int>(itemequalityComparer));
     }
 
 
@@ -62,7 +62,7 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
     public HashBag(int capacity, double fill, SCG.IEqualityComparer<T> itemequalityComparer)
         : base(itemequalityComparer)
     {
-        dict = new HashSet<System.Collections.Generic.KeyValuePair<T, int>>(capacity, fill, new KeyValuePairEqualityComparer<T, int>(itemequalityComparer));
+        dict = new HashSet<SCG.KeyValuePair<T, int>>(capacity, fill, new KeyValuePairEqualityComparer<T, int>(itemequalityComparer));
     }
 
     #endregion
@@ -82,7 +82,7 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
     /// <returns>True if bag contains item</returns>
     public virtual bool Contains(T item)
     {
-        return dict.Contains(new System.Collections.Generic.KeyValuePair<T, int>(item, 0));
+        return dict.Contains(new SCG.KeyValuePair<T, int>(item, 0));
     }
 
 
@@ -95,7 +95,7 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
     /// <returns>True if bag contains item</returns>
     public virtual bool Find(ref T item)
     {
-        System.Collections.Generic.KeyValuePair<T, int> p = new(item, 0);
+        SCG.KeyValuePair<T, int> p = new(item, 0);
 
         if (dict.Find(ref p))
         {
@@ -448,7 +448,7 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
         T[] res = new T[size];
         int ind = 0;
 
-        foreach (System.Collections.Generic.KeyValuePair<T, int> p in dict)
+        foreach (SCG.KeyValuePair<T, int> p in dict)
         {
             for (int i = 0; i < p.Value; i++)
             {
@@ -467,7 +467,7 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
     /// <returns>The count</returns>
     public virtual int ContainsCount(T item)
     {
-        System.Collections.Generic.KeyValuePair<T, int> p = new(item, 0);
+        SCG.KeyValuePair<T, int> p = new(item, 0);
 
         if (dict.Find(ref p))
         {
@@ -487,9 +487,9 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
     ///
     /// </summary>
     /// <returns></returns>
-    public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
+    public virtual ICollectionValue<SCG.KeyValuePair<T, int>> ItemMultiplicities()
     {
-        return new GuardedCollectionValue<System.Collections.Generic.KeyValuePair<T, int>>(dict);
+        return new GuardedCollectionValue<SCG.KeyValuePair<T, int>>(dict);
     }
 
     /// <summary>
@@ -500,7 +500,7 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
     {
         UpdateCheck();
 
-        System.Collections.Generic.KeyValuePair<T, int> p = new(item, 0);
+        SCG.KeyValuePair<T, int> p = new(item, 0);
 
         if (dict.Find(ref p))
         {
@@ -534,10 +534,10 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
     {
         if (index < 0 || index + Count > array.Length)
         {
-            throw new ArgumentOutOfRangeException(nameof(index));
+            throw new ArgumentOutOfRangeException(nameof(array), $"{nameof(array)} and {nameof(index)} combination is out of range");
         }
 
-        foreach (System.Collections.Generic.KeyValuePair<T, int> p in dict)
+        foreach (var p in dict)
         {
             for (int j = 0; j < p.Value; j++)
             {
@@ -674,7 +674,7 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
         int left;
         int mystamp = stamp;
 
-        foreach (System.Collections.Generic.KeyValuePair<T, int> p in dict)
+        foreach (SCG.KeyValuePair<T, int> p in dict)
         {
             left = p.Value;
             while (left > 0)
@@ -701,7 +701,7 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
         bool retval = dict.Check();
         int count = 0;
 
-        foreach (System.Collections.Generic.KeyValuePair<T, int> p in dict)
+        foreach (SCG.KeyValuePair<T, int> p in dict)
         {
             count += p.Value;
         }

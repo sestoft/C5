@@ -7,24 +7,11 @@ using SCG = System.Collections.Generic;
 
 namespace C5.Tests
 {
-    internal class SC : SCG.IComparer<string>
-    {
-        public int Compare(string a, string b)
-        {
-            return a.CompareTo(b);
-        }
-
-        public void appl(string s)
-        {
-            Console.WriteLine("--{0}", s);
-        }
-    }
-
     internal class TenEqualityComparer : SCG.IEqualityComparer<int>, SCG.IComparer<int>
     {
         private TenEqualityComparer() { }
 
-        public static TenEqualityComparer Default => new();
+        public static TenEqualityComparer Instance { get; } = new();
 
         public int GetHashCode(int item) { return (item / 10).GetHashCode(); }
 
@@ -33,95 +20,32 @@ namespace C5.Tests
         public int Compare(int a, int b) { return (a / 10).CompareTo(b / 10); }
     }
 
-    internal class IC : SCG.IComparer<int>, IComparable<int>, SCG.IComparer<IC>, IComparable<IC>
+    internal class IntegerComparer : SCG.IComparer<int>, IComparable<int>
     {
         public int Compare(int a, int b) => a > b ? 1 : a < b ? -1 : 0;
 
-        public int Compare(IC a, IC b) => a.I > b.I ? 1 : a.I < b.I ? -1 : 0;
+        public int I { get; }
 
-        public int I { get; set; }
+        public IntegerComparer() { }
 
-        public IC() { }
-
-        public IC(int i) => I = i;
+        public IntegerComparer(int i) => I = i;
 
         public int CompareTo(int that) => I > that ? 1 : I < that ? -1 : 0;
 
         public bool Equals(int that) => I == that;
-
-        public int CompareTo(IC? that)
-        {
-            if (that is null || I > that.I)
-            {
-                return 1;
-            }
-            else
-            {
-                return I < that.I ? -1 : 0;
-            }
-        }
-
-        public bool Equals(IC that) => I == that.I;
-
-        public static bool Eq(SCG.IEnumerable<int> me, params int[] that)
-        {
-            int i = 0, maxind = that.Length - 1;
-
-            foreach (int item in me)
-            {
-                if (i > maxind || item != that[i++])
-                {
-                    return false;
-                }
-            }
-
-            return i == maxind + 1;
-        }
-        public static bool SetEq(ICollectionValue<int> me, params int[] that)
-        {
-            int[] me2 = me.ToArray();
-
-            Array.Sort(me2);
-
-            int i = 0, maxind = that.Length - 1;
-
-            foreach (int item in me2)
-            {
-                if (i > maxind || item != that[i++])
-                {
-                    return false;
-                }
-            }
-
-            return i == maxind + 1;
-        }
-        public static bool SetEq(ICollectionValue<SCG.KeyValuePair<int, int>> me, params int[] that)
-        {
-            var first = new ArrayList<SCG.KeyValuePair<int, int>>();
-            first.AddAll(me);
-            var other = new ArrayList<SCG.KeyValuePair<int, int>>();
-            for (int i = 0; i < that.Length; i += 2)
-            {
-                other.Add(new SCG.KeyValuePair<int, int>(that[i], that[i + 1]));
-            }
-            return other.UnsequencedEquals(first);
-        }
     }
 
-    internal class RevIC : SCG.IComparer<int>
+    internal class ReverseIntegerComparer : SCG.IComparer<int>
     {
-        public int Compare(int a, int b)
-        {
-            return a > b ? -1 : a < b ? 1 : 0;
-        }
+        public int Compare(int a, int b) => a.CompareTo(b) * -1;
     }
 
-    public class FunEnumerable : SCG.IEnumerable<int>
+    public class FuncEnumerable : SCG.IEnumerable<int>
     {
         private readonly int size;
         private readonly Func<int, int> f;
 
-        public FunEnumerable(int size, Func<int, int> f)
+        public FuncEnumerable(int size, Func<int, int> f)
         {
             this.size = size; this.f = f;
         }
@@ -133,7 +57,6 @@ namespace C5.Tests
                 yield return f(i);
             }
         }
-
 
         #region IEnumerable Members
 
@@ -177,16 +100,11 @@ namespace C5.Tests
         public override T Choose() { throw exception; }
     }
 
-    public class CollectionEventList<T>
+    public class CollectionEventList<T>(SCG.IEqualityComparer<T> itemequalityComparer)
     {
-        private readonly ArrayList<CollectionEvent<T>> happened;
+        private readonly ArrayList<CollectionEvent<T>> happened = [];
         private EventType listenTo;
-        private readonly SCG.IEqualityComparer<T> itemequalityComparer;
-        public CollectionEventList(SCG.IEqualityComparer<T> itemequalityComparer)
-        {
-            happened = new ArrayList<CollectionEvent<T>>();
-            this.itemequalityComparer = itemequalityComparer;
-        }
+
         public void Listen(ICollectionValue<T> list, EventType listenTo)
         {
             this.listenTo = listenTo;
@@ -442,58 +360,18 @@ namespace C5.Tests
         'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
         'U', 'V', 'W', 'X', 'Y', 'Z' ];
 
-        public string Format(string format, object arg, IFormatProvider formatProvider)
+        public string Format(string? format, object? arg, IFormatProvider? formatProvider)
         {
-            /*switch (Type.GetTypeCode(argToBeFormatted.GetType()))
-            {
-              case TypeCode.Boolean:
-                break;
-              case TypeCode.Byte:
-                break;
-              case TypeCode.Char:
-                break;
-              case TypeCode.DBNull:
-                break;
-              case TypeCode.DateTime:
-                break;
-              case TypeCode.Decimal:
-                break;
-              case TypeCode.Double:
-                break;
-              case TypeCode.Empty:
-                break;
-              case TypeCode.Int16:
-                break;
-              case TypeCode.Int32:
-                break;
-              case TypeCode.Int64:
-                break;
-              case TypeCode.Object:
-                break;
-              case TypeCode.SByte:
-                break;
-              case TypeCode.Single:
-                break;
-              case TypeCode.String:
-                break;
-              case TypeCode.UInt16:
-                break;
-              case TypeCode.UInt32:
-                break;
-              case TypeCode.UInt64:
-                break;
-            }*/
             int intToBeFormatted;
             try
             {
-                intToBeFormatted = (int)arg;
+                intToBeFormatted = (int)arg!;
             }
             catch (Exception)
             {
-                if (arg is IFormattable)
+                if (arg is IFormattable formattable)
                 {
-                    return ((IFormattable)arg).
-                        ToString(format, formatProvider);
+                    return formattable.ToString(format, formatProvider);
                 }
                 else if (IsKeyValuePair(arg))
                 {
@@ -550,7 +428,7 @@ namespace C5.Tests
         }
 
         // SCG.KeyValuePair is not showable, so we hack it now.
-        private bool IsKeyValuePair(object arg)
+        private static bool IsKeyValuePair(object arg)
         {
             if (arg != null)
             {
@@ -565,12 +443,12 @@ namespace C5.Tests
             return false;
         }
 
-        private (object key, object value) GetKeyValuePair(object arg)
+        private static (object? key, object? value) GetKeyValuePair(object arg)
         {
             var type = arg.GetType();
 
-            var key = type.GetProperty("Key").GetValue(arg, null);
-            var value = type.GetProperty("Value").GetValue(arg, null);
+            var key = type.GetProperty("Key")?.GetValue(arg, null);
+            var value = type.GetProperty("Value")?.GetValue(arg, null);
 
             return (key, value);
         }

@@ -101,7 +101,7 @@ internal class Nfa
         Trans = new HashDictionary<int, ArrayList<Transition>>();
         if (!startState.Equals(exitState))
         {
-            Trans.Add(exitState, new ArrayList<Transition>());
+            Trans.Add(exitState, []);
         }
     }
 
@@ -114,13 +114,13 @@ internal class Nfa
         }
         else
         {
-            s1Trans = new ArrayList<Transition>();
+            s1Trans = [];
             Trans.Add(s1, s1Trans);
         }
         s1Trans.Add(new Transition(lab, s2));
     }
 
-    public void AddTrans(System.Collections.Generic.KeyValuePair<int, ArrayList<Transition>> tr)
+    public void AddTrans(SCG.KeyValuePair<int, ArrayList<Transition>> tr)
     {
         // Assumption: if tr is in trans, it maps to an empty list (end state)
         Trans.Remove(tr.Key);
@@ -142,7 +142,7 @@ internal class Nfa
 
     private static IDictionary<HashSet<int>, IDictionary<string, HashSet<int>>> CompositeDfaTrans(int s0, IDictionary<int, ArrayList<Transition>> trans)
     {
-        var S0 = EpsilonClose(new HashSet<int> { s0 }, trans);
+        var S0 = EpsilonClose([s0], trans);
         var worklist = new CircularQueue<HashSet<int>>();
         worklist.Enqueue(S0);
 
@@ -173,7 +173,7 @@ internal class Nfa
                             }
                             else // No transitions on lab yet
                             {
-                                toState = new HashSet<int>();
+                                toState = [];
                                 STrans.Add(tr.Lab, toState);
                             }
                             toState.Add(tr.Target);
@@ -274,7 +274,7 @@ internal class Nfa
     public Dfa ToDfa()
     {
         var cDfaTrans = CompositeDfaTrans(Start, Trans);
-        var cDfaStart = EpsilonClose(new HashSet<int> { Start }, Trans);
+        var cDfaStart = EpsilonClose([Start], Trans);
         var cDfaStates = cDfaTrans.Keys;
         var renamer = MkRenamer(cDfaStates);
         var simpleDfaTrans = Rename(renamer, cDfaTrans);

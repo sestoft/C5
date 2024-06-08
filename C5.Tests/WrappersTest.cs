@@ -19,7 +19,7 @@ namespace C5.Tests.wrappers
             [SetUp]
             public void Init()
             {
-                list = new ArrayList<int>(TenEqualityComparer.Default);
+                list = new ArrayList<int>(TenEqualityComparer.Instance);
                 guarded = new GuardedList<int>(list);
                 seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
             }
@@ -491,7 +491,7 @@ namespace C5.Tests.wrappers
             [SetUp]
             public void Init()
             {
-                list = new ArrayList<int>(TenEqualityComparer.Default);
+                list = new ArrayList<int>(TenEqualityComparer.Instance);
                 guarded = new GuardedList<int>(list);
                 seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
             }
@@ -582,7 +582,7 @@ namespace C5.Tests.wrappers
                 Assert.Multiple(() =>
                 {
                     Assert.That(wrapped[1], Is.EqualTo(6));
-                    Assert.That(IC.Eq(wrapped[1, 2], 6, 5), Is.True);
+                    Assert.That(wrapped[1, 2], Is.EqualTo(new[] { 6, 5 }));
                 });
                 //
                 bool is4(int i) { return i == 4; }
@@ -611,7 +611,7 @@ namespace C5.Tests.wrappers
                 wrapped.CopyTo(extarray, 1);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(extarray, 0, 4, 6, 5, 0), Is.True);
+                    Assert.That(extarray, Is.EqualTo(new[] { 0, 4, 6, 5, 0 }));
                     Assert.That(wrapped, Has.Count.EqualTo(3));
                 });
                 Assert.Multiple(() =>
@@ -621,7 +621,7 @@ namespace C5.Tests.wrappers
                     Assert.That(wrapped.DuplicatesByCounting, Is.EqualTo(false));
                     Assert.That(wrapped.EqualityComparer, Is.EqualTo(System.Collections.Generic.EqualityComparer<int>.Default));
                     Assert.That(wrapped.Exists(is4), Is.EqualTo(true));
-                    Assert.That(IC.Eq(wrapped.Filter(is4), 4), Is.True);
+                    Assert.That(wrapped.Filter(is4), Is.EqualTo(new[] { 4 }));
                 });
                 int j = 5;
                 Assert.Multiple(() =>
@@ -650,7 +650,7 @@ namespace C5.Tests.wrappers
                     Assert.That(wrapped.ListenableEvents, Is.EqualTo(EventType.None));
                 });
                 string i2s(int i) { return string.Format("T{0}", i); }
-                Assert.That(wrapped.Map<string>(i2s).ToString(), Is.EqualTo("[ 0:T4, 1:T6, 2:T5 ]"));
+                Assert.That(wrapped.Map(i2s).ToString(), Is.EqualTo("[ 0:T4, 1:T6, 2:T5 ]"));
                 Assert.That(wrapped.Offset, Is.EqualTo(0));
                 wrapped.Reverse();
                 Assert.That(wrapped.ToString(), Is.EqualTo("[ 0:5, 1:6, 2:4 ]"));
@@ -662,14 +662,14 @@ namespace C5.Tests.wrappers
                 Assert.Multiple(() =>
                 {
                     Assert.That(wrapped.ToString(), Is.EqualTo("[ 0:4, 1:5, 2:6 ]"));
-                    Assert.That(IC.Eq(wrapped.ToArray(), 4, 5, 6), Is.True);
+                    Assert.That(wrapped.ToArray(), Is.EquivalentTo(new[] { 4, 5, 6 }));
                     Assert.That(wrapped.ToString("L4", null), Is.EqualTo("[ ... ]"));
                     Assert.That(wrapped.Underlying, Is.EqualTo(null));
-                    Assert.That(IC.SetEq(wrapped.UniqueItems(), 4, 5, 6), Is.True);
+                    Assert.That(wrapped.UniqueItems(), Is.EquivalentTo(new[] { 4, 5, 6 }));
                     Assert.That(wrapped.UnsequencedEquals(other), Is.True);
                 });
                 wrapped.Shuffle();
-                Assert.That(IC.SetEq(wrapped.UniqueItems(), 4, 5, 6), Is.True);
+                Assert.That(wrapped.UniqueItems(), Is.EquivalentTo(new[] { 4, 5, 6 }));
             }
 
             [Test]
@@ -730,11 +730,9 @@ namespace C5.Tests.wrappers
                 WrappedArray<int> wrapped = (WrappedArray<int>)outerwrapped.View(1, 3);
                 Assert.Multiple(() =>
                 {
-                    //
                     Assert.That(wrapped[1], Is.EqualTo(6));
-                    Assert.That(IC.Eq(wrapped[1, 2], 6, 5), Is.True);
+                    Assert.That(wrapped[1, 2], Is.EqualTo(new[] { 6, 5 }));
                 });
-                //
                 bool is4(int i) { return i == 4; }
 
                 Assert.Multiple(() =>
@@ -761,7 +759,7 @@ namespace C5.Tests.wrappers
                 wrapped.CopyTo(extarray, 1);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(extarray, 0, 4, 6, 5, 0), Is.True);
+                    Assert.That(extarray, Is.EqualTo(new[] { 0, 4, 6, 5, 0 }));
                     Assert.That(wrapped, Has.Count.EqualTo(3));
                 });
                 Assert.Multiple(() =>
@@ -771,7 +769,7 @@ namespace C5.Tests.wrappers
                     Assert.That(wrapped.DuplicatesByCounting, Is.EqualTo(false));
                     Assert.That(wrapped.EqualityComparer, Is.EqualTo(System.Collections.Generic.EqualityComparer<int>.Default));
                     Assert.That(wrapped.Exists(is4), Is.EqualTo(true));
-                    Assert.That(IC.Eq(wrapped.Filter(is4), 4), Is.True);
+                    Assert.That(wrapped.Filter(is4), Is.EqualTo(new[] { 4 }));
                 });
                 int j = 5;
                 Assert.Multiple(() =>
@@ -800,7 +798,7 @@ namespace C5.Tests.wrappers
                     Assert.That(wrapped.ListenableEvents, Is.EqualTo(EventType.None));
                 });
                 string i2s(int i) { return string.Format("T{0}", i); }
-                Assert.That(wrapped.Map<string>(i2s).ToString(), Is.EqualTo("[ 0:T4, 1:T6, 2:T5 ]"));
+                Assert.That(wrapped.Map(i2s).ToString(), Is.EqualTo("[ 0:T4, 1:T6, 2:T5 ]"));
                 Assert.That(wrapped.Offset, Is.EqualTo(1));
                 wrapped.Reverse();
                 Assert.That(wrapped.ToString(), Is.EqualTo("[ 0:5, 1:6, 2:4 ]"));
@@ -812,23 +810,21 @@ namespace C5.Tests.wrappers
                 Assert.Multiple(() =>
                 {
                     Assert.That(wrapped.ToString(), Is.EqualTo("[ 0:4, 1:5, 2:6 ]"));
-                    Assert.That(IC.Eq(wrapped.ToArray(), 4, 5, 6), Is.True);
+                    Assert.That(wrapped.ToArray(), Is.EqualTo(new[] { 4, 5, 6 }));
                     Assert.That(wrapped.ToString("L4", null), Is.EqualTo("[ ... ]"));
-                    // TODO: Below line removed as NUnit 3.0 test fails trying to enumerate...
-                    // Assert.AreEqual(outerwrapped, wrapped.Underlying);
-                    Assert.That(IC.SetEq(wrapped.UniqueItems(), 4, 5, 6), Is.True);
+                    Assert.That(outerwrapped, Is.EqualTo(wrapped.Underlying));
+                    Assert.That(wrapped.UniqueItems(), Is.EquivalentTo(new[] { 4, 5, 6 }));
                     Assert.That(wrapped.UnsequencedEquals(other), Is.True);
-                    //
                     Assert.That(wrapped.TrySlide(1), Is.True);
-                    Assert.That(IC.Eq(wrapped, 5, 6, 7), Is.True);
+                    Assert.That(wrapped.ToArray(), Is.EqualTo(new[] { 5, 6, 7 }));
                     Assert.That(wrapped.TrySlide(-1, 2), Is.True);
-                    Assert.That(IC.Eq(wrapped, 4, 5), Is.True);
+                    Assert.That(wrapped.ToArray(), Is.EqualTo(new[] { 4, 5 }));
                     Assert.That(wrapped.TrySlide(-2), Is.False);
-                    Assert.That(IC.Eq(wrapped.Span(outerwrapped.ViewOf(7)), 4, 5, 6, 7), Is.True);
+                    Assert.That(wrapped.Span(outerwrapped.ViewOf(7)), Is.EquivalentTo(new[] { 4, 5, 6, 7 }));
                 });
                 //
                 wrapped.Shuffle();
-                Assert.That(IC.SetEq(wrapped.UniqueItems(), 4, 5), Is.True);
+                Assert.That(wrapped.UniqueItems(), Is.EquivalentTo(new[] { 4, 5 }));
                 Assert.That(wrapped.IsValid, Is.True);
                 wrapped.Dispose();
                 Assert.That(wrapped.IsValid, Is.False);

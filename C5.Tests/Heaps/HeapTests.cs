@@ -12,8 +12,8 @@ namespace C5.Tests.heaps
         [Test]
         public void TestEvents()
         {
-            IntervalHeap<int> factory() { return new IntervalHeap<int>(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.PriorityQueueTester<IntervalHeap<int>>().Test(factory);
+            IntervalHeap<int> factory() { return new IntervalHeap<int>(TenEqualityComparer.Instance); }
+            new Templates.Events.PriorityQueueTester<IntervalHeap<int>>().Test(factory);
         }
     }
 
@@ -28,7 +28,7 @@ namespace C5.Tests.heaps
         public void Init()
         {
             queue = new IntervalHeap<int>();
-            events = new ArrayList<System.Collections.Generic.KeyValuePair<Acts, int>>();
+            events = [];
         }
 
 
@@ -133,7 +133,7 @@ namespace C5.Tests.heaps
         private IntervalHeap<int> coll;
         private IFormatProvider rad16;
         [SetUp]
-        public void Init() { coll = new IntervalHeap<int>(); rad16 = new RadixFormatProvider(16); }
+        public void Init() { coll = []; rad16 = new RadixFormatProvider(16); }
         [TearDown]
         public void Dispose() { coll = null; rad16 = null; }
         [Test]
@@ -642,7 +642,7 @@ namespace C5.Tests.heaps
             int[] a = new int[length];
             Random ran = new(6754);
 
-            LinkedList<int> lst = new();
+            LinkedList<int> lst = [];
             for (int i = 0; i < length; i++)
             {
                 lst.Add(a[i] = ran.Next());

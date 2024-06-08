@@ -970,8 +970,8 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
                     {
                         if (leftEnds == null || rightEnds == null)
                         {
-                            leftEnds = new ArrayList<Position>();
-                            rightEnds = new ArrayList<Position>();
+                            leftEnds = [];
+                            rightEnds = [];
                         }
                         leftEnds.Add(new Position(v, true));
                         rightEnds.Add(new Position(v, false));
@@ -1507,8 +1507,8 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
     {
         Validitycheck();
 
-        HashedLinkedList<V> retval = new();
-        return Map<V>(mapper, retval);
+        HashedLinkedList<V> retval = [];
+        return Map(mapper, retval);
     }
 
     /// <summary>
@@ -1524,7 +1524,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
         Validitycheck();
 
         HashedLinkedList<V> retval = new(equalityComparer);
-        return Map<V>(mapper, retval);
+        return Map(mapper, retval);
     }
 
     private IList<V> Map<V>(Func<T, V> mapper, HashedLinkedList<V> retval)
@@ -1760,7 +1760,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
     {
         if (!TrySlide(offset, size))
         {
-            throw new ArgumentOutOfRangeException();
+            throw new ArgumentOutOfRangeException(nameof(offset), $"{nameof(offset)} and {nameof(size)} combination is out of range");
         }
 
         return this;
@@ -1886,7 +1886,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
             if (_positions != null)
             {
                 positions = _positions.ToArray();
-                Sorting.IntroSort<Position>(positions, 0, positions.Length, PositionComparer.Default);
+                Sorting.IntroSort(positions, 0, positions.Length, PositionComparer.Default);
                 poshigh = positions.Length - 1;
             }
         }
@@ -2221,7 +2221,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
         }
 
         DisposeOverlappingViews(false);
-        ArrayList<T> a = new();
+        ArrayList<T> a = [];
         a.AddAll(this);
         a.Shuffle(rnd);
         Node cursor = startsentinel!.next!;
@@ -2870,7 +2870,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
     {
         Validitycheck();
         int stamp = this.stamp;
-        HashedLinkedList<T> retval = new();
+        HashedLinkedList<T> retval = [];
         Node cursor = startsentinel!.next!;
         Node mcursor = retval.startsentinel!;
         double tagdelta = int.MaxValue / (size + 1.0);
@@ -2930,7 +2930,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
     ///
     /// </summary>
     /// <returns></returns>
-    public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
+    public virtual ICollectionValue<SCG.KeyValuePair<T, int>> ItemMultiplicities()
     {
         return new MultiplicityOne<T>(this);
 
@@ -3383,12 +3383,12 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
 
     #region System.Collections.Generic.IList<T> Members
 
-    void System.Collections.Generic.IList<T>.RemoveAt(int index)
+    void SCG.IList<T>.RemoveAt(int index)
     {
         RemoveAt(index);
     }
 
-    void System.Collections.Generic.ICollection<T>.Add(T item)
+    void SCG.ICollection<T>.Add(T item)
     {
         Add(item);
     }
@@ -3406,7 +3406,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
     {
         if (index < 0 || index + Count > arr.Length)
         {
-            throw new ArgumentOutOfRangeException(nameof(index));
+            throw new ArgumentOutOfRangeException(nameof(arr), $"{nameof(arr)} and {nameof(index)} combination is out of range");
         }
 
         foreach (T item in this)

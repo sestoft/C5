@@ -743,7 +743,7 @@ namespace C5.Tests.Templates.Events
 
     public class PriorityQueueTester<U> : ExtensibleTester<U> where U : IPriorityQueue<int>
     {
-        public override System.Collections.Generic.IEnumerable<EventType> GetSpecs()
+        public override SCG.IEnumerable<EventType> GetSpecs()
         {
             return SpecsBasic;
         }
@@ -843,7 +843,7 @@ namespace C5.Tests.Templates.Events
         }
     }
 
-    public class DictionaryTester<U> : CollectionValueTester<U, System.Collections.Generic.KeyValuePair<int, int>> where U : IDictionary<int, int>
+    public class DictionaryTester<U> : CollectionValueTester<U, SCG.KeyValuePair<int, int>> where U : IDictionary<int, int>
     {
         public override SCG.IEnumerable<EventType> GetSpecs()
         {
@@ -867,12 +867,12 @@ namespace C5.Tests.Templates.Events
             seen.Check([]);
             collection.Add(23, 45);
             seen.Check([
-          new CollectionEvent<System.Collections.Generic.KeyValuePair<int,int>>(EventType.Added, new ItemCountEventArgs<System.Collections.Generic.KeyValuePair<int,int>>(new System.Collections.Generic.KeyValuePair<int,int>(23,45), 1), collection),
-          new CollectionEvent<System.Collections.Generic.KeyValuePair<int,int>>(EventType.Changed, new EventArgs(), collection)]);
+          new CollectionEvent<SCG.KeyValuePair<int,int>>(EventType.Added, new ItemCountEventArgs<SCG.KeyValuePair<int,int>>(new SCG.KeyValuePair<int,int>(23,45), 1), collection),
+          new CollectionEvent<SCG.KeyValuePair<int,int>>(EventType.Changed, new EventArgs(), collection)]);
             collection.Remove(25);
             seen.Check([
-          new CollectionEvent<System.Collections.Generic.KeyValuePair<int,int>>(EventType.Removed, new ItemCountEventArgs<System.Collections.Generic.KeyValuePair<int,int>>(new System.Collections.Generic.KeyValuePair<int,int>(23,45), 1), collection),
-          new CollectionEvent<System.Collections.Generic.KeyValuePair<int,int>>(EventType.Changed, new EventArgs(), collection)]);
+          new CollectionEvent<SCG.KeyValuePair<int,int>>(EventType.Removed, new ItemCountEventArgs<SCG.KeyValuePair<int,int>>(new SCG.KeyValuePair<int,int>(23,45), 1), collection),
+          new CollectionEvent<SCG.KeyValuePair<int,int>>(EventType.Changed, new EventArgs(), collection)]);
         }
 
 

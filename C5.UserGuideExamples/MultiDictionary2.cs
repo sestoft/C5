@@ -31,10 +31,10 @@ namespace C5.UserGuideExamples
             mdict.Remove(20, "twenty");
             Console.WriteLine(mdict);
             Console.WriteLine("mdict.Count is {0}", mdict.Count);
-            Inner zwei = new()
-            {
+            Inner zwei =
+            [
                 "zwei"
-            };
+            ];
             mdict[2] = zwei;
             mdict[-2] = zwei;
             Console.WriteLine(mdict);
@@ -42,7 +42,7 @@ namespace C5.UserGuideExamples
             zwei.Add("kaksi");
             Console.WriteLine(mdict);
             Console.WriteLine("mdict.Count is {0}", mdict.Count);
-            Inner empty = new();
+            Inner empty = [];
             mdict[0] = empty;
             Console.WriteLine(mdict);
             Console.WriteLine("mdict.Count is {0}", mdict.Count);
@@ -91,7 +91,7 @@ namespace C5.MultiDictionary2_MultiDictionary1
             get
             {
                 int count = 0;
-                foreach (System.Collections.Generic.KeyValuePair<K, ICollection<V>> entry in this)
+                foreach (SCG.KeyValuePair<K, ICollection<V>> entry in this)
                     if (entry.Value != null)
                         count += entry.Value.Count;
                 return count;
@@ -218,7 +218,7 @@ namespace C5.MultiDictionary2_MultiDictionary2
         public MultiHashDictionary()
         {
             ItemsAdded +=
-              delegate (object sender, ItemCountEventArgs<System.Collections.Generic.KeyValuePair<K, ICollection<V>>> args)
+              delegate (object sender, ItemCountEventArgs<SCG.KeyValuePair<K, ICollection<V>>> args)
               {
                   ICollection<V> values = args.Item.Value;
                   if (values != null)
@@ -230,7 +230,7 @@ namespace C5.MultiDictionary2_MultiDictionary2
                   }
               };
             ItemsRemoved +=
-              delegate (object sender, ItemCountEventArgs<System.Collections.Generic.KeyValuePair<K, ICollection<V>>> args)
+              delegate (object sender, ItemCountEventArgs<SCG.KeyValuePair<K, ICollection<V>>> args)
               {
                   ICollection<V> values = args.Item.Value;
                   if (values != null)

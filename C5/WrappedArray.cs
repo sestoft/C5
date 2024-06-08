@@ -2,6 +2,7 @@
 // See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using System;
+using System.Drawing;
 using System.Text;
 using SCG = System.Collections.Generic;
 
@@ -72,7 +73,7 @@ public class WrappedArray<T> : IList<T>, SCG.IList<T>
     /// <typeparam name="V"></typeparam>
     /// <param name="mapper"></param>
     /// <returns></returns>
-    public IList<V> Map<V>(Func<T, V> mapper) { return innerlist.Map<V>(mapper); }
+    public IList<V> Map<V>(Func<T, V> mapper) { return innerlist.Map(mapper); }
 
     /// <summary>
     ///
@@ -81,7 +82,7 @@ public class WrappedArray<T> : IList<T>, SCG.IList<T>
     /// <param name="mapper"></param>
     /// <param name="equalityComparer"></param>
     /// <returns></returns>
-    public IList<V> Map<V>(Func<T, V> mapper, SCG.IEqualityComparer<V> equalityComparer) { return innerlist.Map<V>(mapper, equalityComparer); }
+    public IList<V> Map<V>(Func<T, V> mapper, SCG.IEqualityComparer<V> equalityComparer) { return innerlist.Map(mapper, equalityComparer); }
 
     /// <summary>
     /// ???? should we throw NotRelevantException
@@ -141,7 +142,7 @@ public class WrappedArray<T> : IList<T>, SCG.IList<T>
     /// </summary>
     /// <param name="i"></param>
     /// <param name="items"></param>
-    public void InsertAll(int i, System.Collections.Generic.IEnumerable<T> items)
+    public void InsertAll(int i, SCG.IEnumerable<T> items)
     {
         throw new FixedSizeCollectionException();
     }
@@ -422,14 +423,14 @@ public class WrappedArray<T> : IList<T>, SCG.IList<T>
     ///
     /// </summary>
     /// <returns></returns>
-    public ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities() { return innerlist.ItemMultiplicities(); }
+    public ICollectionValue<SCG.KeyValuePair<T, int>> ItemMultiplicities() { return innerlist.ItemMultiplicities(); }
 
     /// <summary>
     ///
     /// </summary>
     /// <param name="items"></param>
     /// <returns></returns>
-    public bool ContainsAll(System.Collections.Generic.IEnumerable<T> items)
+    public bool ContainsAll(SCG.IEnumerable<T> items)
     { return innerlist.ContainsAll(items); }
 
     /// <summary>
@@ -501,7 +502,7 @@ public class WrappedArray<T> : IList<T>, SCG.IList<T>
     ///
     /// </summary>
     /// <param name="items"></param>
-    public void RemoveAll(System.Collections.Generic.IEnumerable<T> items) { throw new FixedSizeCollectionException(); }
+    public void RemoveAll(SCG.IEnumerable<T> items) { throw new FixedSizeCollectionException(); }
 
     /// <summary>
     ///
@@ -512,7 +513,7 @@ public class WrappedArray<T> : IList<T>, SCG.IList<T>
     ///
     /// </summary>
     /// <param name="items"></param>
-    public void RetainAll(System.Collections.Generic.IEnumerable<T> items) { throw new FixedSizeCollectionException(); }
+    public void RetainAll(SCG.IEnumerable<T> items) { throw new FixedSizeCollectionException(); }
 
     #endregion
 
@@ -556,7 +557,7 @@ public class WrappedArray<T> : IList<T>, SCG.IList<T>
     ///
     /// </summary>
     /// <param name="items"></param>
-    public void AddAll(System.Collections.Generic.IEnumerable<T> items)
+    public void AddAll(SCG.IEnumerable<T> items)
     {
         throw new FixedSizeCollectionException();
     }
@@ -815,12 +816,12 @@ public class WrappedArray<T> : IList<T>, SCG.IList<T>
 
     #region System.Collections.Generic.IList<T> Members
 
-    void System.Collections.Generic.IList<T>.RemoveAt(int index)
+    void SCG.IList<T>.RemoveAt(int index)
     {
         throw new FixedSizeCollectionException();
     }
 
-    void System.Collections.Generic.ICollection<T>.Add(T item)
+    void SCG.ICollection<T>.Add(T item)
     {
         throw new FixedSizeCollectionException();
     }
@@ -838,7 +839,7 @@ public class WrappedArray<T> : IList<T>, SCG.IList<T>
     {
         if (index < 0 || index + Count > arr.Length)
         {
-            throw new ArgumentOutOfRangeException(nameof(index));
+            throw new ArgumentOutOfRangeException(nameof(arr), $"{nameof(arr)} and {nameof(index)} combination is out of range");
         }
 
         foreach (T item in this)
@@ -854,7 +855,7 @@ public class WrappedArray<T> : IList<T>, SCG.IList<T>
     object? System.Collections.IList.this[int index]
     {
         get => this[index]!;
-        set 
+        set
         {
             if (value is null && default(T) is not null) throw new ArgumentNullException(nameof(value));
             if (value is not T) throw new ArgumentException("Wrong type", nameof(value));

@@ -138,20 +138,20 @@ namespace C5.UserGuideExamples
     {
         private TreeDictionary<double, ISorted<Edge<T>>> htree;
 
-        private readonly TreeDictionary<double, System.Collections.Generic.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>> endpoints;
+        private readonly TreeDictionary<double, SCG.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>> endpoints;
 
         private bool built = false;
 
         public PointLocator()
         {
             //htree = new TreeDictionary<double,TreeSet<Edge<T>>>(dc);
-            endpoints = new TreeDictionary<double, System.Collections.Generic.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>>();
+            endpoints = [];
         }
 
         public PointLocator(SCG.IEnumerable<Edge<T>> edges)
         {
             //htree = new TreeDictionary<double,TreeSet<Edge<T>>>(dc);
-            endpoints = new TreeDictionary<double, System.Collections.Generic.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>>();
+            endpoints = [];
             foreach (Edge<T> edge in edges)
             {
                 add(edge);
@@ -167,15 +167,15 @@ namespace C5.UserGuideExamples
 
             if (!endpoints.Contains(edge.Xs))
             {
-                endpoints.Add(edge.Xs, new System.Collections.Generic.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>(new LinkedList<Edge<T>>(), new LinkedList<Edge<T>>()));
+                endpoints.Add(edge.Xs, new SCG.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>([], []));
             }
 
-            System.Collections.Generic.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>> kv;
+            SCG.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>> kv;
             kv = endpoints[edge.Xs];
             kv.Key.Add(edge);
             if (!endpoints.Contains(edge.Xe))
             {
-                endpoints.Add(edge.Xe, new System.Collections.Generic.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>(new LinkedList<Edge<T>>(), new LinkedList<Edge<T>>()));
+                endpoints.Add(edge.Xe, new SCG.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>([], []));
             }
 
             kv = endpoints[edge.Xe];
@@ -208,13 +208,13 @@ namespace C5.UserGuideExamples
         public void Build()
         {
             //htree.Clear();
-            htree = new TreeDictionary<double, ISorted<Edge<T>>>();
+            htree = [];
 
-            TreeSet<Edge<T>> vtree = new();
+            TreeSet<Edge<T>> vtree = [];
 
-            htree[double.NegativeInfinity] = (ISorted<Edge<T>>)(vtree.Snapshot());
+            htree[double.NegativeInfinity] = vtree.Snapshot();
 
-            foreach (System.Collections.Generic.KeyValuePair<double, System.Collections.Generic.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>> p in endpoints)
+            foreach (SCG.KeyValuePair<double, SCG.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>> p in endpoints)
             {
                 foreach (Edge<T> e in p.Value.Value)
                 {
@@ -235,7 +235,7 @@ namespace C5.UserGuideExamples
                     Debug.Assert(chk, "edge was not added!", "" + e);
                 }
 
-                htree[p.Key] = (ISorted<Edge<T>>)(vtree.Snapshot());
+                htree[p.Key] = vtree.Snapshot();
             }
 
             built = true;
@@ -261,7 +261,7 @@ namespace C5.UserGuideExamples
                 throw new InvalidOperationException("PointLocator must be built first");
             }
 
-            System.Collections.Generic.KeyValuePair<double, ISorted<Edge<T>>> p = htree.WeakPredecessor(x);
+            SCG.KeyValuePair<double, ISorted<Edge<T>>> p = htree.WeakPredecessor(x);
 
             //if (DoubleComparer.StaticCompare(cell.key,x)==0)
             //Just note it, we have thrown away the vertical edges!
@@ -293,7 +293,7 @@ namespace C5.UserGuideExamples
                 throw new InvalidOperationException("PointLocator must be built first");
             }
 
-            System.Collections.Generic.KeyValuePair<double, ISorted<Edge<T>>> p = htree.WeakPredecessor(x);
+            SCG.KeyValuePair<double, ISorted<Edge<T>>> p = htree.WeakPredecessor(x);
 
             //if (DoubleComparer.StaticCompare(cell.key,x)==0)
             //Just note it, we have thrown away the vertical edges!

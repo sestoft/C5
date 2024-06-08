@@ -55,7 +55,7 @@ namespace C5.Tests.Templates
 
     public abstract class GenericCollectionTester<U> : GenericCollectionTester<U, int>
     {
-        public override System.Collections.Generic.IEnumerable<int> GetSpecs()
+        public override SCG.IEnumerable<int> GetSpecs()
         {
             return [0];
         }

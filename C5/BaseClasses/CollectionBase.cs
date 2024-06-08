@@ -2,6 +2,7 @@
 // See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using System;
+using SCG = System.Collections.Generic;
 
 namespace C5;
 
@@ -30,7 +31,7 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
     /// <summary>
     /// The item equalityComparer of the collection
     /// </summary>
-    protected readonly System.Collections.Generic.IEqualityComparer<T> itemEqualityComparer;
+    protected readonly SCG.IEqualityComparer<T> itemEqualityComparer;
     private int iUnSequencedHashCode, iUnSequencedHashCodeStamp = -1;
 
     #endregion
@@ -38,10 +39,10 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
     /// <summary>
     ///
     /// </summary>
-    /// <param name="itemequalityComparer"></param>
-    protected CollectionBase(System.Collections.Generic.IEqualityComparer<T> itemequalityComparer)
+    /// <param name="itemEqualityComparer"></param>
+    protected CollectionBase(SCG.IEqualityComparer<T> itemEqualityComparer)
     {
-        this.itemEqualityComparer = itemequalityComparer ?? throw new NullReferenceException("Item EqualityComparer cannot be null.");
+        this.itemEqualityComparer = itemEqualityComparer ?? throw new NullReferenceException("Item EqualityComparer cannot be null.");
     }
 
     #region Util
@@ -57,7 +58,7 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
     {
         if (start < 0 || count < 0 || start + count > size)
         {
-            throw new ArgumentOutOfRangeException();
+            throw new ArgumentOutOfRangeException(nameof(start), $"{nameof(start)} and {nameof(count)} combination is out of range");
         }
     }
 
@@ -66,9 +67,9 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
     /// Compute the unsequenced hash code of a collection
     /// </summary>
     /// <param name="items">The collection to compute hash code for</param>
-    /// <param name="itemequalityComparer">The item equalitySCG.Comparer</param>
+    /// <param name="itemEqualityComparer">The item equalitySCG.Comparer</param>
     /// <returns>The hash code</returns>
-    public static int ComputeHashCode(ICollectionValue<T> items, System.Collections.Generic.IEqualityComparer<T> itemequalityComparer)
+    public static int ComputeHashCode(ICollectionValue<T> items, SCG.IEqualityComparer<T> itemEqualityComparer)
     {
         int h = 0;
 
@@ -78,7 +79,7 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
         //Two products is too few
         foreach (T item in items)
         {
-            uint h1 = (uint)itemequalityComparer.GetHashCode(item);
+            uint h1 = (uint)itemEqualityComparer.GetHashCode(item);
 
             h += (int)((h1 * 1529784657 + 1) ^ (h1 * 2912831877) ^ (h1 * 1118771817 + 2));
         }
@@ -115,7 +116,7 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
     /// <param name="collection2">The second collection</param>
     /// <param name="itemequalityComparer">The item equalityComparer to use for comparison</param>
     /// <returns>True if equal</returns>
-    public static bool StaticEquals(ICollection<T> collection1, ICollection<T> collection2, System.Collections.Generic.IEqualityComparer<T> itemequalityComparer)
+    public static bool StaticEquals(ICollection<T> collection1, ICollection<T> collection2, SCG.IEqualityComparer<T> itemequalityComparer)
     {
         if (ReferenceEquals(collection1, collection2))
         {
@@ -146,7 +147,7 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
         {
             if (collection1 is ISorted<T> stit && collection2 is ISorted<T> stat && stit.Comparer == stat.Comparer)
             {
-                using System.Collections.Generic.IEnumerator<T> dat = collection2.GetEnumerator(), dit = collection1.GetEnumerator();
+                using SCG.IEnumerator<T> dat = collection2.GetEnumerator(), dit = collection1.GetEnumerator();
                 while (dit.MoveNext())
                 {
                     dat.MoveNext();
@@ -318,7 +319,7 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
     ///
     /// </summary>
     /// <value></value>
-    public virtual System.Collections.Generic.IEqualityComparer<T> EqualityComparer => itemEqualityComparer;
+    public virtual SCG.IEqualityComparer<T> EqualityComparer => itemEqualityComparer;
 
     /// <summary>
     ///
@@ -333,6 +334,6 @@ public abstract class CollectionBase<T> : CollectionValueBase<T>
     /// Create an enumerator for this collection.
     /// </summary>
     /// <returns>The enumerator</returns>
-    public abstract override System.Collections.Generic.IEnumerator<T> GetEnumerator();
+    public abstract override SCG.IEnumerator<T> GetEnumerator();
     #endregion
 }

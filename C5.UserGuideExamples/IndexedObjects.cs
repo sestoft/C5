@@ -109,7 +109,7 @@ public class IndexMaker<T, Q> : IndexMaker<T>
     public IndexMaker(string name, Func<T, Q> fun) : base(name)
     {
         _fun = fun;
-        _dictionary = new TreeDictionary<Q, HashSet<T>>();
+        _dictionary = [];
     }
 
     public override bool Add(T item)

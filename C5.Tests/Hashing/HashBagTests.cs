@@ -3,6 +3,8 @@
 
 using NUnit.Framework;
 using System;
+using SCG = System.Collections.Generic;
+
 namespace C5.Tests.hashtable.bag
 {
     [TestFixture]
@@ -11,8 +13,8 @@ namespace C5.Tests.hashtable.bag
         [Test]
         public void TestEvents()
         {
-            HashBag<int> factory() { return new HashBag<int>(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.CollectionTester<HashBag<int>>().Test(factory);
+            HashBag<int> factory() { return new HashBag<int>(TenEqualityComparer.Instance); }
+            new Templates.Events.CollectionTester<HashBag<int>>().Test(factory);
         }
 
         //[Test]
@@ -211,7 +213,7 @@ namespace C5.Tests.hashtable.bag
         public void Init()
         {
             Debug.UseDeterministicHashing = true;
-            hashbag = new HashBag<int>();
+            hashbag = [];
         }
 
         [Test]
@@ -283,25 +285,23 @@ namespace C5.Tests.hashtable.bag
             });
         }
 
-
         [Test]
         public void AddAll()
         {
             hashbag.Add(3); hashbag.Add(4); hashbag.Add(4); hashbag.Add(5); hashbag.Add(4);
 
-            HashBag<int> hashbag2 = new();
+            HashBag<int> hashbag2 = [];
 
             hashbag2.AddAll(hashbag);
-            Assert.That(IC.SetEq(hashbag2, 3, 4, 4, 4, 5), Is.True);
+            Assert.That(hashbag2, Is.EquivalentTo(new[] { 3, 4, 4, 4, 5 }));
             hashbag.Add(9);
             hashbag.AddAll(hashbag2);
             Assert.Multiple(() =>
             {
-                Assert.That(IC.SetEq(hashbag2, 3, 4, 4, 4, 5), Is.True);
-                Assert.That(IC.SetEq(hashbag, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 9), Is.True);
+                Assert.That(hashbag2, Is.EquivalentTo(new[] { 3, 4, 4, 4, 5 }));
+                Assert.That(hashbag, Is.EquivalentTo(new[] { 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 9 }));
             });
         }
-
 
         [Test]
         public void ContainsCount()
@@ -341,14 +341,14 @@ namespace C5.Tests.hashtable.bag
             Assert.That(hashbag.ContainsCount(7), Is.EqualTo(1));
             hashbag.Add(5); hashbag.Add(8); hashbag.Add(5);
             hashbag.RemoveAllCopies(8);
-            Assert.That(IC.Eq(hashbag, 7, 5, 5), Is.True);
+            Assert.That(hashbag, Is.EqualTo(new[] { 7, 5, 5 }));
         }
 
 
         [Test]
         public void ContainsAll()
         {
-            HashBag<int> list2 = new();
+            HashBag<int> list2 = [];
 
             Assert.That(hashbag.ContainsAll(list2), Is.True);
             list2.Add(4);
@@ -367,44 +367,41 @@ namespace C5.Tests.hashtable.bag
             Assert.That(hashbag.ContainsAll(list2), Is.True);
         }
 
-
         [Test]
         public void RetainAll()
         {
-            HashBag<int> list2 = new();
+            HashBag<int> list2 = [];
 
             hashbag.Add(4); hashbag.Add(5); hashbag.Add(4); hashbag.Add(6); hashbag.Add(4);
             list2.Add(5); list2.Add(4); list2.Add(7); list2.Add(4);
             hashbag.RetainAll(list2);
-            Assert.That(IC.SetEq(hashbag, 4, 4, 5), Is.True);
+            Assert.That(hashbag, Is.EquivalentTo(new[] { 4, 4, 5 }));
             hashbag.Add(6);
             list2.Clear();
             list2.Add(7); list2.Add(8); list2.Add(9);
             hashbag.RetainAll(list2);
-            Assert.That(IC.Eq(hashbag), Is.True);
+            Assert.That(hashbag, Is.Empty);
         }
-
 
         [Test]
         public void RemoveAll()
         {
-            HashBag<int> list2 = new();
+            HashBag<int> list2 = [];
 
             hashbag.Add(4); hashbag.Add(5); hashbag.Add(6); hashbag.Add(4); hashbag.Add(5);
             list2.Add(5); list2.Add(4); list2.Add(7); list2.Add(4);
             hashbag.RemoveAll(list2);
-            Assert.That(IC.SetEq(hashbag, 5, 6), Is.True);
+            Assert.That(hashbag, Is.EquivalentTo(new[] { 5, 6 }));
             hashbag.Add(5); hashbag.Add(4);
             list2.Clear();
             list2.Add(6); list2.Add(5);
             hashbag.RemoveAll(list2);
-            Assert.That(IC.SetEq(hashbag, 4, 5), Is.True);
+            Assert.That(hashbag, Is.EquivalentTo(new[] { 4, 5 }));
             list2.Clear();
             list2.Add(7); list2.Add(8); list2.Add(9);
             hashbag.RemoveAll(list2);
-            Assert.That(IC.SetEq(hashbag, 4, 5), Is.True);
+            Assert.That(hashbag, Is.EquivalentTo(new[] { 4, 5 }));
         }
-
 
         [Test]
         public void Remove()
@@ -414,26 +411,25 @@ namespace C5.Tests.hashtable.bag
             {
                 Assert.That(hashbag.Remove(2), Is.False);
                 Assert.That(hashbag.Remove(4), Is.True);
-                Assert.That(IC.SetEq(hashbag, 4, 4, 5, 6), Is.True);
+                Assert.That(hashbag, Is.EquivalentTo(new[] { 4, 4, 5, 6 }));
             });
             hashbag.Add(7);
             hashbag.Add(21); hashbag.Add(37); hashbag.Add(53); hashbag.Add(69); hashbag.Add(53); hashbag.Add(85);
             Assert.Multiple(() =>
             {
                 Assert.That(hashbag.Remove(5), Is.True);
-                Assert.That(IC.SetEq(hashbag, 4, 4, 6, 7, 21, 37, 53, 53, 69, 85), Is.True);
+                Assert.That(hashbag, Is.EquivalentTo(new[] { 4, 4, 6, 7, 21, 37, 53, 53, 69, 85 }));
                 Assert.That(hashbag.Remove(165), Is.False);
                 Assert.That(hashbag.Check(), Is.True);
+                Assert.That(hashbag, Is.EquivalentTo(new[] { 4, 4, 6, 7, 21, 37, 53, 53, 69, 85 }));
+                Assert.That(hashbag.Remove(53), Is.True);
+                Assert.That(hashbag, Is.EquivalentTo(new[] { 4, 4, 6, 7, 21, 37, 53, 69, 85 }));
+                Assert.That(hashbag.Remove(37), Is.True);
+                Assert.That(hashbag, Is.EquivalentTo(new[] { 4, 4, 6, 7, 21, 53, 69, 85 }));
+                Assert.That(hashbag.Remove(85), Is.True);
+                Assert.That(hashbag, Is.EquivalentTo(new[] { 4, 4, 6, 7, 21, 53, 69 }));
             });
-            Assert.That(IC.SetEq(hashbag, 4, 4, 6, 7, 21, 37, 53, 53, 69, 85), Is.True);
-            Assert.That(hashbag.Remove(53), Is.True);
-            Assert.That(IC.SetEq(hashbag, 4, 4, 6, 7, 21, 37, 53, 69, 85), Is.True);
-            Assert.That(hashbag.Remove(37), Is.True);
-            Assert.That(IC.SetEq(hashbag, 4, 4, 6, 7, 21, 53, 69, 85), Is.True);
-            Assert.That(hashbag.Remove(85), Is.True);
-            Assert.That(IC.SetEq(hashbag, 4, 4, 6, 7, 21, 53, 69), Is.True);
         }
-
 
         [TearDown]
         public void Dispose()
@@ -453,7 +449,7 @@ namespace C5.Tests.hashtable.bag
         public void Init()
         {
             Debug.UseDeterministicHashing = true;
-            list = new HashBag<int>(TenEqualityComparer.Default);
+            list = new HashBag<int>(TenEqualityComparer.Instance);
             pred = delegate (int i) { return i % 5 == 0; };
         }
 
@@ -486,7 +482,7 @@ namespace C5.Tests.hashtable.bag
         private HashBag<int> list;
 
         [SetUp]
-        public void Init() { list = new HashBag<int>(); }
+        public void Init() { list = []; }
 
         [TearDown]
         public void Dispose() { list = null; }
@@ -496,14 +492,14 @@ namespace C5.Tests.hashtable.bag
         {
             Assert.Multiple(() =>
             {
-                Assert.That(IC.SetEq(list.UniqueItems()), Is.True);
-                Assert.That(IC.SetEq(list.ItemMultiplicities()), Is.True);
+                Assert.That(list.UniqueItems(), Is.Empty);
+                Assert.That(list.ItemMultiplicities(), Is.Empty);
             });
             list.AddAll([7, 9, 7]);
             Assert.Multiple(() =>
             {
-                Assert.That(IC.SetEq(list.UniqueItems(), 7, 9), Is.True);
-                Assert.That(IC.SetEq(list.ItemMultiplicities(), 7, 2, 9, 1), Is.True);
+                Assert.That(list.UniqueItems(), Is.EquivalentTo(new[] { 7, 9 }));
+                Assert.That(list.ItemMultiplicities(), Is.EquivalentTo(new[] { SCG.KeyValuePair.Create(7, 2), SCG.KeyValuePair.Create(9, 1) }));
             });
         }
     }
@@ -519,7 +515,7 @@ namespace C5.Tests.hashtable.bag
         public void Init()
         {
             Debug.UseDeterministicHashing = true;
-            hashbag = new HashBag<int>();
+            hashbag = [];
             a = new int[10];
             for (int i = 0; i < 10; i++)
             {
@@ -535,30 +531,10 @@ namespace C5.Tests.hashtable.bag
             hashbag = null;
         }
 
-
-        private string aeq(int[] a, params int[] b)
-        {
-            if (a.Length != b.Length)
-            {
-                return "Lengths differ: " + a.Length + " != " + b.Length;
-            }
-
-            for (int i = 0; i < a.Length; i++)
-            {
-                if (a[i] != b[i])
-                {
-                    return string.Format("{0}'th elements differ: {1} != {2}", i, a[i], b[i]);
-                }
-            }
-
-            return "Alles klar";
-        }
-
-
         [Test]
         public void ToArray()
         {
-            Assert.That(aeq(hashbag.ToArray()), Is.EqualTo("Alles klar"));
+            Assert.That(hashbag.ToArray(), Is.Empty);
             hashbag.Add(7);
             hashbag.Add(3);
             hashbag.Add(10);
@@ -567,30 +543,29 @@ namespace C5.Tests.hashtable.bag
             int[] r = hashbag.ToArray();
 
             Array.Sort(r);
-            Assert.That(aeq(r, 3, 3, 7, 10), Is.EqualTo("Alles klar"));
+            Assert.That(r, Is.EqualTo(new[] { 3, 3, 7, 10 }));
         }
-
 
         [Test]
         public void CopyTo()
         {
             //Note: for small ints the itemequalityComparer is the identity!
             hashbag.CopyTo(a, 1);
-            Assert.That(aeq(a, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009), Is.EqualTo("Alles klar"));
+            Assert.That(a, Is.EqualTo(new[] { 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009 }));
             hashbag.Add(6);
             hashbag.CopyTo(a, 2);
-            Assert.That(aeq(a, 1000, 1001, 6, 1003, 1004, 1005, 1006, 1007, 1008, 1009), Is.EqualTo("Alles klar"));
+            Assert.That(a, Is.EqualTo(new[] { 1000, 1001, 6, 1003, 1004, 1005, 1006, 1007, 1008, 1009 }));
             hashbag.Add(4);
             hashbag.Add(6);
             hashbag.Add(9);
             hashbag.CopyTo(a, 4);
 
             //TODO: make independent of interequalityComparer
-            Assert.That(aeq(a, 1000, 1001, 6, 1003, 6, 6, 9, 4, 1008, 1009), Is.EqualTo("Alles klar"));
+            Assert.That(a, Is.EqualTo(new[] { 1000, 1001, 6, 1003, 6, 6, 9, 4, 1008, 1009 }));
             hashbag.Clear();
             hashbag.Add(7);
             hashbag.CopyTo(a, 9);
-            Assert.That(aeq(a, 1000, 1001, 6, 1003, 6, 6, 9, 4, 1008, 7), Is.EqualTo("Alles klar"));
+            Assert.That(a, Is.EqualTo(new[] { 1000, 1001, 6, 1003, 6, 6, 9, 4, 1008, 7 }));
         }
 
 
@@ -628,8 +603,8 @@ namespace C5.Tests.hashtable.bag
         [SetUp]
         public void Init()
         {
-            h1 = new HashBag<int>();
-            h2 = new LinkedList<int>();
+            h1 = [];
+            h2 = [];
         }
 
         [TearDown]

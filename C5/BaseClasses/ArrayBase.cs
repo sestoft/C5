@@ -308,7 +308,7 @@ public abstract class ArrayBase<T> : SequencedBase<T>
         }
 
 
-        IDirectedEnumerable<T> C5.IDirectedEnumerable<T>.Backwards()
+        IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards()
         {
             return Backwards();
         }

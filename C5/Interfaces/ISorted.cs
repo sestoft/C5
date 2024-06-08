@@ -75,7 +75,7 @@ public interface ISorted<T> : ISequenced<T>
     /// The comparer object supplied at creation time for this sorted collection.
     /// </summary>
     /// <value>The comparer</value>
-    System.Collections.Generic.IComparer<T> Comparer { get; }
+    IComparer<T> Comparer { get; }
 
     /// <summary>
     /// Find the strict predecessor of item in the sorted collection,

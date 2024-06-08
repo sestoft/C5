@@ -354,7 +354,7 @@ public abstract class DictionaryBase<K, V>(IEqualityComparer<K> keyEqualityCompa
 
         public override V Choose() { return pairs.Choose().Value; }
 
-        public override System.Collections.Generic.IEnumerator<V> GetEnumerator()
+        public override IEnumerator<V> GetEnumerator()
         {
             //Updatecheck is performed by the pairs enumerator
             foreach (KeyValuePair<K, V> p in pairs)
@@ -380,7 +380,7 @@ public abstract class DictionaryBase<K, V>(IEqualityComparer<K> keyEqualityCompa
 
         public override K Choose() { return pairs.Choose().Key; }
 
-        public override System.Collections.Generic.IEnumerator<K> GetEnumerator()
+        public override IEnumerator<K> GetEnumerator()
         {
             foreach (KeyValuePair<K, V> p in pairs)
             {
@@ -484,7 +484,7 @@ public abstract class DictionaryBase<K, V>(IEqualityComparer<K> keyEqualityCompa
     /// Create an enumerator for the collection of entries of the dictionary
     /// </summary>
     /// <returns>The enumerator</returns>
-    public override System.Collections.Generic.IEnumerator<KeyValuePair<K, V>> GetEnumerator()
+    public override IEnumerator<KeyValuePair<K, V>> GetEnumerator()
     {
         return pairs.GetEnumerator();
     }

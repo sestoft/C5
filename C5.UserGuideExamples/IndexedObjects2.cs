@@ -81,7 +81,7 @@ public class HashIndex<Q, T> : IIndex<Q, T> where T : class
     public HashIndex(Func<T, Q> toKey)
     {
         _toKey = toKey;
-        _dictionary = new HashDictionary<Q, HashSet<T>>();
+        _dictionary = [];
     }
 
     public void Add(T item)
@@ -122,7 +122,7 @@ public class TreeIndex<Q, T> : IIndex<Q, T> where T : class
     public TreeIndex(Func<T, Q> toKey)
     {
         _toKey = toKey;
-        _dictionary = new TreeDictionary<Q, HashSet<T>>();
+        _dictionary = [];
     }
 
     public void Add(T item)

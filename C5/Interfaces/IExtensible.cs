@@ -32,7 +32,7 @@ public interface IExtensible<T> : ICollectionValue<T>
     /// </summary>
     /// <value>The equalityComparer used by this collection to check equality of items.
     /// Or null (????) if collection does not check equality at all or uses a comparer.</value>
-    System.Collections.Generic.IEqualityComparer<T> EqualityComparer { get; }
+    IEqualityComparer<T> EqualityComparer { get; }
 
     //ItemEqualityTypeEnum ItemEqualityType {get ;}
 

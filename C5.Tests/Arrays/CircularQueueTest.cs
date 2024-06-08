@@ -12,8 +12,8 @@ namespace C5.Tests.arrays.circularqueue
         public void TestEvents()
         {
             CircularQueue<int> factory() { return new CircularQueue<int>(); }
-            new C5.Tests.Templates.Events.QueueTester<CircularQueue<int>>().Test(factory);
-            new C5.Tests.Templates.Events.StackTester<CircularQueue<int>>().Test(factory);
+            new Templates.Events.QueueTester<CircularQueue<int>>().Test(factory);
+            new Templates.Events.StackTester<CircularQueue<int>>().Test(factory);
         }
 
         //[Test]
@@ -123,7 +123,7 @@ namespace C5.Tests.arrays.circularqueue
         {
             Assert.That(queue.Check(), Is.True);
             loadup3();
-            Assert.That(IC.Eq(queue, 14, 15, 16, 17), Is.True);
+            Assert.That(queue, Is.EqualTo(new[] { 14, 15, 16, 17 }));
         }
 
         [Test]
@@ -134,7 +134,7 @@ namespace C5.Tests.arrays.circularqueue
             {
                 Assert.That(queue.Check(), Is.True);
                 Assert.That(queue, Has.Count.EqualTo(5));
-                Assert.That(IC.Eq(queue, 12, 13, 103, 14, 15), Is.True);
+                Assert.That(queue, Is.EqualTo(new[] { 12, 13, 103, 14, 15 }));
             });
             Assert.That(queue.Choose(), Is.EqualTo(12));
         }
@@ -179,7 +179,7 @@ namespace C5.Tests.arrays.circularqueue
             {
                 Assert.That(queue.Check(), Is.True);
                 Assert.That(queue, Has.Count.EqualTo(5));
-                Assert.That(IC.Eq(queue, 15, 1000, 1001, 1002, 1003), Is.True);
+                Assert.That(queue, Is.EqualTo(new[] { 15, 1000, 1001, 1002, 1003 }));
             });
             Assert.That(queue.Choose(), Is.EqualTo(15));
         }
@@ -203,7 +203,7 @@ namespace C5.Tests.arrays.circularqueue
         [Test]
         public void SW200602()
         {
-            C5.CircularQueue<int> list = new(8);
+            CircularQueue<int> list = new(8);
             for (int count = 0; count <= 7; count++)
             {
                 list.Enqueue(count);

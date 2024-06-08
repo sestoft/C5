@@ -304,7 +304,7 @@ public class HashedArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequal
     /// <returns>The index of first occurrence</returns>
     private int IndexOfInner(T item)
     {
-        System.Collections.Generic.KeyValuePair<T, int> p = new(item, default);
+        SCG.KeyValuePair<T, int> p = new(item, default);
         if (itemIndex.Find(ref p) && p.Value >= offsetField && p.Value < offsetField + size)
         {
             return p.Value - offsetField;
@@ -334,7 +334,7 @@ public class HashedArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequal
     /// <param name="item">Item to insert</param>
     protected override void InsertProtected(int i, T item)
     {
-        System.Collections.Generic.KeyValuePair<T, int> p = new(item, offsetField + i);
+        SCG.KeyValuePair<T, int> p = new(item, offsetField + i);
         if (itemIndex.FindOrAdd(ref p))
         {
             throw new DuplicateNotAllowedException("Item already in indexed list: " + item);
@@ -382,7 +382,7 @@ public class HashedArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequal
         }
 
         array[UnderlyingSize] = default;
-        itemIndex.Remove(new System.Collections.Generic.KeyValuePair<T, int>(retval, default));
+        itemIndex.Remove(new SCG.KeyValuePair<T, int>(retval, default));
         ReIndex(i);
         return retval;
     }
@@ -396,7 +396,7 @@ public class HashedArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequal
     {
         for (int j = start; j < end; j++)
         {
-            itemIndex.UpdateOrAdd(new System.Collections.Generic.KeyValuePair<T, int>(array[j], j));
+            itemIndex.UpdateOrAdd(new SCG.KeyValuePair<T, int>(array[j], j));
         }
     }
     #endregion
@@ -785,7 +785,7 @@ public class HashedArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequal
             index += offsetField;
             T item = array[index];
 
-            System.Collections.Generic.KeyValuePair<T, int> p = new(value, index);
+            SCG.KeyValuePair<T, int> p = new(value, index);
             if (itemEqualityComparer.Equals(value, item))
             {
                 array[index] = value;
@@ -793,7 +793,7 @@ public class HashedArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequal
             }
             else if (!itemIndex.FindOrAdd(ref p))
             {
-                itemIndex.Remove(new System.Collections.Generic.KeyValuePair<T, int>(item, default));
+                itemIndex.Remove(new SCG.KeyValuePair<T, int>(item, default));
                 array[index] = value;
             }
             else
@@ -897,7 +897,7 @@ public class HashedArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequal
 
             foreach (T item in items)
             {
-                System.Collections.Generic.KeyValuePair<T, int> p = new(item, i);
+                SCG.KeyValuePair<T, int> p = new(item, i);
                 if (itemIndex.FindOrAdd(ref p))
                 {
                     throw new DuplicateNotAllowedException("Item already in indexed list");
@@ -1017,7 +1017,7 @@ public class HashedArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequal
 
         HashedArrayList<V> res = new(size);
 
-        return Map<V>(mapper, res);
+        return Map(mapper, res);
     }
 
     /// <summary>
@@ -1037,7 +1037,7 @@ public class HashedArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequal
 
         HashedArrayList<V> res = new(size, itemequalityComparer);
 
-        return Map<V>(mapper, res);
+        return Map(mapper, res);
     }
 
     private HashedArrayList<V> Map<V>(Func<T, V> mapper, HashedArrayList<V> res)
@@ -1049,7 +1049,7 @@ public class HashedArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequal
             {
                 V mappeditem = mapper(array[offsetField + i]);
                 ModifyCheck(stamp);
-                System.Collections.Generic.KeyValuePair<V, int> p = new(mappeditem, i);
+                SCG.KeyValuePair<V, int> p = new(mappeditem, i);
                 if (res.itemIndex.FindOrAdd(ref p))
                 {
                     throw new ArgumentException("Mapped item already in indexed list");
@@ -1228,7 +1228,7 @@ public class HashedArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequal
     {
         if (!TrySlide(offset, size))
         {
-            throw new ArgumentOutOfRangeException(nameof(offset));
+            throw new ArgumentOutOfRangeException(nameof(offset), $"{nameof(offset)} and {nameof(size)} combination is out of range");
         }
 
         return this;
@@ -1367,7 +1367,7 @@ public class HashedArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequal
             return;
         }
 
-        Sorting.IntroSort<T>(array, offsetField, size, comparer);
+        Sorting.IntroSort(array, offsetField, size, comparer);
         DisposeOverlappingViews(false);
         ReIndex(offsetField, offsetField + size);
         (underlying ?? this).RaiseCollectionChanged();
@@ -1572,7 +1572,7 @@ public class HashedArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequal
         {
             olditem = array[offsetField + i];
             array[offsetField + i] = item;
-            itemIndex.Update(new System.Collections.Generic.KeyValuePair<T, int>(item, offsetField + i));
+            itemIndex.Update(new SCG.KeyValuePair<T, int>(item, offsetField + i));
             (underlying ?? this).RaiseForUpdate(item, olditem);
             return true;
         }
@@ -1880,7 +1880,7 @@ public class HashedArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequal
         int j = offsetField;
         int removed = 0;
         int i = offsetField, end = offsetField + size;
-        System.Collections.Generic.KeyValuePair<T, int> p = new();
+        SCG.KeyValuePair<T, int> p = new();
         while (i < end)
         {
             T item;
@@ -2036,7 +2036,7 @@ public class HashedArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequal
     ///
     /// </summary>
     /// <returns></returns>
-    public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
+    public virtual ICollectionValue<SCG.KeyValuePair<T, int>> ItemMultiplicities()
     {
         return new MultiplicityOne<T>(this);
 
@@ -2168,7 +2168,7 @@ public class HashedArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequal
     public virtual bool Add(T item)
     {
         UpdateCheck();
-        System.Collections.Generic.KeyValuePair<T, int> p = new(item, size + offsetField);
+        SCG.KeyValuePair<T, int> p = new(item, size + offsetField);
         if (itemIndex.FindOrAdd(ref p))
         {
             return false;
@@ -2209,7 +2209,7 @@ public class HashedArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequal
         {
             foreach (T item in items)
             {
-                System.Collections.Generic.KeyValuePair<T, int> p = new(item, i);
+                SCG.KeyValuePair<T, int> p = new(item, i);
                 if (itemIndex.FindOrAdd(ref p))
                 {
                     continue;
@@ -2368,12 +2368,12 @@ public void GetObjectData(System.Runtime.Serialization.SerializationInfo info, S
 
     #region System.Collections.Generic.IList<T> Members
 
-    void System.Collections.Generic.IList<T>.RemoveAt(int index)
+    void SCG.IList<T>.RemoveAt(int index)
     {
         RemoveAt(index);
     }
 
-    void System.Collections.Generic.ICollection<T>.Add(T item)
+    void SCG.ICollection<T>.Add(T item)
     {
         Add(item);
     }
@@ -2391,7 +2391,7 @@ public void GetObjectData(System.Runtime.Serialization.SerializationInfo info, S
     {
         if (index < 0 || index + Count > arr.Length)
         {
-            throw new ArgumentOutOfRangeException(nameof(index));
+            throw new ArgumentOutOfRangeException(nameof(arr), $"{nameof(arr)} and {nameof(index)} combination is out of range");
         }
 
         foreach (T item in this)

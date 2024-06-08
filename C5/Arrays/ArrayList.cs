@@ -841,7 +841,7 @@ public class ArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequalityCom
 
         ArrayList<V> res = new(size);
 
-        return Map<V>(mapper, res);
+        return Map(mapper, res);
     }
 
     /// <summary>
@@ -859,7 +859,7 @@ public class ArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequalityCom
 
         ArrayList<V> res = new(size, itemequalityComparer);
 
-        return Map<V>(mapper, res);
+        return Map(mapper, res);
     }
 
     private ArrayList<V> Map<V>(Func<T, V> mapper, ArrayList<V> res)
@@ -1184,7 +1184,7 @@ public class ArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequalityCom
             return;
         }
 
-        Sorting.IntroSort<T>(array, offsetField, size, comparer);
+        Sorting.IntroSort(array, offsetField, size, comparer);
         DisposeOverlappingViews(false);
 
         (underlying ?? this).RaiseCollectionChanged();
@@ -1841,7 +1841,7 @@ public class ArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequalityCom
     ///
     /// </summary>
     /// <returns></returns>
-    public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
+    public virtual ICollectionValue<SCG.KeyValuePair<T, int>> ItemMultiplicities()
     {
         HashBag<T> hashbag = new(itemEqualityComparer);
         hashbag.AddAll(this);
@@ -2225,12 +2225,12 @@ public void GetObjectData(System.Runtime.Serialization.SerializationInfo info, S
 
     #region System.Collections.Generic.IList<T> Members
 
-    void System.Collections.Generic.IList<T>.RemoveAt(int index)
+    void SCG.IList<T>.RemoveAt(int index)
     {
         RemoveAt(index);
     }
 
-    void System.Collections.Generic.ICollection<T>.Add(T item)
+    void SCG.ICollection<T>.Add(T item)
     {
         Add(item);
     }
@@ -2264,12 +2264,12 @@ public void GetObjectData(System.Runtime.Serialization.SerializationInfo info, S
     object? System.Collections.IList.this[int index]
     {
         get => this[index]!;
-        set 
+        set
         {
             if (value is null && default(T) is not null) throw new ArgumentNullException(nameof(value));
             if (value is not T) throw new ArgumentException("Wrong type", nameof(value));
 
-            this[index] = (T)value; 
+            this[index] = (T)value;
         }
     }
 

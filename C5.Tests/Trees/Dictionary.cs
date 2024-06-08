@@ -47,7 +47,7 @@ namespace C5.Tests.trees.RBDictionary
 
 
         [SetUp]
-        public void Init() { dict = new TreeDictionary<string, string>(new SC()); }
+        public void Init() { dict = new TreeDictionary<string, string>(StringComparer.InvariantCulture); }
 
 
         [TearDown]
@@ -63,7 +63,7 @@ namespace C5.Tests.trees.RBDictionary
         public void Choose()
         {
             dict.Add("YES", "NO");
-            Assert.That(dict.Choose(), Is.EqualTo(new System.Collections.Generic.KeyValuePair<string, string>("YES", "NO")));
+            Assert.That(dict.Choose(), Is.EqualTo(new SCG.KeyValuePair<string, string>("YES", "NO")));
         }
 
         [Test]
@@ -99,7 +99,7 @@ namespace C5.Tests.trees.RBDictionary
             dict.Add("E", "3");
             Assert.Multiple(() =>
             {
-                Assert.That(dict.TryPredecessor("B", out System.Collections.Generic.KeyValuePair<string, string> res), Is.True);
+                Assert.That(dict.TryPredecessor("B", out SCG.KeyValuePair<string, string> res), Is.True);
                 Assert.That(res.Value, Is.EqualTo("1"));
                 Assert.That(dict.TryPredecessor("C", out res), Is.True);
                 Assert.That(res.Value, Is.EqualTo("1"));
@@ -229,7 +229,7 @@ namespace C5.Tests.trees.RBDictionary
         [SetUp]
         public void Init()
         {
-            ISortedDictionary<string, string> dict = new TreeDictionary<string, string>(new SC())
+            ISortedDictionary<string, string> dict = new TreeDictionary<string, string>(StringComparer.InvariantCulture)
             {
                 { "A", "1" },
                 { "C", "2" },
@@ -262,7 +262,7 @@ namespace C5.Tests.trees.RBDictionary
         {
             Assert.Multiple(() =>
             {
-                Assert.That(dict.TryPredecessor("B", out System.Collections.Generic.KeyValuePair<string, string> res), Is.True);
+                Assert.That(dict.TryPredecessor("B", out SCG.KeyValuePair<string, string> res), Is.True);
                 Assert.That(res.Value, Is.EqualTo("1"));
                 Assert.That(dict.TryPredecessor("C", out res), Is.True);
                 Assert.That(res.Value, Is.EqualTo("1"));
@@ -360,7 +360,7 @@ namespace C5.Tests.trees.RBDictionary
         [SetUp]
         public void Init()
         {
-            dict = new TreeDictionary<string, string>(new SC())
+            dict = new TreeDictionary<string, string>(StringComparer.InvariantCulture)
             {
                 ["S"] = "A",
                 ["T"] = "B",
@@ -480,12 +480,12 @@ namespace C5.Tests.trees.RBDictionary
             Assert.Multiple(() =>
             {
                 Assert.That(dictEnum.MoveNext(), Is.True);
-                Assert.That(new System.Collections.Generic.KeyValuePair<string, string>("R", "C"), Is.EqualTo(dictEnum.Current));
+                Assert.That(new SCG.KeyValuePair<string, string>("R", "C"), Is.EqualTo(dictEnum.Current));
             });
             Assert.That(dictEnum.MoveNext(), Is.True);
-            Assert.That(new System.Collections.Generic.KeyValuePair<string, string>("S", "A"), Is.EqualTo(dictEnum.Current));
+            Assert.That(new SCG.KeyValuePair<string, string>("S", "A"), Is.EqualTo(dictEnum.Current));
             Assert.That(dictEnum.MoveNext(), Is.True);
-            Assert.That(new System.Collections.Generic.KeyValuePair<string, string>("T", "B"), Is.EqualTo(dictEnum.Current));
+            Assert.That(new SCG.KeyValuePair<string, string>("T", "B"), Is.EqualTo(dictEnum.Current));
             Assert.That(dictEnum.MoveNext(), Is.False);
         }
     }
@@ -504,7 +504,7 @@ namespace C5.Tests.trees.RBDictionary
             [SetUp]
             public void Init()
             {
-                dict = new TreeDictionary<string, string>(new SC())
+                dict = new TreeDictionary<string, string>(StringComparer.InvariantCulture)
                 {
                     ["S"] = "A",
                     ["T"] = "B",

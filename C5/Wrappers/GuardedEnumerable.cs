@@ -10,11 +10,11 @@ namespace C5;
 ///
 /// <i>This is mainly interesting as a base of other guard classes</i>
 /// </summary>
-public class GuardedEnumerable<T> : System.Collections.Generic.IEnumerable<T>
+public class GuardedEnumerable<T> : IEnumerable<T>
 {
     #region Fields
 
-    private readonly System.Collections.Generic.IEnumerable<T> enumerable;
+    private readonly IEnumerable<T> enumerable;
 
     #endregion
 
@@ -24,7 +24,7 @@ public class GuardedEnumerable<T> : System.Collections.Generic.IEnumerable<T>
     /// Wrap an enumerable in a read-only wrapper
     /// </summary>
     /// <param name="enumerable">The enumerable to wrap</param>
-    public GuardedEnumerable(System.Collections.Generic.IEnumerable<T> enumerable)
+    public GuardedEnumerable(IEnumerable<T> enumerable)
     { this.enumerable = enumerable; }
 
     #endregion

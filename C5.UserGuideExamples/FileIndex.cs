@@ -38,7 +38,7 @@ internal class FileIndex
                     {
                         if (!index.Contains(s))
                         {
-                            index[s] = new TreeSet<int>();
+                            index[s] = [];
                         }
                         index[s].Add(lineNumber);
                     }

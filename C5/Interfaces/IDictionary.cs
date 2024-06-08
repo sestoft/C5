@@ -68,7 +68,7 @@ public interface IDictionary<K, V> : ICollectionValue<KeyValuePair<K, V>>
     /// <exception cref="DuplicateNotAllowedException">
     /// If the input contains duplicate keys or a key already present in this dictionary.</exception>
     /// <param name="entries"></param>
-    void AddAll<U, W>(IEnumerable<System.Collections.Generic.KeyValuePair<U, W>> entries)
+    void AddAll<U, W>(IEnumerable<KeyValuePair<U, W>> entries)
         where U : K
         where W : V
     ;

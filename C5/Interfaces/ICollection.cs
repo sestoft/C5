@@ -101,7 +101,7 @@ public interface ICollection<T> : IExtensible<T>, SCG.ICollection<T>
     ///
     /// </summary>
     /// <returns></returns>
-    ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities();
+    ICollectionValue<SCG.KeyValuePair<T, int>> ItemMultiplicities();
 
     /// <summary>
     /// Check whether this collection contains all the values in another collection.
