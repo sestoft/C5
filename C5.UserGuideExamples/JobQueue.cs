@@ -94,22 +94,15 @@ internal class JobQueue
     }
 }
 
-internal class Job : IComparable<Job>
+internal class Job(Rid rid, Ip ip, int time) : IComparable<Job>
 {
-    public Rid Rid { get; }
-    public Ip Ip { get; }
-    public int Time { get; }
+    public Rid Rid { get; } = rid;
+    public Ip Ip { get; } = ip;
+    public int Time { get; } = time;
 
-    public Job(Rid rid, Ip ip, int time)
+    public int CompareTo(Job? that)
     {
-        Rid = rid;
-        Ip = ip;
-        Time = time;
-    }
-
-    public int CompareTo(Job that)
-    {
-        return Time - that.Time;
+        return Time.CompareTo(that!.Time);
     }
 
     public override string ToString()
@@ -134,22 +127,11 @@ internal class Rid
     }
 }
 
-internal class Ip
+internal class Ip(string ipString)
 {
-    public string IpString { get; }
+    public string IpString { get; } = ipString;
 
-    public Ip(string ipString)
-    {
-        IpString = ipString;
-    }
+    public override bool Equals(object? that) => IpString.Equals(that);
 
-    public override int GetHashCode()
-    {
-        return IpString.GetHashCode();
-    }
-
-    public override bool Equals(object that)
-    {
-        return IpString.Equals(that);
-    }
+    public override int GetHashCode() => IpString.GetHashCode();
 }

@@ -63,7 +63,7 @@ internal interface IGraphVertex<V, E, W> where W : IComparable<W>
 {
     V Value { get; }
     IGraph<V, E, W> Graph { get; }
-    ICollectionValue<System.Collections.Generic.KeyValuePair<V, E>> Adjacent { get; }
+    ICollectionValue<SCG.KeyValuePair<V, E>> Adjacent { get; }
 }
 
 internal class Vertex<V>
@@ -104,7 +104,7 @@ internal interface IGraph<V, E, W> where W : IComparable<W>
     /// </summary>
     /// <param name="vertex"></param>
     /// <returns></returns>
-    ICollectionValue<System.Collections.Generic.KeyValuePair<V, E>> Adjacent(V vertex);
+    ICollectionValue<SCG.KeyValuePair<V, E>> Adjacent(V vertex);
 
     /// <summary>
     /// The collection of all edges in the graph. The return value is a snapshot
@@ -179,7 +179,7 @@ internal interface IGraph<V, E, W> where W : IComparable<W>
     /// </summary>
     /// <returns>A collection of (vertex,component) pairs, where the first part of the
     /// pair is some vertex in the component.</returns>
-    ICollectionValue<System.Collections.Generic.KeyValuePair<V, IGraph<V, E, W>>> Components();
+    ICollectionValue<SCG.KeyValuePair<V, IGraph<V, E, W>>> Components();
 
     /// <summary>
     /// Traverse the connected component containing the <code>start</code> vertex,
@@ -207,27 +207,27 @@ internal interface IGraph<V, E, W> where W : IComparable<W>
     /// </summary>
     /// <param name="bfs">True if BFS, false if DFS</param>
     /// <param name="act"></param>
-    /// <param name="beforecomponent"></param>
-    /// <param name="aftercomponent"></param>
-    void TraverseVertices(bool bfs, Action<Edge<V, E>> act, Action<V> beforecomponent, Action<V> aftercomponent);
+    /// <param name="beforeComponent"></param>
+    /// <param name="afterComponent"></param>
+    void TraverseVertices(bool bfs, Action<Edge<V, E>> act, Action<V> beforeComponent, Action<V> afterComponent);
 
     /// <summary>
     /// A more advanced Depth First Search traversal.
     /// </summary>
     /// <param name="start">The vertex to start the search at</param>
-    /// <param name="beforevertex">Action to perform when a vertex is first encountered.</param>
-    /// <param name="aftervertex">Action to perform when all edges out of a vertex has been handles.</param>
-    /// <param name="onfollow">Action to perform as an edge is traversed.</param>
-    /// <param name="onfollowed">Action to perform when an edge is traversed back.</param>
-    /// <param name="onnotfollowed">Action to perform when an edge (a backedge)is seen, but not followed.</param>
-    void DepthFirstSearch(V start, Action<V> beforevertex, Action<V> aftervertex,
-            Action<Edge<V, E>> onfollow, Action<Edge<V, E>> onfollowed, Action<Edge<V, E>> onnotfollowed);
+    /// <param name="beforeVertex">Action to perform when a vertex is first encountered.</param>
+    /// <param name="afterVertex">Action to perform when all edges out of a vertex has been handles.</param>
+    /// <param name="onFollow">Action to perform as an edge is traversed.</param>
+    /// <param name="onFollowed">Action to perform when an edge is traversed back.</param>
+    /// <param name="onNotFollowed">Action to perform when an edge (a backedge)is seen, but not followed.</param>
+    void DepthFirstSearch(V start, Action<V> beforeVertex, Action<V> afterVertex,
+            Action<Edge<V, E>> onFollow, Action<Edge<V, E>> onFollowed, Action<Edge<V, E>> onNotFollowed);
 
     //TODO: perhaps we should avoid exporting this?
     /// <summary>
     /// Traverse the part of the graph reachable from start in order of least distance
     /// from start according to the weight function. Perform act on the edges of the
-    /// traversal as they are recognised.
+    /// traversal as they are recognized.
     /// </summary>
     /// <param name="accumulating"></param>
     /// <param name="start"></param>
@@ -277,7 +277,7 @@ internal interface IGraph<V, E, W> where W : IComparable<W>
 
     /// <summary>
     /// This is intended for implementations of the very simple factor 2 approximation
-    /// algorithms for the travelling salesman problem for Euclidic weight/distance
+    /// algorithms for the traveling salesman problem for Euclidean weight/distance
     /// functions, i.e. distances that satisfy the triangle inequality. (We do not do 3/2)
     /// </summary>
     /// <returns></returns>
@@ -286,7 +286,7 @@ internal interface IGraph<V, E, W> where W : IComparable<W>
     /// <summary>
     /// Pretty-print the graph to the console (for debugging purposes).
     /// </summary>
-    void Print(System.IO.TextWriter output);
+    void Print(TextWriter output);
 }
 
 /// <summary>
@@ -296,16 +296,16 @@ internal interface IGraph<V, E, W> where W : IComparable<W>
 /// </summary>
 /// <typeparam name="V">The type of a vertex.</typeparam>
 /// <typeparam name="E">The type of data associated with edges.</typeparam>
-internal struct Edge<V, E>
+internal readonly struct Edge<V, E>
 {
-    private static readonly SCG.IEqualityComparer<V> vequalityComparer = EqualityComparer<V>.Default;
+    private static readonly SCG.IEqualityComparer<V> vEqualityComparer = EqualityComparer<V>.Default;
     public V Start { get; }
     public V End { get; }
     public E EdgeData { get; }
 
     public Edge(V start, V end, E edgedata)
     {
-        if (vequalityComparer.Equals(start, end))
+        if (vEqualityComparer.Equals(start, end))
         {
             throw new ArgumentException("Illegal: start and end are equal");
         }
@@ -325,11 +325,11 @@ internal struct Edge<V, E>
         return string.Format("(start='{0}', end='{1}', edgedata='{2}')", Start, End, EdgeData); ;
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (obj is Edge<V, E> other)
         {
-            return vequalityComparer.Equals(Start, other.Start) && vequalityComparer.Equals(End, other.End);
+            return vEqualityComparer.Equals(Start, other.Start) && vEqualityComparer.Equals(End, other.End);
         }
         return false;
     }
@@ -357,8 +357,8 @@ internal struct Edge<V, E>
         /// <returns></returns>
         public bool Equals(Edge<V, E> i1, Edge<V, E> i2)
         {
-            return (vequalityComparer.Equals(i1.Start, i2.Start) && vequalityComparer.Equals(i1.End, i2.End)) ||
-                   (vequalityComparer.Equals(i1.End, i2.Start) && vequalityComparer.Equals(i1.Start, i2.End));
+            return (vEqualityComparer.Equals(i1.Start, i2.Start) && vEqualityComparer.Equals(i1.End, i2.End)) ||
+                   (vEqualityComparer.Equals(i1.End, i2.Start) && vEqualityComparer.Equals(i1.Start, i2.End));
         }
 
         /// <summary>
@@ -445,29 +445,48 @@ internal delegate bool EdgeAction<V, E, U>(Edge<V, E> edge, U extra);
 /// <typeparam name="V"></typeparam>
 /// <typeparam name="E"></typeparam>
 /// <typeparam name="W"></typeparam>
-internal class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
+/// <remarks>
+/// Create an initially empty graph.
+/// </remarks>
+/// <param name="weight"></param>
+[method: UsedBy("testTSP")]
+
+/*
+  For a dense graph, we would use data fields:
+
+  E'[,] or E'[][] for the matrix. Possibly E'[][] for a triangular one!
+  Here E' = struct{E edgedata, bool present} or class{E edgedata}, or if E is a class just E.
+  Thus E' is E! for value types. Or we could have two matrices: E[][] and bool[][].
+
+  HashDictionary<V,int> to map vertex ids to indices.
+  ArrayList<V> for the map the other way.
+  Or simply a HashedArrayList<V> to get both?
+
+  PresentList<int>, FreeList<int> or similar, if we do not want to compact the indices in the matrix on each delete.
+  If we compact, we always do a delete on the vertex<->index map by a replace and a removelast:
+    vimap[ind]=vimap[vimap.Count]; vimap.RemoveLast(); //also reorder matrix!
+
+
+*/
+
+/// <summary>
+/// An implementation of IGraph&#x2264;V,E,W&#x2265; based on an adjacency list representation using hash dictionaries.
+/// As a consequence, this will be most efficient for sparse graphs.
+/// </summary>
+/// <typeparam name="V"></typeparam>
+/// <typeparam name="E"></typeparam>
+/// <typeparam name="W"></typeparam>
+internal class HashGraph<V, E, W>(IWeight<E, W> weight) : IGraph<V, E, W> where W : IComparable<W>
 {
-    private readonly HashDictionary<V, HashDictionary<V, E>> _graph;
+    private readonly HashDictionary<V, HashDictionary<V, E>> _graph = [];
 
-    public IWeight<E, W> Weight { get; }
-
-    /// <summary>
-    /// Create an initially empty graph.
-    /// </summary>
-    /// <param name="weight"></param>
-    [UsedBy("testTSP")]
-    public HashGraph(IWeight<E, W> weight)
-    {
-        Weight = weight;
-        EdgeCount = 0;
-        _graph = new HashDictionary<V, HashDictionary<V, E>>();
-    }
+    public IWeight<E, W> Weight { get; } = weight;
 
     /// <summary>
     /// Constructing a graph with no isolated vertices given a collection of edges.
     /// </summary>
     /// <param name="edges"></param>
-    [UsedBy()]
+    [UsedBy]
     public HashGraph(IWeight<E, W> weight, SCG.IEnumerable<Edge<V, E>> edges) : this(weight)
     {
         foreach (var edge in edges)
@@ -546,16 +565,16 @@ internal class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
     public int VertexCount => _graph.Count;
 
     [UsedBy("testCOMP")]
-    public int EdgeCount { get; private set; }
+    public int EdgeCount { get; private set; } = 0;
 
     public ICollectionValue<V> Vertices()
     {
         return new GuardedCollectionValue<V>(_graph.Keys);
     }
 
-    public ICollectionValue<System.Collections.Generic.KeyValuePair<V, E>> Adjacent(V vertex)
+    public ICollectionValue<SCG.KeyValuePair<V, E>> Adjacent(V vertex)
     {
-        return new GuardedCollectionValue<System.Collections.Generic.KeyValuePair<V, E>>(_graph[vertex]);
+        return new GuardedCollectionValue<SCG.KeyValuePair<V, E>>(_graph[vertex]);
     }
 
     private class EdgesValue : CollectionValueBase<Edge<V, E>>
@@ -724,9 +743,9 @@ internal class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
         }
     }
 
-    public ICollectionValue<System.Collections.Generic.KeyValuePair<V, IGraph<V, E, W>>> Components()
+    public ICollectionValue<SCG.KeyValuePair<V, IGraph<V, E, W>>> Components()
     {
-        ArrayList<System.Collections.Generic.KeyValuePair<V, IGraph<V, E, W>>> retval = new();
+        ArrayList<SCG.KeyValuePair<V, IGraph<V, E, W>>> retval = new();
         HashGraph<V, E, W> component;
         ArrayList<V> vertices = null;
         void edgeaction(Edge<V, E> e)
@@ -747,12 +766,12 @@ internal class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
             {
                 //component.graph[start] = graph[start].Clone();
                 HashDictionary<V, E> edgeset = component._graph[start] = new HashDictionary<V, E>();
-                foreach (System.Collections.Generic.KeyValuePair<V, E> adjacent in _graph[start])
+                foreach (SCG.KeyValuePair<V, E> adjacent in _graph[start])
                 {
                     edgeset[adjacent.Key] = adjacent.Value;
                 }
             }
-            retval.Add(new System.Collections.Generic.KeyValuePair<V, IGraph<V, E, W>>(v, component));
+            retval.Add(new SCG.KeyValuePair<V, IGraph<V, E, W>>(v, component));
         }
         TraverseVertices(false, edgeaction, beforecomponent, aftercomponent);
         return retval;
@@ -788,7 +807,7 @@ internal class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
 
             if (_graph.Find(ref v, out HashDictionary<V, E> adjacent))
             {
-                foreach (System.Collections.Generic.KeyValuePair<V, E> p in adjacent)
+                foreach (SCG.KeyValuePair<V, E> p in adjacent)
                 {
                     var end = p.Key;
                     if (!seen.FindOrAdd(ref end))
@@ -839,7 +858,7 @@ internal class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
             before(v);
             if (_graph.Find(ref v, out HashDictionary<V, E> adjacent))
             {
-                foreach (System.Collections.Generic.KeyValuePair<V, E> p in adjacent)
+                foreach (SCG.KeyValuePair<V, E> p in adjacent)
                 {
                     V end = p.Key;
                     Edge<V, E> e = new(v, end, p.Value);
@@ -900,7 +919,7 @@ internal class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
             }
             if (_graph.Find(ref current, out HashDictionary<V, E> adjacentnodes))
             {
-                foreach (System.Collections.Generic.KeyValuePair<V, E> adjacent in adjacentnodes)
+                foreach (SCG.KeyValuePair<V, E> adjacent in adjacentnodes)
                 {
                     V end = adjacent.Key;
                     E edgedata = adjacent.Value;
@@ -1035,7 +1054,7 @@ internal class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
             else
             {
                 bool first = true;
-                foreach (System.Collections.Generic.KeyValuePair<V, E> p in clone._graph[current])
+                foreach (SCG.KeyValuePair<V, E> p in clone._graph[current])
                 {
                     W thisweight = Weight.Weight(p.Value);
                     if (first || bestweight.CompareTo(thisweight) > 0)
@@ -1169,11 +1188,11 @@ internal class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
     /// The purpose of this struct is to be able to create and add new,
     /// synthetic vertices to a graph.
     /// </summary>
-    private struct Vplus : IEquatable<Vplus>
+    private readonly struct Vplus : IEquatable<Vplus>
     {
         private static readonly SCG.IEqualityComparer<V> _vequalityComparer = EqualityComparer<V>.Default;
 
-        public V Vertex { get; }
+        public V? Vertex { get; }
         public int Id { get; }
 
         internal Vplus(V v) { Vertex = v; Id = 0; }
@@ -1304,7 +1323,7 @@ internal class HashGraph<V, E, W> : IGraph<V, E, W> where W : IComparable<W>
         return tour;
     }
 
-    public void Print(System.IO.TextWriter output)
+    public void Print(TextWriter output)
     {
         output.WriteLine("Graph has {0} vertices, {1} edges, {2} components", _graph.Count, EdgeCount, ComponentCount);
         foreach (SCG.KeyValuePair<V, HashDictionary<V, E>> p in _graph)
@@ -1356,6 +1375,7 @@ internal class DoubleWeight : IWeight<double, double>
 /// <summary>
 /// Attribute used for marking which examples use a particular graph method
 /// </summary>
+[AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Method | AttributeTargets.Property)]
 internal class UsedByAttribute : Attribute
 {
     private readonly string[] tests;
@@ -1363,7 +1383,7 @@ internal class UsedByAttribute : Attribute
 
     public override string ToString()
     {
-        System.Text.StringBuilder sb = new();
+        StringBuilder sb = new();
         for (int i = 0; i < tests.Length; i++)
         {
             if (i > 0)
@@ -1462,10 +1482,7 @@ internal class Graph
     /// <returns>An enumerable with the edges</returns>
     private static SCG.IEnumerable<Edge<string, double>> Wheel(bool complete, int n)
     {
-        if (n < 3)
-        {
-            throw new ArgumentOutOfRangeException("n must be at least 3");
-        }
+        ArgumentOutOfRangeException.ThrowIfLessThan(n, 3);
 
         var center = "C";
         var perimeter = new string[n];
@@ -1521,7 +1538,7 @@ internal class Graph
         IGraph<string, int, int> g = new HashGraph<string, int, int>(new CountWeight<int>(), Forest(2, 2));
         Console.WriteLine("Forest has: Vertices: {0}, Edges: {1}, Components: {2}", g.VertexCount, g.EdgeCount, g.ComponentCount);
         //g.Print(Console.Out);
-        foreach (System.Collections.Generic.KeyValuePair<string, IGraph<string, int, int>> comp in g.Components())
+        foreach (SCG.KeyValuePair<string, IGraph<string, int, int>> comp in g.Components())
         {
             Console.WriteLine("Component of {0}:", comp.Key);
             comp.Value.Print(Console.Out);

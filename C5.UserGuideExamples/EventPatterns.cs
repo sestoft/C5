@@ -166,29 +166,16 @@ internal class EventPatterns
 }
 
 // Example class where objects may be equal yet display differently
-internal class Teacher : IEquatable<Teacher>
+internal class Teacher(string name, string subject) : IEquatable<Teacher>
 {
-    public string Name { get; }
-    public string Subject { get; }
+    public string Name { get; } = name;
+    public string Subject { get; } = subject;
 
-    public Teacher(string name, string subject)
-    {
-        Name = name;
-        Subject = subject;
-    }
+    public bool Equals(Teacher? that) => Subject == that?.Subject;
 
-    public bool Equals(Teacher that)
-    {
-        return Subject == that.Subject;
-    }
+    public override int GetHashCode() => Subject.GetHashCode();
 
-    public override int GetHashCode()
-    {
-        return Subject.GetHashCode();
-    }
+    public override string ToString() => $"{Name} [{Subject}]";
 
-    public override string ToString()
-    {
-        return $"{Name} [{Subject}]";
-    }
+    public override bool Equals(object? obj) => Equals(obj as Teacher);
 }

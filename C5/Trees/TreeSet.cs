@@ -2365,7 +2365,7 @@ public class TreeSet<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted
 
         if (start < 0 || count < 0 || start + count > size)
         {
-            throw new ArgumentOutOfRangeException();
+            throw new ArgumentOutOfRangeException(nameof(start), $"{nameof(start)} and {nameof(count)} combination is out of range");
         }
 
         UpdateCheck();

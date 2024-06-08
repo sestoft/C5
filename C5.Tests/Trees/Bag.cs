@@ -3456,7 +3456,7 @@ namespace C5.Tests.trees.TreeBag
             {
                 dit = new TreeBag<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
                 dat = new TreeBag<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
-                dut = new TreeBag<int>(new RevIC(), EqualityComparer<int>.Default);
+                dut = new TreeBag<int>(new ReverseIntegerComparer(), EqualityComparer<int>.Default);
             }
 
 
@@ -3570,7 +3570,7 @@ namespace C5.Tests.trees.TreeBag
             {
                 dit = new TreeBag<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
                 dat = new TreeBag<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
-                dut = new TreeBag<int>(new RevIC(), EqualityComparer<int>.Default);
+                dut = new TreeBag<int>(new ReverseIntegerComparer(), EqualityComparer<int>.Default);
             }
 
 

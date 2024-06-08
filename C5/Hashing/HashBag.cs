@@ -534,10 +534,10 @@ public class HashBag<T> : CollectionBase<T>, ICollection<T>
     {
         if (index < 0 || index + Count > array.Length)
         {
-            throw new ArgumentOutOfRangeException(nameof(index));
+            throw new ArgumentOutOfRangeException(nameof(array), $"{nameof(array)} and {nameof(index)} combination is out of range");
         }
 
-        foreach (System.Collections.Generic.KeyValuePair<T, int> p in dict)
+        foreach (var p in dict)
         {
             for (int j = 0; j < p.Value; j++)
             {

@@ -546,7 +546,7 @@ public class GuardedList<T> : GuardedSequenced<T>, IList<T>, System.Collections.
     {
         if (index < 0 || index + Count > arr.Length)
         {
-            throw new ArgumentOutOfRangeException();
+            throw new ArgumentOutOfRangeException(nameof(arr), $"{nameof(arr)} and {nameof(index)} combination is out of range");
         }
 
         foreach (T item in this)

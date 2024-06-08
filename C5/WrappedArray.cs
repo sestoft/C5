@@ -2,6 +2,7 @@
 // See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using System;
+using System.Drawing;
 using System.Text;
 using SCG = System.Collections.Generic;
 
@@ -838,7 +839,7 @@ public class WrappedArray<T> : IList<T>, SCG.IList<T>
     {
         if (index < 0 || index + Count > arr.Length)
         {
-            throw new ArgumentOutOfRangeException(nameof(index));
+            throw new ArgumentOutOfRangeException(nameof(arr), $"{nameof(arr)} and {nameof(index)} combination is out of range");
         }
 
         foreach (T item in this)

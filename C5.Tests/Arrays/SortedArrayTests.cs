@@ -2576,7 +2576,7 @@ namespace C5.Tests.arrays.sorted
             {
                 dit = new SortedArray<int>(8, SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
                 dat = new SortedArray<int>(8, SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
-                dut = new SortedArray<int>(8, new RevIC(), EqualityComparer<int>.Default);
+                dut = new SortedArray<int>(8, new ReverseIntegerComparer(), EqualityComparer<int>.Default);
             }
 
 
@@ -2690,7 +2690,7 @@ namespace C5.Tests.arrays.sorted
             {
                 dit = new SortedArray<int>(8, SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
                 dat = new SortedArray<int>(8, SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
-                dut = new SortedArray<int>(8, new RevIC(), EqualityComparer<int>.Default);
+                dut = new SortedArray<int>(8, new ReverseIntegerComparer(), EqualityComparer<int>.Default);
             }
 
 

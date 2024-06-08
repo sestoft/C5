@@ -1228,7 +1228,7 @@ public class HashedArrayList<T>(int capacity, SCG.IEqualityComparer<T> itemequal
     {
         if (!TrySlide(offset, size))
         {
-            throw new ArgumentOutOfRangeException(nameof(offset));
+            throw new ArgumentOutOfRangeException(nameof(offset), $"{nameof(offset)} and {nameof(size)} combination is out of range");
         }
 
         return this;
@@ -2391,7 +2391,7 @@ public void GetObjectData(System.Runtime.Serialization.SerializationInfo info, S
     {
         if (index < 0 || index + Count > arr.Length)
         {
-            throw new ArgumentOutOfRangeException(nameof(index));
+            throw new ArgumentOutOfRangeException(nameof(arr), $"{nameof(arr)} and {nameof(index)} combination is out of range");
         }
 
         foreach (T item in this)

@@ -96,12 +96,9 @@ namespace C5.Tests
         }
     }
 
-    internal class RevIC : SCG.IComparer<int>
+    internal class ReverseIntegerComparer : SCG.IComparer<int>
     {
-        public int Compare(int a, int b)
-        {
-            return a > b ? -1 : a < b ? 1 : 0;
-        }
+        public int Compare(int a, int b) => a.CompareTo(b) * -1;
     }
 
     public class FunEnumerable : SCG.IEnumerable<int>

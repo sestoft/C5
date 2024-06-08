@@ -26,7 +26,7 @@ public class Sorting
     {
         if (start < 0 || count < 0 || start + count > array.Length)
         {
-            throw new ArgumentOutOfRangeException();
+            throw new ArgumentOutOfRangeException(nameof(start), $"{nameof(start)} and {nameof(count)} combination is out of range");
         }
 
         new Sorter<T>(array, comparer).IntroSort(start, start + count);
@@ -56,7 +56,7 @@ public class Sorting
     {
         if (start < 0 || count < 0 || start + count > array.Length)
         {
-            throw new ArgumentOutOfRangeException();
+            throw new ArgumentOutOfRangeException(nameof(start), $"{nameof(start)} and {nameof(count)} combination is out of range");
         }
 
         new Sorter<T>(array, comparer).InsertionSort(start, start + count);
@@ -76,7 +76,7 @@ public class Sorting
     {
         if (start < 0 || count < 0 || start + count > array.Length)
         {
-            throw new ArgumentOutOfRangeException();
+            throw new ArgumentOutOfRangeException(nameof(start), $"{nameof(start)} and {nameof(count)} combination is out of range");
         }
 
         new Sorter<T>(array, comparer).HeapSort(start, start + count);

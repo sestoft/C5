@@ -2,6 +2,7 @@
 // See https://github.com/sestoft/C5/blob/master/LICENSE for licensing details.
 
 using System;
+using System.Drawing;
 
 namespace C5;
 
@@ -455,7 +456,7 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
     {
         if (index < 0 || index + Count > array.Length)
         {
-            throw new ArgumentOutOfRangeException(nameof(index));
+            throw new ArgumentOutOfRangeException(nameof(array), $"{nameof(array)} and {nameof(index)} combination is out of range");
         }
 
         foreach (T item in this)

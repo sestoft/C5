@@ -14,13 +14,10 @@ internal static class Extension
 
     public static SCG.IEnumerable<T> Where<T>(this ICollection<T> coll, Expression<Func<T, bool>> predicate)
     {
-        Console.WriteLine("hallo");
-        // Func<T,bool> p = pred.Compile();
         var p = predicate.Compile();
         foreach (T item in coll)
         {
-            // if (p(item))
-            if ((bool)p.DynamicInvoke(item))
+            if (p(item))
             {
                 yield return item;
             }
@@ -29,11 +26,7 @@ internal static class Extension
 
     private static void Main()
     {
-        var hs = new HashSet<NamedPerson>
-            {
-                new("Ole"),
-                new("Hans")
-            };
+        HashSet<NamedPerson> hs = [new("Ole"), new("Hans")];
 
         foreach (NamedPerson q in (from p in hs where p.Name.Length == 4 select p))
         {
@@ -42,14 +35,9 @@ internal static class Extension
     }
 }
 
-internal class NamedPerson
+internal class NamedPerson(string name)
 {
-    public string Name { get; }
-
-    public NamedPerson(string name)
-    {
-        Name = name;
-    }
+    public string Name { get; } = name;
 
     public override string ToString()
     {

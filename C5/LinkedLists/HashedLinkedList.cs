@@ -1760,7 +1760,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
     {
         if (!TrySlide(offset, size))
         {
-            throw new ArgumentOutOfRangeException();
+            throw new ArgumentOutOfRangeException(nameof(offset), $"{nameof(offset)} and {nameof(size)} combination is out of range");
         }
 
         return this;
@@ -3406,7 +3406,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
     {
         if (index < 0 || index + Count > arr.Length)
         {
-            throw new ArgumentOutOfRangeException(nameof(index));
+            throw new ArgumentOutOfRangeException(nameof(arr), $"{nameof(arr)} and {nameof(index)} combination is out of range");
         }
 
         foreach (T item in this)

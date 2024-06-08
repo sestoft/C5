@@ -3166,7 +3166,7 @@ namespace C5.Tests.trees.TreeSet
             {
                 dit = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
                 dat = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
-                dut = new TreeSet<int>(new RevIC(), EqualityComparer<int>.Default);
+                dut = new TreeSet<int>(new ReverseIntegerComparer(), EqualityComparer<int>.Default);
             }
 
 
@@ -3279,7 +3279,7 @@ namespace C5.Tests.trees.TreeSet
                 {
                     dit = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
                     dat = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
-                    dut = new TreeSet<int>(new RevIC(), EqualityComparer<int>.Default);
+                    dut = new TreeSet<int>(new ReverseIntegerComparer(), EqualityComparer<int>.Default);
                 }
 
 
