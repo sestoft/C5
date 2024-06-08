@@ -2430,9 +2430,9 @@ namespace C5.Tests.arrays.list
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.Backwards(), Is.EqualTo(new[] { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 }));
-                    Assert.That(IC.Eq(lst[0, 4].Backwards(), 3, 2, 1, 0), Is.True);
-                    Assert.That(IC.Eq(lst[3, 4].Backwards(), 6, 5, 4, 3), Is.True);
-                    Assert.That(IC.Eq(lst[6, 4].Backwards(), 9, 8, 7, 6), Is.True);
+                    Assert.That(lst[0, 4].Backwards(), Is.EqualTo(new[] { 3, 2, 1, 0 }));
+                    Assert.That(lst[3, 4].Backwards(), Is.EqualTo(new[] { 6, 5, 4, 3 }));
+                    Assert.That(lst[6, 4].Backwards(), Is.EqualTo(new[] { 9, 8, 7, 6 }));
                 });
             }
 

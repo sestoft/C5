@@ -2217,7 +2217,6 @@ namespace C5.Tests.arrays.hashed
             [TearDown]
             public void Dispose() { lst.Dispose(); }
 
-
             [Test]
             public void GetRange()
             {
@@ -2229,13 +2228,12 @@ namespace C5.Tests.arrays.hashed
 
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(lst[0, 3], 0, 1, 2), Is.True);
-                    Assert.That(IC.Eq(lst[3, 3], 3, 4, 5), Is.True);
-                    Assert.That(IC.Eq(lst[6, 3], 6, 7, 8), Is.True);
-                    Assert.That(IC.Eq(lst[6, 4], 6, 7, 8, 9), Is.True);
+                    Assert.That(lst[0, 3], Is.EqualTo(new[] { 0, 1, 2 }));
+                    Assert.That(lst[3, 3], Is.EqualTo(new[] { 3, 4, 5 }));
+                    Assert.That(lst[6, 3], Is.EqualTo(new[] { 6, 7, 8 }));
+                    Assert.That(lst[6, 4], Is.EqualTo(new[] { 6, 7, 8, 9 }));
                 });
             }
-
 
             [Test]
             public void Backwards()
@@ -2248,12 +2246,11 @@ namespace C5.Tests.arrays.hashed
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.Backwards(), Is.EqualTo(new[] { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 }));
-                    Assert.That(IC.Eq(lst[0, 3].Backwards(), 2, 1, 0), Is.True);
-                    Assert.That(IC.Eq(lst[3, 3].Backwards(), 5, 4, 3), Is.True);
-                    Assert.That(IC.Eq(lst[6, 4].Backwards(), 9, 8, 7, 6), Is.True);
+                    Assert.That(lst[0, 3].Backwards(), Is.EqualTo(new[] { 2, 1, 0 }));
+                    Assert.That(lst[3, 3].Backwards(), Is.EqualTo(new[] { 5, 4, 3 }));
+                    Assert.That(lst[6, 4].Backwards(), Is.EqualTo(new[] { 9, 8, 7, 6 }));
                 });
             }
-
 
             [Test]
             public void DirectionAndCount()
