@@ -13,8 +13,8 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void TestEvents()
         {
-            SortedArray<int> factory() { return new SortedArray<int>(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.SortedIndexedTester<SortedArray<int>>().Test(factory);
+            SortedArray<int> factory() { return new SortedArray<int>(TenEqualityComparer.Instance); }
+            new Templates.Events.SortedIndexedTester<SortedArray<int>>().Test(factory);
         }
     }
 
@@ -377,13 +377,13 @@ namespace C5.Tests.arrays.sorted
     [TestFixture]
     public class FindOrAdd
     {
-        private SortedArray<System.Collections.Generic.KeyValuePair<int, string>> bag;
+        private SortedArray<SCG.KeyValuePair<int, string>> bag;
 
 
         [SetUp]
         public void Init()
         {
-            bag = new SortedArray<System.Collections.Generic.KeyValuePair<int, string>>(new KeyValuePairComparer<int, string>(new IC()));
+            bag = new SortedArray<SCG.KeyValuePair<int, string>>(new KeyValuePairComparer<int, string>(new IC()));
         }
 
 
@@ -424,7 +424,7 @@ namespace C5.Tests.arrays.sorted
         [SetUp]
         public void Init()
         {
-            list = new SortedArray<int>(TenEqualityComparer.Default);
+            list = new SortedArray<int>(TenEqualityComparer.Instance);
             pred = delegate (int i) { return i % 5 == 0; };
         }
 
@@ -587,16 +587,16 @@ namespace C5.Tests.arrays.sorted
     [TestFixture]
     public class Combined
     {
-        private IIndexedSorted<System.Collections.Generic.KeyValuePair<int, int>> lst;
+        private IIndexedSorted<SCG.KeyValuePair<int, int>> lst;
 
 
         [SetUp]
         public void Init()
         {
-            lst = new SortedArray<System.Collections.Generic.KeyValuePair<int, int>>(new KeyValuePairComparer<int, int>(new IC()));
+            lst = new SortedArray<SCG.KeyValuePair<int, int>>(new KeyValuePairComparer<int, int>(new IC()));
             for (int i = 0; i < 10; i++)
             {
-                lst.Add(new System.Collections.Generic.KeyValuePair<int, int>(i, i + 30));
+                lst.Add(new SCG.KeyValuePair<int, int>(i, i + 30));
             }
         }
 
@@ -607,7 +607,7 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void Find()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+            SCG.KeyValuePair<int, int> p = new(3, 78);
 
             Assert.Multiple(() =>
             {
@@ -615,7 +615,7 @@ namespace C5.Tests.arrays.sorted
                 Assert.That(p.Key, Is.EqualTo(3));
                 Assert.That(p.Value, Is.EqualTo(33));
             });
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+            p = new SCG.KeyValuePair<int, int>(13, 78);
             Assert.That(lst.Find(ref p), Is.False);
         }
 
@@ -623,7 +623,7 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void FindOrAdd()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+            SCG.KeyValuePair<int, int> p = new(3, 78);
 
             Assert.Multiple(() =>
             {
@@ -631,7 +631,7 @@ namespace C5.Tests.arrays.sorted
                 Assert.That(p.Key, Is.EqualTo(3));
                 Assert.That(p.Value, Is.EqualTo(33));
             });
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
+            p = new SCG.KeyValuePair<int, int>(13, 79);
             Assert.Multiple(() =>
             {
                 Assert.That(lst.FindOrAdd(ref p), Is.False);
@@ -644,7 +644,7 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void Update()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+            SCG.KeyValuePair<int, int> p = new(3, 78);
 
             Assert.Multiple(() =>
             {
@@ -652,7 +652,7 @@ namespace C5.Tests.arrays.sorted
                 Assert.That(lst[3].Key, Is.EqualTo(3));
                 Assert.That(lst[3].Value, Is.EqualTo(78));
             });
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+            p = new SCG.KeyValuePair<int, int>(13, 78);
             Assert.That(lst.Update(p), Is.False);
         }
 
@@ -660,7 +660,7 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void UpdateOrAdd1()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+            SCG.KeyValuePair<int, int> p = new(3, 78);
 
             Assert.Multiple(() =>
             {
@@ -668,7 +668,7 @@ namespace C5.Tests.arrays.sorted
                 Assert.That(lst[3].Key, Is.EqualTo(3));
                 Assert.That(lst[3].Value, Is.EqualTo(78));
             });
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
+            p = new SCG.KeyValuePair<int, int>(13, 79);
             Assert.Multiple(() =>
             {
                 Assert.That(lst.UpdateOrAdd(p), Is.False);
@@ -723,7 +723,7 @@ namespace C5.Tests.arrays.sorted
         [Test]
         public void RemoveWithReturn()
         {
-            System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+            SCG.KeyValuePair<int, int> p = new(3, 78);
 
             Assert.Multiple(() =>
             {
@@ -733,7 +733,7 @@ namespace C5.Tests.arrays.sorted
                 Assert.That(lst[3].Key, Is.EqualTo(4));
                 Assert.That(lst[3].Value, Is.EqualTo(34));
             });
-            p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+            p = new SCG.KeyValuePair<int, int>(13, 78);
             Assert.That(lst.Remove(p, out _), Is.False);
         }
     }

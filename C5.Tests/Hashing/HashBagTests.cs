@@ -11,8 +11,8 @@ namespace C5.Tests.hashtable.bag
         [Test]
         public void TestEvents()
         {
-            HashBag<int> factory() { return new HashBag<int>(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.CollectionTester<HashBag<int>>().Test(factory);
+            HashBag<int> factory() { return new HashBag<int>(TenEqualityComparer.Instance); }
+            new Templates.Events.CollectionTester<HashBag<int>>().Test(factory);
         }
 
         //[Test]
@@ -453,7 +453,7 @@ namespace C5.Tests.hashtable.bag
         public void Init()
         {
             Debug.UseDeterministicHashing = true;
-            list = new HashBag<int>(TenEqualityComparer.Default);
+            list = new HashBag<int>(TenEqualityComparer.Instance);
             pred = delegate (int i) { return i % 5 == 0; };
         }
 

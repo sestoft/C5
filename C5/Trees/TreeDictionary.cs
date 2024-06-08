@@ -29,7 +29,7 @@ public class TreeDictionary<K, V> : SortedDictionaryBase<K, V>, IDictionary<K, V
     private TreeDictionary(SCG.IComparer<K> comparer, SCG.IEqualityComparer<K> equalityComparer)
         : base(comparer, equalityComparer)
     {
-        pairs = sortedPairs = new TreeSet<System.Collections.Generic.KeyValuePair<K, V>>(new KeyValuePairComparer<K, V>(comparer));
+        pairs = sortedPairs = new TreeSet<SCG.KeyValuePair<K, V>>(new KeyValuePairComparer<K, V>(comparer));
     }
 
     #endregion

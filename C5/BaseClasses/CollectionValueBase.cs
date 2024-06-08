@@ -604,7 +604,7 @@ public abstract class CollectionValueBase<T> : EnumerableBase<T>, ICollectionVal
     /// <returns></returns>
     public virtual bool Show(System.Text.StringBuilder stringbuilder, ref int rest, IFormatProvider? formatProvider)
     {
-        return Showing.ShowCollectionValue<T>(this, stringbuilder, ref rest, formatProvider!);
+        return Showing.ShowCollectionValue(this, stringbuilder, ref rest, formatProvider!);
     }
     #endregion
 

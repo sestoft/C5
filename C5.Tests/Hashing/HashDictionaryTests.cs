@@ -15,8 +15,8 @@ namespace C5.Tests.hashtable.dictionary
         [Test]
         public void TestEvents()
         {
-            DictionaryIntToInt factory() { return new DictionaryIntToInt(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.DictionaryTester<DictionaryIntToInt>().Test(factory);
+            DictionaryIntToInt factory() { return new DictionaryIntToInt(TenEqualityComparer.Instance); }
+            new Templates.Events.DictionaryTester<DictionaryIntToInt>().Test(factory);
         }
     }
 
@@ -75,20 +75,20 @@ namespace C5.Tests.hashtable.dictionary
         [Test]
         public void NullEqualityComparerinConstructor1()
         {
-            Assert.Throws<NullReferenceException>(() => new HashDictionary<int, int>(null));
+            Assert.Throws<NullReferenceException>(() => new DictionaryIntToInt(null));
         }
 
         [Test]
         public void NullEqualityComparerinConstructor2()
         {
-            Assert.Throws<NullReferenceException>(() => new HashDictionary<int, int>(5, 0.5, null));
+            Assert.Throws<NullReferenceException>(() => new DictionaryIntToInt(5, 0.5, null));
         }
 
         [Test]
         public void Choose()
         {
             dict.Add("ER", "FOO");
-            Assert.That(dict.Choose(), Is.EqualTo(new System.Collections.Generic.KeyValuePair<string, string>("ER", "FOO")));
+            Assert.That(dict.Choose(), Is.EqualTo(new SCG.KeyValuePair<string, string>("ER", "FOO")));
         }
 
         [Test]
@@ -261,7 +261,7 @@ namespace C5.Tests.hashtable.dictionary
         [Test]
         public void DeepBucket()
         {
-            HashDictionary<int, int> dict2 = new();
+            DictionaryIntToInt dict2 = new();
 
             for (int i = 0; i < 5; i++)
             {

@@ -143,18 +143,18 @@ namespace C5.Tests.support
             [Test]
             public void PrimitiveComparersViaBuilder()
             {
-                ComparerViaBuilderTest<char>('A', 'a');
+                ComparerViaBuilderTest('A', 'a');
                 ComparerViaBuilderTest<sbyte>(-122, 126);
                 ComparerViaBuilderTest<byte>(122, 126);
                 ComparerViaBuilderTest<short>(-30000, 3);
                 ComparerViaBuilderTest<ushort>(3, 50000);
-                ComparerViaBuilderTest<int>(-10000000, 10000);
+                ComparerViaBuilderTest(-10000000, 10000);
                 ComparerViaBuilderTest<uint>(10000000, 3000000000);
-                ComparerViaBuilderTest<long>(-1000000000000, 10000000);
-                ComparerViaBuilderTest<ulong>(10000000000000UL, 10000000000004UL);
-                ComparerViaBuilderTest<float>(-0.001F, 0.00001F);
-                ComparerViaBuilderTest<double>(-0.001, 0.00001E-200);
-                ComparerViaBuilderTest<decimal>(-20.001M, 19.999M);
+                ComparerViaBuilderTest(-1000000000000, 10000000);
+                ComparerViaBuilderTest(10000000000000UL, 10000000000004UL);
+                ComparerViaBuilderTest(-0.001F, 0.00001F);
+                ComparerViaBuilderTest(-0.001, 0.00001E-200);
+                ComparerViaBuilderTest(-20.001M, 19.999M);
             }
 
             // This test is obsoleted by the one above, but we keep it for good measure
@@ -491,8 +491,8 @@ namespace C5.Tests.support
             [Test]
             public void UnseqequalityComparerViaBuilder2()
             {
-                SCG.IEqualityComparer<C5.HashSet<int>> h = EqualityComparer<HashSet<int>>.Default;
-                C5.HashSet<int> s = [1, 2, 3];
+                SCG.IEqualityComparer<HashSet<int>> h = EqualityComparer<HashSet<int>>.Default;
+                HashSet<int> s = [1, 2, 3];
                 Assert.That(h.GetHashCode(s), Is.EqualTo(CHC.UnsequencedHashCode(1, 2, 3)));
             }
 
@@ -500,14 +500,14 @@ namespace C5.Tests.support
             [Test]
             public void SeqequalityComparerViaBuilder3()
             {
-                SCG.IEqualityComparer<C5.IList<int>> h = EqualityComparer<IList<int>>.Default;
-                C5.IList<int> s = new LinkedList<int>() { 1, 2, 3 };
+                SCG.IEqualityComparer<IList<int>> h = EqualityComparer<IList<int>>.Default;
+                IList<int> s = new LinkedList<int>() { 1, 2, 3 };
                 Assert.That(h.GetHashCode(s), Is.EqualTo(CHC.SequencedHashCode(1, 2, 3)));
             }
 
-            private interface IFoo<T> : C5.ICollection<T> { void Bamse(); }
+            private interface IFoo<T> : ICollection<T> { void Bamse(); }
 
-            private class Foo<T> : C5.HashSet<T>, IFoo<T>
+            private class Foo<T> : HashSet<T>, IFoo<T>
             {
                 internal Foo() : base() { }
                 public void Bamse() { }
@@ -540,29 +540,29 @@ namespace C5.Tests.support
                 Assert.That(h.GetHashCode(s), Is.EqualTo(CHC.SequencedHashCode(1, 2, 3)));
             }
 
-            private interface IBar : C5.ICollection<int>
+            private interface IBar : ICollection<int>
             {
                 void Bamse();
             }
 
-            private class Bar : C5.HashSet<int>, IBar
+            private class Bar : HashSet<int>, IBar
             {
                 internal Bar() : base() { }
                 public void Bamse() { }
 
                 //TODO: remove all this workaround stuff:
 
-                bool C5.ICollection<int>.ContainsAll(System.Collections.Generic.IEnumerable<int> items)
+                bool ICollection<int>.ContainsAll(SCG.IEnumerable<int> items)
                 {
                     throw new NotImplementedException();
                 }
 
-                void C5.ICollection<int>.RemoveAll(System.Collections.Generic.IEnumerable<int> items)
+                void ICollection<int>.RemoveAll(SCG.IEnumerable<int> items)
                 {
                     throw new NotImplementedException();
                 }
 
-                void C5.ICollection<int>.RetainAll(System.Collections.Generic.IEnumerable<int> items)
+                void ICollection<int>.RetainAll(SCG.IEnumerable<int> items)
                 {
                     throw new NotImplementedException();
                 }

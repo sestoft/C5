@@ -646,7 +646,7 @@ public class HashSet<T> : CollectionBase<T>, ICollection<T>
     ///
     /// </summary>
     /// <returns></returns>
-    public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
+    public virtual ICollectionValue<SCG.KeyValuePair<T, int>> ItemMultiplicities()
     {
         return new MultiplicityOne<T>(this);
     }

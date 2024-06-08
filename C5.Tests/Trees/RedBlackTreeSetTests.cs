@@ -13,8 +13,8 @@ namespace C5.Tests.trees.TreeSet
         [Test]
         public void TestEvents()
         {
-            TreeSet<int> factory() { return new TreeSet<int>(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.SortedIndexedTester<TreeSet<int>>().Test(factory);
+            TreeSet<int> factory() { return new TreeSet<int>(TenEqualityComparer.Instance); }
+            new Templates.Events.SortedIndexedTester<TreeSet<int>>().Test(factory);
         }
     }
 
@@ -545,7 +545,7 @@ namespace C5.Tests.trees.TreeSet
         [SetUp]
         public void Init()
         {
-            list = new TreeSet<int>(TenEqualityComparer.Default);
+            list = new TreeSet<int>(TenEqualityComparer.Instance);
             pred = delegate (int i) { return i % 5 == 0; };
         }
 

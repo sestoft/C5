@@ -90,7 +90,7 @@ namespace C5.UserGuideExamples
                 get
                 {
                     int count = 0;
-                    foreach (System.Collections.Generic.KeyValuePair<K, ICollection<V>> entry in this)
+                    foreach (SCG.KeyValuePair<K, ICollection<V>> entry in this)
                     {
                         if (entry.Value != null)
                         {
@@ -308,7 +308,7 @@ namespace C5.UserGuideExamples
             public MultiHashDictionary()
             {
                 ItemsAdded +=
-                  delegate (object sender, ItemCountEventArgs<System.Collections.Generic.KeyValuePair<K, ICollection<V>>> args)
+                  delegate (object sender, ItemCountEventArgs<SCG.KeyValuePair<K, ICollection<V>>> args)
                   {
                       ICollection<V> values = args.Item.Value;
                       if (values != null)
@@ -320,7 +320,7 @@ namespace C5.UserGuideExamples
                       }
                   };
                 ItemsRemoved +=
-                  delegate (object sender, ItemCountEventArgs<System.Collections.Generic.KeyValuePair<K, ICollection<V>>> args)
+                  delegate (object sender, ItemCountEventArgs<SCG.KeyValuePair<K, ICollection<V>>> args)
                   {
                       ICollection<V> values = args.Item.Value;
                       if (values != null)

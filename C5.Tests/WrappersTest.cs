@@ -19,7 +19,7 @@ namespace C5.Tests.wrappers
             [SetUp]
             public void Init()
             {
-                list = new ArrayList<int>(TenEqualityComparer.Default);
+                list = new ArrayList<int>(TenEqualityComparer.Instance);
                 guarded = new GuardedList<int>(list);
                 seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
             }
@@ -491,7 +491,7 @@ namespace C5.Tests.wrappers
             [SetUp]
             public void Init()
             {
-                list = new ArrayList<int>(TenEqualityComparer.Default);
+                list = new ArrayList<int>(TenEqualityComparer.Instance);
                 guarded = new GuardedList<int>(list);
                 seen = new CollectionEventList<int>(System.Collections.Generic.EqualityComparer<int>.Default);
             }
@@ -650,7 +650,7 @@ namespace C5.Tests.wrappers
                     Assert.That(wrapped.ListenableEvents, Is.EqualTo(EventType.None));
                 });
                 string i2s(int i) { return string.Format("T{0}", i); }
-                Assert.That(wrapped.Map<string>(i2s).ToString(), Is.EqualTo("[ 0:T4, 1:T6, 2:T5 ]"));
+                Assert.That(wrapped.Map(i2s).ToString(), Is.EqualTo("[ 0:T4, 1:T6, 2:T5 ]"));
                 Assert.That(wrapped.Offset, Is.EqualTo(0));
                 wrapped.Reverse();
                 Assert.That(wrapped.ToString(), Is.EqualTo("[ 0:5, 1:6, 2:4 ]"));
@@ -800,7 +800,7 @@ namespace C5.Tests.wrappers
                     Assert.That(wrapped.ListenableEvents, Is.EqualTo(EventType.None));
                 });
                 string i2s(int i) { return string.Format("T{0}", i); }
-                Assert.That(wrapped.Map<string>(i2s).ToString(), Is.EqualTo("[ 0:T4, 1:T6, 2:T5 ]"));
+                Assert.That(wrapped.Map(i2s).ToString(), Is.EqualTo("[ 0:T4, 1:T6, 2:T5 ]"));
                 Assert.That(wrapped.Offset, Is.EqualTo(1));
                 wrapped.Reverse();
                 Assert.That(wrapped.ToString(), Is.EqualTo("[ 0:5, 1:6, 2:4 ]"));

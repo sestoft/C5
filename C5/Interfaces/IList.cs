@@ -199,7 +199,7 @@ void Insert(int index, T item);*/
     /// <param name="mapper">The delegate defining the map.</param>
     /// <param name="equalityComparer">The equalityComparer to use for the new list</param>
     /// <returns>The new list.</returns>
-    IList<V> Map<V>(Func<T, V> mapper, System.Collections.Generic.IEqualityComparer<V> equalityComparer);
+    IList<V> Map<V>(Func<T, V> mapper, IEqualityComparer<V> equalityComparer);
 
     /// <summary>
     /// Remove one item from the list: from the front if <code>FIFO</code>
@@ -331,7 +331,7 @@ void Insert(int index, T item);*/
     /// </summary>
     /// <param name="comparer">The comparer defining the sorting order.</param>
     /// <returns>True if the list is sorted, else false.</returns>
-    bool IsSorted(System.Collections.Generic.IComparer<T> comparer);
+    bool IsSorted(IComparer<T> comparer);
 
     /// <summary>
     /// Sort the items of the list according to the default sorting order
@@ -348,7 +348,7 @@ void Insert(int index, T item);*/
     /// </para>
     /// </summary>
     /// <param name="comparer">The comparer defining the sorting order.</param>
-    void Sort(System.Collections.Generic.IComparer<T> comparer);
+    void Sort(IComparer<T> comparer);
 
 
     /// <summary>

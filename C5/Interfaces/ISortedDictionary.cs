@@ -159,7 +159,7 @@ public interface ISortedDictionary<K, V> : IDictionary<K, V>
     /// on this collection.</param>
     /// <returns>True if the cut function is zero somewhere
     /// on this collection.</returns>
-    bool Cut(IComparable<K> cutFunction, out SCG.KeyValuePair<K, V> lowEntry, out bool lowIsValid, out System.Collections.Generic.KeyValuePair<K, V> highEntry, out bool highIsValid);
+    bool Cut(IComparable<K> cutFunction, out SCG.KeyValuePair<K, V> lowEntry, out bool lowIsValid, out SCG.KeyValuePair<K, V> highEntry, out bool highIsValid);
 
     /// <summary>
     /// Query this sorted collection for items greater than or equal to a supplied value.

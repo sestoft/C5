@@ -463,7 +463,7 @@ namespace C5.Tests.interfaces
                 Assert.That(dict.IsEmpty, Is.True);
                 Assert.That(dict.IsReadOnly, Is.False);
             });
-            System.Collections.Generic.KeyValuePair<string, string>[] arr = [];
+            SCG.KeyValuePair<string, string>[] arr = [];
             dict.CopyTo(arr, 0);
             dict["R"] = "A";
             dict["S"] = "B";

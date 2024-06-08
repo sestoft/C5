@@ -12,8 +12,8 @@ namespace C5.Tests.hashtable.set
         [Test]
         public void TestEvents()
         {
-            HashSet<int> factory() { return new HashSet<int>(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.CollectionTester<HashSet<int>>().Test(factory);
+            HashSet<int> factory() { return new HashSet<int>(TenEqualityComparer.Instance); }
+            new Templates.Events.CollectionTester<HashSet<int>>().Test(factory);
         }
     }
 
@@ -315,7 +315,7 @@ namespace C5.Tests.hashtable.set
             public void Init()
             {
                 Debug.UseDeterministicHashing = true;
-                list = new HashSet<int>(TenEqualityComparer.Default);
+                list = new HashSet<int>(TenEqualityComparer.Instance);
                 pred = delegate (int i) { return i % 5 == 0; };
             }
 
@@ -796,16 +796,16 @@ namespace C5.Tests.hashtable.set
         [TestFixture]
         public class Combined
         {
-            private ICollection<System.Collections.Generic.KeyValuePair<int, int>> lst;
+            private ICollection<SCG.KeyValuePair<int, int>> lst;
 
 
             [SetUp]
             public void Init()
             {
-                lst = new HashSet<System.Collections.Generic.KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
+                lst = new HashSet<SCG.KeyValuePair<int, int>>(new KeyValuePairEqualityComparer<int, int>());
                 for (int i = 0; i < 10; i++)
                 {
-                    lst.Add(new System.Collections.Generic.KeyValuePair<int, int>(i, i + 30));
+                    lst.Add(new SCG.KeyValuePair<int, int>(i, i + 30));
                 }
             }
 
@@ -817,7 +817,7 @@ namespace C5.Tests.hashtable.set
             [Test]
             public void Find()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+                SCG.KeyValuePair<int, int> p = new(3, 78);
 
                 Assert.Multiple(() =>
                 {
@@ -825,7 +825,7 @@ namespace C5.Tests.hashtable.set
                     Assert.That(p.Key, Is.EqualTo(3));
                     Assert.That(p.Value, Is.EqualTo(33));
                 });
-                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+                p = new SCG.KeyValuePair<int, int>(13, 78);
                 Assert.That(lst.Find(ref p), Is.False);
             }
 
@@ -917,7 +917,7 @@ namespace C5.Tests.hashtable.set
             [Test]
             public void RemoveWithReturn()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+                SCG.KeyValuePair<int, int> p = new(3, 78);
                 Assert.Multiple(() =>
                 {
                     //System.Collections.Generic.KeyValuePair<int,int> q = new System.Collections.Generic.KeyValuePair<int,int>();
@@ -926,7 +926,7 @@ namespace C5.Tests.hashtable.set
                     Assert.That(p.Key, Is.EqualTo(3));
                     Assert.That(p.Value, Is.EqualTo(33));
                 });
-                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+                p = new SCG.KeyValuePair<int, int>(13, 78);
                 Assert.That(lst.Remove(p, out _), Is.False);
             }
         }

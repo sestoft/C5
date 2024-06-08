@@ -1508,7 +1508,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
         Validitycheck();
 
         HashedLinkedList<V> retval = new();
-        return Map<V>(mapper, retval);
+        return Map(mapper, retval);
     }
 
     /// <summary>
@@ -1524,7 +1524,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
         Validitycheck();
 
         HashedLinkedList<V> retval = new(equalityComparer);
-        return Map<V>(mapper, retval);
+        return Map(mapper, retval);
     }
 
     private IList<V> Map<V>(Func<T, V> mapper, HashedLinkedList<V> retval)
@@ -1886,7 +1886,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
             if (_positions != null)
             {
                 positions = _positions.ToArray();
-                Sorting.IntroSort<Position>(positions, 0, positions.Length, PositionComparer.Default);
+                Sorting.IntroSort(positions, 0, positions.Length, PositionComparer.Default);
                 poshigh = positions.Length - 1;
             }
         }
@@ -2930,7 +2930,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
     ///
     /// </summary>
     /// <returns></returns>
-    public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
+    public virtual ICollectionValue<SCG.KeyValuePair<T, int>> ItemMultiplicities()
     {
         return new MultiplicityOne<T>(this);
 
@@ -3383,12 +3383,12 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
 
     #region System.Collections.Generic.IList<T> Members
 
-    void System.Collections.Generic.IList<T>.RemoveAt(int index)
+    void SCG.IList<T>.RemoveAt(int index)
     {
         RemoveAt(index);
     }
 
-    void System.Collections.Generic.ICollection<T>.Add(T item)
+    void SCG.ICollection<T>.Add(T item)
     {
         Add(item);
     }

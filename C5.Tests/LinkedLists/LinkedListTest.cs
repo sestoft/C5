@@ -16,10 +16,10 @@ namespace C5.Tests.linkedlists.plain
         [Test]
         public void TestEvents()
         {
-            LinkedList<int> factory() { return new LinkedList<int>(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.ListTester<LinkedList<int>>().Test(factory);
-            new C5.Tests.Templates.Events.QueueTester<LinkedList<int>>().Test(factory);
-            new C5.Tests.Templates.Events.StackTester<LinkedList<int>>().Test(factory);
+            LinkedList<int> factory() { return new LinkedList<int>(TenEqualityComparer.Instance); }
+            new Templates.Events.ListTester<LinkedList<int>>().Test(factory);
+            new Templates.Events.QueueTester<LinkedList<int>>().Test(factory);
+            new Templates.Events.StackTester<LinkedList<int>>().Test(factory);
         }
 
         [Test]
@@ -319,7 +319,7 @@ namespace C5.Tests.linkedlists.plain
             [SetUp]
             public void Init()
             {
-                list = new LinkedList<int>(TenEqualityComparer.Default);
+                list = new LinkedList<int>(TenEqualityComparer.Instance);
                 pred = delegate (int i) { return i % 5 == 0; };
             }
 
@@ -1661,7 +1661,7 @@ namespace C5.Tests.linkedlists.plain
                     lst.Shuffle(new C5Random(i + 1));
                     Assert.That(lst.Check(), Is.True, "Check " + i);
                     int[] lst2 = lst.ToArray();
-                    Sorting.IntroSort<int>(lst2);
+                    Sorting.IntroSort(lst2);
                     Assert.That(IC.Eq(lst2, 3, 5, 5, 6, 7), Is.True, "Contents " + i);
                 }
             }

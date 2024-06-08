@@ -1095,7 +1095,7 @@ public class SortedArray<T> : ArrayBase<T>, IIndexedSorted<T>
     ///
     /// </summary>
     /// <returns></returns>
-    public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
+    public virtual ICollectionValue<SCG.KeyValuePair<T, int>> ItemMultiplicities()
     {
         return new MultiplicityOne<T>(this);
     }
@@ -1210,7 +1210,7 @@ public class SortedArray<T> : ArrayBase<T>, IIndexedSorted<T>
             newarr[size + toadd++] = item;
         }
 
-        Sorting.IntroSort<T>(newarr, size, toadd, _comparer);
+        Sorting.IntroSort(newarr, size, toadd, _comparer);
 
         int j = 0, i = 0, numAdded = 0;
         T lastitem = default;

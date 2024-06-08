@@ -502,7 +502,7 @@ public class TreeBag<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted
 
         #region IDisposable Members
 
-        void System.IDisposable.Dispose()
+        void IDisposable.Dispose()
         {
             tree = null;
             valid = false;
@@ -1972,12 +1972,12 @@ public class TreeBag<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted
         }
 
 #warning improve (mainly for bag) by using a Node iterator instead of ItemMultiplicities()
-        CircularQueue<System.Collections.Generic.KeyValuePair<T, int>>? wasRemoved = null;
+        CircularQueue<SCG.KeyValuePair<T, int>>? wasRemoved = null;
         if ((ActiveEvents & EventType.Removed) != 0)
         {
-            wasRemoved = new CircularQueue<System.Collections.Generic.KeyValuePair<T, int>>();
-            SCG.IEnumerator<System.Collections.Generic.KeyValuePair<T, int>> ie = ItemMultiplicities().GetEnumerator();
-            foreach (System.Collections.Generic.KeyValuePair<T, int> p in t.ItemMultiplicities())
+            wasRemoved = new CircularQueue<SCG.KeyValuePair<T, int>>();
+            SCG.IEnumerator<SCG.KeyValuePair<T, int>> ie = ItemMultiplicities().GetEnumerator();
+            foreach (SCG.KeyValuePair<T, int> p in t.ItemMultiplicities())
             {
                 //We know p.Key is in this!
                 while (ie.MoveNext())
@@ -1988,7 +1988,7 @@ public class TreeBag<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted
                         int removed = ie.Current.Value - p.Value;
                         if (removed > 0)
                         {
-                            wasRemoved.Enqueue(new System.Collections.Generic.KeyValuePair<T, int>(p.Key, removed));
+                            wasRemoved.Enqueue(new SCG.KeyValuePair<T, int>(p.Key, removed));
                         }
 
                         break;
@@ -2011,7 +2011,7 @@ public class TreeBag<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted
         blackdepth = t.blackdepth;
         if (wasRemoved != null)
         {
-            foreach (System.Collections.Generic.KeyValuePair<T, int> p in wasRemoved)
+            foreach (SCG.KeyValuePair<T, int> p in wasRemoved)
             {
                 RaiseItemsRemoved(p.Key, p.Value);
             }
@@ -2263,19 +2263,19 @@ public class TreeBag<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted
 
 
     //TODO: make work with snapshots
-    private class Multiplicities : CollectionValueBase<System.Collections.Generic.KeyValuePair<T, int>>, ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>>
+    private class Multiplicities : CollectionValueBase<SCG.KeyValuePair<T, int>>, ICollectionValue<SCG.KeyValuePair<T, int>>
     {
         private readonly TreeBag<T> treebag;
         private readonly int origstamp;
         internal Multiplicities(TreeBag<T> treebag) { this.treebag = treebag; origstamp = treebag.stamp; }
-        public override System.Collections.Generic.KeyValuePair<T, int> Choose() { return new System.Collections.Generic.KeyValuePair<T, int>(treebag.root!.item, treebag.root.items); }
+        public override SCG.KeyValuePair<T, int> Choose() { return new SCG.KeyValuePair<T, int>(treebag.root!.item, treebag.root.items); }
 
-        public override SCG.IEnumerator<System.Collections.Generic.KeyValuePair<T, int>> GetEnumerator()
+        public override SCG.IEnumerator<SCG.KeyValuePair<T, int>> GetEnumerator()
         {
             return GetEnumerator(treebag.root!, origstamp); //TODO: NBNBNB
         }
 
-        private SCG.IEnumerator<System.Collections.Generic.KeyValuePair<T, int>> GetEnumerator(Node node, int origstamp)
+        private SCG.IEnumerator<SCG.KeyValuePair<T, int>> GetEnumerator(Node node, int origstamp)
         {
             if (node == null)
             {
@@ -2284,7 +2284,7 @@ public class TreeBag<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted
 
             if (node.left != null)
             {
-                SCG.IEnumerator<System.Collections.Generic.KeyValuePair<T, int>> child = GetEnumerator(node.left, origstamp);
+                SCG.IEnumerator<SCG.KeyValuePair<T, int>> child = GetEnumerator(node.left, origstamp);
 
                 while (child.MoveNext())
                 {
@@ -2292,10 +2292,10 @@ public class TreeBag<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted
                     yield return child.Current;
                 }
             }
-            yield return new System.Collections.Generic.KeyValuePair<T, int>(node.item, node.items);
+            yield return new SCG.KeyValuePair<T, int>(node.item, node.items);
             if (node.right != null)
             {
-                SCG.IEnumerator<System.Collections.Generic.KeyValuePair<T, int>> child = GetEnumerator(node.right, origstamp);
+                SCG.IEnumerator<SCG.KeyValuePair<T, int>> child = GetEnumerator(node.right, origstamp);
 
                 while (child.MoveNext())
                 {
@@ -2306,7 +2306,7 @@ public class TreeBag<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted
         }
 
         public override bool IsEmpty => treebag.IsEmpty;
-        public override int Count { get { int i = 0; foreach (System.Collections.Generic.KeyValuePair<T, int> p in this) { i++; } return i; } } //TODO: make better
+        public override int Count { get { int i = 0; foreach (SCG.KeyValuePair<T, int> p in this) { i++; } return i; } } //TODO: make better
         public override Speed CountSpeed => Speed.Linear;  //TODO: make better
     }
 
@@ -2331,7 +2331,7 @@ public class TreeBag<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted
     ///
     /// </summary>
     /// <returns></returns>
-    public virtual ICollectionValue<System.Collections.Generic.KeyValuePair<T, int>> ItemMultiplicities()
+    public virtual ICollectionValue<SCG.KeyValuePair<T, int>> ItemMultiplicities()
     {
         if (!isValid)
         {
@@ -2873,7 +2873,7 @@ public class TreeBag<T> : SequencedBase<T>, IIndexedSorted<T>, IPersistentSorted
         { return new Interval(tree, start, length, !forwards); }
 
 
-        IDirectedEnumerable<T> C5.IDirectedEnumerable<T>.Backwards()
+        IDirectedEnumerable<T> IDirectedEnumerable<T>.Backwards()
         { return Backwards(); }
 
 

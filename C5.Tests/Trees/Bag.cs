@@ -59,8 +59,8 @@ namespace C5.Tests.trees.TreeBag
         [Test]
         public void TestEvents()
         {
-            TreeBag<int> factory() { return new TreeBag<int>(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.SortedIndexedTester<TreeBag<int>>().Test(factory);
+            TreeBag<int> factory() { return new TreeBag<int>(TenEqualityComparer.Instance); }
+            new Templates.Events.SortedIndexedTester<TreeBag<int>>().Test(factory);
         }
     }
 
@@ -792,7 +792,7 @@ namespace C5.Tests.trees.TreeBag
         [SetUp]
         public void Init()
         {
-            list = new TreeBag<int>(TenEqualityComparer.Default);
+            list = new TreeBag<int>(TenEqualityComparer.Instance);
             pred = delegate (int i) { return i % 5 == 0; };
         }
 
@@ -2127,7 +2127,7 @@ namespace C5.Tests.trees.TreeBag
             [Test]
             public void Bug20120422_1()
             {
-                var coll = new C5.TreeBag<string>() { "C" };
+                var coll = new TreeBag<string>() { "C" };
                 _ = coll.Snapshot();
                 coll.Add("C");
                 Assert.That(coll.ContainsCount("C"), Is.EqualTo(2));
@@ -2136,7 +2136,7 @@ namespace C5.Tests.trees.TreeBag
             [Test]
             public void Bug20120422_2()
             {
-                var coll = new C5.TreeBag<string>
+                var coll = new TreeBag<string>
                 {
                     "B",
                     "A",
@@ -3031,28 +3031,21 @@ namespace C5.Tests.trees.TreeBag
         [TestFixture]
         public class AddSorted
         {
-            private int sqr(int i) { return i * i; }
-
-            private int step(int i) { return i / 3; }
-
-
-            private int bad(int i) { return i * (5 - i); }
-
             private TreeBag<int> tree;
 
-
             [SetUp]
-            public void Init() { tree = new TreeBag<int>(new IC()); }
-
+            public void Init()
+            {
+                tree = new TreeBag<int>(new IC());
+            }
 
             [Test]
             public void EmptyEmpty()
             {
-                tree.AddSorted(new FunEnumerable(0, new Func<int, int>(sqr)));
+                tree.AddSorted(new FunEnumerable(0, i => i * i));
                 Assert.That(tree, Is.Empty);
                 Assert.That(tree.Check(), Is.True);
             }
-
 
             [Test]
             public void SomeEmpty()
@@ -3062,19 +3055,19 @@ namespace C5.Tests.trees.TreeBag
                     tree.Add(i);
                 }
 
-                tree.AddSorted(new FunEnumerable(0, new Func<int, int>(sqr)));
+                tree.AddSorted(new FunEnumerable(0, i => i * i));
                 Assert.That(tree, Has.Count.EqualTo(5));
                 Assert.That(tree.Check(), Is.True);
             }
 
-
             [Test]
             public void EmptySome()
             {
-                tree.AddSorted(new FunEnumerable(4, new Func<int, int>(sqr)));
-                Assert.That(tree, Has.Count.EqualTo(4));
+                tree.AddSorted(new FunEnumerable(4, i => i * i));
+
                 Assert.Multiple(() =>
                 {
+                    Assert.That(tree, Has.Count.EqualTo(4));
                     Assert.That(tree.Check(), Is.True);
                     Assert.That(tree[0], Is.EqualTo(0));
                     Assert.That(tree[1], Is.EqualTo(1));
@@ -3086,11 +3079,11 @@ namespace C5.Tests.trees.TreeBag
             [Test]
             public void EmptySome2()
             {
-                tree.AddSorted(new FunEnumerable(4, new Func<int, int>(step)));
-                //tree.dump();
-                Assert.That(tree, Has.Count.EqualTo(4));
+                tree.AddSorted(new FunEnumerable(4, i => i / 3));
+
                 Assert.Multiple(() =>
                 {
+                    Assert.That(tree, Has.Count.EqualTo(4));
                     Assert.That(tree.Check(), Is.True);
                     Assert.That(tree[0], Is.EqualTo(0));
                     Assert.That(tree[1], Is.EqualTo(0));
@@ -3098,7 +3091,6 @@ namespace C5.Tests.trees.TreeBag
                     Assert.That(tree[3], Is.EqualTo(1));
                 });
             }
-
 
             [Test]
             public void SomeSome()
@@ -3109,36 +3101,33 @@ namespace C5.Tests.trees.TreeBag
                 }
 
                 tree.Add(1);
+                tree.AddSorted(new FunEnumerable(4, i => i * i));
 
-                tree.AddSorted(new FunEnumerable(4, new Func<int, int>(sqr)));
-                Assert.That(tree, Has.Count.EqualTo(9));
                 Assert.Multiple(() =>
                 {
+                    Assert.That(tree, Has.Count.EqualTo(9));
                     Assert.That(tree.Check(), Is.True);
                     Assert.That(IC.Eq(tree, 0, 1, 1, 4, 5, 6, 7, 8, 9), Is.True);
                 });
             }
 
-
             [Test]
             public void EmptyBad()
             {
-                var exception = Assert.Throws<ArgumentException>(() => tree.AddSorted(new FunEnumerable(9, new Func<int, int>(bad))));
+                static int bad(int i) { return i * (5 - i); }
+
+                var exception = Assert.Throws<ArgumentException>(() => tree.AddSorted(new FunEnumerable(9, bad)));
                 Assert.That(exception.Message, Is.EqualTo("Argument not sorted"));
             }
-
 
             [TearDown]
             public void Dispose() { tree.Dispose(); }
         }
 
-
-
         [TestFixture]
         public class Rest
         {
             private TreeBag<int> tree, tree2;
-
 
             [SetUp]
             public void Init()

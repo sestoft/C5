@@ -12,8 +12,8 @@ namespace C5.Tests.heaps
         [Test]
         public void TestEvents()
         {
-            IntervalHeap<int> factory() { return new IntervalHeap<int>(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.PriorityQueueTester<IntervalHeap<int>>().Test(factory);
+            IntervalHeap<int> factory() { return new IntervalHeap<int>(TenEqualityComparer.Instance); }
+            new Templates.Events.PriorityQueueTester<IntervalHeap<int>>().Test(factory);
         }
     }
 

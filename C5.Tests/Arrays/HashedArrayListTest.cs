@@ -13,8 +13,8 @@ namespace C5.Tests.arrays.hashed
         [Test]
         public void TestEvents()
         {
-            HashedArrayList<int> factory() { return new HashedArrayList<int>(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.ListTester<HashedArrayList<int>>().Test(factory);
+            HashedArrayList<int> factory() { return new HashedArrayList<int>(TenEqualityComparer.Instance); }
+            new Templates.Events.ListTester<HashedArrayList<int>>().Test(factory);
         }
 
         [Test]
@@ -910,7 +910,7 @@ namespace C5.Tests.arrays.hashed
             [SetUp]
             public void Init()
             {
-                list = new HashedArrayList<int>(TenEqualityComparer.Default);
+                list = new HashedArrayList<int>(TenEqualityComparer.Instance);
                 pred = delegate (int i) { return i % 5 == 0; };
             }
 

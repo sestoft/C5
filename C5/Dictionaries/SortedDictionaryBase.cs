@@ -523,6 +523,6 @@ public abstract class SortedDictionaryBase<K, V> : DictionaryBase<K, V>, ISorted
     /// <returns></returns>
     public override bool Show(System.Text.StringBuilder stringbuilder, ref int rest, IFormatProvider? formatProvider)
     {
-        return Showing.ShowDictionary<K, V>(this, stringbuilder, ref rest, formatProvider);
+        return Showing.ShowDictionary(this, stringbuilder, ref rest, formatProvider);
     }
 }

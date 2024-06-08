@@ -12,8 +12,8 @@ namespace C5.Tests.arrays.circularqueue
         public void TestEvents()
         {
             CircularQueue<int> factory() { return new CircularQueue<int>(); }
-            new C5.Tests.Templates.Events.QueueTester<CircularQueue<int>>().Test(factory);
-            new C5.Tests.Templates.Events.StackTester<CircularQueue<int>>().Test(factory);
+            new Templates.Events.QueueTester<CircularQueue<int>>().Test(factory);
+            new Templates.Events.StackTester<CircularQueue<int>>().Test(factory);
         }
 
         //[Test]
@@ -203,7 +203,7 @@ namespace C5.Tests.arrays.circularqueue
         [Test]
         public void SW200602()
         {
-            C5.CircularQueue<int> list = new(8);
+            CircularQueue<int> list = new(8);
             for (int count = 0; count <= 7; count++)
             {
                 list.Enqueue(count);

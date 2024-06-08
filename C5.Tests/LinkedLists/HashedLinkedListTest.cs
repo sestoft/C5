@@ -14,8 +14,8 @@ namespace C5.Tests.linkedlists.hashed
         [Test]
         public void TestEvents()
         {
-            HashedLinkedList<int> factory() { return new HashedLinkedList<int>(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.ListTester<HashedLinkedList<int>>().Test(factory);
+            HashedLinkedList<int> factory() { return new HashedLinkedList<int>(TenEqualityComparer.Instance); }
+            new Templates.Events.ListTester<HashedLinkedList<int>>().Test(factory);
         }
 
         [Test]
@@ -316,7 +316,7 @@ namespace C5.Tests.linkedlists.hashed
             [SetUp]
             public void Init()
             {
-                list = new HashedLinkedList<int>(TenEqualityComparer.Default);
+                list = new HashedLinkedList<int>(TenEqualityComparer.Instance);
                 pred = delegate (int i) { return i % 5 == 0; };
             }
 
@@ -1638,7 +1638,7 @@ namespace C5.Tests.linkedlists.hashed
                     lst.Shuffle(new C5Random(i + 1));
                     Assert.That(lst.Check(), Is.True, "Check " + i);
                     int[] lst2 = lst.ToArray();
-                    Sorting.IntroSort<int>(lst2);
+                    Sorting.IntroSort(lst2);
                     Assert.That(IC.Eq(lst2, 3, 5, 6, 7), Is.True, "Contents " + i);
                 }
             }

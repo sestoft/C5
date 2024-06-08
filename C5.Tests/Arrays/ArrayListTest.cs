@@ -13,10 +13,10 @@ namespace C5.Tests.arrays.list
         [Test]
         public void TestEvents()
         {
-            ArrayList<int> factory() { return new ArrayList<int>(TenEqualityComparer.Default); }
-            new C5.Tests.Templates.Events.ListTester<ArrayList<int>>().Test(factory);
-            new C5.Tests.Templates.Events.QueueTester<ArrayList<int>>().Test(factory);
-            new C5.Tests.Templates.Events.StackTester<ArrayList<int>>().Test(factory);
+            ArrayList<int> factory() { return new ArrayList<int>(TenEqualityComparer.Instance); }
+            new Templates.Events.ListTester<ArrayList<int>>().Test(factory);
+            new Templates.Events.QueueTester<ArrayList<int>>().Test(factory);
+            new Templates.Events.StackTester<ArrayList<int>>().Test(factory);
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace C5.Tests.arrays.list
             [SetUp]
             public void Init()
             {
-                list = new ArrayList<int>(TenEqualityComparer.Default);
+                list = new ArrayList<int>(TenEqualityComparer.Instance);
                 seen = new CollectionEventList<int>(SCG.EqualityComparer<int>.Default);
             }
 
@@ -514,7 +514,7 @@ namespace C5.Tests.arrays.list
             [SetUp]
             public void Init()
             {
-                list = new ArrayList<int>(TenEqualityComparer.Default);
+                list = new ArrayList<int>(TenEqualityComparer.Instance);
                 seen = new CollectionEventList<int>(SCG.EqualityComparer<int>.Default);
             }
 
@@ -985,7 +985,7 @@ namespace C5.Tests.arrays.list
             [SetUp]
             public void Init()
             {
-                list = new ArrayList<int>(TenEqualityComparer.Default);
+                list = new ArrayList<int>(TenEqualityComparer.Instance);
                 pred = delegate (int i) { return i % 5 == 0; };
             }
 
@@ -2075,14 +2075,14 @@ namespace C5.Tests.arrays.list
             [Test]
             public void Find()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+                SCG.KeyValuePair<int, int> p = new(3, 78);
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.Find(ref p), Is.True);
                     Assert.That(p.Key, Is.EqualTo(3));
                     Assert.That(p.Value, Is.EqualTo(33));
                 });
-                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+                p = new SCG.KeyValuePair<int, int>(13, 78);
                 Assert.That(lst.Find(ref p), Is.False);
             }
 
@@ -2090,7 +2090,7 @@ namespace C5.Tests.arrays.list
             [Test]
             public void FindOrAdd()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+                SCG.KeyValuePair<int, int> p = new(3, 78);
 
                 Assert.Multiple(() =>
                 {
@@ -2098,7 +2098,7 @@ namespace C5.Tests.arrays.list
                     Assert.That(p.Key, Is.EqualTo(3));
                     Assert.That(p.Value, Is.EqualTo(33));
                 });
-                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
+                p = new SCG.KeyValuePair<int, int>(13, 79);
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.FindOrAdd(ref p), Is.False);
@@ -2111,7 +2111,7 @@ namespace C5.Tests.arrays.list
             [Test]
             public void Update()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+                SCG.KeyValuePair<int, int> p = new(3, 78);
 
                 Assert.Multiple(() =>
                 {
@@ -2119,7 +2119,7 @@ namespace C5.Tests.arrays.list
                     Assert.That(lst[3].Key, Is.EqualTo(3));
                     Assert.That(lst[3].Value, Is.EqualTo(78));
                 });
-                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+                p = new SCG.KeyValuePair<int, int>(13, 78);
                 Assert.That(lst.Update(p), Is.False);
             }
 
@@ -2127,7 +2127,7 @@ namespace C5.Tests.arrays.list
             [Test]
             public void UpdateOrAdd1()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+                SCG.KeyValuePair<int, int> p = new(3, 78);
 
                 Assert.Multiple(() =>
                 {
@@ -2135,7 +2135,7 @@ namespace C5.Tests.arrays.list
                     Assert.That(lst[3].Key, Is.EqualTo(3));
                     Assert.That(lst[3].Value, Is.EqualTo(78));
                 });
-                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 79);
+                p = new SCG.KeyValuePair<int, int>(13, 79);
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.UpdateOrAdd(p), Is.False);
@@ -2163,7 +2163,7 @@ namespace C5.Tests.arrays.list
             [Test]
             public void RemoveWithReturn()
             {
-                System.Collections.Generic.KeyValuePair<int, int> p = new(3, 78);
+                SCG.KeyValuePair<int, int> p = new(3, 78);
 
                 Assert.Multiple(() =>
                 {
@@ -2173,7 +2173,7 @@ namespace C5.Tests.arrays.list
                     Assert.That(lst[3].Key, Is.EqualTo(4));
                     Assert.That(lst[3].Value, Is.EqualTo(34));
                 });
-                p = new System.Collections.Generic.KeyValuePair<int, int>(13, 78);
+                p = new SCG.KeyValuePair<int, int>(13, 78);
                 Assert.That(lst.Remove(p, out _), Is.False);
             }
         }
@@ -2211,21 +2211,21 @@ namespace C5.Tests.arrays.list
             [Test]
             public void Stability()
             {
-                IList<System.Collections.Generic.KeyValuePair<int, string>> lst2 = new ArrayList<System.Collections.Generic.KeyValuePair<int, string>>();
-                SCG.IComparer<System.Collections.Generic.KeyValuePair<int, string>> c = new KeyValuePairComparer<int, string>(new IC());
+                IList<SCG.KeyValuePair<int, string>> lst2 = new ArrayList<SCG.KeyValuePair<int, string>>();
+                SCG.IComparer<SCG.KeyValuePair<int, string>> c = new KeyValuePairComparer<int, string>(new IC());
 
-                lst2.Add(new System.Collections.Generic.KeyValuePair<int, string>(5, "a"));
-                lst2.Add(new System.Collections.Generic.KeyValuePair<int, string>(5, "b"));
-                lst2.Add(new System.Collections.Generic.KeyValuePair<int, string>(6, "c"));
-                lst2.Add(new System.Collections.Generic.KeyValuePair<int, string>(4, "d"));
-                lst2.Add(new System.Collections.Generic.KeyValuePair<int, string>(3, "e"));
-                lst2.Add(new System.Collections.Generic.KeyValuePair<int, string>(4, "f"));
-                lst2.Add(new System.Collections.Generic.KeyValuePair<int, string>(5, "handle"));
+                lst2.Add(new SCG.KeyValuePair<int, string>(5, "a"));
+                lst2.Add(new SCG.KeyValuePair<int, string>(5, "b"));
+                lst2.Add(new SCG.KeyValuePair<int, string>(6, "c"));
+                lst2.Add(new SCG.KeyValuePair<int, string>(4, "d"));
+                lst2.Add(new SCG.KeyValuePair<int, string>(3, "e"));
+                lst2.Add(new SCG.KeyValuePair<int, string>(4, "f"));
+                lst2.Add(new SCG.KeyValuePair<int, string>(5, "handle"));
                 Assert.That(lst2.IsSorted(c), Is.False);
                 lst2.Sort(c);
                 Assert.That(lst2.IsSorted(c), Is.True);
 
-                System.Collections.Generic.KeyValuePair<int, string> p = lst2.RemoveFirst();
+                SCG.KeyValuePair<int, string> p = lst2.RemoveFirst();
 
                 Assert.Multiple(() =>
                 {
@@ -2295,7 +2295,7 @@ namespace C5.Tests.arrays.list
                     lst.Shuffle(new C5Random(i + 1));
                     Assert.That(lst.Check(), Is.True, "Check " + i);
                     int[] lst2 = lst.ToArray();
-                    Sorting.IntroSort<int>(lst2);
+                    Sorting.IntroSort(lst2);
                     Assert.That(IC.Eq(lst2, 3, 5, 5, 6, 7), Is.True, "Contents " + i);
                 }
             }
