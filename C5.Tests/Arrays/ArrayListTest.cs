@@ -608,7 +608,7 @@ namespace C5.Tests.arrays.list
                 Assert.Multiple(() =>
                 {
                     Assert.That(list.Check(), Is.True);
-                    Assert.That(IC.Eq(list, 4, 9, 8, 7, 56, 8), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 4, 9, 8, 7, 56, 8 }));
                 });
 
             }
@@ -627,7 +627,7 @@ namespace C5.Tests.arrays.list
                 Assert.Multiple(() =>
                 {
                     Assert.That(list.Check(), Is.True);
-                    Assert.That(IC.Eq(list, 4, 9, 8, 7, 56, 8), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 4, 9, 8, 7, 56, 8 }));
                 });
             }
 
@@ -645,7 +645,7 @@ namespace C5.Tests.arrays.list
                 Assert.Multiple(() =>
                 {
                     Assert.That(list.Check(), Is.True);
-                    Assert.That(IC.Eq(list, 4, 56, 8), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 4, 56, 8 }));
                 });
             }
 
@@ -663,7 +663,7 @@ namespace C5.Tests.arrays.list
                 Assert.Multiple(() =>
                 {
                     Assert.That(list.Check(), Is.True);
-                    Assert.That(IC.Eq(list, 4, 56, 8), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 4, 56, 8 }));
                 });
             }
 
@@ -682,7 +682,7 @@ namespace C5.Tests.arrays.list
                 Assert.Multiple(() =>
                 {
                     Assert.That(list.Check(), Is.True);
-                    Assert.That(IC.Eq(list, 4, 56, 8), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 4, 56, 8 }));
                 });
             }
 
@@ -963,12 +963,12 @@ namespace C5.Tests.arrays.list
                 ArrayList<int> list2 = [];
 
                 list2.AddAll(list);
-                Assert.That(IC.Eq(list2, 3, 4, 5), Is.True);
+                Assert.That(list2, Is.EqualTo(new[] { 3, 4, 5 }));
                 list.AddAll(list2);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(list2, 3, 4, 5), Is.True);
-                    Assert.That(IC.Eq(list, 3, 4, 5, 3, 4, 5), Is.True);
+                    Assert.That(list2, Is.EqualTo(new[] { 3, 4, 5 }));
+                    Assert.That(list, Is.EqualTo(new[] { 3, 4, 5, 3, 4, 5 }));
                 });
             }
 
@@ -1246,7 +1246,7 @@ namespace C5.Tests.arrays.list
                 Assert.That(list.ContainsCount(7), Is.EqualTo(1));
                 list.Add(5); list.Add(8); list.Add(5);
                 list.RemoveAllCopies(8);
-                Assert.That(IC.Eq(list, 7, 5, 5), Is.True);
+                Assert.That(list, Is.EqualTo(new[] { 7, 5, 5 }));
             }
 
 
@@ -1260,7 +1260,7 @@ namespace C5.Tests.arrays.list
                 Assert.Multiple(() =>
                 {
                     Assert.That(((ArrayList<int>)list.FindAll(f)).Check(), Is.True);
-                    Assert.That(IC.Eq(list.FindAll(f), 8, 10, 8), Is.True);
+                    Assert.That(list.FindAll(f), Is.EqualTo(new[] { 8, 10, 8 }));
                 });
             }
 
@@ -1295,7 +1295,7 @@ namespace C5.Tests.arrays.list
                 Assert.Multiple(() =>
                 {
                     Assert.That(list.Check(), Is.True);
-                    Assert.That(IC.Eq(list, 4, 4, 5), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 4, 4, 5 }));
                 });
                 list.Add(5); list.Add(4); list.Add(6);
                 list2.Clear();
@@ -1304,7 +1304,7 @@ namespace C5.Tests.arrays.list
                 Assert.Multiple(() =>
                 {
                     Assert.That(list.Check(), Is.True);
-                    Assert.That(IC.Eq(list, 5, 5, 6), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 5, 5, 6 }));
                 });
                 list2.Clear();
                 list2.Add(7); list2.Add(8); list2.Add(9);
@@ -1325,7 +1325,7 @@ namespace C5.Tests.arrays.list
                 Assert.Multiple(() =>
                 {
                     Assert.That(list.Check(), Is.True);
-                    Assert.That(IC.Eq(list, 4, 6), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 4, 6 }));
                 });
                 list.Add(5); list.Add(4); list.Add(6);
                 list2.Clear();
@@ -1334,13 +1334,13 @@ namespace C5.Tests.arrays.list
                 Assert.Multiple(() =>
                 {
                     Assert.That(list.Check(), Is.True);
-                    Assert.That(IC.Eq(list, 4, 4), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 4, 4 }));
                 });
                 list2.Clear();
                 list2.Add(7); list2.Add(8); list2.Add(9);
                 list.RemoveAll(list2);
                 Assert.That(list.Check(), Is.True);
-                Assert.That(IC.Eq(list, 4, 4), Is.True);
+                Assert.That(list, Is.EqualTo(new[] { 4, 4 }));
             }
 
 
@@ -1356,16 +1356,16 @@ namespace C5.Tests.arrays.list
                     Assert.That(list.Remove(4), Is.True);
                 });
                 Assert.That(list.Check(), Is.True);
-                Assert.That(IC.Eq(list, 4, 4, 5, 6), Is.True);
+                Assert.That(list, Is.EqualTo(new[] { 4, 4, 5, 6 }));
                 Assert.That(list.RemoveLast(), Is.EqualTo(6));
                 Assert.That(list.Check(), Is.True);
-                Assert.That(IC.Eq(list, 4, 4, 5), Is.True);
+                Assert.That(list, Is.EqualTo(new[] { 4, 4, 5 }));
                 list.Add(7);
                 Assert.Multiple(() =>
                 {
                     Assert.That(list.RemoveFirst(), Is.EqualTo(4));
                     Assert.That(list.Check(), Is.True);
-                    Assert.That(IC.Eq(list, 4, 5, 7), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 4, 5, 7 }));
                 });
 
                 list.FIFO = true;
@@ -1375,16 +1375,16 @@ namespace C5.Tests.arrays.list
                 Assert.That(list.Check(), Is.True);
                 Assert.That(list.Remove(4), Is.True);
                 Assert.That(list.Check(), Is.True);
-                Assert.That(IC.Eq(list, 4, 5, 4, 6), Is.True);
+                Assert.That(list, Is.EqualTo(new[] { 4, 5, 4, 6 }));
                 Assert.That(list.RemoveLast(), Is.EqualTo(6));
                 Assert.That(list.Check(), Is.True);
-                Assert.That(IC.Eq(list, 4, 5, 4), Is.True);
+                Assert.That(list, Is.EqualTo(new[] { 4, 5, 4 }));
                 list.Add(7);
                 Assert.Multiple(() =>
                 {
                     Assert.That(list.RemoveFirst(), Is.EqualTo(4));
                     Assert.That(list.Check(), Is.True);
-                    Assert.That(IC.Eq(list, 5, 4, 7), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 5, 4, 7 }));
                 });
             }
 
@@ -1470,15 +1470,15 @@ namespace C5.Tests.arrays.list
                 Assert.Multiple(() =>
                 {
                     Assert.That(dit.RemoveAt(1), Is.EqualTo(7));
-                    Assert.That(((ArrayList<int>)dit).Check(), Is.True);
-                    Assert.That(IC.Eq(dit, 5, 9, 1, 2), Is.True);
+                    Assert.That(dit.Check(), Is.True);
+                    Assert.That(dit, Is.EqualTo(new[] { 5, 9, 1, 2 }));
                     Assert.That(dit.RemoveAt(0), Is.EqualTo(5));
                 });
-                Assert.That(((ArrayList<int>)dit).Check(), Is.True);
-                Assert.That(IC.Eq(dit, 9, 1, 2), Is.True);
+                Assert.That(dit.Check(), Is.True);
+                Assert.That(dit, Is.EqualTo(new[] { 9, 1, 2 }));
                 Assert.That(dit.RemoveAt(2), Is.EqualTo(2));
-                Assert.That(((ArrayList<int>)dit).Check(), Is.True);
-                Assert.That(IC.Eq(dit, 9, 1), Is.True);
+                Assert.That(dit.Check(), Is.True);
+                Assert.That(dit, Is.EqualTo(new[] { 9, 1 }));
             }
 
 
@@ -1511,39 +1511,39 @@ namespace C5.Tests.arrays.list
                 dit.RemoveInterval(3, 0);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(((ArrayList<int>)dit).Check(), Is.True);
-                    Assert.That(IC.Eq(dit, 10, 20, 30, 40, 50, 60), Is.True);
+                    Assert.That(dit.Check(), Is.True);
+                    Assert.That(dit, Is.EqualTo(new[] { 10, 20, 30, 40, 50, 60 }));
                 });
                 dit.RemoveInterval(3, 1);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(((ArrayList<int>)dit).Check(), Is.True);
-                    Assert.That(IC.Eq(dit, 10, 20, 30, 50, 60), Is.True);
+                    Assert.That(dit.Check(), Is.True);
+                    Assert.That(dit, Is.EqualTo(new[] { 10, 20, 30, 50, 60 }));
                 });
                 dit.RemoveInterval(1, 3);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(((ArrayList<int>)dit).Check(), Is.True);
-                    Assert.That(IC.Eq(dit, 10, 60), Is.True);
+                    Assert.That(dit.Check(), Is.True);
+                    Assert.That(dit, Is.EqualTo(new[] { 10, 60 }));
                 });
                 dit.RemoveInterval(0, 2);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(((ArrayList<int>)dit).Check(), Is.True);
+                    Assert.That(dit.Check(), Is.True);
                     Assert.That(IC.Eq(dit), Is.True);
                 });
                 dit.Add(10); dit.Add(20); dit.Add(30); dit.Add(40); dit.Add(50); dit.Add(60);
                 dit.RemoveInterval(0, 2);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(((ArrayList<int>)dit).Check(), Is.True);
-                    Assert.That(IC.Eq(dit, 30, 40, 50, 60), Is.True);
+                    Assert.That(dit.Check(), Is.True);
+                    Assert.That(dit, Is.EqualTo(new[] { 30, 40, 50, 60 }));
                 });
                 dit.RemoveInterval(2, 2);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(((ArrayList<int>)dit).Check(), Is.True);
-                    Assert.That(IC.Eq(dit, 30, 40), Is.True);
+                    Assert.That(dit.Check(), Is.True);
+                    Assert.That(dit, Is.EqualTo(new[] { 30, 40 }));
                 });
             }
 
@@ -1617,7 +1617,7 @@ namespace C5.Tests.arrays.list
                 Assert.That(lst.First, Is.EqualTo(56));
                 lst.Add(7); lst.Add(7); lst.Add(7); lst.Add(7);
                 lst[0] = 45; lst[2] = 78; lst[4] = 101;
-                Assert.That(IC.Eq(lst, 45, 7, 78, 7, 101), Is.True);
+                Assert.That(lst, Is.EqualTo(new[] { 45, 7, 78, 7, 101 }));
             }
 
 
@@ -1700,37 +1700,37 @@ namespace C5.Tests.arrays.list
             public void Insert()
             {
                 lst.Insert(0, 5);
-                Assert.That(IC.Eq(lst, 5), Is.True);
+                Assert.That(lst, Is.EqualTo(new[] { 5 }));
                 lst.Insert(0, 7);
-                Assert.That(IC.Eq(lst, 7, 5), Is.True);
+                Assert.That(lst, Is.EqualTo(new[] { 7, 5 }));
                 lst.Insert(1, 4);
-                Assert.That(IC.Eq(lst, 7, 4, 5), Is.True);
+                Assert.That(lst, Is.EqualTo(new[] { 7, 4, 5 }));
                 lst.Insert(3, 2);
-                Assert.That(IC.Eq(lst, 7, 4, 5, 2), Is.True);
+                Assert.That(lst, Is.EqualTo(new[] { 7, 4, 5, 2 }));
             }
 
             [Test]
             public void InsertDuplicate()
             {
                 lst.Insert(0, 5);
-                Assert.That(IC.Eq(lst, 5), Is.True);
+                Assert.That(lst, Is.EqualTo(new[] { 5 }));
                 lst.Insert(0, 7);
-                Assert.That(IC.Eq(lst, 7, 5), Is.True);
+                Assert.That(lst, Is.EqualTo(new[] { 7, 5 }));
                 lst.Insert(1, 5);
-                Assert.That(IC.Eq(lst, 7, 5, 5), Is.True);
+                Assert.That(lst, Is.EqualTo(new[] { 7, 5, 5 }));
             }
 
             [Test]
             public void InsertAllDuplicate1()
             {
                 lst.Insert(0, 3);
-                Assert.That(IC.Eq(lst, 3), Is.True);
+                Assert.That(lst, Is.EqualTo(new[] { 3 }));
                 lst.Insert(0, 7);
-                Assert.That(IC.Eq(lst, 7, 3), Is.True);
+                Assert.That(lst, Is.EqualTo(new[] { 7, 3 }));
                 lst.InsertAll(1, [1, 2, 3, 4]);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(lst, 7, 1, 2, 3, 4, 3), Is.True);
+                    Assert.That(lst, Is.EqualTo(new[] { 7, 1, 2, 3, 4, 3 }));
                     Assert.That(lst.Check(), Is.True);
                 });
             }
@@ -1739,14 +1739,14 @@ namespace C5.Tests.arrays.list
             public void InsertAllDuplicate2()
             {
                 lst.Insert(0, 3);
-                Assert.That(IC.Eq(lst, 3), Is.True);
+                Assert.That(lst, Is.EqualTo(new[] { 3 }));
                 lst.Insert(0, 7);
-                Assert.That(IC.Eq(lst, 7, 3), Is.True);
+                Assert.That(lst, Is.EqualTo(new[] { 7, 3 }));
                 lst.InsertAll(1, [5, 6, 5, 8]);
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.Check(), Is.True);
-                    Assert.That(IC.Eq(lst, 7, 5, 6, 5, 8, 3), Is.True);
+                    Assert.That(lst, Is.EqualTo(new[] { 7, 5, 6, 5, 8, 3 }));
                 });
             }
 
@@ -1801,7 +1801,7 @@ namespace C5.Tests.arrays.list
                 lst.InsertLast(25);
                 lst.InsertFirst(34);
                 lst.InsertLast(55);
-                Assert.That(IC.Eq(lst, 34, 24, 14, 4, 5, 15, 25, 55), Is.True);
+                Assert.That(lst, Is.EqualTo(new[] { 34, 24, 14, 4, 5, 15, 25, 55 }));
             }
 
 
@@ -1816,19 +1816,19 @@ namespace C5.Tests.arrays.list
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.Check(), Is.True);
-                    Assert.That(IC.Eq(lst, 7, 2, 3, 2, 5), Is.True);
+                    Assert.That(lst, Is.EqualTo(new[] { 7, 2, 3, 2, 5 }));
                 });
                 lst.ViewOf(3).InsertFirst(8);
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.Check(), Is.True);
-                    Assert.That(IC.Eq(lst, 7, 2, 8, 3, 2, 5), Is.True);
+                    Assert.That(lst, Is.EqualTo(new[] { 7, 2, 8, 3, 2, 5 }));
                 });
                 lst.ViewOf(5).InsertFirst(9);
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.Check(), Is.True);
-                    Assert.That(IC.Eq(lst, 7, 2, 8, 3, 2, 9, 5), Is.True);
+                    Assert.That(lst, Is.EqualTo(new[] { 7, 2, 8, 3, 2, 9, 5 }));
                 });
             }
 
@@ -1844,19 +1844,19 @@ namespace C5.Tests.arrays.list
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.Check(), Is.True);
-                    Assert.That(IC.Eq(lst, 1, 2, 3, 2, 7, 5), Is.True);
+                    Assert.That(lst, Is.EqualTo(new[] { 1, 2, 3, 2, 7, 5 }));
                 });
                 lst.LastViewOf(1).InsertLast(8);
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.Check(), Is.True);
-                    Assert.That(IC.Eq(lst, 1, 8, 2, 3, 2, 7, 5), Is.True);
+                    Assert.That(lst, Is.EqualTo(new[] { 1, 8, 2, 3, 2, 7, 5 }));
                 });
                 lst.LastViewOf(5).InsertLast(9);
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.Check(), Is.True);
-                    Assert.That(IC.Eq(lst, 1, 8, 2, 3, 2, 7, 5, 9), Is.True);
+                    Assert.That(lst, Is.EqualTo(new[] { 1, 8, 2, 3, 2, 7, 5, 9 }));
                 });
             }
 
@@ -1874,19 +1874,19 @@ namespace C5.Tests.arrays.list
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.Check(), Is.True);
-                    Assert.That(IC.Eq(lst, 7, 8, 9, 1, 2, 3, 4), Is.True);
+                    Assert.That(lst, Is.EqualTo(new[] { 7, 8, 9, 1, 2, 3, 4 }));
                 });
                 lst.InsertAll(7, lst2);
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.Check(), Is.True);
-                    Assert.That(IC.Eq(lst, 7, 8, 9, 1, 2, 3, 4, 7, 8, 9), Is.True);
+                    Assert.That(lst, Is.EqualTo(new[] { 7, 8, 9, 1, 2, 3, 4, 7, 8, 9 }));
                 });
                 lst.InsertAll(5, lst2);
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.Check(), Is.True);
-                    Assert.That(IC.Eq(lst, 7, 8, 9, 1, 2, 7, 8, 9, 3, 4, 7, 8, 9), Is.True);
+                    Assert.That(lst, Is.EqualTo(new[] { 7, 8, 9, 1, 2, 7, 8, 9, 3, 4, 7, 8, 9 }));
                 });
             }
 
@@ -2011,31 +2011,31 @@ namespace C5.Tests.arrays.list
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.Check(), Is.True);
-                    Assert.That(IC.Eq(lst, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0), Is.True);
+                    Assert.That(lst, Is.EqualTo(new[] { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 }));
                 });
                 lst.View(0, 3).Reverse();
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.Check(), Is.True);
-                    Assert.That(IC.Eq(lst, 7, 8, 9, 6, 5, 4, 3, 2, 1, 0), Is.True);
+                    Assert.That(lst, Is.EqualTo(new[] { 7, 8, 9, 6, 5, 4, 3, 2, 1, 0 }));
                 });
                 lst.View(7, 0).Reverse();
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.Check(), Is.True);
-                    Assert.That(IC.Eq(lst, 7, 8, 9, 6, 5, 4, 3, 2, 1, 0), Is.True);
+                    Assert.That(lst, Is.EqualTo(new[] { 7, 8, 9, 6, 5, 4, 3, 2, 1, 0 }));
                 });
                 lst.View(7, 3).Reverse();
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.Check(), Is.True);
-                    Assert.That(IC.Eq(lst, 7, 8, 9, 6, 5, 4, 3, 0, 1, 2), Is.True);
+                    Assert.That(lst, Is.EqualTo(new[] { 7, 8, 9, 6, 5, 4, 3, 0, 1, 2 }));
                 });
                 lst.View(5, 1).Reverse();
                 Assert.Multiple(() =>
                 {
                     Assert.That(lst.Check(), Is.True);
-                    Assert.That(IC.Eq(lst, 7, 8, 9, 6, 5, 4, 3, 0, 1, 2), Is.True);
+                    Assert.That(lst, Is.EqualTo(new[] { 7, 8, 9, 6, 5, 4, 3, 0, 1, 2 }));
                 });
             }
 
@@ -2203,7 +2203,7 @@ namespace C5.Tests.arrays.list
                 {
                     Assert.That(lst.IsSorted(), Is.True);
                     Assert.That(lst.IsSorted(new IC()), Is.True);
-                    Assert.That(IC.Eq(lst, 3, 5, 5, 6, 7), Is.True);
+                    Assert.That(lst, Is.EqualTo(new[] { 3, 5, 5, 6, 7 }));
                 });
             }
 
@@ -2441,7 +2441,7 @@ namespace C5.Tests.arrays.list
 
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(lst.Backwards(), 9, 8, 7, 6, 5, 4, 3, 2, 1, 0), Is.True);
+                    Assert.That(lst.Backwards(), Is.EqualTo(new[] { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 }));
                     Assert.That(IC.Eq(lst[0, 4].Backwards(), 3, 2, 1, 0), Is.True);
                     Assert.That(IC.Eq(lst[3, 4].Backwards(), 6, 5, 4, 3), Is.True);
                     Assert.That(IC.Eq(lst[6, 4].Backwards(), 9, 8, 7, 6), Is.True);
@@ -2541,8 +2541,8 @@ namespace C5.Tests.arrays.list
                 check();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(list, 0, 11, 1, 9, 7, 2, 10, 3, 8), Is.True);
-                    Assert.That(IC.Eq(view, 11, 1, 9, 7, 2, 10), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 0, 11, 1, 9, 7, 2, 10, 3, 8 }));
+                    Assert.That(view, Is.EqualTo(new[] { 11, 1, 9, 7, 2, 10 }));
                 });
             }
 
@@ -2603,21 +2603,21 @@ namespace C5.Tests.arrays.list
                 Assert.Multiple(() =>
                 {
                     Assert.That(v.Check(), Is.True);
-                    Assert.That(IC.Eq(v, 2), Is.True);
+                    Assert.That(v, Is.EqualTo(new[] { 2 }));
                     Assert.That(v.Offset, Is.EqualTo(2));
                 });
                 v = list.ViewOf(2);
                 Assert.Multiple(() =>
                 {
                     Assert.That(v.Check(), Is.True);
-                    Assert.That(IC.Eq(v, 2), Is.True);
+                    Assert.That(v, Is.EqualTo(new[] { 2 }));
                     Assert.That(v.Offset, Is.EqualTo(2));
                 });
                 v = list.LastViewOf(2);
                 Assert.Multiple(() =>
                 {
                     Assert.That(v.Check(), Is.True);
-                    Assert.That(IC.Eq(v, 2), Is.True);
+                    Assert.That(v, Is.EqualTo(new[] { 2 }));
                     Assert.That(v.Offset, Is.EqualTo(6));
                 });
             }
@@ -2625,10 +2625,10 @@ namespace C5.Tests.arrays.list
             [Test]
             public void ArrayStuff()
             {
-                Assert.That(IC.Eq(view.ToArray(), 1, 2), Is.True);
+                Assert.That(view.ToArray(), Is.EqualTo(new[] { 1, 2 }));
                 int[] extarray = new int[5];
                 view.CopyTo(extarray, 2);
-                Assert.That(IC.Eq(extarray, 0, 0, 1, 2, 0), Is.True);
+                Assert.That(extarray, Is.EqualTo(new[] { 0, 0, 1, 2, 0 }));
             }
 
             [Test]
@@ -2651,15 +2651,15 @@ namespace C5.Tests.arrays.list
                 check();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(list, 0, 1, 2, 3), Is.True);
-                    Assert.That(IC.Eq(view, 1, 2), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 0, 1, 2, 3 }));
+                    Assert.That(view, Is.EqualTo(new[] { 1, 2 }));
                 });
                 view.InsertFirst(10);
                 check();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(list, 0, 10, 1, 2, 3), Is.True);
-                    Assert.That(IC.Eq(view, 10, 1, 2), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 0, 10, 1, 2, 3 }));
+                    Assert.That(view, Is.EqualTo(new[] { 10, 1, 2 }));
                 });
                 view.Clear();
                 Assert.Multiple(() =>
@@ -2669,7 +2669,7 @@ namespace C5.Tests.arrays.list
                     Assert.That(view.IsEmpty, Is.True);
                 });
                 check();
-                Assert.That(IC.Eq(list, 0, 3), Is.True);
+                Assert.That(list, Is.EqualTo(new[] { 0, 3 }));
                 Assert.That(IC.Eq(view), Is.True);
                 view.Add(8);
                 Assert.That(view.IsEmpty, Is.False);
@@ -2678,29 +2678,29 @@ namespace C5.Tests.arrays.list
                 check();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(list, 0, 8, 3), Is.True);
-                    Assert.That(IC.Eq(view, 8), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 0, 8, 3 }));
+                    Assert.That(view, Is.EqualTo(new[] { 8 }));
                 });
                 view.Add(12);
                 check();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(list, 0, 8, 12, 3), Is.True);
-                    Assert.That(IC.Eq(view, 8, 12), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 0, 8, 12, 3 }));
+                    Assert.That(view, Is.EqualTo(new[] { 8, 12 }));
                 });
                 view./*ViewOf(12)*/InsertLast(15);
                 check();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(list, 0, 8, 12, 15, 3), Is.True);
-                    Assert.That(IC.Eq(view, 8, 12, 15), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 0, 8, 12, 15, 3 }));
+                    Assert.That(view, Is.EqualTo(new[] { 8, 12, 15 }));
                 });
                 view.ViewOf(12).InsertFirst(18);
                 check();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(list, 0, 8, 18, 12, 15, 3), Is.True);
-                    Assert.That(IC.Eq(view, 8, 18, 12, 15), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 0, 8, 18, 12, 15, 3 }));
+                    Assert.That(view, Is.EqualTo(new[] { 8, 18, 12, 15 }));
                 });
 
                 ArrayList<int> lst2 = [90, 92];
@@ -2708,16 +2708,16 @@ namespace C5.Tests.arrays.list
                 check();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(list, 0, 8, 18, 12, 15, 90, 92, 3), Is.True);
-                    Assert.That(IC.Eq(view, 8, 18, 12, 15, 90, 92), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 0, 8, 18, 12, 15, 90, 92, 3 }));
+                    Assert.That(view, Is.EqualTo(new[] { 8, 18, 12, 15, 90, 92 }));
                 });
                 view.InsertLast(66);
                 check();
 
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(list, 0, 8, 18, 12, 15, 90, 92, 66, 3), Is.True);
-                    Assert.That(IC.Eq(view, 8, 18, 12, 15, 90, 92, 66), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 0, 8, 18, 12, 15, 90, 92, 66, 3 }));
+                    Assert.That(view, Is.EqualTo(new[] { 8, 18, 12, 15, 90, 92, 66 }));
                 });
             }
 
@@ -2727,7 +2727,7 @@ namespace C5.Tests.arrays.list
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(view.Backwards(), 2, 1), Is.True);
+                    Assert.That(view.Backwards(), Is.EqualTo(new[] { 2, 1 }));
                     Assert.That(view.Underlying, Is.SameAs(list));
                     Assert.That(list.Underlying, Is.Null);
                     Assert.That(view.Direction, Is.EqualTo(Direction.Forwards));
@@ -2785,11 +2785,11 @@ namespace C5.Tests.arrays.list
                 check();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(view, 1, 2, 23, 24, 25), Is.True);
+                    Assert.That(view, Is.EqualTo(new[] { 1, 2, 23, 24, 25 }));
                     Assert.That(view.Remove(), Is.EqualTo(1));
                 });
                 check();
-                Assert.That(IC.Eq(view, 2, 23, 24, 25), Is.True);
+                Assert.That(view, Is.EqualTo(new[] { 2, 23, 24, 25 }));
                 view.FIFO = false;
                 Assert.Multiple(() =>
                 {
@@ -2797,7 +2797,7 @@ namespace C5.Tests.arrays.list
                     Assert.That(view.Remove(), Is.EqualTo(25));
                 });
                 check();
-                Assert.That(IC.Eq(view, 2, 23, 24), Is.True);
+                Assert.That(view, Is.EqualTo(new[] { 2, 23, 24 }));
             }
 
 
@@ -2821,7 +2821,7 @@ namespace C5.Tests.arrays.list
                 Assert.Multiple(() =>
                 {
                     Assert.That(list.Check(), Is.True);
-                    Assert.That(IC.Eq(list, 1, 1, 5, 9), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 1, 1, 5, 9 }));
                 });
             }
 
@@ -2873,7 +2873,7 @@ namespace C5.Tests.arrays.list
                 Assert.Multiple(() =>
                 {
                     Assert.That(view.Check(), Is.True);
-                    Assert.That(IC.Eq(view, 34, 35, 1, 2, 36), Is.True);
+                    Assert.That(view, Is.EqualTo(new[] { 34, 35, 1, 2, 36 }));
                 });
 
                 IList<int> list2 = new ArrayList<int>();
@@ -2883,7 +2883,7 @@ namespace C5.Tests.arrays.list
                 Assert.Multiple(() =>
                 {
                     Assert.That(view.Check(), Is.True);
-                    Assert.That(IC.Eq(view, 34, 35, 1, 34, 35, 1, 2, 36, 2, 36), Is.True);
+                    Assert.That(view, Is.EqualTo(new[] { 34, 35, 1, 34, 35, 1, 2, 36, 2, 36 }));
                 });
             }
 
@@ -2915,8 +2915,8 @@ namespace C5.Tests.arrays.list
                 check();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(list, 0, 1, 2, 45, 46, 47, 48, 3), Is.True);
-                    Assert.That(IC.Eq(view, 1, 2, 45, 46, 47, 48), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 0, 1, 2, 45, 46, 47, 48, 3 }));
+                    Assert.That(view, Is.EqualTo(new[] { 1, 2, 45, 46, 47, 48 }));
                 });
             }
 
@@ -2927,32 +2927,32 @@ namespace C5.Tests.arrays.list
                 view.Add(1); view.Add(5); view.Add(3); view.Add(1); view.Add(3); view.Add(0);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(view, 1, 2, 1, 5, 3, 1, 3, 0), Is.True);
+                    Assert.That(view, Is.EqualTo(new[] { 1, 2, 1, 5, 3, 1, 3, 0 }));
                     Assert.That(view.Remove(1), Is.True);
                 });
                 check();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(view, 1, 2, 1, 5, 3, 3, 0), Is.True);
+                    Assert.That(view, Is.EqualTo(new[] { 1, 2, 1, 5, 3, 3, 0 }));
                     Assert.That(view.Remove(1), Is.True);
                 });
                 check();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(view, 1, 2, 5, 3, 3, 0), Is.True);
+                    Assert.That(view, Is.EqualTo(new[] { 1, 2, 5, 3, 3, 0 }));
                     Assert.That(view.Remove(0), Is.True);
                 });
                 check();
-                Assert.That(IC.Eq(view, 1, 2, 5, 3, 3), Is.True);
+                Assert.That(view, Is.EqualTo(new[] { 1, 2, 5, 3, 3 }));
                 view.RemoveAllCopies(3);
                 check();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(view, 1, 2, 5), Is.True);
-                    Assert.That(IC.Eq(list, 0, 1, 2, 5, 3), Is.True);
+                    Assert.That(view, Is.EqualTo(new[] { 1, 2, 5 }));
+                    Assert.That(list, Is.EqualTo(new[] { 0, 1, 2, 5, 3 }));
                 });
                 view.Add(1); view.Add(5); view.Add(3); view.Add(1); view.Add(3); view.Add(0);
-                Assert.That(IC.Eq(view, 1, 2, 5, 1, 5, 3, 1, 3, 0), Is.True);
+                Assert.That(view, Is.EqualTo(new[] { 1, 2, 5, 1, 5, 3, 1, 3, 0 }));
 
                 view.FIFO = true;
                 view.Clear(); view.Add(1); view.Add(2);
@@ -2960,32 +2960,32 @@ namespace C5.Tests.arrays.list
                 view.Add(1); view.Add(5); view.Add(3); view.Add(1); view.Add(3); view.Add(0);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(view, 1, 2, 1, 5, 3, 1, 3, 0), Is.True);
+                    Assert.That(view, Is.EqualTo(new[] { 1, 2, 1, 5, 3, 1, 3, 0 }));
                     Assert.That(view.Remove(1), Is.True);
                 });
                 check();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(view, 2, 1, 5, 3, 1, 3, 0), Is.True);
+                    Assert.That(view, Is.EqualTo(new[] { 2, 1, 5, 3, 1, 3, 0 }));
                     Assert.That(view.Remove(1), Is.True);
                 });
                 check();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(view, 2, 5, 3, 1, 3, 0), Is.True);
+                    Assert.That(view, Is.EqualTo(new[] { 2, 5, 3, 1, 3, 0 }));
                     Assert.That(view.Remove(0), Is.True);
                 });
                 check();
-                Assert.That(IC.Eq(view, 2, 5, 3, 1, 3), Is.True);
+                Assert.That(view, Is.EqualTo(new[] { 2, 5, 3, 1, 3 }));
                 view.RemoveAllCopies(3);
                 check();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(view, 2, 5, 1), Is.True);
-                    Assert.That(IC.Eq(list, 0, 2, 5, 1, 3), Is.True);
+                    Assert.That(view, Is.EqualTo(new[] { 2, 5, 1 }));
+                    Assert.That(list, Is.EqualTo(new[] { 0, 2, 5, 1, 3 }));
                 });
                 view.Add(1); view.Add(5); view.Add(3); view.Add(1); view.Add(3); view.Add(0);
-                Assert.That(IC.Eq(view, 2, 5, 1, 1, 5, 3, 1, 3, 0), Is.True);
+                Assert.That(view, Is.EqualTo(new[] { 2, 5, 1, 1, 5, 3, 1, 3, 0 }));
 
                 view.FIFO = false;
 
@@ -2993,10 +2993,10 @@ namespace C5.Tests.arrays.list
 
                 view.RemoveAll(l2);
                 check();
-                Assert.That(IC.Eq(view, 5, 5, 1, 3, 0), Is.True);
+                Assert.That(view, Is.EqualTo(new[] { 5, 5, 1, 3, 0 }));
                 view.RetainAll(l2);
                 check();
-                Assert.That(IC.Eq(view, 1, 3), Is.True);
+                Assert.That(view, Is.EqualTo(new[] { 1, 3 }));
                 view.Add(2); view.Add(4); view.Add(5);
                 Assert.Multiple(() =>
                 {
@@ -3005,7 +3005,7 @@ namespace C5.Tests.arrays.list
                     Assert.That(view.RemoveAt(1), Is.EqualTo(2));
                 });
                 check();
-                Assert.That(IC.Eq(view, 3, 4), Is.True);
+                Assert.That(view, Is.EqualTo(new[] { 3, 4 }));
                 view.Add(8);
                 Assert.Multiple(() =>
                 {
@@ -3015,7 +3015,7 @@ namespace C5.Tests.arrays.list
                 view.Add(2); view.Add(5); view.Add(3); view.Add(1);
                 view.RemoveInterval(1, 2);
                 check();
-                Assert.That(IC.Eq(view, 4, 3, 1), Is.True);
+                Assert.That(view, Is.EqualTo(new[] { 4, 3, 1 }));
             }
 
 
@@ -3030,12 +3030,12 @@ namespace C5.Tests.arrays.list
 
                 view.View(3, 4).Reverse();
                 check();
-                Assert.That(IC.Eq(view, 10, 11, 12, 16, 15, 14, 13, 17, 18, 19), Is.True);
+                Assert.That(view, Is.EqualTo(new[] { 10, 11, 12, 16, 15, 14, 13, 17, 18, 19 }));
                 view.Reverse();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(view, 19, 18, 17, 13, 14, 15, 16, 12, 11, 10), Is.True);
-                    Assert.That(IC.Eq(list, 0, 19, 18, 17, 13, 14, 15, 16, 12, 11, 10, 3), Is.True);
+                    Assert.That(view, Is.EqualTo(new[] { 19, 18, 17, 13, 14, 15, 16, 12, 11, 10 }));
+                    Assert.That(list, Is.EqualTo(new[] { 0, 19, 18, 17, 13, 14, 15, 16, 12, 11, 10, 3 }));
                 });
             }
 
@@ -3045,24 +3045,24 @@ namespace C5.Tests.arrays.list
             {
                 view.Slide(1);
                 check();
-                Assert.That(IC.Eq(view, 2, 3), Is.True);
+                Assert.That(view, Is.EqualTo(new[] { 2, 3 }));
                 view.Slide(-2);
                 check();
-                Assert.That(IC.Eq(view, 0, 1), Is.True);
+                Assert.That(view, Is.EqualTo(new[] { 0, 1 }));
                 view.Slide(0, 3);
                 check();
-                Assert.That(IC.Eq(view, 0, 1, 2), Is.True);
+                Assert.That(view, Is.EqualTo(new[] { 0, 1, 2 }));
                 view.Slide(2, 1);
                 check();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(view, 2), Is.True);
+                    Assert.That(view, Is.EqualTo(new[] { 2 }));
                     Assert.That(view.Slide(-1, 0), Is.EqualTo(view));
                 });
                 check();
                 Assert.That(IC.Eq(view), Is.True);
                 view.Add(28);
-                Assert.That(IC.Eq(list, 0, 28, 1, 2, 3), Is.True);
+                Assert.That(list, Is.EqualTo(new[] { 0, 28, 1, 2, 3 }));
             }
             [Test]
             public void Iterate()
@@ -3096,7 +3096,7 @@ namespace C5.Tests.arrays.list
                 Assert.Multiple(() =>
                 {
                     Assert.That(list.Check(), Is.True);
-                    Assert.That(IC.Eq(list, 2, 4, 8, 666, 13, 6, 1, 666, 2, 666, 7), Is.True);
+                    Assert.That(list, Is.EqualTo(new[] { 2, 4, 8, 666, 13, 6, 1, 666, 2, 666, 7 }));
                 });
             }
 
@@ -3989,7 +3989,7 @@ namespace C5.Tests.arrays.list
                     Assert.That(dut.SequencedEquals(dit), Is.True);
                 });
                 dit.Add(7);
-                ((ArrayList<int>)dut).InsertFirst(7);
+                dut.InsertFirst(7);
                 Assert.Multiple(() =>
                 {
                     Assert.That(dit.SequencedEquals(dut), Is.False);

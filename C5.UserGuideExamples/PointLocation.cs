@@ -212,7 +212,7 @@ namespace C5.UserGuideExamples
 
             TreeSet<Edge<T>> vtree = [];
 
-            htree[double.NegativeInfinity] = (ISorted<Edge<T>>)(vtree.Snapshot());
+            htree[double.NegativeInfinity] = vtree.Snapshot();
 
             foreach (SCG.KeyValuePair<double, SCG.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>> p in endpoints)
             {
@@ -235,7 +235,7 @@ namespace C5.UserGuideExamples
                     Debug.Assert(chk, "edge was not added!", "" + e);
                 }
 
-                htree[p.Key] = (ISorted<Edge<T>>)(vtree.Snapshot());
+                htree[p.Key] = vtree.Snapshot();
             }
 
             built = true;

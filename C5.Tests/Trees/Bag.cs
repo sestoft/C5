@@ -542,11 +542,11 @@ namespace C5.Tests.trees.TreeBag
             }
 
             tree.RemoveRangeFromTo(4, 8);
-            Assert.That(IC.Eq(tree, 1, 2, 2, 3, 8, 8, 9, 10, 10, 12, 14, 16, 18, 20), Is.True);
+            Assert.That(tree, Is.EqualTo(new[] { 1, 2, 2, 3, 8, 8, 9, 10, 10, 12, 14, 16, 18, 20 }));
             tree.RemoveRangeFromTo(14, 28);
-            Assert.That(IC.Eq(tree, 1, 2, 2, 3, 8, 8, 9, 10, 10, 12), Is.True);
+            Assert.That(tree, Is.EqualTo(new[] { 1, 2, 2, 3, 8, 8, 9, 10, 10, 12 }));
             tree.RemoveRangeFromTo(0, 9);
-            Assert.That(IC.Eq(tree, 9, 10, 10, 12), Is.True);
+            Assert.That(tree, Is.EqualTo(new[] { 9, 10, 10, 12 }));
             tree.RemoveRangeFromTo(0, 81);
             Assert.That(IC.Eq(tree), Is.True);
         }
@@ -772,7 +772,7 @@ namespace C5.Tests.trees.TreeBag
             });
             Assert.That(tree.Add(18), Is.True);
             Assert.That(tree, Has.Count.EqualTo(4));
-            Assert.That(IC.Eq(tree, 17, 17, 18, 18), Is.True);
+            Assert.That(tree, Is.EqualTo(new[] { 17, 17, 18, 18 }));
         }
 
 
@@ -3017,7 +3017,7 @@ namespace C5.Tests.trees.TreeBag
                 Assert.Multiple(() =>
                 {
                     Assert.That(tree.Check(), Is.True);
-                    Assert.That(IC.Eq(tree, 0, 1, 1, 4, 5, 6, 7, 8, 9), Is.True);
+                    Assert.That(tree, Is.EqualTo(new[] { 0, 1, 1, 4, 5, 6, 7, 8, 9 }));
                 });
             }
 
@@ -3107,7 +3107,7 @@ namespace C5.Tests.trees.TreeBag
                 {
                     Assert.That(tree, Has.Count.EqualTo(9));
                     Assert.That(tree.Check(), Is.True);
-                    Assert.That(IC.Eq(tree, 0, 1, 1, 4, 5, 6, 7, 8, 9), Is.True);
+                    Assert.That(tree, Is.EqualTo(new[] { 0, 1, 1, 4, 5, 6, 7, 8, 9 }));
                 });
             }
 
@@ -3156,28 +3156,28 @@ namespace C5.Tests.trees.TreeBag
                 Assert.Multiple(() =>
                 {
                     Assert.That(tree.Check(), Is.True);
-                    Assert.That(IC.Eq(tree, 0, 1, 2, 3, 4, 5, 7, 8, 9), Is.True);
+                    Assert.That(tree, Is.EqualTo(new[] { 0, 1, 2, 3, 4, 5, 7, 8, 9 }));
                 });
                 tree.RemoveAll(tree2.RangeFromTo(3, 7));
                 Assert.That(tree, Has.Count.EqualTo(8));
                 Assert.Multiple(() =>
                 {
                     Assert.That(tree.Check(), Is.True);
-                    Assert.That(IC.Eq(tree, 0, 1, 2, 3, 5, 7, 8, 9), Is.True);
+                    Assert.That(tree, Is.EqualTo(new[] { 0, 1, 2, 3, 5, 7, 8, 9 }));
                 });
                 tree.RemoveAll(tree2.RangeFromTo(13, 17));
                 Assert.That(tree, Has.Count.EqualTo(8));
                 Assert.Multiple(() =>
                 {
                     Assert.That(tree.Check(), Is.True);
-                    Assert.That(IC.Eq(tree, 0, 1, 2, 3, 5, 7, 8, 9), Is.True);
+                    Assert.That(tree, Is.EqualTo(new[] { 0, 1, 2, 3, 5, 7, 8, 9 }));
                 });
                 tree.RemoveAll(tree2.RangeFromTo(3, 17));
                 Assert.That(tree, Has.Count.EqualTo(7));
                 Assert.Multiple(() =>
                 {
                     Assert.That(tree.Check(), Is.True);
-                    Assert.That(IC.Eq(tree, 0, 1, 2, 3, 5, 7, 9), Is.True);
+                    Assert.That(tree, Is.EqualTo(new[] { 0, 1, 2, 3, 5, 7, 9 }));
                 });
                 for (int i = 0; i < 10; i++)
                 {
@@ -3202,21 +3202,21 @@ namespace C5.Tests.trees.TreeBag
                 Assert.Multiple(() =>
                 {
                     Assert.That(tree.Check(), Is.True);
-                    Assert.That(IC.Eq(tree, 4, 6, 8), Is.True);
+                    Assert.That(tree, Is.EqualTo(new[] { 4, 6, 8 }));
                 });
                 tree.RetainAll(tree2.RangeFromTo(1, 17));
                 Assert.That(tree, Has.Count.EqualTo(3));
                 Assert.Multiple(() =>
                 {
                     Assert.That(tree.Check(), Is.True);
-                    Assert.That(IC.Eq(tree, 4, 6, 8), Is.True);
+                    Assert.That(tree, Is.EqualTo(new[] { 4, 6, 8 }));
                 });
                 tree.RetainAll(tree2.RangeFromTo(3, 5));
                 Assert.That(tree, Has.Count.EqualTo(1));
                 Assert.Multiple(() =>
                 {
                     Assert.That(tree.Check(), Is.True);
-                    Assert.That(IC.Eq(tree, 4), Is.True);
+                    Assert.That(tree, Is.EqualTo(new[] { 4 }));
                 });
                 tree.RetainAll(tree2.RangeFromTo(7, 17));
                 Assert.That(tree, Is.Empty);
@@ -3277,14 +3277,14 @@ namespace C5.Tests.trees.TreeBag
                 {
                     Assert.That(tree.Check(), Is.True);
                     Assert.That(tree, Has.Count.EqualTo(7));
-                    Assert.That(IC.Eq(tree, 0, 1, 2, 6, 7, 8, 9), Is.True);
+                    Assert.That(tree, Is.EqualTo(new[] { 0, 1, 2, 6, 7, 8, 9 }));
                 });
                 tree.RemoveInterval(2, 3);
                 Assert.Multiple(() =>
                 {
                     Assert.That(tree.Check(), Is.True);
                     Assert.That(tree, Has.Count.EqualTo(4));
-                    Assert.That(IC.Eq(tree, 0, 1, 8, 9), Is.True);
+                    Assert.That(tree, Is.EqualTo(new[] { 0, 1, 8, 9 }));
                 });
                 tree.RemoveInterval(0, 4);
                 Assert.Multiple(() =>

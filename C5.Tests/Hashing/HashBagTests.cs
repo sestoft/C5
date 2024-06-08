@@ -341,7 +341,7 @@ namespace C5.Tests.hashtable.bag
             Assert.That(hashbag.ContainsCount(7), Is.EqualTo(1));
             hashbag.Add(5); hashbag.Add(8); hashbag.Add(5);
             hashbag.RemoveAllCopies(8);
-            Assert.That(IC.Eq(hashbag, 7, 5, 5), Is.True);
+            Assert.That(hashbag, Is.EqualTo(new[] { 7, 5, 5 }));
         }
 
 

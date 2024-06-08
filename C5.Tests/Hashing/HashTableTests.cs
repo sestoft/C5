@@ -657,7 +657,7 @@ namespace C5.Tests.hashtable.set
                 Assert.That(hashset.ContainsCount(7), Is.EqualTo(1));
                 hashset.Add(5); hashset.Add(8); hashset.Add(5);
                 hashset.RemoveAllCopies(8);
-                Assert.That(IC.Eq(hashset, 7, 5), Is.True);
+                Assert.That(hashset, Is.EqualTo(new[] { 7, 5 }));
             }
 
 
@@ -735,16 +735,16 @@ namespace C5.Tests.hashtable.set
                 hashset.Add(4); hashset.Add(5); hashset.Add(6);
                 list2.Add(5); list2.Add(7); list2.Add(4);
                 hashset.RemoveAll(list2);
-                Assert.That(IC.Eq(hashset, 6), Is.True);
+                Assert.That(hashset, Is.EqualTo(new[] { 6 }));
                 hashset.Add(5); hashset.Add(4);
                 list2.Clear();
                 list2.Add(6); list2.Add(5);
                 hashset.RemoveAll(list2);
-                Assert.That(IC.Eq(hashset, 4), Is.True);
+                Assert.That(hashset, Is.EqualTo(new[] { 4 }));
                 list2.Clear();
                 list2.Add(7); list2.Add(8); list2.Add(9);
                 hashset.RemoveAll(list2);
-                Assert.That(IC.Eq(hashset, 4), Is.True);
+                Assert.That(hashset, Is.EqualTo(new[] { 4 }));
             }
 
 

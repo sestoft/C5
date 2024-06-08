@@ -611,7 +611,7 @@ namespace C5.Tests.wrappers
                 wrapped.CopyTo(extarray, 1);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(extarray, 0, 4, 6, 5, 0), Is.True);
+                    Assert.That(extarray, Is.EqualTo(new[] { 0, 4, 6, 5, 0 }));
                     Assert.That(wrapped, Has.Count.EqualTo(3));
                 });
                 Assert.Multiple(() =>
@@ -621,7 +621,7 @@ namespace C5.Tests.wrappers
                     Assert.That(wrapped.DuplicatesByCounting, Is.EqualTo(false));
                     Assert.That(wrapped.EqualityComparer, Is.EqualTo(System.Collections.Generic.EqualityComparer<int>.Default));
                     Assert.That(wrapped.Exists(is4), Is.EqualTo(true));
-                    Assert.That(IC.Eq(wrapped.Filter(is4), 4), Is.True);
+                    Assert.That(wrapped.Filter(is4), Is.EqualTo(new[] { 4 }));
                 });
                 int j = 5;
                 Assert.Multiple(() =>

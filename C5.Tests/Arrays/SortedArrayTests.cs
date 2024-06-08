@@ -125,11 +125,11 @@ namespace C5.Tests.arrays.sorted
             }
 
             array.RemoveRangeFromTo(4, 8);
-            Assert.That(IC.Eq(array, 2, 8, 10, 12, 14, 16, 18, 20), Is.True);
+            Assert.That(array, Is.EqualTo(new[] { 2, 8, 10, 12, 14, 16, 18, 20 }));
             array.RemoveRangeFromTo(14, 28);
-            Assert.That(IC.Eq(array, 2, 8, 10, 12), Is.True);
+            Assert.That(array, Is.EqualTo(new[] { 2, 8, 10, 12 }));
             array.RemoveRangeFromTo(0, 9);
-            Assert.That(IC.Eq(array, 10, 12), Is.True);
+            Assert.That(array, Is.EqualTo(new[] { 10, 12 }));
             array.RemoveRangeFromTo(0, 81);
             Assert.That(IC.Eq(array), Is.True);
         }
@@ -2015,7 +2015,7 @@ namespace C5.Tests.arrays.sorted
                 Assert.Multiple(() =>
                 {
                     Assert.That(array.Check(), Is.True);
-                    Assert.That(IC.Eq(array, 0, 1, 3, 4, 5, 6, 7, 8, 9), Is.True);
+                    Assert.That(array, Is.EqualTo(new[] { 0, 1, 3, 4, 5, 6, 7, 8, 9 }));
                 });
             }
 
@@ -2096,7 +2096,7 @@ namespace C5.Tests.arrays.sorted
                 Assert.Multiple(() =>
                 {
                     Assert.That(array.Check(), Is.True);
-                    Assert.That(IC.Eq(array, 0, 1, 3, 4, 5, 6, 7, 8, 9), Is.True);
+                    Assert.That(array, Is.EqualTo(new[] { 0, 1, 3, 4, 5, 6, 7, 8, 9 }));
                 });
             }
 
@@ -2143,28 +2143,28 @@ namespace C5.Tests.arrays.sorted
                 {
                     Assert.That(array, Has.Count.EqualTo(8));
                     Assert.That(array.Check(), Is.True);
-                    Assert.That(IC.Eq(array, 0, 1, 2, 3, 5, 7, 8, 9), Is.True);
+                    Assert.That(array, Is.EqualTo(new[] { 0, 1, 2, 3, 5, 7, 8, 9 }));
                 });
                 array.RemoveAll(array2.RangeFromTo(3, 7));
                 Assert.Multiple(() =>
                 {
                     Assert.That(array, Has.Count.EqualTo(8));
                     Assert.That(array.Check(), Is.True);
-                    Assert.That(IC.Eq(array, 0, 1, 2, 3, 5, 7, 8, 9), Is.True);
+                    Assert.That(array, Is.EqualTo(new[] { 0, 1, 2, 3, 5, 7, 8, 9 }));
                 });
                 array.RemoveAll(array2.RangeFromTo(13, 17));
                 Assert.That(array, Has.Count.EqualTo(8));
                 Assert.Multiple(() =>
                 {
                     Assert.That(array.Check(), Is.True);
-                    Assert.That(IC.Eq(array, 0, 1, 2, 3, 5, 7, 8, 9), Is.True);
+                    Assert.That(array, Is.EqualTo(new[] { 0, 1, 2, 3, 5, 7, 8, 9 }));
                 });
                 array.RemoveAll(array2.RangeFromTo(3, 17));
                 Assert.That(array, Has.Count.EqualTo(7));
                 Assert.Multiple(() =>
                 {
                     Assert.That(array.Check(), Is.True);
-                    Assert.That(IC.Eq(array, 0, 1, 2, 3, 5, 7, 9), Is.True);
+                    Assert.That(array, Is.EqualTo(new[] { 0, 1, 2, 3, 5, 7, 9 }));
                 });
                 for (int i = 0; i < 10; i++)
                 {
@@ -2189,21 +2189,21 @@ namespace C5.Tests.arrays.sorted
                 {
                     Assert.That(array, Has.Count.EqualTo(3));
                     Assert.That(array.Check(), Is.True);
-                    Assert.That(IC.Eq(array, 4, 6, 8), Is.True);
+                    Assert.That(array, Is.EqualTo(new[] { 4, 6, 8 }));
                 });
                 array.RetainAll(array2.RangeFromTo(1, 17));
                 Assert.That(array, Has.Count.EqualTo(3));
                 Assert.Multiple(() =>
                 {
                     Assert.That(array.Check(), Is.True);
-                    Assert.That(IC.Eq(array, 4, 6, 8), Is.True);
+                    Assert.That(array, Is.EqualTo(new[] { 4, 6, 8 }));
                 });
                 array.RetainAll(array2.RangeFromTo(3, 5));
                 Assert.That(array, Has.Count.EqualTo(1));
                 Assert.Multiple(() =>
                 {
                     Assert.That(array.Check(), Is.True);
-                    Assert.That(IC.Eq(array, 4), Is.True);
+                    Assert.That(array, Is.EqualTo(new[] { 4 }));
                 });
                 array.RetainAll(array2.RangeFromTo(7, 17));
                 Assert.That(array, Is.Empty);
@@ -2264,14 +2264,14 @@ namespace C5.Tests.arrays.sorted
                 {
                     Assert.That(array.Check(), Is.True);
                     Assert.That(array, Has.Count.EqualTo(6));
-                    Assert.That(IC.Eq(array, 0, 1, 2, 7, 8, 9), Is.True);
+                    Assert.That(array, Is.EqualTo(new[] { 0, 1, 2, 7, 8, 9 }));
                 });
                 array.RemoveInterval(2, 3);
                 Assert.Multiple(() =>
                 {
                     Assert.That(array.Check(), Is.True);
                     Assert.That(array, Has.Count.EqualTo(3));
-                    Assert.That(IC.Eq(array, 0, 1, 9), Is.True);
+                    Assert.That(array, Is.EqualTo(new[] { 0, 1, 9 }));
                 });
                 array.RemoveInterval(0, 3);
                 Assert.Multiple(() =>
@@ -2309,7 +2309,7 @@ namespace C5.Tests.arrays.sorted
             {
                 SCG.IEnumerable<int> e = array[3, 3];
 
-                Assert.That(IC.Eq(e, 3, 4, 5), Is.True);
+                Assert.That(e, Is.EqualTo(new[] { 3, 4, 5 }));
                 e = array[3, 0];
                 Assert.That(IC.Eq(e), Is.True);
             }

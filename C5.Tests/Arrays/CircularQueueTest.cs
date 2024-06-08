@@ -123,7 +123,7 @@ namespace C5.Tests.arrays.circularqueue
         {
             Assert.That(queue.Check(), Is.True);
             loadup3();
-            Assert.That(IC.Eq(queue, 14, 15, 16, 17), Is.True);
+            Assert.That(queue, Is.EqualTo(new[] { 14, 15, 16, 17 }));
         }
 
         [Test]
@@ -134,7 +134,7 @@ namespace C5.Tests.arrays.circularqueue
             {
                 Assert.That(queue.Check(), Is.True);
                 Assert.That(queue, Has.Count.EqualTo(5));
-                Assert.That(IC.Eq(queue, 12, 13, 103, 14, 15), Is.True);
+                Assert.That(queue, Is.EqualTo(new[] { 12, 13, 103, 14, 15 }));
             });
             Assert.That(queue.Choose(), Is.EqualTo(12));
         }
@@ -179,7 +179,7 @@ namespace C5.Tests.arrays.circularqueue
             {
                 Assert.That(queue.Check(), Is.True);
                 Assert.That(queue, Has.Count.EqualTo(5));
-                Assert.That(IC.Eq(queue, 15, 1000, 1001, 1002, 1003), Is.True);
+                Assert.That(queue, Is.EqualTo(new[] { 15, 1000, 1001, 1002, 1003 }));
             });
             Assert.That(queue.Choose(), Is.EqualTo(15));
         }
