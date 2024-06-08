@@ -869,7 +869,7 @@ public class HashSet<T> : CollectionBase<T>, ICollection<T>
     /// <returns>Histogram data.</returns>
     public ISortedDictionary<int, int> BucketCostDistribution()
     {
-        TreeDictionary<int, int> res = new();
+        TreeDictionary<int, int> res = [];
         for (int i = 0, s = table.Length; i < s; i++)
         {
             int count = 0;

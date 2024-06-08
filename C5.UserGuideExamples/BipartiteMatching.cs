@@ -104,7 +104,7 @@ internal class BipartiteMatchingProgram
                 HashSet<RightNode> ledges = newrnodes;
                 if (!edges.FindOrAdd(edge.Item1, ref ledges))
                 {
-                    newrnodes = new HashSet<RightNode>();
+                    newrnodes = [];
                 }
                 ledges.Add(rnode);
             }
@@ -150,7 +150,7 @@ internal class BipartiteMatchingProgram
             {
                 Debug.Print("Start outer");
                 _foundAugmentingPath = false;
-                _endPoints = new HashSet<RightNode>();
+                _endPoints = [];
                 foreach (var rightNode in _rightNodes)
                 {
                     rightNode.BackRef = null;
@@ -163,7 +163,7 @@ internal class BipartiteMatchingProgram
                 while (!_foundAugmentingPath && _endPoints.Count > 0)
                 {
                     var oldLayer = _endPoints;
-                    _endPoints = new HashSet<RightNode>();
+                    _endPoints = [];
                     foreach (var rb in oldLayer)
                     {
                         Search(rb.Match, rb.Origin);

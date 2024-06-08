@@ -496,14 +496,14 @@ namespace C5.Tests.arrays.sorted
         {
             Assert.Multiple(() =>
             {
-                Assert.That(IC.SetEq(list.UniqueItems()), Is.True);
-                Assert.That(IC.SetEq(list.ItemMultiplicities()), Is.True);
+                Assert.That(list.UniqueItems(), Is.Empty);
+                Assert.That(list.ItemMultiplicities(), Is.Empty);
             });
             list.AddAll([7, 9, 7]);
             Assert.Multiple(() =>
             {
-                Assert.That(IC.SetEq(list.UniqueItems(), 7, 9), Is.True);
-                Assert.That(IC.SetEq(list.ItemMultiplicities(), 7, 1, 9, 1), Is.True);
+                Assert.That(list.UniqueItems(), Is.EquivalentTo(new[] { 7, 9 }));
+                Assert.That(list.ItemMultiplicities(), Is.EquivalentTo(new[] { SCG.KeyValuePair.Create(7, 1), SCG.KeyValuePair.Create(9, 1) }));
             });
         }
     }
@@ -697,7 +697,7 @@ namespace C5.Tests.arrays.sorted
         public void UpdateOrAddWithExpand()
         {
             // bug20071217
-            SortedArray<double> arr = new();
+            SortedArray<double> arr = [];
             for (int i = 0; i < 50; i++)
             {
                 arr.UpdateOrAdd(i + 0.1);
@@ -710,7 +710,7 @@ namespace C5.Tests.arrays.sorted
         public void FindOrAddWithExpand()
         {
             // bug20071217
-            SortedArray<double> arr = new();
+            SortedArray<double> arr = [];
             for (int i = 0; i < 50; i++)
             {
                 double iVar = i + 0.1;

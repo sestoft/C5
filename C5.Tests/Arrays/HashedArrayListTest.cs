@@ -644,7 +644,7 @@ namespace C5.Tests.arrays.hashed
             [SetUp]
             public void Init()
             {
-                list = new HashedArrayList<int>();
+                list = [];
                 always = delegate { return true; };
                 never = delegate { return false; };
                 even = delegate (int i) { return i % 2 == 0; };
@@ -731,7 +731,7 @@ namespace C5.Tests.arrays.hashed
 
 
             [SetUp]
-            public void Init() { list = new HashedArrayList<int>(); }
+            public void Init() { list = []; }
 
 
             [Test]
@@ -838,7 +838,7 @@ namespace C5.Tests.arrays.hashed
 
 
             [SetUp]
-            public void Init() { list = new HashedArrayList<int>(); }
+            public void Init() { list = []; }
 
             [Test]
             public void Choose()
@@ -884,7 +884,7 @@ namespace C5.Tests.arrays.hashed
             {
                 list.Add(3); list.Add(4); list.Add(5);
 
-                HashedArrayList<int> list2 = new();
+                HashedArrayList<int> list2 = [];
 
                 list2.AddAll(list);
                 Assert.That(IC.Eq(list2, 3, 4, 5), Is.True);
@@ -972,7 +972,7 @@ namespace C5.Tests.arrays.hashed
             private HashedArrayList<int> list;
 
             [SetUp]
-            public void Init() { list = new HashedArrayList<int>(); }
+            public void Init() { list = []; }
 
             [TearDown]
             public void Dispose() { list.Dispose(); }
@@ -982,14 +982,14 @@ namespace C5.Tests.arrays.hashed
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.SetEq(list.UniqueItems()), Is.True);
-                    Assert.That(IC.SetEq(list.ItemMultiplicities()), Is.True);
+                    Assert.That(list.UniqueItems(), Is.Empty);
+                    Assert.That(list.ItemMultiplicities(), Is.Empty);
                 });
                 list.AddAll([7, 9, 7]);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.SetEq(list.UniqueItems(), 7, 9), Is.True);
-                    Assert.That(IC.SetEq(list.ItemMultiplicities(), 7, 1, 9, 1), Is.True);
+                    Assert.That(list.UniqueItems(), Is.EquivalentTo(new[] { 7, 9 }));
+                    Assert.That(list.ItemMultiplicities(), Is.EquivalentTo(new[] { SCG.KeyValuePair.Create(7, 1), SCG.KeyValuePair.Create(9, 1) }));
                 });
             }
         }
@@ -1004,7 +1004,7 @@ namespace C5.Tests.arrays.hashed
             [SetUp]
             public void Init()
             {
-                list = new HashedArrayList<int>();
+                list = [];
                 a = new int[10];
                 for (int i = 0; i < 10; i++)
                 {
@@ -1086,7 +1086,7 @@ namespace C5.Tests.arrays.hashed
 
 
             [SetUp]
-            public void Init() { list = new HashedArrayList<int>(); }
+            public void Init() { list = []; }
 
 
             [Test]
@@ -1201,7 +1201,7 @@ namespace C5.Tests.arrays.hashed
             [Test]
             public void ContainsAll()
             {
-                HashedArrayList<int> list2 = new();
+                HashedArrayList<int> list2 = [];
 
                 Assert.That(list.ContainsAll(list2), Is.True);
                 list2.Add(4);
@@ -1216,7 +1216,7 @@ namespace C5.Tests.arrays.hashed
             [Test]
             public void RetainAll()
             {
-                HashedArrayList<int> list2 = new();
+                HashedArrayList<int> list2 = [];
 
                 list.Add(4); list.Add(5); list.Add(6);
                 list2.Add(5); list2.Add(4); list2.Add(7);
@@ -1246,7 +1246,7 @@ namespace C5.Tests.arrays.hashed
             [Test]
             public void RemoveAll()
             {
-                HashedArrayList<int> list2 = new();
+                HashedArrayList<int> list2 = [];
 
                 list.Add(4); list.Add(5); list.Add(6);
                 list2.Add(5); list2.Add(4); list2.Add(7);
@@ -1326,7 +1326,7 @@ namespace C5.Tests.arrays.hashed
             [SetUp]
             public void Init()
             {
-                dit = new HashedArrayList<int>();
+                dit = [];
             }
 
 
@@ -1367,7 +1367,7 @@ namespace C5.Tests.arrays.hashed
             [SetUp]
             public void Init()
             {
-                dit = new HashedArrayList<int>();
+                dit = [];
             }
 
             [Test]
@@ -2211,7 +2211,7 @@ namespace C5.Tests.arrays.hashed
 
 
             [SetUp]
-            public void Init() { lst = new HashedArrayList<int>(); }
+            public void Init() { lst = []; }
 
 
             [TearDown]
@@ -2309,13 +2309,13 @@ namespace C5.Tests.arrays.hashed
             [SetUp]
             public void Init()
             {
-                list = new HashedArrayList<int>
-                {
+                list =
+                [
                     0,
                     1,
                     2,
                     3
-                };
+                ];
                 view = (HashedArrayList<int>)list.View(1, 2);
             }
 
@@ -2516,11 +2516,11 @@ namespace C5.Tests.arrays.hashed
                     Assert.That(IC.Eq(view, 8, 18, 12, 15), Is.True);
                 });
 
-                HashedArrayList<int> lst2 = new()
-                {
+                HashedArrayList<int> lst2 =
+                [
                     90,
                     92
-                };
+                ];
                 view.AddAll(lst2);
                 check();
                 Assert.Multiple(() =>
@@ -2563,10 +2563,10 @@ namespace C5.Tests.arrays.hashed
                     Assert.That(view.Contains(0), Is.False);
                 });
 
-                HashedArrayList<int> lst2 = new()
-                {
+                HashedArrayList<int> lst2 =
+                [
                     2
-                };
+                ];
                 Assert.That(view.ContainsAll(lst2), Is.True);
                 lst2.Add(3);
                 Assert.Multiple(() =>
@@ -2757,14 +2757,14 @@ namespace C5.Tests.arrays.hashed
                 view.Add(1); view.Add(5); view.Add(3); view.Add(1); view.Add(3); view.Add(0);
                 Assert.That(IC.Eq(view, 2, 5, 1), Is.True);
 
-                HashedArrayList<int> l2 = new()
-                {
+                HashedArrayList<int> l2 =
+                [
                     1,
                     2,
                     2,
                     3,
                     1
-                };
+                ];
                 view.RemoveAll(l2);
                 check();
                 Assert.That(IC.Eq(view, 5), Is.True);
@@ -3435,9 +3435,9 @@ namespace C5.Tests.arrays.hashed
             [SetUp]
             public void Init()
             {
-                dit = new HashedArrayList<int>();
-                dat = new HashedArrayList<int>();
-                dut = new HashedArrayList<int>();
+                dit = [];
+                dat = [];
+                dut = [];
             }
 
 
@@ -3562,9 +3562,9 @@ namespace C5.Tests.arrays.hashed
             [SetUp]
             public void Init()
             {
-                dit = new HashedArrayList<int>();
-                dat = new HashedArrayList<int>();
-                dut = new HashedArrayList<int>();
+                dit = [];
+                dat = [];
+                dut = [];
             }
 
 
@@ -3689,15 +3689,15 @@ namespace C5.Tests.arrays.hashed
             [SetUp]
             public void Init()
             {
-                dit = new HashedArrayList<int>();
-                dat = new HashedArrayList<int>();
-                dut = new HashedArrayList<int>();
+                dit = [];
+                dat = [];
+                dut = [];
                 dit.Add(2); dit.Add(1);
                 dat.Add(1); dat.Add(2);
                 dut.Add(3);
-                Dit = new HashedArrayList<ICollection<int>>();
-                Dat = new HashedArrayList<ICollection<int>>();
-                Dut = new HashedArrayList<ICollection<int>>();
+                Dit = [];
+                Dat = [];
+                Dut = [];
             }
 
 
@@ -3750,15 +3750,15 @@ namespace C5.Tests.arrays.hashed
             [SetUp]
             public void Init()
             {
-                dit = new HashedArrayList<int>();
-                dat = new HashedArrayList<int>();
-                dut = new HashedArrayList<int>();
+                dit = [];
+                dat = [];
+                dut = [];
                 dit.Add(2); dit.Add(1);
                 dat.Add(1); dat.Add(2);
                 dut.Add(3);
-                Dit = new HashedArrayList<ICollection<int>>();
-                Dat = new HashedArrayList<ICollection<int>>();
-                Dut = new HashedArrayList<ICollection<int>>();
+                Dit = [];
+                Dat = [];
+                Dut = [];
             }
 
 
@@ -3812,18 +3812,18 @@ namespace C5.Tests.arrays.hashed
             [SetUp]
             public void Init()
             {
-                dit = new HashedArrayList<int>();
-                dat = new HashedArrayList<int>();
-                dut = new HashedArrayList<int>();
-                dot = new HashedArrayList<int>();
+                dit = [];
+                dat = [];
+                dut = [];
+                dot = [];
                 dit.Add(2); dit.Add(1);
                 dat.Add(1); dat.Add(2);
                 dut.Add(3);
                 dot.Add(2); dot.Add(1);
-                Dit = new HashedArrayList<ISequenced<int>>();
-                Dat = new HashedArrayList<ISequenced<int>>();
-                Dut = new HashedArrayList<ISequenced<int>>();
-                Dot = new HashedArrayList<ISequenced<int>>();
+                Dit = [];
+                Dat = [];
+                Dut = [];
+                Dot = [];
             }
 
 
@@ -3882,18 +3882,18 @@ namespace C5.Tests.arrays.hashed
             [SetUp]
             public void Init()
             {
-                dit = new HashedArrayList<int>();
-                dat = new HashedArrayList<int>();
-                dut = new HashedArrayList<int>();
-                dot = new HashedArrayList<int>();
+                dit = [];
+                dat = [];
+                dut = [];
+                dot = [];
                 dit.Add(2); dit.Add(1); //{2,1}
                 dat.Add(1); dat.Add(2); //{1,2}
                 dut.Add(3);            //{3}
                 dot.Add(2); dot.Add(1); //{2,1}
-                Dit = new HashedArrayList<ISequenced<int>>();
-                Dat = new HashedArrayList<ISequenced<int>>();
-                Dut = new HashedArrayList<ISequenced<int>>();
-                Dot = new HashedArrayList<ISequenced<int>>();
+                Dit = [];
+                Dat = [];
+                Dut = [];
+                Dot = [];
             }
 
 

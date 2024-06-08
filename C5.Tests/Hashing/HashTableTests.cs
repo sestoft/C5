@@ -3,6 +3,7 @@
 
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using SCG = System.Collections.Generic;
 namespace C5.Tests.hashtable.set
 {
@@ -37,7 +38,7 @@ namespace C5.Tests.hashtable.set
             public void Init()
             {
                 Debug.UseDeterministicHashing = true;
-                list = new HashSet<int>();
+                list = [];
                 always = delegate { return true; };
                 never = delegate { return false; };
                 even = delegate (int i) { return i % 2 == 0; };
@@ -128,7 +129,7 @@ namespace C5.Tests.hashtable.set
 
 
             [SetUp]
-            public void Init() { hashset = new HashSet<int>(); }
+            public void Init() { hashset = []; }
 
 
             [Test]
@@ -153,7 +154,7 @@ namespace C5.Tests.hashtable.set
                 hashset.Add(18);
                 hashset.Add(17);
                 hashset.Add(33);
-                Assert.That(IC.SetEq(hashset, 1, 5, 8, 10, 16, 17, 18, 33), Is.True);
+                Assert.That(hashset, Is.EquivalentTo(new[] { 1, 5, 8, 10, 16, 17, 18, 33 }));
             }
 
             [Test]
@@ -236,7 +237,7 @@ namespace C5.Tests.hashtable.set
 
 
             [SetUp]
-            public void Init() { hashset = new HashSet<int>(); }
+            public void Init() { hashset = []; }
 
             [Test]
             public void Choose()
@@ -281,25 +282,23 @@ namespace C5.Tests.hashtable.set
                 });
             }
 
-
             [Test]
             public void AddAll()
             {
                 hashset.Add(3); hashset.Add(4); hashset.Add(5);
 
-                HashSet<int> hashset2 = new();
+                HashSet<int> hashset2 = [];
 
                 hashset2.AddAll(hashset);
-                Assert.That(IC.SetEq(hashset2, 3, 4, 5), Is.True);
+                Assert.That(hashset2, Is.EquivalentTo(new[] { 3, 4, 5 }));
                 hashset.Add(9);
                 hashset.AddAll(hashset2);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.SetEq(hashset2, 3, 4, 5), Is.True);
-                    Assert.That(IC.SetEq(hashset, 3, 4, 5, 9), Is.True);
+                    Assert.That(hashset2, Is.EquivalentTo(new[] { 3, 4, 5 }));
+                    Assert.That(hashset, Is.EquivalentTo(new[] { 3, 4, 5, 9 }));
                 });
             }
-
 
             [TearDown]
             public void Dispose() { hashset = null; }
@@ -347,7 +346,7 @@ namespace C5.Tests.hashtable.set
             private HashSet<int> list;
 
             [SetUp]
-            public void Init() { list = new HashSet<int>(); }
+            public void Init() { list = []; }
 
             [TearDown]
             public void Dispose() { list = null; }
@@ -357,14 +356,15 @@ namespace C5.Tests.hashtable.set
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.SetEq(list.UniqueItems()), Is.True);
-                    Assert.That(IC.SetEq(list.ItemMultiplicities()), Is.True);
+                    Assert.That(list.UniqueItems(), Is.Empty);
+                    Assert.That(list.ItemMultiplicities(), Is.Empty);
                 });
                 list.AddAll([7, 9, 7]);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.SetEq(list.UniqueItems(), 7, 9), Is.True);
-                    Assert.That(IC.SetEq(list.ItemMultiplicities(), 7, 1, 9, 1), Is.True);
+                    Assert.That(list.UniqueItems(), Is.EquivalentTo(new[] { 7, 9 }));
+                    Assert.That(list.ItemMultiplicities(), Is.EquivalentTo(new[] { SCG.KeyValuePair.Create(7, 1), SCG.KeyValuePair.Create(9, 1) }));
+
                 });
             }
         }
@@ -380,7 +380,7 @@ namespace C5.Tests.hashtable.set
             public void Init()
             {
                 Debug.UseDeterministicHashing = true;
-                hashset = new HashSet<int>();
+                hashset = [];
                 a = new int[10];
                 for (int i = 0; i < 10; i++)
                 {
@@ -468,7 +468,7 @@ namespace C5.Tests.hashtable.set
             [SetUp]
             public void Init()
             {
-                hashset = new HashSet<int>();
+                hashset = [];
             }
 
 
@@ -503,7 +503,7 @@ namespace C5.Tests.hashtable.set
             public void Init()
             {
                 Debug.UseDeterministicHashing = true;
-                hashset = new HashSet<int>();
+                hashset = [];
             }
 
 
@@ -615,7 +615,7 @@ namespace C5.Tests.hashtable.set
                     a[i] = 3 * i + 1;
                 }
 
-                Assert.That(IC.SetEq(hashset, a), Is.True);
+                Assert.That(hashset, Is.EquivalentTo(a));
             }
 
 
@@ -664,7 +664,7 @@ namespace C5.Tests.hashtable.set
             [Test]
             public void ContainsAll()
             {
-                HashSet<int> list2 = new();
+                HashSet<int> list2 = [];
 
                 Assert.That(hashset.ContainsAll(list2), Is.True);
                 list2.Add(4);
@@ -683,17 +683,17 @@ namespace C5.Tests.hashtable.set
             [Test]
             public void RetainAll()
             {
-                HashSet<int> list2 = new();
+                HashSet<int> list2 = [];
 
                 hashset.Add(4); hashset.Add(5); hashset.Add(6);
                 list2.Add(5); list2.Add(4); list2.Add(7);
                 hashset.RetainAll(list2);
-                Assert.That(IC.SetEq(hashset, 4, 5), Is.True);
+                Assert.That(hashset, Is.EquivalentTo(new[] { 4, 5 }));
                 hashset.Add(6);
                 list2.Clear();
                 list2.Add(7); list2.Add(8); list2.Add(9);
                 hashset.RetainAll(list2);
-                Assert.That(IC.SetEq(hashset), Is.True);
+                Assert.That(hashset, Is.Empty);
             }
 
             //Bug in RetainAll reported by Chris Fesler
@@ -711,10 +711,10 @@ namespace C5.Tests.hashtable.set
                     _largeArrayTwo[i] = "" + (i + LARGE_ARRAY_MID);
                 }
 
-                HashSet<string> setOne = new();
+                HashSet<string> setOne = [];
                 setOne.AddAll(_largeArrayOne);
 
-                HashSet<string> setTwo = new();
+                HashSet<string> setTwo = [];
                 setTwo.AddAll(_largeArrayTwo);
 
                 setOne.RetainAll(setTwo);
@@ -730,7 +730,7 @@ namespace C5.Tests.hashtable.set
             [Test]
             public void RemoveAll()
             {
-                HashSet<int> list2 = new();
+                HashSet<int> list2 = [];
 
                 hashset.Add(4); hashset.Add(5); hashset.Add(6);
                 list2.Add(5); list2.Add(7); list2.Add(4);
@@ -756,34 +756,36 @@ namespace C5.Tests.hashtable.set
                 {
                     Assert.That(hashset.Remove(2), Is.False);
                     Assert.That(hashset.Remove(4), Is.True);
-                    Assert.That(IC.SetEq(hashset, 5, 6), Is.True);
+                    Assert.That(hashset, Is.EquivalentTo(new[] { 5, 6 }));
                 });
                 hashset.Add(7);
                 hashset.Add(21); hashset.Add(37); hashset.Add(53); hashset.Add(69); hashset.Add(85);
                 Assert.Multiple(() =>
                 {
                     Assert.That(hashset.Remove(5), Is.True);
-                    Assert.That(IC.SetEq(hashset, 6, 7, 21, 37, 53, 69, 85), Is.True);
+                    Assert.That(hashset, Is.EquivalentTo(new[] { 6, 7, 21, 37, 53, 69, 85 }));
                     Assert.That(hashset.Remove(165), Is.False);
                 });
-                Assert.That(IC.SetEq(hashset, 6, 7, 21, 37, 53, 69, 85), Is.True);
+                Assert.That(hashset, Is.EquivalentTo(new[] { 6, 7, 21, 37, 53, 69, 85 }));
                 Assert.That(hashset.Remove(53), Is.True);
-                Assert.That(IC.SetEq(hashset, 6, 7, 21, 37, 69, 85), Is.True);
+                Assert.That(hashset, Is.EquivalentTo(new[] { 6, 7, 21, 37, 69, 85 }));
                 Assert.That(hashset.Remove(37), Is.True);
-                Assert.That(IC.SetEq(hashset, 6, 7, 21, 69, 85), Is.True);
+                Assert.That(hashset, Is.EquivalentTo(new[] { 6, 7, 21, 69, 85 }));
                 Assert.That(hashset.Remove(85), Is.True);
-                Assert.That(IC.SetEq(hashset, 6, 7, 21, 69), Is.True);
+                Assert.That(hashset, Is.EquivalentTo(new[] { 6, 7, 21, 69 }));
             }
-
 
             [Test]
             public void Clear()
             {
                 hashset.Add(7); hashset.Add(7);
                 hashset.Clear();
-                Assert.That(hashset.IsEmpty, Is.True);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(hashset.IsEmpty, Is.True);
+                    Assert.That(hashset, Is.Empty);
+                });
             }
-
 
             [TearDown]
             public void Dispose()
@@ -1135,15 +1137,15 @@ namespace C5.Tests.hashtable.set
             [SetUp]
             public void Init()
             {
-                dit = new HashSet<int>();
-                dat = new HashSet<int>();
-                dut = new HashSet<int>();
+                dit = [];
+                dat = [];
+                dut = [];
                 dit.Add(2); dit.Add(1);
                 dat.Add(1); dat.Add(2);
                 dut.Add(3);
-                Dit = new LinkedList<ICollection<int>>();
-                Dat = new LinkedList<ICollection<int>>();
-                Dut = new LinkedList<ICollection<int>>();
+                Dit = [];
+                Dat = [];
+                Dut = [];
             }
 
 
@@ -1193,18 +1195,18 @@ namespace C5.Tests.hashtable.set
             [SetUp]
             public void Init()
             {
-                dit = new LinkedList<int>();
-                dat = new LinkedList<int>();
-                dut = new LinkedList<int>();
-                dot = new LinkedList<int>();
+                dit = [];
+                dat = [];
+                dut = [];
+                dot = [];
                 dit.Add(2); dit.Add(1);
                 dat.Add(1); dat.Add(2);
                 dut.Add(3);
                 dot.Add(2); dot.Add(1);
-                Dit = new HashSet<ISequenced<int>>();
-                Dat = new HashSet<ISequenced<int>>();
-                Dut = new HashSet<ISequenced<int>>();
-                Dot = new HashSet<ISequenced<int>>();
+                Dit = [];
+                Dat = [];
+                Dut = [];
+                Dot = [];
             }
 
 

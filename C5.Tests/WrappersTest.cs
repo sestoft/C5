@@ -662,14 +662,14 @@ namespace C5.Tests.wrappers
                 Assert.Multiple(() =>
                 {
                     Assert.That(wrapped.ToString(), Is.EqualTo("[ 0:4, 1:5, 2:6 ]"));
-                    Assert.That(IC.Eq(wrapped.ToArray(), 4, 5, 6), Is.True);
+                    Assert.That(wrapped.ToArray(), Is.EquivalentTo(new[] { 4, 5, 6 }));
                     Assert.That(wrapped.ToString("L4", null), Is.EqualTo("[ ... ]"));
                     Assert.That(wrapped.Underlying, Is.EqualTo(null));
-                    Assert.That(IC.SetEq(wrapped.UniqueItems(), 4, 5, 6), Is.True);
+                    Assert.That(wrapped.UniqueItems(), Is.EquivalentTo(new[] { 4, 5, 6 }));
                     Assert.That(wrapped.UnsequencedEquals(other), Is.True);
                 });
                 wrapped.Shuffle();
-                Assert.That(IC.SetEq(wrapped.UniqueItems(), 4, 5, 6), Is.True);
+                Assert.That(wrapped.UniqueItems(), Is.EquivalentTo(new[] { 4, 5, 6 }));
             }
 
             [Test]
@@ -814,21 +814,19 @@ namespace C5.Tests.wrappers
                     Assert.That(wrapped.ToString(), Is.EqualTo("[ 0:4, 1:5, 2:6 ]"));
                     Assert.That(IC.Eq(wrapped.ToArray(), 4, 5, 6), Is.True);
                     Assert.That(wrapped.ToString("L4", null), Is.EqualTo("[ ... ]"));
-                    // TODO: Below line removed as NUnit 3.0 test fails trying to enumerate...
-                    // Assert.AreEqual(outerwrapped, wrapped.Underlying);
-                    Assert.That(IC.SetEq(wrapped.UniqueItems(), 4, 5, 6), Is.True);
+                    Assert.That(outerwrapped, Is.EqualTo(wrapped.Underlying));
+                    Assert.That(wrapped.UniqueItems(), Is.EquivalentTo(new[] { 4, 5, 6 }));
                     Assert.That(wrapped.UnsequencedEquals(other), Is.True);
-                    //
                     Assert.That(wrapped.TrySlide(1), Is.True);
                     Assert.That(IC.Eq(wrapped, 5, 6, 7), Is.True);
                     Assert.That(wrapped.TrySlide(-1, 2), Is.True);
                     Assert.That(IC.Eq(wrapped, 4, 5), Is.True);
                     Assert.That(wrapped.TrySlide(-2), Is.False);
-                    Assert.That(IC.Eq(wrapped.Span(outerwrapped.ViewOf(7)), 4, 5, 6, 7), Is.True);
+                    Assert.That(wrapped.Span(outerwrapped.ViewOf(7)), Is.EquivalentTo(new[] { 4, 5, 6, 7 }));
                 });
                 //
                 wrapped.Shuffle();
-                Assert.That(IC.SetEq(wrapped.UniqueItems(), 4, 5), Is.True);
+                Assert.That(wrapped.UniqueItems(), Is.EquivalentTo(new[] { 4, 5 }));
                 Assert.That(wrapped.IsValid, Is.True);
                 wrapped.Dispose();
                 Assert.That(wrapped.IsValid, Is.False);

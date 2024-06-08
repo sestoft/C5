@@ -40,7 +40,7 @@ internal class HashCodes
 
     public static HashSet<int> MakeRandom(int count, SCG.IEqualityComparer<int> eqc)
     {
-        var res = eqc == null ? new HashSet<int>() : new HashSet<int>(eqc);
+        var res = eqc == null ? [] : new HashSet<int>(eqc);
 
         for (var i = 0; i < count; i++)
         {

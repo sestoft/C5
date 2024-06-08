@@ -591,7 +591,7 @@ namespace C5.Tests.arrays.list
             [SetUp]
             public void Init()
             {
-                list = new ArrayList<int>();
+                list = [];
             }
 
             [Test]
@@ -724,7 +724,7 @@ namespace C5.Tests.arrays.list
             [SetUp]
             public void Init()
             {
-                list = new ArrayList<int>();
+                list = [];
                 always = delegate { return true; };
                 never = delegate { return false; };
                 even = delegate (int i) { return i % 2 == 0; };
@@ -811,7 +811,7 @@ namespace C5.Tests.arrays.list
 
 
             [SetUp]
-            public void Init() { list = new ArrayList<int>(); }
+            public void Init() { list = []; }
 
 
             [Test]
@@ -921,7 +921,7 @@ namespace C5.Tests.arrays.list
 
 
             [SetUp]
-            public void Init() { list = new ArrayList<int>(); }
+            public void Init() { list = []; }
 
             [Test]
             public void Choose()
@@ -960,7 +960,7 @@ namespace C5.Tests.arrays.list
             {
                 list.Add(3); list.Add(4); list.Add(5);
 
-                ArrayList<int> list2 = new();
+                ArrayList<int> list2 = [];
 
                 list2.AddAll(list);
                 Assert.That(IC.Eq(list2, 3, 4, 5), Is.True);
@@ -1047,7 +1047,7 @@ namespace C5.Tests.arrays.list
             private ArrayList<int> list;
 
             [SetUp]
-            public void Init() { list = new ArrayList<int>(); }
+            public void Init() { list = []; }
 
             [TearDown]
             public void Dispose() { list.Dispose(); }
@@ -1057,14 +1057,14 @@ namespace C5.Tests.arrays.list
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.SetEq(list.UniqueItems()), Is.True);
-                    Assert.That(IC.SetEq(list.ItemMultiplicities()), Is.True);
+                    Assert.That(list.UniqueItems(), Is.Empty);
+                    Assert.That(list.ItemMultiplicities(), Is.Empty);
                 });
                 list.AddAll([7, 9, 7]);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.SetEq(list.UniqueItems(), 7, 9), Is.True);
-                    Assert.That(IC.SetEq(list.ItemMultiplicities(), 7, 2, 9, 1), Is.True);
+                    Assert.That(list.UniqueItems(), Is.EquivalentTo(new[] { 7, 9 }));
+                    Assert.That(list.ItemMultiplicities(), Is.EquivalentTo(new[] { SCG.KeyValuePair.Create(7, 2), SCG.KeyValuePair.Create(9, 1) }));
                 });
             }
         }
@@ -1079,7 +1079,7 @@ namespace C5.Tests.arrays.list
             [SetUp]
             public void Init()
             {
-                list = new ArrayList<int>();
+                list = [];
                 a = new int[10];
                 for (int i = 0; i < 10; i++)
                 {
@@ -1164,7 +1164,7 @@ namespace C5.Tests.arrays.list
 
 
             [SetUp]
-            public void Init() { list = new ArrayList<int>(); }
+            public void Init() { list = []; }
 
             [Test]
             public void NullEqualityComparerinConstructor1()
@@ -1268,7 +1268,7 @@ namespace C5.Tests.arrays.list
             [Test]
             public void ContainsAll()
             {
-                ArrayList<int> list2 = new();
+                ArrayList<int> list2 = [];
 
                 Assert.That(list.ContainsAll(list2), Is.True);
                 list2.Add(4);
@@ -1287,7 +1287,7 @@ namespace C5.Tests.arrays.list
             [Test]
             public void RetainAll()
             {
-                ArrayList<int> list2 = new();
+                ArrayList<int> list2 = [];
 
                 list.Add(4); list.Add(4); list.Add(5); list.Add(4); list.Add(6);
                 list2.Add(5); list2.Add(4); list2.Add(7); list2.Add(7); list2.Add(4);
@@ -1317,7 +1317,7 @@ namespace C5.Tests.arrays.list
             [Test]
             public void RemoveAll()
             {
-                ArrayList<int> list2 = new();
+                ArrayList<int> list2 = [];
 
                 list.Add(4); list.Add(4); list.Add(5); list.Add(4); list.Add(6);
                 list2.Add(5); list2.Add(4); list2.Add(7); list2.Add(7); list2.Add(4);
@@ -1417,7 +1417,7 @@ namespace C5.Tests.arrays.list
             [SetUp]
             public void Init()
             {
-                dit = new ArrayList<int>();
+                dit = [];
             }
 
 
@@ -1459,7 +1459,7 @@ namespace C5.Tests.arrays.list
             [SetUp]
             public void Init()
             {
-                dit = new ArrayList<int>();
+                dit = [];
             }
 
 
@@ -2313,7 +2313,7 @@ namespace C5.Tests.arrays.list
 
 
             [SetUp]
-            public void Init() { list = new ArrayList<int>(); }
+            public void Init() { list = []; }
 
 
             [Test]
@@ -2354,7 +2354,7 @@ namespace C5.Tests.arrays.list
             private ArrayList<int> list;
 
             [SetUp]
-            public void Init() { list = new ArrayList<int>(); }
+            public void Init() { list = []; }
 
             [Test]
             public void Normal()
@@ -2502,7 +2502,7 @@ namespace C5.Tests.arrays.list
             [SetUp]
             public void Init()
             {
-                list = new ArrayList<int> { 0, 1, 2, 3 };
+                list = [0, 1, 2, 3];
                 view = (ArrayList<int>)list.View(1, 2);
             }
 
@@ -2703,7 +2703,7 @@ namespace C5.Tests.arrays.list
                     Assert.That(IC.Eq(view, 8, 18, 12, 15), Is.True);
                 });
 
-                ArrayList<int> lst2 = new() { 90, 92 };
+                ArrayList<int> lst2 = [90, 92];
                 view.AddAll(lst2);
                 check();
                 Assert.Multiple(() =>
@@ -2747,7 +2747,7 @@ namespace C5.Tests.arrays.list
                     Assert.That(view.Contains(0), Is.False);
                 });
 
-                ArrayList<int> lst2 = new() { 2 };
+                ArrayList<int> lst2 = [2];
 
                 Assert.That(view.ContainsAll(lst2), Is.True);
                 lst2.Add(3);
@@ -2989,7 +2989,7 @@ namespace C5.Tests.arrays.list
 
                 view.FIFO = false;
 
-                ArrayList<int> l2 = new() { 1, 2, 2, 3, 1 };
+                ArrayList<int> l2 = [1, 2, 2, 3, 1];
 
                 view.RemoveAll(l2);
                 check();
@@ -3115,7 +3115,7 @@ namespace C5.Tests.arrays.list
             [SetUp]
             public void Init()
             {
-                list = new ArrayList<int>();
+                list = [];
                 for (int i = 0; i < 6; i++)
                 {
                     list.Add(i);
@@ -3313,7 +3313,7 @@ namespace C5.Tests.arrays.list
             [Test]
             public void InsertAll()
             {
-                ArrayList<int> list2 = new();
+                ArrayList<int> list2 = [];
                 for (int i = 0; i < 5; i++) { list2.Add(100 + i); }
                 Assert.That(list.Check(), Is.True, "list check before insertAll");
                 list.InsertAll(3, list2);
@@ -3334,7 +3334,7 @@ namespace C5.Tests.arrays.list
             [Test]
             public void AddAll()
             {
-                ArrayList<int> list2 = new();
+                ArrayList<int> list2 = [];
                 for (int i = 0; i < 5; i++) { list2.Add(100 + i); }
                 Assert.That(list.Check(), Is.True, "list check before AddAll");
                 list.View(1, 2).AddAll(list2);
@@ -3355,13 +3355,13 @@ namespace C5.Tests.arrays.list
             [Test]
             public void RemoveAll1()
             {
-                ArrayList<int> list2 = new() { 1, 3, 4 };
+                ArrayList<int> list2 = [1, 3, 4];
 
                 for (int i = 0; i < 7; i++)
                 {
                     for (int j = 0; j < 7 - i; j++)
                     {
-                        list = new ArrayList<int>();
+                        list = [];
                         for (int k = 0; k < 6; k++)
                         {
                             list.Add(k);
@@ -3376,7 +3376,7 @@ namespace C5.Tests.arrays.list
             [Test]
             public void RemoveAll2()
             {
-                ArrayList<int> list2 = new() { 1, 3, 4 };
+                ArrayList<int> list2 = [1, 3, 4];
                 Assert.That(list.Check(), Is.True, "list check before RemoveAll");
                 list.RemoveAll(list2);
 
@@ -3447,7 +3447,7 @@ namespace C5.Tests.arrays.list
             [Test]
             public void RetainAll()
             {
-                ArrayList<int> list2 = new() { 2, 4, 5 };
+                ArrayList<int> list2 = [2, 4, 5];
                 Assert.That(list.Check(), Is.True, "list check before RetainAll");
                 list.RetainAll(list2);
 
@@ -3518,13 +3518,13 @@ namespace C5.Tests.arrays.list
             [Test]
             public void RemoveAllCopies()
             {
-                ArrayList<int> list2 = new() { 0, 2, 2, 2, 5, 2, 1 };
+                ArrayList<int> list2 = [0, 2, 2, 2, 5, 2, 1];
 
                 for (int i = 0; i < 7; i++)
                 {
                     for (int j = 0; j < 7 - i; j++)
                     {
-                        list = new ArrayList<int>();
+                        list = [];
                         list.AddAll(list2);
                         ArrayList<int> v = (ArrayList<int>)list.View(i, j);
                         list.RemoveAllCopies(2);
@@ -3633,15 +3633,15 @@ namespace C5.Tests.arrays.list
             [SetUp]
             public void Init()
             {
-                dit = new ArrayList<int>();
+                dit = [];
                 dat = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
-                dut = new ArrayList<int>();
+                dut = [];
                 dit.Add(2); dit.Add(1);
                 dat.Add(1); dat.Add(2);
                 dut.Add(3);
-                Dit = new ArrayList<ICollection<int>>();
-                Dat = new ArrayList<ICollection<int>>();
-                Dut = new ArrayList<ICollection<int>>();
+                Dit = [];
+                Dat = [];
+                Dut = [];
             }
 
 
@@ -3696,15 +3696,15 @@ namespace C5.Tests.arrays.list
             [SetUp]
             public void Init()
             {
-                dit = new ArrayList<int>();
+                dit = [];
                 dat = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
-                dut = new ArrayList<int>();
+                dut = [];
                 dit.Add(2); dit.Add(1);
                 dat.Add(1); dat.Add(2);
                 dut.Add(3);
-                Dit = new ArrayList<ICollection<int>>();
-                Dat = new ArrayList<ICollection<int>>();
-                Dut = new ArrayList<ICollection<int>>();
+                Dit = [];
+                Dat = [];
+                Dut = [];
             }
 
 
@@ -3765,17 +3765,17 @@ namespace C5.Tests.arrays.list
             public void Init()
             {
                 dit = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
-                dat = new ArrayList<int>();
-                dut = new ArrayList<int>();
-                dot = new ArrayList<int>();
+                dat = [];
+                dut = [];
+                dot = [];
                 dit.Add(2); dit.Add(1);
                 dat.Add(2); dat.Add(1);
                 dut.Add(3);
                 dot.Add(1); dot.Add(2);
-                Dit = new ArrayList<ISequenced<int>>();
-                Dat = new ArrayList<ISequenced<int>>();
-                Dut = new ArrayList<ISequenced<int>>();
-                Dot = new ArrayList<ISequenced<int>>();
+                Dit = [];
+                Dat = [];
+                Dut = [];
+                Dot = [];
             }
 
             [Test]
@@ -3836,17 +3836,17 @@ namespace C5.Tests.arrays.list
             public void Init()
             {
                 dit = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
-                dat = new ArrayList<int>();
-                dut = new ArrayList<int>();
-                dot = new ArrayList<int>();
+                dat = [];
+                dut = [];
+                dot = [];
                 dit.Add(2); dit.Add(1);
                 dat.Add(2); dat.Add(1);
                 dut.Add(3);
                 dot.Add(1); dot.Add(2);
-                Dit = new ArrayList<ISequenced<int>>();
-                Dat = new ArrayList<ISequenced<int>>();
-                Dut = new ArrayList<ISequenced<int>>();
-                Dot = new ArrayList<ISequenced<int>>();
+                Dit = [];
+                Dat = [];
+                Dut = [];
+                Dot = [];
             }
 
 
@@ -3904,9 +3904,9 @@ namespace C5.Tests.arrays.list
             [SetUp]
             public void Init()
             {
-                dit = new ArrayList<int>();
-                dat = new ArrayList<int>();
-                dut = new ArrayList<int>();
+                dit = [];
+                dat = [];
+                dut = [];
             }
 
             [Test]
@@ -4027,9 +4027,9 @@ namespace C5.Tests.arrays.list
             [SetUp]
             public void Init()
             {
-                dit = new ArrayList<int>();
-                dat = new ArrayList<int>();
-                dut = new ArrayList<int>();
+                dit = [];
+                dat = [];
+                dut = [];
             }
 
             [Test]
@@ -4150,15 +4150,15 @@ namespace C5.Tests.arrays.list
             [SetUp]
             public void Init()
             {
-                dit = new ArrayList<int>();
-                dat = new ArrayList<int>();
-                dut = new ArrayList<int>();
+                dit = [];
+                dat = [];
+                dut = [];
                 dit.Add(2); dit.Add(1);
                 dat.Add(1); dat.Add(2);
                 dut.Add(3);
-                Dit = new ArrayList<ICollection<int>>();
-                Dat = new ArrayList<ICollection<int>>();
-                Dut = new ArrayList<ICollection<int>>();
+                Dit = [];
+                Dat = [];
+                Dut = [];
             }
 
 
@@ -4209,15 +4209,15 @@ namespace C5.Tests.arrays.list
             [SetUp]
             public void Init()
             {
-                dit = new ArrayList<int>();
-                dat = new ArrayList<int>();
-                dut = new ArrayList<int>();
+                dit = [];
+                dat = [];
+                dut = [];
                 dit.Add(2); dit.Add(1);
                 dat.Add(1); dat.Add(2);
                 dut.Add(3);
-                Dit = new ArrayList<ICollection<int>>();
-                Dat = new ArrayList<ICollection<int>>();
-                Dut = new ArrayList<ICollection<int>>();
+                Dit = [];
+                Dat = [];
+                Dut = [];
             }
 
 
@@ -4269,18 +4269,18 @@ namespace C5.Tests.arrays.list
             [SetUp]
             public void Init()
             {
-                dit = new ArrayList<int>();
-                dat = new ArrayList<int>();
-                dut = new ArrayList<int>();
-                dot = new ArrayList<int>();
+                dit = [];
+                dat = [];
+                dut = [];
+                dot = [];
                 dit.Add(2); dit.Add(1);
                 dat.Add(1); dat.Add(2);
                 dut.Add(3);
                 dot.Add(2); dot.Add(1);
-                Dit = new ArrayList<ISequenced<int>>();
-                Dat = new ArrayList<ISequenced<int>>();
-                Dut = new ArrayList<ISequenced<int>>();
-                Dot = new ArrayList<ISequenced<int>>();
+                Dit = [];
+                Dat = [];
+                Dut = [];
+                Dot = [];
             }
 
 
@@ -4339,18 +4339,18 @@ namespace C5.Tests.arrays.list
             [SetUp]
             public void Init()
             {
-                dit = new ArrayList<int>();
-                dat = new ArrayList<int>();
-                dut = new ArrayList<int>();
-                dot = new ArrayList<int>();
+                dit = [];
+                dat = [];
+                dut = [];
+                dot = [];
                 dit.Add(2); dit.Add(1);
                 dat.Add(1); dat.Add(2);
                 dut.Add(3);
                 dot.Add(2); dot.Add(1);
-                Dit = new ArrayList<ISequenced<int>>();
-                Dat = new ArrayList<ISequenced<int>>();
-                Dut = new ArrayList<ISequenced<int>>();
-                Dot = new ArrayList<ISequenced<int>>();
+                Dit = [];
+                Dat = [];
+                Dut = [];
+                Dot = [];
             }
 
 

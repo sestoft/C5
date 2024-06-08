@@ -500,7 +500,7 @@ internal class HashGraph<V, E, W>(IWeight<E, W> weight) : IGraph<V, E, W> where 
             V start = edge.Start, end = edge.End;
             if (!_graph.Find(ref start, out HashDictionary<V, E> edgeset))
             {
-                _graph.Add(edge.Start, edgeset = new HashDictionary<V, E>());
+                _graph.Add(edge.Start, edgeset = []);
             }
 
             if (!edgeset.UpdateOrAdd(edge.End, edge.EdgeData))
@@ -510,7 +510,7 @@ internal class HashGraph<V, E, W>(IWeight<E, W> weight) : IGraph<V, E, W> where 
 
             if (!_graph.Find(ref end, out edgeset))
             {
-                _graph.Add(edge.End, edgeset = new HashDictionary<V, E>());
+                _graph.Add(edge.End, edgeset = []);
             }
 
             edgeset.UpdateOrAdd(edge.Start, edge.EdgeData);
@@ -529,7 +529,7 @@ internal class HashGraph<V, E, W>(IWeight<E, W> weight) : IGraph<V, E, W> where 
     {
         foreach (var v in vertices)
         {
-            _graph.Add(v, new HashDictionary<V, E>());
+            _graph.Add(v, []);
         }
 
         foreach (var edge in edges)
@@ -631,7 +631,7 @@ internal class HashGraph<V, E, W>(IWeight<E, W> weight) : IGraph<V, E, W> where 
             return false;
         }
 
-        _graph.Add(v, new HashDictionary<V, E>());
+        _graph.Add(v, []);
 
         return true;
     }
@@ -648,7 +648,7 @@ internal class HashGraph<V, E, W>(IWeight<E, W> weight) : IGraph<V, E, W> where 
         }
         else
         {
-            _graph[start] = edgeset = new HashDictionary<V, E>();
+            _graph[start] = edgeset = [];
             edgeset[end] = edgedata;
             retval = true;
         }
@@ -658,7 +658,7 @@ internal class HashGraph<V, E, W>(IWeight<E, W> weight) : IGraph<V, E, W> where 
         }
         else
         {
-            _graph[end] = edgeset = new HashDictionary<V, E>();
+            _graph[end] = edgeset = [];
             edgeset[start] = edgedata;
         }
         if (retval)
@@ -722,7 +722,7 @@ internal class HashGraph<V, E, W>(IWeight<E, W> weight) : IGraph<V, E, W> where 
     {
         if (!(vs is HashSet<V> vertexset))
         {
-            vertexset = new HashSet<V>();
+            vertexset = [];
             vertexset.AddAll(vs);
         }
 
@@ -745,7 +745,7 @@ internal class HashGraph<V, E, W>(IWeight<E, W> weight) : IGraph<V, E, W> where 
 
     public ICollectionValue<SCG.KeyValuePair<V, IGraph<V, E, W>>> Components()
     {
-        ArrayList<SCG.KeyValuePair<V, IGraph<V, E, W>>> retval = new();
+        ArrayList<SCG.KeyValuePair<V, IGraph<V, E, W>>> retval = [];
         HashGraph<V, E, W> component;
         ArrayList<V> vertices = null;
         void edgeaction(Edge<V, E> e)
@@ -755,7 +755,7 @@ internal class HashGraph<V, E, W>(IWeight<E, W> weight) : IGraph<V, E, W> where 
 
         void beforecomponent(V v)
         {
-            vertices = new ArrayList<V>() { v };
+            vertices = [v];
         }
 
         void aftercomponent(V v)
@@ -765,7 +765,7 @@ internal class HashGraph<V, E, W>(IWeight<E, W> weight) : IGraph<V, E, W> where 
             foreach (V start in vertices)
             {
                 //component.graph[start] = graph[start].Clone();
-                HashDictionary<V, E> edgeset = component._graph[start] = new HashDictionary<V, E>();
+                HashDictionary<V, E> edgeset = component._graph[start] = [];
                 foreach (SCG.KeyValuePair<V, E> adjacent in _graph[start])
                 {
                     edgeset[adjacent.Key] = adjacent.Value;
@@ -1122,7 +1122,7 @@ internal class HashGraph<V, E, W>(IWeight<E, W> weight) : IGraph<V, E, W> where 
         HashedArrayList<V> adjacent = default;
         foreach (var p in _graph)
         {
-            adjacent = new HashedArrayList<V>();
+            adjacent = [];
             adjacent.AddAll(p.Value.Keys);
             start = p.Key;
             edges.Add(start, adjacent);
@@ -1759,7 +1759,7 @@ internal class Graph
         g.AddEdge("C", "G", 0);
         g.AddEdge("F", "G", 0);
 
-        HashDictionary<string, int> index = new();
+        HashDictionary<string, int> index = [];
         int[] leastIndexReachableFrom = new int[g.VertexCount];
         int nextindex = 0;
         int outgoingFromRoot = 0;

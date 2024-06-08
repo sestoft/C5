@@ -9,7 +9,7 @@ internal class RandomSelection
 {
     public static void Main()
     {
-        ArrayList<int> list = new();
+        ArrayList<int> list = [];
         list.AddAll([2, 3, 5, 7, 11, 13, 17, 19]);
         var copy1 = new ArrayList<int>();
         copy1.AddAll(list);

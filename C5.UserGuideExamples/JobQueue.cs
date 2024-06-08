@@ -48,7 +48,7 @@ internal class JobQueue
     {
         _jobQueue = new IntervalHeap<Job>();
         _jobs = new HashDictionary<Rid, IPriorityQueueHandle<Job>>();
-        _userJobs = new HashBag<Ip>();
+        _userJobs = [];
     }
 
     public Rid Submit(Ip ip, int time)

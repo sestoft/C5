@@ -31,10 +31,10 @@ namespace C5.UserGuideExamples
             mdict.Remove(20, "twenty");
             Console.WriteLine(mdict);
             Console.WriteLine("mdict.Count is {0}", mdict.Count);
-            Inner zwei = new()
-            {
+            Inner zwei =
+            [
                 "zwei"
-            };
+            ];
             mdict[2] = zwei;
             mdict[-2] = zwei;
             Console.WriteLine(mdict);
@@ -42,7 +42,7 @@ namespace C5.UserGuideExamples
             zwei.Add("kaksi");
             Console.WriteLine(mdict);
             Console.WriteLine("mdict.Count is {0}", mdict.Count);
-            Inner empty = new();
+            Inner empty = [];
             mdict[0] = empty;
             Console.WriteLine(mdict);
             Console.WriteLine("mdict.Count is {0}", mdict.Count);

@@ -248,10 +248,10 @@ namespace C5.UserGuideExamples
                     mdict.Remove(20, "twenty");
                     Console.WriteLine(mdict);
                     Console.WriteLine("mdict.Count is {0}", mdict.Count);
-                    HashSet<string> zwei = new()
-                    {
+                    HashSet<string> zwei =
+                    [
                     "zwei"
-                };
+                ];
                     mdict[2] = zwei;
                     mdict[-2] = zwei;
                     Console.WriteLine(mdict);
@@ -259,7 +259,7 @@ namespace C5.UserGuideExamples
                     zwei.Add("kaksi");
                     Console.WriteLine(mdict);
                     Console.WriteLine("mdict.Count is {0}", mdict.Count);
-                    HashSet<string> empty = new();
+                    HashSet<string> empty = [];
                     mdict[0] = empty;
                     Console.WriteLine(mdict);
                     Console.WriteLine("mdict.Count is {0}", mdict.Count);

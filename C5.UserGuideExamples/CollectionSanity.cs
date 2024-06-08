@@ -16,12 +16,12 @@ internal class CollectionSanity
         col2.AddAll([7, 9, 13]);
         col3.AddAll([9, 7, 13]);
 
-        HashSet<IList<int>> hs1 = new()
-        {
+        HashSet<IList<int>> hs1 =
+        [
                 col1,
                 col2,
                 col3
-            };
+            ];
         Console.WriteLine("hs1 is sane: {0}", EqualityComparerSanity<int, IList<int>>(hs1));
     }
 

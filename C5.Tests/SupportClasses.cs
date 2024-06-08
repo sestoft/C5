@@ -64,36 +64,6 @@ namespace C5.Tests
 
             return i == maxind + 1;
         }
-
-        public static bool SetEq(ICollectionValue<int> me, params int[] that)
-        {
-            int[] me2 = me.ToArray();
-
-            Array.Sort(me2);
-
-            int i = 0, maxind = that.Length - 1;
-
-            foreach (int item in me2)
-            {
-                if (i > maxind || item != that[i++])
-                {
-                    return false;
-                }
-            }
-
-            return i == maxind + 1;
-        }
-        public static bool SetEq(ICollectionValue<SCG.KeyValuePair<int, int>> me, params int[] that)
-        {
-            var first = new ArrayList<SCG.KeyValuePair<int, int>>();
-            first.AddAll(me);
-            var other = new ArrayList<SCG.KeyValuePair<int, int>>();
-            for (int i = 0; i < that.Length; i += 2)
-            {
-                other.Add(new SCG.KeyValuePair<int, int>(that[i], that[i + 1]));
-            }
-            return other.UnsequencedEquals(first);
-        }
     }
 
     internal class ReverseIntegerComparer : SCG.IComparer<int>

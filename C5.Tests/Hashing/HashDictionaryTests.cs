@@ -68,7 +68,7 @@ namespace C5.Tests.hashtable.dictionary
         [SetUp]
         public void Init()
         {
-            dict = new HashDictionary<string, string>();
+            dict = [];
             //dict = TreeDictionary<string,string>.MakeNaturalO<string,string>();
         }
 
@@ -261,7 +261,7 @@ namespace C5.Tests.hashtable.dictionary
         [Test]
         public void DeepBucket()
         {
-            DictionaryIntToInt dict2 = new();
+            DictionaryIntToInt dict2 = [];
 
             for (int i = 0; i < 5; i++)
             {

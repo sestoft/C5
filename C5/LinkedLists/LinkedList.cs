@@ -644,8 +644,8 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
                     {
                         if (leftEnds == null || rightEnds == null)
                         {
-                            leftEnds = new ArrayList<Position>();
-                            rightEnds = new ArrayList<Position>();
+                            leftEnds = [];
+                            rightEnds = [];
                         }
                         leftEnds.Add(new Position(v, true));
                         rightEnds.Add(new Position(v, false));
@@ -1120,7 +1120,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
     {
         ValidityCheck();
 
-        LinkedList<V> retval = new();
+        LinkedList<V> retval = [];
         return Map(mapper, retval);
     }
 
@@ -1765,7 +1765,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
         }
 
         DisposeOverlappingViews(false);
-        ArrayList<T> a = new();
+        ArrayList<T> a = [];
         a.AddAll(this);
         a.Shuffle(rnd);
         Node cursor = startsentinel!.next!;
@@ -2434,7 +2434,7 @@ public class LinkedList<T> : SequencedBase<T>, IList<T>, IStack<T>, IQueue<T>
     {
         ValidityCheck();
         int stamp = this.stamp;
-        LinkedList<T> retval = new();
+        LinkedList<T> retval = [];
         Node cursor = startsentinel!.next!;
         Node mcursor = retval.startsentinel!;
 

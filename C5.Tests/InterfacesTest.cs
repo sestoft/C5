@@ -244,7 +244,7 @@ namespace C5.Tests.interfaces
         {
             B b1_ = new(), b2_ = new();
             C c1_ = new(), c2_ = new();
-            ArrayList<B> mylist = new();
+            ArrayList<B> mylist = [];
             mylist.AddAll([b1_, b2_, c1_]);
             System.Collections.IList list = new GuardedList<B>(mylist);
             object b1 = b1_, b2 = b2_, c1 = c1_, c2 = c2_;
@@ -305,7 +305,7 @@ namespace C5.Tests.interfaces
         {
             B b1_ = new(), b2_ = new();
             C c1_ = new(), c2_ = new();
-            ArrayList<B> mylist = new();
+            ArrayList<B> mylist = [];
             mylist.AddAll([new B(), b1_, b2_, c1_, new B()]);
             System.Collections.IList list = new GuardedList<B>(mylist).View(1, 3);
             object b1 = b1_, b2 = b2_, c1 = c1_, c2 = c2_;
@@ -447,7 +447,7 @@ namespace C5.Tests.interfaces
         [Test]
         public void TryGuardedViewAsSCIList()
         {
-            ArrayList<B> mylist = new();
+            ArrayList<B> mylist = [];
             TryListViewAsSCIList2(new GuardedList<B>(mylist));
         }
     }

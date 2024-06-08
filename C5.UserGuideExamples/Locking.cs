@@ -7,7 +7,7 @@ namespace C5.UserGuideExamples
 {
     internal class Locking
     {
-        private static ArrayList<int> _collection = new();
+        private static ArrayList<int> _collection = [];
         private static readonly int _count = 1000;
 
         public static void Main()
@@ -16,15 +16,15 @@ namespace C5.UserGuideExamples
             RunTwoThreads(delegate { AddAndRemove(15000); });
             Console.WriteLine($"Collection has {_collection.Count} items, should be 0");
 
-            _collection = new ArrayList<int>();
+            _collection = [];
             Console.WriteLine("Adding and removing with locking:");
             RunTwoThreads(delegate { SafeAddAndRemove(15000); });
             Console.WriteLine($"Collection has {_collection.Count} items, should be 0");
 
             Console.WriteLine("Moving items without locking:");
             ArrayList<int> from, to;
-            from = new ArrayList<int>();
-            to = new ArrayList<int>();
+            from = [];
+            to = [];
 
             for (var i = 0; i < _count; i++)
             {
@@ -41,8 +41,8 @@ namespace C5.UserGuideExamples
             Console.WriteLine($"Collection has {to.Count} items, should be {_count}");
 
             Console.WriteLine("Moving items with locking:");
-            from = new ArrayList<int>();
-            to = new ArrayList<int>();
+            from = [];
+            to = [];
 
             for (var i = 0; i < _count; i++)
             {

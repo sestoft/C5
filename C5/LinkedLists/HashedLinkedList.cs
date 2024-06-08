@@ -970,8 +970,8 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
                     {
                         if (leftEnds == null || rightEnds == null)
                         {
-                            leftEnds = new ArrayList<Position>();
-                            rightEnds = new ArrayList<Position>();
+                            leftEnds = [];
+                            rightEnds = [];
                         }
                         leftEnds.Add(new Position(v, true));
                         rightEnds.Add(new Position(v, false));
@@ -1507,7 +1507,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
     {
         Validitycheck();
 
-        HashedLinkedList<V> retval = new();
+        HashedLinkedList<V> retval = [];
         return Map(mapper, retval);
     }
 
@@ -2221,7 +2221,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
         }
 
         DisposeOverlappingViews(false);
-        ArrayList<T> a = new();
+        ArrayList<T> a = [];
         a.AddAll(this);
         a.Shuffle(rnd);
         Node cursor = startsentinel!.next!;
@@ -2870,7 +2870,7 @@ public class HashedLinkedList<T> : SequencedBase<T>, IList<T>, SCG.IList<T>
     {
         Validitycheck();
         int stamp = this.stamp;
-        HashedLinkedList<T> retval = new();
+        HashedLinkedList<T> retval = [];
         Node cursor = startsentinel!.next!;
         Node mcursor = retval.startsentinel!;
         double tagdelta = int.MaxValue / (size + 1.0);

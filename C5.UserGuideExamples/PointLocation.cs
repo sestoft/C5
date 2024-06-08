@@ -145,13 +145,13 @@ namespace C5.UserGuideExamples
         public PointLocator()
         {
             //htree = new TreeDictionary<double,TreeSet<Edge<T>>>(dc);
-            endpoints = new TreeDictionary<double, SCG.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>>();
+            endpoints = [];
         }
 
         public PointLocator(SCG.IEnumerable<Edge<T>> edges)
         {
             //htree = new TreeDictionary<double,TreeSet<Edge<T>>>(dc);
-            endpoints = new TreeDictionary<double, SCG.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>>();
+            endpoints = [];
             foreach (Edge<T> edge in edges)
             {
                 add(edge);
@@ -167,7 +167,7 @@ namespace C5.UserGuideExamples
 
             if (!endpoints.Contains(edge.Xs))
             {
-                endpoints.Add(edge.Xs, new SCG.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>(new LinkedList<Edge<T>>(), new LinkedList<Edge<T>>()));
+                endpoints.Add(edge.Xs, new SCG.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>([], []));
             }
 
             SCG.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>> kv;
@@ -175,7 +175,7 @@ namespace C5.UserGuideExamples
             kv.Key.Add(edge);
             if (!endpoints.Contains(edge.Xe))
             {
-                endpoints.Add(edge.Xe, new SCG.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>(new LinkedList<Edge<T>>(), new LinkedList<Edge<T>>()));
+                endpoints.Add(edge.Xe, new SCG.KeyValuePair<LinkedList<Edge<T>>, LinkedList<Edge<T>>>([], []));
             }
 
             kv = endpoints[edge.Xe];
@@ -208,9 +208,9 @@ namespace C5.UserGuideExamples
         public void Build()
         {
             //htree.Clear();
-            htree = new TreeDictionary<double, ISorted<Edge<T>>>();
+            htree = [];
 
-            TreeSet<Edge<T>> vtree = new();
+            TreeSet<Edge<T>> vtree = [];
 
             htree[double.NegativeInfinity] = (ISorted<Edge<T>>)(vtree.Snapshot());
 

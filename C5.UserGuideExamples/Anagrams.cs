@@ -125,7 +125,7 @@ internal class Anagrams
 
             if (!classes.Find(ref anagram, out TreeSet<string> anagramClass))
             {
-                classes[anagram] = anagramClass = new TreeSet<string>();
+                classes[anagram] = anagramClass = [];
             }
 
             anagramClass.Add(s);

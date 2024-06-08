@@ -48,7 +48,7 @@ namespace C5.Tests.linkedlists.plain
             [SetUp]
             public void Init()
             {
-                list = new LinkedList<int>();
+                list = [];
                 always = delegate { return true; };
                 never = delegate { return false; };
                 even = delegate (int i) { return i % 2 == 0; };
@@ -135,7 +135,7 @@ namespace C5.Tests.linkedlists.plain
 
 
             [SetUp]
-            public void Init() { list = new LinkedList<int>(); }
+            public void Init() { list = []; }
 
 
             [Test]
@@ -247,7 +247,7 @@ namespace C5.Tests.linkedlists.plain
 
 
             [SetUp]
-            public void Init() { list = new LinkedList<int>(); }
+            public void Init() { list = []; }
 
             [Test]
             public void NullEqualityComparerinConstructor1()
@@ -293,7 +293,7 @@ namespace C5.Tests.linkedlists.plain
             {
                 list.Add(3); list.Add(4); list.Add(5);
 
-                LinkedList<int> list2 = new();
+                LinkedList<int> list2 = [];
 
                 list2.AddAll(list);
                 Assert.That(IC.Eq(list2, 3, 4, 5), Is.True);
@@ -381,7 +381,7 @@ namespace C5.Tests.linkedlists.plain
             private LinkedList<int> list;
 
             [SetUp]
-            public void Init() { list = new LinkedList<int>(); }
+            public void Init() { list = []; }
 
             [TearDown]
             public void Dispose() { list.Dispose(); }
@@ -391,14 +391,14 @@ namespace C5.Tests.linkedlists.plain
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.SetEq(list.UniqueItems()), Is.True);
-                    Assert.That(IC.SetEq(list.ItemMultiplicities()), Is.True);
+                    Assert.That(list.UniqueItems(), Is.Empty);
+                    Assert.That(list.ItemMultiplicities(), Is.Empty);
                 });
                 list.AddAll([7, 9, 7]);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.SetEq(list.UniqueItems(), 7, 9), Is.True);
-                    Assert.That(IC.SetEq(list.ItemMultiplicities(), 7, 2, 9, 1), Is.True);
+                    Assert.That(list.UniqueItems(), Is.EquivalentTo(new[] { 7, 9 }));
+                    Assert.That(list.ItemMultiplicities(), Is.EquivalentTo(new[] { SCG.KeyValuePair.Create(7, 2), SCG.KeyValuePair.Create(9, 1) }));
                 });
             }
         }
@@ -413,7 +413,7 @@ namespace C5.Tests.linkedlists.plain
             [SetUp]
             public void Init()
             {
-                list = new LinkedList<int>();
+                list = [];
                 a = new int[10];
                 for (int i = 0; i < 10; i++)
                 {
@@ -483,7 +483,7 @@ namespace C5.Tests.linkedlists.plain
             [SetUp]
             public void Init()
             {
-                list = new LinkedList<int>();
+                list = [];
             }
 
             [TearDown]
@@ -505,7 +505,7 @@ namespace C5.Tests.linkedlists.plain
             private LinkedList<int> list;
 
             [SetUp]
-            public void Init() { list = new LinkedList<int>(); }
+            public void Init() { list = []; }
 
             [Test]
             public void Contains()
@@ -596,7 +596,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void ContainsAll()
             {
-                LinkedList<int> list2 = new();
+                LinkedList<int> list2 = [];
 
                 Assert.That(list.ContainsAll(list2), Is.True);
                 list2.Add(4);
@@ -615,7 +615,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void RetainAll()
             {
-                LinkedList<int> list2 = new();
+                LinkedList<int> list2 = [];
 
                 list.Add(4); list.Add(4); list.Add(5); list.Add(4); list.Add(6);
                 list2.Add(5); list2.Add(4); list2.Add(7); list2.Add(7); list2.Add(4);
@@ -645,7 +645,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void RemoveAll()
             {
-                LinkedList<int> list2 = new();
+                LinkedList<int> list2 = [];
 
                 list.Add(4); list.Add(4); list.Add(5); list.Add(4); list.Add(6);
                 list2.Add(5); list2.Add(4); list2.Add(7); list2.Add(7); list2.Add(4);
@@ -746,7 +746,7 @@ namespace C5.Tests.linkedlists.plain
             [SetUp]
             public void Init()
             {
-                dit = new LinkedList<int>();
+                dit = [];
             }
 
 
@@ -791,7 +791,7 @@ namespace C5.Tests.linkedlists.plain
             [SetUp]
             public void Init()
             {
-                dit = new LinkedList<int>();
+                dit = [];
             }
 
 
@@ -1678,7 +1678,7 @@ namespace C5.Tests.linkedlists.plain
 
 
             [SetUp]
-            public void Init() { list = new LinkedList<int>(); }
+            public void Init() { list = []; }
 
 
             [Test]
@@ -1714,7 +1714,7 @@ namespace C5.Tests.linkedlists.plain
 
 
             [SetUp]
-            public void Init() { list = new LinkedList<int>(); }
+            public void Init() { list = []; }
 
 
             [Test]
@@ -1862,7 +1862,7 @@ namespace C5.Tests.linkedlists.plain
             [SetUp]
             public void Init()
             {
-                list = new LinkedList<int>() { 0, 1, 2, 3 };
+                list = [0, 1, 2, 3];
                 view = (LinkedList<int>)list.View(1, 2);
             }
 
@@ -2064,7 +2064,7 @@ namespace C5.Tests.linkedlists.plain
                     Assert.That(IC.Eq(view, 8, 18, 12, 15), Is.True);
                 });
 
-                LinkedList<int> lst2 = new() { 90, 92 };
+                LinkedList<int> lst2 = [90, 92];
                 view.AddAll(lst2);
                 check();
                 Assert.Multiple(() =>
@@ -2107,7 +2107,7 @@ namespace C5.Tests.linkedlists.plain
                     Assert.That(view.Contains(0), Is.False);
                 });
 
-                LinkedList<int> lst2 = new() { 2 };
+                LinkedList<int> lst2 = [2];
 
                 Assert.That(view.ContainsAll(lst2), Is.True);
                 lst2.Add(3);
@@ -2329,7 +2329,7 @@ namespace C5.Tests.linkedlists.plain
                 view.Add(1); view.Add(5); view.Add(3); view.Add(1); view.Add(3); view.Add(0);
                 Assert.That(IC.Eq(view, 2, 5, 1, 1, 5, 3, 1, 3, 0), Is.True);
 
-                LinkedList<int> l2 = new() { 1, 2, 2, 3, 1 };
+                LinkedList<int> l2 = [1, 2, 2, 3, 1];
 
                 view.RemoveAll(l2);
                 check();
@@ -2654,7 +2654,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void InsertAll()
             {
-                LinkedList<int> list2 = new();
+                LinkedList<int> list2 = [];
                 for (int i = 0; i < 5; i++) { list2.Add(100 + i); }
                 Assert.That(list.Check(), Is.True, "list check before insertAll");
                 list.InsertAll(3, list2);
@@ -2675,7 +2675,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void AddAll()
             {
-                LinkedList<int> list2 = new();
+                LinkedList<int> list2 = [];
                 for (int i = 0; i < 5; i++) { list2.Add(100 + i); }
                 Assert.That(list.Check(), Is.True, "list check before AddAll");
                 list.View(1, 2).AddAll(list2);
@@ -2696,7 +2696,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void RemoveAll1()
             {
-                LinkedList<int> list2 = new() { 1, 3, 4 };
+                LinkedList<int> list2 = [1, 3, 4];
 
                 for (int i = 0; i < 7; i++)
                 {
@@ -2717,7 +2717,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void RemoveAll2()
             {
-                LinkedList<int> list2 = new() { 1, 3, 4 };
+                LinkedList<int> list2 = [1, 3, 4];
                 Assert.That(list.Check(), Is.True, "list check before RemoveAll");
                 list.RemoveAll(list2);
 
@@ -2788,7 +2788,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void RetainAll()
             {
-                LinkedList<int> list2 = new() { 2, 4, 5 };
+                LinkedList<int> list2 = [2, 4, 5];
                 Assert.That(list.Check(), Is.True, "list check before RetainAll");
                 list.RetainAll(list2);
                 Assert.Multiple(() =>
@@ -2859,7 +2859,7 @@ namespace C5.Tests.linkedlists.plain
             [Test]
             public void RemoveAllCopies()
             {
-                LinkedList<int> list2 = new() { 0, 2, 2, 2, 5, 2, 1 };
+                LinkedList<int> list2 = [0, 2, 2, 2, 5, 2, 1];
                 for (int i = 0; i < 7; i++)
                 {
                     for (int j = 0; j < 7 - i; j++)
@@ -3213,15 +3213,15 @@ namespace C5.Tests.linkedlists.plain
             [SetUp]
             public void Init()
             {
-                dit = new LinkedList<int>();
+                dit = [];
                 dat = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
-                dut = new LinkedList<int>();
+                dut = [];
                 dit.Add(2); dit.Add(1);
                 dat.Add(1); dat.Add(2);
                 dut.Add(3);
-                Dit = new LinkedList<ICollection<int>>();
-                Dat = new LinkedList<ICollection<int>>();
-                Dut = new LinkedList<ICollection<int>>();
+                Dit = [];
+                Dat = [];
+                Dut = [];
             }
 
 
@@ -3278,15 +3278,15 @@ namespace C5.Tests.linkedlists.plain
             [SetUp]
             public void Init()
             {
-                dit = new LinkedList<int>();
+                dit = [];
                 dat = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
-                dut = new LinkedList<int>();
+                dut = [];
                 dit.Add(2); dit.Add(1);
                 dat.Add(1); dat.Add(2);
                 dut.Add(3);
-                Dit = new LinkedList<ICollection<int>>();
-                Dat = new LinkedList<ICollection<int>>();
-                Dut = new LinkedList<ICollection<int>>();
+                Dit = [];
+                Dat = [];
+                Dut = [];
             }
 
 
@@ -3347,17 +3347,17 @@ namespace C5.Tests.linkedlists.plain
             public void Init()
             {
                 dit = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
-                dat = new LinkedList<int>();
-                dut = new LinkedList<int>();
-                dot = new LinkedList<int>();
+                dat = [];
+                dut = [];
+                dot = [];
                 dit.Add(2); dit.Add(1);
                 dat.Add(2); dat.Add(1);
                 dut.Add(3);
                 dot.Add(1); dot.Add(2);
-                Dit = new LinkedList<ISequenced<int>>();
-                Dat = new LinkedList<ISequenced<int>>();
-                Dut = new LinkedList<ISequenced<int>>();
-                Dot = new LinkedList<ISequenced<int>>();
+                Dit = [];
+                Dat = [];
+                Dut = [];
+                Dot = [];
             }
 
 
@@ -3422,17 +3422,17 @@ namespace C5.Tests.linkedlists.plain
             public void Init()
             {
                 dit = new TreeSet<int>(SCG.Comparer<int>.Default, EqualityComparer<int>.Default);
-                dat = new LinkedList<int>();
-                dut = new LinkedList<int>();
-                dot = new LinkedList<int>();
+                dat = [];
+                dut = [];
+                dot = [];
                 dit.Add(2); dit.Add(1);
                 dat.Add(2); dat.Add(1);
                 dut.Add(3);
                 dot.Add(1); dot.Add(2);
-                Dit = new LinkedList<ISequenced<int>>();
-                Dat = new LinkedList<ISequenced<int>>();
-                Dut = new LinkedList<ISequenced<int>>();
-                Dot = new LinkedList<ISequenced<int>>();
+                Dit = [];
+                Dat = [];
+                Dut = [];
+                Dot = [];
             }
 
 
@@ -3493,9 +3493,9 @@ namespace C5.Tests.linkedlists.plain
             [SetUp]
             public void Init()
             {
-                dit = new LinkedList<int>();
-                dat = new LinkedList<int>();
-                dut = new LinkedList<int>();
+                dit = [];
+                dat = [];
+                dut = [];
             }
 
 
@@ -3620,9 +3620,9 @@ namespace C5.Tests.linkedlists.plain
             [SetUp]
             public void Init()
             {
-                dit = new LinkedList<int>();
-                dat = new LinkedList<int>();
-                dut = new LinkedList<int>();
+                dit = [];
+                dat = [];
+                dut = [];
             }
 
 
@@ -3750,15 +3750,15 @@ namespace C5.Tests.linkedlists.plain
             [SetUp]
             public void Init()
             {
-                dit = new LinkedList<int>();
-                dat = new LinkedList<int>();
-                dut = new LinkedList<int>();
+                dit = [];
+                dat = [];
+                dut = [];
                 dit.Add(2); dit.Add(1);
                 dat.Add(1); dat.Add(2);
                 dut.Add(3);
-                Dit = new LinkedList<ICollection<int>>();
-                Dat = new LinkedList<ICollection<int>>();
-                Dut = new LinkedList<ICollection<int>>();
+                Dit = [];
+                Dat = [];
+                Dut = [];
             }
 
 
@@ -3811,15 +3811,15 @@ namespace C5.Tests.linkedlists.plain
             [SetUp]
             public void Init()
             {
-                dit = new LinkedList<int>();
-                dat = new LinkedList<int>();
-                dut = new LinkedList<int>();
+                dit = [];
+                dat = [];
+                dut = [];
                 dit.Add(2); dit.Add(1);
                 dat.Add(1); dat.Add(2);
                 dut.Add(3);
-                Dit = new LinkedList<ICollection<int>>();
-                Dat = new LinkedList<ICollection<int>>();
-                Dut = new LinkedList<ICollection<int>>();
+                Dit = [];
+                Dat = [];
+                Dut = [];
             }
 
 
@@ -3873,18 +3873,18 @@ namespace C5.Tests.linkedlists.plain
             [SetUp]
             public void Init()
             {
-                dit = new LinkedList<int>();
-                dat = new LinkedList<int>();
-                dut = new LinkedList<int>();
-                dot = new LinkedList<int>();
+                dit = [];
+                dat = [];
+                dut = [];
+                dot = [];
                 dit.Add(2); dit.Add(1);
                 dat.Add(1); dat.Add(2);
                 dut.Add(3);
                 dot.Add(2); dot.Add(1);
-                Dit = new LinkedList<ISequenced<int>>();
-                Dat = new LinkedList<ISequenced<int>>();
-                Dut = new LinkedList<ISequenced<int>>();
-                Dot = new LinkedList<ISequenced<int>>();
+                Dit = [];
+                Dat = [];
+                Dut = [];
+                Dot = [];
             }
 
 
@@ -3943,18 +3943,18 @@ namespace C5.Tests.linkedlists.plain
             [SetUp]
             public void Init()
             {
-                dit = new LinkedList<int>();
-                dat = new LinkedList<int>();
-                dut = new LinkedList<int>();
-                dot = new LinkedList<int>();
+                dit = [];
+                dat = [];
+                dut = [];
+                dot = [];
                 dit.Add(2); dit.Add(1);
                 dat.Add(1); dat.Add(2);
                 dut.Add(3);
                 dot.Add(2); dot.Add(1);
-                Dit = new LinkedList<ISequenced<int>>();
-                Dat = new LinkedList<ISequenced<int>>();
-                Dut = new LinkedList<ISequenced<int>>();
-                Dot = new LinkedList<ISequenced<int>>();
+                Dit = [];
+                Dat = [];
+                Dut = [];
+                Dot = [];
             }
 
 
