@@ -240,9 +240,9 @@ namespace C5.Tests.trees.TreeSet
             int[] all = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20];
 
             tree.RemoveRangeFrom(18);
-            Assert.That(IC.Eq(tree, [2, 4, 6, 8, 10, 12, 14, 16]), Is.True);
+            Assert.That(tree, Is.EqualTo(new[] { 2, 4, 6, 8, 10, 12, 14, 16 }));
             tree.RemoveRangeFrom(28);
-            Assert.That(IC.Eq(tree, [2, 4, 6, 8, 10, 12, 14, 16]), Is.True);
+            Assert.That(tree, Is.EqualTo(new[] { 2, 4, 6, 8, 10, 12, 14, 16 }));
             tree.RemoveRangeFrom(2);
             Assert.That(tree, Is.Empty);
             foreach (int i in all)
@@ -251,9 +251,9 @@ namespace C5.Tests.trees.TreeSet
             }
 
             tree.RemoveRangeTo(10);
-            Assert.That(IC.Eq(tree, [10, 12, 14, 16, 18, 20]), Is.True);
+            Assert.That(tree, Is.EqualTo(new[] { 10, 12, 14, 16, 18, 20 }));
             tree.RemoveRangeTo(2);
-            Assert.That(IC.Eq(tree, [10, 12, 14, 16, 18, 20]), Is.True);
+            Assert.That(tree, Is.EqualTo(new[] { 10, 12, 14, 16, 18, 20 }));
             tree.RemoveRangeTo(21);
             Assert.That(tree, Is.Empty);
             foreach (int i in all)
