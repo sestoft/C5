@@ -524,7 +524,7 @@ namespace C5.Tests.trees.TreeBag
             tree.RemoveRangeFrom(28);
             Assert.That(IC.Eq(tree, [1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 8, 8, 9, 10, 10, 12, 14, 16]), Is.True);
             tree.RemoveRangeFrom(1);
-            Assert.That(IC.Eq(tree), Is.True);
+            Assert.That(tree, Is.Empty);
             foreach (int i in all)
             {
                 tree.Add(i);
@@ -535,7 +535,7 @@ namespace C5.Tests.trees.TreeBag
             tree.RemoveRangeTo(2);
             Assert.That(IC.Eq(tree, [10, 10, 12, 14, 16, 18, 20]), Is.True);
             tree.RemoveRangeTo(21);
-            Assert.That(IC.Eq(tree), Is.True);
+            Assert.That(tree, Is.Empty);
             foreach (int i in all)
             {
                 tree.Add(i);
@@ -548,7 +548,7 @@ namespace C5.Tests.trees.TreeBag
             tree.RemoveRangeFromTo(0, 9);
             Assert.That(tree, Is.EqualTo(new[] { 9, 10, 10, 12 }));
             tree.RemoveRangeFromTo(0, 81);
-            Assert.That(IC.Eq(tree), Is.True);
+            Assert.That(tree, Is.Empty);
         }
 
 
@@ -3189,7 +3189,7 @@ namespace C5.Tests.trees.TreeBag
                 Assert.Multiple(() =>
                 {
                     Assert.That(tree.Check(), Is.True);
-                    Assert.That(IC.Eq(tree), Is.True);
+                    Assert.That(tree, Is.Empty);
                 });
             }
 
@@ -3223,7 +3223,7 @@ namespace C5.Tests.trees.TreeBag
                 Assert.Multiple(() =>
                 {
                     Assert.That(tree.Check(), Is.True);
-                    Assert.That(IC.Eq(tree), Is.True);
+                    Assert.That(tree, Is.Empty);
                 });
                 for (int i = 0; i < 10; i++)
                 {
@@ -3235,7 +3235,7 @@ namespace C5.Tests.trees.TreeBag
                 Assert.Multiple(() =>
                 {
                     Assert.That(tree.Check(), Is.True);
-                    Assert.That(IC.Eq(tree), Is.True);
+                    Assert.That(tree, Is.Empty);
                 });
                 for (int i = 0; i < 10; i++)
                 {
@@ -3247,7 +3247,7 @@ namespace C5.Tests.trees.TreeBag
                 Assert.Multiple(() =>
                 {
                     Assert.That(tree.Check(), Is.True);
-                    Assert.That(IC.Eq(tree), Is.True);
+                    Assert.That(tree, Is.Empty);
                 });
             }
 
@@ -3291,7 +3291,7 @@ namespace C5.Tests.trees.TreeBag
                 {
                     Assert.That(tree.Check(), Is.True);
                     Assert.That(tree, Is.Empty);
-                    Assert.That(IC.Eq(tree), Is.True);
+                    Assert.That(tree, Is.Empty);
                 });
             }
 

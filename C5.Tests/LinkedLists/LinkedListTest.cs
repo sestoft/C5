@@ -638,7 +638,7 @@ namespace C5.Tests.linkedlists.plain
                 list2.Add(7); list2.Add(8); list2.Add(9);
                 list.RetainAll(list2);
                 Assert.That(list.Check(), Is.True);
-                Assert.That(IC.Eq(list), Is.True);
+                Assert.That(list, Is.Empty);
             }
 
 
@@ -861,7 +861,7 @@ namespace C5.Tests.linkedlists.plain
                 Assert.Multiple(() =>
                 {
                     Assert.That(dit.Check(), Is.True);
-                    Assert.That(IC.Eq(dit), Is.True);
+                    Assert.That(dit, Is.Empty);
                 });
                 dit.Add(10); dit.Add(20); dit.Add(30); dit.Add(40); dit.Add(50); dit.Add(60);
                 dit.RemoveInterval(0, 2);
@@ -2031,7 +2031,7 @@ namespace C5.Tests.linkedlists.plain
                 });
                 check();
                 Assert.That(list, Is.EqualTo(new[] { 0, 3 }));
-                Assert.That(IC.Eq(view), Is.True);
+                Assert.That(view, Is.Empty);
                 view.Add(8);
                 Assert.That(view.IsEmpty, Is.False);
                 Assert.That(view.AllowsDuplicates, Is.True);
@@ -2400,7 +2400,7 @@ namespace C5.Tests.linkedlists.plain
                     Assert.That(view.Slide(-1, 0), Is.EqualTo(view));
                 });
                 check();
-                Assert.That(IC.Eq(view), Is.True);
+                Assert.That(view, Is.Empty);
                 view.Add(28);
                 Assert.That(list, Is.EqualTo(new[] { 0, 28, 1, 2, 3 }));
             }

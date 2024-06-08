@@ -107,7 +107,7 @@ namespace C5.Tests.arrays.sorted
             array.RemoveRangeFrom(13);
             Assert.That(IC.Eq(array, [2, 4, 6, 8, 10, 12]), Is.True);
             array.RemoveRangeFrom(2);
-            Assert.That(IC.Eq(array), Is.True);
+            Assert.That(array, Is.Empty);
             foreach (int i in all)
             {
                 array.Add(i);
@@ -118,7 +118,7 @@ namespace C5.Tests.arrays.sorted
             array.RemoveRangeTo(2);
             Assert.That(IC.Eq(array, [10, 12, 14, 16, 18, 20]), Is.True);
             array.RemoveRangeTo(21);
-            Assert.That(IC.Eq(array), Is.True);
+            Assert.That(array, Is.Empty);
             foreach (int i in all)
             {
                 array.Add(i);
@@ -131,7 +131,7 @@ namespace C5.Tests.arrays.sorted
             array.RemoveRangeFromTo(0, 9);
             Assert.That(array, Is.EqualTo(new[] { 10, 12 }));
             array.RemoveRangeFromTo(0, 81);
-            Assert.That(IC.Eq(array), Is.True);
+            Assert.That(array, Is.Empty);
         }
 
         [Test]
@@ -2176,7 +2176,7 @@ namespace C5.Tests.arrays.sorted
                 {
                     Assert.That(array, Is.Empty);
                     Assert.That(array.Check(), Is.True);
-                    Assert.That(IC.Eq(array), Is.True);
+                    Assert.That(array, Is.Empty);
                 });
             }
 
@@ -2210,7 +2210,7 @@ namespace C5.Tests.arrays.sorted
                 Assert.Multiple(() =>
                 {
                     Assert.That(array.Check(), Is.True);
-                    Assert.That(IC.Eq(array), Is.True);
+                    Assert.That(array, Is.Empty);
                 });
                 for (int i = 0; i < 10; i++)
                 {
@@ -2222,7 +2222,7 @@ namespace C5.Tests.arrays.sorted
                 {
                     Assert.That(array, Is.Empty);
                     Assert.That(array.Check(), Is.True);
-                    Assert.That(IC.Eq(array), Is.True);
+                    Assert.That(array, Is.Empty);
                 });
                 for (int i = 0; i < 10; i++)
                 {
@@ -2234,7 +2234,7 @@ namespace C5.Tests.arrays.sorted
                 {
                     Assert.That(array, Is.Empty);
                     Assert.That(array.Check(), Is.True);
-                    Assert.That(IC.Eq(array), Is.True);
+                    Assert.That(array, Is.Empty);
                 });
             }
 
@@ -2278,7 +2278,7 @@ namespace C5.Tests.arrays.sorted
                 {
                     Assert.That(array.Check(), Is.True);
                     Assert.That(array, Is.Empty);
-                    Assert.That(IC.Eq(array), Is.True);
+                    Assert.That(array, Is.Empty);
                 });
             }
 
@@ -2311,7 +2311,7 @@ namespace C5.Tests.arrays.sorted
 
                 Assert.That(e, Is.EqualTo(new[] { 3, 4, 5 }));
                 e = array[3, 0];
-                Assert.That(IC.Eq(e), Is.True);
+                Assert.That(e, Is.Empty);
             }
 
             [Test]
