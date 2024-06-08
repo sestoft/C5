@@ -2201,7 +2201,7 @@ namespace C5.Tests.trees.TreeBag
                     Assert.Multiple(() =>
                     {
                         Assert.That(snap.Check("M"), Is.True, "Bad snap!");
-                        Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                        Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
                         Assert.That(tree.Check("Tree"), Is.True, "Bad tree!");
                     });
                 }
@@ -2217,14 +2217,14 @@ namespace C5.Tests.trees.TreeBag
                 Assert.Multiple(() =>
                 {
                     Assert.That(snap.Check("Snap"), Is.True, "Bad snap!");
-                    Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                    Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
                 });
                 tree.Remove(19);
                 Assert.Multiple(() =>
                 {
                     Assert.That(snap.Check("Snap"), Is.True, "Bad snap!");
                     Assert.That(tree.Check("Tree"), Is.True, "Bad tree!");
-                    Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                    Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
                 });
             }
 
@@ -2247,7 +2247,7 @@ namespace C5.Tests.trees.TreeBag
                 {
                     Assert.That(tree.Remove(-20), Is.False);
                     Assert.That(snap.Check("Snap"), Is.True, "Bad snap!");
-                    Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                    Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
 
 
                     //decrease items case
@@ -2256,13 +2256,13 @@ namespace C5.Tests.trees.TreeBag
                 });
                 Assert.That(snap.Check("Snap"), Is.True, "Bad snap!");
                 //snap.dump();
-                Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
 
                 //No demote case, with move_item
                 Assert.That(tree.Remove(20), Is.True);
                 Assert.That(tree.Check("T1"), Is.True);
                 Assert.That(snap.Check("Snap"), Is.True, "Bad snap!");
-                Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
                 Assert.That(tree.Remove(20), Is.False);
 
                 //plain case 2
@@ -2272,26 +2272,26 @@ namespace C5.Tests.trees.TreeBag
                     Assert.That(tree.Remove(14), Is.True);
                     Assert.That(tree.Check("Normal test 1"), Is.True, "Bad tree");
                     Assert.That(snap.Check("Snap"), Is.True, "Bad snap!");
-                    Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                    Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
 
                     //case 1b
                     Assert.That(tree.Remove(25), Is.True);
                 });
                 Assert.That(tree.Check("Normal test 1"), Is.True, "Bad tree");
                 Assert.That(snap.Check("Snap"), Is.True, "Bad snap!");
-                Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
 
                 //case 1c
                 Assert.That(tree.Remove(29), Is.True);
                 Assert.That(tree.Check("Normal test 1"), Is.True, "Bad tree");
                 Assert.That(snap.Check("Snap"), Is.True, "Bad snap!");
-                Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
 
                 //1a (terminating)
                 Assert.That(tree.Remove(10), Is.True);
                 Assert.That(tree.Check("Normal test 1"), Is.True, "Bad tree");
                 Assert.That(snap.Check("Snap"), Is.True, "Bad snap!");
-                Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
 
                 //2+1b
                 Assert.That(tree.Remove(12), Is.True);
@@ -2301,7 +2301,7 @@ namespace C5.Tests.trees.TreeBag
                     Assert.That(tree.Remove(11), Is.True);
                     Assert.That(tree.Check("Normal test 1"), Is.True, "Bad tree");
                     Assert.That(snap.Check("Snap"), Is.True, "Bad snap!");
-                    Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                    Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
 
                     //1a+1b
                     Assert.That(tree.Remove(18), Is.True);
@@ -2310,7 +2310,7 @@ namespace C5.Tests.trees.TreeBag
                 });
                 Assert.That(tree.Check("Normal test 1"), Is.True, "Bad tree");
                 Assert.That(snap.Check("Snap"), Is.True, "Bad snap!");
-                Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
 
                 //2+1c
                 for (int i = 0; i < 10; i++)
@@ -2326,7 +2326,7 @@ namespace C5.Tests.trees.TreeBag
                     Assert.That(tree.Remove(40), Is.True);
                     Assert.That(tree.Check("Normal test 1"), Is.True, "Bad tree");
                     Assert.That(snap.Check("Snap"), Is.True, "Bad snap!");
-                    Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                    Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
 
                     //
                     Assert.That(tree.Remove(16), Is.True);
@@ -2351,14 +2351,14 @@ namespace C5.Tests.trees.TreeBag
                     Assert.That(tree.Remove(48), Is.True);
                     Assert.That(tree.Check("Normal test 1"), Is.True, "Bad tree");
                     Assert.That(snap.Check("Snap"), Is.True, "Bad snap!");
-                    Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                    Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
                 });
 
                 //Empty tree:
                 Assert.That(tree.Remove(26), Is.False);
                 Assert.That(tree.Check("Normal test 1"), Is.True, "Bad tree");
                 Assert.That(snap.Check("Snap"), Is.True, "Bad snap!");
-                Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
             }
 
 
@@ -2371,21 +2371,21 @@ namespace C5.Tests.trees.TreeBag
                 Assert.Multiple(() =>
                 {
                     Assert.That(snap.Check("M"), Is.True, "Bad snap!");
-                    Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                    Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
                     Assert.That(tree.Check("Tree"), Is.True, "Bad tree!");
                 });
                 tree.Add(10);
                 Assert.Multiple(() =>
                 {
                     Assert.That(snap.Check("M"), Is.True, "Bad snap!");
-                    Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                    Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
                     Assert.That(tree.Check("Tree"), Is.True, "Bad tree!");
                 });
                 tree.Add(16);
                 Assert.Multiple(() =>
                 {
                     Assert.That(snap.Check("M"), Is.True, "Bad snap!");
-                    Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                    Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
                     Assert.That(tree.Check("Tree"), Is.True, "Bad tree!");
                 });
 
@@ -2394,7 +2394,7 @@ namespace C5.Tests.trees.TreeBag
                 {
                     Assert.That(snap.Check("M"), Is.True, "Bad snap!");
                     Assert.That(tree.Check("Tree"), Is.True, "Bad tree!");
-                    Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                    Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
                 });
 
                 //Promote+zigzig
@@ -2403,7 +2403,7 @@ namespace C5.Tests.trees.TreeBag
                 {
                     Assert.That(snap.Check("M"), Is.True, "Bad snap!");
                     Assert.That(tree.Check("Tree"), Is.True, "Bad tree!");
-                    Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                    Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
                 });
                 for (int i = 1; i < 4; i++)
                 {
@@ -2413,7 +2413,7 @@ namespace C5.Tests.trees.TreeBag
                 Assert.Multiple(() =>
                 {
                     Assert.That(snap.Check("M"), Is.True, "Bad snap!");
-                    Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                    Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
                     Assert.That(tree.Check("Tree"), Is.True, "Bad tree!");
                 });
 
@@ -2422,7 +2422,7 @@ namespace C5.Tests.trees.TreeBag
                 Assert.Multiple(() =>
                 {
                     Assert.That(snap.Check("M"), Is.True, "Bad snap!");
-                    Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                    Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
                     Assert.That(tree.Check("Tree"), Is.True, "Bad tree!");
                 });
             }
@@ -2439,7 +2439,7 @@ namespace C5.Tests.trees.TreeBag
                 {
                     Assert.That(snap.Check("Snap"), Is.True, "Bad snap!");
                     Assert.That(tree.Check("Tree"), Is.True, "Bad tree!");
-                    Assert.That(IC.Eq(snap, orig), Is.True, "Snap was changed!");
+                    Assert.That(snap, Is.EqualTo(orig), "Snap was changed!");
                     Assert.That(tree, Is.Empty);
                 });
             }
