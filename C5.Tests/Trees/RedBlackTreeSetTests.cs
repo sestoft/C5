@@ -278,34 +278,33 @@ namespace C5.Tests.trees.TreeSet
 
             Assert.Multiple(() =>
             {
-                Assert.That(IC.Eq(tree, all), Is.True);
-                Assert.That(IC.Eq(tree.RangeAll(), all), Is.True);
+                Assert.That(tree, Is.EqualTo(all));
+                Assert.That(tree.RangeAll(), Is.EqualTo(all));
                 Assert.That(tree.RangeAll(), Has.Count.EqualTo(10));
-                Assert.That(IC.Eq(tree.RangeFrom(11), [12, 14, 16, 18, 20]), Is.True);
+                Assert.That(tree.RangeFrom(11), Is.EqualTo(new[] { 12, 14, 16, 18, 20 }));
                 Assert.That(tree.RangeFrom(11), Has.Count.EqualTo(5));
-                Assert.That(IC.Eq(tree.RangeFrom(12), [12, 14, 16, 18, 20]), Is.True);
-                Assert.That(IC.Eq(tree.RangeFrom(2), all), Is.True);
-                Assert.That(IC.Eq(tree.RangeFrom(1), all), Is.True);
-                Assert.That(IC.Eq(tree.RangeFrom(21), []), Is.True);
-                Assert.That(IC.Eq(tree.RangeFrom(20), [20]), Is.True);
-                Assert.That(IC.Eq(tree.RangeTo(8), [2, 4, 6]), Is.True);
-                Assert.That(IC.Eq(tree.RangeTo(7), [2, 4, 6]), Is.True);
+                Assert.That(tree.RangeFrom(12), Is.EqualTo(new[] { 12, 14, 16, 18, 20 }));
+                Assert.That(tree.RangeFrom(2), Is.EqualTo(all));
+                Assert.That(tree.RangeFrom(1), Is.EqualTo(all));
+                Assert.That(tree.RangeFrom(21), Is.Empty);
+                Assert.That(tree.RangeFrom(20), Is.EqualTo(new[] { 20 }));
+                Assert.That(tree.RangeTo(8), Is.EqualTo(new[] { 2, 4, 6 }));
+                Assert.That(tree.RangeTo(7), Is.EqualTo(new[] { 2, 4, 6 }));
                 Assert.That(tree.RangeTo(7), Has.Count.EqualTo(3));
-                Assert.That(IC.Eq(tree.RangeTo(2), []), Is.True);
-                Assert.That(IC.Eq(tree.RangeTo(1), []), Is.True);
-                Assert.That(IC.Eq(tree.RangeTo(3), [2]), Is.True);
-                Assert.That(IC.Eq(tree.RangeTo(20), [2, 4, 6, 8, 10, 12, 14, 16, 18]), Is.True);
-                Assert.That(IC.Eq(tree.RangeTo(21), all), Is.True);
-                Assert.That(IC.Eq(tree.RangeFromTo(7, 12), [8, 10]), Is.True);
-                Assert.That(IC.Eq(tree.RangeFromTo(6, 11), [6, 8, 10]), Is.True);
-                Assert.That(IC.Eq(tree.RangeFromTo(1, 12), [2, 4, 6, 8, 10]), Is.True);
+                Assert.That(tree.RangeTo(2), Is.Empty);
+                Assert.That(tree.RangeTo(1), Is.Empty);
+                Assert.That(tree.RangeTo(3), Is.EqualTo(new[] { 2 }));
+                Assert.That(tree.RangeTo(20), Is.EqualTo(new[] { 2, 4, 6, 8, 10, 12, 14, 16, 18 }));
+                Assert.That(tree.RangeTo(21), Is.EqualTo(all));
+                Assert.That(tree.RangeFromTo(7, 12), Is.EqualTo(new[] { 8, 10 }));
+                Assert.That(tree.RangeFromTo(6, 11), Is.EqualTo(new[] { 6, 8, 10 }));
+                Assert.That(tree.RangeFromTo(1, 12), Is.EqualTo(new[] { 2, 4, 6, 8, 10 }));
                 Assert.That(tree.RangeFromTo(1, 12), Has.Count.EqualTo(5));
-                Assert.That(IC.Eq(tree.RangeFromTo(2, 12), [2, 4, 6, 8, 10]), Is.True);
-                Assert.That(IC.Eq(tree.RangeFromTo(6, 21), [6, 8, 10, 12, 14, 16, 18, 20]), Is.True);
-                Assert.That(IC.Eq(tree.RangeFromTo(6, 20), [6, 8, 10, 12, 14, 16, 18]), Is.True);
+                Assert.That(tree.RangeFromTo(2, 12), Is.EqualTo(new[] { 2, 4, 6, 8, 10 }));
+                Assert.That(tree.RangeFromTo(6, 21), Is.EqualTo(new[] { 6, 8, 10, 12, 14, 16, 18, 20 }));
+                Assert.That(tree.RangeFromTo(6, 20), Is.EqualTo(new[] { 6, 8, 10, 12, 14, 16, 18 }));
             });
         }
-
 
         [Test]
         public void Backwards()
@@ -315,27 +314,27 @@ namespace C5.Tests.trees.TreeSet
 
             Assert.Multiple(() =>
             {
-                Assert.That(IC.Eq(tree, all), Is.True);
-                Assert.That(IC.Eq(tree.RangeAll().Backwards(), lla), Is.True);
-                Assert.That(IC.Eq(tree.RangeFrom(11).Backwards(), [20, 18, 16, 14, 12]), Is.True);
-                Assert.That(IC.Eq(tree.RangeFrom(12).Backwards(), [20, 18, 16, 14, 12]), Is.True);
-                Assert.That(IC.Eq(tree.RangeFrom(2).Backwards(), lla), Is.True);
-                Assert.That(IC.Eq(tree.RangeFrom(1).Backwards(), lla), Is.True);
-                Assert.That(IC.Eq(tree.RangeFrom(21).Backwards(), []), Is.True);
-                Assert.That(IC.Eq(tree.RangeFrom(20).Backwards(), [20]), Is.True);
-                Assert.That(IC.Eq(tree.RangeTo(8).Backwards(), [6, 4, 2]), Is.True);
-                Assert.That(IC.Eq(tree.RangeTo(7).Backwards(), [6, 4, 2]), Is.True);
-                Assert.That(IC.Eq(tree.RangeTo(2).Backwards(), []), Is.True);
-                Assert.That(IC.Eq(tree.RangeTo(1).Backwards(), []), Is.True);
-                Assert.That(IC.Eq(tree.RangeTo(3).Backwards(), [2]), Is.True);
-                Assert.That(IC.Eq(tree.RangeTo(20).Backwards(), [18, 16, 14, 12, 10, 8, 6, 4, 2]), Is.True);
-                Assert.That(IC.Eq(tree.RangeTo(21).Backwards(), lla), Is.True);
-                Assert.That(IC.Eq(tree.RangeFromTo(7, 12).Backwards(), [10, 8]), Is.True);
-                Assert.That(IC.Eq(tree.RangeFromTo(6, 11).Backwards(), [10, 8, 6]), Is.True);
-                Assert.That(IC.Eq(tree.RangeFromTo(1, 12).Backwards(), [10, 8, 6, 4, 2]), Is.True);
-                Assert.That(IC.Eq(tree.RangeFromTo(2, 12).Backwards(), [10, 8, 6, 4, 2]), Is.True);
-                Assert.That(IC.Eq(tree.RangeFromTo(6, 21).Backwards(), [20, 18, 16, 14, 12, 10, 8, 6]), Is.True);
-                Assert.That(IC.Eq(tree.RangeFromTo(6, 20).Backwards(), [18, 16, 14, 12, 10, 8, 6]), Is.True);
+                Assert.That(tree, Is.EqualTo(all));
+                Assert.That(tree.RangeAll().Backwards(), Is.EqualTo(lla));
+                Assert.That(tree.RangeFrom(11).Backwards(), Is.EqualTo(new[] { 20, 18, 16, 14, 12 }));
+                Assert.That(tree.RangeFrom(12).Backwards(), Is.EqualTo(new[] { 20, 18, 16, 14, 12 }));
+                Assert.That(tree.RangeFrom(2).Backwards(), Is.EqualTo(lla));
+                Assert.That(tree.RangeFrom(1).Backwards(), Is.EqualTo(lla));
+                Assert.That(tree.RangeFrom(21).Backwards(), Is.Empty);
+                Assert.That(tree.RangeFrom(20).Backwards(), Is.EqualTo(new[] { 20 }));
+                Assert.That(tree.RangeTo(8).Backwards(), Is.EqualTo(new[] { 6, 4, 2 }));
+                Assert.That(tree.RangeTo(7).Backwards(), Is.EqualTo(new[] { 6, 4, 2 }));
+                Assert.That(tree.RangeTo(2).Backwards(), Is.Empty);
+                Assert.That(tree.RangeTo(1).Backwards(), Is.Empty);
+                Assert.That(tree.RangeTo(3).Backwards(), Is.EqualTo(new[] { 2 }));
+                Assert.That(tree.RangeTo(20).Backwards(), Is.EqualTo(new[] { 18, 16, 14, 12, 10, 8, 6, 4, 2 }));
+                Assert.That(tree.RangeTo(21).Backwards(), Is.EqualTo(lla));
+                Assert.That(tree.RangeFromTo(7, 12).Backwards(), Is.EqualTo(new[] { 10, 8 }));
+                Assert.That(tree.RangeFromTo(6, 11).Backwards(), Is.EqualTo(new[] { 10, 8, 6 }));
+                Assert.That(tree.RangeFromTo(1, 12).Backwards(), Is.EqualTo(new[] { 10, 8, 6, 4, 2 }));
+                Assert.That(tree.RangeFromTo(2, 12).Backwards(), Is.EqualTo(new[] { 10, 8, 6, 4, 2 }));
+                Assert.That(tree.RangeFromTo(6, 21).Backwards(), Is.EqualTo(new[] { 20, 18, 16, 14, 12, 10, 8, 6 }));
+                Assert.That(tree.RangeFromTo(6, 20).Backwards(), Is.EqualTo(new[] { 18, 16, 14, 12, 10, 8, 6 }));
             });
         }
 
@@ -1541,26 +1540,22 @@ namespace C5.Tests.trees.TreeSet
                 }
             }
 
-
             private bool twomodeleven(int i)
             {
                 return i % 11 == 2;
             }
 
-
             [Test]
             public void InternalEnum()
             {
-                Assert.That(IC.Eq(snap.FindAll(new Func<int, bool>(twomodeleven)), 13, 35), Is.True);
+                Assert.That(snap.FindAll(new Func<int, bool>(twomodeleven)), Is.EqualTo(new[] { 13, 35 }));
             }
-
 
             public void MoreCut() { }
 
             [Test]
             public void Cut()
             {
-
                 Assert.Multiple(() =>
                 {
                     Assert.That(snap.Cut(new HigherOrder.CubeRoot(64), out int lo, out bool lv, out int hi, out bool hv), Is.False);
@@ -1586,9 +1581,9 @@ namespace C5.Tests.trees.TreeSet
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(snap.RangeFromTo(5, 16), 5, 7, 9, 11, 13, 15), Is.True);
-                    Assert.That(IC.Eq(snap.RangeFromTo(5, 17), 5, 7, 9, 11, 13, 15), Is.True);
-                    Assert.That(IC.Eq(snap.RangeFromTo(6, 16), 7, 9, 11, 13, 15), Is.True);
+                    Assert.That(snap.RangeFromTo(5, 16), Is.EqualTo(new[] { 5, 7, 9, 11, 13, 15 }));
+                    Assert.That(snap.RangeFromTo(5, 17), Is.EqualTo(new[] { 5, 7, 9, 11, 13, 15 }));
+                    Assert.That(snap.RangeFromTo(6, 16), Is.EqualTo(new[] { 7, 9, 11, 13, 15 }));
                 });
                 //Assert.AreEqual(snap.RangeFromTo(6, 16).Count, 5);
             }
@@ -2109,9 +2104,9 @@ namespace C5.Tests.trees.TreeSet
 
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(snaps[3], snap3), Is.True, "Snap 3 was changed!");
-                    Assert.That(IC.Eq(snaps[7], snap7), Is.True, "Snap 7 was changed!");
-                    Assert.That(IC.Eq(tree, res), Is.True);
+                    Assert.That(snaps[3], Is.EqualTo(snap3), "Snap 3 was changed!");
+                    Assert.That(snaps[7], Is.EqualTo(snap7), "Snap 7 was changed!");
+                    Assert.That(tree, Is.EqualTo(res));
                     Assert.That(tree.Check("B"), Is.True);
                     Assert.That(snaps[3].Check("B"), Is.True);
                     Assert.That(snaps[7].Check("B"), Is.True);
@@ -2147,8 +2142,8 @@ namespace C5.Tests.trees.TreeSet
 
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(snaps[3], snap3), Is.True, "Snap 3 was changed!");
-                    Assert.That(IC.Eq(snaps[7], snap7), Is.True, "Snap 7 was changed!");
+                    Assert.That(snaps[3], Is.EqualTo(snap3), "Snap 3 was changed!");
+                    Assert.That(snaps[7], Is.EqualTo(snap7), "Snap 7 was changed!");
                     Assert.That(snaps[3].Check("B"), Is.True);
                     Assert.That(snaps[7].Check("B"), Is.True);
                 });

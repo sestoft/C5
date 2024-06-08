@@ -582,7 +582,7 @@ namespace C5.Tests.wrappers
                 Assert.Multiple(() =>
                 {
                     Assert.That(wrapped[1], Is.EqualTo(6));
-                    Assert.That(IC.Eq(wrapped[1, 2], 6, 5), Is.True);
+                    Assert.That(wrapped[1, 2], Is.EqualTo(new[] { 6, 5 }));
                 });
                 //
                 bool is4(int i) { return i == 4; }
@@ -730,11 +730,9 @@ namespace C5.Tests.wrappers
                 WrappedArray<int> wrapped = (WrappedArray<int>)outerwrapped.View(1, 3);
                 Assert.Multiple(() =>
                 {
-                    //
                     Assert.That(wrapped[1], Is.EqualTo(6));
-                    Assert.That(IC.Eq(wrapped[1, 2], 6, 5), Is.True);
+                    Assert.That(wrapped[1, 2], Is.EqualTo(new[] { 6, 5 }));
                 });
-                //
                 bool is4(int i) { return i == 4; }
 
                 Assert.Multiple(() =>
@@ -761,7 +759,7 @@ namespace C5.Tests.wrappers
                 wrapped.CopyTo(extarray, 1);
                 Assert.Multiple(() =>
                 {
-                    Assert.That(IC.Eq(extarray, 0, 4, 6, 5, 0), Is.True);
+                    Assert.That(extarray, Is.EqualTo(new[] { 0, 4, 6, 5, 0 }));
                     Assert.That(wrapped, Has.Count.EqualTo(3));
                 });
                 Assert.Multiple(() =>
@@ -771,7 +769,7 @@ namespace C5.Tests.wrappers
                     Assert.That(wrapped.DuplicatesByCounting, Is.EqualTo(false));
                     Assert.That(wrapped.EqualityComparer, Is.EqualTo(System.Collections.Generic.EqualityComparer<int>.Default));
                     Assert.That(wrapped.Exists(is4), Is.EqualTo(true));
-                    Assert.That(IC.Eq(wrapped.Filter(is4), 4), Is.True);
+                    Assert.That(wrapped.Filter(is4), Is.EqualTo(new[] { 4 }));
                 });
                 int j = 5;
                 Assert.Multiple(() =>
@@ -812,7 +810,7 @@ namespace C5.Tests.wrappers
                 Assert.Multiple(() =>
                 {
                     Assert.That(wrapped.ToString(), Is.EqualTo("[ 0:4, 1:5, 2:6 ]"));
-                    Assert.That(IC.Eq(wrapped.ToArray(), 4, 5, 6), Is.True);
+                    Assert.That(wrapped.ToArray(), Is.EqualTo(new[] { 4, 5, 6 }));
                     Assert.That(wrapped.ToString("L4", null), Is.EqualTo("[ ... ]"));
                     Assert.That(outerwrapped, Is.EqualTo(wrapped.Underlying));
                     Assert.That(wrapped.UniqueItems(), Is.EquivalentTo(new[] { 4, 5, 6 }));
